@@ -1,0 +1,239 @@
+
+
+
+##########################################
+####### OPTIMAL CLUSTERING BREAKS ########
+##########################################
+##### Sampling within clusters
+OSB <- list()
+for(i in c(1,2,10)){
+  #1 - average height
+  #2 - covariance
+  #10 - p99 height
+  res <- strata.data(o_val[,i], h = 4, n=100)
+  k <- names(o_val[1])
+  
+  breaks <- data.frame(res$OSB)
+  colnames(breaks)=k
+  
+  OSB[[i]] <- breaks
+}
+
+breaks <- cbind(as.data.frame(OSB[[1]]),as.data.frame(OSB[[2]]),as.data.frame(OSB[[10]]))
+names(breaks) <- c("avg","cov","p99")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+setwd("G:\\Documents\\post_doc\\sgsR")
+
+raster <- rast("G:\\Documents\\post_doc\\RMFinventory\\inst\\extdata\\wall_metrics_small.tif")
+
+raster <- rast("G:\\Documents\\post_doc\\RMFinventory\\GJP\\ALS_metrics.tif")
+
+raster %>%
+  terra::values() %>%
+  as.data.frame() %>%
+  filter(complete.cases(.)) %>%
+  strata.data(h = 4, n=100)
+
+
+k <- strat_kmeans(raster[[2]],6)
+
+
+k <- strat_osb(raster[[2]],h = 6,n = 100)
+
+strat_osb(raster[[9]],raster[[23]],h = 4,n = 100,parallel = TRUE)
+
+strat_osb(raster[[9]],raster[[23]],h = 4,n = 100,parallel = TRUE)
+
+sgsR::strat_osb(raster[[9]],raster[[23]],h = 4,n = 100,parallel = TRUE)
+
+bands_l <- list(raster[[3]],raster[[4]],raster[[5]])
+
+sgsR::strat_osb(raster[[9]],raster[[23]],h = 4,n = 100,parallel = TRUE)
+
+
+foreach(i=1:length(bands_l), .packages = c("terra","stratifyR","dplyr","stra")) %dopar% {
+  
+  #--- Extract values from raster ---#
+  vals <- raster[[i]] %>%
+    terra::values(dataframe=TRUE) %>%
+    filter(complete.cases(.)) %>%
+    pull()
+  
+  
+  
+  
+    strata.data(h = 4, n=100)
+    
+
+  #--- perform OSB stratification ---#
+  strata.data(vals[,1], h = 4, n=100) 
+  
+}
+
+
+
+
+kkk <- strat_kmeans(raster=raster,k=5)
+
+
+
+kkk <- strat_kmeans(raster,k=12,plot=FALSE)
+## determine index of each cell so to map values correctly without NA's
+idx <- 1:ncell(wall_poly)
+idx <- idx[-unique(which(is.na(v), arr.ind=TRUE)[,1])]
+
+############################
+#### K MEANS CLUSTERING ####
+############################
+
+#### DETERMINE OPTIMAL NUMBER OF CLUSTERS?????
+#Apply K means - center and scale values and remove NA's
+E <- kmeans(na.omit(scale(v,center = T,scale=T)), 4)
+
+clusters <- E$cluster
+
+# create empty raster from original candidate dimentions
+r.empty <- wall_poly[[1]]
+r.empty[] <- NA
+
+# add cluster values to corresponding index and re-name
+r.empty[idx] <- clusters
+names(r.empty) <- c("clusters")
+
+#combine clusters with original structural metrics
+wall_poly[[14]] <- r.empty
+
+
+pal <- brewer.pal(n = 4, name = "Spectral")
+plot(wall_poly$clusters,col=pal)
+
+
+
+
+
+
+
+
+
+
+prep_metrics <- function(raster,
+                         shp,
+                         poly_type = c("road","forest"),
+                         buffer_min = buffer_min,
+                         buffer_max = buffer_max) {
+  
+  
+  
+  
+  
+  if (!inherits(raster,"SpatRaster"))
+    stop("'raster_in' must be a raster", call. = FALSE)
+  
+  if (poly_type == "road")
+  {
+    if (!all(sf::st_is(shp,"LINESTRING") | sf::st_is(shp,"MULTILINESTRING"))
+        {
+          stop("'road' must be a of type of geometry 'LINESTRING' or 'MULTILINESTRING'")
+    }
+    if (buffer_min >= buffer_max)
+      stop("buffer_max must be >= buffer_min")
+  }
+  
+  else if (poly_type == "forest")
+  {
+    if (!all(sf::st_is(shp,"POLYGON") | sf::st_is(shp,"MULTIPOLYGON"))
+        {
+          stop("'forest' must be a of type of geometry 'POLYGON' or 'MULTIPOLYGON'")
+    }
+  }
+  
+  
+  
+  
+  
+  
+  
+  #Read in raster ALS metrics
+  
+  message("reading", paste0("  ",raster_in))
+  wall_crs <- raster::crs(raster_in)
+  
+  ###prepare shapefiles
+  ##Forest stands##
+  message("reading", paste0("  ",shp_poly))
+  stands <- st_read(shp_poly)
+  stands <- st_transform(stands, wall_crs@projargs)
+  
+  # plot(stands["TYPE_COUV"],axes=T)
+  
+  message("filtering", paste0("  ",shp_poly))
+  # Filter only forested polygons
+  stands_sub <- stands[stands$TYPE_COUV == "R" |stands$TYPE_COUV == "M" | stands$TYPE_COUV == "T",]
+  
+  message("uniting", paste0("  ",shp_poly))
+  #unite poygons of same type
+  stands_sub_u <- st_union(stands_sub)
+  
+  # plot(st_geometry(stands_sub_u), axes = TRUE, col = "red")
+  
+  stands_sub_u <- as(stands_sub_u,"Spatial")
+  
+  message("masking", paste0("  ",raster_in))
+  #mask metrics with stand coverage polygon
+  wall_poly <- raster::mask(raster_in, mask = stands_sub_u)
+  # plot(wall_poly$zmean)
+  message("forest poly masking complete - starting road masking")
+  
+  ##Roads
+  message("reading", paste0("  ",shp_poly))
+  roads <- st_read(shp_roads)
+  roads <- st_transform(roads, wall_crs@projargs)
+  roads <- st_union(roads)
+  
+  # plot(als_m$zmean)
+  # plot(roads,add=T)
+  
+  message("buffering", paste0("  ",shp_poly))
+  ## internal and external bffers for roads
+  roads_buffer_min <- st_buffer(roads, dist = buff_min)
+  roads_buffer_max <- st_buffer(roads, dist = buff_max)
+  
+  message("differencing", paste0("  ",shp_poly))
+  #difference buffers
+  roads_buffer <- st_sym_difference(roads_buffer_max, roads_buffer_min)
+  roads_buffer <- sf::as_Spatial(roads_buffer)
+  
+  
+  message("masking", paste0("  ",shp_poly))
+  # mask metrics with roads buffers
+  als_candidates_F <- raster::mask(wall_poly, mask = roads_buffer)
+  # plot(als_candidates_F)
+  
+  message("process complete")
+  
+  return(als_candidates_F)
+}
