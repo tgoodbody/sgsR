@@ -18,7 +18,8 @@ Depends:
     doParallel,
     stratifyR,
     ggplot2,
-    RStoolbox,
+    factoextra,
+    FactoMineR,
     raster
 Suggests: 
     testthat

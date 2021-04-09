@@ -1,10 +1,16 @@
 classPlot <- function(dfc,
                       coordsgrps,
                       var1,
-                      var2){
+                      var2,
+                      samp){
 
   var1 <- sym(var1)
   var2 <- sym(var2)
+  
+  dfc <- dfc %>%
+    na.omit %>%
+    group_by(class) %>%
+    slice_sample(prop = samp)
 
   p <- ggplot(mapping = aes(x=!!var1,y=!!var2))+
     geom_point(data = dfc, aes(color = as.factor(class)))+
