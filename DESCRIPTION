@@ -14,12 +14,9 @@ Depends:
     dplyr,
     tidyr,
     RColorBrewer,
-    foreach,
-    doParallel,
     stratifyR,
     ggplot2,
     factoextra,
-    FactoMineR,
-    raster
+    FactoMineR
 Suggests: 
     testthat

@@ -4,7 +4,8 @@ strat_vars <- function(raster,
                        var2 = NULL,
                        b1,
                        b2 = NULL,
-                       plot = TRUE){
+                       plot = TRUE,
+                       samp = 1){
 
   if (!inherits(raster,"SpatRaster"))
     stop("all specified bands must be type SpatRaster", call. = FALSE)
@@ -17,6 +18,9 @@ strat_vars <- function(raster,
 
   if (!is.logical(plot))
     stop("'plot' must be type logical")
+  
+  if (!is.numeric(samp))
+    stop("'samp' must be type numeric")
 
   if (is.null(var2)){
     if (!is.null(b2))
@@ -26,8 +30,7 @@ strat_vars <- function(raster,
     vals <- terra::subset(raster,var1) %>%
       terra::values()
 
-    vals[is.nan(vals)] <- NA
-    vals[is.infinite(vals)] <- NA
+    vals[!is.finite(vals)] <- NA
 
     #--- Determine index of each cell so to map values correctly without NA ---#
     idx <- !is.na(vals)
@@ -35,7 +38,7 @@ strat_vars <- function(raster,
     #--- Remove NA / NaN / Inf values ---#
     df <- vals %>%
       as.data.frame() %>%
-      filter(complete.cases(.))
+      filter(!is.na(.))
 
     var1 <- ensym(var1)
 
@@ -63,6 +66,8 @@ strat_vars <- function(raster,
     #--- Extract values from raster ---#
     vals <- terra::subset(raster,c(var1,var2)) %>%
       terra::values()
+    
+    vals[!is.finite(vals)] <- NA
 
     #--- Determine index of each cell so to map values correctly without NA ---#
     idx <- is.finite(vals[,1]) & is.finite(vals[,2])
@@ -70,7 +75,7 @@ strat_vars <- function(raster,
     #--- Remove NA / NaN / Inf values ---#
     df <- vals %>%
       as.data.frame() %>%
-      filter(complete.cases(.))
+      filter(!is.na(.))
 
     var1 <- ensym(var1)
     var2 <- ensym(var2)
@@ -96,6 +101,8 @@ strat_vars <- function(raster,
     names(rout) <- "class"
 
     if (plot == TRUE){
+      if (samp > 1 | samp < 0)
+        stop("'samp' must be > 0 & <= 1")
 
       #--- set up colour palette ---#
       ncol <- b1 * b2
@@ -113,7 +120,8 @@ strat_vars <- function(raster,
       q <- classPlot(dfc = dfc,
                      coordsgrps = coordsgrps,
                      var1 = var1,
-                     var2 = var2)
+                     var2 = var2,
+                     samp = samp)
 
       print(q)
 

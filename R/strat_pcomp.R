@@ -26,14 +26,10 @@ strat_pcomp <- function(raster,
   if (!is.numeric(samp))
     stop("'samp' must be type numeric")
   
-  if (samp > 1.0 | samp < 0)
-    stop("'samp' must be > 0 & <= 1")
-  
   #--- Extract values from raster ---#
   vals <- terra::values(raster)
   
-  vals[is.nan(vals)] <- NA
-  vals[is.infinite(vals)] <- NA
+  vals[!is.finite(vals)] <- NA
   
   #--- Determine index of each cell so to map values correctly without NA ---#
   idx <- !is.na(vals)
@@ -167,6 +163,8 @@ strat_pcomp <- function(raster,
   }
   
   if (plot == TRUE){
+    if (samp > 1 | samp < 0)
+      stop("'samp' must be > 0 & <= 1")
     
     terra::plot(rout)
     
