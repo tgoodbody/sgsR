@@ -10,7 +10,7 @@ Encoding: UTF-8
 LazyData: true
 Depends:
     terra,
-    sp,
+    sf,
     dplyr,
     tidyr,
     RColorBrewer,

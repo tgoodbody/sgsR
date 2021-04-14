@@ -41,8 +41,7 @@ strat_kmeans <- function(raster,
   vals <- terra::values(raster)
 
   #--- Determine index of each cell so to map values correctly without NA ---#
-  vals[is.nan(vals)] <- NA
-  vals[is.infinite(vals)] <- NA
+  vals[!is.finite(vals)] <- NA
 
   idx <- !is.na(vals)
 
