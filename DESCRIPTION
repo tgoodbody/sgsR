@@ -4,19 +4,20 @@ Title: Appraoches to structurally guided sampling using ALS data
 Version: 0.1.0
 Author: Tristan R.H. Goodbody
 Maintainer: Tristan R.H. Goodbody <goodbody.t@gmail.com>
-Description: This is a test to start up the sgsR package.
+Description: This is a test to start up the sgsR package
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Depends:
     terra,
     sf,
+    sp,
     dplyr,
     tidyr,
+    purrr,
     RColorBrewer,
     stratifyR,
     ggplot2,
     factoextra,
-    FactoMineR
-Suggests: 
-    testthat
+    FactoMineR,
+    spatstat
