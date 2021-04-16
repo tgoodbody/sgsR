@@ -1,11 +1,11 @@
 classPlot <- function(dfc,
                       coordsgrps,
-                      var1,
-                      var2,
+                      metric,
+                      metric2,
                       samp){
 
-  var1 <- sym(var1)
-  var2 <- sym(var2)
+  metric <- sym(metric)
+  metric2 <- sym(metric2)
   
   #--- sample cells based on 'samp' parameter ---#
   
@@ -16,7 +16,7 @@ classPlot <- function(dfc,
   
   #--- plot individual cells coloured by associated class ---#
 
-  p <- ggplot(mapping = aes(x = !!var1, y = !!var2))+
+  p <- ggplot(mapping = aes(x = !!metric, y = !!metric2))+
     geom_point(data = dfc, alpha = 0.3, aes(color = as.factor(class)))+
     theme_bw() +
     theme(legend.position = "none")
@@ -28,10 +28,10 @@ classPlot <- function(dfc,
     data <- coordsgrps$data[[i]]
     
     p <- p + geom_rect(data = data,
-                       aes(xmin = min(!!var1),
-                           xmax = max(!!var1),
-                           ymin = min(!!var2),
-                           ymax = max(!!var2)),
+                       aes(xmin = min(!!metric),
+                           xmax = max(!!metric),
+                           ymin = min(!!metric2),
+                           ymax = max(!!metric2)),
                        colour = "black",
                        fill = NA)
   }

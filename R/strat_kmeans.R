@@ -1,5 +1,12 @@
-## need to filter initial als metrics to a select set to be used for structurally guided sampling
-##
+# raster = spatRaster. Multiband ALS metrics raster.
+# k = Character. Number of k-mean centers to calculate.
+# iter.max = Numeric. The maximum number of iterations allowed.
+# center - Logical. Determines whether centering of data should be conducted prior to k-means analysis.
+# scale - Logical. Determines whether scaling of data should be conducted prior to k-means analysis.
+# plot = Logical. Plots output strata raster and visualized strata with boundary dividers.
+
+## output object is a list where `$kmeans` corresponds to all k-means analysis outputs and '$raster' is the output stratification spatRaster
+
 
 strat_kmeans <- function(raster,
                          k,
@@ -93,12 +100,12 @@ strat_kmeans <- function(raster,
   vals[idx] <- km_clust$cluster
 
   kmv <- terra::setValues(raster[[1]],vals)
-  names(kmv) <- "class"
+  names(kmv) <- "strata"
 
-  #--- assign output raster to k-means info ---#
-  km_clust$raster <- kmv
+  #--- create list to assign k-means info and output raster ---#
+  out <- list(kmeans = km_clust, raster = kmv)
 
-    #--- plot if requested ---#
+  #--- plot if requested ---#
   if (plot == TRUE){
 
     #--- make plot using diverging colour palette ---#
@@ -108,10 +115,12 @@ strat_kmeans <- function(raster,
     terra::plot(kmv, main = 'K-means clusters', col=col,type="classes")
 
     #--- return k-means object with combined raster ---#
-    return(km_clust)
+    out
 
-  }
+  } else {
     #--- return k-means object with combined raster ---#
-    return(km_clust)
+    
+    out
+  }
 
 }

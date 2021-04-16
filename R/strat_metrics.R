@@ -1,8 +1,16 @@
+# raster = spatRaster. Multiband ALS metrics raster
+# metric = Character. Name of primary metric to stratify
+# metric2 = Character. Name of secondary metric to stratify
+# b = Numeric. Number of desired strata for metric
+# b2 = Numeric. Number of desired strata for metric2
+# plot = Logical. Plots output strata raster and visualized strata with boundary dividers
+# samp = Numeric. Determines proportion of cells to plot for strata visualization. Lower values reduce processing time.
 
-strat_vars <- function(raster,
-                       var1,
-                       var2 = NULL,
-                       b1,
+
+strat_metrics <- function(raster,
+                       metric,
+                       metric2 = NULL,
+                       b,
                        b2 = NULL,
                        plot = TRUE,
                        samp = 1){
@@ -10,11 +18,11 @@ strat_vars <- function(raster,
   if (!inherits(raster,"SpatRaster"))
     stop("all specified bands must be type SpatRaster", call. = FALSE)
 
-  if (!is.character(var1))
-    stop("'var1' must be type character")
+  if (!is.character(metric))
+    stop("'metric' must be type character")
 
-  if (!is.numeric(b1))
-    stop("'b1' must be type numeric")
+  if (!is.numeric(b))
+    stop("'b' must be type numeric")
 
   if (!is.logical(plot))
     stop("'plot' must be type logical")
@@ -22,12 +30,12 @@ strat_vars <- function(raster,
   if (!is.numeric(samp))
     stop("'samp' must be type numeric")
 
-  if (is.null(var2)){
+  if (is.null(metric2)){
     if (!is.null(b2))
-      message("You are stratifying with only 1 variable but specified 'b2' - ignoring.")
+      message("You are stratifying with only 1 metric but specified 'b2' - ignoring.")
 
     #--- Extract values from raster ---#
-    vals <- terra::subset(raster,var1) %>%
+    vals <- terra::subset(raster,metric) %>%
       terra::values()
 
     vals[!is.finite(vals)] <- NA
@@ -40,31 +48,31 @@ strat_vars <- function(raster,
       as.data.frame() %>%
       filter(!is.na(.))
 
-    var1 <- ensym(var1)
+    metric <- ensym(metric)
 
-    #--- Split var1 distribution in to number specified by 'breaks' ---#
+    #--- Split metric distribution in to number specified by 'breaks' ---#
     dfc <- df %>%
-      mutate(class = ntile(!!var1,b1))
+      mutate(class = ntile(!!metric,b))
 
     #--- convert back to original raster extent ---#
     vals[idx] <- dfc$class
 
     #--- set newly stratified values ---#
     rout <- terra::setValues(raster[[1]],vals)
-    names(rout) <- "class"
+    names(rout) <- "strata"
 
   }
 
-  if (!is.null(var2)){
+  if (!is.null(metric2)){
 
-    if (!is.character(var2))
-      stop("'var2' must be type character")
+    if (!is.character(metric2))
+      stop("'metric2' must be type character")
 
     if (is.null(b2))
-      stop("If using 2 variables to stratify, 'b2' must be defined")
+      stop("If using 2 metrics to stratify, 'b2' must be defined")
 
     #--- Extract values from raster ---#
-    vals <- terra::subset(raster,c(var1,var2)) %>%
+    vals <- terra::subset(raster,c(metric,metric2)) %>%
       terra::values()
     
     vals[!is.finite(vals)] <- NA
@@ -77,17 +85,17 @@ strat_vars <- function(raster,
       as.data.frame() %>%
       filter(!is.na(.))
 
-    var1 <- ensym(var1)
-    var2 <- ensym(var2)
+    metric <- ensym(metric)
+    metric2 <- ensym(metric2)
 
-    #--- Split var1 distribution in to number specified by 'breaks' ---#
+    #--- Split metric distribution in to number specified by 'breaks' ---#
     dfc <- df %>%
-      #--- define b1 classes ---#
-      mutate(class1 = ntile(!!var1,b1)) %>%
+      #--- define b classes ---#
+      mutate(class1 = ntile(!!metric,b)) %>%
       #--- group by class to sub stratify ---#
       group_by(class1) %>%
       #--- define b2 classes ---#
-      mutate(class2 = ntile(!!var2,b2)) %>%
+      mutate(class2 = ntile(!!metric2,b2)) %>%
       #--- combine classes ---#
       group_by(class1,class2) %>%
       #--- establish newly formed unique class ---#
@@ -98,14 +106,14 @@ strat_vars <- function(raster,
 
     #--- set newly stratified values ---#
     rout <- terra::setValues(raster[[1]],vals[,1])
-    names(rout) <- "class"
+    names(rout) <- "strata"
 
     if (plot == TRUE){
       if (samp > 1 | samp < 0)
         stop("'samp' must be > 0 & <= 1")
 
       #--- set up colour palette ---#
-      ncol <- b1 * b2
+      ncol <- b * b2
       qual_col_pals = brewer.pal.info[brewer.pal.info$category == 'seq',]
       col_vector = unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))
 
@@ -119,8 +127,8 @@ strat_vars <- function(raster,
 
       q <- classPlot(dfc = dfc,
                      coordsgrps = coordsgrps,
-                     var1 = var1,
-                     var2 = var2,
+                     metric = metric,
+                     metric2 = metric2,
                      samp = samp)
 
       print(q)
@@ -134,7 +142,7 @@ strat_vars <- function(raster,
   if (plot == TRUE){
 
     #--- set up colour palette ---#
-    ncol <- b1
+    ncol <- b
     qual_col_pals = brewer.pal.info[brewer.pal.info$category == 'qual',]
     col_vector = unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))
 

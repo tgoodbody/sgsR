@@ -1,3 +1,14 @@
+# raster = spatRaster. Multiband ALS metrics raster.
+# ncp = Character. Number of components to create.
+# b1 = Numeric. Number of desired strata for first principal component.
+# b2 = Numeric. Number of desired strata for second principal component.
+# scale - Logical. Determines whether centering and scaling of data should be conducted prior to principal component analysis.
+# plot = Logical. Plots output strata raster and visualized strata with boundary dividers.
+# samp = Numeric. Determines proportion of cells to plot for strata visualization. Lower values reduce processing time.
+
+## output object contains all k-means data and the output stratification spatRaster - $raster
+
+
 strat_pcomp <- function(raster,
                         ncp,
                         b1,
@@ -39,7 +50,7 @@ strat_pcomp <- function(raster,
     if ( is.null(b2) ){
       
       #--- perform PCA using rasterPCA -- requires conversion to raster* format ---#
-      pca <- FactoMineR::PCA(vals, ncp = ncp, scale.unit = TRUE,graph = FALSE)
+      pca <- suppressWarnings(FactoMineR::PCA(vals, ncp = ncp, scale.unit = TRUE,graph = FALSE))
       
       ########################################################
       ### WHICH PRINCIPAL COMPONENT METHOD SHOULD BE USED? ###
@@ -58,7 +69,7 @@ strat_pcomp <- function(raster,
       
       #--- set newly stratified values ---#
       rout <- terra::setValues(raster[[1]],vals)
-      names(rout) <- "class"
+      names(rout) <- "strata"
       
     } else {
       
@@ -66,7 +77,7 @@ strat_pcomp <- function(raster,
         stop("'b2' must be type numeric")
       
       #--- perform PCA using rasterPCA -- requires conversion to raster* format ---#
-      pca <- FactoMineR::PCA(vals, ncp = ncp, scale.unit = TRUE,graph = FALSE)
+      pca <- suppressWarnings(FactoMineR::PCA(vals, ncp = ncp, scale.unit = TRUE,graph = FALSE))
       
       ########################################################
       ### WHICH PRINCIPAL COMPONENT METHOD SHOULD BE USED? ###
@@ -93,7 +104,7 @@ strat_pcomp <- function(raster,
       
       #--- set newly stratified values ---#
       rout <- terra::setValues(raster[[1]],vals)
-      names(rout) <- "class"
+      names(rout) <- "strata"
       
     }
     
@@ -102,7 +113,7 @@ strat_pcomp <- function(raster,
     if ( is.null(b2) ){
       
       #--- perform PCA using rasterPCA -- requires conversion to raster* format ---#
-      pca <- FactoMineR::PCA(vals, ncp = ncp, scale.unit = FALSE,graph = FALSE)
+      pca <- suppressWarnings(FactoMineR::PCA(vals, ncp = ncp, scale.unit = FALSE,graph = FALSE))
       
       ########################################################
       ### WHICH PRINCIPAL COMPONENT METHOD SHOULD BE USED? ###
@@ -121,7 +132,7 @@ strat_pcomp <- function(raster,
       
       #--- set newly stratified values ---#
       rout <- terra::setValues(raster[[1]],vals)
-      names(rout) <- "class"
+      names(rout) <- "strata"
       
     } else {
       
@@ -129,7 +140,7 @@ strat_pcomp <- function(raster,
         stop("'b2' must be type numeric")
       
       #--- perform PCA using rasterPCA -- requires conversion to raster* format ---#
-      pca <- FactoMineR::PCA(vals, ncp = ncp, scale.unit = FALSE,graph = FALSE)
+      pca <- suppressWarnings(FactoMineR::PCA(vals, ncp = ncp, scale.unit = FALSE,graph = FALSE))
       
       ########################################################
       ### WHICH PRINCIPAL COMPONENT METHOD SHOULD BE USED? ###
@@ -156,7 +167,7 @@ strat_pcomp <- function(raster,
       
       #--- set newly stratified values ---#
       rout <- terra::setValues(raster[[1]],vals)
-      names(rout) <- "class"
+      names(rout) <- "strata"
       
     }
     
@@ -177,14 +188,16 @@ strat_pcomp <- function(raster,
     
     p <- classPlot(pcagrps,
                    coordsgrps,
-                   var1 = "Dim.1",
-                   var2 = "Dim.2",
+                   metric = "Dim.1",
+                   metric2 = "Dim.2",
                    samp)
     
     print(p)
     
   }
   
-  return(rout)
+ out <- list(pca = pca, raster = rout)
+ 
+ out
   
 }

@@ -1,424 +1,152 @@
+# raster = spatRaster. Raster to be used for simple random sampling
+# ns = Numeric. Number of desired samples.
+# mindist = Numeric. Minimum allowable distance between selected samples.
+# access = spatVector. Road access network - must be lines.
+# buff_inner = Numeric. Inner buffer boundary specifying distance from access where plots cannot be sampled.
+# buff_outer = Numeric. Outer buffer boundary specifying distance from access where plots can be sampled.
+
+
 sample_srs <- function(raster,
-                       ns) {
+                       ns,
+                       mindist,
+                       access = NULL,
+                       buff_inner = NULL,
+                       buff_outer = NULL) {
   #--- Error management ---#
   if (!inherits(raster, "SpatRaster"))
-    stop("'raster_in' must be type SpatRaster", call. = FALSE)
-  
-  if (!is.numeric(n))
-    stop("'n' must be type numeric")
+    stop("'raster' must be type SpatRaster", call. = FALSE)
+
+  if (!is.numeric(ns))
+    stop("'ns' must be type numeric")
+
+  if (!is.numeric(mindist))
+    stop("'mindist' must be type numeric")
   
   ######################################
   ##DETERMINE NULL / NA SYNTAX FOR CRS##
   ######################################
-  
+
   if (is.na(crs(raster)))
     stop("'raster' does not have a coordinate system")
+
+  raster <- raster[[1]]
   
   #--- determine crs of input raster ---#
   crs <- crs(raster)
-  
-  #--- randomly sample n cells from input raster and save cell index ---#
-  cells <- terra::spatSample(raster, ns, "random", cells = TRUE)
-  
-  #--- extract values from input rater using sample index ---#
-  v <- raster[cells]
-  
-  #--- derive coordinates ---#
-  xy <- terra::xyFromCell(raster, cells)
-  
-  #--- bind values and coordinates ---#
-  samples <- cbind(xy, v)
-  
-  #--- convert coordinates to a spatial points object ---#
-  coords <- xy %>%
-    as.data.frame() %>%
-    st_as_sf(., coords = c("x", "y"))
-  
-  #--- assign raster crs to spatial points object ---#
-  st_crs(coords) <- crs
-  
-  #--- plot input raster and random samples ---#
-  terra::plot(raster[[1]])
-  terra::plot(coords, add = T)
-  
-  #--- output samples dataframe ---#
-  samples
-  
-  
-}
 
-sample_strat <- function(raster,
-                         ns,
-                         mindist,
-                         existing = NULL,
-                         access = NULL,
-                         buff_inner = NULL,
-                         buff_outer = NULL,
-                         buff_extend = NULL,
-                         buff_max = NULL,
-                         wrow = 3,
-                         wcol = 3) {
-  #--- Error management ---#
-  if (!inherits(raster, "SpatRaster"))
-    stop("'raster' must be type SpatRaster", call. = FALSE)
-  
-  if (!is.numeric(mindist))
-    stop("'mindist' must be type numeric")
-  
-  if (!is.numeric(ns))
-    stop("'ns' must be type numeric")
-  
-  if (!is.numeric(wrow))
-    stop("'wrow' must be type numeric")
-  
-  if (!is.numeric(wcol))
-    stop("'wcol' must be type numeric")
-  
-  if (!inherits(access, "SpatVector"))
-    stop("'access' must be type SpatVector", call. = FALSE)
-  
-  #--- determine crs of input raster ---#
-  crs <- crs(raster)
-  
-  #--- if existing samples are provided ensure they are in the proper format ---#
-  
-  if (missing(existing)) {
-    #--- if existing samples do not exist make an empty dataframe called addSamples ---#
-    addSamples <- data.frame(strata = NA, x = NA, y = NA)
-    extraCols <- character(0)
-    
-  } else {
-    #--- if existing samples do exist ensure proper naming convention ---#
-    
-    if (!is(existing, "data.frame")) {
-      stop("existing_samples must be a data.frame")
-      
-    }
-    
-    if (any(!c("strata", "x", "y") %in% colnames(existing))) {
-      stop("existing_samples must have columns named strata, x and y")
-      
-    }
-    
-    addSamples <- existing
-    extraCols <- colnames(existing)[!colnames(existing) %in% c("x", "y", "strata")]
-    
-    # Transform strata to numeric if factor
-    if (is(addSamples$strata, "factor")) {
-      addSamples$strata <- as.numeric(as.character(addSamples$strata))
-      
-    }
-    
+  if (!is.null(access)) {
+
+    if (!inherits(access, "SpatVector"))
+      stop("'access' must be type SpatVector", call. = FALSE)
+
+    #--- list all buffers to catch NULL values within error handling ---#
+    buffers <- list(buff_inner, buff_outer)
+
+    #--- error handling in the presence of 'access' ---#
+    if (any(vapply(buffers, is.null, TRUE)))
+      stop("All 'buff_*' paramaters must be provided when 'access' is defined.")
+
+    if (!any(vapply(buffers, is.numeric, FALSE)))
+      stop("All 'buff_*' paramaters must be type numeric")
+
+    message(
+      paste0(
+        "An access layer has been provided. An internal buffer of ",
+        buff_inner,
+        " m and an external buffer of ",
+        buff_outer,
+        " m have been applied"
+      )
+    )
+
+    #--- make access buffer with user defined values ---#
+
+    buff_in <- terra::buffer(x = roads,
+                             width = buff_inner,
+                             capstyle = "round")
+
+    buff_out <- terra::buffer(x = roads,
+                              width = buff_outer,
+                              capstyle = "round")
+
+    #--- make difference and aggregate inner and outer buffers to prevent sampling too close to access ---#
+    buffer <- aggregate(buff_out - buff_in)
+
+    raster <- terra::mask(raster, mask = buffer)
+
   }
   
-  #--- determine number of samples for each strata ---#
+  #--- create empty dataframe for samples to be populated to ---#
+  add_strata <- data.frame()
   
-  toSample <- tallySamples(raster, ns)
-  
-  #--- determine access buffers ---#
-  
-  for (i in 1:nrow(toSample)) {
-    s <- as.numeric(toSample[i, 1])
-    nsamp <- as.numeric(toSample[i, 2])
-    
-    print(paste0("Processing strata : ", s))
-    
-    if (nsamp > 0) {
-      #--- mask for individual strata ---#
-      
-      strata_m <-terra::mask(raster,
-          mask = raster,
-          maskvalues = s,
-          inverse = TRUE
-        )
-      names(strata_m) <- "strata"
+  #--- create indices for all, NA, and valid sampling candidates ---#
 
-      #--- if access line polygon is specified create inner and outer buffers
-      
-      if (!is.null(access)) {
-        #--- list all buffers to catch NULL values within error handling ---#
-        buffers <- list(buff_inner, buff_outer, buff_extend, buff_max)
-        
-        #--- error handling in the presence of 'access' ---#
-        if (any(vapply(buffers, is.null, TRUE)))
-          stop("All 'buff_*' paramaters must be provided when 'access' is defined.")
-        
-        if (!any(vapply(buffers, is.numeric, FALSE)))
-          stop("All 'buff_*' paramaters must be type numeric")
-        
-        message(
-          paste0(
-            "An access layer has been provided. An internal buffer of ",
-            buff_inner,
-            " m and an external buffer of ",
-            buff_outer,
-            " m have been applied"
-          )
-        )
-        
-        #--- make access buffer with user defined values ---#
-        
-        buff_in <- terra::buffer(x = roads,
-                        width = buff_inner,
-                        capstyle = "round")
-        
-        buff_out <- terra::buffer(x = roads,
-                        width = buff_outer,
-                        capstyle = "round")
-        
-        #--- make difference and aggregate inner and outer buffers to prevent sampling too close to access ---#
-        buffer <- aggregate(buff_out - buff_in)
-        
-        strata_m_buff <- terra::mask(strata_m, 
-                                     mask = buffer)
-        
-        sampAvail <- sum(!is.na(values(strata_m_buff)))
-        
-        if (sampAvail > nsamp) {
-          message(
-            paste0(
-              "Buffered area contains ",
-              sampAvail,
-              " available  candidates. Sampling to reach ",
-              nsamp,
-              " samples starting."
-            )
-          )
-          
-          #--- rename to original strata raster that will be used for sampling ---#
-          strata_m <- strata_m_buff
-          
-          #--- if there are no samples to take within the specified 'buff_outer' distance extend buffer until values are found ---#
-          
-        } else {
-          if (is.null(buff_extend))
-            stop(
-              "Insufficient candidate samples are within the buffer extent and 'buff_extend' is null. Supply a value to iterate increasing external buffers or increase 'buff_outer' value."
-            )
-          
-          counter <- 1
-          
-          while (sampAvail < nsamp) {
-            #--- extend buffer based on 'buff_extend' ---#
-            buff_outer_n <- buff_outer + (buff_extend * counter)
-            
-            #--- if the max buffer has been reached stop ---#
-            if (buff_outer_n > buff_max) {
-              stop(
-                "Maximum buffer size of 'buff_max' has been reached. Insufficient number of candidates to reach sample size."
-              )
-              
-            } else {
-              message(
-                paste0(
-                  "Buffered area contains no available samples. Increasing buff_outer to ",
-                  buff_outer_n,
-                  " m"
-                )
-              )
-              
-            }
-            
-            #--- recompute outer buffer with buffer extension ---#
-            buff_out <-
-              terra::buffer(x = roads,
-                            width = buff_outer_n,
-                            capstyle = "round")
-            
-            buffer <- aggregate(buff_out - buff_in)
-            
-            #--- mask strata raster with extended buffer ---#
-            strata_m_buff <- terra::mask(strata_m, mask = buffer)
-            
-            sampAvail <- sum(!is.na(values(strata_m_buff)))
-            
-            #--- if number of  candidate samples > samples needed exit while loop and begin sampling ---#
-            if (sampAvail > nsamp) {
-              message(
-                paste0(
-                  "External buffer of ",
-                  buff_outer_n,
-                  " m contains ",
-                  sampAvail,
-                  " available  candidates. Sampling to reach ",
-                  nsamp,
-                  " samples starting."
-                )
-              )
-              
-              #--- rename to original strata raster that will be used for sampling ---#
-              strata_m <- strata_m_buff
-              
-            }
-            counter <- counter + 1
-            
-          }
-          
-        }
-        
-      }
-      
-      ##################
-      #--- sampling ---#
-      ##################
-      
-      #--- RULE 1: select only cells surrounded by cells with same strata ---#
-      
-      #--- Define focal window ---#
-      w <- matrix(1 / (wrow * wcol), nr = wrow, nc = wcol)
-      
-      suppressWarnings(strata_m_clust <-
-                         terra::focal(
-                           strata_m,
-                           w = w,
-                           na.rm = FALSE,
-                           na.only = FALSE
-                         ))
-      names(strata_m_clust) <- "strata"
-      
-      #--- create indices for all, NA, and valid sampling candidates ---#
-      
-      idx_all <- 1:ncell(strata_m_clust)
-      idx_na <- is.na(terra::values(strata_m_clust))
-      validCandidates <- idx_all[!idx_na]
-      
-      #--- Initiate number of sampled cells ---#
-      add_strata <- addSamples %>% 
-        dplyr::filter(strata == s)
-      
-      if (nrow(add_strata) > 0) {
-        add_strata$type <- "Existing"
-        
-        if (!"rule" %in% colnames(add_strata)) {
-          add_strata$rule <- NA
-          
-        }
-      }
-      
-      #--- Rule 1 sampling ---#
-      nCount <- 0 #Number of sampled cells
-      
-      # While loop for RULE 1
-      while (length(validCandidates) > 0 & nCount < nsamp) {
-        #-- identify potential sample from candidates ---#
-        smp <- sample(1:length(validCandidates), size = 1)
-        
-        smp_cell <- validCandidates[smp]
-        
-        #--- extract coordinates and sample details ---#
-        
-        add_temp <- data.frame(
-          cell = smp_cell,
-          x = terra::xFromCell(strata_m_clust, smp_cell),
-          y = terra::yFromCell(strata_m_clust, smp_cell),
-          strata = strata_m_clust[smp_cell]
-        )
-        
-        #--- Remove sampled cell from validCandidates so that it cannot be sampled again later ---#
-        
-        validCandidates <- validCandidates[-smp]
-        
-        #--- populate add_temp with values ---#
-        add_temp$type <- "New"
-        add_temp$rule <- "rule1"
-        add_temp[, extraCols] <- NA
-        
-        #--- If add_strata is empty, sampled cell accepted ---#
-        
-        if (nrow(add_strata) == 0) {
-          
-          add_strata <- add_temp[, c("x", "y", "strata", "rule", "type", extraCols)]
-          
-          nCount <-  nCount + 1
-          
-          #--- If add_strata isnt empty, check distance with all other sampled cells in strata ---#
-        } else {
-          
-          dist <- crossdist(add_temp$x, add_temp$y , add_strata$x , add_strata$y)
-          
-          #--- If all less than 'mindist' - accept sampled cell otherwise reject ---#
-          if (all(as.numeric(dist) > mindist)) {
-            
-            add_strata <- rbind(add_strata, add_temp[, c("x", "y", "strata", "rule", "type", extraCols)])
-            
-            nCount <-  nCount + 1
-            
-          }
-        }
-      }
-      
-      #---- RULE 3 sampling ---#
-      
-      if (nCount < nsamp) {
-        
-        idx_all <- 1:ncell(strata_m)
-        idx_na <- is.na(terra::values(strata_m))
-        validCandidates <- idx_all[!idx_na]
+  idx_all <- 1:ncell(raster)
+  idx_na <- is.na(terra::values(raster))
+  validCandidates <- idx_all[!idx_na]
 
-        while(length(validCandidates) > 0 & nCount < nsamp){
-          
-          #-- identify potential sample from candidates ---#
-          smp <- sample(1:length(validCandidates), size = 1)
-          
-          smp_cell <- validCandidates[smp]
-          
-          #--- extract coordinates and sample details ---#
-          
-          add_temp <- data.frame(
-            cell = smp_cell,
-            x = terra::xFromCell(strata_m, smp_cell),
-            y = terra::yFromCell(strata_m, smp_cell),
-            strata = validCandidates[smp_cell]
-          )
-          
-          #--- Remove sampled cell from validCandidates so that it cannot be sampled again later ---#
-          
-          validCandidates <- validCandidates[-smp]
-          
-          add_temp$rule <- "isolated"
-          add_temp$type <- "New"
-          add_temp[,extraCols] <- NA
-          add_temp$strata <- s
-          
-          if (nrow(add_strata) == 0) {
-            
-            add_strata <- add_temp[,c("x","y","strata","rule","type",extraCols)]
-            
-            nCount = nCount +1
-            
-          } else{
-            
-            dist <- crossdist(add_temp$x,add_temp$y,add_strata$x,add_strata$y)
-            
-            if( all(as.numeric(dist)>mindist )){
-              
-              add_strata <- rbind(add_strata, add_temp[,c("x","y","strata","rule","type",extraCols)])
-              nCount = nCount +1
-              
-            }
-          }
-        }
+  #--- Rule 1 sampling ---#
+  nCount <- 0 #Number of sampled cells
+
+  # While loop for RULE 1
+  while (length(validCandidates) > 0 & nCount < ns) {
+    #-- identify potential sample from candidates ---#
+    smp <- sample(1:length(validCandidates), size = 1)
+
+    smp_cell <- validCandidates[smp]
+
+    #--- extract coordinates and sample details ---#
+
+    add_temp <- data.frame(
+      cell = smp_cell,
+      x = terra::xFromCell(raster, smp_cell),
+      y = terra::yFromCell(raster, smp_cell)
+    )
+
+    #--- Remove sampled cell from validCandidates so that it cannot be sampled again later ---#
+
+    validCandidates <- validCandidates[-smp]
+
+    #--- If add_strata is empty, sampled cell accepted ---#
+
+    if (nrow(add_strata) == 0) {
+
+      add_strata <- add_temp[, c("x", "y")]
+
+      nCount <-  nCount + 1
+
+      #--- If add_strata isnt empty, check distance with all other sampled cells in strata ---#
+    } else {
+
+      dist <- crossdist(add_temp$x, add_temp$y , add_strata$x , add_strata$y)
+
+      #--- If all less than 'mindist' - accept sampled cell otherwise reject ---#
+      if (all(as.numeric(dist) > mindist)) {
+
+        add_strata <- rbind(add_strata, add_temp[, c("x", "y")])
+
+        nCount <-  nCount + 1
+
       }
-      
     }
-    
-    # Create out object if first iteration of loop
-    # Else just rbind output with what has been processed in the loop
-    if (i == 1) {
-      out <- add_strata
-    }else{
-      out <- rbind(out,add_strata)
-    }
-    
   }
   
-  #--- convert coordinates to a spatial points object ---#
-  coords <- out %>%
-    as.data.frame() %>%
-    st_as_sf(., coords = c("x", "y"))
-  
-  #--- assign raster crs to spatial points object ---#
-  st_crs(coords) <- crs
-  
-  return(coords)
+    #--- convert coordinates to a spatial points object ---#
+    samples <- add_strata %>%
+      as.data.frame() %>%
+      st_as_sf(., coords = c("x", "y"))
+
+    #--- assign raster crs to spatial points object ---#
+    st_crs(samples) <- crs
+
+    #--- plot input raster and random samples ---#
+    terra::plot(raster[[1]])
+    suppressWarnings(terra::plot(samples, add = T, col = "black"))
+
+    #--- output samples dataframe ---#
+    return(samples)
+
+
 }
+
+
