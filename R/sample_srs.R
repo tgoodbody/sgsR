@@ -77,6 +77,9 @@ sample_strat <- function(raster,
   if (!inherits(access, "SpatVector"))
     stop("'access' must be type SpatVector", call. = FALSE)
   
+  #--- determine crs of input raster ---#
+  crs <- crs(raster)
+  
   #--- if existing samples are provided ensure they are in the proper format ---#
   
   if (missing(existing)) {
@@ -112,20 +115,18 @@ sample_strat <- function(raster,
   
   toSample <- tallySamples(raster, ns)
   
-  #--- begin sampling ---#
+  #--- determine access buffers ---#
   
   for (i in 1:nrow(toSample)) {
     s <- as.numeric(toSample[i, 1])
     nsamp <- as.numeric(toSample[i, 2])
     
-    print(s)
+    print(paste0("Processing strata : ", s))
     
     if (nsamp > 0) {
       #--- mask for individual strata ---#
       
-      strata_m <-
-        terra::mask(
-          raster,
+      strata_m <-terra::mask(raster,
           mask = raster,
           maskvalues = s,
           inverse = TRUE
@@ -157,19 +158,19 @@ sample_strat <- function(raster,
         
         #--- make access buffer with user defined values ---#
         
-        buff_in <-
-          terra::buffer(x = roads,
+        buff_in <- terra::buffer(x = roads,
                         width = buff_inner,
                         capstyle = "round")
-        buff_out <-
-          terra::buffer(x = roads,
+        
+        buff_out <- terra::buffer(x = roads,
                         width = buff_outer,
                         capstyle = "round")
         
         #--- make difference and aggregate inner and outer buffers to prevent sampling too close to access ---#
         buffer <- aggregate(buff_out - buff_in)
         
-        strata_m_buff <- terra::mask(strata_m, mask = buffer)
+        strata_m_buff <- terra::mask(strata_m, 
+                                     mask = buffer)
         
         sampAvail <- sum(!is.na(values(strata_m_buff)))
         
@@ -325,24 +326,80 @@ sample_strat <- function(raster,
         #--- If add_strata is empty, sampled cell accepted ---#
         
         if (nrow(add_strata) == 0) {
+          
           add_strata <- add_temp[, c("x", "y", "strata", "rule", "type", extraCols)]
           
-          nCount = nCount + 1
+          nCount <-  nCount + 1
           
           #--- If add_strata isnt empty, check distance with all other sampled cells in strata ---#
         } else {
-          dist <-
-            crossdist(add_temp$x, add_temp$y , add_strata$x , add_strata$y)
+          
+          dist <- crossdist(add_temp$x, add_temp$y , add_strata$x , add_strata$y)
           
           #--- If all less than 'mindist' - accept sampled cell otherwise reject ---#
           if (all(as.numeric(dist) > mindist)) {
-            add_strata <-
-              rbind(add_strata, add_temp[, c("x", "y", "strata", "rule", "type", extraCols)])
-            nCount = nCount + 1
+            
+            add_strata <- rbind(add_strata, add_temp[, c("x", "y", "strata", "rule", "type", extraCols)])
+            
+            nCount <-  nCount + 1
             
           }
         }
       }
+      
+      #---- RULE 3 sampling ---#
+      
+      if (nCount < nsamp) {
+        
+        idx_all <- 1:ncell(strata_m)
+        idx_na <- is.na(terra::values(strata_m))
+        validCandidates <- idx_all[!idx_na]
+
+        while(length(validCandidates) > 0 & nCount < nsamp){
+          
+          #-- identify potential sample from candidates ---#
+          smp <- sample(1:length(validCandidates), size = 1)
+          
+          smp_cell <- validCandidates[smp]
+          
+          #--- extract coordinates and sample details ---#
+          
+          add_temp <- data.frame(
+            cell = smp_cell,
+            x = terra::xFromCell(strata_m, smp_cell),
+            y = terra::yFromCell(strata_m, smp_cell),
+            strata = validCandidates[smp_cell]
+          )
+          
+          #--- Remove sampled cell from validCandidates so that it cannot be sampled again later ---#
+          
+          validCandidates <- validCandidates[-smp]
+          
+          add_temp$rule <- "isolated"
+          add_temp$type <- "New"
+          add_temp[,extraCols] <- NA
+          add_temp$strata <- s
+          
+          if (nrow(add_strata) == 0) {
+            
+            add_strata <- add_temp[,c("x","y","strata","rule","type",extraCols)]
+            
+            nCount = nCount +1
+            
+          } else{
+            
+            dist <- crossdist(add_temp$x,add_temp$y,add_strata$x,add_strata$y)
+            
+            if( all(as.numeric(dist)>mindist )){
+              
+              add_strata <- rbind(add_strata, add_temp[,c("x","y","strata","rule","type",extraCols)])
+              nCount = nCount +1
+              
+            }
+          }
+        }
+      }
+      
     }
     
     # Create out object if first iteration of loop
@@ -354,5 +411,14 @@ sample_strat <- function(raster,
     }
     
   }
-  return(out)
+  
+  #--- convert coordinates to a spatial points object ---#
+  coords <- out %>%
+    as.data.frame() %>%
+    st_as_sf(., coords = c("x", "y"))
+  
+  #--- assign raster crs to spatial points object ---#
+  st_crs(coords) <- crs
+  
+  return(coords)
 }
