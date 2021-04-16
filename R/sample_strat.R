@@ -390,7 +390,7 @@ sample_strat <- function(raster,
   
   #--- plot input raster and random samples ---#
   terra::plot(raster[[1]])
-  suppressWarnings(terra::plot(samples, add = T))
+  suppressWarnings(terra::plot(samples, add = T, col = "black"))
   
   #--- output samples dataframe ---#
   return(samples)
