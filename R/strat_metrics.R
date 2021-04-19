@@ -15,6 +15,7 @@ strat_metrics <- function(raster,
                        plot = TRUE,
                        samp = 1){
 
+  #--- error handling ---#
   if (!inherits(raster,"SpatRaster"))
     stop("all specified bands must be type SpatRaster", call. = FALSE)
 

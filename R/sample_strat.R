@@ -10,7 +10,6 @@
 # wrow = Numeric. Number of row in the focal window (default is 3).
 # wcol = Numeric. Number of columns in the focal window (default is 3).
 
-
 sample_strat <- function(raster,
                          ns,
                          mindist,
@@ -43,34 +42,70 @@ sample_strat <- function(raster,
   
   #--- if existing samples are provided ensure they are in the proper format ---#
   
-  if (missing(existing)) {
-    #--- if existing samples do not exist make an empty dataframe called addSamples ---#
-    addSamples <- data.frame(strata = NA, x = NA, y = NA)
+  if (is.null(existing)) {
+    #--- if existing samples do not exist make an empty data.frame called addSamples ---#
+    addSamples <- data.frame(strata = NA, X = NA, Y = NA)
     extraCols <- character(0)
     
   } else {
-    #--- if existing samples do exist ensure proper naming convention ---#
     
-    if (!is(existing, "data.frame")) {
-      stop("existing_samples must be a data.frame")
+    #--- existing must be either a data.frame or an sf object with columns names 'X' 'Y' 'strata' ---#
+    
+    if (!inherits(existing, "data.frame") && !inherits(existing,"sf"))
+      stop("'existing' must be a data.frame or sf object")
+    
+    if (any(! c("strata") %in% names(existing)) )
+      stop("'existing' must have an attribute named 'strata'")
+    
+    if (inherits(existing,"sf") && inherits(sf::st_geometry(existing),"sfc_POINT")){
+      
+      #--- if existing is an sf object extract the coordinates and the strata vector ---#
+      
+      exist_xy <- st_coordinates(existing)
+      
+      strata <- existing$strata
+      
+      existing <- as.data.frame(cbind(strata, exist_xy))
+
       
     }
     
-    if (any(!c("strata", "x", "y") %in% colnames(existing))) {
-      stop("existing_samples must have columns named strata, x and y")
+    #--- if existing samples do exist ensure proper naming convention ---#
+    
+    if (any(! c("X", "Y") %in% colnames(existing)) ) {
+      
+      #--- if coordinate column names are lowercase change them to uppercase to match requirements ---#
+      
+      if (any(c("x", "y") %in% colnames(existing))) {
+        
+        existing <- existing %>%
+          rename(X = x,
+                 Y = y)
+        
+        message("'existing' column coordinate names are lowercase - converting to uppercase")
+        
+      } else {
+        
+        #--- if no x/y columns are present stop ---#  
+        
+        stop("'existing' must have columns named 'X' and 'Y'")
+        
+      }
+      
       
     }
     
     addSamples <- existing
-    extraCols <- colnames(existing)[!colnames(existing) %in% c("x", "y", "strata")]
+    
+  } 
+  
+    extraCols <- colnames(existing)[!colnames(existing) %in% c("X", "Y", "strata")]
     
     # Transform strata to numeric if factor
     if (is(addSamples$strata, "factor")) {
       addSamples$strata <- as.numeric(as.character(addSamples$strata))
       
     }
-    
-  }
   
   #--- determine number of samples for each strata ---#
   
@@ -87,7 +122,7 @@ sample_strat <- function(raster,
     if (nsamp > 0) {
       #--- mask for individual strata ---#
       
-      strata_m <-terra::mask(raster,
+      strata_m <- terra::mask(raster,
                              mask = raster,
                              maskvalues = s,
                              inverse = TRUE
@@ -135,6 +170,7 @@ sample_strat <- function(raster,
                                   capstyle = "round")
         
         #--- make difference and aggregate inner and outer buffers to prevent sampling too close to access ---#
+        
         buffer <- aggregate(buff_out - buff_in)
         
         strata_m_buff <- terra::mask(strata_m, 
@@ -160,8 +196,7 @@ sample_strat <- function(raster,
           
         } else {
           if (is.null(buff_extend))
-            stop(
-              "Insufficient candidate samples are within the buffer extent and 'buff_extend' is null. Supply a value to iterate increasing external buffers or increase 'buff_outer' value."
+            stop("Insufficient candidate samples are within the buffer extent and 'buff_extend' is null. Supply a value to iterate increasing external buffers or increase 'buff_outer' value."
             )
           
           counter <- 1
@@ -245,7 +280,7 @@ sample_strat <- function(raster,
       names(strata_m_clust) <- "strata"
       
       #--- Initiate number of sampled cells ---#
-      add_strata <- addSamples %>% 
+      add_strata <- addSamples %>%
         dplyr::filter(strata == s)
       
       if (nrow(add_strata) > 0) {
@@ -277,8 +312,8 @@ sample_strat <- function(raster,
         
         add_temp <- data.frame(
           cell = smp_cell,
-          x = terra::xFromCell(strata_m_clust, smp_cell),
-          y = terra::yFromCell(strata_m_clust, smp_cell),
+          X = terra::xFromCell(strata_m_clust, smp_cell),
+          Y = terra::yFromCell(strata_m_clust, smp_cell),
           strata = strata_m_clust[smp_cell]
         )
         
@@ -295,19 +330,19 @@ sample_strat <- function(raster,
         
         if (nrow(add_strata) == 0) {
           
-          add_strata <- add_temp[, c("x", "y", "strata", "rule", "type", extraCols)]
+          add_strata <- add_temp[, c("X", "Y", "strata", "type", "rule", extraCols)]
           
           nCount <-  nCount + 1
           
-          #--- If add_strata isnt empty, check distance with all other sampled cells in strata ---#
+          #--- If add_strata isn't empty, check distance with all other sampled cells in strata ---#
         } else {
           
-          dist <- crossdist(add_temp$x, add_temp$y , add_strata$x , add_strata$y)
+          dist <- crossdist(add_temp$X, add_temp$Y , add_strata$X , add_strata$Y)
           
           #--- If all less than 'mindist' - accept sampled cell otherwise reject ---#
           if (all(as.numeric(dist) > mindist)) {
             
-            add_strata <- rbind(add_strata, add_temp[, c("x", "y", "strata", "rule", "type", extraCols)])
+            add_strata <- rbind(add_strata, add_temp[, c("X", "Y", "strata", "type", "rule", extraCols)])
             
             nCount <-  nCount + 1
             
@@ -334,8 +369,8 @@ sample_strat <- function(raster,
           
           add_temp <- data.frame(
             cell = smp_cell,
-            x = terra::xFromCell(strata_m, smp_cell),
-            y = terra::yFromCell(strata_m, smp_cell),
+            X = terra::xFromCell(strata_m, smp_cell),
+            Y = terra::yFromCell(strata_m, smp_cell),
             strata = validCandidates[smp_cell]
           )
           
@@ -350,18 +385,19 @@ sample_strat <- function(raster,
           
           if (nrow(add_strata) == 0) {
             
-            add_strata <- add_temp[,c("x","y","strata","rule","type",extraCols)]
+            add_strata <- add_temp[,c("X","Y","strata","type","rule",extraCols)]
             
             nCount = nCount +1
             
-          } else{
+          } else {
             
-            dist <- crossdist(add_temp$x,add_temp$y,add_strata$x,add_strata$y)
+            dist <- crossdist(add_temp$X,add_temp$Y,add_strata$X,add_strata$Y)
             
-            if( all(as.numeric(dist)>mindist )){
+            if( all(as.numeric(dist) > mindist )){
               
-              add_strata <- rbind(add_strata, add_temp[,c("x","y","strata","rule","type",extraCols)])
-              nCount = nCount +1
+              add_strata <- rbind(add_strata, add_temp[,c("X","Y","strata","type","rule",extraCols)])
+              
+              nCount <-  nCount + 1
               
             }
           }
@@ -373,9 +409,13 @@ sample_strat <- function(raster,
     # Create out object if first iteration of loop
     # Else just rbind output with what has been processed in the loop
     if (i == 1) {
+      
       out <- add_strata
+      
     }else{
+      
       out <- rbind(out,add_strata)
+      
     }
     
   }
@@ -383,14 +423,14 @@ sample_strat <- function(raster,
   #--- convert coordinates to a spatial points object ---#
   samples <- out %>%
     as.data.frame() %>%
-    st_as_sf(., coords = c("x", "y"))
+    st_as_sf(., coords = c("X", "Y"))
   
   #--- assign raster crs to spatial points object ---#
   st_crs(samples) <- crs
   
   #--- plot input raster and random samples ---#
   terra::plot(raster[[1]])
-  suppressWarnings(terra::plot(samples, add = T, col = "black"))
+  suppressWarnings(terra::plot(samples, add = T, col = ifelse(samples$type=="Existing","Red","Black")),)
   
   #--- output samples dataframe ---#
   return(samples)

@@ -34,8 +34,8 @@ metrics <- strat_metrics(raster = raster, metric = "wal_5", metric2 = "wal_2", b
 
 #--- sampling without access defined---#
 
-srs_wo <- sample_srs(raster = raster,
-                  ns = 200,
+srs_wo <- sample_srs(raster = kmeans$raster,
+                  ns = 15,
                   mindist = 200)
 
 strat_wo <- sample_strat(raster = kmeans$raster,
@@ -48,8 +48,8 @@ srs_w <- sample_srs(raster = raster,
                   ns = 200,
                   mindist = 200,
                   access = roads,
-                  buff_inner = 200,
-                  buff_outer = 800)
+                  buff_inner = 50,
+                  buff_outer = 200)
 
 strat_w <- sample_strat(raster = pcomp$raster,
                       ns = 200, 
@@ -59,4 +59,21 @@ strat_w <- sample_strat(raster = pcomp$raster,
                       buff_outer = 200,
                       buff_extend = 100,
                       buff_max = 600)
+
+#--- extract strata from raster for already existing sample network ---#
+
+existing <- extract_existing(kmeans$raster,srs_wo)
+
+#--- sampling with access defined and existing samples ---#
+
+strat_w_e <- sample_strat(raster = kmeans$raster,
+                        ns = 200, 
+                        mindist = 200, 
+                        access = roads, 
+                        existing = existing,
+                        buff_inner = 50,
+                        buff_outer = 200,
+                        buff_extend = 100,
+                        buff_max = 600)
+
 
