@@ -49,7 +49,7 @@ strat_osb <- function(raster,
     message("'subset = TRUE' : taking 50% of available pixels to determine OSB")
 
     #--- Extract values from raster removing any NA/INF/NaN ---#
-    OSB <- perform_osb_sample(rastermetric, h - 1, n)
+    OSB <- perform_osb_sample(rastermetric, h, n)
 
   } else {
 
@@ -57,7 +57,7 @@ strat_osb <- function(raster,
       message("The raster you are using has over 100,000 cells. Consider using 'subset = TRUE' to improve processing times.")
 
     #--- Extract values from raster removing any NA/INF/NaN ---#
-    OSB <- perform_osb(rastermetric, h - 1, n)
+    OSB <- perform_osb(rastermetric, h, n)
 
   }
 
