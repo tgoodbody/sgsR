@@ -2,6 +2,7 @@
 # ns = Numeric. Number of desired samples.
 # mindist = Numeric. Minimum allowable distance between selected samples.
 # existing = data.frame or sf. Existing sample plot network. must have columns denoted X and Y.
+# include = Logical. Include existing samples in quantification of 'ns'. Default == FALSE.
 # access = spatVector. Road access network - must be lines.
 # buff_inner = Numeric. Inner buffer boundary specifying distance from access where plots cannot be sampled.
 # buff_outer = Numeric. Outer buffer boundary specifying distance from access where plots can be sampled.
@@ -18,6 +19,7 @@ sample_strat <- function(raster,
                          ns,
                          mindist,
                          existing = NULL,
+                         include = FALSE,
                          access = NULL,
                          buff_inner = NULL,
                          buff_outer = NULL,
@@ -28,6 +30,9 @@ sample_strat <- function(raster,
   #--- Error management ---#
   if (!inherits(raster, "SpatRaster"))
     stop("'raster' must be type SpatRaster", call. = FALSE)
+  
+  if (any(! c("strata") %in% names(raster)))
+    stop("'raster must have a layer named 'strata'")
   
   if (!is.numeric(mindist))
     stop("'mindist' must be type numeric")
@@ -41,12 +46,23 @@ sample_strat <- function(raster,
   if (!is.numeric(wcol))
     stop("'wcol' must be type numeric")
   
+  #--- if the raster has multiple bands subset the band named strata ---#
+  if(nlyr(raster) > 1){
+    
+    raster <- terra::subset(raster, "strata")
+    
+  }
+  
   #--- determine crs of input raster ---#
   crs <- crs(raster)
   
   #--- if existing samples are provided ensure they are in the proper format ---#
   
   if (is.null(existing)) {
+    
+    if (isTRUE(include))
+      stop("'existing' must be provided when 'include' == TRUE")
+    
     #--- if existing samples do not exist make an empty data.frame called addSamples ---#
     addSamples <- data.frame(strata = NA, X = NA, Y = NA)
     extraCols <- character(0)
@@ -112,8 +128,18 @@ sample_strat <- function(raster,
     }
   
   #--- determine number of samples for each strata ---#
+    
+  if (isTRUE(include)) {
+    message("'existing' samples being included in 'ns' calculation")
+    
+    toSample <- tallySamples(raster, ns, existing)
+    
+  } else {
+    
+    toSample <- tallySamples(raster,ns)
+    
+  }
   
-  toSample <- tallySamples(raster, ns)
   
   #--- determine access buffers ---#
   
@@ -298,10 +324,10 @@ sample_strat <- function(raster,
         dplyr::filter(strata == s)
       
       if (nrow(add_strata) > 0) {
-        add_strata$type <- "Existing"
+        add_strata$type <- "existing"
         
         if (!"rule" %in% colnames(add_strata)) {
-          add_strata$rule <- NA
+          add_strata$rule <- "existing"
           
         }
       }
@@ -336,7 +362,7 @@ sample_strat <- function(raster,
         validCandidates <- validCandidates[-smp]
         
         #--- populate add_temp with values ---#
-        add_temp$type <- "New"
+        add_temp$type <- "new"
         add_temp$rule <- "rule1"
         add_temp[, extraCols] <- NA
         
@@ -393,7 +419,7 @@ sample_strat <- function(raster,
           validCandidates <- validCandidates[-smp]
           
           add_temp$rule <- "isolated"
-          add_temp$type <- "New"
+          add_temp$type <- "new"
           add_temp[,extraCols] <- NA
           add_temp$strata <- s
           
@@ -449,8 +475,9 @@ sample_strat <- function(raster,
   st_crs(samples) <- crs
   
   #--- plot input raster and random samples ---#
-  terra::plot(raster[[1]])
-  suppressWarnings(terra::plot(samples, add = T, col = ifelse(samples$type=="Existing","Red","Black")),)
+  
+  terra::plot(raster)
+  suppressWarnings(terra::plot(samples, add = T, col = ifelse(samples$type=="existing","Red","Black")),)
   
   output <- list(sampleDist = toSample, samples = samples)
   

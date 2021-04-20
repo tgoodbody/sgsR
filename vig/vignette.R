@@ -71,11 +71,13 @@ existing <- extract_existing(raster,srs_wo)
 
 #--- sampling **with** access defined **and** existing samples defined ---#
 
+
 strat_w_e <- sample_strat(raster = raster,
                         ns = 200, 
                         mindist = 200, 
                         access = roads, 
                         existing = existing,
+                        include = TRUE, #include the existing samples provided in the value defined by 'ns'
                         buff_inner = 50,
                         buff_outer = 200,
                         buff_extend = 100,

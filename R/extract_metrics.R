@@ -2,7 +2,8 @@
 # samples = sf.  Samples resulting from sample_* functions.
 
 extract_metrics <- function(raster,
-                            samples){
+                            samples,
+                            data.frame = FALSE){
 
   #--- Error management ---#
   
@@ -18,17 +19,35 @@ extract_metrics <- function(raster,
   
   vals <- terra::extract(raster,xy)
   
+  #--- extract other attributes from sampling and remove geometry attribute ---#
+  
+  samp_mets <- as.data.frame(samples)
+  
+  samp_mets <-  dplyr::select(samp_mets, -geometry)
+  
   #--- bind values and coordinates ---#
-  samples <- cbind(xy, vals)
+  samples <- cbind(xy, samp_mets, vals)
   
-  #--- convert coordinates to a sf object ---#
-  samples <- samples %>%
-    as.data.frame() %>%
-    st_as_sf(., coords = c("X", "Y"))
-  
-  #--- assign raster crs to spatial points object ---#
-  st_crs(samples) <- crs(raster)
-  
-  samples
+  if (isTRUE(data.frame)) {
+    
+    #--- return data.frame ---#
+    return(samples)
+    
+  } else {
+    
+    #--- convert coordinates to a sf object ---#
+    
+    samples <- samples %>%
+      as.data.frame() %>%
+      st_as_sf(., coords = c("X", "Y"))
+    
+    #--- assign raster crs to spatial points object ---#
+    
+    st_crs(samples) <- crs(raster)
+    
+    #--- return sf object ---#
+    return(samples)
+    
+  }
 
 }

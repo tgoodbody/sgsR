@@ -69,7 +69,7 @@ extract_existing <- function(raster,
   
   #--- output either data.frame or sf object ---#
   
-  if (data.frame == TRUE) {
+  if (isTRUE(data.frame)) {
     
     #--- return data.frame ---#
     return(existing_strata)
