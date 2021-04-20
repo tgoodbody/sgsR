@@ -13,7 +13,7 @@
 
 # output is an list where:
 # $sampleDist is a data.frame of the distribution of samples and associate strata
-# $samples is sf object with 'ns' sampled points ( + 'existing' points is supplied)
+# $samples is sf object with 'ns' sampled points (+ 'existing' points if supplied)
 
 sample_strat <- function(raster,
                          ns,
