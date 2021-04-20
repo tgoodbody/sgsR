@@ -5,8 +5,9 @@
 # scale - Logical. Determines whether scaling of data should be conducted prior to k-means analysis.
 # plot = Logical. Plots output strata raster and visualized strata with boundary dividers.
 
-## output object is a list where `$kmeans` corresponds to all k-means analysis outputs and '$raster' is the output stratification spatRaster
-
+## output is a list where:
+#'$kmeans' is all principal component analysis data
+#'$raster' is the output stratification spatRaster
 
 strat_kmeans <- function(raster,
                          k,

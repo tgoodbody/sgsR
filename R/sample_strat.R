@@ -10,6 +10,10 @@
 # wrow = Numeric. Number of row in the focal window (default is 3).
 # wcol = Numeric. Number of columns in the focal window (default is 3).
 
+# output is an list where:
+# $sampleDist is a data.frame of the distribution of samples and associate strata
+# $samples is sf object with 'ns' sampled points ( + 'existing' points is supplied)
+
 sample_strat <- function(raster,
                          ns,
                          mindist,
@@ -115,11 +119,11 @@ sample_strat <- function(raster,
   
   for (i in 1:nrow(toSample)) {
     s <- as.numeric(toSample[i, 1])
-    nsamp <- as.numeric(toSample[i, 2])
+    nSamp <- as.numeric(toSample[i, 2])
     
     print(paste0("Processing strata : ", s))
     
-    if (nsamp > 0) {
+    if (nSamp > 0) {
       #--- mask for individual strata ---#
       
       strata_m <- terra::mask(raster,
@@ -178,13 +182,13 @@ sample_strat <- function(raster,
         
         sampAvail <- sum(!is.na(values(strata_m_buff)))
         
-        if (sampAvail > nsamp) {
+        if (sampAvail > nSamp) {
           message(
             paste0(
               "Buffered area contains ",
               sampAvail,
               " available  candidates. Sampling to reach ",
-              nsamp,
+              nSamp,
               " samples starting."
             )
           )
@@ -201,7 +205,7 @@ sample_strat <- function(raster,
           
           counter <- 1
           
-          while (sampAvail < nsamp) {
+          while (sampAvail < nSamp) {
             #--- extend buffer based on 'buff_extend' ---#
             buff_outer_n <- buff_outer + (buff_extend * counter)
             
@@ -236,7 +240,7 @@ sample_strat <- function(raster,
             sampAvail <- sum(!is.na(values(strata_m_buff)))
             
             #--- if number of  candidate samples > samples needed exit while loop and begin sampling ---#
-            if (sampAvail > nsamp) {
+            if (sampAvail > nSamp) {
               message(
                 paste0(
                   "External buffer of ",
@@ -244,7 +248,7 @@ sample_strat <- function(raster,
                   " m contains ",
                   sampAvail,
                   " available  candidates. Sampling to reach ",
-                  nsamp,
+                  nSamp,
                   " samples starting."
                 )
               )
@@ -302,7 +306,7 @@ sample_strat <- function(raster,
       nCount <- 0 #Number of sampled cells
       
       # While loop for RULE 1
-      while (length(validCandidates) > 0 & nCount < nsamp) {
+      while (length(validCandidates) > 0 & nCount < nSamp) {
         #-- identify potential sample from candidates ---#
         smp <- sample(1:length(validCandidates), size = 1)
         
@@ -352,13 +356,13 @@ sample_strat <- function(raster,
       
       #---- RULE 3 sampling ---#
       
-      if (nCount < nsamp) {
+      if (nCount < nSamp) {
         
         idx_all <- 1:ncell(strata_m)
         idx_na <- is.na(terra::values(strata_m))
         validCandidates <- idx_all[!idx_na]
         
-        while(length(validCandidates) > 0 & nCount < nsamp){
+        while(length(validCandidates) > 0 & nCount < nSamp){
           
           #-- identify potential sample from candidates ---#
           smp <- sample(1:length(validCandidates), size = 1)
@@ -387,7 +391,7 @@ sample_strat <- function(raster,
             
             add_strata <- add_temp[,c("X","Y","strata","type","rule",extraCols)]
             
-            nCount = nCount +1
+            nCount <- nCount + 1
             
           } else {
             
@@ -403,6 +407,12 @@ sample_strat <- function(raster,
           }
         }
       }
+     
+      if (nCount < nSamp){
+        
+        message(sprintf("Strata %s: couldn't select required number of samples: %i instead of %i \n", s , nCount , nSamp))
+      
+        }
       
     }
     
@@ -432,7 +442,9 @@ sample_strat <- function(raster,
   terra::plot(raster[[1]])
   suppressWarnings(terra::plot(samples, add = T, col = ifelse(samples$type=="Existing","Red","Black")),)
   
+  output <- list(sampleDist = toSample, samples = samples)
+  
   #--- output samples dataframe ---#
-  return(samples)
+  output
   
 }

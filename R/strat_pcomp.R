@@ -6,8 +6,9 @@
 # plot = Logical. Plots output strata raster and visualized strata with boundary dividers.
 # samp = Numeric. Determines proportion of cells to plot for strata visualization. Lower values reduce processing time.
 
-## output object contains all k-means data and the output stratification spatRaster - $raster
-
+## output is a list where:
+#'$pca' is all principal component analysis data
+#'$raster' is the output stratification spatRaster
 
 strat_pcomp <- function(raster,
                         ncp,

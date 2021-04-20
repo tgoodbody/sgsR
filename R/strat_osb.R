@@ -6,7 +6,9 @@
 # plot = Logical. Plots output strata raster and visualized strata with boundary dividers.
 # samp = Numeric. Determines proportion of cells to plot for strata visualization. Lower values reduce processing time.
 
-## output is a list where '$breaks' are the breaks defined by the OSB algorithm and '$raster' is the output stratification spatRaster
+## output is a list where:
+#'$breaks' are the breaks defined by the OSB algorithm
+#'$raster' is the output stratification spatRaster
 
 
 strat_osb <- function(raster,
@@ -64,13 +66,13 @@ strat_osb <- function(raster,
 
   #--- reclassify values based on breaks ---#
 
-  breaks <- data.frame(from=c(-Inf,OSB[[2]]$OSB)) %>%
+  breaks <- data.frame(from=c(-Inf,OSB[[2]]$OSB[1:(h-1)],Inf)) %>%
     mutate(to = lead(from),
            becomes = seq(1:length(from))) %>%
     na.omit() %>%
     as.matrix()
 
-  rcl <- terra::classify(rastermetric,breaks,include.lowest=TRUE)
+  rcl <- terra::classify(rastermetric,breaks)
   names(rcl) <- "strata"
 
   if (plot == TRUE){
@@ -102,7 +104,7 @@ strat_osb <- function(raster,
 
 }
 
-perform_osb_sample <- function(rastermetric,h,n){
+perform_osb_sample <- function(rastermetric, h, n){
   vals <- rastermetric %>%
     terra::values(dataframe=TRUE) %>%
     filter(complete.cases(.)) %>%
@@ -117,7 +119,7 @@ perform_osb_sample <- function(rastermetric,h,n){
   out
 }
 
-perform_osb <- function(rastermetric,h,n){
+perform_osb <- function(rastermetric, h, n){
   vals <- rastermetric %>%
     terra::values(dataframe=TRUE) %>%
     filter(complete.cases(.)) %>%

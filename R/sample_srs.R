@@ -5,6 +5,7 @@
 # buff_inner = Numeric. Inner buffer boundary specifying distance from access where plots cannot be sampled.
 # buff_outer = Numeric. Outer buffer boundary specifying distance from access where plots can be sampled.
 
+# output is an sf object with 'ns' randomly sampled points
 
 sample_srs <- function(raster,
                        ns,
