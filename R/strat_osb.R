@@ -1,15 +1,12 @@
 # raster = spatRaster. Multiband ALS metrics raster.
-# ncp = Character. Number of components to create.
-# b1 = Numeric. Number of desired strata for first principal component.
-# b2 = Numeric. Number of desired strata for second principal component.
-# scale - Logical. Determines whether centering and scaling of data should be conducted prior to principal component analysis.
+# nstrata = Numeric. Number of desired output strata.
+# n = Numeric. Number of desired samples - used within OSB algorithm to help determine break points.
+# subset - Logical. Determines whether a subset of data should be used to help determine break points
 # plot = Logical. Plots output strata raster and visualized strata with boundary dividers.
-# samp = Numeric. Determines proportion of cells to plot for strata visualization. Lower values reduce processing time.
 
 ## output is a list where:
 #'$breaks' are the breaks defined by the OSB algorithm
 #'$raster' is the output stratification spatRaster
-
 
 strat_osb <- function(raster,
                       metric,
@@ -52,7 +49,7 @@ strat_osb <- function(raster,
     message("'subset = TRUE' : taking 50% of available pixels to determine OSB")
 
     #--- Extract values from raster removing any NA/INF/NaN ---#
-    OSB <- perform_osb_sample(rastermetric, h, n)
+    OSB <- perform_osb_sample(rastermetric, h - 1, n)
 
   } else {
 
@@ -60,13 +57,13 @@ strat_osb <- function(raster,
       message("The raster you are using has over 100,000 cells. Consider using 'subset = TRUE' to improve processing times.")
 
     #--- Extract values from raster removing any NA/INF/NaN ---#
-    OSB <- perform_osb(rastermetric, h, n)
+    OSB <- perform_osb(rastermetric, h - 1, n)
 
   }
 
   #--- reclassify values based on breaks ---#
 
-  breaks <- data.frame(from=c(-Inf,OSB[[2]]$OSB[1:(h-1)],Inf)) %>%
+  breaks <- data.frame(from=c(-Inf,OSB[[2]]$OSB[1:(h - 1)],Inf)) %>%
     mutate(to = lead(from),
            becomes = seq(1:length(from))) %>%
     na.omit() %>%
