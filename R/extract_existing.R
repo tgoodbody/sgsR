@@ -1,6 +1,17 @@
-# raster = spatRaster. Stratification raster derived from sample_* functions.
-# existing = sf or data.frame.  Existing plot network to be included within sample_* functions
-# data.frame = Logical. If TRUE, the user receives a data.frame output instead of an sf object
+#' Extract raster cell values existing samples
+#' @family extract functions
+#'
+#' @inheritParams extract_metrics
+#' @param existing sf or data.frame.  Existing plot network to be included within sample_* functions
+#' 
+#' @return An sf or data.frame object with raster cell attributes
+#' 
+#' @examples 
+#' extract_existing(raster = raster, existing = existing)
+#' extract_existing(raster = raster, existing = existing, data.frame = TRUE)
+#' 
+#' @export
+
 
 extract_existing <- function(raster,
                             existing,

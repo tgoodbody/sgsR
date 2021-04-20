@@ -1,12 +1,18 @@
-# raster = spatRaster. Multiband ALS metrics raster.
-# nstrata = Numeric. Number of desired output strata.
-# n = Numeric. Number of desired samples - used within OSB algorithm to help determine break points.
-# subset - Logical. Determines whether a subset of data should be used to help determine break points
-# plot = Logical. Plots output strata raster and visualized strata with boundary dividers.
-
-## output is a list where:
-#'$breaks' are the breaks defined by the OSB algorithm
-#'$raster' is the output stratification spatRaster
+#' Stratify raster using optimum sample breaks algorithm
+#' @family stratify functions
+#'
+#' @inheritParams strat_kmeans
+#' @param raster spatRaster. Multiband ALS metrics raster.
+#' @param nstrata Numeric. Number of desired output strata.
+#' @param n Numeric. Number of desired samples - used within OSB algorithm to help determine break points.
+#' @param subset - Logical. Determines whether a subset of data should be used to help determine break points
+#'
+#' @return list where \code{breaks} are the breaks defined by the OSB algorithm and \code{raster} is the output stratification spatRaster
+#' 
+#' @examples 
+#' strat_osb(raster = raster, metric = "p99", h = 4, n = 200)
+#' 
+#' @export
 
 strat_osb <- function(raster,
                       metric,

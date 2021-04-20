@@ -1,19 +1,25 @@
-# raster = spatRaster. Single band stratification raster derived from strat_* functions.
-# ns = Numeric. Number of desired samples.
-# mindist = Numeric. Minimum allowable distance between selected samples.
-# existing = data.frame or sf. Existing sample plot network. must have columns denoted X and Y.
-# include = Logical. Include existing samples in quantification of 'ns'. Default == FALSE.
-# access = spatVector. Road access network - must be lines.
-# buff_inner = Numeric. Inner buffer boundary specifying distance from access where plots cannot be sampled.
-# buff_outer = Numeric. Outer buffer boundary specifying distance from access where plots can be sampled.
-# buff_extend = Numeric. Amount 'buff_outer' will be increased by if no valid sample candidates are available.
-# buff_max = Numeric. Maximum buffer distance resulting from increasing iterations of 'buff_outer' + 'buff_extend'.
-# wrow = Numeric. Number of row in the focal window (default is 3).
-# wcol = Numeric. Number of columns in the focal window (default is 3).
+#' Sampling based on a stratified raster
+#' @family sample functions
+#'
+#' @inheritParams sample_srs
+#' @param existing sf or data.frame.  Existing plot network 
+#' @param buff_extend Numeric. Amount \code{buff_outer} will be increased by if no valid sample candidates are available.
+#' @param buff_outer Numeric. Outer buffer boundary specifying distance from access where plots can be sampled.
+#' @param buff_max Numeric. Maximum buffer distance resulting from increasing iterations of \code{buff_outer} + \code{buff_extend}.
+#' @param wrow Numeric. Number of row in the focal window (default is 3).
+#' @param wcol Numeric. Number of columns in the focal window (default is 3).
+#' 
+#' @return list where \code{sampleDist} is a data.frame and \code{samples} is an sf object
+#' 
+#' @examples 
+#' sample_strat(raster = raster, ns = 200, mindist = 200)
+#' sample_strat(raster = raster, ns = 200, mindist = 200, access = roads, buff_inner = 50, buff_outer = 200)
+#' sample_strat(raster = raster, ns = 200, mindist = 200, access = roads, buff_inner = 50, buff_outer = 200, buff_extend = 100, buff_max = 800)
+#' 
+#' @export
 
-# output is an list where:
-# $sampleDist is a data.frame of the distribution of samples and associate strata
-# $samples is sf object with 'ns' sampled points (+ 'existing' points if supplied)
+
+# output is an 
 
 sample_strat <- function(raster,
                          ns,

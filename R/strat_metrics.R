@@ -1,11 +1,20 @@
-# raster = spatRaster. Multiband ALS metrics raster
-# metric = Character. Name of primary metric to stratify
-# metric2 = Character. Name of secondary metric to stratify
-# b = Numeric. Number of desired strata for metric
-# b2 = Numeric. Number of desired strata for metric2
-# plot = Logical. Plots output strata raster and visualized strata with boundary dividers
-# samp = Numeric. Determines proportion of cells to plot for strata visualization. Lower values reduce processing time.
-
+#' Stratify raster using metric quantiles
+#' @family stratify functions
+#'
+#' @inheritParams strat_kmeans
+#' @param metric Character. Name of primary metric to stratify
+#' @param metric2 Character. Name of secondary metric to stratify
+#' @param b Numeric. Number of desired strata for metric
+#' @param b2 Numeric. Number of desired strata for metric2
+#' @param samp Numeric. Determines proportion of cells to plot for strata visualization. Lower values reduce processing time.
+#'
+#' @return list where \code{kmeans} is all principal component analysis data and \code{raster} is the output stratification spatRaster
+#' 
+#' @examples 
+#' strat_metrics(raster = raster, metric = "p99", b = 4)
+#' strat_metrics(raster = raster, metric = "p99", metric2 = "stdev", b = 4, b2 = 3)
+#' 
+#' @export
 
 strat_metrics <- function(raster,
                        metric,

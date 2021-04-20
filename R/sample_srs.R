@@ -1,11 +1,20 @@
-# raster = spatRaster. Raster to be used for simple random sampling
-# ns = Numeric. Number of desired samples.
-# mindist = Numeric. Minimum allowable distance between selected samples.
-# access = sf. Road access network - must be lines.
-# buff_inner = Numeric. Inner buffer boundary specifying distance from access where plots cannot be sampled.
-# buff_outer = Numeric. Outer buffer boundary specifying distance from access where plots can be sampled.
-
-# output is an sf object with 'ns' randomly sampled points
+#' Randomly sample within a raster extent
+#' @family sample functions
+#'
+#' @param raster spatRaster. Raster to be used for simple random sampling
+#' @param ns Numeric. Number of desired samples.
+#' @param mindist Numeric. Minimum allowable distance between selected samples.
+#' @param access sf. Road access network - must be lines.
+#' @param buff_inner Numeric. Inner buffer boundary specifying distance from access where plots cannot be sampled.
+#' @param buff_outer Numeric. Outer buffer boundary specifying distance from access where plots can be sampled.
+#' 
+#' @return An sf object with 'ns' randomly sampled points
+#' 
+#' @examples 
+#' sample_srs(raster = raster, ns = 200, mindist = 200)
+#' sample_srs(raster = raster, ns = 200, mindist = 200, access = roads, buff_inner = 50, buff_outer = 200)
+#' 
+#' @export
 
 sample_srs <- function(raster,
                        ns,

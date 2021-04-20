@@ -1,14 +1,19 @@
-# raster = spatRaster. Multiband ALS metrics raster.
-# ncp = Character. Number of components to create.
-# b1 = Numeric. Number of desired strata for first principal component.
-# b2 = Numeric. Number of desired strata for second principal component.
-# scale - Logical. Determines whether centering and scaling of data should be conducted prior to principal component analysis.
-# plot = Logical. Plots output strata raster and visualized strata with boundary dividers.
-# samp = Numeric. Determines proportion of cells to plot for strata visualization. Lower values reduce processing time.
-
-## output is a list where:
-#'$pca' is all principal component analysis data
-#'$raster' is the output stratification spatRaster
+#' Stratify raster using principal components and quantile breaks
+#' @family stratify functions
+#'
+#' @inheritParams strat_metrics
+#' @param ncp Character. Number of components to create.
+#' @param b1 Numeric. Number of desired strata for first principal component.
+#' @param b2 Numeric. Number of desired strata for second principal component.
+#' @param scale Logical. Determines whether centering and scaling of data should be conducted prior to principal component analysis.
+#'
+#' @return list where \code{pca} is all principal component analysis data and \code{raster} is the output stratification spatRaster
+#' 
+#' @examples 
+#' strat_pcomp(raster = raster, ncp = 4, b1 = 4)
+#' strat_pcomp(raster = raster, ncp = 4, b1 = 4, b2 = 3)
+#' 
+#' @export
 
 strat_pcomp <- function(raster,
                         ncp,

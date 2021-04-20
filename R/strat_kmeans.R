@@ -1,13 +1,21 @@
-# raster = spatRaster. Multiband ALS metrics raster.
-# k = Character. Number of k-mean centers to calculate.
-# iter.max = Numeric. The maximum number of iterations allowed.
-# center - Logical. Determines whether centering of data should be conducted prior to k-means analysis.
-# scale - Logical. Determines whether scaling of data should be conducted prior to k-means analysis.
-# plot = Logical. Plots output strata raster and visualized strata with boundary dividers.
-
-## output is a list where:
-#'$kmeans' is all principal component analysis data
-#'$raster' is the output stratification spatRaster
+#' Stratify raster using k-means algorithm
+#' @family stratify functions
+#'
+#' @inheritParams sample_srs
+#' @param k Character. Number of k-mean centers to calculate.
+#' @param iter.max Numeric. The maximum number of iterations allowed.
+#' @param center Logical. Determines whether centering of data should be conducted prior to k-means analysis.
+#' @param scale Logical. Determines whether scaling of data should be conducted prior to k-means analysis.
+#' @param plot Logical. Plots output strata raster and visualized strata with boundary dividers.
+#' 
+#' @return list where \code{kmeans} is all principal component analysis data and \code{raster} is the output stratification spatRaster
+#' 
+#' @examples 
+#' strat_kmeans(raster = raster, k = 5)
+#' strat_kmeans(raster = raster, k = 5, algorithm = "MacQueen")
+#' strat_kmeans(raster = raster, k = 5, plot = FALSE)
+#' 
+#' @export
 
 strat_kmeans <- function(raster,
                          k,

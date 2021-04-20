@@ -1,5 +1,17 @@
-# raster = spatRaster. ALS metrics raster used to create the stratification rasters.
-# samples = sf.  Samples resulting from sample_* functions.
+#' Extract raster cell values to samples
+#' @family extract functions
+#'
+#' @inheritParams sample_srs
+#' @param samples sf. Samples resulting from sample_* functions.
+#' @param data.frame Logical. If true outputs as data.frame
+#' 
+#' @return An sf or data.frame object with raster cell attributes
+#' 
+#' @examples 
+#' extract_metrics(raster = raster, samples = samples)
+#' extract_metrics(raster = raster, samples = samples, data.frame = TRUE)
+#' 
+#' @export
 
 extract_metrics <- function(raster,
                             samples,
