@@ -1,7 +1,7 @@
 # raster = spatRaster. Raster to be used for simple random sampling
 # ns = Numeric. Number of desired samples.
 # mindist = Numeric. Minimum allowable distance between selected samples.
-# access = spatVector. Road access network - must be lines.
+# access = sf. Road access network - must be lines.
 # buff_inner = Numeric. Inner buffer boundary specifying distance from access where plots cannot be sampled.
 # buff_outer = Numeric. Outer buffer boundary specifying distance from access where plots can be sampled.
 
@@ -37,9 +37,9 @@ sample_srs <- function(raster,
 
   if (!is.null(access)) {
 
-    if (!inherits(access, "SpatVector"))
-      stop("'access' must be type SpatVector", call. = FALSE)
-
+    if (!inherits(access,"sf") && inherits(sf::st_geometry(access),"sfc_MULTILINESTRING"))
+      stop("'access' must be an 'sf' object of type 'sfc_MULTILINESTRING' geometry")
+    
     #--- list all buffers to catch NULL values within error handling ---#
     buffers <- list(buff_inner, buff_outer)
 
@@ -60,6 +60,9 @@ sample_srs <- function(raster,
       )
     )
 
+    #--- convert vectors to spatVector to synergize with terra raster functions---#
+    roads <- vect(roads)
+    
     #--- make access buffer with user defined values ---#
 
     buff_in <- terra::buffer(x = roads,

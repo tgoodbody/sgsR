@@ -117,6 +117,20 @@ sample_strat <- function(raster,
   
   #--- determine access buffers ---#
   
+  if (!missing(access)){
+    
+  #--- error handling in the presence of 'access' ---#
+    if (!inherits(access,"sf") && inherits(sf::st_geometry(access),"sfc_MULTILINESTRING"))
+      stop("'access' must be an 'sf' object of type 'sfc_MULTILINESTRING' geometry")
+      
+      #--- convert vectors to spatVector to synergize with terra raster functions---#
+      
+      access <- terra::vect(access)
+
+  }
+  
+  #--- Start of sampling function ---#
+  
   for (i in 1:nrow(toSample)) {
     s <- as.numeric(toSample[i, 1])
     nSamp <- as.numeric(toSample[i, 2])
@@ -136,10 +150,6 @@ sample_strat <- function(raster,
       #--- if access line polygon is specified create inner and outer buffers
       
       if (!is.null(access)) {
-        
-        #--- error handling in the presence of 'access' ---#
-        if (!inherits(access, "SpatVector"))
-          stop("'access' must be type SpatVector", call. = FALSE)
         
         if (any(buff_max < c(buff_inner, buff_outer)))
           stop("'buff_inner' must be < 'buff_outer' & 'buff_outer' must be < 'buff_max'")
@@ -165,11 +175,11 @@ sample_strat <- function(raster,
         
         #--- make access buffer with user defined values ---#
         
-        buff_in <- terra::buffer(x = roads,
+        buff_in <- terra::buffer(x = access,
                                  width = buff_inner,
                                  capstyle = "round")
         
-        buff_out <- terra::buffer(x = roads,
+        buff_out <- terra::buffer(x = access,
                                   width = buff_outer,
                                   capstyle = "round")
         
@@ -228,7 +238,7 @@ sample_strat <- function(raster,
             
             #--- recompute outer buffer with buffer extension ---#
             buff_out <-
-              terra::buffer(x = roads,
+              terra::buffer(x = access,
                             width = buff_outer_n,
                             capstyle = "round")
             

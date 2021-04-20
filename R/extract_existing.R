@@ -15,7 +15,7 @@ extract_existing <- function(raster,
     stop("'raster' must have a layer named 'strata'")
   
   if (!inherits(existing,"sf") && inherits(sf::st_geometry(existing),"sfc_POINT"))
-    stop("'sf' object must be of type 'sfc_POINT' geometry")
+    stop("'existing' must be an 'sf' object of type 'sfc_POINT' geometry")
   
   if (!is(existing, "data.frame"))
     stop("existing must be a data.frame")

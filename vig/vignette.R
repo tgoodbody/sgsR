@@ -5,21 +5,23 @@
 raster <- rast("C:/Users/goodb/Documents/UBC/post_doc/sgsR/vig/data/wall_metrics_small.tif")
 
 #--- import forest inventory polygon and mask unwanted areas ---#
-poly <- vect("C:/Users/goodb/Documents/UBC/post_doc/sgsR/vig/data/inventory_polygons.shp")
+poly <- st_read("C:/Users/goodb/Documents/UBC/post_doc/sgsR/vig/data/inventory_polygons.shp")
 
 poly_subset <- poly[poly$POLYTYPE == "FOR" & poly$OWNER == 1, ]
-poly_subset <- terra::aggregate(poly_subset,dissolve = TRUE)
+poly_subset <- st_union(poly_subset)
 
+poly_subset <- vect(poly_subset)
 #--- mask input ALS raster using polygon layer ---#
 
 wall_poly <- terra::mask(raster,poly_subset)
 
 #--- import access layer to be used during sampling if desired ---#
 
-roads <- vect("C:/Users/goodb/Documents/UBC/post_doc/sgsR/vig/data/roads.shp")
+roads <- st_read("C:/Users/goodb/Documents/UBC/post_doc/sgsR/vig/data/roads.shp")
 
 #--- perform stratification using k-means ---#
-kmeans <- strat_kmeans(raster = wall_poly, k = 8) ### note some values k dont seem to give the right output
+kmeans <- strat_kmeans(raster = wall_poly[[5]], k = 4) ### note some values of k dont seem to give the right output
+## maybe this is related to the raster layers?
 
 #--- perform stratification using OSB ---#
 #--- note that this one can take a while ---#
@@ -32,7 +34,7 @@ pcomp <- strat_pcomp(raster = wall_poly, ncp = 2, b1 = 4, b2 = 3) # should integ
 metrics <- strat_metrics(raster = wall_poly, metric = "wal_5", metric2 = "wal_2", b = 10, b2 = 5)
 
 #--- define desired stratification raster ---#
-raster <- osb$raster
+raster <- kmeans$raster
 
 #--- sampling **without** access defined---#
 
