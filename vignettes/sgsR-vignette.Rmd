@@ -1,3 +1,12 @@
+---
+title: "sgsR-vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{sgsR-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
 ### sgsR vignette ###
 
 #--- import ALS metrics raster ---#
