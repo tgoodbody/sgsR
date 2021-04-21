@@ -1,6 +1,4 @@
-# sgsR
-
-Implementation of structurally guided sampling using ALS metrics.
+# sgsR - structurally guided sampling using ALS metrics
 
 Development of sgsR was made possible thanks to the financial support of _______________________.
 
