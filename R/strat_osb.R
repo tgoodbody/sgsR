@@ -17,7 +17,7 @@ strat_osb <- function(raster,
                       h,
                       n,
                       subset = TRUE,
-                      plot = TRUE)
+                      plot = FALSE)
 
 {
   #--- Error management ---#

@@ -19,7 +19,7 @@ strat_kmeans <- function(raster,
                          algorithm = "Lloyd",
                          center = TRUE,
                          scale = TRUE,
-                         plot = TRUE
+                         plot = FALSE
 )
 {
 

@@ -14,12 +14,9 @@
 #' 
 #' @export
 
-
-# output is an 
-
 sample_strat <- function(raster,
                          ns,
-                         mindist,
+                         mindist = 100,
                          existing = NULL,
                          include = FALSE,
                          access = NULL,

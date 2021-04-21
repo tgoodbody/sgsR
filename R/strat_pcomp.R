@@ -2,7 +2,6 @@
 #' @family stratify functions
 #'
 #' @inheritParams strat_metrics
-#' @param ncp Character. Number of components to create.
 #' @param b1 Numeric. Number of desired strata for first principal component.
 #' @param b2 Numeric. Number of desired strata for second principal component.
 #' @param scale Logical. Determines whether centering and scaling of data should be conducted prior to principal component analysis.
@@ -12,20 +11,16 @@
 #' @export
 
 strat_pcomp <- function(raster,
-                        ncp,
                         b1,
                         b2 = NULL,
                         scale = TRUE,
-                        plot = TRUE,
+                        plot = FALSE,
                         samp = 1)
   
 {
   #--- Error management ---#
   if (!inherits(raster,"SpatRaster"))
     stop("raster must be type SpatRaster", call. = FALSE)
-  
-  if (!is.numeric(ncp))
-    stop("'ncp' must be type numeric")
   
   if (!is.numeric(b1))
     stop("'b1' must be type numeric")
@@ -52,7 +47,7 @@ strat_pcomp <- function(raster,
     if ( is.null(b2) ){
       
       #--- perform PCA using rasterPCA -- requires conversion to raster* format ---#
-      pca <- suppressWarnings(FactoMineR::PCA(vals, ncp = ncp, scale.unit = TRUE,graph = FALSE))
+      pca <- suppressWarnings(FactoMineR::PCA(vals, ncp = 2, scale.unit = TRUE, graph = FALSE))
       
       ########################################################
       ### WHICH PRINCIPAL COMPONENT METHOD SHOULD BE USED? ###
@@ -79,7 +74,7 @@ strat_pcomp <- function(raster,
         stop("'b2' must be type numeric")
       
       #--- perform PCA using rasterPCA -- requires conversion to raster* format ---#
-      pca <- suppressWarnings(FactoMineR::PCA(vals, ncp = ncp, scale.unit = TRUE,graph = FALSE))
+      pca <- suppressWarnings(FactoMineR::PCA(vals, ncp = 2, scale.unit = TRUE, graph = FALSE))
       
       ########################################################
       ### WHICH PRINCIPAL COMPONENT METHOD SHOULD BE USED? ###
@@ -115,7 +110,7 @@ strat_pcomp <- function(raster,
     if ( is.null(b2) ){
       
       #--- perform PCA using rasterPCA -- requires conversion to raster* format ---#
-      pca <- suppressWarnings(FactoMineR::PCA(vals, ncp = ncp, scale.unit = FALSE,graph = FALSE))
+      pca <- suppressWarnings(FactoMineR::PCA(vals, ncp = 2, scale.unit = FALSE, graph = FALSE))
       
       ########################################################
       ### WHICH PRINCIPAL COMPONENT METHOD SHOULD BE USED? ###
@@ -142,7 +137,7 @@ strat_pcomp <- function(raster,
         stop("'b2' must be type numeric")
       
       #--- perform PCA using rasterPCA -- requires conversion to raster* format ---#
-      pca <- suppressWarnings(FactoMineR::PCA(vals, ncp = ncp, scale.unit = FALSE,graph = FALSE))
+      pca <- suppressWarnings(FactoMineR::PCA(vals, ncp = 2, scale.unit = FALSE, graph = FALSE))
       
       ########################################################
       ### WHICH PRINCIPAL COMPONENT METHOD SHOULD BE USED? ###

@@ -17,7 +17,7 @@ strat_metrics <- function(raster,
                        metric2 = NULL,
                        b,
                        b2 = NULL,
-                       plot = TRUE,
+                       plot = FALSE,
                        samp = 1){
 
   #--- error handling ---#

@@ -3,7 +3,7 @@
 #'
 #' @param raster spatRaster. Raster to be used for simple random sampling
 #' @param ns Numeric. Number of desired samples.
-#' @param mindist Numeric. Minimum allowable distance between selected samples.
+#' @param mindist Numeric. Minimum allowable distance between selected samples. Default = 100.
 #' @param access sf. Road access network - must be lines.
 #' @param buff_inner Numeric. Inner buffer boundary specifying distance from access where plots cannot be sampled.
 #' @param buff_outer Numeric. Outer buffer boundary specifying distance from access where plots can be sampled.
@@ -14,7 +14,7 @@
 
 sample_srs <- function(raster,
                        ns,
-                       mindist,
+                       mindist = 100,
                        access = NULL,
                        buff_inner = NULL,
                        buff_outer = NULL) {
