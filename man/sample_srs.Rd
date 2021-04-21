@@ -2,35 +2,38 @@
 % Please edit documentation in R/sample_srs.R
 \name{sample_srs}
 \alias{sample_srs}
-\title{Randomly sample within a raster extent}
+\title{Randomly sample within a stratification raster extent.}
 \usage{
 sample_srs(
-  raster,
-  ns,
-  mindist,
+  sraster,
+  n,
+  mindist = 100,
   access = NULL,
   buff_inner = NULL,
-  buff_outer = NULL
+  buff_outer = NULL,
+  plot = FALSE
 )
 }
 \arguments{
-\item{raster}{spatRaster. Raster to be used for simple random sampling}
+\item{sraster}{spatRaster. Stratification raster to be used for sampling.}
 
-\item{ns}{Numeric. Number of desired samples.}
+\item{n}{Numeric. Number of desired samples.}
 
-\item{mindist}{Numeric. Minimum allowable distance between selected samples.}
+\item{mindist}{Numeric. Minimum allowable distance between selected samples. Default = 100.}
 
 \item{access}{sf. Road access network - must be lines.}
 
 \item{buff_inner}{Numeric. Inner buffer boundary specifying distance from access where plots cannot be sampled.}
 
 \item{buff_outer}{Numeric. Outer buffer boundary specifying distance from access where plots can be sampled.}
+
+\item{plot}{Logical. Plots output strata raster with samples.}
 }
 \value{
-An sf object with 'ns' randomly sampled points
+An sf object with \code{n} randomly sampled points.
 }
 \description{
-Randomly sample within a raster extent
+Randomly sample within a stratification raster extent.
 }
 \seealso{
 Other sample functions: 

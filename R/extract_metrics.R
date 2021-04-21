@@ -1,22 +1,22 @@
-#' Extract raster cell values to samples
+#' Extract metric raster attributes to samples
 #' @family extract functions
 #'
-#' @param raster spatRaster. Multiband ALS metrics raster.
+#' @inheritParams  sample_srs
 #' @param samples sf. Samples resulting from sample_* functions.
 #' @param data.frame Logical. If true outputs as data.frame
 #' 
-#' @return An sf or data.frame object with raster cell attributes
+#' @return An sf or data.frame object of samples with associated raster cell attributes
 #' 
 #' @export
 
-extract_metrics <- function(raster,
+extract_metrics <- function(sraster,
                             samples,
                             data.frame = FALSE){
 
   #--- Error management ---#
   
-  if (!inherits(raster, "SpatRaster"))
-    stop("'raster' must be type SpatRaster", call. = FALSE)
+  if (!inherits(sraster, "SpatRaster"))
+    stop("'sraster' must be type SpatRaster", call. = FALSE)
   
   if (!inherits(samples, "sf"))
     stop("'samples' must be an 'sf' object", call. = FALSE)
@@ -25,7 +25,7 @@ extract_metrics <- function(raster,
   
   xy <- st_coordinates(samples)
   
-  vals <- terra::extract(raster,xy)
+  vals <- terra::extract(sraster,xy)
   
   #--- extract other attributes from sampling and remove geometry attribute ---#
   
@@ -49,9 +49,9 @@ extract_metrics <- function(raster,
       as.data.frame() %>%
       st_as_sf(., coords = c("X", "Y"))
     
-    #--- assign raster crs to spatial points object ---#
+    #--- assign sraster crs to spatial points object ---#
     
-    st_crs(samples) <- crs(raster)
+    st_crs(samples) <- crs(sraster)
     
     #--- return sf object ---#
     return(samples)

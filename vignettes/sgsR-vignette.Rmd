@@ -10,9 +10,13 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r, echo=FALSE, eval = FALSE}
+knitr::opts_chunk$set(error = TRUE)
+```
+
 ### sgsR vignette
 
-```{r, eval=F}
+```{r message=FALSE, warning=FALSE}
 library(sgsR)
 library(terra)
 library(sf)
@@ -24,13 +28,28 @@ library(spatstat)
 
 ```
 
-```{r,eval=F}
+```{r}
 #--- import ALS metrics raster ---#
 
-raster <- terra::rast(system.file("extdata", "wall_metrics_small.tif", package = "sgsR"))
+raster <- "C:/Users/goodb/Documents/UBC/post_doc/sgsR/inst/extdata/wall_metrics_small.tif"
+
+raster <- terra::rast(raster)
+
+poly <- "C:/Users/goodb/Documents/UBC/post_doc/sgsR/inst/extdata/inventory_polygons.shp"
 
 #--- import forest inventory polygon and mask unwanted areas ---#
-poly <- sf::st_read(system.file("extdata", "inventory_polygons.shp", package = "sgsR"))
+poly <- sf::st_read(poly)
+
+#--- import access layer to be used during sampling if desired ---#
+
+roads <- "C:/Users/goodb/Documents/UBC/post_doc/sgsR/inst/extdata/roads.shp"
+
+roads <- sf::st_read(roads)
+
+```
+
+```{r}
+#--- manipulate inventory polygon to mask out unwanted areas ---#
 
 poly_subset <- poly[poly$POLYTYPE == "FOR" & poly$OWNER == 1, ]
 poly_subset <- sf::st_union(poly_subset)
@@ -42,91 +61,267 @@ poly_subset <- terra::vect(poly_subset)
 wall_poly <- terra::mask(raster,
                          poly_subset)
 
-#--- import access layer to be used during sampling if desired ---#
+plot(wall_poly[[1:2]])
 
-roads <- st_read(system.file("extdata", "roads.shp", package = "sgsR"))
+```
 
+## Stratification Methods
+
+### k-means stratification
+```{r}
 #--- perform stratification using k-means ---#
-kmeans <- strat_kmeans(raster = wall_poly[[5]], 
-                       k = 4) ### note some values of k dont seem to give the right output
-## maybe this is related to the raster layers?
+kmeans <- strat_kmeans(mraster = wall_poly[[1]], nstrata = 4)
 
+plot(kmeans)
+
+#--- set 'details' = TRUE to get algorithm details and outputs ---#
+
+```
+
+### Optimum sample breaks
+
+```{r,eval=FALSE}
 #--- perform stratification using OSB ---#
 #--- note that this one can take a while ---#
-# osb <- strat_osb(raster = wall_poly, 
-#                  metric = "wal_5", 
-#                  h = 4, 
-#                  n = 100) # should integrate functionality to do 2 metrics concurrently and create unique strata
 
-#--- perform stratification using principal components ---#
-pcomp <- strat_pcomp(raster = wall_poly, 
-                     ncp = 2, 
-                     b1 = 4, 
-                     b2 = 3) # should integrate functionality to allow users to define strata based on more than just PC1 and PC2
+osb <- strat_osb(mraster = wall_poly,
+                 metric = "wal_5",
+                 nstrata = 4,
+                 n = 100,
+                 details = TRUE)
 
-#--- perform stratification using individual metrics ---#
-metrics <- strat_metrics(raster = wall_poly, 
+plot(osb$raster)
+
+osb$details
+
+```
+
+### Principal components analysis
+```{r}
+
+#--- perform stratification using principal components on P1 only ---#
+pcomp1 <- strat_pcomp(mraster = wall_poly,
+                     nstrata = 4)
+
+plot(pcomp1)
+```
+
+```{r}
+
+#--- perform stratification using principal components on P1 and P2 ---#
+pcomp2 <- strat_pcomp(mraster = wall_poly,
+                     nstrata = 4, 
+                     nstrata2 = 3)
+
+#--- number of output strata will always be equal to ---#
+#--- 'nstrata' * 'nstrata2' (if 'nstrata2' is provided) ---#
+
+plot(pcomp2)
+
+#--- set 'details' = TRUE to get algorithm details and outputs ---#
+
+```
+
+### Metric values stratification
+```{r}
+
+#--- perform stratification using an individual metric ---#
+#--- if no 'metric' name defined and raster is 1 layer - automatically uses only available layer ---#
+metrics1 <- strat_metrics(mraster = wall_poly[[1]], 
+                         nstrata = 5)
+
+plot(metrics1)
+
+```
+
+```{r}
+#--- perform stratification using an individual metric ---#
+metrics2 <- strat_metrics(mraster = wall_poly, 
+                         metric = "wal_5", 
+                         nstrata = 10)
+
+plot(metrics2)
+
+```
+
+```{r}
+
+#--- perform stratification using 2 metrics metrics ---#
+metrics3 <- strat_metrics(mraster = wall_poly, 
                          metric = "wal_5", 
                          metric2 = "wal_2", 
-                         b = 10, 
-                         b2 = 5)
+                         nstrata = 10, 
+                         nstrata2 = 5)
+
+plot(metrics3)
+
+#--- number of output strata will always be equal to ---#
+#--- 'nstrata' * 'nstrata2' (if 'nstrata2' is provided) ---#
+
+```
+
+## Sampling
+### Simple random sampling (SRS)
+```{r}
 
 #--- define desired stratification raster ---#
-raster <- kmeans$raster
+sraster <- kmeans
 
-#--- sampling **without** access defined---#
+#--- SRS **without** access defined---#
 
-srs_wo <- sample_srs(raster = raster,
-                  ns = 50,
-                  mindist = 200)
+#--- 'mindist' between samples defaults to 100 ---#
+srs_wo <- sample_srs(sraster = sraster,
+                  n = 50,
+                  plot = TRUE)
 
-strat_wo <- sample_strat(raster = raster,
-                      ns = 50, 
-                      mindist = 200)
+```
+
+```{r}
+
+#--- increase desired samples and mindist parameter ---#
+srs_md <- sample_srs(sraster = sraster,
+                     n = 300, 
+                     mindist = 400,
+                     plot = TRUE)
+
+```
+
+### SRS with access defined
+```{r}
 
 #--- sampling **with** access defined---#
 
-srs_w <- sample_srs(raster = raster,
-                  ns = 200,
+#--- we want 200 samples with 200m min distance between each ---#
+#--- we also provide an `access` polygon, which is linear road features ---#
+#--- we specify we want an internal buffer ('buff_inner') of 50 ---#
+#--- we also speficy we want an external buffer ('buff_outer') of 200 ---#
+
+srs_w <- sample_srs(sraster = sraster,
+                  n = 200,
                   mindist = 200,
                   access = roads,
                   buff_inner = 50,
-                  buff_outer = 200)
+                  buff_outer = 200,
+                  plot = TRUE)
 
-strat_w <- sample_strat(raster = raster,
-                      ns = 200, 
-                      mindist = 200, 
-                      access = roads, 
-                      buff_inner = 50,
-                      buff_outer = 200,
-                      buff_extend = 100,
-                      buff_max = 600)
+
+```
+
+### Stratified sampling
+```{r}
+
+#--- stratified sampling **without** access defined---#
+
+#--- 'mindist' between samples defaults to 100 ---#
+strat_wo <- sample_strat(sraster = sraster, 
+                         n = 200,
+                         plot = TRUE)
+
+```
+
+```{r}
+#--- change mindist parameter ---#
+strat_md <- sample_strat(sraster = sraster,
+                      n = 200, 
+                      mindist = 200,
+                      plot = TRUE)
+
+```
+
+```{r}
+
+#--- stratified sampling with access and buffers provided ---#
+strat_w_a <- sample_strat(sraster = sraster,
+                        n = 200, 
+                        mindist = 200,
+                        access = roads,
+                        buff_inner = 50,
+                        buff_outer = 200,
+                        plot = TRUE)
+```
+
+## Incorporating existing sample networks
+
+```{r}
 
 #--- extract strata from raster for already existing sample network ---#
 #--- we use random samples defined above ---#
 
-existing <- extract_existing(raster,
-                             srs_wo)
+existing <- extract_existing(sraster = sraster,
+                             existing = srs_wo)
+
+existing
+
+#--- if 'data.frame = TRUE -- output will be a dataframe instead of an sf object ---#
+
+```
+
+### Stratified sampling in presense of existing plot networks
+```{r}
+#--- sampling **with** access defined **and** existing samples defined ---#
+
+#--- we want 200 samples with 200m min distance between each ---#
+#--- we specify we have an existing plot network to include in our sampling ---#
+#--- we also provide an `access` polygon, which is linear road features ---#
+#--- we specify we want an internal buffer ('buff_inner') of 50 ---#
+#--- we also specify we want an external buffer ('buff_outer') of 200 ---#
+
+
+strat_w_e <- sample_strat(sraster = sraster,
+                        n = 200, 
+                        mindist = 200,
+                        existing = existing,
+                        access = roads,
+                        buff_inner = 50,
+                        buff_outer = 200,
+                        plot = TRUE)
+
+#--- red plots are existing and black are new ---#
+
+#--- how many samples did we get total? ---#
+strat_w_e
+
+```
+
+Notice that we specified that we wanted 200 samples but we get 250. That's because the existing samples were not included within the `n` parameter total. To include the existing samples within the context of ther strata we can set `include = TRUE` and we will get the value of `n` we specify with all `existing` samples included.
+
+```{r}
 
 #--- sampling **with** access defined **and** existing samples defined ---#
 
+#--- we want 200 samples with 200m min distance between each ---#
+#--- we specify we have an existing plot network to include in our sampling ---#
+#--- we also provide an `access` polygon, which is linear road features ---#
+#--- we specify we want an internal buffer ('buff_inner') of 50 ---#
+#--- we also specify we want an external buffer ('buff_outer') of 200 ---#
 
-strat_w_e <- sample_strat(raster = raster,
-                        ns = 200, 
-                        mindist = 200, 
-                        access = roads, 
+
+strat_w_e_i <- sample_strat(sraster = sraster,
+                        n = 200, 
+                        mindist = 200,
                         existing = existing,
-                        include = TRUE, #include the existing samples provided in the value defined by 'ns'
+                        include = TRUE, #--- including our existing plots to reach 200 samples ---#
+                        access = roads,
                         buff_inner = 50,
                         buff_outer = 200,
-                        buff_extend = 100,
-                        buff_max = 600)
+                        plot = TRUE)
 
+
+#--- how many samples did we get total? ---#
+strat_w_e_i
+
+```
+
+## Extract als metrics from samples for future modelling
+```{r}
 #--- extract metrics from multi-band ALS raster for potential modeling ---#
 
-metrics <- extract_metrics(wall_poly,
-                           strat_w_e$samples)
+metrics <- extract_metrics(sraster = wall_poly,
+                           samples = strat_w_e_i)
 
+metrics
+
+#--- if 'data.frame = TRUE -- output will be a dataframe instead of an sf object ---#
 
 ```
 

@@ -1,55 +1,80 @@
-#' Stratify raster using metric quantiles
+#' Stratify metric raster using metric quantiles.
 #' @family stratify functions
 #'
 #' @inheritParams strat_kmeans
-#' @param metric Character. Name of primary metric to stratify
-#' @param metric2 Character. Name of secondary metric to stratify
-#' @param b Numeric. Number of desired strata for metric
-#' @param b2 Numeric. Number of desired strata for metric2
+#' @param metric Character. Name of primary metric to stratify. If \code{mraster} is has 1 layer it is take as default.
+#' @param metric2 Character. Name of secondary metric to stratify.
+#' @param nstrata2 Numeric.  Number of secondary strata within \code{nstrata}.
 #' @param samp Numeric. Determines proportion of cells to plot for strata visualization. Lower values reduce processing time.
 #'
-#' @return list where \code{kmeans} is all principal component analysis data and \code{raster} is the output stratification spatRaster
+#' @return output stratification \code{spatRaster}
 #' 
 #' @export
 
-strat_metrics <- function(raster,
-                       metric,
+strat_metrics <- function(mraster,
+                       metric = NULL,
                        metric2 = NULL,
-                       b,
-                       b2 = NULL,
+                       nstrata,
+                       nstrata2 = NULL,
                        plot = FALSE,
-                       samp = 1){
+                       samp = 1,
+                       details = FALSE){
 
   #--- error handling ---#
-  if (!inherits(raster,"SpatRaster"))
+  if (!inherits(mraster,"SpatRaster"))
     stop("all specified bands must be type SpatRaster", call. = FALSE)
 
-  if (!is.character(metric))
-    stop("'metric' must be type character")
-
-  if (!is.numeric(b))
-    stop("'b' must be type numeric")
+  if (!is.numeric(nstrata))
+    stop("'nstrata' must be type numeric")
 
   if (!is.logical(plot))
     stop("'plot' must be type logical")
   
   if (!is.numeric(samp))
     stop("'samp' must be type numeric")
+  
+  if (!is.logical(details))
+    stop("'details' must be type logical")
 
   if (is.null(metric2)){
-    if (!is.null(b2))
-      message("You are stratifying with only 1 metric but specified 'b2' - ignoring.")
-
-    #--- Extract values from raster ---#
-    vals <- terra::subset(raster,metric) %>%
-      terra::values()
+    if (!is.null(nstrata2))
+      message("You are stratifying with only 1 metric but specified 'nstrata2' - ignoring.")
+    
+  #--- if there is only 1 metric in the raster use it as default ---#
+  
+    if (terra::nlyr(mraster) == 1){
+      
+      #--- Extract values from mraster ---#
+      
+      vals <- terra::values(mraster)  
+      
+      #--- set name of raster band to 'metric' ---#
+      
+      metric <- names(mraster)
+      
+    } else {
+      
+      if (is.null(metric))
+        stop(" multiple layers detected in 'mraster'. Please define a 'metric' to stratify")
+      
+      if (!is.character(metric))
+        stop("'metric' must be type character")
+      
+      #--- Extract values from mraster ---#
+      
+      vals <- terra::subset(mraster,metric) %>%
+        terra::values()
+      
+    }
 
     vals[!is.finite(vals)] <- NA
 
     #--- Determine index of each cell so to map values correctly without NA ---#
+    
     idx <- !is.na(vals)
 
     #--- Remove NA / NaN / Inf values ---#
+    
     df <- vals %>%
       as.data.frame() %>%
       filter(!is.na(.))
@@ -57,14 +82,17 @@ strat_metrics <- function(raster,
     metric <- ensym(metric)
 
     #--- Split metric distribution in to number specified by 'breaks' ---#
+    
     dfc <- df %>%
-      mutate(class = ntile(!!metric,b))
+      mutate(class = ntile(!!metric,nstrata))
 
-    #--- convert back to original raster extent ---#
+    #--- convert back to original mraster extent ---#
+    
     vals[idx] <- dfc$class
 
     #--- set newly stratified values ---#
-    rout <- terra::setValues(raster[[1]],vals)
+    
+    rout <- terra::setValues(mraster[[1]],vals)
     names(rout) <- "strata"
 
   }
@@ -74,19 +102,22 @@ strat_metrics <- function(raster,
     if (!is.character(metric2))
       stop("'metric2' must be type character")
 
-    if (is.null(b2))
-      stop("If using 2 metrics to stratify, 'b2' must be defined")
+    if (is.null(nstrata2))
+      stop("If using 2 metrics to stratify, 'nstrata2' must be defined")
 
-    #--- Extract values from raster ---#
-    vals <- terra::subset(raster,c(metric,metric2)) %>%
+    #--- Extract values from mraster ---#
+    
+    vals <- terra::subset(mraster,c(metric,metric2)) %>%
       terra::values()
     
     vals[!is.finite(vals)] <- NA
 
     #--- Determine index of each cell so to map values correctly without NA ---#
+    
     idx <- is.finite(vals[,1]) & is.finite(vals[,2])
 
     #--- Remove NA / NaN / Inf values ---#
+    
     df <- vals %>%
       as.data.frame() %>%
       filter(!is.na(.))
@@ -95,31 +126,35 @@ strat_metrics <- function(raster,
     metric2 <- ensym(metric2)
 
     #--- Split metric distribution in to number specified by 'breaks' ---#
+    
     dfc <- df %>%
-      #--- define b classes ---#
-      mutate(class1 = ntile(!!metric,b)) %>%
+      #--- define nstrata classes ---#
+      mutate(class1 = ntile(!!metric,nstrata)) %>%
       #--- group by class to sub stratify ---#
       group_by(class1) %>%
-      #--- define b2 classes ---#
-      mutate(class2 = ntile(!!metric2,b2)) %>%
+      #--- define nstrata2 classes ---#
+      mutate(class2 = ntile(!!metric2,nstrata2)) %>%
       #--- combine classes ---#
       group_by(class1,class2) %>%
       #--- establish newly formed unique class ---#
       mutate(class = cur_group_id())
 
-    #--- convert back to original raster extent ---#
+    #--- convert back to original mraster extent ---#
+    
     vals[,1][idx] <- dfc$class
 
     #--- set newly stratified values ---#
-    rout <- terra::setValues(raster[[1]],vals[,1])
+    
+    rout <- terra::setValues(mraster[[1]],vals[,1])
     names(rout) <- "strata"
 
-    if (plot == TRUE){
+    if (isTRUE(plot)){
       if (samp > 1 | samp < 0)
-        stop("'samp' must be > 0 & <= 1")
+        stop("'samp' must be between 0 and 1")
 
       #--- set up colour palette ---#
-      ncol <- b * b2
+      
+      ncol <- nstrata * nstrata2
       qual_col_pals = brewer.pal.info[brewer.pal.info$category == 'seq',]
       col_vector = unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))
 
@@ -140,23 +175,29 @@ strat_metrics <- function(raster,
       print(q)
 
     }
-
-    return(rout)
+    
+    #--- Output based on 'details' to return raster alone or list with details ---#
+    
+    if ( isTRUE(details) ){
+      
+      #--- output metrics details along with stratification raster ---#
+      
+      out <- list(details = dfc, raster = rout)
+      
+      return(out)
+      
+      
+    } else {
+      
+      #--- just output raster ---#
+      
+      return(rout)
+      
+    }
 
   }
-
-  if (plot == TRUE){
-
-    #--- set up colour palette ---#
-    ncol <- b
-    qual_col_pals = brewer.pal.info[brewer.pal.info$category == 'qual',]
-    col_vector = unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))
-
-    terra::plot(rout, main = 'Classes', col=sample(col_vector, ncol))
-
-    return(rout)
-
-  }
+  
+  return(rout)
 
 }
 

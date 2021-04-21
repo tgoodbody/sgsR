@@ -2,28 +2,39 @@
 % Please edit documentation in R/strat_osb.R
 \name{strat_osb}
 \alias{strat_osb}
-\title{Stratify raster using optimum sample breaks algorithm}
+\title{Stratify metrics raster using optimum sample breaks algorithm}
 \usage{
-strat_osb(raster, metric, h, n, subset = TRUE, plot = TRUE)
+strat_osb(
+  mraster,
+  metric = NULL,
+  nstrata,
+  n,
+  subset = 1,
+  plot = FALSE,
+  details = FALSE
+)
 }
 \arguments{
-\item{raster}{spatRaster. Multiband ALS metrics raster.}
+\item{mraster}{spatRaster. ALS metrics raster.}
 
 \item{metric}{Character. Name of metric to be used for stratification}
 
-\item{h}{Numeric. Number of desired output strata.}
+\item{nstrata}{Numeric. Number of desired output strata.}
 
 \item{n}{Numeric. Number of desired samples - used within OSB algorithm to help determine break points.}
 
-\item{subset}{- Logical. Determines whether a subset of data should be used to help determine break points}
+\item{subset}{- Numeric. Value between 0 and 1 (default) denoting proportion of data to use to determine break points}
 
 \item{plot}{Logical. Plots output strata raster and visualized strata with boundary dividers.}
+
+\item{details}{Logical. If \code{FALSE} (default) output is only stratification raster. If \code{TRUE} return a list
+where \code{$details} is additional stratification information and \code{$raster} is the output stratification spatRaster.}
 }
 \value{
-list where \code{breaks} are the breaks defined by the OSB algorithm and \code{raster} is the output stratification spatRaster
+output stratification \code{spatRaster}
 }
 \description{
-Stratify raster using optimum sample breaks algorithm
+Stratify metrics raster using optimum sample breaks algorithm
 }
 \seealso{
 Other stratify functions: 

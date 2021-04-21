@@ -1,8 +1,8 @@
 # raster = spatRaster. The input raster used to determine the proportional number of samples to collect based on number of strata pixels
-# ns = numeric. The number of samples the user specifies to take
+# n = numeric. The number of samples the user specifies to take
 
 tallySamples <- function(raster,
-                         ns,
+                         n,
                          existing = NULL){
   
   #--- determine crs of input raster ---#
@@ -17,9 +17,9 @@ tallySamples <- function(raster,
   toSample <- vals %>% 
     na.omit() %>%
     group_by(strata) %>% 
-    summarize(n= n()) %>% 
-    mutate(freq = n / sum(n),
-           total = freq*ns) %>%
+    summarize(count= n()) %>% 
+    mutate(freq = count / sum(count),
+           total = freq * n) %>%
     
     #--- if a value equates to <1 it will have 0 samples --- change 0 to 1 ---#
     
@@ -32,9 +32,9 @@ tallySamples <- function(raster,
     dplyr::select(strata, total) %>%
     as.data.frame()
   
-  #--- determine whether there is a difference between 'ns' and the number of samples provided based on count ---#
+  #--- determine whether there is a difference between 'n' and the number of samples provided based on count ---#
   
-  diff <- sum(toSample$total) - ns
+  diff <- sum(toSample$total) - n
   
   #--- if there is a difference remove samples from classes with the most samples ---#
   

@@ -2,22 +2,22 @@
 % Please edit documentation in R/extract_existing.R
 \name{extract_existing}
 \alias{extract_existing}
-\title{Extract raster cell values using existing samples}
+\title{Extract stratification raster strata to existing samples}
 \usage{
-extract_existing(raster, existing, data.frame = FALSE)
+extract_existing(sraster, existing, data.frame = FALSE)
 }
 \arguments{
-\item{raster}{spatRaster. Multiband ALS metrics raster.}
+\item{sraster}{spatRaster. Stratification raster to be used for sampling.}
 
-\item{existing}{sf or data.frame.  Existing plot network to be included within sample_* functions}
+\item{existing}{sf or data.frame.  Existing plot network.}
 
 \item{data.frame}{Logical. If true outputs as data.frame}
 }
 \value{
-An sf or data.frame object with raster cell attributes
+An sf or data.frame object of samples with strata attributes
 }
 \description{
-Extract raster cell values using existing samples
+Extract stratification raster strata to existing samples
 }
 \seealso{
 Other extract functions: 

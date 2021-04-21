@@ -1,71 +1,95 @@
-#' Stratify raster using optimum sample breaks algorithm
+#' Stratify metrics raster using optimum sample breaks algorithm
 #' @family stratify functions
 #'
 #' @inheritParams strat_kmeans
-#' @param raster spatRaster. Multiband ALS metrics raster.
 #' @param metric Character. Name of metric to be used for stratification
-#' @param h Numeric. Number of desired output strata.
+#' @param nstrata Numeric. Number of desired output strata.
 #' @param n Numeric. Number of desired samples - used within OSB algorithm to help determine break points.
-#' @param subset - Logical. Determines whether a subset of data should be used to help determine break points
-#'
-#' @return list where \code{breaks} are the breaks defined by the OSB algorithm and \code{raster} is the output stratification spatRaster
+#' @param subset - Numeric. Value between 0 and 1 (default) denoting proportion of data to use to determine break points
+#' 
+#' @return output stratification \code{spatRaster}
 #' 
 #' @export
 
-strat_osb <- function(raster,
-                      metric,
-                      h,
+strat_osb <- function(mraster,
+                      metric = NULL,
+                      nstrata,
                       n,
-                      subset = TRUE,
-                      plot = FALSE)
+                      subset = 1,
+                      plot = FALSE,
+                      details = FALSE)
 
 {
   #--- Error management ---#
-  if (!inherits(raster,"SpatRaster"))
-    stop("'raster' must be type SpatRaster", call. = FALSE)
   
-  if (!is.character(metric))
-    stop("'metric' must be type character")
+  if (!inherits(mraster,"SpatRaster"))
+    stop("'mraster' must be type SpatRaster", call. = FALSE)
   
-  if(! metric %in% names(raster))
-    stop(paste0("raster does not have a variable named ",metric))
+  if(! metric %in% names(mraster))
+    stop(paste0("mraster does not have a variable named ",metric))
 
-  if (!is.numeric(h))
-    stop("'h' must be type numeric")
+  if (!is.numeric(nstrata))
+    stop("'nstrata' must be type numeric")
 
   if (!is.numeric(n))
     stop("'n' must be type numeric")
 
-  if (!is.logical(subset))
-    stop("'subset' must be type logical")
+  if (!is.numeric(subset))
+    stop("'subset' must be type numeric")
 
   if (!is.logical(plot))
     stop("'plot' must be type logical")
   
-  #--- extract raster metric ---#
-  rastermetric <- terra::subset(raster,metric)
+  if (!is.logical(details))
+    stop("'details' must be type logical")
+  
+  #--- if there is only 1 metric in the raster use it as default ---#
+  
+  if (terra::nlyr(mraster) == 1){
+    
+    rastermetric <- mraster  
+    
+  } else {
+    
+    if (is.null(metric))
+      stop(" multiple layers detected in 'mraster'. Please define a 'metric' to stratify")
+    
+    if (!is.character(metric))
+      stop("'metric' must be type character")
+  
+    #--- extract mraster metric ---#
+    
+    rastermetric <- terra::subset(mraster,metric)
+  
+  }
 
   #--- Perform OSB ---#
   #--- determine whether data should be subset prior to OSB calculation to save processing time ---#
-  if (subset == TRUE) {
-    message("'subset = TRUE' : taking 50% of available pixels to determine OSB")
+  
+  if (isTRUE(subset)) {
+    if (subset > 1 | subset < 0)
+      stop("'subset' must be between 0 and 1")
+    
+    message(paste0("'subset' was specified. Taking ", subset * 100, "% of available pixels to determine OSB"))
 
-    #--- Extract values from raster removing any NA/INF/NaN ---#
-    OSB <- perform_osb_sample(rastermetric, h, n)
+    #--- Extract values from mraster removing any NA/INF/NaN ---#
+    
+    OSB <- perform_osb_sample(rastermetric, nstrata, n, subset)
 
   } else {
 
     if (ncell(rastermetric) > 100000)
-      message("The raster you are using has over 100,000 cells. Consider using 'subset = TRUE' to improve processing times.")
+      message("The raster you are using has over 100,000 cells. Consider using 'subset' to improve processing times.")
 
     #--- Extract values from raster removing any NA/INF/NaN ---#
-    OSB <- perform_osb(rastermetric, h, n)
+    
+    OSB <- perform_osb(rastermetric, nstrata, n)
 
   }
 
   #--- reclassify values based on breaks ---#
 
-  breaks <- data.frame(from=c(-Inf,OSB[[2]]$OSB[1:(h - 1)],Inf)) %>%
+  breaks <- data.frame(from=c(-Inf,OSB[[2]]$OSB[1:(nstrata - 1)],Inf)) %>%
     mutate(to = lead(from),
            becomes = seq(1:length(from))) %>%
     na.omit() %>%
@@ -74,7 +98,7 @@ strat_osb <- function(raster,
   rcl <- terra::classify(rastermetric,breaks)
   names(rcl) <- "strata"
 
-  if (plot == TRUE){
+  if (isTRUE(plot)){
 
     data <- as.data.frame(OSB[[1]])
     names(data) <- "metric"
@@ -89,43 +113,58 @@ strat_osb <- function(raster,
     print(p1)
 
     #--- set colour palette ---#
-    ncols <- h
+    
+    ncols <- nstrata
     col = brewer.pal(ncols, "Set3")
 
     terra::plot(rcl, main = 'OSB breaks', col=col,type="classes")
 
   }
-
-  #--- output OSB break points raster with associated breaks ---#
-  breaks_rcl <- list(breaks = OSB[[2]]$OSB, raster = rcl)
-
-  return(breaks_rcl)
+  
+  #--- Output based on 'details' to return raster alone or list with details ---#
+  
+  if ( isTRUE(details) ){
+    
+    #--- output OSB break points raster with associated breaks ---#
+    
+    breaks_rcl <- list(details = OSB[[2]]$OSB, raster = rcl)
+    
+    return(breaks_rcl)
+    
+    
+  } else {
+    
+    #--- just output raster ---#
+    
+    return(rcl)
+    
+  }
 
 }
 
-perform_osb_sample <- function(rastermetric, h, n){
+perform_osb_sample <- function(rastermetric, nstrata, n, subset){
   vals <- rastermetric %>%
     terra::values(dataframe=TRUE) %>%
     filter(complete.cases(.)) %>%
-    slice_sample(prop = 0.5) %>%
+    slice_sample(prop = subset) %>%
     pull()
 
   OSB_result <- vals %>%
-    strata.data(h = (h), n = n)
+    strata.data(nstrata = (nstrata), n = n)
 
   out <- list(vals,OSB_result)
 
   out
 }
 
-perform_osb <- function(rastermetric, h, n){
+perform_osb <- function(rastermetric, nstrata, n){
   vals <- rastermetric %>%
     terra::values(dataframe=TRUE) %>%
     filter(complete.cases(.)) %>%
     pull()
 
   OSB_result <- vals %>%
-    strata.data(h = (h), n = n)
+    strata.data(nstrata = (nstrata), n = n)
 
   out <- list(vals,OSB_result)
 

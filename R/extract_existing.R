@@ -1,25 +1,25 @@
-#' Extract raster cell values using existing samples
+#' Extract stratification raster strata to existing samples
 #' @family extract functions
 #'
-#' @param raster spatRaster. Multiband ALS metrics raster.
-#' @param existing sf or data.frame.  Existing plot network to be included within sample_* functions
-#' @param data.frame Logical. If true outputs as data.frame
+#' @inheritParams  sample_srs
+#' @inheritParams  extract_metrics
+#' @param existing sf or data.frame.  Existing plot network.
 #' 
-#' @return An sf or data.frame object with raster cell attributes
+#' @return An sf or data.frame object of samples with strata attributes
 #' 
 #' @export
 
-extract_existing <- function(raster,
+extract_existing <- function(sraster,
                              existing,
                              data.frame = FALSE){
   
   #--- Error management ---#
   
-  if (!inherits(raster, "SpatRaster") )
-    stop("'raster' must be type SpatRaster", call. = FALSE)
+  if (!inherits(sraster, "SpatRaster") )
+    stop("'sraster' must be type SpatRaster", call. = FALSE)
   
-  if (any(! c("strata") %in% names(raster)) )
-    stop("'raster' must have a layer named 'strata'")
+  if (any(! c("strata") %in% names(sraster)) )
+    stop("'sraster' must have a layer named 'strata'")
   
   if (!inherits(existing,"sf") && inherits(sf::st_geometry(existing),"sfc_POINT"))
     stop("'existing' must be an 'sf' object of type 'sfc_POINT' geometry")
@@ -61,9 +61,9 @@ extract_existing <- function(raster,
     
   }
   
-  #--- extract values from the raster dataset ---#
+  #--- extract values from the sraster dataset ---#
   
-  strata_vals <- terra::extract(raster,existing)
+  strata_vals <- terra::extract(sraster,existing)
   
   #--- bind values and coordinates ---#
   
@@ -89,9 +89,9 @@ extract_existing <- function(raster,
       as.data.frame() %>%
       st_as_sf(., coords = c("X", "Y"))
     
-    #--- assign raster crs to spatial points object ---#
+    #--- assign sraster crs to spatial points object ---#
     
-    st_crs(samples) <- crs(raster)
+    st_crs(samples) <- crs(sraster)
     
     #--- return sf object ---#
     return(samples)

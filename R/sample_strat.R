@@ -1,43 +1,43 @@
-#' Sampling based on a stratified raster
+#' Sampling based on a stratified raster.
 #' @family sample functions
 #'
 #' @inheritParams sample_srs
-#' @param existing sf or data.frame.  Existing plot network 
-#' @param include Logical. If \code{TRUE} include existing plots in \code{ns} total
-#' @param buff_extend Numeric. Amount \code{buff_outer} will be increased by if no valid sample candidates are available.
-#' @param buff_outer Numeric. Outer buffer boundary specifying distance from access where plots can be sampled.
-#' @param buff_max Numeric. Maximum buffer distance resulting from increasing iterations of \code{buff_outer} + \code{buff_extend}.
+#' @param existing sf or data.frame.  Existing plot network.
+#' @param include Logical. If \code{TRUE} include existing plots in \code{n} total.
 #' @param wrow Numeric. Number of row in the focal window (default is 3).
 #' @param wcol Numeric. Number of columns in the focal window (default is 3).
+#' @param details Logical. If \code{FALSE} (default) output is sf object of stratified samples. If \code{TRUE} return a list
+#' where \code{$details} additional sampling information and \code{$raster} is an sf object of stratified samples.
+#'
 #' 
-#' @return list where \code{sampleDist} is a data.frame and \code{samples} is an sf object
+#' @return An sf object with \code{n} stratified samples.
 #' 
 #' @export
 
-sample_strat <- function(raster,
-                         ns,
+sample_strat <- function(sraster,
+                         n,
                          mindist = 100,
                          existing = NULL,
                          include = FALSE,
                          access = NULL,
                          buff_inner = NULL,
                          buff_outer = NULL,
-                         buff_extend = NULL,
-                         buff_max = NULL,
                          wrow = 3,
-                         wcol = 3) {
+                         wcol = 3,
+                         plot = FALSE,
+                         details = FALSE) {
   #--- Error management ---#
-  if (!inherits(raster, "SpatRaster"))
-    stop("'raster' must be type SpatRaster", call. = FALSE)
+  if (!inherits(sraster, "SpatRaster"))
+    stop("'sraster' must be type SpatRaster", call. = FALSE)
   
-  if (any(! c("strata") %in% names(raster)))
-    stop("'raster must have a layer named 'strata'")
+  if (any(! c("strata") %in% names(sraster)))
+    stop("'sraster must have a layer named 'strata'")
   
   if (!is.numeric(mindist))
     stop("'mindist' must be type numeric")
   
-  if (!is.numeric(ns))
-    stop("'ns' must be type numeric")
+  if (!is.numeric(n))
+    stop("'n' must be type numeric")
   
   if (!is.numeric(wrow))
     stop("'wrow' must be type numeric")
@@ -45,15 +45,21 @@ sample_strat <- function(raster,
   if (!is.numeric(wcol))
     stop("'wcol' must be type numeric")
   
-  #--- if the raster has multiple bands subset the band named strata ---#
-  if(nlyr(raster) > 1){
+  if (!is.logical(plot))
+    stop("'plot' must be type logical")
+  
+  if (!is.logical(details))
+    stop("'details' must be type logical")
+  
+  #--- if the sraster has multiple bands subset the band named strata ---#
+  if(nlyr(sraster) > 1){
     
-    raster <- terra::subset(raster, "strata")
+    sraster <- terra::subset(sraster, "strata")
     
   }
   
-  #--- determine crs of input raster ---#
-  crs <- crs(raster)
+  #--- determine crs of input sraster ---#
+  crs <- crs(sraster)
   
   #--- if existing samples are provided ensure they are in the proper format ---#
   
@@ -85,7 +91,7 @@ sample_strat <- function(raster,
       strata <- existing$strata
       
       existing <- as.data.frame(cbind(strata, exist_xy))
-
+      
       
     }
     
@@ -118,24 +124,24 @@ sample_strat <- function(raster,
     
   } 
   
-    extraCols <- colnames(existing)[!colnames(existing) %in% c("X", "Y", "strata")]
+  extraCols <- colnames(existing)[!colnames(existing) %in% c("X", "Y", "strata")]
+  
+  # Transform strata to numeric if factor
+  if (is(addSamples$strata, "factor")) {
+    addSamples$strata <- as.numeric(as.character(addSamples$strata))
     
-    # Transform strata to numeric if factor
-    if (is(addSamples$strata, "factor")) {
-      addSamples$strata <- as.numeric(as.character(addSamples$strata))
-      
-    }
+  }
   
   #--- determine number of samples for each strata ---#
-    
+  
   if (isTRUE(include)) {
-    message("'existing' samples being included in 'ns' calculation")
+    message("'existing' samples being included in 'n' calculation")
     
-    toSample <- tallySamples(raster, ns, existing)
+    toSample <- tallySamples(sraster, n, existing)
     
   } else {
     
-    toSample <- tallySamples(raster,ns)
+    toSample <- tallySamples(sraster,n)
     
   }
   
@@ -144,73 +150,79 @@ sample_strat <- function(raster,
   
   if (!missing(access)){
     
-  #--- error handling in the presence of 'access' ---#
+    #--- error handling in the presence of 'access' ---#
     if (!inherits(access,"sf") && inherits(sf::st_geometry(access),"sfc_MULTILINESTRING"))
       stop("'access' must be an 'sf' object of type 'sfc_MULTILINESTRING' geometry")
-      
-      #--- convert vectors to spatVector to synergize with terra raster functions---#
-      
-      access <- terra::vect(access)
-
+    
+    if (buff_inner > buff_outer)
+      stop("'buff_inner' must be < 'buff_outer'")
+    
+    #--- convert vectors to spatVector to synergize with terra sraster functions---#
+    
+    access <- terra::vect(access)
+    
+    #--- list all buffers to catch NULL values within error handling ---#
+    buffers <- list(buff_inner, buff_outer)
+    
+    if (any(vapply(buffers, is.null, TRUE)))
+      stop("All 'buff_*' paramaters must be provided when 'access' is defined.")
+    
+    if (!any(vapply(buffers, is.numeric, FALSE)))
+      stop("All 'buff_*' paramaters must be type numeric")
+    
+    message(
+      paste0(
+        "An access layer has been provided. An internal buffer of ",
+        buff_inner,
+        " m and an external buffer of ",
+        buff_outer,
+        " m have been applied"
+      )
+    )
+    
+    #--- make access buffer with user defined values ---#
+    
+    buff_in <- terra::buffer(x = access,
+                             width = buff_inner,
+                             capstyle = "round")
+    
+    buff_out <- terra::buffer(x = access,
+                              width = buff_outer,
+                              capstyle = "round")
+    
+    #--- make difference and aggregate inner and outer buffers to prevent sampling too close to access ---#
+    
+    buffer <- aggregate(buff_out - buff_in)
+    
+    #--- mask sraster for plotting ---#
+    raster_masked <- terra::mask(sraster, 
+                                 mask = buffer)
+    
   }
   
+  ####################################
   #--- Start of sampling function ---#
+  ####################################
   
   for (i in 1:nrow(toSample)) {
     s <- as.numeric(toSample[i, 1])
     nSamp <- as.numeric(toSample[i, 2])
     
-    print(paste0("Processing strata : ", s))
+    message(paste0("Processing strata : ", s))
     
     if (nSamp > 0) {
       #--- mask for individual strata ---#
       
-      strata_m <- terra::mask(raster,
-                             mask = raster,
-                             maskvalues = s,
-                             inverse = TRUE
+      strata_m <- terra::mask(sraster,
+                              mask = sraster,
+                              maskvalues = s,
+                              inverse = TRUE
       )
       names(strata_m) <- "strata"
       
       #--- if access line polygon is specified create inner and outer buffers
       
-      if (!is.null(access)) {
-        
-        if (any(buff_max < c(buff_inner, buff_outer)))
-          stop("'buff_inner' must be < 'buff_outer' & 'buff_outer' must be < 'buff_max'")
-
-        #--- list all buffers to catch NULL values within error handling ---#
-        buffers <- list(buff_inner, buff_outer, buff_extend, buff_max)
-
-        if (any(vapply(buffers, is.null, TRUE)))
-          stop("All 'buff_*' paramaters must be provided when 'access' is defined.")
-        
-        if (!any(vapply(buffers, is.numeric, FALSE)))
-          stop("All 'buff_*' paramaters must be type numeric")
-        
-        message(
-          paste0(
-            "An access layer has been provided. An internal buffer of ",
-            buff_inner,
-            " m and an external buffer of ",
-            buff_outer,
-            " m have been applied"
-          )
-        )
-        
-        #--- make access buffer with user defined values ---#
-        
-        buff_in <- terra::buffer(x = access,
-                                 width = buff_inner,
-                                 capstyle = "round")
-        
-        buff_out <- terra::buffer(x = access,
-                                  width = buff_outer,
-                                  capstyle = "round")
-        
-        #--- make difference and aggregate inner and outer buffers to prevent sampling too close to access ---#
-        
-        buffer <- aggregate(buff_out - buff_in)
+      if (!missing(access)) {
         
         strata_m_buff <- terra::mask(strata_m, 
                                      mask = buffer)
@@ -228,73 +240,14 @@ sample_strat <- function(raster,
             )
           )
           
-          #--- rename to original strata raster that will be used for sampling ---#
+          #--- rename to original strata sraster that will be used for sampling ---#
           strata_m <- strata_m_buff
           
           #--- if there are no samples to take within the specified 'buff_outer' distance extend buffer until values are found ---#
           
         } else {
-          if (is.null(buff_extend))
-            stop("Insufficient candidate samples are within the buffer extent and 'buff_extend' is null. Supply a value to iterate increasing external buffers or increase 'buff_outer' value."
-            )
           
-          counter <- 1
-          
-          while (sampAvail < nSamp) {
-            #--- extend buffer based on 'buff_extend' ---#
-            buff_outer_n <- buff_outer + (buff_extend * counter)
-            
-            #--- if the max buffer has been reached stop ---#
-            if (buff_outer_n > buff_max) {
-              stop(
-                "Maximum buffer size of 'buff_max' has been reached. Insufficient number of candidates to reach sample size."
-              )
-              
-            } else {
-              message(
-                paste0(
-                  "Buffered area contains no available samples. Increasing buff_outer to ",
-                  buff_outer_n,
-                  " m"
-                )
-              )
-              
-            }
-            
-            #--- recompute outer buffer with buffer extension ---#
-            buff_out <-
-              terra::buffer(x = access,
-                            width = buff_outer_n,
-                            capstyle = "round")
-            
-            buffer <- aggregate(buff_out - buff_in)
-            
-            #--- mask strata raster with extended buffer ---#
-            strata_m_buff <- terra::mask(strata_m, mask = buffer)
-            
-            sampAvail <- sum(!is.na(values(strata_m_buff)))
-            
-            #--- if number of  candidate samples > samples needed exit while loop and begin sampling ---#
-            if (sampAvail > nSamp) {
-              message(
-                paste0(
-                  "External buffer of ",
-                  buff_outer_n,
-                  " m contains ",
-                  sampAvail,
-                  " available  candidates. Sampling to reach ",
-                  nSamp,
-                  " samples starting."
-                )
-              )
-              
-              #--- rename to original strata raster that will be used for sampling ---#
-              strata_m <- strata_m_buff
-              
-            }
-            counter <- counter + 1
-            
-          }
+          stop("Insufficient candidate samples within the buffered access extent. Consider altering buffer widths.")
           
         }
         
@@ -442,12 +395,12 @@ sample_strat <- function(raster,
           }
         }
       }
-     
+      
       if (nCount < nSamp){
         
         message(sprintf("Strata %s: couldn't select required number of samples: %i instead of %i \n", s , nCount , nSamp))
-      
-        }
+        
+      }
       
     }
     
@@ -470,17 +423,65 @@ sample_strat <- function(raster,
     as.data.frame() %>%
     st_as_sf(., coords = c("X", "Y"))
   
-  #--- assign raster crs to spatial points object ---#
+  #--- assign sraster crs to spatial points object ---#
   st_crs(samples) <- crs
   
-  #--- plot input raster and random samples ---#
   
-  terra::plot(raster)
-  suppressWarnings(terra::plot(samples, add = T, col = ifelse(samples$type=="existing","Red","Black")),)
+  #--- plot the raster and samples if desired ---#
   
-  output <- list(sampleDist = toSample, samples = samples)
+  if(isTRUE(plot)){
+    
+    #--- if existing is not provided plot the masked raster ---#
+    
+    if(missing(existing)){
+      
+      #--- if access is also missing plot the full sraster extent ---#
+      
+      if(missing(access)){
+        
+        terra::plot(sraster)
+        suppressWarnings(terra::plot(samples, add = T, col = ifelse(samples$type=="existing","Red","Black")))
+        
+        #--- if access is provided plot the masked access sraster ---#
+        
+      } else {
+
+        terra::plot(raster_masked)
+        suppressWarnings(terra::plot(samples, add = T, col = ifelse(samples$type=="existing","Red","Black")))
+      
+      }
+      
+      #--- if existing is provided plot the full raster ---#
+      
+    } else {
+    
+      #--- plot input sraster and random samples ---#
+      
+      terra::plot(sraster)
+      suppressWarnings(terra::plot(samples, add = T, col = ifelse(samples$type=="existing","Red","Black")))
+    
+    }
+    
+
+  }
+
+  if ( isTRUE(details) ){
+    
+    #--- output metrics details along with stratification raster ---#
+    
+    output <- list(sampleDist = toSample, samples = samples)
+    
+    #--- output samples dataframe ---#
+    return(output)
+    
+    
+  } else {
+    
+    #--- just output raster ---#
+    
+    return(samples)
+    
   
-  #--- output samples dataframe ---#
-  output
+    }
   
 }

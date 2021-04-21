@@ -2,38 +2,39 @@
 % Please edit documentation in R/strat_kmeans.R
 \name{strat_kmeans}
 \alias{strat_kmeans}
-\title{Stratify raster using k-means algorithm}
+\title{Stratify metrics raster using k-means algorithm}
 \usage{
 strat_kmeans(
-  raster,
-  k,
+  mraster,
+  nstrata,
   iter.max = 500,
   algorithm = "Lloyd",
-  center = TRUE,
   scale = TRUE,
-  plot = TRUE
+  plot = FALSE,
+  details = FALSE
 )
 }
 \arguments{
-\item{raster}{spatRaster. Raster to be used for simple random sampling}
+\item{mraster}{spatRaster. ALS metrics raster.}
 
-\item{k}{Character. Number of k-mean centers to calculate.}
+\item{nstrata}{Character. Number of desired strata.}
 
 \item{iter.max}{Numeric. The maximum number of iterations allowed.}
 
-\item{algorithm}{Character. \code{Lloyd} (default) or \code{MacQueen} algorithms}
+\item{algorithm}{Character. \code{Lloyd} (default) or \code{MacQueen} algorithms.}
 
-\item{center}{Logical. Determines whether centering of data should be conducted prior to k-means analysis.}
-
-\item{scale}{Logical. Determines whether scaling of data should be conducted prior to k-means analysis.}
+\item{scale}{Logical. Determines whether scaling and centering of data should be conducted prior to analysis.}
 
 \item{plot}{Logical. Plots output strata raster and visualized strata with boundary dividers.}
+
+\item{details}{Logical. If \code{FALSE} (default) output is only stratification raster. If \code{TRUE} return a list
+where \code{$details} is additional stratification information and \code{$raster} is the output stratification spatRaster.}
 }
 \value{
-list where \code{kmeans} is all principal component analysis data and \code{raster} is the output stratification spatRaster
+output stratification \code{spatRaster}
 }
 \description{
-Stratify raster using k-means algorithm
+Stratify metrics raster using k-means algorithm
 }
 \seealso{
 Other stratify functions: 

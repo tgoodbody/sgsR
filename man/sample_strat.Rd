@@ -2,33 +2,33 @@
 % Please edit documentation in R/sample_strat.R
 \name{sample_strat}
 \alias{sample_strat}
-\title{Sampling based on a stratified raster}
+\title{Sampling based on a stratified raster.}
 \usage{
 sample_strat(
-  raster,
-  ns,
-  mindist,
+  sraster,
+  n,
+  mindist = 100,
   existing = NULL,
   include = FALSE,
   access = NULL,
   buff_inner = NULL,
   buff_outer = NULL,
-  buff_extend = NULL,
-  buff_max = NULL,
   wrow = 3,
-  wcol = 3
+  wcol = 3,
+  plot = FALSE,
+  details = FALSE
 )
 }
 \arguments{
-\item{raster}{spatRaster. Raster to be used for simple random sampling}
+\item{sraster}{spatRaster. Stratification raster to be used for sampling.}
 
-\item{ns}{Numeric. Number of desired samples.}
+\item{n}{Numeric. Number of desired samples.}
 
-\item{mindist}{Numeric. Minimum allowable distance between selected samples.}
+\item{mindist}{Numeric. Minimum allowable distance between selected samples. Default = 100.}
 
-\item{existing}{sf or data.frame.  Existing plot network}
+\item{existing}{sf or data.frame.  Existing plot network.}
 
-\item{include}{Logical. If \code{TRUE} include existing plots in \code{ns} total}
+\item{include}{Logical. If \code{TRUE} include existing plots in \code{n} total.}
 
 \item{access}{sf. Road access network - must be lines.}
 
@@ -36,19 +36,20 @@ sample_strat(
 
 \item{buff_outer}{Numeric. Outer buffer boundary specifying distance from access where plots can be sampled.}
 
-\item{buff_extend}{Numeric. Amount \code{buff_outer} will be increased by if no valid sample candidates are available.}
-
-\item{buff_max}{Numeric. Maximum buffer distance resulting from increasing iterations of \code{buff_outer} + \code{buff_extend}.}
-
 \item{wrow}{Numeric. Number of row in the focal window (default is 3).}
 
 \item{wcol}{Numeric. Number of columns in the focal window (default is 3).}
+
+\item{plot}{Logical. Plots output strata raster with samples.}
+
+\item{details}{Logical. If \code{FALSE} (default) output is sf object of stratified samples. If \code{TRUE} return a list
+where \code{$details} additional sampling information and \code{$raster} is an sf object of stratified samples.}
 }
 \value{
-list where \code{sampleDist} is a data.frame and \code{samples} is an sf object
+An sf object with \code{n} stratified samples.
 }
 \description{
-Sampling based on a stratified raster
+Sampling based on a stratified raster.
 }
 \seealso{
 Other sample functions: 

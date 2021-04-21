@@ -2,30 +2,39 @@
 % Please edit documentation in R/strat_pcomp.R
 \name{strat_pcomp}
 \alias{strat_pcomp}
-\title{Stratify raster using principal components and quantile breaks}
+\title{Stratify metrics raster using principal components and quantile breaks}
 \usage{
-strat_pcomp(raster, ncp, b1, b2 = NULL, scale = TRUE, plot = TRUE, samp = 1)
+strat_pcomp(
+  mraster,
+  nstrata,
+  nstrata2 = NULL,
+  scale = TRUE,
+  plot = FALSE,
+  samp = 1,
+  details = FALSE
+)
 }
 \arguments{
-\item{raster}{spatRaster. Raster to be used for simple random sampling}
+\item{mraster}{spatRaster. ALS metrics raster.}
 
-\item{ncp}{Character. Number of components to create.}
+\item{nstrata}{Character. Number of desired strata.}
 
-\item{b1}{Numeric. Number of desired strata for first principal component.}
+\item{nstrata2}{Numeric.  Number of secondary strata within \code{nstrata}.}
 
-\item{b2}{Numeric. Number of desired strata for second principal component.}
-
-\item{scale}{Logical. Determines whether centering and scaling of data should be conducted prior to principal component analysis.}
+\item{scale}{Logical. Determines whether scaling and centering of data should be conducted prior to analysis.}
 
 \item{plot}{Logical. Plots output strata raster and visualized strata with boundary dividers.}
 
 \item{samp}{Numeric. Determines proportion of cells to plot for strata visualization. Lower values reduce processing time.}
+
+\item{details}{Logical. If \code{FALSE} (default) output is only stratification raster. If \code{TRUE} return a list
+where \code{$details} is additional stratification information and \code{$raster} is the output stratification spatRaster.}
 }
 \value{
-list where \code{pca} is all principal component analysis data and \code{raster} is the output stratification spatRaster
+output stratification \code{spatRaster}
 }
 \description{
-Stratify raster using principal components and quantile breaks
+Stratify metrics raster using principal components and quantile breaks
 }
 \seealso{
 Other stratify functions: 

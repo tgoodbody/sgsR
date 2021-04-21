@@ -2,22 +2,22 @@
 % Please edit documentation in R/extract_metrics.R
 \name{extract_metrics}
 \alias{extract_metrics}
-\title{Extract raster cell values to samples}
+\title{Extract metric raster attributes to samples}
 \usage{
-extract_metrics(raster, samples, data.frame = FALSE)
+extract_metrics(sraster, samples, data.frame = FALSE)
 }
 \arguments{
-\item{raster}{spatRaster. Multiband ALS metrics raster.}
+\item{sraster}{spatRaster. Stratification raster to be used for sampling.}
 
 \item{samples}{sf. Samples resulting from sample_* functions.}
 
 \item{data.frame}{Logical. If true outputs as data.frame}
 }
 \value{
-An sf or data.frame object with raster cell attributes
+An sf or data.frame object of samples with associated raster cell attributes
 }
 \description{
-Extract raster cell values to samples
+Extract metric raster attributes to samples
 }
 \seealso{
 Other extract functions: 

@@ -2,38 +2,42 @@
 % Please edit documentation in R/strat_metrics.R
 \name{strat_metrics}
 \alias{strat_metrics}
-\title{Stratify raster using metric quantiles}
+\title{Stratify metric raster using metric quantiles.}
 \usage{
 strat_metrics(
-  raster,
-  metric,
+  mraster,
+  metric = NULL,
   metric2 = NULL,
-  b,
-  b2 = NULL,
-  plot = TRUE,
-  samp = 1
+  nstrata,
+  nstrata2 = NULL,
+  plot = FALSE,
+  samp = 1,
+  details = FALSE
 )
 }
 \arguments{
-\item{raster}{spatRaster. Raster to be used for simple random sampling}
+\item{mraster}{spatRaster. ALS metrics raster.}
 
-\item{metric}{Character. Name of primary metric to stratify}
+\item{metric}{Character. Name of primary metric to stratify. If \code{mraster} is has 1 layer it is take as default.}
 
-\item{metric2}{Character. Name of secondary metric to stratify}
+\item{metric2}{Character. Name of secondary metric to stratify.}
 
-\item{b}{Numeric. Number of desired strata for metric}
+\item{nstrata}{Character. Number of desired strata.}
 
-\item{b2}{Numeric. Number of desired strata for metric2}
+\item{nstrata2}{Numeric.  Number of secondary strata within \code{nstrata}.}
 
 \item{plot}{Logical. Plots output strata raster and visualized strata with boundary dividers.}
 
 \item{samp}{Numeric. Determines proportion of cells to plot for strata visualization. Lower values reduce processing time.}
+
+\item{details}{Logical. If \code{FALSE} (default) output is only stratification raster. If \code{TRUE} return a list
+where \code{$details} is additional stratification information and \code{$raster} is the output stratification spatRaster.}
 }
 \value{
-list where \code{kmeans} is all principal component analysis data and \code{raster} is the output stratification spatRaster
+output stratification \code{spatRaster}
 }
 \description{
-Stratify raster using metric quantiles
+Stratify metric raster using metric quantiles.
 }
 \seealso{
 Other stratify functions: 
