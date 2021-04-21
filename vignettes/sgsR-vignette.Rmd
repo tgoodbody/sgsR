@@ -1,25 +1,42 @@
 ---
 title: "sgsR-vignette"
-output: rmarkdown::html_vignette
+author: "Tristan Goodbody"
+output:
+  html_document:
+    df_print: paged
 vignette: >
   %\VignetteIndexEntry{sgsR-vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-### sgsR vignette ###
+### sgsR vignette
 
+```{r, eval=F}
+library(sgsR)
+library(terra)
+library(sf)
+library(RColorBrewer)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(spatstat)
+
+```
+
+```{r,eval=F}
 #--- import ALS metrics raster ---#
 
-raster <- rast("C:/Users/goodb/Documents/UBC/post_doc/sgsR/vig/data/wall_metrics_small.tif")
+raster <- terra::rast(system.file("extdata", "wall_metrics_small.tif", package = "sgsR"))
 
 #--- import forest inventory polygon and mask unwanted areas ---#
-poly <- st_read("C:/Users/goodb/Documents/UBC/post_doc/sgsR/vig/data/inventory_polygons.shp")
+poly <- sf::st_read(system.file("extdata", "inventory_polygons.shp", package = "sgsR"))
 
 poly_subset <- poly[poly$POLYTYPE == "FOR" & poly$OWNER == 1, ]
-poly_subset <- st_union(poly_subset)
+poly_subset <- sf::st_union(poly_subset)
 
-poly_subset <- vect(poly_subset)
+poly_subset <- terra::vect(poly_subset)
+
 #--- mask input ALS raster using polygon layer ---#
 
 wall_poly <- terra::mask(raster,
@@ -27,7 +44,7 @@ wall_poly <- terra::mask(raster,
 
 #--- import access layer to be used during sampling if desired ---#
 
-roads <- st_read("C:/Users/goodb/Documents/UBC/post_doc/sgsR/vig/data/roads.shp")
+roads <- st_read(system.file("extdata", "roads.shp", package = "sgsR"))
 
 #--- perform stratification using k-means ---#
 kmeans <- strat_kmeans(raster = wall_poly[[5]], 
@@ -36,10 +53,10 @@ kmeans <- strat_kmeans(raster = wall_poly[[5]],
 
 #--- perform stratification using OSB ---#
 #--- note that this one can take a while ---#
-osb <- strat_osb(raster = wall_poly, 
-                 metric = "wal_5", 
-                 h = 4, 
-                 n = 100) # should integrate functionality to do 2 metrics concurrently and create unique strata
+# osb <- strat_osb(raster = wall_poly, 
+#                  metric = "wal_5", 
+#                  h = 4, 
+#                  n = 100) # should integrate functionality to do 2 metrics concurrently and create unique strata
 
 #--- perform stratification using principal components ---#
 pcomp <- strat_pcomp(raster = wall_poly, 
@@ -110,4 +127,6 @@ strat_w_e <- sample_strat(raster = raster,
 metrics <- extract_metrics(wall_poly,
                            strat_w_e$samples)
 
+
+```
 

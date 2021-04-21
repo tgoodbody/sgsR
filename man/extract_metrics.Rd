@@ -7,7 +7,7 @@
 extract_metrics(raster, samples, data.frame = FALSE)
 }
 \arguments{
-\item{raster}{spatRaster. Raster to be used for simple random sampling}
+\item{raster}{spatRaster. Multiband ALS metrics raster.}
 
 \item{samples}{sf. Samples resulting from sample_* functions.}
 
@@ -18,11 +18,6 @@ An sf or data.frame object with raster cell attributes
 }
 \description{
 Extract raster cell values to samples
-}
-\examples{
-extract_metrics(raster = raster, samples = samples)
-extract_metrics(raster = raster, samples = samples, data.frame = TRUE)
-
 }
 \seealso{
 Other extract functions: 

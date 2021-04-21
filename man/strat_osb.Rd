@@ -4,28 +4,26 @@
 \alias{strat_osb}
 \title{Stratify raster using optimum sample breaks algorithm}
 \usage{
-strat_osb(raster, metric, h, n, subset = TRUE, plot = TRUE, ...)
+strat_osb(raster, metric, h, n, subset = TRUE, plot = TRUE)
 }
 \arguments{
 \item{raster}{spatRaster. Multiband ALS metrics raster.}
+
+\item{metric}{Character. Name of metric to be used for stratification}
+
+\item{h}{Numeric. Number of desired output strata.}
 
 \item{n}{Numeric. Number of desired samples - used within OSB algorithm to help determine break points.}
 
 \item{subset}{- Logical. Determines whether a subset of data should be used to help determine break points}
 
 \item{plot}{Logical. Plots output strata raster and visualized strata with boundary dividers.}
-
-\item{nstrata}{Numeric. Number of desired output strata.}
 }
 \value{
 list where \code{breaks} are the breaks defined by the OSB algorithm and \code{raster} is the output stratification spatRaster
 }
 \description{
 Stratify raster using optimum sample breaks algorithm
-}
-\examples{
-strat_osb(raster = raster, metric = "p99", h = 4, n = 200)
-
 }
 \seealso{
 Other stratify functions: 

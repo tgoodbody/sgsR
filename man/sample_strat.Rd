@@ -28,6 +28,8 @@ sample_strat(
 
 \item{existing}{sf or data.frame.  Existing plot network}
 
+\item{include}{Logical. If \code{TRUE} include existing plots in \code{ns} total}
+
 \item{access}{sf. Road access network - must be lines.}
 
 \item{buff_inner}{Numeric. Inner buffer boundary specifying distance from access where plots cannot be sampled.}
@@ -47,12 +49,6 @@ list where \code{sampleDist} is a data.frame and \code{samples} is an sf object
 }
 \description{
 Sampling based on a stratified raster
-}
-\examples{
-sample_strat(raster = raster, ns = 200, mindist = 200)
-sample_strat(raster = raster, ns = 200, mindist = 200, access = roads, buff_inner = 50, buff_outer = 200)
-sample_strat(raster = raster, ns = 200, mindist = 200, access = roads, buff_inner = 50, buff_outer = 200, buff_extend = 100, buff_max = 800)
-
 }
 \seealso{
 Other sample functions: 

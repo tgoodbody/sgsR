@@ -10,10 +10,6 @@
 #' 
 #' @return An sf object with 'ns' randomly sampled points
 #' 
-#' @examples 
-#' sample_srs(raster = raster, ns = 200, mindist = 200)
-#' sample_srs(raster = raster, ns = 200, mindist = 200, access = roads, buff_inner = 50, buff_outer = 200)
-#' 
 #' @export
 
 sample_srs <- function(raster,

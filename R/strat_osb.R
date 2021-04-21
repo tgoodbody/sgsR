@@ -3,14 +3,12 @@
 #'
 #' @inheritParams strat_kmeans
 #' @param raster spatRaster. Multiband ALS metrics raster.
-#' @param nstrata Numeric. Number of desired output strata.
+#' @param metric Character. Name of metric to be used for stratification
+#' @param h Numeric. Number of desired output strata.
 #' @param n Numeric. Number of desired samples - used within OSB algorithm to help determine break points.
 #' @param subset - Logical. Determines whether a subset of data should be used to help determine break points
 #'
 #' @return list where \code{breaks} are the breaks defined by the OSB algorithm and \code{raster} is the output stratification spatRaster
-#' 
-#' @examples 
-#' strat_osb(raster = raster, metric = "p99", h = 4, n = 200)
 #' 
 #' @export
 
@@ -19,9 +17,7 @@ strat_osb <- function(raster,
                       h,
                       n,
                       subset = TRUE,
-                      plot = TRUE,
-                      ...
-)
+                      plot = TRUE)
 
 {
   #--- Error management ---#
@@ -107,7 +103,6 @@ strat_osb <- function(raster,
 
 }
 
-#' @export
 perform_osb_sample <- function(rastermetric, h, n){
   vals <- rastermetric %>%
     terra::values(dataframe=TRUE) %>%
@@ -123,7 +118,6 @@ perform_osb_sample <- function(rastermetric, h, n){
   out
 }
 
-#' @export
 perform_osb <- function(rastermetric, h, n){
   vals <- rastermetric %>%
     terra::values(dataframe=TRUE) %>%

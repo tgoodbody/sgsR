@@ -27,11 +27,6 @@ list where \code{pca} is all principal component analysis data and \code{raster}
 \description{
 Stratify raster using principal components and quantile breaks
 }
-\examples{
-strat_pcomp(raster = raster, ncp = 4, b1 = 4)
-strat_pcomp(raster = raster, ncp = 4, b1 = 4, b2 = 3)
-
-}
 \seealso{
 Other stratify functions: 
 \code{\link{strat_kmeans}()},

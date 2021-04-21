@@ -21,6 +21,8 @@ strat_kmeans(
 
 \item{iter.max}{Numeric. The maximum number of iterations allowed.}
 
+\item{algorithm}{Character. \code{Lloyd} (default) or \code{MacQueen} algorithms}
+
 \item{center}{Logical. Determines whether centering of data should be conducted prior to k-means analysis.}
 
 \item{scale}{Logical. Determines whether scaling of data should be conducted prior to k-means analysis.}
@@ -32,12 +34,6 @@ list where \code{kmeans} is all principal component analysis data and \code{rast
 }
 \description{
 Stratify raster using k-means algorithm
-}
-\examples{
-strat_kmeans(raster = raster, k = 5)
-strat_kmeans(raster = raster, k = 5, algorithm = "MacQueen")
-strat_kmeans(raster = raster, k = 5, plot = FALSE)
-
 }
 \seealso{
 Other stratify functions: 

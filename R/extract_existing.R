@@ -1,21 +1,17 @@
-#' Extract raster cell values existing samples
+#' Extract raster cell values using existing samples
 #' @family extract functions
 #'
-#' @inheritParams extract_metrics
+#' @param raster spatRaster. Multiband ALS metrics raster.
 #' @param existing sf or data.frame.  Existing plot network to be included within sample_* functions
+#' @param data.frame Logical. If true outputs as data.frame
 #' 
 #' @return An sf or data.frame object with raster cell attributes
 #' 
-#' @examples 
-#' extract_existing(raster = raster, existing = existing)
-#' extract_existing(raster = raster, existing = existing, data.frame = TRUE)
-#' 
 #' @export
 
-
 extract_existing <- function(raster,
-                            existing,
-                            data.frame = FALSE){
+                             existing,
+                             data.frame = FALSE){
   
   #--- Error management ---#
   

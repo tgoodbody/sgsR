@@ -3,6 +3,7 @@
 #'
 #' @inheritParams sample_srs
 #' @param existing sf or data.frame.  Existing plot network 
+#' @param include Logical. If \code{TRUE} include existing plots in \code{ns} total
 #' @param buff_extend Numeric. Amount \code{buff_outer} will be increased by if no valid sample candidates are available.
 #' @param buff_outer Numeric. Outer buffer boundary specifying distance from access where plots can be sampled.
 #' @param buff_max Numeric. Maximum buffer distance resulting from increasing iterations of \code{buff_outer} + \code{buff_extend}.
@@ -10,11 +11,6 @@
 #' @param wcol Numeric. Number of columns in the focal window (default is 3).
 #' 
 #' @return list where \code{sampleDist} is a data.frame and \code{samples} is an sf object
-#' 
-#' @examples 
-#' sample_strat(raster = raster, ns = 200, mindist = 200)
-#' sample_strat(raster = raster, ns = 200, mindist = 200, access = roads, buff_inner = 50, buff_outer = 200)
-#' sample_strat(raster = raster, ns = 200, mindist = 200, access = roads, buff_inner = 50, buff_outer = 200, buff_extend = 100, buff_max = 800)
 #' 
 #' @export
 

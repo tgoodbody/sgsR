@@ -32,11 +32,6 @@ An sf object with 'ns' randomly sampled points
 \description{
 Randomly sample within a raster extent
 }
-\examples{
-sample_srs(raster = raster, ns = 200, mindist = 200)
-sample_srs(raster = raster, ns = 200, mindist = 200, access = roads, buff_inner = 50, buff_outer = 200)
-
-}
 \seealso{
 Other sample functions: 
 \code{\link{sample_strat}()}

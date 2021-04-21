@@ -10,10 +10,6 @@
 #'
 #' @return list where \code{kmeans} is all principal component analysis data and \code{raster} is the output stratification spatRaster
 #' 
-#' @examples 
-#' strat_metrics(raster = raster, metric = "p99", b = 4)
-#' strat_metrics(raster = raster, metric = "p99", metric2 = "stdev", b = 4, b2 = 3)
-#' 
 #' @export
 
 strat_metrics <- function(raster,

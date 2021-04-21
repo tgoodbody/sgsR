@@ -2,8 +2,6 @@
 
 export(extract_existing)
 export(extract_metrics)
-export(perform_osb)
-export(perform_osb_sample)
 export(sample_srs)
 export(sample_strat)
 export(strat_kmeans)

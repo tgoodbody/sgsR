@@ -9,10 +9,6 @@
 #'
 #' @return list where \code{pca} is all principal component analysis data and \code{raster} is the output stratification spatRaster
 #' 
-#' @examples 
-#' strat_pcomp(raster = raster, ncp = 4, b1 = 4)
-#' strat_pcomp(raster = raster, ncp = 4, b1 = 4, b2 = 3)
-#' 
 #' @export
 
 strat_pcomp <- function(raster,

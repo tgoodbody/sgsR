@@ -2,12 +2,12 @@
 % Please edit documentation in R/extract_existing.R
 \name{extract_existing}
 \alias{extract_existing}
-\title{Extract raster cell values existing samples}
+\title{Extract raster cell values using existing samples}
 \usage{
 extract_existing(raster, existing, data.frame = FALSE)
 }
 \arguments{
-\item{raster}{spatRaster. Raster to be used for simple random sampling}
+\item{raster}{spatRaster. Multiband ALS metrics raster.}
 
 \item{existing}{sf or data.frame.  Existing plot network to be included within sample_* functions}
 
@@ -17,12 +17,7 @@ extract_existing(raster, existing, data.frame = FALSE)
 An sf or data.frame object with raster cell attributes
 }
 \description{
-Extract raster cell values existing samples
-}
-\examples{
-extract_existing(raster = raster, existing = existing)
-extract_existing(raster = raster, existing = existing, data.frame = TRUE)
-
+Extract raster cell values using existing samples
 }
 \seealso{
 Other extract functions: 
