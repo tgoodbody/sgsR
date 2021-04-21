@@ -107,6 +107,7 @@ strat_osb <- function(raster,
 
 }
 
+#' @export
 perform_osb_sample <- function(rastermetric, h, n){
   vals <- rastermetric %>%
     terra::values(dataframe=TRUE) %>%
@@ -122,6 +123,7 @@ perform_osb_sample <- function(rastermetric, h, n){
   out
 }
 
+#' @export
 perform_osb <- function(rastermetric, h, n){
   vals <- rastermetric %>%
     terra::values(dataframe=TRUE) %>%
