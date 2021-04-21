@@ -1,14 +1,19 @@
-# raster = spatRaster. The input raster used to determine the proportional number of samples to collect based on number of strata pixels
-# n = numeric. The number of samples the user specifies to take
+#' Tally required number of samples for each raster strata
+#'
+#' @inheritParams sample_srs
+#' @inheritParams sample_strat
+#' 
+#' @return data.frame of strata and associates samples
 
-tallySamples <- function(raster,
+
+tallySamples <- function(sraster,
                          n,
                          existing = NULL){
   
-  #--- determine crs of input raster ---#
-  crs <- crs(raster)
+  #--- determine crs of input sraster ---#
+  crs <- crs(sraster)
   
-  vals <- values(raster) %>% 
+  vals <- values(sraster) %>% 
     as.data.frame()
   
   names(vals) <- "strata"
@@ -89,7 +94,7 @@ tallySamples <- function(raster,
     
     #--- if the strata for toSample and existing are not identical throw an error ---#
     if (!identical(unique(existing$strata),unique(toSample$strata)))
-      stop("Strata for 'raster' and 'existing' are not identical")
+      stop("Strata for 'sraster' and 'existing' are not identical")
     
     #--- join the 2 df together and subtrace the number of existing plots by strata from toSample ---#
     toSample <- toSample %>%
