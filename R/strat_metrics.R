@@ -2,7 +2,7 @@
 #' @family stratify functions
 #'
 #' @inheritParams strat_kmeans
-#' @param metric Character. Name of primary metric to stratify. If \code{mraster} is has 1 layer it is take as default.
+#' @param metric Character. Name of primary metric to stratify. If \code{mraster} is has 1 layer it is taken as default.
 #' @param metric2 Character. Name of secondary metric to stratify.
 #' @param nstrata2 Numeric.  Number of secondary strata within \code{nstrata}.
 #' @param samp Numeric. Determines proportion of cells to plot for strata visualization. Lower values reduce processing time.
@@ -60,6 +60,9 @@ strat_metrics <- function(mraster,
       if (!is.character(metric))
         stop("'metric' must be type character")
       
+      if (any(! metric %in% names(mraster)) )
+        stop(paste0("'mraster' must have an attribute named ", metric))
+      
       #--- Extract values from mraster ---#
       
       vals <- terra::subset(mraster,metric) %>%
@@ -104,6 +107,9 @@ strat_metrics <- function(mraster,
 
     if (is.null(nstrata2))
       stop("If using 2 metrics to stratify, 'nstrata2' must be defined")
+    
+    if (any(! metric2 %in% names(mraster)) )
+      stop(paste0("'mraster' must have an attribute named ", metric2))
 
     #--- Extract values from mraster ---#
     

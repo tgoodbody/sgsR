@@ -61,7 +61,7 @@ poly_subset <- terra::vect(poly_subset)
 wall_poly <- terra::mask(raster,
                          poly_subset)
 
-plot(wall_poly[[1:2]])
+terra::plot(wall_poly[[1:2]])
 
 ```
 
@@ -93,6 +93,45 @@ osb <- strat_osb(mraster = wall_poly,
 plot(osb$raster)
 
 osb$details
+
+```
+
+### User-defined breaks
+## Single metric stratification
+```{r}
+#--- perform stratification using user-defined breaks ---#
+
+#--- define breaks for metric ---#
+breaks <- c(seq(5,20,5))
+
+breaks
+
+#--- stratify on 1 metric only ---#
+
+bk1 <- strat_breaks(mraster = wall_poly,
+                 metric = "wal_1",
+                 breaks = breaks,
+                 details = TRUE,
+                 plot = TRUE)
+
+```
+
+## Dual metric stratification
+```{r}
+#--- stratify on 2 metrics ---#
+
+breaks2 <- c(seq(3,9,3))
+
+breaks2
+
+bk2 <- strat_breaks(mraster = wall_poly,
+                 metric = "wal_1",
+                 metric2 = "wal_3",
+                 breaks = breaks,
+                 breaks2 = breaks2,
+                 details = TRUE,
+                 plot = TRUE)
+
 
 ```
 
@@ -240,6 +279,81 @@ strat_w_a <- sample_strat(sraster = sraster,
                         plot = TRUE)
 ```
 
+## Balanced Sampling - uses metrics rasters
+### `lpm2` method
+
+```{r}
+
+#--- stratified sampling with access and buffers provided ---#
+bal_wo <- sample_balanced(mraster = wall_poly,
+                        n = 200, 
+                        algorithm = "lpm2",
+                        plot = TRUE)
+```
+
+### `lpm2` with access provided
+
+```{r}
+#--- stratified sampling with access and buffers provided ---#
+bal_w_a <- sample_balanced(mraster = wall_poly,
+                        n = 200, 
+                        algorithm = "lpm2",
+                        access = roads,
+                        buff_inner = 50,
+                        buff_outer = 200,
+                        plot = TRUE)
+```
+
+### `lcube` algorithm - Slower
+
+```{r}
+
+#--- stratified sampling with access and buffers provided ---#
+bal_wo <- sample_balanced(mraster = wall_poly,
+                        n = 200, 
+                        algorithm = "lcube",
+                        plot = TRUE)
+```
+
+### `lcube` with access provided - Slower
+
+```{r}
+#--- stratified sampling with access and buffers provided ---#
+bal_w_a <- sample_balanced(mraster = wall_poly,
+                        n = 200, 
+                        algorithm = "lcube",
+                        access = roads,
+                        buff_inner = 50,
+                        buff_outer = 200,
+                        plot = TRUE)
+```
+
+### `lcubestratified` algorithm
+
+```{r}
+#--- need to add a variable named strata to enable stratified sampling ---#
+mraster <- c(wall_poly,kmeans)
+
+#--- stratified sampling with access and buffers provided ---#
+bal_wo <- sample_balanced(mraster = mraster,
+                        n = 200, 
+                        algorithm = "lcubestratified",
+                        plot = TRUE)
+```
+
+## `lcubestratified` - with access provided
+
+```{r}
+#--- stratified sampling with access and buffers provided ---#
+bal_w_a <- sample_balanced(mraster = mraster,
+                        n = 200, 
+                        algorithm = "lcubestratified",
+                        access = roads,
+                        buff_inner = 50,
+                        buff_outer = 200,
+                        plot = TRUE)
+```
+
 ## Incorporating existing sample networks
 
 ```{r}
@@ -247,7 +361,7 @@ strat_w_a <- sample_strat(sraster = sraster,
 #--- extract strata from raster for already existing sample network ---#
 #--- we use random samples defined above ---#
 
-existing <- extract_existing(sraster = sraster,
+existing <- extract_existing(sraster = kmeans,
                              existing = srs_wo)
 
 existing
@@ -296,7 +410,7 @@ Notice that we specified that we wanted 200 samples but we get 250. That's becau
 #--- we also specify we want an external buffer ('buff_outer') of 200 ---#
 
 
-strat_w_e_i <- sample_strat(sraster = sraster,
+strat_w_e_i <- sample_strat(sraster = kmeans,
                         n = 200, 
                         mindist = 200,
                         existing = existing,

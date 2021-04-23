@@ -38,6 +38,7 @@ Stratify metrics raster using optimum sample breaks algorithm
 }
 \seealso{
 Other stratify functions: 
+\code{\link{strat_breaks}()},
 \code{\link{strat_kmeans}()},
 \code{\link{strat_metrics}()},
 \code{\link{strat_pcomp}()}

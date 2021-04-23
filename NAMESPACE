@@ -2,8 +2,10 @@
 
 export(extract_existing)
 export(extract_metrics)
+export(sample_balanced)
 export(sample_srs)
 export(sample_strat)
+export(strat_breaks)
 export(strat_kmeans)
 export(strat_metrics)
 export(strat_osb)

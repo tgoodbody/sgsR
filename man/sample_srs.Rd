@@ -37,6 +37,7 @@ Randomly sample within a stratification raster extent.
 }
 \seealso{
 Other sample functions: 
+\code{\link{sample_balanced}()},
 \code{\link{sample_strat}()}
 }
 \concept{sample functions}

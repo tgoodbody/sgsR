@@ -9,12 +9,15 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
+    BalancedSampling,
     dplyr,
     factoextra,
     FactoMineR,
     ggplot2,
+    ggpubr,
     purrr,
     RColorBrewer,
+    SamplingBigData,
     sf,
     sp,
     spatstat,
