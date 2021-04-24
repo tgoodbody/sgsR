@@ -2,10 +2,12 @@
 #' @family stratify functions
 #'
 #' @inheritParams strat_kmeans
-#' @param metric Character. Name of primary metric to stratify. If \code{mraster} is has 1 layer it is taken as default.
+#' @param metric Character. Name of primary metric to stratify. If 
+#' \code{mraster} is has 1 layer it is taken as default.
 #' @param metric2 Character. Name of secondary metric to stratify.
 #' @param nstrata2 Numeric.  Number of secondary strata within \code{nstrata}.
-#' @param samp Numeric. Determines proportion of cells to plot for strata visualization. Lower values reduce processing time.
+#' @param samp Numeric. For plotting - Determines proportion of cells 
+#' for strata visualization. Lower values reduce processing time.
 #'
 #' @return output stratification \code{spatRaster}
 #' 

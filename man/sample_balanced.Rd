@@ -22,15 +22,19 @@ sample_balanced(
 
 \item{algorithm}{Character. One of \code{lpm2 lcube lcubestratified}}
 
-\item{p}{Numeric. Inclusion probability for each candidate sample. Default is \code{n / N}}
+\item{p}{Numeric. Inclusion probability for each candidate sample. 
+Default is \code{n / N}}
 
 \item{access}{sf. Road access network - must be lines.}
 
-\item{buff_inner}{Numeric. Inner buffer boundary specifying distance from access where plots cannot be sampled.}
+\item{buff_inner}{Numeric. Inner buffer boundary specifying distance
+from access where plots cannot be sampled.}
 
-\item{buff_outer}{Numeric. Outer buffer boundary specifying distance from access where plots can be sampled.}
+\item{buff_outer}{Numeric. Outer buffer boundary specifying distance
+from access where plots can be sampled.}
 
-\item{plot}{Logical. Plots output strata raster and visualized strata with boundary dividers.}
+\item{plot}{Logical. Plots output strata raster and visualized
+strata with boundary dividers.}
 }
 \value{
 An sf object with \code{n} randomly sampled points.

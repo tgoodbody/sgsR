@@ -4,7 +4,8 @@
 #' @inheritParams strat_kmeans
 #' @inheritParams sample_srs
 #' @param algorithm Character. One of \code{lpm2 lcube lcubestratified}
-#' @param p Numeric. Inclusion probability for each candidate sample. Default is \code{n / N}
+#' @param p Numeric. Inclusion probability for each candidate sample. 
+#' Default is \code{n / N}
 #' 
 #' 
 #' @return An sf object with \code{n} randomly sampled points.

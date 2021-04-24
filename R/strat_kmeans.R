@@ -4,11 +4,16 @@
 #' @param mraster spatRaster. ALS metrics raster.
 #' @param nstrata Character. Number of desired strata.
 #' @param iter.max Numeric. The maximum number of iterations allowed.
-#' @param algorithm Character. \code{Lloyd} (default) or \code{MacQueen} algorithms.
-#' @param scale Logical. Determines whether scaling and centering of data should be conducted prior to analysis.
-#' @param plot Logical. Plots output strata raster and visualized strata with boundary dividers.
-#' @param details Logical. If \code{FALSE} (default) output is only stratification raster. If \code{TRUE} return a list
-#' where \code{$details} is additional stratification information and \code{$raster} is the output stratification spatRaster.
+#' @param algorithm Character. \code{Lloyd} (default) or 
+#' \code{MacQueen} algorithms.
+#' @param scale Logical. Determines whether scaling and centering
+#'  of data should be conducted prior to analysis.
+#' @param plot Logical. Plots output strata raster and visualized
+#'  strata with boundary dividers.
+#' @param details Logical. If \code{FALSE} (default) output is only
+#'  stratification raster. If \code{TRUE} return a list
+#' where \code{$details} is additional stratification information and
+#'  \code{$raster} is the output stratification spatRaster.
 #'
 #' @return output stratification \code{spatRaster}
 #' 

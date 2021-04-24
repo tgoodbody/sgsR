@@ -21,14 +21,19 @@ strat_osb(
 
 \item{nstrata}{Numeric. Number of desired output strata.}
 
-\item{n}{Numeric. Number of desired samples - used within OSB algorithm to help determine break points.}
+\item{n}{Numeric. Number of desired samples - used within 
+OSB algorithm to help determine break points.}
 
-\item{subset}{- Numeric. Value between 0 and 1 (default) denoting proportion of data to use to determine break points}
+\item{subset}{- Numeric. Value between 0 and 1 (default) 
+denoting proportion of data to use to determine break points}
 
-\item{plot}{Logical. Plots output strata raster and visualized strata with boundary dividers.}
+\item{plot}{Logical. Plots output strata raster and visualized
+strata with boundary dividers.}
 
-\item{details}{Logical. If \code{FALSE} (default) output is only stratification raster. If \code{TRUE} return a list
-where \code{$details} is additional stratification information and \code{$raster} is the output stratification spatRaster.}
+\item{details}{Logical. If \code{FALSE} (default) output is only
+ stratification raster. If \code{TRUE} return a list
+where \code{$details} is additional stratification information and
+ \code{$raster} is the output stratification spatRaster.}
 }
 \value{
 output stratification \code{spatRaster}

@@ -6,8 +6,10 @@
 #' @param include Logical. If \code{TRUE} include existing plots in \code{n} total.
 #' @param wrow Numeric. Number of row in the focal window (default is 3).
 #' @param wcol Numeric. Number of columns in the focal window (default is 3).
-#' @param details Logical. If \code{FALSE} (default) output is sf object of stratified samples. If \code{TRUE} return a list
-#' where \code{$details} additional sampling information and \code{$raster} is an sf object of stratified samples.
+#' @param details Logical. If \code{FALSE} (default) output is sf object of 
+#' stratified samples. If \code{TRUE} return a list
+#' where \code{$details} additional sampling information and \code{$raster} 
+#' is an sf object of stratified samples.
 #'
 #' 
 #' @return An sf object with \code{n} stratified samples.

@@ -3,10 +3,13 @@
 #'
 #' @param sraster spatRaster. Stratification raster to be used for sampling.
 #' @param n Numeric. Number of desired samples.
-#' @param mindist Numeric. Minimum allowable distance between selected samples. Default = 100.
+#' @param mindist Numeric. Minimum allowable distance between selected
+#'  samples. Default = 100.
 #' @param access sf. Road access network - must be lines.
-#' @param buff_inner Numeric. Inner buffer boundary specifying distance from access where plots cannot be sampled.
-#' @param buff_outer Numeric. Outer buffer boundary specifying distance from access where plots can be sampled.
+#' @param buff_inner Numeric. Inner buffer boundary specifying distance
+#'  from access where plots cannot be sampled.
+#' @param buff_outer Numeric. Outer buffer boundary specifying distance
+#'  from access where plots can be sampled.
 #' @param plot Logical. Plots output strata raster with samples.
 #' 
 #' @return An sf object with \code{n} randomly sampled points.

@@ -21,14 +21,19 @@ strat_kmeans(
 
 \item{iter.max}{Numeric. The maximum number of iterations allowed.}
 
-\item{algorithm}{Character. \code{Lloyd} (default) or \code{MacQueen} algorithms.}
+\item{algorithm}{Character. \code{Lloyd} (default) or 
+\code{MacQueen} algorithms.}
 
-\item{scale}{Logical. Determines whether scaling and centering of data should be conducted prior to analysis.}
+\item{scale}{Logical. Determines whether scaling and centering
+of data should be conducted prior to analysis.}
 
-\item{plot}{Logical. Plots output strata raster and visualized strata with boundary dividers.}
+\item{plot}{Logical. Plots output strata raster and visualized
+strata with boundary dividers.}
 
-\item{details}{Logical. If \code{FALSE} (default) output is only stratification raster. If \code{TRUE} return a list
-where \code{$details} is additional stratification information and \code{$raster} is the output stratification spatRaster.}
+\item{details}{Logical. If \code{FALSE} (default) output is only
+ stratification raster. If \code{TRUE} return a list
+where \code{$details} is additional stratification information and
+ \code{$raster} is the output stratification spatRaster.}
 }
 \value{
 output stratification \code{spatRaster}

@@ -19,13 +19,16 @@ sample_srs(
 
 \item{n}{Numeric. Number of desired samples.}
 
-\item{mindist}{Numeric. Minimum allowable distance between selected samples. Default = 100.}
+\item{mindist}{Numeric. Minimum allowable distance between selected
+samples. Default = 100.}
 
 \item{access}{sf. Road access network - must be lines.}
 
-\item{buff_inner}{Numeric. Inner buffer boundary specifying distance from access where plots cannot be sampled.}
+\item{buff_inner}{Numeric. Inner buffer boundary specifying distance
+from access where plots cannot be sampled.}
 
-\item{buff_outer}{Numeric. Outer buffer boundary specifying distance from access where plots can be sampled.}
+\item{buff_outer}{Numeric. Outer buffer boundary specifying distance
+from access where plots can be sampled.}
 
 \item{plot}{Logical. Plots output strata raster with samples.}
 }

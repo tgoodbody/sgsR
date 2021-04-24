@@ -18,7 +18,8 @@ strat_metrics(
 \arguments{
 \item{mraster}{spatRaster. ALS metrics raster.}
 
-\item{metric}{Character. Name of primary metric to stratify. If \code{mraster} is has 1 layer it is taken as default.}
+\item{metric}{Character. Name of primary metric to stratify. If 
+\code{mraster} is has 1 layer it is taken as default.}
 
 \item{metric2}{Character. Name of secondary metric to stratify.}
 
@@ -26,12 +27,16 @@ strat_metrics(
 
 \item{nstrata2}{Numeric.  Number of secondary strata within \code{nstrata}.}
 
-\item{plot}{Logical. Plots output strata raster and visualized strata with boundary dividers.}
+\item{plot}{Logical. Plots output strata raster and visualized
+strata with boundary dividers.}
 
-\item{samp}{Numeric. Determines proportion of cells to plot for strata visualization. Lower values reduce processing time.}
+\item{samp}{Numeric. For plotting - Determines proportion of cells 
+for strata visualization. Lower values reduce processing time.}
 
-\item{details}{Logical. If \code{FALSE} (default) output is only stratification raster. If \code{TRUE} return a list
-where \code{$details} is additional stratification information and \code{$raster} is the output stratification spatRaster.}
+\item{details}{Logical. If \code{FALSE} (default) output is only
+ stratification raster. If \code{TRUE} return a list
+where \code{$details} is additional stratification information and
+ \code{$raster} is the output stratification spatRaster.}
 }
 \value{
 output stratification \code{spatRaster}

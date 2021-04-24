@@ -4,8 +4,10 @@
 #' @inheritParams strat_kmeans
 #' @param metric Character. Name of metric to be used for stratification
 #' @param nstrata Numeric. Number of desired output strata.
-#' @param n Numeric. Number of desired samples - used within OSB algorithm to help determine break points.
-#' @param subset - Numeric. Value between 0 and 1 (default) denoting proportion of data to use to determine break points
+#' @param n Numeric. Number of desired samples - used within 
+#' OSB algorithm to help determine break points.
+#' @param subset - Numeric. Value between 0 and 1 (default) 
+#' denoting proportion of data to use to determine break points
 #' 
 #' @return output stratification \code{spatRaster}
 #' 

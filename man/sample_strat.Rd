@@ -24,7 +24,8 @@ sample_strat(
 
 \item{n}{Numeric. Number of desired samples.}
 
-\item{mindist}{Numeric. Minimum allowable distance between selected samples. Default = 100.}
+\item{mindist}{Numeric. Minimum allowable distance between selected
+samples. Default = 100.}
 
 \item{existing}{sf or data.frame.  Existing plot network.}
 
@@ -32,9 +33,11 @@ sample_strat(
 
 \item{access}{sf. Road access network - must be lines.}
 
-\item{buff_inner}{Numeric. Inner buffer boundary specifying distance from access where plots cannot be sampled.}
+\item{buff_inner}{Numeric. Inner buffer boundary specifying distance
+from access where plots cannot be sampled.}
 
-\item{buff_outer}{Numeric. Outer buffer boundary specifying distance from access where plots can be sampled.}
+\item{buff_outer}{Numeric. Outer buffer boundary specifying distance
+from access where plots can be sampled.}
 
 \item{wrow}{Numeric. Number of row in the focal window (default is 3).}
 
@@ -42,8 +45,10 @@ sample_strat(
 
 \item{plot}{Logical. Plots output strata raster with samples.}
 
-\item{details}{Logical. If \code{FALSE} (default) output is sf object of stratified samples. If \code{TRUE} return a list
-where \code{$details} additional sampling information and \code{$raster} is an sf object of stratified samples.}
+\item{details}{Logical. If \code{FALSE} (default) output is sf object of 
+stratified samples. If \code{TRUE} return a list
+where \code{$details} additional sampling information and \code{$raster} 
+is an sf object of stratified samples.}
 }
 \value{
 An sf object with \code{n} stratified samples.

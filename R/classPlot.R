@@ -3,7 +3,8 @@
 #' @inheritParams strat_metrics
 #' @param dfc data.frame. Values for metric1 and metric2
 #' @param coordsgrps List. Cartesian coordinates of each strata
-#' @param samp Numeric. Determines proportion of cells to plot for strata visualization. Lower values reduce processing time.
+#' @param samp Numeric. Determines proportion of cells to plot 
+#' for strata visualization. Lower values reduce processing time.
 #'
 
 

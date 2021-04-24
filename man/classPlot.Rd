@@ -11,11 +11,13 @@ classPlot(dfc, coordsgrps, metric, metric2, samp)
 
 \item{coordsgrps}{List. Cartesian coordinates of each strata}
 
-\item{metric}{Character. Name of primary metric to stratify. If \code{mraster} is has 1 layer it is taken as default.}
+\item{metric}{Character. Name of primary metric to stratify. If 
+\code{mraster} is has 1 layer it is taken as default.}
 
 \item{metric2}{Character. Name of secondary metric to stratify.}
 
-\item{samp}{Numeric. Determines proportion of cells to plot for strata visualization. Lower values reduce processing time.}
+\item{samp}{Numeric. Determines proportion of cells to plot 
+for strata visualization. Lower values reduce processing time.}
 }
 \description{
 Scatter plot of strata using ggplot

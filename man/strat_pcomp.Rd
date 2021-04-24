@@ -21,14 +21,19 @@ strat_pcomp(
 
 \item{nstrata2}{Numeric.  Number of secondary strata within \code{nstrata}.}
 
-\item{scale}{Logical. Determines whether scaling and centering of data should be conducted prior to analysis.}
+\item{scale}{Logical. Determines whether scaling and centering
+of data should be conducted prior to analysis.}
 
-\item{plot}{Logical. Plots output strata raster and visualized strata with boundary dividers.}
+\item{plot}{Logical. Plots output strata raster and visualized
+strata with boundary dividers.}
 
-\item{samp}{Numeric. Determines proportion of cells to plot for strata visualization. Lower values reduce processing time.}
+\item{samp}{Numeric. For plotting - Determines proportion of cells 
+for strata visualization. Lower values reduce processing time.}
 
-\item{details}{Logical. If \code{FALSE} (default) output is only stratification raster. If \code{TRUE} return a list
-where \code{$details} is additional stratification information and \code{$raster} is the output stratification spatRaster.}
+\item{details}{Logical. If \code{FALSE} (default) output is only
+ stratification raster. If \code{TRUE} return a list
+where \code{$details} is additional stratification information and
+ \code{$raster} is the output stratification spatRaster.}
 }
 \value{
 output stratification \code{spatRaster}
