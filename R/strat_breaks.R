@@ -29,9 +29,6 @@ strat_breaks <- function(mraster,
   
   if (!is.numeric(breaks))
     stop("'breaks' must be type numeric")
-  
-  if (!is.numeric(n))
-    stop("'n' must be type numeric")
 
   if (!is.logical(plot))
     stop("'plot' must be type logical")
@@ -61,6 +58,14 @@ strat_breaks <- function(mraster,
     rastermetric <- terra::subset(mraster,metric)
     
   }
+  
+  minmax <- terra::minmax(rastermetric)
+  
+  if(any(breaks < minmax[1]))
+    stop("'breaks' contains values < the minimum 'metric' value.")
+  
+  if(any(breaks > minmax[2]))
+    stop("'breaks' contains values > the minimum 'metric' value.")
   
   #--- apply breaks to primary metric ---#
   
@@ -93,6 +98,16 @@ strat_breaks <- function(mraster,
     
     rastermetric2 <- terra::subset(mraster, metric2)
     
+    #--- Determine if breaks are > / < min and max values of metrics ---#
+    
+    minmax2 <- terra::minmax(rastermetric2)
+    
+    if(any(breaks2 < minmax2[1]))
+      stop("'breaks2' contains values < the minimum 'metric2' value.")
+    
+    if(any(breaks2 > minmax2[2]))
+      stop("'breaks2' contains values > the minimum 'metric2' value.")
+    
     #--- reclassify values based on breaks ---#
     
     breaks2_m <- data.frame(from=c(-Inf,breaks2,Inf)) %>%
@@ -116,7 +131,7 @@ strat_breaks <- function(mraster,
       mutate(class = cur_group_id()) %>%
       ungroup()
     
-    idx <- cellFromXY(rcl,cbind(breaks_c$x,breaks_c$y))
+    idx <- terra::cellFromXY(rcl,cbind(breaks_c$x,breaks_c$y))
     
     #--- convert back to original mraster extent ---#
     rcl[idx] <- breaks_c$class
@@ -146,7 +161,7 @@ strat_breaks <- function(mraster,
       geom_vline(xintercept = breaks2, linetype = "dashed") +
       ggtitle(paste0(metric2, " histogram with defined breaks"))
     
-    suppressMessages(print(ggarrange(p1, p2, ncol = 1, nrow =2)))
+    suppressMessages(print(ggpubr::ggarrange(p1, p2, ncol = 1, nrow =2)))
     
     } else {
       
