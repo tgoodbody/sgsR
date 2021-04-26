@@ -1,7 +1,8 @@
 #' Extract metric raster attributes to samples
 #' @family extract functions
 #'
-#' @inheritParams  sample_srs
+#' @inheritParams sample_srs
+#' @inheritParams strat_kmeans
 #' @param samples sf. Samples resulting from sample_* functions.
 #' @param data.frame Logical. If true outputs as data.frame
 #' 
@@ -9,14 +10,14 @@
 #' 
 #' @export
 
-extract_metrics <- function(sraster,
+extract_metrics <- function(mraster,
                             samples,
                             data.frame = FALSE){
 
   #--- Error management ---#
   
-  if (!inherits(sraster, "SpatRaster"))
-    stop("'sraster' must be type SpatRaster", call. = FALSE)
+  if (!inherits(mraster, "SpatRaster"))
+    stop("'mraster' must be type SpatRaster", call. = FALSE)
   
   if (!inherits(samples, "sf"))
     stop("'samples' must be an 'sf' object", call. = FALSE)
@@ -25,7 +26,7 @@ extract_metrics <- function(sraster,
   
   xy <- st_coordinates(samples)
   
-  vals <- terra::extract(sraster,xy)
+  vals <- terra::extract(mraster,xy)
   
   #--- extract other attributes from sampling and remove geometry attribute ---#
   
@@ -49,9 +50,9 @@ extract_metrics <- function(sraster,
       as.data.frame() %>%
       st_as_sf(., coords = c("X", "Y"))
     
-    #--- assign sraster crs to spatial points object ---#
+    #--- assign mraster crs to spatial points object ---#
     
-    st_crs(samples) <- crs(sraster)
+    st_crs(samples) <- crs(mraster)
     
     #--- return sf object ---#
     return(samples)
