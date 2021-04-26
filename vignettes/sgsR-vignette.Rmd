@@ -31,18 +31,21 @@ library(spatstat)
 ```{r}
 #--- import ALS metrics raster ---#
 
-raster <- "C:/Users/goodb/Documents/UBC/post_doc/sgsR/inst/extdata/wall_metrics_small.tif"
+raster <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
 
 raster <- terra::rast(raster)
 
-poly <- "C:/Users/goodb/Documents/UBC/post_doc/sgsR/inst/extdata/inventory_polygons.shp"
+names(raster) <- c("avg", "cov", "std","p10", "p20","p50","p70","p95", "p99","d0","d2","d4","dns")
+
 
 #--- import forest inventory polygon and mask unwanted areas ---#
+poly <- system.file("extdata","inventory_polygons.shp", package = "sgsR")
+
 poly <- sf::st_read(poly)
 
 #--- import access layer to be used during sampling if desired ---#
 
-roads <- "C:/Users/goodb/Documents/UBC/post_doc/sgsR/inst/extdata/roads.shp"
+roads <- system.file("extdata","roads.shp", package = "sgsR")
 
 roads <- sf::st_read(roads)
 
@@ -85,7 +88,7 @@ plot(kmeans)
 #--- note that this one can take a while ---#
 
 osb <- strat_osb(mraster = wall_poly,
-                 metric = "wal_5",
+                 metric = "avg",
                  nstrata = 4,
                  n = 100,
                  details = TRUE)
@@ -109,7 +112,7 @@ breaks
 #--- stratify on 1 metric only ---#
 
 bk1 <- strat_breaks(mraster = wall_poly,
-                 metric = "wal_1",
+                 metric = "avg",
                  breaks = breaks,
                  details = TRUE,
                  plot = TRUE)
@@ -125,8 +128,8 @@ breaks2 <- c(seq(3,9,3))
 breaks2
 
 bk2 <- strat_breaks(mraster = wall_poly,
-                 metric = "wal_1",
-                 metric2 = "wal_3",
+                 metric = "avg",
+                 metric2 = "p99",
                  breaks = breaks,
                  breaks2 = breaks2,
                  details = TRUE,
@@ -176,7 +179,7 @@ plot(metrics1)
 ```{r}
 #--- perform stratification using an individual metric ---#
 metrics2 <- strat_metrics(mraster = wall_poly, 
-                         metric = "wal_5", 
+                         metric = "avg", 
                          nstrata = 10)
 
 plot(metrics2)
@@ -187,8 +190,8 @@ plot(metrics2)
 
 #--- perform stratification using 2 metrics metrics ---#
 metrics3 <- strat_metrics(mraster = wall_poly, 
-                         metric = "wal_5", 
-                         metric2 = "wal_2", 
+                         metric = "avg", 
+                         metric2 = "p99", 
                          nstrata = 10, 
                          nstrata2 = 5)
 
@@ -285,7 +288,7 @@ strat_w_a <- sample_strat(sraster = sraster,
 ```{r}
 
 #--- stratified sampling with access and buffers provided ---#
-bal_wo <- sample_balanced(mraster = wall_poly,
+bal_wo <- sample_balanced(mraster = raster,
                         n = 200, 
                         algorithm = "lpm2",
                         plot = TRUE)
@@ -430,7 +433,7 @@ strat_w_e_i
 ```{r}
 #--- extract metrics from multi-band ALS raster for potential modeling ---#
 
-metrics <- extract_metrics(sraster = wall_poly,
+metrics <- extract_metrics(mraster = wall_poly,
                            samples = strat_w_e_i)
 
 metrics
