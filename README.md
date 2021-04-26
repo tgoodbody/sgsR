@@ -6,9 +6,11 @@ Development of sgsR was made possible thanks to the financial support of _______
 
 ```
 install.packages("devtools")
-devtools::install_github("https://github.com/tgoodbody/sgsR")
+devtools::install_github("https://github.com/tgoodbody/sgsR", build_vignettes = FALSE)
 library(sgsR)
 ```
+
+If you want to build the vignette use `build_vignette = TRUE`.
 
 ## Example usage
 
