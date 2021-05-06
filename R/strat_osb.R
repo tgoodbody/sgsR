@@ -9,7 +9,7 @@
 #' @param subset - Numeric. Value between 0 and 1 (default) 
 #' denoting proportion of data to use to determine break points
 #' 
-#' @return output stratification \code{spatRaster}
+#' @return output stratification \code{spatRaster}, or a list when \code{details = TRUE}.
 #' 
 #' @export
 
@@ -92,9 +92,9 @@ strat_osb <- function(mraster,
   #--- reclassify values based on breaks ---#
 
   breaks <- data.frame(from=c(-Inf,OSB[[2]]$OSB[1:(nstrata - 1)],Inf)) %>%
-    mutate(to = lead(from),
+    dplyr::mutate(to = lead(from),
            becomes = seq(1:length(from))) %>%
-    na.omit() %>%
+    stats::na.omit() %>%
     as.matrix()
 
   rcl <- terra::classify(rastermetric,breaks)
@@ -107,17 +107,17 @@ strat_osb <- function(mraster,
 
     #--- plot histogram of metric with associated break lines ---#
 
-    p1 <- ggplot(data,aes(metric)) +
-      geom_histogram() +
-      geom_vline(xintercept = OSB[[2]]$OSB, linetype = "dashed") +
-      ggtitle("Metric histogram with OSB break lines")
+    p1 <- ggplot2::ggplot(data,aes(metric)) +
+      ggplot2::geom_histogram() +
+      ggplot2::geom_vline(xintercept = OSB[[2]]$OSB, linetype = "dashed") +
+      ggplot2::ggtitle("Metric histogram with OSB break lines")
 
     print(p1)
 
     #--- set colour palette ---#
     
     ncols <- nstrata
-    col = brewer.pal(ncols, "Set3")
+    col = RColorBrewer::brewer.pal(ncols, "Set3")
 
     terra::plot(rcl, main = 'OSB breaks', col=col,type="classes")
 
@@ -147,12 +147,12 @@ strat_osb <- function(mraster,
 perform_osb_sample <- function(rastermetric, nstrata, n, subset){
   vals <- rastermetric %>%
     terra::values(dataframe=TRUE) %>%
-    filter(complete.cases(.)) %>%
-    slice_sample(prop = subset) %>%
-    pull()
+    dplyr::filter(complete.cases(.)) %>%
+    dplyr::slice_sample(prop = subset) %>%
+    dplyr::pull()
 
   OSB_result <- vals %>%
-    strata.data(nstrata = (nstrata), n = n)
+    stratifyR::strata.data(h = nstrata, n = n)
 
   out <- list(vals,OSB_result)
 
@@ -160,13 +160,14 @@ perform_osb_sample <- function(rastermetric, nstrata, n, subset){
 }
 
 perform_osb <- function(rastermetric, nstrata, n){
+  
   vals <- rastermetric %>%
     terra::values(dataframe=TRUE) %>%
-    filter(complete.cases(.)) %>%
-    pull()
+    dplyr::filter(complete.cases(.)) %>%
+    dplyr::pull()
 
   OSB_result <- vals %>%
-    strata.data(nstrata = (nstrata), n = n)
+    stratifyR::strata.data(h = (nstrata), n = n)
 
   out <- list(vals,OSB_result)
 

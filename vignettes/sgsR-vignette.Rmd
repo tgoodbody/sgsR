@@ -90,7 +90,7 @@ plot(kmeans)
 osb <- strat_osb(mraster = wall_poly,
                  metric = "avg",
                  nstrata = 4,
-                 n = 100,
+                 n = 20,
                  details = TRUE)
 
 plot(osb$raster)

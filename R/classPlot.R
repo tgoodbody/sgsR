@@ -14,22 +14,22 @@ classPlot <- function(dfc,
                       metric2,
                       samp){
 
-  metric <- sym(metric)
-  metric2 <- sym(metric2)
+  metric <- ggplot2::sym(metric)
+  metric2 <- ggplot2::sym(metric2)
   
   #--- sample cells based on 'samp' parameter ---#
   
   dfc <- dfc %>%
-    na.omit %>%
-    group_by(class) %>%
-    slice_sample(prop = samp)
+    stats::na.omit() %>%
+    dplyr::group_by(class) %>%
+    dplyr::slice_sample(prop = samp)
   
   #--- plot individual cells coloured by associated class ---#
 
-  p <- ggplot(mapping = aes(x = !!metric, y = !!metric2))+
-    geom_point(data = dfc, alpha = 0.3, aes(color = as.factor(class)))+
-    theme_bw() +
-    theme(legend.position = "none")
+  p <- ggplot2::ggplot(mapping = aes(x = !!metric, y = !!metric2))+
+    ggplot2::geom_point(data = dfc, alpha = 0.3, aes(color = as.factor(class)))+
+    ggplot2::theme_bw() +
+    ggplot2::theme(legend.position = "none")
   
   #--- add class boundary boxes to delineate class extents ---#
 
@@ -37,8 +37,8 @@ classPlot <- function(dfc,
     
     data <- coordsgrps$data[[i]]
     
-    p <- p + geom_rect(data = data,
-                       aes(xmin = min(!!metric),
+    p <- p + ggplot2::geom_rect(data = data,
+                      ggplot2::aes(xmin = min(!!metric),
                            xmax = max(!!metric),
                            ymin = min(!!metric2),
                            ymax = max(!!metric2)),

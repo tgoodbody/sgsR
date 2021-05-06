@@ -24,7 +24,7 @@ extract_metrics <- function(mraster,
   
   #--- Extract coordinates from samples ---#
   
-  xy <- st_coordinates(samples)
+  xy <- sf::st_coordinates(samples)
   
   vals <- terra::extract(mraster,xy)
   
@@ -48,11 +48,11 @@ extract_metrics <- function(mraster,
     
     samples <- samples %>%
       as.data.frame() %>%
-      st_as_sf(., coords = c("X", "Y"))
+      sf::st_as_sf(., coords = c("X", "Y"))
     
     #--- assign mraster crs to spatial points object ---#
     
-    st_crs(samples) <- crs(mraster)
+    sf::st_crs(samples) <- terra::crs(mraster)
     
     #--- return sf object ---#
     return(samples)

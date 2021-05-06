@@ -79,12 +79,10 @@ sample_srs <- function(sraster,
     #--- make access buffer with user defined values ---#
 
     buff_in <- terra::buffer(x = roads,
-                             width = buff_inner,
-                             capstyle = "round")
+                             width = buff_inner)
 
     buff_out <- terra::buffer(x = roads,
-                              width = buff_outer,
-                              capstyle = "round")
+                              width = buff_outer)
 
     #--- make difference and aggregate inner and outer buffers to prevent sampling too close to access ---#
     buffer <- aggregate(buff_out - buff_in)

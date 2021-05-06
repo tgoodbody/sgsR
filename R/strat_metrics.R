@@ -9,7 +9,7 @@
 #' @param samp Numeric. For plotting - Determines proportion of cells 
 #' for strata visualization. Lower values reduce processing time.
 #'
-#' @return output stratification \code{spatRaster}
+#' @return output stratification \code{spatRaster}, or a list when \code{details = TRUE}.
 #' 
 #' @export
 
@@ -82,14 +82,14 @@ strat_metrics <- function(mraster,
     
     df <- vals %>%
       as.data.frame() %>%
-      filter(!is.na(.))
+      dplyr::filter(!is.na(.))
 
-    metric <- ensym(metric)
+    metric <- ggplot2::ensym(metric)
 
     #--- Split metric distribution in to number specified by 'breaks' ---#
     
     dfc <- df %>%
-      mutate(class = ntile(!!metric,nstrata))
+      dplyr::mutate(class = ntile(!!metric,nstrata))
 
     #--- convert back to original mraster extent ---#
     
@@ -128,24 +128,24 @@ strat_metrics <- function(mraster,
     
     df <- vals %>%
       as.data.frame() %>%
-      filter(!is.na(.))
+      dplyr::filter(!is.na(.))
 
-    metric <- ensym(metric)
-    metric2 <- ensym(metric2)
+    metric <- ggplot2::ensym(metric)
+    metric2 <- ggplot2::ensym(metric2)
 
     #--- Split metric distribution in to number specified by 'breaks' ---#
     
     dfc <- df %>%
       #--- define nstrata classes ---#
-      mutate(class1 = ntile(!!metric,nstrata)) %>%
+      dplyr::mutate(class1 = ntile(!!metric,nstrata)) %>%
       #--- group by class to sub stratify ---#
-      group_by(class1) %>%
+      dplyr::group_by(class1) %>%
       #--- define nstrata2 classes ---#
-      mutate(class2 = ntile(!!metric2,nstrata2)) %>%
+      dplyr::mutate(class2 = ntile(!!metric2,nstrata2)) %>%
       #--- combine classes ---#
-      group_by(class1,class2) %>%
+      dplyr::group_by(class1,class2) %>%
       #--- establish newly formed unique class ---#
-      mutate(class = cur_group_id())
+      dplyr::mutate(class = cur_group_id())
 
     #--- convert back to original mraster extent ---#
     
@@ -163,16 +163,16 @@ strat_metrics <- function(mraster,
       #--- set up colour palette ---#
       
       ncol <- nstrata * nstrata2
-      qual_col_pals = brewer.pal.info[brewer.pal.info$category == 'seq',]
-      col_vector = unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))
+      qual_col_pals = RColorBrewer::brewer.pal.info[brewer.pal.info$category == 'seq',]
+      col_vector = unlist(mapply(RColorBrewer::brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))
 
       terra::plot(rout, main = 'Classes', col=sample(col_vector, ncol))
 
       coordsgrps <- dfc %>%
-        group_by(class) %>%
-        arrange(class) %>%
-        nest() %>%
-        ungroup()
+        dplyr::group_by(class) %>%
+        dplyr::arrange(class) %>%
+        tidyr::nest() %>%
+        dplyr::ungroup()
 
       q <- classPlot(dfc = dfc,
                      coordsgrps = coordsgrps,

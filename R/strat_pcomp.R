@@ -4,7 +4,7 @@
 #' @inheritParams strat_kmeans
 #' @inheritParams strat_metrics
 #' 
-#' @return output stratification \code{spatRaster}
+#' @return output stratification \code{spatRaster}, or a list when \code{details = TRUE}.
 #' 
 #' @export
 
@@ -67,7 +67,7 @@ strat_pcomp <- function(mraster,
       
       pcagrps <- pcavals[idx,] %>%
         #--- define nstrata classes ---#
-        mutate(class = ntile(Dim.1,nstrata))
+        dplyr::mutate(class = ntile(Dim.1,nstrata))
       
       #--- convert back to original mraster extent ---#
       
@@ -99,15 +99,15 @@ strat_pcomp <- function(mraster,
       
       pcagrps <- pcavals[idx,] %>%
         #--- define nstrata classes ---#
-        mutate(class1 = ntile(Dim.1,nstrata)) %>%
+        dplyr::mutate(class1 = ntile(Dim.1,nstrata)) %>%
         #--- group by class to sub stratify ---#
-        group_by(class1) %>%
+        dplyr::group_by(class1) %>%
         #--- define nstrata2 classes ---#
-        mutate(class2 = ntile(Dim.2,nstrata2)) %>%
+        dplyr::mutate(class2 = ntile(Dim.2,nstrata2)) %>%
         #--- combine classes ---#
-        group_by(class1,class2) %>%
+        dplyr::group_by(class1,class2) %>%
         #--- establish newly formed unique class ---#
-        mutate(class = cur_group_id())
+        dplyr::mutate(class = cur_group_id())
       
       #--- convert back to original raster extent ---#
       
@@ -140,7 +140,7 @@ strat_pcomp <- function(mraster,
       
       pcagrps <- pcavals[idx,] %>%
         #--- define nstrata classes ---#
-        mutate(class = ntile(Dim.1,nstrata))
+        dplyr::mutate(class = ntile(Dim.1,nstrata))
       
       #--- convert back to original raster extent ---#
       
@@ -172,15 +172,15 @@ strat_pcomp <- function(mraster,
       
       pcagrps <- pcavals[idx,] %>%
         #--- define nstrata classes ---#
-        mutate(class1 = ntile(Dim.1,nstrata)) %>%
+        dplyr::mutate(class1 = ntile(Dim.1,nstrata)) %>%
         #--- group by class to sub stratify ---#
-        group_by(class1) %>%
+        dplyr::group_by(class1) %>%
         #--- define b2 classes ---#
-        mutate(class2 = ntile(Dim.2,nstrata2)) %>%
+        dplyr::mutate(class2 = ntile(Dim.2,nstrata2)) %>%
         #--- combine classes ---#
-        group_by(class1,class2) %>%
+        dplyr::group_by(class1,class2) %>%
         #--- establish newly formed unique class ---#
-        mutate(class = cur_group_id())
+        dplyr::mutate(class = cur_group_id())
       
       #--- convert back to original raster extent ---#
       
@@ -188,7 +188,7 @@ strat_pcomp <- function(mraster,
       
       #--- set newly stratified values ---#
       
-      rout <- terra::setValues(raster[[1]],vals)
+      rout <- terra::setValues(mraster[[1]],vals)
       names(rout) <- "strata"
       
     }
@@ -202,11 +202,11 @@ strat_pcomp <- function(mraster,
     terra::plot(rout)
     
     coordsgrps <- pcagrps %>%
-      group_by(class) %>%
-      arrange(class) %>%
-      na.omit() %>%
-      nest() %>%
-      ungroup()
+      dplyr::group_by(class) %>%
+      dplyr::arrange(class) %>%
+      stats::na.omit() %>%
+      tidyr::nest() %>%
+      dplyr::ungroup()
     
     p <- classPlot(pcagrps,
                    coordsgrps,

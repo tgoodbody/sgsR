@@ -6,7 +6,7 @@
 #' @param breaks Numeric. Vector of breakpoints for \code{metric}
 #' @param breaks2 Numeric. Vector of breakpoints for \code{metric2} (if provided)
 #' 
-#' @return output stratification \code{spatRaster}
+#' @return output stratification \code{spatRaster}, or a list when \code{details = TRUE}.
 #' 
 #' @export
 
@@ -65,16 +65,16 @@ strat_breaks <- function(mraster,
     stop("'breaks' contains values < the minimum 'metric' value.")
   
   if(any(breaks > minmax[2]))
-    stop("'breaks' contains values > the minimum 'metric' value.")
+    stop("'breaks' contains values > the maximum 'metric' value.")
   
   #--- apply breaks to primary metric ---#
   
   #--- reclassify values based on breaks ---#
   
   breaks_m <- data.frame(from=c(-Inf,breaks,Inf)) %>%
-    mutate(to = lead(from),
+    dplyr::mutate(to = lead(from),
            becomes = seq(1:length(from))) %>%
-    na.omit() %>%
+    stats::na.omit() %>%
     as.matrix()
   
   rcl <- terra::classify(rastermetric,breaks_m)
@@ -106,14 +106,14 @@ strat_breaks <- function(mraster,
       stop("'breaks2' contains values < the minimum 'metric2' value.")
     
     if(any(breaks2 > minmax2[2]))
-      stop("'breaks2' contains values > the minimum 'metric2' value.")
+      stop("'breaks2' contains values > the maximum 'metric2' value.")
     
     #--- reclassify values based on breaks ---#
     
     breaks2_m <- data.frame(from=c(-Inf,breaks2,Inf)) %>%
-      mutate(to = lead(from),
+      dplyr::mutate(to = lead(from),
              becomes = seq(1:length(from))) %>%
-      na.omit() %>%
+      stats::na.omit() %>%
       as.matrix()
     
     rcl2 <- terra::classify(rastermetric2,breaks2_m)
@@ -126,10 +126,10 @@ strat_breaks <- function(mraster,
     breaks_c <- terra::as.data.frame(rstack, xy=TRUE)
     
     breaks_c <- breaks_c %>%
-      group_by(strata,strata2) %>%
+      dplyr::group_by(strata,strata2) %>%
       #--- establish newly formed unique class ---#
-      mutate(class = cur_group_id()) %>%
-      ungroup()
+      dplyr::mutate(class = cur_group_id()) %>%
+      dplyr::ungroup()
     
     idx <- terra::cellFromXY(rcl,cbind(breaks_c$x,breaks_c$y))
     
@@ -138,7 +138,6 @@ strat_breaks <- function(mraster,
     
   }
   
-  
   if (isTRUE(plot)){
     
     data <- terra::as.data.frame(rastermetric)
@@ -146,20 +145,20 @@ strat_breaks <- function(mraster,
     
     #--- plot histogram of metric with associated break lines ---#
     
-    p1 <- ggplot(data,aes(metric)) +
-      geom_histogram() +
-      geom_vline(xintercept = breaks, linetype = "dashed") +
-      ggtitle(paste0(metric, " histogram with defined breaks"))
+    p1 <- ggplot2::ggplot(data,aes(metric)) +
+      ggplot2::geom_histogram() +
+      ggplot2::geom_vline(xintercept = breaks, linetype = "dashed") +
+      ggplot2::ggtitle(paste0(metric, " histogram with defined breaks"))
     
     if (!is.null(metric2)){
       
       data2 <- terra::as.data.frame(rastermetric2)
       names(data2) <- "metric2"
     
-    p2 <- ggplot(data2,aes(metric2)) +
-      geom_histogram() +
-      geom_vline(xintercept = breaks2, linetype = "dashed") +
-      ggtitle(paste0(metric2, " histogram with defined breaks"))
+    p2 <- ggplot2::ggplot(data2,aes(metric2)) +
+      ggplot2::geom_histogram() +
+      ggplot2::geom_vline(xintercept = breaks2, linetype = "dashed") +
+      ggplot2::ggtitle(paste0(metric2, " histogram with defined breaks"))
     
     suppressMessages(print(ggpubr::ggarrange(p1, p2, ncol = 1, nrow =2)))
     

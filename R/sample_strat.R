@@ -185,12 +185,10 @@ sample_strat <- function(sraster,
     #--- make access buffer with user defined values ---#
     
     buff_in <- terra::buffer(x = access,
-                             width = buff_inner,
-                             capstyle = "round")
+                             width = buff_inner)
     
     buff_out <- terra::buffer(x = access,
-                              width = buff_outer,
-                              capstyle = "round")
+                              width = buff_outer)
     
     #--- make difference and aggregate inner and outer buffers to prevent sampling too close to access ---#
     
@@ -331,7 +329,7 @@ sample_strat <- function(sraster,
           #--- If add_strata isn't empty, check distance with all other sampled cells in strata ---#
         } else {
           
-          dist <- crossdist(add_temp$X, add_temp$Y , add_strata$X , add_strata$Y)
+          dist <- spatstat.geom::crossdist(add_temp$X, add_temp$Y , add_strata$X , add_strata$Y)
           
           #--- If all less than 'mindist' - accept sampled cell otherwise reject ---#
           if (all(as.numeric(dist) > mindist)) {
@@ -385,7 +383,7 @@ sample_strat <- function(sraster,
             
           } else {
             
-            dist <- crossdist(add_temp$X,add_temp$Y,add_strata$X,add_strata$Y)
+            dist <- spatstat.geom::crossdist(add_temp$X,add_temp$Y,add_strata$X,add_strata$Y)
             
             if( all(as.numeric(dist) > mindist )){
               
@@ -423,7 +421,7 @@ sample_strat <- function(sraster,
   #--- convert coordinates to a spatial points object ---#
   samples <- out %>%
     as.data.frame() %>%
-    st_as_sf(., coords = c("X", "Y"))
+    sf::st_as_sf(., coords = c("X", "Y"))
   
   #--- assign sraster crs to spatial points object ---#
   st_crs(samples) <- crs

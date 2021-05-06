@@ -33,7 +33,7 @@ extract_existing <- function(sraster,
     
     #--- Convert to spatVector to enable extraction of strata values ---#
     
-    existing <- st_coordinates(existing)
+    existing <- sf::st_coordinates(existing)
     
   } else {
   
@@ -44,7 +44,7 @@ extract_existing <- function(sraster,
       if (any(c("x", "y") %in% colnames(existing))) {
         
         existing <- existing %>%
-          rename(X = x,
+          dplyr::rename(X = x,
                  Y = y)
         
         message("Column coordinate names are lowercase - converting to uppercase")
@@ -87,11 +87,11 @@ extract_existing <- function(sraster,
     
     samples <- existing_strata %>%
       as.data.frame() %>%
-      st_as_sf(., coords = c("X", "Y"))
+      sf::st_as_sf(., coords = c("X", "Y"))
     
     #--- assign sraster crs to spatial points object ---#
     
-    st_crs(samples) <- crs(sraster)
+    sf::st_crs(samples) <- terra::crs(sraster)
     
     #--- return sf object ---#
     return(samples)

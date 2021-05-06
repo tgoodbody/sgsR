@@ -15,7 +15,7 @@
 #' where \code{$details} is additional stratification information and
 #'  \code{$raster} is the output stratification spatRaster.
 #'
-#' @return output stratification \code{spatRaster}
+#' @return output stratification \code{spatRaster}, or a list when \code{details = TRUE}.
 #' 
 #' @export
 
@@ -121,7 +121,7 @@ strat_kmeans <- function(mraster,
     #--- make plot using diverging colour palette ---#
     
     ncols <- nstrata
-    col = brewer.pal(ncols, "Set3")
+    col = RColorBrewer::brewer.pal(ncols, "Set3")
 
     terra::plot(kmv, main = 'K-means clusters', col=col,type="classes")
 

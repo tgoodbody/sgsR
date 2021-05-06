@@ -11,19 +11,19 @@ tallySamples <- function(sraster,
                          existing = NULL){
   
   #--- determine crs of input sraster ---#
-  crs <- crs(sraster)
+  crs <- terra::crs(sraster)
   
-  vals <- values(sraster) %>% 
+  vals <- terra::values(sraster) %>% 
     as.data.frame()
   
   names(vals) <- "strata"
   
   #--- determine number of samples within each strata ---#
   toSample <- vals %>% 
-    na.omit() %>%
-    group_by(strata) %>% 
-    summarize(count= n()) %>% 
-    mutate(freq = count / sum(count),
+    stats::na.omit() %>%
+    dplyr::group_by(strata) %>% 
+    dplyr::summarize(count= n()) %>% 
+    dplyr::mutate(freq = count / sum(count),
            total = freq * n) %>%
     
     #--- if a value equates to <1 it will have 0 samples --- change 0 to 1 ---#
@@ -32,8 +32,8 @@ tallySamples <- function(sraster,
     #### What other method could be used ####
     #########################################
   
-    mutate(total = replace(total, total < 1, 1)) %>%
-    mutate(total = round(total)) %>%
+    dplyr::mutate(total = replace(total, total < 1, 1)) %>%
+    dplyr::mutate(total = round(total)) %>%
     dplyr::select(strata, total) %>%
     as.data.frame()
   
@@ -54,7 +54,7 @@ tallySamples <- function(sraster,
       #--- subtract 'diff' from largest sample size ---#
       
       toSample <- toSample %>% 
-        mutate(total = replace(total,
+        dplyr::mutate(total = replace(total,
                                total == maxTotal,
                                maxTotal - abs(diff))
         )
@@ -68,7 +68,7 @@ tallySamples <- function(sraster,
       #--- add 'diff' to smallest sample size ---#
       
       toSample <- toSample %>% 
-        mutate(total = replace(total,
+        dplyr::mutate(total = replace(total,
                                total == minTotal,
                                minTotal + abs(diff))
         )
@@ -88,9 +88,9 @@ tallySamples <- function(sraster,
     #--- determine number of samples for each strata ---#
     
     existing <- existing %>%
-      group_by(strata) %>% 
-      arrange() %>%
-      summarize(eTotal= n())
+      dplyr::group_by(strata) %>% 
+      dplyr::arrange() %>%
+      dplyr::summarize(eTotal= n())
     
     #--- if the strata for toSample and existing are not identical throw an error ---#
     if (!identical(unique(existing$strata),unique(toSample$strata)))
@@ -98,8 +98,8 @@ tallySamples <- function(sraster,
     
     #--- join the 2 df together and subtrace the number of existing plots by strata from toSample ---#
     toSample <- toSample %>%
-      left_join(existing, by = "strata") %>%
-      mutate(total = total - eTotal) %>%
+      dplyr::left_join(existing, by = "strata") %>%
+      dplyr::mutate(total = total - eTotal) %>%
       dplyr::select(-eTotal) %>%
       as.data.frame()
 
