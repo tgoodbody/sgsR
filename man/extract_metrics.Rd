@@ -4,10 +4,10 @@
 \alias{extract_metrics}
 \title{Extract metric raster attributes to samples}
 \usage{
-extract_metrics(sraster, samples, data.frame = FALSE)
+extract_metrics(mraster, samples, data.frame = FALSE)
 }
 \arguments{
-\item{sraster}{spatRaster. Stratification raster to be used for sampling.}
+\item{mraster}{spatRaster. ALS metrics raster.}
 
 \item{samples}{sf. Samples resulting from sample_* functions.}
 

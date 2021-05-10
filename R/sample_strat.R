@@ -28,6 +28,7 @@ sample_strat <- function(sraster,
                          wcol = 3,
                          plot = FALSE,
                          details = FALSE) {
+  
   #--- Error management ---#
   if (!inherits(sraster, "SpatRaster"))
     stop("'sraster' must be type SpatRaster", call. = FALSE)
@@ -84,15 +85,20 @@ sample_strat <- function(sraster,
     if (any(! c("strata") %in% names(existing)) )
       stop("'existing' must have an attribute named 'strata'")
     
-    if (inherits(existing,"sf") && inherits(sf::st_geometry(existing),"sfc_POINT")){
-      
-      #--- if existing is an sf object extract the coordinates and the strata vector ---#
-      
-      exist_xy <- st_coordinates(existing)
-      
-      strata <- existing$strata
-      
-      existing <- as.data.frame(cbind(strata, exist_xy))
+    #--- error handling in the presence of 'existing' ---#
+    if (!inherits(existing,"sf")) {
+      stop("'access' must be an 'sf' object")
+    
+      if(!inherits(sf::st_geometry(existing),"sfc_POINT"))
+        stop("'access' geometry type must be 'sfc_MULTILINESTRING'")
+        
+        #--- if existing is an sf object extract the coordinates and the strata vector ---#
+        
+        exist_xy <- st_coordinates(existing)
+        
+        strata <- existing$strata
+        
+        existing <- as.data.frame(cbind(strata, exist_xy))
       
       
     }
@@ -153,8 +159,11 @@ sample_strat <- function(sraster,
   if (!missing(access)){
     
     #--- error handling in the presence of 'access' ---#
-    if (!inherits(access,"sf") && inherits(sf::st_geometry(access),"sfc_MULTILINESTRING"))
-      stop("'access' must be an 'sf' object of type 'sfc_MULTILINESTRING' geometry")
+    if (!inherits(access,"sf"))
+      stop("'access' must be an 'sf' object")
+      
+    if(!inherits(sf::st_geometry(access),"sfc_MULTILINESTRING"))
+     stop("'access' geometry type must be 'sfc_MULTILINESTRING'")
     
     if (buff_inner > buff_outer)
       stop("'buff_inner' must be < 'buff_outer'")

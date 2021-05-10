@@ -19,16 +19,11 @@ strat_pcomp(
 
 \item{nstrata}{Character. Number of desired strata.}
 
-\item{nstrata2}{Numeric.  Number of secondary strata within \code{nstrata}.}
-
 \item{scale}{Logical. Determines whether scaling and centering
 of data should be conducted prior to analysis.}
 
 \item{plot}{Logical. Plots output strata raster and visualized
 strata with boundary dividers.}
-
-\item{samp}{Numeric. For plotting - Determines proportion of cells 
-for strata visualization. Lower values reduce processing time.}
 
 \item{details}{Logical. If \code{FALSE} (default) output is only
  stratification raster. If \code{TRUE} return a list
@@ -36,7 +31,7 @@ where \code{$details} is additional stratification information and
  \code{$raster} is the output stratification spatRaster.}
 }
 \value{
-output stratification \code{spatRaster}
+output stratification \code{spatRaster}, or a list when \code{details = TRUE}.
 }
 \description{
 Stratify metrics raster using principal components and quantile breaks
@@ -45,7 +40,7 @@ Stratify metrics raster using principal components and quantile breaks
 Other stratify functions: 
 \code{\link{strat_breaks}()},
 \code{\link{strat_kmeans}()},
-\code{\link{strat_metrics}()},
-\code{\link{strat_osb}()}
+\code{\link{strat_osb}()},
+\code{\link{strat_quantiles}()}
 }
 \concept{stratify functions}

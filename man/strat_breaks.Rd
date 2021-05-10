@@ -17,11 +17,6 @@ strat_breaks(
 \arguments{
 \item{mraster}{spatRaster. ALS metrics raster.}
 
-\item{metric}{Character. Name of primary metric to stratify. If 
-\code{mraster} is has 1 layer it is taken as default.}
-
-\item{metric2}{Character. Name of secondary metric to stratify.}
-
 \item{breaks}{Numeric. Vector of breakpoints for \code{metric}}
 
 \item{breaks2}{Numeric. Vector of breakpoints for \code{metric2} (if provided)}
@@ -35,7 +30,7 @@ where \code{$details} is additional stratification information and
  \code{$raster} is the output stratification spatRaster.}
 }
 \value{
-output stratification \code{spatRaster}
+output stratification \code{spatRaster}, or a list when \code{details = TRUE}.
 }
 \description{
 Stratify metrics raster using user defined breaks
@@ -43,8 +38,8 @@ Stratify metrics raster using user defined breaks
 \seealso{
 Other stratify functions: 
 \code{\link{strat_kmeans}()},
-\code{\link{strat_metrics}()},
 \code{\link{strat_osb}()},
-\code{\link{strat_pcomp}()}
+\code{\link{strat_pcomp}()},
+\code{\link{strat_quantiles}()}
 }
 \concept{stratify functions}

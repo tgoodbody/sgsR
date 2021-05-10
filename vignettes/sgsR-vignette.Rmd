@@ -169,7 +169,7 @@ plot(pcomp2)
 
 #--- perform stratification using an individual metric ---#
 #--- if no 'metric' name defined and raster is 1 layer - automatically uses only available layer ---#
-metrics1 <- strat_metrics(mraster = wall_poly[[1]], 
+metrics1 <- strat_quantiles(mraster = wall_poly[[1]], 
                          nstrata = 5)
 
 plot(metrics1)
@@ -178,7 +178,7 @@ plot(metrics1)
 
 ```{r}
 #--- perform stratification using an individual metric ---#
-metrics2 <- strat_metrics(mraster = wall_poly, 
+metrics2 <- strat_quantiles(mraster = wall_poly, 
                          metric = "avg", 
                          nstrata = 10)
 
@@ -189,7 +189,7 @@ plot(metrics2)
 ```{r}
 
 #--- perform stratification using 2 metrics metrics ---#
-metrics3 <- strat_metrics(mraster = wall_poly, 
+metrics3 <- strat_quantiles(mraster = wall_poly, 
                          metric = "avg", 
                          metric2 = "p99", 
                          nstrata = 10, 
