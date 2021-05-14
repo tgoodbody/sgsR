@@ -10,6 +10,9 @@
 #' 
 #' @return An sf object with \code{n} randomly sampled points.
 #' 
+#' @importFrom magrittr %>%
+#' @importFrom methods is
+#' 
 #' @export
 
 sample_balanced <- function(mraster,
@@ -19,7 +22,11 @@ sample_balanced <- function(mraster,
                             access = NULL,
                             buff_inner = NULL,
                             buff_outer = NULL,
-                            plot = FALSE) {
+                            plot = FALSE) 
+  {
+  
+  #--- Set global vars ---#
+  x <- y <- X <- Y <- strata <- NULL
   
   #--- Error management ---#
   if (!inherits(mraster, "SpatRaster"))
@@ -85,12 +92,10 @@ sample_balanced <- function(mraster,
     #--- make access buffer with user defined values ---#
     
     buff_in <- terra::buffer(x = roads,
-                             width = buff_inner,
-                             capstyle = "round")
+                             width = buff_inner)
     
     buff_out <- terra::buffer(x = roads,
-                              width = buff_outer,
-                              capstyle = "round")
+                              width = buff_outer)
     
     #--- make difference and aggregate inner and outer buffers to prevent sampling too close to access ---#
     buffer <- terra::aggregate(buff_out - buff_in)
@@ -101,7 +106,7 @@ sample_balanced <- function(mraster,
   
   #--- extract XY coordinates from raster ---#
   vals <- terra::as.data.frame(mraster,xy=TRUE) %>%
-    rename(X = x,
+    dplyr::rename(X = x,
            Y = y)
   
   #--- # drop x,y matrix of auxiliary variables ---#
@@ -172,10 +177,10 @@ sample_balanced <- function(mraster,
   #--- convert coordinates to a spatial points object ---#
   samples <- dplyr::select(samples, X, Y) %>%
     as.data.frame() %>%
-    st_as_sf(., coords = c("X", "Y"))
+    sf::st_as_sf(., coords = c("X", "Y"))
   
   #--- assign mraster crs to spatial points object ---#
-  st_crs(samples) <- crs
+  sf::st_crs(samples) <- crs
   
   if(isTRUE(plot)){
     

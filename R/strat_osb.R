@@ -9,6 +9,9 @@
 #' @param subset - Numeric. Value between 0 and 1 (default) 
 #' denoting proportion of data to use to determine break points
 #' 
+#' @importFrom magrittr %>%
+#' @importFrom methods is
+#' 
 #' @return output stratification \code{spatRaster}, or a list when \code{details = TRUE}.
 #' 
 #' @export
@@ -22,6 +25,11 @@ strat_osb <- function(mraster,
                       details = FALSE)
 
 {
+  
+  #--- Set global vars ---#
+  
+  from <- NULL
+  
   #--- Error management ---#
   
   if (!inherits(mraster,"SpatRaster"))
@@ -80,7 +88,7 @@ strat_osb <- function(mraster,
 
   } else {
 
-    if (ncell(rastermetric) > 100000)
+    if (terra::ncell(rastermetric) > 100000)
       message("The raster you are using has over 100,000 cells. Consider using 'subset' to improve processing times.")
 
     #--- Extract values from raster removing any NA/INF/NaN ---#
@@ -91,8 +99,8 @@ strat_osb <- function(mraster,
 
   #--- reclassify values based on breaks ---#
 
-  breaks <- data.frame(from=c(-Inf,OSB[[2]]$OSB[1:(nstrata - 1)],Inf)) %>%
-    dplyr::mutate(to = lead(from),
+  breaks <- data.frame(from = c(-Inf,OSB[[2]]$OSB[1:(nstrata - 1)],Inf)) %>%
+    dplyr::mutate(to = dplyr::lead(from),
            becomes = seq(1:length(from))) %>%
     stats::na.omit() %>%
     as.matrix()
@@ -107,7 +115,7 @@ strat_osb <- function(mraster,
 
     #--- plot histogram of metric with associated break lines ---#
 
-    p1 <- ggplot2::ggplot(data,aes(metric)) +
+    p1 <- ggplot2::ggplot(data, ggplot2::aes(metric)) +
       ggplot2::geom_histogram() +
       ggplot2::geom_vline(xintercept = OSB[[2]]$OSB, linetype = "dashed") +
       ggplot2::ggtitle("Metric histogram with OSB break lines")
@@ -147,7 +155,7 @@ strat_osb <- function(mraster,
 perform_osb_sample <- function(rastermetric, nstrata, n, subset){
   vals <- rastermetric %>%
     terra::values(dataframe=TRUE) %>%
-    dplyr::filter(complete.cases(.)) %>%
+    dplyr::filter(stats::complete.cases(.)) %>%
     dplyr::slice_sample(prop = subset) %>%
     dplyr::pull()
 
@@ -163,7 +171,7 @@ perform_osb <- function(rastermetric, nstrata, n){
   
   vals <- rastermetric %>%
     terra::values(dataframe=TRUE) %>%
-    dplyr::filter(complete.cases(.)) %>%
+    dplyr::filter(stats::complete.cases(.)) %>%
     dplyr::pull()
 
   OSB_result <- vals %>%

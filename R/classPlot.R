@@ -1,10 +1,13 @@
 #' Scatter plot of strata using ggplot
 #'
-#' @inheritParams strat_metrics
+#' @inheritParams strat_quantiles
 #' @param dfc data.frame. Values for metric1 and metric2
 #' @param coordsgrps List. Cartesian coordinates of each strata
 #' @param samp Numeric. Determines proportion of cells to plot 
 #' for strata visualization. Lower values reduce processing time.
+#' 
+#' @importFrom magrittr %>%
+#' @importFrom methods is
 #'
 
 
@@ -26,8 +29,8 @@ classPlot <- function(dfc,
   
   #--- plot individual cells coloured by associated class ---#
 
-  p <- ggplot2::ggplot(mapping = aes(x = !!metric, y = !!metric2))+
-    ggplot2::geom_point(data = dfc, alpha = 0.3, aes(color = as.factor(class)))+
+  p <- ggplot2::ggplot(mapping = ggplot2::aes(x = !!metric, y = !!metric2))+
+    ggplot2::geom_point(data = dfc, alpha = 0.3, ggplot2::aes(color = as.factor(class)))+
     ggplot2::theme_bw() +
     ggplot2::theme(legend.position = "none")
   

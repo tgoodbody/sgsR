@@ -1,10 +1,11 @@
 Package: sgsR
 Type: Package
-Title: Approaches to structurally guided sampling using ALS data
+Title: sgsR: Structurally Guided Sampling Approaches using ALS Data for R
 Version: 0.1.0
-Author: Tristan R.H. Goodbody
-Maintainer: Tristan R.H. Goodbody <goodbody.t@gmail.com>
-Description: This is a test to start up the sgsR package
+Date: 2021
+Author: Tristan RH Goodbody
+Maintainer: Tristan RH Goodbody <goodbody.t@gmail.com>
+Description: This package provides functions to enable stratification and sampling for structurally guided sampling using ALS data.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -15,12 +16,16 @@ Imports:
     FactoMineR (>= 2.4.0),
     ggplot2 (>= 3.3.3),
     ggpubr (>= 0.4.0),
+    magrittr (>= 2.0.1),
+    methods (>= 4.0.5),
     purrr (>= 0.3.4),
     RColorBrewer (>= 1.1.0),
+    rlang (>= 0.4.11),
     SamplingBigData (>= 1.0.0),
     sf (>= 0.9.0),
     sp (>= 1.4.0),
     spatstat (>= 2.1.0),
+    spatstat.geom (>= 2.1.0),
     stratifyR (>= 1.0.0),
     terra (>= 1.1.0),
     tidyr (>= 1.1.3)

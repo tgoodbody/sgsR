@@ -11,6 +11,8 @@
 #' where \code{$details} additional sampling information and \code{$raster} 
 #' is an sf object of stratified samples.
 #'
+#' @importFrom magrittr %>%
+#' @importFrom methods is
 #' 
 #' @return An sf object with \code{n} stratified samples.
 #' 
@@ -27,7 +29,11 @@ sample_strat <- function(sraster,
                          wrow = 3,
                          wcol = 3,
                          plot = FALSE,
-                         details = FALSE) {
+                         details = FALSE) 
+{
+  
+  #--- Set global vars ---#
+  x <- y <- NULL
   
   #--- Error management ---#
   if (!inherits(sraster, "SpatRaster"))
@@ -55,7 +61,7 @@ sample_strat <- function(sraster,
     stop("'details' must be type logical")
   
   #--- if the sraster has multiple bands subset the band named strata ---#
-  if(nlyr(sraster) > 1){
+  if(terra::nlyr(sraster) > 1){
     
     sraster <- terra::subset(sraster, "strata")
     
@@ -86,20 +92,23 @@ sample_strat <- function(sraster,
       stop("'existing' must have an attribute named 'strata'")
     
     #--- error handling in the presence of 'existing' ---#
-    if (!inherits(existing,"sf")) {
-      stop("'access' must be an 'sf' object")
+    if (!inherits(existing,"sf"))
+      stop("'existing' must be an 'sf' object")
     
-      if(!inherits(sf::st_geometry(existing),"sfc_POINT"))
-        stop("'access' geometry type must be 'sfc_MULTILINESTRING'")
+      if(inherits(sf::st_geometry(existing),"sfc_POINT")){
         
         #--- if existing is an sf object extract the coordinates and the strata vector ---#
         
-        exist_xy <- st_coordinates(existing)
+        exist_xy <- sf::st_coordinates(existing)
         
         strata <- existing$strata
         
         existing <- as.data.frame(cbind(strata, exist_xy))
       
+      
+    } else {
+      
+      stop("'existing' geometry type must be 'sfc_POINT'")
       
     }
     
@@ -112,7 +121,7 @@ sample_strat <- function(sraster,
       if (any(c("x", "y") %in% colnames(existing))) {
         
         existing <- existing %>%
-          rename(X = x,
+          dplyr::rename(X = x,
                  Y = y)
         
         message("'existing' column coordinate names are lowercase - converting to uppercase")
@@ -201,7 +210,7 @@ sample_strat <- function(sraster,
     
     #--- make difference and aggregate inner and outer buffers to prevent sampling too close to access ---#
     
-    buffer <- aggregate(buff_out - buff_in)
+    buffer <- terra::aggregate(buff_out - buff_in)
     
     #--- mask sraster for plotting ---#
     raster_masked <- terra::mask(sraster, 
@@ -236,7 +245,7 @@ sample_strat <- function(sraster,
         strata_m_buff <- terra::mask(strata_m, 
                                      mask = buffer)
         
-        sampAvail <- sum(!is.na(values(strata_m_buff)))
+        sampAvail <- sum(!is.na(terra::values(strata_m_buff)))
         
         if (sampAvail > nSamp) {
           message(
@@ -295,7 +304,7 @@ sample_strat <- function(sraster,
       
       #--- create indices for all, NA, and valid sampling candidates ---#
       
-      idx_all <- 1:ncell(strata_m_clust)
+      idx_all <- 1:terra::ncell(strata_m_clust)
       idx_na <- is.na(terra::values(strata_m_clust))
       validCandidates <- idx_all[!idx_na]
       
@@ -355,7 +364,7 @@ sample_strat <- function(sraster,
       
       if (nCount < nSamp) {
         
-        idx_all <- 1:ncell(strata_m)
+        idx_all <- 1:terra::ncell(strata_m)
         idx_na <- is.na(terra::values(strata_m))
         validCandidates <- idx_all[!idx_na]
         
@@ -433,7 +442,7 @@ sample_strat <- function(sraster,
     sf::st_as_sf(., coords = c("X", "Y"))
   
   #--- assign sraster crs to spatial points object ---#
-  st_crs(samples) <- crs
+  sf::st_crs(samples) <- crs
   
   
   #--- plot the raster and samples if desired ---#

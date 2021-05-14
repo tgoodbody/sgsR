@@ -2,11 +2,14 @@
 #' @family stratify functions
 #'
 #' @inheritParams strat_kmeans
-#' @inheritParams strat_metrics
+#' @inheritParams strat_quantiles
 #' @param breaks Numeric. Vector of breakpoints for \code{metric}
 #' @param breaks2 Numeric. Vector of breakpoints for \code{metric2} (if provided)
 #' 
 #' @return output stratification \code{spatRaster}, or a list when \code{details = TRUE}.
+#' 
+#' @importFrom magrittr %>%
+#' @importFrom methods is
 #' 
 #' @export
 
@@ -19,6 +22,10 @@ strat_breaks <- function(mraster,
                       details = FALSE)
   
 {
+  
+  #--- Set global vars ---#
+  from <- strata <- strata2 <- NULL
+  
   #--- Error management ---#
   
   if (!inherits(mraster,"SpatRaster"))
@@ -72,7 +79,7 @@ strat_breaks <- function(mraster,
   #--- reclassify values based on breaks ---#
   
   breaks_m <- data.frame(from=c(-Inf,breaks,Inf)) %>%
-    dplyr::mutate(to = lead(from),
+    dplyr::mutate(to = dplyr::lead(from),
            becomes = seq(1:length(from))) %>%
     stats::na.omit() %>%
     as.matrix()
@@ -111,7 +118,7 @@ strat_breaks <- function(mraster,
     #--- reclassify values based on breaks ---#
     
     breaks2_m <- data.frame(from=c(-Inf,breaks2,Inf)) %>%
-      dplyr::mutate(to = lead(from),
+      dplyr::mutate(to = dplyr::lead(from),
              becomes = seq(1:length(from))) %>%
       stats::na.omit() %>%
       as.matrix()
@@ -128,7 +135,7 @@ strat_breaks <- function(mraster,
     breaks_c <- breaks_c %>%
       dplyr::group_by(strata,strata2) %>%
       #--- establish newly formed unique class ---#
-      dplyr::mutate(class = cur_group_id()) %>%
+      dplyr::mutate(class = dplyr::cur_group_id()) %>%
       dplyr::ungroup()
     
     idx <- terra::cellFromXY(rcl,cbind(breaks_c$x,breaks_c$y))
@@ -145,7 +152,7 @@ strat_breaks <- function(mraster,
     
     #--- plot histogram of metric with associated break lines ---#
     
-    p1 <- ggplot2::ggplot(data,aes(metric)) +
+    p1 <- ggplot2::ggplot(data,ggplot2::aes(metric)) +
       ggplot2::geom_histogram() +
       ggplot2::geom_vline(xintercept = breaks, linetype = "dashed") +
       ggplot2::ggtitle(paste0(metric, " histogram with defined breaks"))
@@ -155,7 +162,7 @@ strat_breaks <- function(mraster,
       data2 <- terra::as.data.frame(rastermetric2)
       names(data2) <- "metric2"
     
-    p2 <- ggplot2::ggplot(data2,aes(metric2)) +
+    p2 <- ggplot2::ggplot(data2,ggplot2::aes(metric2)) +
       ggplot2::geom_histogram() +
       ggplot2::geom_vline(xintercept = breaks2, linetype = "dashed") +
       ggplot2::ggtitle(paste0(metric2, " histogram with defined breaks"))

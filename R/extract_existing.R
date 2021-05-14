@@ -7,11 +7,19 @@
 #' 
 #' @return An sf or data.frame object of samples with strata attributes
 #' 
+#' @importFrom magrittr %>%
+#' @importFrom methods is
+#' 
 #' @export
 
 extract_existing <- function(sraster,
                              existing,
-                             data.frame = FALSE){
+                             data.frame = FALSE)
+  {
+  
+  #--- Set global vars ---#
+  
+  x <- y <- X <- Y <- strata <-  NULL
   
   #--- Error management ---#
   

@@ -14,6 +14,9 @@
 #'  stratification raster. If \code{TRUE} return a list
 #' where \code{$details} is additional stratification information and
 #'  \code{$raster} is the output stratification spatRaster.
+#'  
+#' @importFrom magrittr %>%
+#' @importFrom methods is
 #'
 #' @return output stratification \code{spatRaster}, or a list when \code{details = TRUE}.
 #' 
@@ -73,13 +76,13 @@ strat_kmeans <- function(mraster,
     if (isTRUE(scale))
       {
       
-      message("K-means being performed on ",nlyr(mraster)," layers with ",nstrata," centers. Data have been centered and scaled")
+      message("K-means being performed on ",terra::nlyr(mraster)," layers with ",nstrata," centers. Data have been centered and scaled")
 
       km_clust <- stats::kmeans(scale(vals[idx], center = TRUE, scale=TRUE), centers = nstrata, iter.max = iter.max, algorithm = algorithm)
     
       } else {
       
-      message("K-means being performed on ",nlyr(mraster)," layers with ",nstrata," centers, Data have not been centered or scaled.")
+      message("K-means being performed on ",terra::nlyr(mraster)," layers with ",nstrata," centers, Data have not been centered or scaled.")
 
       km_clust <- stats::kmeans(scale(vals[idx], center = FALSE, scale=FALSE), centers = nstrata, iter.max = iter.max, algorithm = algorithm)
       
@@ -92,13 +95,13 @@ strat_kmeans <- function(mraster,
     {
     if (isTRUE(scale))
       {
-      message("K-means being performed on ",nlyr(mraster)," layers with ",nstrata," centers. Data have been centered and scaled")
+      message("K-means being performed on ",terra::nlyr(mraster)," layers with ",nstrata," centers. Data have been centered and scaled")
       
       km_clust <- stats::kmeans(scale(vals[idx], center = TRUE, scale=TRUE), centers = nstrata, iter.max = iter.max, algorithm = algorithm)
       
       } else {
       
-      message("K-means being performed on ",nlyr(mraster)," layers with ",nstrata," centers, Data have not been centered or scaled.")
+      message("K-means being performed on ",terra::nlyr(mraster)," layers with ",nstrata," centers, Data have not been centered or scaled.")
       
       km_clust <- stats::kmeans(scale(vals[idx],center = FALSE, scale=FALSE), centers = nstrata, iter.max = iter.max, algorithm = algorithm)
       

@@ -9,6 +9,9 @@
 #' @param samp Numeric. For plotting - Determines proportion of cells 
 #' for strata visualization. Lower values reduce processing time.
 #'
+#' @importFrom magrittr %>%
+#' @importFrom methods is
+#' 
 #' @return output stratification \code{spatRaster}, or a list when \code{details = TRUE}.
 #' 
 #' @export
@@ -21,6 +24,10 @@ strat_quantiles <- function(mraster,
                           plot = FALSE,
                           samp = 1,
                           details = FALSE){
+  
+  #--- Set global vars ---#
+  
+  class1 <- class2 <- NULL
   
   #--- error handling ---#
   if (!inherits(mraster,"SpatRaster"))
@@ -89,7 +96,7 @@ strat_quantiles <- function(mraster,
     #--- Split metric distribution in to number specified by 'breaks' ---#
     
     dfc <- df %>%
-      dplyr::mutate(class = ntile(!!metric,nstrata))
+      dplyr::mutate(class = dplyr::ntile(!!metric,nstrata))
     
     #--- convert back to original mraster extent ---#
     
@@ -138,15 +145,15 @@ strat_quantiles <- function(mraster,
     
     dfc <- df %>%
       #--- define nstrata classes ---#
-      dplyr::mutate(class1 = ntile(!!metric,nstrata)) %>%
+      dplyr::mutate(class1 = dplyr::ntile(!!metric,nstrata)) %>%
       #--- group by class to sub stratify ---#
       dplyr::group_by(class1) %>%
       #--- define nstrata2 classes ---#
-      dplyr::mutate(class2 = ntile(!!metric2,nstrata2)) %>%
+      dplyr::mutate(class2 = dplyr::ntile(!!metric2,nstrata2)) %>%
       #--- combine classes ---#
       dplyr::group_by(class1,class2) %>%
       #--- establish newly formed unique class ---#
-      dplyr::mutate(class = cur_group_id())
+      dplyr::mutate(class = dplyr::cur_group_id())
     
     #--- convert back to original mraster extent ---#
     
@@ -182,7 +189,7 @@ strat_quantiles <- function(mraster,
       
       #--- plot histogram of metric with associated break lines ---#
       
-      p1 <- ggplot2::ggplot(df.p,aes(!!metric)) +
+      p1 <- ggplot2::ggplot(df.p,ggplot2::aes(!!metric)) +
         ggplot2::geom_histogram() +
         ggplot2::geom_vline(xintercept = breaks, linetype = "dashed") +
         ggplot2::ggtitle(paste0(metric, " histogram with defined breaks"))

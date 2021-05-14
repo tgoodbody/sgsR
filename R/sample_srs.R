@@ -14,6 +14,9 @@
 #' 
 #' @return An sf object with \code{n} randomly sampled points.
 #' 
+#' @importFrom magrittr %>%
+#' @importFrom methods is
+#' 
 #' @export
 
 sample_srs <- function(sraster,
@@ -78,7 +81,7 @@ sample_srs <- function(sraster,
     )
 
     #--- convert vectors to spatVector to synergize with terra raster functions---#
-    roads <- vect(roads)
+    roads <- terra::vect(roads)
     
     #--- make access buffer with user defined values ---#
 
@@ -89,7 +92,7 @@ sample_srs <- function(sraster,
                               width = buff_outer)
 
     #--- make difference and aggregate inner and outer buffers to prevent sampling too close to access ---#
-    buffer <- aggregate(buff_out - buff_in)
+    buffer <- terra::aggregate(buff_out - buff_in)
 
     sraster <- terra::mask(sraster, mask = buffer)
 
@@ -100,7 +103,7 @@ sample_srs <- function(sraster,
   
   #--- create indices for all, NA, and valid sampling candidates ---#
 
-  idx_all <- 1:ncell(sraster)
+  idx_all <- 1:terra::ncell(sraster)
   idx_na <- is.na(terra::values(sraster))
   validCandidates <- idx_all[!idx_na]
 
@@ -137,7 +140,7 @@ sample_srs <- function(sraster,
       #--- If add_strata isnt empty, check distance with all other sampled cells in strata ---#
     } else {
 
-      dist <- crossdist(add_temp$x, add_temp$y , add_strata$x , add_strata$y)
+      dist <- spatstat.geom::crossdist(add_temp$x, add_temp$y , add_strata$x , add_strata$y)
 
       #--- If all less than 'mindist' - accept sampled cell otherwise reject ---#
       if (all(as.numeric(dist) > mindist)) {
@@ -153,10 +156,10 @@ sample_srs <- function(sraster,
     #--- convert coordinates to a spatial points object ---#
     samples <- add_strata %>%
       as.data.frame() %>%
-      st_as_sf(., coords = c("x", "y"))
+      sf::st_as_sf(., coords = c("x", "y"))
 
     #--- assign sraster crs to spatial points object ---#
-    st_crs(samples) <- crs
+    sf::st_crs(samples) <- crs
     
     if(isTRUE(plot)){
 

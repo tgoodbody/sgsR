@@ -3,12 +3,19 @@
 #' @inheritParams sample_srs
 #' @inheritParams sample_strat
 #' 
+#' @importFrom magrittr %>%
+#' @importFrom methods is
+#' 
 #' @return data.frame of strata and associates samples
 
 
 tallySamples <- function(sraster,
                          n,
                          existing = NULL){
+  
+  #--- set global vars ---#
+  
+  strata <- count <- freq <- total <- eTotal <- NULL
   
   #--- determine crs of input sraster ---#
   crs <- terra::crs(sraster)
@@ -22,7 +29,7 @@ tallySamples <- function(sraster,
   toSample <- vals %>% 
     stats::na.omit() %>%
     dplyr::group_by(strata) %>% 
-    dplyr::summarize(count= n()) %>% 
+    dplyr::summarize(count = n()) %>% 
     dplyr::mutate(freq = count / sum(count),
            total = freq * n) %>%
     

@@ -31,12 +31,11 @@ library(spatstat)
 ```{r}
 #--- import ALS metrics raster ---#
 
-raster <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+raster <- system.file("extdata","rmf_metrics.tif", package = "sgsR")
 
 raster <- terra::rast(raster)
 
-names(raster) <- c("avg", "cov", "std","p10", "p20","p50","p70","p95", "p99","d0","d2","d4","dns")
-
+names(raster) <- c("zmax","zmean","zsd","pzabove2","zq20","zq50","zq70","zq90","zq95","l_1","l_2","t_3","t_4")
 
 #--- import forest inventory polygon and mask unwanted areas ---#
 poly <- system.file("extdata","inventory_polygons.shp", package = "sgsR")
@@ -88,7 +87,7 @@ plot(kmeans)
 #--- note that this one can take a while ---#
 
 osb <- strat_osb(mraster = wall_poly,
-                 metric = "avg",
+                 metric = "pzabove2",
                  nstrata = 4,
                  n = 20,
                  details = TRUE)
@@ -112,7 +111,7 @@ breaks
 #--- stratify on 1 metric only ---#
 
 bk1 <- strat_breaks(mraster = wall_poly,
-                 metric = "avg",
+                 metric = "zmean",
                  breaks = breaks,
                  details = TRUE,
                  plot = TRUE)
@@ -123,13 +122,13 @@ bk1 <- strat_breaks(mraster = wall_poly,
 ```{r}
 #--- stratify on 2 metrics ---#
 
-breaks2 <- c(seq(3,9,3))
+breaks2 <- c(seq(3,30,10))
 
 breaks2
 
 bk2 <- strat_breaks(mraster = wall_poly,
-                 metric = "avg",
-                 metric2 = "p99",
+                 metric = "zmean",
+                 metric2 = "zq95",
                  breaks = breaks,
                  breaks2 = breaks2,
                  details = TRUE,
@@ -169,7 +168,7 @@ plot(pcomp2)
 
 #--- perform stratification using an individual metric ---#
 #--- if no 'metric' name defined and raster is 1 layer - automatically uses only available layer ---#
-metrics1 <- strat_quantiles(mraster = wall_poly[[1]], 
+metrics1 <- strat_quantiles(mraster = wall_poly[[3]], 
                          nstrata = 5)
 
 plot(metrics1)
@@ -179,7 +178,7 @@ plot(metrics1)
 ```{r}
 #--- perform stratification using an individual metric ---#
 metrics2 <- strat_quantiles(mraster = wall_poly, 
-                         metric = "avg", 
+                         metric = "zmean", 
                          nstrata = 10)
 
 plot(metrics2)
@@ -190,8 +189,8 @@ plot(metrics2)
 
 #--- perform stratification using 2 metrics metrics ---#
 metrics3 <- strat_quantiles(mraster = wall_poly, 
-                         metric = "avg", 
-                         metric2 = "p99", 
+                         metric = "zmean", 
+                         metric2 = "zq95", 
                          nstrata = 10, 
                          nstrata2 = 5)
 

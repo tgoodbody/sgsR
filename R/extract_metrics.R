@@ -8,11 +8,19 @@
 #' 
 #' @return An sf or data.frame object of samples with associated raster cell attributes
 #' 
+#' @importFrom magrittr %>%
+#' @importFrom methods is
+#' 
 #' @export
 
 extract_metrics <- function(mraster,
                             samples,
-                            data.frame = FALSE){
+                            data.frame = FALSE)
+  {
+  
+  #--- Set global vars ---#
+  
+  x <- y <- X <- Y <- strata <- geometry <-  NULL
 
   #--- Error management ---#
   
