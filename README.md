@@ -24,7 +24,7 @@ kmeans <- strat_kmeans(mraster = mraster,
 pcomp <- strat_pcomp(mraster = mraster, 
                       nstrata = 4)
 
-metrics <- strat_metrics(mraster = wall_poly, 
+metrics <- strat_quantiles(mraster = wall_poly, 
                           metric = "metric", 
                           metric2 = "metric2", 
                           nstrata = 10, 
