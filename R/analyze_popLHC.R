@@ -15,7 +15,7 @@
 #' @importFrom methods is
 #' 
 #' 
-#' @return output stratification \code{spatRaster}, or a list when \code{details = TRUE}.
+#' @return List of matrices to be used as input for \code{analyze_sampOptLHC}.
 #' 
 #' @export
 
