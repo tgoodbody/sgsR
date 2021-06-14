@@ -40,13 +40,14 @@ analyze_sampOptLHC(
 iterations for the Metropolis-Hastings annealing process. Defaults to \code{10000}.}
 }
 \value{
-TBD
+data.frame with summary statistics.
 }
 \description{
 Population level analysis of metric raster data to determine optimal Latin Hypercube sample size
 }
 \seealso{
 Other analyze functions: 
+\code{\link{analyze_COOBS}()},
 \code{\link{analyze_popLHC}()}
 }
 \concept{analyze functions}

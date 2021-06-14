@@ -206,7 +206,7 @@ plot(metrics3)
 ```{r}
 
 #--- define desired stratification raster ---#
-sraster <- metrics2
+sraster <- kmeans
 
 #--- SRS **without** access defined---#
 
