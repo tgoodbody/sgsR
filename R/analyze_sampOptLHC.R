@@ -255,7 +255,7 @@ plot_LHCOptim <- function(dfFinal,
     dplyr::select(df.x) %>%
     pull()
   
-  message(paste0("Your optimum sample size based on KL divergence is: ",num))
+  message(paste0("Your optimum estimated sample size based on KL divergence is: ",num))
   
   x2<- c(num, num); y2<- c(0, 1)
   lines(x2,y2, lwd=2, col="red")

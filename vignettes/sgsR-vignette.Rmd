@@ -31,7 +31,7 @@ library(spatstat)
 ```{r}
 #--- import ALS metrics raster ---#
 
-raster <- system.file("extdata","rmf_metrics.tif", package = "sgsR")
+raster <- "C:/Users/goodb/Documents/UBC/post_doc/sgsR/inst/extdata/rmf_metrics.tif" #system.file("extdata","rmf_metrics.tif", package = "sgsR")
 
 raster <- terra::rast(raster)
 
@@ -211,8 +211,8 @@ sraster <- kmeans
 #--- SRS **without** access defined---#
 
 #--- 'mindist' between samples defaults to 100 ---#
-srs_wo <- sample_srs(sraster = sraster,
-                  n = 50,
+existing <- sample_srs(sraster = sraster, #srs_wo
+                  n = 150,
                   plot = TRUE)
 
 ```
@@ -363,10 +363,8 @@ bal_w_a <- sample_balanced(mraster = mraster,
 #--- extract strata from raster for already existing sample network ---#
 #--- we use random samples defined above ---#
 
-existing <- extract_existing(sraster = kmeans,
+existing <- extract_existing(sraster = raster,
                              existing = srs_wo)
-
-existing
 
 #--- if 'data.frame = TRUE -- output will be a dataframe instead of an sf object ---#
 
@@ -432,7 +430,7 @@ strat_w_e_i
 ```{r}
 #--- extract metrics from multi-band ALS raster for potential modeling ---#
 
-metrics <- extract_metrics(mraster = wall_poly,
+metrics <- extract_metrics(mraster = mraster,
                            samples = strat_w_e_i)
 
 metrics

@@ -121,8 +121,8 @@ sample_srs <- function(sraster,
 
     add_temp <- data.frame(
       cell = smp_cell,
-      x = terra::xFromCell(sraster, smp_cell),
-      y = terra::yFromCell(sraster, smp_cell)
+      X = terra::xFromCell(sraster, smp_cell),
+      Y = terra::yFromCell(sraster, smp_cell)
     )
 
     #--- Remove sampled cell from validCandidates so that it cannot be sampled again later ---#
@@ -133,19 +133,19 @@ sample_srs <- function(sraster,
 
     if (nrow(add_strata) == 0) {
 
-      add_strata <- add_temp[, c("x", "y")]
+      add_strata <- add_temp[, c("X", "Y")]
 
       nCount <-  nCount + 1
 
       #--- If add_strata isnt empty, check distance with all other sampled cells in strata ---#
     } else {
 
-      dist <- spatstat.geom::crossdist(add_temp$x, add_temp$y , add_strata$x , add_strata$y)
+      dist <- spatstat.geom::crossdist(add_temp$X, add_temp$Y , add_strata$X , add_strata$Y)
 
       #--- If all less than 'mindist' - accept sampled cell otherwise reject ---#
       if (all(as.numeric(dist) > mindist)) {
 
-        add_strata <- rbind(add_strata, add_temp[, c("x", "y")])
+        add_strata <- rbind(add_strata, add_temp[, c("X", "Y")])
 
         nCount <-  nCount + 1
 
@@ -156,7 +156,7 @@ sample_srs <- function(sraster,
     #--- convert coordinates to a spatial points object ---#
     samples <- add_strata %>%
       as.data.frame() %>%
-      sf::st_as_sf(., coords = c("x", "y"))
+      sf::st_as_sf(., coords = c("X", "Y"))
 
     #--- assign sraster crs to spatial points object ---#
     sf::st_crs(samples) <- crs

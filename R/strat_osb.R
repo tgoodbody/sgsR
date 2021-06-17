@@ -175,7 +175,7 @@ perform_osb <- function(rastermetric, nstrata, n){
     dplyr::pull()
 
   OSB_result <- vals %>%
-    stratifyR::strata.data(h = (nstrata), n = n)
+    stratifyR::strata.data(h = nstrata, n = n)
 
   out <- list(vals,OSB_result)
 

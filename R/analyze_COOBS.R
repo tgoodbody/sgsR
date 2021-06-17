@@ -58,7 +58,7 @@ analyze_COOBS <- function(mraster = NULL,
   
   #--- iterate parallel processing of mahalanobis distance ---#
   
-  loop <- foreach::foreach(i=1:nrow(vals), .combine = "c") %dopar% {
+  loop <- foreach::foreach(i = 1:nrow(vals), .combine = "c") %dopar% {
     
     cell <- vals[i,3:ncol(vals)]
     
@@ -85,9 +85,10 @@ analyze_COOBS <- function(mraster = NULL,
     
     #--- larger values equate to more similarity ---#
     
-    sampNDist <- 1- sampNDist
+    sampNDist <- 1 - sampNDist
     
     #--- establish count above threshold ---#
+    
     sum(sampNDist >= threshold)
 
     
@@ -102,7 +103,7 @@ analyze_COOBS <- function(mraster = NULL,
   
   #--- convert nSamp to raster ---#
   
-  rout <- terra::rast(as.matrix(vals[,c("x", "y", "nSamp")]),type="xyz")
+  rout <- terra::rast(as.matrix(vals[,c("x", "y", "nSamp")]), type = "xyz")
   
   return(rout)
   
