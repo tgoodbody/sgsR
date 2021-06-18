@@ -21,7 +21,6 @@ analyze_HELS <- function(mraster = NULL,
                          existing = NULL,
                          nQuant = 20,
                          nSamp = 100,
-                         retireSamp = TRUE,
                          plot = FALSE)
 {
   
@@ -36,9 +35,6 @@ analyze_HELS <- function(mraster = NULL,
   
   if (!is.numeric(nSamp))
     stop("'nSamp' must be type numeric")
-  
-  if (!is.logical(retireSamp))
-    stop("'retireSamp' must be type logical")
   
   #--- determine number of bands in 'mraster' ---#
   
@@ -70,6 +66,10 @@ analyze_HELS <- function(mraster = NULL,
   
   matCovDens <- mats$matCov / nrow(vals)
   
+  #--- Remove quantiles that do not cover at least 1% area in eac covariate ---#
+  
+  matCovDens[which(matCovDens <= 0.01)] <- NA
+  
   ###--- Prepare existing sample data ---###
   
   #--- extract covariates at existing sample locations ---#
@@ -98,6 +98,8 @@ analyze_HELS <- function(mraster = NULL,
   
   ratio <- matCovSampDens / matCovDens
   
+  print(ratio)
+  
   #--- order the densities based on representation ---#
   
   #--- low to high ---#
@@ -112,11 +114,6 @@ analyze_HELS <- function(mraster = NULL,
   
   underRep <- which(ratio < 1, arr.ind = TRUE)
   underRep <- cbind(underRep,which(ratio < 1))
-  
-  #--- Outline quantiles that are overrepresented (> 1) in the sample ---#
-  
-  overRep <- which(ratio > 1, arr.ind = TRUE)
-  overRep <- cbind(overRep,which(ratio > 1))
   
   #--- begin sampling from highest discrepancy to lowest ---#
   
@@ -181,7 +178,7 @@ analyze_HELS <- function(mraster = NULL,
     #--- update loop parameters ---#
     position <- position + 1
     newSamp <- newSamp - sampNeed
-    print(sampNeed)
+    message("Iteration ", position, " - A total of ", sampNeed, " samples have been allocated.")
 
   }
   
@@ -218,7 +215,7 @@ analyze_HELS <- function(mraster = NULL,
     
   }
   
-  return(ratio)
+  return(samples)
   
   
 }

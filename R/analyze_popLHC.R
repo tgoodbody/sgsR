@@ -144,7 +144,7 @@ mat_quant <- function(vals,
                       nb)
 {
   
-  #--- create covariate matrix of the quantiles ---#
+  #--- create covariance matrix of the quantiles ---#
   
   matQ <- matrix(NA, nrow =(nQuant+1), ncol = nb)
   
