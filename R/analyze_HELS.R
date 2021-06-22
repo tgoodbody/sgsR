@@ -14,8 +14,6 @@
 #' @importFrom foreach %dopar%
 #' 
 #' @export
-#' 
-
 
 analyze_HELS <- function(mraster = NULL,
                          existing = NULL,
@@ -79,10 +77,16 @@ analyze_HELS <- function(mraster = NULL,
   #--- Assign code to differentiate between original samples and those added during HELS algorithm ---#
   
   samples$type <- "existing"
+  samples$n <- seq(1:nrow(samples))
+  
+  #--- Rearrange columns ---#
+  
+  samples <- samples %>%
+    select(X,Y,n,type,everything())
   
   #--- Create data hypercube of existing samples to compare with mraster data ---#
   
-  matCovSamp <- mat_cov(vals = samples[3:ncol(samples)], nQuant = nQuant, nb = nb, matQ = mats$matQ)
+  matCovSamp <- mat_cov(vals = samples[5:ncol(samples)], nQuant = nQuant, nb = nb, matQ = mats$matQ)
   
   #--- Change 0's to very small number to avoid division issues ---#
   
@@ -184,7 +188,7 @@ analyze_HELS <- function(mraster = NULL,
   
   #--- Create data hypercube of existing samples to compare with mraster data ---#
   
-  matCovSamp <- mat_cov(vals = samples[3:ncol(samples)], nQuant = nQuant, nb = nb, matQ = mats$matQ)
+  matCovSamp <- mat_cov(vals = samples[5:ncol(samples)], nQuant = nQuant, nb = nb, matQ = mats$matQ)
   
   #--- Change 0's to very small number to avoid division issues ---#
   

@@ -33,9 +33,9 @@ library(spatstat)
 
 raster <- "C:/Users/goodb/Documents/UBC/post_doc/sgsR/inst/extdata/rmf_metrics.tif" #system.file("extdata","rmf_metrics.tif", package = "sgsR")
 
-raster <- terra::rast(raster)
+mraster <- terra::rast(raster)
 
-names(raster) <- c("zmax","zmean","zsd","pzabove2","zq20","zq50","zq70","zq90","zq95","l_1","l_2","t_3","t_4")
+names(mraster) <- c("zmax","zmean","zsd","pzabove2","zq20","zq50","zq70","zq90","zq95","l_1","l_2","t_3","t_4")
 
 #--- import forest inventory polygon and mask unwanted areas ---#
 poly <- system.file("extdata","inventory_polygons.shp", package = "sgsR")
