@@ -1,3 +1,27 @@
+#' Evaluates existing sample data using an adapted Hypercube Evaluation of a Legacy Sample (HELS) algorithm
+#' to remove redundant samples based on covariate and sample quantile comparisons
+#' @family analyze functions
+#'
+#' @inheritParams strat_kmeans
+#' @inheritParams extract_existing
+#' 
+#' @param threshold Numeric. Proxy maximum pixel quantile to avoid outliers. \code{default = 0.95}
+#' 
+#' @return 
+#' 
+#' @importFrom magrittr %>%
+#' @importFrom methods is
+#' @importFrom foreach %dopar%
+#' 
+#' @export
+#' 
+
+analyze_HELSrem <- function(mraster = mraster,
+                            existing = existing,
+                            nQuant = nQuant
+                            ){
+  
+  
 #--- determine number of bands in 'mraster' ---#
 
 nb <- terra::nlyr(mraster)
@@ -46,7 +70,7 @@ samples$n <- seq(1:nrow(samples))
 #--- Rearrange columns ---#
 
 samples <- samples %>%
-  select(X,Y,n,type,everything())
+  dplyr::select(X,Y,n,type,everything())
 
 #--- Create data hypercube of existing samples to compare with mraster data ---#
 
@@ -68,7 +92,7 @@ ratio1 <- matCovSampDens / matCovDens
 
 #--- OUtline which quantiles are greater than 1 (overrepresented) ---#
 
-ratioGr1 <- ratio1 > 1
+ratioGr1 <- ratio1 > threshold
 
 #--- set NA values to FALSE -- these are from quantiles with <= 1% of covariate coverage ---#
 
@@ -152,10 +176,10 @@ ratOrderOver <- rev(ratOrderUnder)
 
 #--- Outline quantiles that are overrepresented (> 1) in the sample ---#
 
-overRep <- which(ratio1 > 1, arr.ind = TRUE)
-overRep <- cbind(overRep,which(ratio1 > 1))
+overRep <- which(ratio1 > threshold, arr.ind = TRUE)
+overRep <- cbind(overRep,which(ratio1 > threshold))
 
-#--- determine decenting order of overrepresentation ---#
+#--- determine decending order of overrepresentation ---#
 
 indexOrder <- overRep %>%
   as.data.frame() %>%
@@ -318,7 +342,8 @@ k2$type <- "diff"
 
 kk <- rbind(k,k1)
 
-ggplot(kk, aes(x=x, y=y, fill = z)) + geom_tile(colour = "grey50") +  scale_fill_viridis() + facet_grid(.~type)
+ggplot(kk, aes(x=x, y=y)) + geom_tile(aes(fill = z), colour = "grey50") +
+  scale_fill_continuous_divergingx(palette = 'RdBu', mid = 0.7) + facet_grid(.~type)
 
 
 p1 <- ggplot(k, aes(x=x, y=y, fill = z)) + geom_tile(colour = "grey50") + scale_fill_viridis() + theme_light()
@@ -377,22 +402,24 @@ print(ratio1 - ratio2)
 
 
 
-model <- prcomp(vals[,3:5], scale. = TRUE, center = TRUE)
-w=TRUE)
-scores_all <- data.frame(model$x[,1:2])
-scores_all$type <- "all"
+# model <- prcomp(vals[,3:5], scale. = TRUE, center = TRUE)
+# w=TRUE)
+# scores_all <- data.frame(model$x[,1:2])
+# scores_all$type <- "all"
+# 
+# scores_samp <- data.frame(predict(model,samples[,5:7]))[,1:2]
+# scores_samp$type <- "sample"
+# 
+# df <- rbind(scores_all,scores_samp)
+# 
+# ggplot(df,aes(x=PC1,y=PC2,colour = type)) + geom_point(size =2,) + labs(title="Plotting Customer Data against PC1 and PC2")
+# 
+# 
+# 
+# plot(scores$PC1,scores$PC2)
+# par(ne
+#     plot(new$PC1,new$PC2,col="red",add=T)
 
-scores_samp <- data.frame(predict(model,samples[,5:7]))[,1:2]
-scores_samp$type <- "sample"
-
-df <- rbind(scores_all,scores_samp)
-
-ggplot(df,aes(x=PC1,y=PC2,colour = type)) + geom_point(size =2,) + labs(title="Plotting Customer Data against PC1 and PC2")
-
-
-
-plot(scores$PC1,scores$PC2)
-par(ne
-    plot(new$PC1,new$PC2,col="red",add=T)
+}
     
     

@@ -87,7 +87,7 @@ sample_balanced <- function(mraster,
     )
     
     #--- convert vectors to spatVector to synergize with terra raster functions---#
-    roads <- terra::vect(roads)
+    roads <- terra::vect(access)
     
     #--- make access buffer with user defined values ---#
     
