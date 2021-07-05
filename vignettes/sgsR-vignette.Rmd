@@ -212,7 +212,7 @@ sraster <- kmeans
 
 #--- 'mindist' between samples defaults to 100 ---#
 existing <- sample_srs(sraster = sraster, #srs_wo
-                  n = 150,
+                  n = 90,
                   plot = TRUE)
 
 ```

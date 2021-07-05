@@ -25,8 +25,11 @@ sample_srs <- function(sraster,
                        access = NULL,
                        buff_inner = NULL,
                        buff_outer = NULL,
-                       plot = FALSE) {
+                       plot = FALSE)
+{
+  
   #--- Error management ---#
+  
   if (!inherits(sraster, "SpatRaster"))
     stop("'sraster' must be type SpatRaster", call. = FALSE)
 
@@ -81,7 +84,7 @@ sample_srs <- function(sraster,
     )
 
     #--- convert vectors to spatVector to synergize with terra raster functions---#
-    roads <- terra::vect(roads)
+    roads <- terra::vect(access)
     
     #--- make access buffer with user defined values ---#
 
