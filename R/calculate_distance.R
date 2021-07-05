@@ -1,4 +1,4 @@
-#' Per pixel distance to nearest access vector. Likely to be used as a `cost` constraint
+#' Per pixel distance to nearest access vector. Intended to be used as a `cost` constraint
 #' within the \code{sample_clhs} function
 #' 
 #' @family calculate functions
