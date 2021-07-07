@@ -201,7 +201,7 @@ strat_quantiles <- function(mraster,
     #--- set up colour palette ---#
     
     ncol <- nstrata * nstrata2
-    qual_col_pals = RColorBrewer::brewer.pal.info[brewer.pal.info$category == 'seq',]
+    qual_col_pals = RColorBrewer::brewer.pal.info[RColorBrewer::brewer.pal.info$category == 'seq',]
     col_vector = unlist(mapply(RColorBrewer::brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))
     
     terra::plot(rout, main = 'Classes', col=sample(col_vector, ncol))

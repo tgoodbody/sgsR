@@ -20,6 +20,8 @@ sample_aHELS(
 
 \item{existing}{sf or data.frame.  Existing plot network.}
 
+\item{nQuant}{Numeric. Number of quantiles to divide covariates and samples into.}
+
 \item{nSamp}{Numeric. Maximum number of new samples to allocate. If provided, the algorithm
 will default to allocating number of samples provided.}
 
@@ -27,7 +29,7 @@ will default to allocating number of samples provided.}
 additional samples should be added. \code{default = 0.9}. Values close to 1 can cause the algorithm to 
 continually loop and should be used sparingly.}
 
-\item{plot}{Logial. Plots existing (black) and new (red) samples on the first band of mraster.}
+\item{plot}{Logial. Plots existing (circles) and new (crosses) samples on the first band of mraster.}
 }
 \value{
 

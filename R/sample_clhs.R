@@ -3,9 +3,15 @@
 #' 
 #' @inheritParams analyze_sampOptLHC
 #' @inheritParams sample_srs
+#' @inheritParams strat_kmeans
+#' @inheritParams extract_existing
+#' 
+#' @param ...
 #'
 #' @importFrom magrittr %>%
 #' @importFrom methods is
+#' @importFrom stats coef complete.cases median quantile sd
+#' @importFrom utils setTxtProgressBar
 #' 
 #' @return An sf object with \code{n} stratified samples.
 #' 
@@ -21,6 +27,10 @@ sample_clhs <- function(mraster = mraster,
                         details = FALSE,
                         ...)
 {
+  
+  #--- Set global vars ---#
+  
+  x <- y <- type <- NULL
   
   #--- Error management ---#
   

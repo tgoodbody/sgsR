@@ -13,12 +13,11 @@
 #' @importFrom methods is
 #' @importFrom foreach %dopar%
 #' 
-#' @export
 #' 
 
-analyze_HELSrem <- function(mraster = mraster,
-                            existing = existing,
-                            nQuant = nQuant
+analyze_HELSrem <- function(mraster = NULL,
+                            existing = NULL,
+                            nQuant = 10
                             ){
   
   

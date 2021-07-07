@@ -36,6 +36,8 @@ from access where plots can be sampled.}
 
 \item{plot}{Logical. Plots output strata raster and visualized
 strata with boundary dividers.}
+
+\item{...}{}
 }
 \value{
 An sf object with \code{n} randomly sampled points.

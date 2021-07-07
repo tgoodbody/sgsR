@@ -6,6 +6,7 @@
 #' @inheritParams strat_kmeans
 #' 
 #' @param nComp Numeric. Value indicating number of principal components to be rasterized.
+#' @param ...
 #' 
 #'
 #' @importFrom magrittr %>%
@@ -74,7 +75,7 @@ calculate_pcomp <- function(mraster = NULL,
   
   #--- stack pca rasters ---#
   
-  pcaRout <- rast(rs)
+  pcaRout <- terra::rast(rs)
   
   #--- rename ---#
   

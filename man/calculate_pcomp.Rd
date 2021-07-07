@@ -27,6 +27,8 @@ of data should be conducted prior to analysis.}
  stratification raster. If \code{TRUE} return a list
 where \code{$details} is additional stratification information and
  \code{$raster} is the output stratification spatRaster.}
+
+\item{...}{}
 }
 \value{
 Output raster with specified number of principal components as layers.

@@ -24,7 +24,7 @@ calculate_distance <- function(raster = NULL,
   if (!inherits(raster, "SpatRaster"))
     stop("'raster' must be type SpatRaster", call. = FALSE)
   
-  if (is.na(crs(raster)))
+  if (is.na(terra::crs(raster)))
     stop("'raster' does not have a coordinate system")
   
   if (!inherits(access,"sf"))

@@ -5,7 +5,7 @@
 \title{Evaluates existing sample data using an adapted Hypercube Evaluation of a Legacy Sample (HELS) algorithm
 to remove redundant samples based on covariate and sample quantile comparisons}
 \usage{
-analyze_HELSrem(mraster = mraster, existing = existing, nQuant = nQuant)
+analyze_HELSrem(mraster = NULL, existing = NULL, nQuant = 10)
 }
 \arguments{
 \item{mraster}{spatRaster. ALS metrics raster.}

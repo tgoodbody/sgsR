@@ -54,7 +54,7 @@ analyze_popLHC <- function(mraster,
   
   vals <- vals %>%
     as.data.frame() %>%
-    dplyr::filter(complete.cases(.))
+    dplyr::filter(stats::complete.cases(.))
   
   #--- PCA loadings for the population ---#
   

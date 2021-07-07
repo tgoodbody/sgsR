@@ -35,6 +35,8 @@ for strata visualization. Lower values reduce processing time.}
  stratification raster. If \code{TRUE} return a list
 where \code{$details} is additional stratification information and
  \code{$raster} is the output stratification spatRaster.}
+
+\item{...}{}
 }
 \value{
 output stratification \code{spatRaster}, or a list when \code{details = TRUE}.

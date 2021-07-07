@@ -29,6 +29,11 @@ analyze_sampOptLHC <- function(popLHC = NULL,
                                iter = 10000)
 {
   
+  #--- Set global vars ---#
+  x <- y <- NULL
+  
+  #--- Error handling ---#
+  
   if (!is.list(popLHC))
     stop("'popLHC' must be a list")
   
@@ -131,11 +136,11 @@ analyze_sampOptLHC <- function(popLHC = NULL,
           
           #--- Calculate sample quantiles ---#
           
-          sampleQuant <- quantile(samples[,var], probs = seq(0, 1, 0.25), names = F, type = 7)
+          sampleQuant <- stats::quantile(samples[,var], probs = seq(0, 1, 0.25), names = F, type = 7)
           
           #--- Calculate population quantiles ---#
           
-          popQuant <- quantile(popLHC$values[,var], probs = seq(0, 1, 0.25),names = F, type = 7)
+          popQuant <- stats::quantile(popLHC$values[,var], probs = seq(0, 1, 0.25),names = F, type = 7)
           
           #--- populate quantile differences into matFinal ---#
           
@@ -196,11 +201,11 @@ analyze_sampOptLHC <- function(popLHC = NULL,
     #--- create outputs for all tests ---#
 
     matSeq[tSamp,1] <- mean(matFinal[,6])
-    matSeq[tSamp,2] <- sd(matFinal[,6])
+    matSeq[tSamp,2] <- stats::sd(matFinal[,6])
     matSeq[tSamp,3] <- min(matFinal[,1])
     matSeq[tSamp,4] <- max(matFinal[,1])
     matSeq[tSamp,5] <- mean(matFinal[,7])
-    matSeq[tSamp,6] <- sd(matFinal[,7])
+    matSeq[tSamp,6] <- stats::sd(matFinal[,7])
     
     
   }
@@ -220,6 +225,10 @@ analyze_sampOptLHC <- function(popLHC = NULL,
 plot_LHCOptim <- function(dfFinal,
                           maxSamp){
   
+  #--- set global vars ---#
+  
+  df.x <- NULL
+  
   #--- Create normalized ---#
   df <- data.frame(x = dfFinal[,1],
                         y = 1-(dfFinal[,6]-min(dfFinal[,6]))/(max(dfFinal[,6])-min(dfFinal[,6])))
@@ -229,36 +238,36 @@ plot_LHCOptim <- function(dfFinal,
   
   # Prepare a good inital state
   theta.0 <- max(df$y) * 1.1
-  model.0 <- lm(log(- y + theta.0) ~ x, data=df)
-  alpha.0 <- -exp(coef(model.0)[1])
-  beta.0 <- coef(model.0)[2]
+  model.0 <- stats::lm(log(- y + theta.0) ~ x, data=df)
+  alpha.0 <- -exp(stats::coef(model.0)[1])
+  beta.0 <- stats::coef(model.0)[2]
   
   start <- list(alpha = alpha.0, beta = beta.0, theta = theta.0)
   
   # Fit the model
-  model <- nls(y ~ alpha * exp(beta * x) + theta , data = df, start = start)
+  model <- stats::nls(y ~ alpha * exp(beta * x) + theta , data = df, start = start)
   
   
   # add fitted curve
   
-  predicted <- predict(model, list(x = df$x))
+  predicted <- stats::predict(model, list(x = df$x))
   
   plot(df$x, df$y, xlab = "# of samples", ylab = "norm mean KL divergence")
-  lines(df$x, predicted, col = 'skyblue', lwd = 3)
+  graphics::lines(df$x, predicted, col = 'skyblue', lwd = 3)
   
   x1<- c(-1, maxSamp)
   y1<- c(0.95, 0.95)
-  lines(x1,y1, lwd=2, col="red")
+  graphics::lines(x1,y1, lwd=2, col="red")
   
   num <- data.frame(df$x,predicted) %>% 
-    filter(abs(predicted - 0.95) == min(abs(predicted - 0.95))) %>% 
+    dplyr::filter(abs(predicted - 0.95) == min(abs(predicted - 0.95))) %>% 
     dplyr::select(df.x) %>%
-    pull()
+    dplyr::pull()
   
   message(paste0("Your optimum estimated sample size based on KL divergence is: ",num))
   
   x2<- c(num, num); y2<- c(0, 1)
-  lines(x2,y2, lwd=2, col="red")
+  graphics::lines(x2,y2, lwd=2, col="red")
   
 }
 

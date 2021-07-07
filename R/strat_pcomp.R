@@ -4,6 +4,7 @@
 #' @inheritParams strat_kmeans
 #' @inheritParams strat_quantiles
 #' 
+#' @param ...
 #' 
 #' @importFrom magrittr %>%
 #' @importFrom methods is

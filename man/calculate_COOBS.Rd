@@ -21,6 +21,8 @@ calculate_COOBS(
 
 \item{existing}{sf or data.frame.  Existing plot network.}
 
+\item{cores}{Numeric. Number of CPU cores to use for parallel processing. \code{default = 1}}
+
 \item{threshold}{Numeric. Proxy maximum pixel quantile to avoid outliers. \code{default = 0.95}}
 
 \item{plot}{Logical. Plots output strata raster and visualized

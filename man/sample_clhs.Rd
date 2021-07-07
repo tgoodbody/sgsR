@@ -17,7 +17,11 @@ sample_clhs(
 )
 }
 \arguments{
+\item{mraster}{spatRaster. ALS metrics raster.}
+
 \item{n}{Numeric. Number of desired samples.}
+
+\item{existing}{sf or data.frame.  Existing plot network.}
 
 \item{access}{sf. Road access network - must be lines.}
 
@@ -28,6 +32,13 @@ from access where plots cannot be sampled.}
 from access where plots can be sampled.}
 
 \item{plot}{Logical. Plots output strata raster with samples.}
+
+\item{details}{Logical. If \code{FALSE} (default) output is only
+ stratification raster. If \code{TRUE} return a list
+where \code{$details} is additional stratification information and
+ \code{$raster} is the output stratification spatRaster.}
+
+\item{...}{}
 }
 \value{
 An sf object with \code{n} stratified samples.

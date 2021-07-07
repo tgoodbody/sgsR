@@ -8,6 +8,7 @@
 #' @inheritParams extract_existing
 #' 
 #' @param threshold Numeric. Proxy maximum pixel quantile to avoid outliers. \code{default = 0.95}
+#' @param cores Numeric. Number of CPU cores to use for parallel processing. \code{default = 1}
 #' 
 #' @return output raster with COOBS and classified COOBS layers.
 #' 
@@ -25,6 +26,10 @@ calculate_COOBS <- function(mraster = NULL,
                             plot = FALSE,
                             details = FALSE)
 {
+  
+  #--- set global vars ---#
+  
+  i <- NULL
   
   #--- Error handling ---#
   
@@ -47,11 +52,11 @@ calculate_COOBS <- function(mraster = NULL,
   #--- Remove NA / NaN / Inf values ---#
   
   vals <- vals %>%
-    dplyr::filter(complete.cases(.))
+    dplyr::filter(stats::complete.cases(.))
   
   #--- Generate covariance matrix ---#
   
-  covMat <- as.matrix(cov(vals[,3:ncol(vals)]))
+  covMat <- as.matrix(stats::cov(vals[,3:ncol(vals)]))
   
   #--- extract covariates at existing sample locations ---#
   
@@ -82,11 +87,11 @@ calculate_COOBS <- function(mraster = NULL,
     #--- Determine min and max distance values for each ---#
     
     pixMin <- min(pixDist)
-    pixMax <- quantile(pixDist, probs = threshold)
+    pixMax <- stats::quantile(pixDist, probs = threshold)
     
     #--- Determine distance for each sample location ---#
     
-    sampDist<- mahalanobis(x = as.matrix(samples[,3:ncol(samples)]), center = as.matrix(cell), cov = covMat) #calculate distance of observations to all other pixels
+    sampDist<- stats::mahalanobis(x = as.matrix(samples[,3:ncol(samples)]), center = as.matrix(cell), cov = covMat) #calculate distance of observations to all other pixels
     
     #--- Normalize distance between data and samples)
     

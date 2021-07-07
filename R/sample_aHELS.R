@@ -12,7 +12,8 @@
 #' @param threshold Numeric. A sample quantile ratio threshold for establishing whether 
 #' additional samples should be added. \code{default = 0.9}. Values close to 1 can cause the algorithm to 
 #' continually loop and should be used sparingly.
-#' @param plot Logial. Plots existing (black) and new (red) samples on the first band of mraster.
+#' @param plot Logial. Plots existing (circles) and new (crosses) samples on the first band of mraster.
+#' @param nQuant Numeric. Number of quantiles to divide covariates and samples into.
 #' 
 #' @return 
 #' 
@@ -29,6 +30,12 @@ sample_aHELS <- function(mraster = NULL,
                          threshold = 0.9,
                          plot = FALSE)
 {
+  
+  #--- Set global vars ---#
+  
+  x <- y <- X <- Y <- n <- type <- NULL
+  
+  #--- Error handling ---#
   
   if (!inherits(mraster,"SpatRaster"))
     stop("'mraster' must be type SpatRaster", call. = FALSE)
@@ -93,7 +100,7 @@ sample_aHELS <- function(mraster = NULL,
   #--- Rearrange columns ---#
   
   samples <- samples %>%
-    select(X,Y,n,type,everything())
+    dplyr::select(X,Y,n,type,tidyselect::everything())
   
   #--- Create data hypercube of existing samples to compare with mraster data ---#
   
