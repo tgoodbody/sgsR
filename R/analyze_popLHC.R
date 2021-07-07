@@ -110,7 +110,7 @@ analyze_popLHC <- function(mraster,
     
     #--- create covariate matrix of the quantiles ---#
     
-    message("Creating the covariance matrix. This could take a bit of time.")
+    message("Creating covariance matrix.")
     
     matCov <- mat_cov(vals, nQuant, nb, matQ)
     
@@ -170,9 +170,70 @@ mat_quant <- function(vals,
   
 }
 
-#--- function for calculating covariance matrix ---#
+#--- function for calculating covariance matrix with a progress bar---#
 
 mat_cov <- function(vals,
+                    nQuant,
+                    nb,
+                    matQ)
+{
+  
+  matCov <- matrix(0, nrow = nQuant, ncol = nb)
+  
+  #--- create progress text bar ---#
+  
+  iterations <- nrow(vals)
+  pb <- utils::txtProgressBar(min = 1, max = iterations, style = 3)
+  
+  #--- for each row in dataframe ---#
+  
+  for (i in 1:nrow(vals)){
+    
+    setTxtProgressBar(pb,i)
+    
+    count <- 1 
+    
+    #--- for each column in dataframe ---#
+    
+    for (j in 1:nb){ 
+      
+      indv <- vals[i,j] 
+      
+      #--- for each quantile in covariates ---#
+      
+      for (k in 1:nQuant){  
+        
+        #--- determine upper and lower limits ---#
+        
+        limL <- matQ[k, count] 
+        
+        limU <- matQ[k+1, count] 
+        
+        #--- determine whether the sample row fits within the quantile being analyzed ---#
+        
+        if (indv >= limL & indv <= limU){
+          
+          matCov[k, count] <- matCov[k, count] + 1
+          
+        }
+        
+      }
+      
+      count <- count + 1
+      
+    }
+    
+  }
+  
+  close(pb)
+  
+  return(matCov)
+  
+}  
+
+#--- function for calculating covariance matrix without a progress bar---#
+
+mat_covNB <- function(vals,
                     nQuant,
                     nb,
                     matQ)
@@ -183,6 +244,7 @@ mat_cov <- function(vals,
   #--- for each row in dataframe ---#
   
   for (i in 1:nrow(vals)){
+
     
     count <- 1 
     
@@ -220,6 +282,6 @@ mat_cov <- function(vals,
   
   return(matCov)
   
-}  
+}
 
 

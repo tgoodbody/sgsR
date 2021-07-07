@@ -36,6 +36,7 @@ Calculate and rasterize principal components from a metric raster
 }
 \seealso{
 Other calculate functions: 
+\code{\link{calculate_COOBS}()},
 \code{\link{calculate_distance}()}
 }
 \concept{calculate functions}

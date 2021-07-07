@@ -237,7 +237,7 @@ sample_clhs <- function(mraster = mraster,
     } else {
     
     terra::plot(mraster[[1]])
-    suppressWarnings(terra::plot(samples, add = T, col = ifelse(samples$type=="existing","Black","Red")))
+    suppressWarnings(terra::plot(samples, add = T, col = "black", pch = ifelse(samples$type=="existing",1,3)))
     
     }
     

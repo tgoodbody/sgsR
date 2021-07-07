@@ -37,6 +37,7 @@ Conditioned Latin Hypercube Sampling using the \code{clhs} package functionality
 }
 \seealso{
 Other sample functions: 
+\code{\link{sample_aHELS}()},
 \code{\link{sample_balanced}()},
 \code{\link{sample_srs}()},
 \code{\link{sample_strat}()}

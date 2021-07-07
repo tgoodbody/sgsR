@@ -458,14 +458,14 @@ sample_strat <- function(sraster,
       if(missing(access)){
         
         terra::plot(sraster)
-        suppressWarnings(terra::plot(samples, add = T, col = ifelse(samples$type=="existing","Red","Black")))
+        suppressWarnings(terra::plot(samples, add = T, col = "black", pch = ifelse(samples$type=="existing",1,3)))
         
         #--- if access is provided plot the masked access sraster ---#
         
       } else {
 
         terra::plot(raster_masked)
-        suppressWarnings(terra::plot(samples, add = T, col = ifelse(samples$type=="existing","Red","Black")))
+        suppressWarnings(terra::plot(samples, add = T, col = "black", pch = ifelse(samples$type=="existing",1,3)))
       
       }
       
@@ -476,7 +476,7 @@ sample_strat <- function(sraster,
       #--- plot input sraster and random samples ---#
       
       terra::plot(sraster)
-      suppressWarnings(terra::plot(samples, add = T, col = ifelse(samples$type=="existing","Red","Black")))
+      suppressWarnings(terra::plot(samples, add = T, col = "black", pch = ifelse(samples$type=="existing",1,3)))
     
     }
     

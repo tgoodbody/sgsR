@@ -47,9 +47,7 @@ Population level analysis of metric raster data to determine optimal Latin Hyper
 }
 \seealso{
 Other analyze functions: 
-\code{\link{analyze_COOBS}()},
 \code{\link{analyze_HELSrem}()},
-\code{\link{analyze_HELS}()},
 \code{\link{analyze_popLHC}()}
 }
 \concept{analyze functions}

@@ -23,8 +23,6 @@ to remove redundant samples based on covariate and sample quantile comparisons
 }
 \seealso{
 Other analyze functions: 
-\code{\link{analyze_COOBS}()},
-\code{\link{analyze_HELS}()},
 \code{\link{analyze_popLHC}()},
 \code{\link{analyze_sampOptLHC}()}
 }

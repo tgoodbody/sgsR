@@ -1,14 +1,15 @@
-#' Perform the COunt of ObServations (COOBS) algorithm using existing site data
+#' Perform the COunt of OBServations (COOBS) algorithm using existing site data
 #' and raster metrics. This algorithm aids the user in determining where additional samples
 #' could be located by comparing existing samples to each pixel and associated covariates.
-#' @family analyze functions
+#' The output COOBS raster could be used to constrain clhs sampling to areas that are underreprented.
+#' @family calculate functions
 #'
 #' @inheritParams strat_kmeans
 #' @inheritParams extract_existing
 #' 
 #' @param threshold Numeric. Proxy maximum pixel quantile to avoid outliers. \code{default = 0.95}
 #' 
-#' @return 
+#' @return output raster with COOBS and classified COOBS layers.
 #' 
 #' @importFrom magrittr %>%
 #' @importFrom methods is
@@ -17,15 +18,16 @@
 #' @export
 
 
-analyze_COOBS <- function(mraster = NULL,
-                          existing = NULL,
-                          cores = 1,
-                          threshold = 0.95,
-                          plot = FALSE)
-  {
+calculate_COOBS <- function(mraster = NULL,
+                            existing = NULL,
+                            cores = 1,
+                            threshold = 0.95,
+                            plot = FALSE,
+                            details = FALSE)
+{
   
   #--- Error handling ---#
-
+  
   if (!inherits(mraster,"SpatRaster"))
     stop("'mraster' must be type SpatRaster", call. = FALSE)
   
@@ -34,6 +36,9 @@ analyze_COOBS <- function(mraster = NULL,
   
   if (!is.numeric(threshold))
     stop("'threshold' must be type numeric")
+  
+  if (!is.logical(details))
+    stop("'details' must be type logical")
   
   #--- extract covariates data from mraster ---#
   
@@ -98,7 +103,7 @@ analyze_COOBS <- function(mraster = NULL,
     #--- establish count above threshold ---#
     
     sum(sampNDist >= threshold)
-
+    
     
   }
   
@@ -108,23 +113,38 @@ analyze_COOBS <- function(mraster = NULL,
   snow::stopCluster(cl)
   
   #--- Coerce output from parallel to a new attribute in covariates ---#
-   
+  
   vals$nSamp <- loop
   
   #--- convert nSamp to raster ---#
   
-  rout <- terra::rast(as.matrix(vals[,c("x", "y", "nSamp")]), type = "xyz")
+  r <- terra::rast(as.matrix(vals[,c("x", "y", "nSamp")]), type = "xyz")
+  names(r) <- "COOB"
   
+  #--- classify raster into breaks ---#
+  
+  rc <- terra::classify(r, c(0,5,10,15,20,25,30,35), include.lowest=TRUE, right=FALSE)
+  names(rc) <- "COOBclass"
+  
+  #--- stack 2 rasters for output ---#
+  
+  rout <- c(r,rc)
   
   #--- Plot output ---#
   
   if (isTRUE(plot)){
-  
-    terra::plot(rout)
+    
+    #--- apply colour scheme ---#
+    
+    cols <- RColorBrewer::brewer.pal(7, "Spectral")
+    
+    #--- plot ---#  
+    
+    terra::plot(rc, col = cols)
     terra::plot(existing, add = TRUE)
     
   }
   
   return(rout)
-
+  
 }

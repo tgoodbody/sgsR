@@ -40,6 +40,7 @@ Randomly sample within a stratification raster extent.
 }
 \seealso{
 Other sample functions: 
+\code{\link{sample_aHELS}()},
 \code{\link{sample_balanced}()},
 \code{\link{sample_clhs}()},
 \code{\link{sample_strat}()}

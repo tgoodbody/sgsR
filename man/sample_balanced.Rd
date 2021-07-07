@@ -45,6 +45,7 @@ Balanced raster sampling using \code{\link{BalancedSampling}} and \code{\link{Sa
 }
 \seealso{
 Other sample functions: 
+\code{\link{sample_aHELS}()},
 \code{\link{sample_clhs}()},
 \code{\link{sample_srs}()},
 \code{\link{sample_strat}()}

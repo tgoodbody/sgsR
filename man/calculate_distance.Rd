@@ -23,6 +23,7 @@ within the \code{sample_clhs} function
 }
 \seealso{
 Other calculate functions: 
+\code{\link{calculate_COOBS}()},
 \code{\link{calculate_pcomp}()}
 }
 \concept{calculate functions}
