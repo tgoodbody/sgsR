@@ -11,7 +11,8 @@ strat_pcomp(
   scale = TRUE,
   plot = FALSE,
   samp = 1,
-  details = FALSE
+  details = FALSE,
+  ...
 )
 }
 \arguments{

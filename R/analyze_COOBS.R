@@ -1,5 +1,6 @@
 #' Perform the COunt of ObServations (COOBS) algorithm using existing site data
-#' and raster metrics
+#' and raster metrics. This algorithm aids the user in determining where additional samples
+#' could be located by comparing existing samples to each pixel and associated covariates.
 #' @family analyze functions
 #'
 #' @inheritParams strat_kmeans
@@ -49,16 +50,23 @@ analyze_COOBS <- function(mraster = NULL,
   
   #--- extract covariates at existing sample locations ---#
   
-  samples <- extract_metrics(mraster, existing, data.frame = TRUE)
+  samples <- sgsR::extract_metrics(mraster, existing, data.frame = TRUE)
   
   #--- create parallel processing structure ---#
   
   cl <- snow::makeCluster(spec = cores)
-  doParallel::registerDoParallel(cl)
+  doSNOW::registerDoSNOW(cl)
+  
+  #--- create progress text bar ---#
+  
+  iterations <- nrow(vals)
+  pb <- utils::txtProgressBar(max = iterations, style = 3)
+  progress <- function(n) utils::setTxtProgressBar(pb, n)
+  opts <- list(progress = progress)
   
   #--- iterate parallel processing of mahalanobis distance ---#
   
-  loop <- foreach::foreach(i = 1:nrow(vals), .combine = "c") %dopar% {
+  loop <- foreach::foreach(i = 1:iterations, .combine = "c", .options.snow = opts) %dopar% {
     
     cell <- vals[i,3:ncol(vals)]
     
@@ -94,6 +102,8 @@ analyze_COOBS <- function(mraster = NULL,
     
   }
   
+  close(pb)
+  
   #--- End parallel ---# 
   snow::stopCluster(cl)
   
@@ -105,15 +115,16 @@ analyze_COOBS <- function(mraster = NULL,
   
   rout <- terra::rast(as.matrix(vals[,c("x", "y", "nSamp")]), type = "xyz")
   
-  return(rout)
   
   #--- Plot output ---#
   
   if (isTRUE(plot)){
   
-    plot(r1)
-    plot(existing, add = TRUE)
+    terra::plot(rout)
+    terra::plot(existing, add = TRUE)
     
   }
+  
+  return(rout)
 
 }

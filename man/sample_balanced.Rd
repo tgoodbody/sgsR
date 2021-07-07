@@ -12,7 +12,8 @@ sample_balanced(
   access = NULL,
   buff_inner = NULL,
   buff_outer = NULL,
-  plot = FALSE
+  plot = FALSE,
+  ...
 )
 }
 \arguments{
@@ -44,6 +45,7 @@ Balanced raster sampling using \code{\link{BalancedSampling}} and \code{\link{Sa
 }
 \seealso{
 Other sample functions: 
+\code{\link{sample_clhs}()},
 \code{\link{sample_srs}()},
 \code{\link{sample_strat}()}
 }

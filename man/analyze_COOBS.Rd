@@ -3,7 +3,8 @@
 \name{analyze_COOBS}
 \alias{analyze_COOBS}
 \title{Perform the COunt of ObServations (COOBS) algorithm using existing site data
-and raster metrics}
+and raster metrics. This algorithm aids the user in determining where additional samples
+could be located by comparing existing samples to each pixel and associated covariates.}
 \usage{
 analyze_COOBS(
   mraster = NULL,
@@ -28,10 +29,13 @@ strata with boundary dividers.}
 }
 \description{
 Perform the COunt of ObServations (COOBS) algorithm using existing site data
-and raster metrics
+and raster metrics. This algorithm aids the user in determining where additional samples
+could be located by comparing existing samples to each pixel and associated covariates.
 }
 \seealso{
 Other analyze functions: 
+\code{\link{analyze_HELSrem}()},
+\code{\link{analyze_HELS}()},
 \code{\link{analyze_popLHC}()},
 \code{\link{analyze_sampOptLHC}()}
 }

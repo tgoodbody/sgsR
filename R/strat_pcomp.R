@@ -18,7 +18,8 @@ strat_pcomp <- function(mraster,
                         scale = TRUE,
                         plot = FALSE,
                         samp = 1,
-                        details = FALSE)
+                        details = FALSE,
+                        ...)
   
 {
   
@@ -62,7 +63,7 @@ strat_pcomp <- function(mraster,
       
       #--- perform PCA using rasterPCA -- requires conversion to raster* format ---#
       
-      pca <- suppressWarnings(FactoMineR::PCA(vals, ncp = 2, scale.unit = TRUE, graph = FALSE))
+      pca <- suppressWarnings(FactoMineR::PCA(vals, ncp = 2, scale.unit = TRUE, graph = FALSE, ...))
       
       ########################################################
       ### WHICH PRINCIPAL COMPONENT METHOD SHOULD BE USED? ###
@@ -72,7 +73,7 @@ strat_pcomp <- function(mraster,
       
       pcavals <- as.data.frame(pca$ind$coord)
       
-      #--- Split PCA distribution in to number specified by 'nstrata' ---#
+      #--- Split PCA distribution into number specified by 'nstrata' ---#
       
       pcagrps <- pcavals[idx,] %>%
         #--- define nstrata classes ---#
@@ -94,7 +95,7 @@ strat_pcomp <- function(mraster,
       
       #--- perform PCA using rasterPCA -- requires conversion to raster* format ---#
       
-      pca <- suppressWarnings(FactoMineR::PCA(vals, ncp = 2, scale.unit = TRUE, graph = FALSE))
+      pca <- suppressWarnings(FactoMineR::PCA(vals, ncp = 2, scale.unit = TRUE, graph = FALSE, ...))
       
       ########################################################
       ### WHICH PRINCIPAL COMPONENT METHOD SHOULD BE USED? ###
@@ -135,7 +136,7 @@ strat_pcomp <- function(mraster,
       
       #--- perform PCA using rasterPCA -- requires conversion to raster* format ---#
       
-      pca <- suppressWarnings(FactoMineR::PCA(vals, ncp = 2, scale.unit = FALSE, graph = FALSE))
+      pca <- suppressWarnings(FactoMineR::PCA(vals, ncp = 2, scale.unit = FALSE, graph = FALSE, ...))
       
       ########################################################
       ### WHICH PRINCIPAL COMPONENT METHOD SHOULD BE USED? ###
@@ -167,7 +168,7 @@ strat_pcomp <- function(mraster,
       
       #--- perform PCA using rasterPCA -- requires conversion to raster* format ---#
       
-      pca <- suppressWarnings(FactoMineR::PCA(vals, ncp = 2, scale.unit = FALSE, graph = FALSE))
+      pca <- suppressWarnings(FactoMineR::PCA(vals, ncp = 2, scale.unit = FALSE, graph = FALSE, ...))
       
       ########################################################
       ### WHICH PRINCIPAL COMPONENT METHOD SHOULD BE USED? ###

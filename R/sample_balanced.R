@@ -22,7 +22,8 @@ sample_balanced <- function(mraster,
                             access = NULL,
                             buff_inner = NULL,
                             buff_outer = NULL,
-                            plot = FALSE) 
+                            plot = FALSE,
+                            ...) 
   {
   
   #--- Set global vars ---#
@@ -132,14 +133,14 @@ sample_balanced <- function(mraster,
   
   if (algorithm == "lpm2"){
     
-    sampled <- SamplingBigData::lpm2_kdtree(prob = p, x = vals_m)
+    sampled <- SamplingBigData::lpm2_kdtree(prob = p, x = vals_m, ...)
     
     
    }
   
   if (algorithm == "lcube"){
     
-    sampled <- BalancedSampling::lcube(prob = p, Xspread = vals_m, Xbal = cbind(p))
+    sampled <- BalancedSampling::lcube(prob = p, Xspread = vals_m, Xbal = cbind(p), ...)
     
     
   }
@@ -163,7 +164,8 @@ sample_balanced <- function(mraster,
     sampled <- BalancedSampling::lcubestratified(prob = p, 
                                                  Xspread = vals_m, 
                                                  Xbal = cbind(p),
-                                                 integerStrata = strata_v)
+                                                 integerStrata = strata_v,
+                                                 ...)
     
     #--- extract all 1 (sampled) cells ---#
     

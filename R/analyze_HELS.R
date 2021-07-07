@@ -1,11 +1,13 @@
 #' Perform the Hypercube Evaluation of a Legacy Sample (HELS) algorithm using existing site data
-#' and raster metrics
+#' and raster metrics. New samples are allocated based on quantile ratios between the existing sample
+#' and covariate dataset.
+#' 
 #' @family analyze functions
 #'
 #' @inheritParams strat_kmeans
 #' @inheritParams extract_existing
 #' 
-#' @param threshold Numeric. Proxy maximum pixel quantile to avoid outliers. \code{default = 0.95}
+#' @param nSamp Numeric. Maximum number of new samples to allocate.
 #' 
 #' @return 
 #' 
@@ -126,7 +128,7 @@ analyze_HELS <- function(mraster = NULL,
   
   #--- begin while loop to sample ---#
   
-  while(newSamp > 0){
+  while( newSamp != 0 ){
   
     #--- determine the greatest discrepancy between sample and covariate data ---#
     
@@ -139,11 +141,11 @@ analyze_HELS <- function(mraster = NULL,
     
     #--- determine number of existing samples in selected quantile ---#
     
-    sampExist <- floor(nrow(samples) * matCovSampDens[repRow,repcol])
+    sampExist <- floor(nrow(samples) * matCovSampDens[repRow,repCol])
     
     #--- determine max number of samples based on covariate density ---#
     
-    sampOptim <- ceiling(nrow(samples) * matCovDens[repRow,repcol])
+    sampOptim <- ceiling(nrow(samples) * matCovDens[repRow,repCol])
     
     #--- number of samples needed ---#
     
@@ -151,7 +153,7 @@ analyze_HELS <- function(mraster = NULL,
   
     #--- we have a limited number of samples so we need to be sure not to over allocate ---#
     
-    if(newSamp < sampNeed) sampNeed <- newSamp
+    if(newSamp <= sampNeed) sampNeed <- newSamp
     
     #--- selecting covariates based on quantile chosen ---#
     
@@ -170,6 +172,7 @@ analyze_HELS <- function(mraster = NULL,
     valsSubSamp <- valsSub[addSamp,]
     
     valsSubSamp$type <- "new"
+    valsSubSamp$n <- row.names(valsSubSamp)
     
     #--- remove samples from pool to ensure same cells are not sampled again ---#
     
@@ -180,9 +183,18 @@ analyze_HELS <- function(mraster = NULL,
     samples <- rbind(samples,valsSubSamp)
     
     #--- update loop parameters ---#
+    message("Underrepresented Quantile ", position, " - A total of ", sampNeed, " samples have been allocated.")
+    
     position <- position + 1
     newSamp <- newSamp - sampNeed
-    message("Iteration ", position, " - A total of ", sampNeed, " samples have been allocated.")
+    
+    if( position > nrow(underRep) ){
+      
+      message(paste0("Allocated a total of ", nSamp - newSamp, " samples"))
+      
+      break
+      
+    }
 
   }
   
@@ -204,9 +216,12 @@ analyze_HELS <- function(mraster = NULL,
   
   ratio <- matCovSampDens / matCovDens
   
+  print(ratio)
+  
   #--- convert coordinates to a spatial points object ---#
   samples <- samples %>%
     as.data.frame() %>%
+    dplyr::select(-n) %>%
     sf::st_as_sf(., coords = c("X", "Y"))
   
   #--- assign sraster crs to spatial points object ---#
@@ -215,7 +230,7 @@ analyze_HELS <- function(mraster = NULL,
   if(isTRUE(plot)){
     
     terra::plot(mraster[[1]])
-    suppressWarnings(terra::plot(samples, add = T, col = ifelse(samples$type=="existing","Red","Black")))
+    suppressWarnings(terra::plot(samples, add = T, col = ifelse(samples$type=="existing","Black","Red")))
     
   }
   

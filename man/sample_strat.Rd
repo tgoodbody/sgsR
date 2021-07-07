@@ -59,6 +59,7 @@ Sampling based on a stratified raster.
 \seealso{
 Other sample functions: 
 \code{\link{sample_balanced}()},
+\code{\link{sample_clhs}()},
 \code{\link{sample_srs}()}
 }
 \concept{sample functions}

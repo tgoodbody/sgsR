@@ -178,7 +178,7 @@ mat_cov <- function(vals,
                     matQ)
 {
   
-  matCov <- matrix(1, nrow = nQuant, ncol = nb)
+  matCov <- matrix(0, nrow = nQuant, ncol = nb)
   
   #--- for each row in dataframe ---#
   

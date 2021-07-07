@@ -31,20 +31,20 @@ library(spatstat)
 ```{r}
 #--- import ALS metrics raster ---#
 
-raster <- "F:/_2021_SGS/sgsR/inst/extdata/rmf_metrics.tif" #system.file("extdata","rmf_metrics.tif", package = "sgsR")
+raster <- "C:/Users/goodb/Documents/UBC/post_doc/sgsR/inst/extdata/wall_metrics_small.tif"
 
 mraster <- terra::rast(raster)
 
 names(mraster) <- c("zmax","zmean","zsd","pzabove2","zq20","zq50","zq70","zq90","zq95","l_1","l_2","t_3","t_4")
 
 #--- import forest inventory polygon and mask unwanted areas ---#
-poly <- "F:/_2021_SGS/sgsR/inst/extdata/inventory_polygons.shp" #system.file("extdata","inventory_polygons.shp", package = "sgsR")
+poly <- "C:/Users/goodb/Documents/UBC/post_doc/sgsR/inst/extdata/inventory_polygons.shp" #system.file("extdata","inventory_polygons.shp", package = "sgsR")
 
 poly <- sf::st_read(poly)
 
 #--- import access layer to be used during sampling if desired ---#
 
-roads <- "F:/_2021_SGS/sgsR/inst/extdata/roads.shp" #system.file("extdata","roads.shp", package = "sgsR")
+roads <- "C:/Users/goodb/Documents/UBC/post_doc/sgsR/inst/extdata/roads.shp" #system.file("extdata","roads.shp", package = "sgsR")
 
 roads <- sf::st_read(roads)
 
@@ -212,7 +212,7 @@ sraster <- kmeans
 
 #--- 'mindist' between samples defaults to 100 ---#
 existing <- sample_srs(sraster = sraster, #srs_wo
-                  n = 90,
+                  n = 150,
                   plot = TRUE)
 
 ```
