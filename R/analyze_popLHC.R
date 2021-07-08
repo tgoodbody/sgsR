@@ -148,7 +148,7 @@ mat_quant <- function(vals,
   
   #--- create covariance matrix of the quantiles ---#
   
-  matQ <- matrix(NA, nrow =(nQuant+1), ncol = nb)
+  matQ <- matrix(NA, nrow = (nQuant + 1), ncol = nb)
   
   for(i in 1:nb){
     
@@ -179,6 +179,9 @@ mat_cov <- function(vals,
                     nb,
                     matQ)
 {
+  
+  if(anyNA(vals))
+    stop("NA values cannot exist in your covariates/samples")
   
   matCov <- matrix(0, nrow = nQuant, ncol = nb)
   
@@ -240,6 +243,9 @@ mat_covNB <- function(vals,
                     nb,
                     matQ)
 {
+  
+  if(anyNA(vals))
+    stop("NA values cannot exist in your covariates/samples")
   
   matCov <- matrix(0, nrow = nQuant, ncol = nb)
   

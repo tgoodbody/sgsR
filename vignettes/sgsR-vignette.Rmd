@@ -72,7 +72,7 @@ terra::plot(wall_poly[[1:2]])
 ### k-means stratification
 ```{r}
 #--- perform stratification using k-means ---#
-kmeans <- strat_kmeans(mraster = wall_poly[[1]], nstrata = 4)
+kmeans <- strat_kmeans(mraster = wall_poly[[1]], nstrata = 6)
 
 plot(kmeans)
 
@@ -104,7 +104,7 @@ osb$details
 #--- perform stratification using user-defined breaks ---#
 
 #--- define breaks for metric ---#
-breaks <- c(seq(5,20,5))
+breaks <- c(seq(0,100,20))
 
 breaks
 

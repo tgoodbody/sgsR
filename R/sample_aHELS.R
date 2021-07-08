@@ -56,7 +56,7 @@ sample_aHELS <- function(mraster = NULL,
   
   #--- determine number of bands in 'mraster' ---#
   
-  nb <- terra::nlyr(mraster)
+    nb <- terra::nlyr(mraster)
   
   #--- determine crs of input sraster ---#
   crs <- crs(mraster)
@@ -89,6 +89,11 @@ sample_aHELS <- function(mraster = NULL,
   matCovDens[which(matCovDens <= 0.01)] <- NA
   
   ###--- Prepare existing sample data ---###
+  
+  #--- remove any attributes that are not geometry ---#
+  
+  existing <- existing %>% 
+    dplyr::select(geometry)
   
   #--- extract covariates at existing sample locations ---#
   

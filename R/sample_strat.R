@@ -13,6 +13,7 @@
 #' stratified samples. If \code{TRUE} return a list
 #' where \code{$details} additional sampling information and \code{$raster} 
 #' is an sf object of stratified samples.
+#' @param plot Logial. Plots existing (circles) and new (crosses) samples on the first band of mraster.
 #'
 #' @importFrom magrittr %>%
 #' @importFrom methods is
