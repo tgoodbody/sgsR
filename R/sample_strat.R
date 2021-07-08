@@ -72,7 +72,7 @@ sample_strat <- function(sraster,
   }
   
   #--- determine crs of input sraster ---#
-  crs <- crs(sraster)
+  crs <- terra::crs(sraster)
   
   #--- if existing samples are provided ensure they are in the proper format ---#
   

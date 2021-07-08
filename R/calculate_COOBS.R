@@ -66,6 +66,11 @@ calculate_COOBS <- function(mraster = NULL,
   
   covMat <- as.matrix(stats::cov(vals[,3:ncol(vals)]))
   
+  #--- remove any attributes that are not geometry ---#
+  
+  existing <- existing %>% 
+    dplyr::select(geometry)
+  
   #--- extract covariates at existing sample locations ---#
   
   samples <- sgsR::extract_metrics(mraster, existing, data.frame = TRUE)
@@ -99,7 +104,7 @@ calculate_COOBS <- function(mraster = NULL,
     
     #--- Determine distance for each sample location ---#
     
-    sampDist<- stats::mahalanobis(x = as.matrix(samples[,3:ncol(samples)]), center = as.matrix(cell), cov = covMat) #calculate distance of observations to all other pixels
+    sampDist <- stats::mahalanobis(x = as.matrix(samples[,3:ncol(samples)]), center = as.matrix(cell), cov = covMat) #calculate distance of observations to all other pixels
     
     #--- Normalize distance between data and samples)
     
@@ -134,9 +139,11 @@ calculate_COOBS <- function(mraster = NULL,
   r <- terra::rast(as.matrix(vals[,c("x", "y", "nSamp")]), type = "xyz")
   names(r) <- "COOB"
   
-  #--- classify raster into breaks ---#
+  #--- classify raster into breaks on the fly ---#
   
-  rc <- terra::classify(r, c(0,5,10,15,20,25,30,35), include.lowest=TRUE, right=FALSE)
+  breaks <- unique(floor(seq(min(vals$nSamp),max(vals$nSamp),length.out = 8)))
+  
+  rc <- terra::classify(r, breaks, include.lowest=TRUE, right=FALSE)
   names(rc) <- "COOBclass"
   
   #--- stack 2 rasters for output ---#
@@ -161,3 +168,4 @@ calculate_COOBS <- function(mraster = NULL,
   return(rout)
   
 }
+

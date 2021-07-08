@@ -56,10 +56,10 @@ sample_aHELS <- function(mraster = NULL,
   
   #--- determine number of bands in 'mraster' ---#
   
-    nb <- terra::nlyr(mraster)
+  nb <- terra::nlyr(mraster)
   
   #--- determine crs of input sraster ---#
-  crs <- crs(mraster)
+  crs <- terra::crs(mraster)
   
   #--- extract covariates data from mraster ---#
   
@@ -98,6 +98,11 @@ sample_aHELS <- function(mraster = NULL,
   #--- extract covariates at existing sample locations ---#
   
   samples <- extract_metrics(mraster, existing, data.frame = TRUE)
+  
+  #--- remove already existing samples from vals to no repeat sample ---#
+  
+  vals <- vals %>% 
+    dplyr::anti_join(samples, by = c("X", "Y"))
   
   #--- Assign code to differentiate between original samples and those added during HELS algorithm ---#
   
@@ -158,7 +163,7 @@ sample_aHELS <- function(mraster = NULL,
     if ( !is.numeric(nSamp) )
       stop("'nSamp' must be type numeric")
     
-    message(paste0("'nSamp' of", nSamp, "  has been provided. Samples will be added until this number is reached"))
+    message(paste0("'nSamp' of ", nSamp, "  has been provided. Samples will be added until this number is reached"))
     
     while( newSamp != 0 ){
       
