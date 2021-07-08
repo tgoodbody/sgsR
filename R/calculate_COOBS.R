@@ -9,6 +9,7 @@
 #' @inheritParams strat_kmeans
 #' @inheritParams extract_existing
 #' 
+#' @param mraster spatRaster. ALS metrics raster. Requires at least 2 layers to calculate covariance matrix
 #' @param threshold Numeric. Proxy maximum pixel quantile to avoid outliers. \code{default = 0.95}
 #' @param cores Numeric. Number of CPU cores to use for parallel processing. \code{default = 1}
 #' 
@@ -46,6 +47,11 @@ calculate_COOBS <- function(mraster = NULL,
   
   if (!is.logical(details))
     stop("'details' must be type logical")
+  
+  nb <- terra::nlyr(mraster)
+  
+  if(nb < 2)
+    stop("mraster only has 1 layer. Need at least 2 layers to calculate covariance matrix")
   
   #--- extract covariates data from mraster ---#
   

@@ -19,13 +19,13 @@
 #' @export
 
 strat_quantiles <- function(mraster,
-                          metric = NULL,
-                          metric2 = NULL,
-                          nstrata,
-                          nstrata2 = NULL,
-                          plot = FALSE,
-                          samp = 1,
-                          details = FALSE){
+                            metric = NULL,
+                            metric2 = NULL,
+                            nstrata,
+                            nstrata2 = NULL,
+                            plot = FALSE,
+                            samp = 1,
+                            details = FALSE){
   
   #--- Set global vars ---#
   
