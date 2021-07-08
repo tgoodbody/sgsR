@@ -51,7 +51,7 @@ calculate_COOBS <- function(mraster = NULL,
   nb <- terra::nlyr(mraster)
   
   if(nb < 2)
-    stop("mraster only has 1 layer. Need at least 2 layers to calculate covariance matrix")
+    stop("'mraster' only has 1 band. Need at least 2 bands to calculate covariance matrix")
   
   #--- extract covariates data from mraster ---#
   
