@@ -2,7 +2,7 @@
 % Please edit documentation in R/calculate_pcomp.R
 \name{calculate_pcomp}
 \alias{calculate_pcomp}
-\title{Calculate and rasterize principal components from a metric raster}
+\title{Raster principal components}
 \usage{
 calculate_pcomp(
   mraster = NULL,

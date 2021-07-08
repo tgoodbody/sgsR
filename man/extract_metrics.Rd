@@ -2,7 +2,7 @@
 % Please edit documentation in R/extract_metrics.R
 \name{extract_metrics}
 \alias{extract_metrics}
-\title{Extract metric raster attributes to samples}
+\title{Extract raster metrics to existing sample}
 \usage{
 extract_metrics(mraster, samples, data.frame = FALSE)
 }

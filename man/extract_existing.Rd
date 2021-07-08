@@ -2,7 +2,7 @@
 % Please edit documentation in R/extract_existing.R
 \name{extract_existing}
 \alias{extract_existing}
-\title{Extract stratification raster strata to existing samples}
+\title{Extract raster strata to samples}
 \usage{
 extract_existing(sraster, existing, data.frame = FALSE)
 }

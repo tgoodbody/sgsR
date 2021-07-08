@@ -1,4 +1,6 @@
-#' Extract stratification raster strata to existing samples
+#' Extract raster strata to samples
+#' 
+#' @description Extract stratification raster strata to existing samples
 #' @family extract functions
 #'
 #' @inheritParams  sample_srs

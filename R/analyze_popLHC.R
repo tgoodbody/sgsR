@@ -1,4 +1,6 @@
-#' Population level analysis of metric raster data to determine optimal Latin Hypercube sample size
+#' Analyze covariates for LHC
+#' 
+#' @description Population level analysis of metric raster data to determine optimal Latin Hypercube sample size
 #' @family analyze functions
 #'
 #' @inheritParams strat_kmeans

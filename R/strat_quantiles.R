@@ -1,4 +1,6 @@
-#' Stratify metric raster using metric quantiles.
+#' Quantiles stratification
+#' 
+#' @description Stratify metric raster using metric quantiles.
 #' @family stratify functions
 #'
 #' @inheritParams strat_kmeans

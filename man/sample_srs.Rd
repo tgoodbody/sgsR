@@ -2,7 +2,7 @@
 % Please edit documentation in R/sample_srs.R
 \name{sample_srs}
 \alias{sample_srs}
-\title{Randomly sample within a stratification raster extent.}
+\title{Simple random sampling}
 \usage{
 sample_srs(
   sraster,

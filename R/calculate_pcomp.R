@@ -1,4 +1,6 @@
-#' Calculate and rasterize principal components from a metric raster
+#' Raster principal components
+#' 
+#' @description Calculate and rasterize principal components from a metric raster
 #' 
 #' @family calculate functions
 #' 

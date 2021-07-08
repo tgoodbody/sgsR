@@ -1,4 +1,6 @@
-#' Stratify metrics raster using user defined breaks
+#' Breaks stratification
+#' 
+#' @description Stratify metrics raster using user defined breaks
 #' @family stratify functions
 #'
 #' @inheritParams strat_kmeans

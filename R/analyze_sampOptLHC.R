@@ -1,4 +1,6 @@
-#' Population level analysis of metric raster data to determine optimal Latin Hypercube sample size
+#' Analyze optimal LHC sample number
+#' 
+#' @description Population level analysis of metric raster data to determine optimal Latin Hypercube sample size
 #' @family analyze functions
 #' 
 #' @inheritParams analyze_popLHC

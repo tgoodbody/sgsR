@@ -1,4 +1,7 @@
-#' Randomly sample within a stratification raster extent.
+#' Simple random sampling
+#'  
+#' @description Randomly sample within a stratification raster extent.
+#' 
 #' @family sample functions
 #'
 #' @param sraster spatRaster. Stratification raster to be used for sampling.

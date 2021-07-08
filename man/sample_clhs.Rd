@@ -2,7 +2,7 @@
 % Please edit documentation in R/sample_clhs.R
 \name{sample_clhs}
 \alias{sample_clhs}
-\title{Conditioned Latin Hypercube Sampling using the \code{clhs} package functionality}
+\title{CLHS sampling}
 \usage{
 sample_clhs(
   mraster = mraster,

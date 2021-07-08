@@ -2,7 +2,7 @@
 % Please edit documentation in R/strat_osb.R
 \name{strat_osb}
 \alias{strat_osb}
-\title{Stratify metrics raster using optimum sample breaks algorithm}
+\title{Optimum sample breaks stratification}
 \usage{
 strat_osb(
   mraster,

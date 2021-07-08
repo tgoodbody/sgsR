@@ -1,4 +1,6 @@
-#' Stratify metrics raster using principal components and quantile breaks
+#' Principal components stratification
+#' 
+#' @description Stratify metrics raster using principal components and quantile breaks
 #' @family stratify functions
 #'
 #' @inheritParams strat_kmeans

@@ -2,7 +2,7 @@
 % Please edit documentation in R/analyze_popLHC.R
 \name{analyze_popLHC}
 \alias{analyze_popLHC}
-\title{Population level analysis of metric raster data to determine optimal Latin Hypercube sample size}
+\title{Analyze covariates for LHC}
 \usage{
 analyze_popLHC(mraster, PCA = TRUE, quant = TRUE, nQuant = 20, KLdiv = TRUE)
 }

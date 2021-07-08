@@ -2,7 +2,7 @@
 % Please edit documentation in R/strat_kmeans.R
 \name{strat_kmeans}
 \alias{strat_kmeans}
-\title{Stratify metrics raster using k-means algorithm}
+\title{k-means stratification}
 \usage{
 strat_kmeans(
   mraster,

@@ -1,4 +1,6 @@
-#' Stratify metrics raster using k-means algorithm
+#' k-means stratification
+#' 
+#' @description Stratify metrics raster using k-means algorithm
 #' @family stratify functions
 #'
 #' @param mraster spatRaster. ALS metrics raster.

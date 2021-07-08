@@ -1,4 +1,6 @@
-#' Perform the COunt of OBServations (COOBS) algorithm using existing site data
+#' COOBS algorithm sampling
+#' 
+#' @description Perform the COunt of OBServations (COOBS) algorithm using existing site data
 #' and raster metrics. This algorithm aids the user in determining where additional samples
 #' could be located by comparing existing samples to each pixel and associated covariates.
 #' The output COOBS raster could be used to constrain clhs sampling to areas that are underreprented.

@@ -1,4 +1,7 @@
-#' Extract metric raster attributes to samples
+#' Extract raster metrics to existing sample
+#' 
+#' @description Extract metric raster attributes to samples
+#' 
 #' @family extract functions
 #'
 #' @inheritParams sample_srs

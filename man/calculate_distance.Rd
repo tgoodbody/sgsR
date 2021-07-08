@@ -2,8 +2,7 @@
 % Please edit documentation in R/calculate_distance.R
 \name{calculate_distance}
 \alias{calculate_distance}
-\title{Per pixel distance to nearest access vector. Intended to be used as a `cost` constraint
-within the \code{sample_clhs} function}
+\title{distance to access}
 \usage{
 calculate_distance(raster = NULL, access = NULL, plot = FALSE)
 }

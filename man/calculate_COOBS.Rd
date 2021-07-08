@@ -2,10 +2,7 @@
 % Please edit documentation in R/calculate_COOBS.R
 \name{calculate_COOBS}
 \alias{calculate_COOBS}
-\title{Perform the COunt of OBServations (COOBS) algorithm using existing site data
-and raster metrics. This algorithm aids the user in determining where additional samples
-could be located by comparing existing samples to each pixel and associated covariates.
-The output COOBS raster could be used to constrain clhs sampling to areas that are underreprented.}
+\title{COOBS algorithm sampling}
 \usage{
 calculate_COOBS(
   mraster = NULL,

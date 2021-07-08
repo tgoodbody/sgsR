@@ -1,6 +1,8 @@
-#' Perform the adapted Hypercube Evaluation of a Legacy Sample (aHELS) algorithm using existing site data
-#' and raster metrics. New samples are allocated based on quantile ratios between the existing sample
-#' and covariate dataset.
+#' adapted Hypercube Evaluation of a Legacy Sample (aHELS)
+#'
+#' @description Perform the adapted Hypercube Evaluation of a Legacy Sample (aHELS) algorithm using 
+#' existing site data and raster metrics. New samples are allocated based on quantile ratios between
+#' the existing sampleand covariate dataset.
 #' 
 #' @family sample functions
 #'

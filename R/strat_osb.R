@@ -1,4 +1,6 @@
-#' Stratify metrics raster using optimum sample breaks algorithm
+#' Optimum sample breaks stratification
+#' 
+#' @description Stratify metrics raster using optimum sample breaks algorithm
 #' @family stratify functions
 #'
 #' @inheritParams strat_kmeans

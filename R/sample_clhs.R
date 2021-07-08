@@ -1,4 +1,7 @@
-#' Conditioned Latin Hypercube Sampling using the \code{clhs} package functionality
+#' CLHS sampling
+#' 
+#' @description Conditioned Latin Hypercube Sampling using the \code{clhs} package functionality
+#' 
 #' @family sample functions
 #' 
 #' @inheritParams analyze_sampOptLHC

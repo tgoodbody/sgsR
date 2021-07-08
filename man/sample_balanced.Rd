@@ -2,7 +2,7 @@
 % Please edit documentation in R/sample_balanced.R
 \name{sample_balanced}
 \alias{sample_balanced}
-\title{Balanced raster sampling using \code{\link{BalancedSampling}} and \code{\link{SamplingBigData}} methods}
+\title{Balanced sampling}
 \usage{
 sample_balanced(
   mraster,
@@ -43,7 +43,8 @@ strata with boundary dividers.}
 An sf object with \code{n} randomly sampled points.
 }
 \description{
-Balanced raster sampling using \code{\link{BalancedSampling}} and \code{\link{SamplingBigData}} methods
+Balanced raster sampling using \code{\link{BalancedSampling}} and 
+\code{\link{SamplingBigData}} methods
 }
 \seealso{
 Other sample functions: 

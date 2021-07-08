@@ -2,7 +2,7 @@
 % Please edit documentation in R/analyze_sampOptLHC.R
 \name{analyze_sampOptLHC}
 \alias{analyze_sampOptLHC}
-\title{Population level analysis of metric raster data to determine optimal Latin Hypercube sample size}
+\title{Analyze optimal LHC sample number}
 \usage{
 analyze_sampOptLHC(
   popLHC = NULL,

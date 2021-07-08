@@ -2,7 +2,7 @@
 % Please edit documentation in R/strat_breaks.R
 \name{strat_breaks}
 \alias{strat_breaks}
-\title{Stratify metrics raster using user defined breaks}
+\title{Breaks stratification}
 \usage{
 strat_breaks(
   mraster,

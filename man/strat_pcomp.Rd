@@ -2,7 +2,7 @@
 % Please edit documentation in R/strat_pcomp.R
 \name{strat_pcomp}
 \alias{strat_pcomp}
-\title{Stratify metrics raster using principal components and quantile breaks}
+\title{Principal components stratification}
 \usage{
 strat_pcomp(
   mraster,

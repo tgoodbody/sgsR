@@ -1,4 +1,8 @@
-#' Balanced raster sampling using \code{\link{BalancedSampling}} and \code{\link{SamplingBigData}} methods
+#' Balanced sampling 
+#' 
+#' @description Balanced raster sampling using \code{\link{BalancedSampling}} and 
+#' \code{\link{SamplingBigData}} methods
+#' 
 #' @family sample functions
 #'
 #' @inheritParams strat_kmeans

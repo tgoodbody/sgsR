@@ -2,9 +2,7 @@
 % Please edit documentation in R/sample_aHELS.R
 \name{sample_aHELS}
 \alias{sample_aHELS}
-\title{Perform the adapted Hypercube Evaluation of a Legacy Sample (aHELS) algorithm using existing site data
-and raster metrics. New samples are allocated based on quantile ratios between the existing sample
-and covariate dataset.}
+\title{adapted Hypercube Evaluation of a Legacy Sample (aHELS)}
 \usage{
 sample_aHELS(
   mraster = NULL,
@@ -35,9 +33,9 @@ continually loop and should be used sparingly.}
 
 }
 \description{
-Perform the adapted Hypercube Evaluation of a Legacy Sample (aHELS) algorithm using existing site data
-and raster metrics. New samples are allocated based on quantile ratios between the existing sample
-and covariate dataset.
+Perform the adapted Hypercube Evaluation of a Legacy Sample (aHELS) algorithm using 
+existing site data and raster metrics. New samples are allocated based on quantile ratios between
+the existing sampleand covariate dataset.
 }
 \seealso{
 Other sample functions: 

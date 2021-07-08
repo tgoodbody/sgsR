@@ -1,4 +1,7 @@
-#' Sampling based on a stratified raster.
+#' Stratified sampling
+#' 
+#' @description Sampling based on a stratified raster.
+#' 
 #' @family sample functions
 #'
 #' @inheritParams sample_srs

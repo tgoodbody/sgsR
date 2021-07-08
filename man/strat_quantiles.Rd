@@ -2,7 +2,7 @@
 % Please edit documentation in R/strat_quantiles.R
 \name{strat_quantiles}
 \alias{strat_quantiles}
-\title{Stratify metric raster using metric quantiles.}
+\title{Quantiles stratification}
 \usage{
 strat_quantiles(
   mraster,

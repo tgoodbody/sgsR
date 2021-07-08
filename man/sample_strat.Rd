@@ -2,7 +2,7 @@
 % Please edit documentation in R/sample_strat.R
 \name{sample_strat}
 \alias{sample_strat}
-\title{Sampling based on a stratified raster.}
+\title{Stratified sampling}
 \usage{
 sample_strat(
   sraster,
