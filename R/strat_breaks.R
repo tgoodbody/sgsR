@@ -8,7 +8,7 @@
 #' @param breaks Numeric. Vector of breakpoints for \code{metric}
 #' @param breaks2 Numeric. Vector of breakpoints for \code{metric2} (if provided)
 #' @param filename Character. Path to write stratified raster to disc.
-#' @param ... Additional arguments for for writing files. See \link[terra]{writeRaster}.
+#' @param ... Additional arguments for writing files. See \link[terra]{writeRaster}.
 #' 
 #' @return output stratification \code{spatRaster}, or a list when \code{details = TRUE}.
 #' 

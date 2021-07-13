@@ -11,7 +11,9 @@ strat_kmeans(
   algorithm = "Lloyd",
   scale = TRUE,
   plot = FALSE,
-  details = FALSE
+  details = FALSE,
+  filename = NULL,
+  ...
 )
 }
 \arguments{
@@ -34,6 +36,10 @@ strata with boundary dividers.}
  stratification raster. If \code{TRUE} return a list
 where \code{$details} is additional stratification information and
  \code{$raster} is the output stratification spatRaster.}
+
+\item{filename}{Character. Path to write stratified raster to disc.}
+
+\item{...}{Additional arguments for writing files. See \link[terra]{writeRaster}.}
 }
 \value{
 output stratification \code{spatRaster}, or a list when \code{details = TRUE}.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/sample_aHELS.R
 \name{sample_aHELS}
 \alias{sample_aHELS}
-\title{adapted Hypercube Evaluation of a Legacy Sample (aHELS)}
+\title{Adapted Hypercube Evaluation of a Legacy Sample (aHELS)}
 \usage{
 sample_aHELS(
   mraster = NULL,
@@ -37,10 +37,14 @@ Perform the adapted Hypercube Evaluation of a Legacy Sample (aHELS) algorithm us
 existing site data and raster metrics. New samples are allocated based on quantile ratios between
 the existing sampleand covariate dataset.
 }
+\references{
+Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451
+}
 \seealso{
 Other sample functions: 
 \code{\link{sample_balanced}()},
 \code{\link{sample_clhs}()},
+\code{\link{sample_grid}()},
 \code{\link{sample_srs}()},
 \code{\link{sample_strat}()}
 }

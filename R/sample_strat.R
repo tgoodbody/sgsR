@@ -158,11 +158,11 @@ sample_strat <- function(sraster,
   if (isTRUE(include)) {
     message("'existing' samples being included in 'n' calculation")
     
-    toSample <- tallySamples(sraster, n, existing)
+    toSample <- calculate_reqSamples(sraster, n, existing)
     
   } else {
     
-    toSample <- tallySamples(sraster,n)
+    toSample <- calculate_reqSamples(sraster,n)
     
   }
   

@@ -61,6 +61,7 @@ Other sample functions:
 \code{\link{sample_aHELS}()},
 \code{\link{sample_balanced}()},
 \code{\link{sample_clhs}()},
+\code{\link{sample_grid}()},
 \code{\link{sample_srs}()}
 }
 \concept{sample functions}

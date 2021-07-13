@@ -31,20 +31,20 @@ library(spatstat)
 ```{r}
 #--- import ALS metrics raster ---#
 
-raster <- "C:/Users/goodb/Documents/UBC/post_doc/sgsR/inst/extdata/wall_metrics_small.tif"
+raster <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
 
 mraster <- terra::rast(raster)
 
 names(mraster) <- c("zmax","zmean","zsd","pzabove2","zq20","zq50","zq70","zq90","zq95","l_1","l_2","t_3","t_4")
 
 #--- import forest inventory polygon and mask unwanted areas ---#
-poly <- "C:/Users/goodb/Documents/UBC/post_doc/sgsR/inst/extdata/inventory_polygons.shp" #system.file("extdata","inventory_polygons.shp", package = "sgsR")
+poly <- system.file("extdata","inventory_polygons.shp", package = "sgsR")
 
 poly <- sf::st_read(poly)
 
 #--- import access layer to be used during sampling if desired ---#
 
-roads <- "C:/Users/goodb/Documents/UBC/post_doc/sgsR/inst/extdata/roads.shp" #system.file("extdata","roads.shp", package = "sgsR")
+roads <- system.file("extdata","roads.shp", package = "sgsR")
 
 roads <- sf::st_read(roads)
 
@@ -151,8 +151,8 @@ plot(pcomp1)
 
 #--- perform stratification using principal components on P1 and P2 ---#
 pcomp2 <- strat_pcomp(mraster = wall_poly,
-                     nstrata = 4, 
-                     nstrata2 = 3)
+                     nstrata = 10, 
+                     nstrata2 = 10)
 
 #--- number of output strata will always be equal to ---#
 #--- 'nstrata' * 'nstrata2' (if 'nstrata2' is provided) ---#
@@ -254,7 +254,7 @@ srs_w <- sample_srs(sraster = sraster,
 #--- stratified sampling **without** access defined---#
 
 #--- 'mindist' between samples defaults to 100 ---#
-strat_wo <- sample_strat(sraster = sraster, 
+strat_wo <- sample_strat(sraster = pcomp2, 
                          n = 200,
                          plot = TRUE)
 
@@ -363,7 +363,7 @@ bal_w_a <- sample_balanced(mraster = mraster,
 #--- extract strata from raster for already existing sample network ---#
 #--- we use random samples defined above ---#
 
-existing <- extract_existing(sraster = raster,
+existing <- extract_existing(sraster = kmeans,
                              existing = srs_wo)
 
 #--- if 'data.frame = TRUE -- output will be a dataframe instead of an sf object ---#

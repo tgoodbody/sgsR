@@ -38,7 +38,7 @@ from access where plots can be sampled.}
 where \code{$details} is additional stratification information and
  \code{$raster} is the output stratification spatRaster.}
 
-\item{...}{}
+\item{...}{Additional arguments for clhs sampling. See \link[clhs]{clhs}.}
 }
 \value{
 An sf object with \code{n} stratified samples.
@@ -50,6 +50,7 @@ Conditioned Latin Hypercube Sampling using the \code{clhs} package functionality
 Other sample functions: 
 \code{\link{sample_aHELS}()},
 \code{\link{sample_balanced}()},
+\code{\link{sample_grid}()},
 \code{\link{sample_srs}()},
 \code{\link{sample_strat}()}
 }

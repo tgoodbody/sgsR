@@ -12,6 +12,7 @@ strat_pcomp(
   plot = FALSE,
   samp = 1,
   details = FALSE,
+  filename = NULL,
   ...
 )
 }
@@ -36,10 +37,10 @@ for strata visualization. Lower values reduce processing time.}
 where \code{$details} is additional stratification information and
  \code{$raster} is the output stratification spatRaster.}
 
-\item{...}{}
-}
-\value{
-output stratification \code{spatRaster}, or a list when \code{details = TRUE}.
+\item{filename}{Character. Path to write stratified raster to disc.}
+
+\item{...}{Additional arguments for PCA implementation and writing files. See \link[FactoMineR]{PCA}
+and \link[terra]{writeRaster}.}
 }
 \description{
 Stratify metrics raster using principal components and quantile breaks

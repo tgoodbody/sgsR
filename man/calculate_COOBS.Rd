@@ -39,9 +39,13 @@ and raster metrics. This algorithm aids the user in determining where additional
 could be located by comparing existing samples to each pixel and associated covariates.
 The output COOBS raster could be used to constrain clhs sampling to areas that are underreprented.
 }
+\references{
+Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451
+}
 \seealso{
 Other calculate functions: 
 \code{\link{calculate_distance}()},
-\code{\link{calculate_pcomp}()}
+\code{\link{calculate_pcomp}()},
+\code{\link{calculate_reqSamples}()}
 }
 \concept{calculate functions}

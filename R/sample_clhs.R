@@ -9,7 +9,7 @@
 #' @inheritParams strat_kmeans
 #' @inheritParams extract_existing
 #' 
-#' @param ...
+#' @param ... Additional arguments for clhs sampling. See \link[clhs]{clhs}.
 #'
 #' @importFrom magrittr %>%
 #' @importFrom methods is

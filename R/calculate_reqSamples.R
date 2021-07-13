@@ -1,4 +1,8 @@
-#' Tally required number of samples for each raster strata
+#' Determine required samples in strata
+#' 
+#' @details Count the required number of samples for each raster strata
+#'
+#' @family calculate functions
 #'
 #' @inheritParams sample_srs
 #' @inheritParams sample_strat
@@ -9,9 +13,9 @@
 #' @return data.frame of strata and associates samples
 
 
-tallySamples <- function(sraster,
-                         n,
-                         existing = NULL){
+calculate_reqSamples <- function(sraster,
+                                 n,
+                                 existing = NULL){
   
   #--- set global vars ---#
   
@@ -31,15 +35,15 @@ tallySamples <- function(sraster,
     dplyr::group_by(strata) %>% 
     dplyr::summarize(count = n()) %>% 
     dplyr::mutate(freq = count / sum(count),
-           total = freq * n) %>%
+                  total = freq * n) %>%
     
     #--- if a value equates to <1 it will have 0 samples --- change 0 to 1 ---#
     
     #########################################
-    #### What other method could be used ####
-    #########################################
+  #### What other method could be used ####
+  #########################################
   
-    dplyr::mutate(total = replace(total, total < 1, 1)) %>%
+  dplyr::mutate(total = replace(total, total < 1, 1)) %>%
     dplyr::mutate(total = round(total)) %>%
     dplyr::select(strata, total) %>%
     as.data.frame()
@@ -62,8 +66,8 @@ tallySamples <- function(sraster,
       
       toSample <- toSample %>% 
         dplyr::mutate(total = replace(total,
-                               total == maxTotal,
-                               maxTotal - abs(diff))
+                                      total == maxTotal,
+                                      maxTotal - abs(diff))
         )
       
     } else {
@@ -76,8 +80,8 @@ tallySamples <- function(sraster,
       
       toSample <- toSample %>% 
         dplyr::mutate(total = replace(total,
-                               total == minTotal,
-                               minTotal + abs(diff))
+                                      total == minTotal,
+                                      minTotal + abs(diff))
         )
       
     }
@@ -109,9 +113,9 @@ tallySamples <- function(sraster,
       dplyr::mutate(total = total - eTotal) %>%
       dplyr::select(-eTotal) %>%
       as.data.frame()
-
+    
   }
   
   toSample
-
+  
 }

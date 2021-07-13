@@ -12,7 +12,8 @@ strat_quantiles(
   nstrata2 = NULL,
   plot = FALSE,
   samp = 1,
-  details = FALSE
+  details = FALSE,
+  filename = NULL
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ for strata visualization. Lower values reduce processing time.}
  stratification raster. If \code{TRUE} return a list
 where \code{$details} is additional stratification information and
  \code{$raster} is the output stratification spatRaster.}
+
+\item{filename}{Character. Path to write stratified raster to disc.}
 }
 \value{
 output stratification \code{spatRaster}, or a list when \code{details = TRUE}.

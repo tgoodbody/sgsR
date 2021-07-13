@@ -38,7 +38,7 @@ where \code{$details} is additional stratification information and
 
 \item{filename}{Character. Path to write stratified raster to disc.}
 
-\item{...}{Additional arguments for for writing files. See \link[terra]{writeRaster}.}
+\item{...}{Additional arguments for writing files. See \link[terra]{writeRaster}.}
 }
 \value{
 output stratification \code{spatRaster}, or a list when \code{details = TRUE}.

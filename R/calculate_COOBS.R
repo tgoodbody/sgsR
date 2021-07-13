@@ -13,6 +13,10 @@
 #' @param threshold Numeric. Proxy maximum pixel quantile to avoid outliers. \code{default = 0.95}
 #' @param cores Numeric. Number of CPU cores to use for parallel processing. \code{default = 1}
 #' 
+#' @references 
+#' Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451  
+#' 
+#'   
 #' @return output raster with COOBS and classified COOBS layers.
 #' 
 #' @importFrom magrittr %>%

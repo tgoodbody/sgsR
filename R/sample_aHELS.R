@@ -1,4 +1,4 @@
-#' adapted Hypercube Evaluation of a Legacy Sample (aHELS)
+#' Adapted Hypercube Evaluation of a Legacy Sample (aHELS)
 #'
 #' @description Perform the adapted Hypercube Evaluation of a Legacy Sample (aHELS) algorithm using 
 #' existing site data and raster metrics. New samples are allocated based on quantile ratios between
@@ -16,6 +16,9 @@
 #' continually loop and should be used sparingly.
 #' @param plot Logial. Plots existing (circles) and new (crosses) samples on the first band of mraster.
 #' @param nQuant Numeric. Number of quantiles to divide covariates and samples into.
+#' 
+#' @references 
+#' Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451  
 #' 
 #' @return 
 #' 
