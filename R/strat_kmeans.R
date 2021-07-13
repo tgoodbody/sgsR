@@ -2,6 +2,8 @@
 #' 
 #' @description Stratify metrics raster using k-means algorithm
 #' @family stratify functions
+#' 
+#' @inheritParams strat_breaks
 #'
 #' @param mraster spatRaster. ALS metrics raster.
 #' @param nstrata Character. Number of desired strata.
@@ -30,7 +32,9 @@ strat_kmeans <- function(mraster,
                          algorithm = "Lloyd",
                          scale = TRUE,
                          plot = FALSE,
-                         details = FALSE
+                         details = FALSE,
+                         filename = NULL,
+                         ...
 )
 {
 
@@ -130,6 +134,14 @@ strat_kmeans <- function(mraster,
 
     terra::plot(kmv, main = 'K-means clusters', col=col,type="classes")
 
+  }
+  
+  #--- write file to disc ---#
+  
+  if (!is.null(filename)){
+    
+    writeRaster(kmv, filename, overwrite = TRUE, ...)
+    
   }
     
   #--- Output based on 'details' to return raster alone or list with details ---#

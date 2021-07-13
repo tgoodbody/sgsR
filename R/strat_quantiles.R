@@ -4,6 +4,7 @@
 #' @family stratify functions
 #'
 #' @inheritParams strat_kmeans
+#' @inheritParams strat_breaks
 #' @param metric Character. Name of primary metric to stratify. If 
 #' \code{mraster} is has 1 layer it is taken as default.
 #' @param metric2 Character. Name of secondary metric to stratify.
@@ -25,7 +26,8 @@ strat_quantiles <- function(mraster,
                             nstrata2 = NULL,
                             plot = FALSE,
                             samp = 1,
-                            details = FALSE){
+                            details = FALSE,
+                            filename = NULL){
   
   #--- Set global vars ---#
   
@@ -222,7 +224,15 @@ strat_quantiles <- function(mraster,
     
     print(q)
     
-  }
+    }
+    
+    #--- write file to disc ---#
+    
+    if (!is.null(filename)){
+      
+      writeRaster(rout, filename, overwrite = TRUE, ...)
+      
+    }
     
     #--- Output based on 'details' to return raster alone or list with details ---#
     

@@ -5,8 +5,10 @@
 #'
 #' @inheritParams strat_kmeans
 #' @inheritParams strat_quantiles
+#' @inheritParams strat_breaks
 #' 
-#' @param ...
+#' @param ... Additional arguments for PCA implementation and writing files. See \link[FactoMineR]{PCA}
+#' and \link[terra]{writeRaster}.
 #' 
 #' @importFrom magrittr %>%
 #' @importFrom methods is
@@ -22,6 +24,7 @@ strat_pcomp <- function(mraster,
                         plot = FALSE,
                         samp = 1,
                         details = FALSE,
+                        filename = NULL,
                         ...)
   
 {
@@ -228,6 +231,14 @@ strat_pcomp <- function(mraster,
                    samp)
     
     print(p)
+    
+  }
+  
+  #--- write file to disc ---#
+  
+  if (!is.null(filename)){
+    
+    writeRaster(pca, filename, overwrite = TRUE, ...)
     
   }
   

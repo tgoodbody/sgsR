@@ -4,6 +4,8 @@
 #' @family stratify functions
 #'
 #' @inheritParams strat_kmeans
+#' @inheritParams strat_breaks
+#' 
 #' @param metric Character. Name of metric to be used for stratification
 #' @param nstrata Numeric. Number of desired output strata.
 #' @param n Numeric. Number of desired samples - used within 
@@ -24,7 +26,9 @@ strat_osb <- function(mraster,
                       n,
                       subset = 1,
                       plot = FALSE,
-                      details = FALSE)
+                      details = FALSE,
+                      filename = NULL,
+                      ...)
 
 {
   
@@ -131,6 +135,14 @@ strat_osb <- function(mraster,
 
     terra::plot(rcl, main = 'OSB breaks', col=col,type="classes")
 
+  }
+  
+  #--- write file to disc ---#
+  
+  if (!is.null(filename)){
+    
+    writeRaster(rcl, filename, overwrite = TRUE, ...)
+    
   }
   
   #--- Output based on 'details' to return raster alone or list with details ---#

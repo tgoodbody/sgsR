@@ -14,7 +14,7 @@ calculate_COOBS(
 )
 }
 \arguments{
-\item{mraster}{spatRaster. ALS metrics raster.}
+\item{mraster}{spatRaster. ALS metrics raster. Requires at least 2 layers to calculate covariance matrix}
 
 \item{existing}{sf or data.frame.  Existing plot network.}
 
