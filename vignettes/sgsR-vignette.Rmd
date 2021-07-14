@@ -287,7 +287,7 @@ strat_w_a <- sample_strat(sraster = sraster,
 ```{r}
 
 #--- stratified sampling with access and buffers provided ---#
-bal_wo <- sample_balanced(mraster = raster,
+bal_wo <- sample_balanced(mraster = wall_poly,
                         n = 200, 
                         algorithm = "lpm2",
                         plot = TRUE)
@@ -364,7 +364,7 @@ bal_w_a <- sample_balanced(mraster = mraster,
 #--- we use random samples defined above ---#
 
 existing <- extract_existing(sraster = kmeans,
-                             existing = srs_wo)
+                             existing = existing)
 
 #--- if 'data.frame = TRUE -- output will be a dataframe instead of an sf object ---#
 

@@ -1,7 +1,7 @@
 #' Balanced sampling 
 #' 
-#' @description Balanced raster sampling using \code{\link{BalancedSampling}} and 
-#' \code{\link{SamplingBigData}} methods
+#' @description Balanced raster sampling using BalancedSampling and 
+#' SamplingBigData methods
 #' 
 #' @family sample functions
 #'
@@ -12,12 +12,20 @@
 #' Default is \code{n / N}
 #' @param ...
 #' 
-#' 
 #' @return An sf object with \code{n} randomly sampled points.
 #' 
 #' @importFrom magrittr %>%
 #' @importFrom methods is
 #' 
+#' @references
+#' 
+#' Anton Grafstrom and Jonathan Lisic (2019). BalancedSampling: Balanced and Spatially
+#' Balanced Sampling. R package version 1.5.5. https://CRAN.R-project.org/package=BalancedSampling
+#' 
+#' Jonathan Lisic and Anton Grafstrom (2018). SamplingBigData: Sampling Methods for
+#' Big Data. R package version 1.0.0. https://CRAN.R-project.org/package=SamplingBigData
+#' 
+#'  
 #' @export
 
 sample_balanced <- function(mraster,

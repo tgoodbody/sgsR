@@ -1,14 +1,15 @@
-Package: sgsR
 Type: Package
+Package: sgsR
 Title: sgsR: Structurally Guided Sampling Approaches using ALS Data for R
 Version: 0.1.0
 Date: 2021
 Author: Tristan RH Goodbody
 Maintainer: Tristan RH Goodbody <goodbody.t@gmail.com>
-Description: This package provides functions to enable stratification and sampling for structurally guided sampling using ALS data.
+Description: This package provides functions to enable stratification and
+    sampling for structurally guided sampling using ALS data.
 License: MIT + file LICENSE
-Encoding: UTF-8
-LazyData: true
+Depends: 
+    R (>= 2.10)
 Imports:
     BalancedSampling (>= 1.5.5),
     clhs (>= 0.8.1),
@@ -37,12 +38,13 @@ Imports:
     stratifyR (>= 1.0.0),
     terra (>= 1.1.0),
     tidyr (>= 1.1.3)
-Depends: 
-    R (>= 2.10)
-RoxygenNote: 7.1.1
 Suggests: 
-    rmarkdown (>= 2.7.0),
     knitr (>= 1.33.0),
+    rmarkdown (>= 2.7.0),
     testthat (>= 3.0.0)
-VignetteBuilder: knitr
+VignetteBuilder: 
+    knitr
 Config/testthat/edition: 3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1

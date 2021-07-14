@@ -38,13 +38,13 @@ from access where plots can be sampled.}
 where \code{$details} is additional stratification information and
  \code{$raster} is the output stratification spatRaster.}
 
-\item{...}{Additional arguments for clhs sampling. See \link[clhs]{clhs}.}
+\item{...}{Additional arguments for clhs sampling. See \code{\link[clhs]{clhs}}.}
 }
 \value{
 An sf object with \code{n} stratified samples.
 }
 \description{
-Conditioned Latin Hypercube Sampling using the \code{clhs} package functionality
+Conditioned Latin Hypercube Sampling using the \code{\link[=clhs-package]{clhs}} package functionality
 }
 \seealso{
 Other sample functions: 

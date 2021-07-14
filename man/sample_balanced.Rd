@@ -43,8 +43,15 @@ strata with boundary dividers.}
 An sf object with \code{n} randomly sampled points.
 }
 \description{
-Balanced raster sampling using \code{\link{BalancedSampling}} and 
-\code{\link{SamplingBigData}} methods
+Balanced raster sampling using BalancedSampling and 
+SamplingBigData methods
+}
+\references{
+Anton Grafstrom and Jonathan Lisic (2019). BalancedSampling: Balanced and Spatially
+Balanced Sampling. R package version 1.5.5. https://CRAN.R-project.org/package=BalancedSampling
+
+Jonathan Lisic and Anton Grafstrom (2018). SamplingBigData: Sampling Methods for
+Big Data. R package version 1.0.0. https://CRAN.R-project.org/package=SamplingBigData
 }
 \seealso{
 Other sample functions: 

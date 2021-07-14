@@ -12,6 +12,7 @@ sample_grid(
   buff_outer = NULL,
   plot = FALSE,
   filename = NULL,
+  overwrite = FALSE,
   ...
 )
 }
@@ -30,7 +31,9 @@ from access where plots can be sampled.}
 
 \item{plot}{Logical. Plots output strata raster with samples.}
 
-\item{filename}{Character.}
+\item{filename}{Character. Path to write output samples.}
+
+\item{overwrite}{Logical. Choice to overwrite existing \code{filename} if it exists.}
 
 \item{...}{Additional arguments for \link[sf]{st_make_grid}.}
 }

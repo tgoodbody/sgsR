@@ -13,6 +13,8 @@
 #'  from access where plots can be sampled.
 #' @param plot Logical. Plots output strata raster with samples.
 #' @param filename Character. 
+#' @param filename Character. Path to write output samples.
+#' @param overwrite Logical. Choice to overwrite existing \code{filename} if it exists.
 #' @param ... Additional arguments for \link[sf]{st_make_grid}.
 #' 
 #' @return An sf object with sampled points at intersections of fishnet grid.
@@ -30,6 +32,7 @@ sample_grid <- function(raster,
                         buff_outer = NULL,
                         plot = FALSE,
                         filename = NULL,
+                        overwrite = FALSE,
                         ...)
   {
   
@@ -44,8 +47,6 @@ sample_grid <- function(raster,
   
   if (!is.logical(plot))
     stop("'plot' must be type logical")
-  
-  raster <- raster[[1]]
   
   #--- determine crs of input raster ---#
   crs <- crs(raster)
@@ -107,12 +108,13 @@ sample_grid <- function(raster,
   
   #--- extract values from raster for each sample ---#
   
-  gridSamp <- extract_existing(sraster = raster, existing = gridSamp)
+  gridSamp <- extract_metrics(mraster = raster, samples = gridSamp)
   
   #--- remove samples with NA values ---#
   
   gridSamp <- gridSamp %>% 
-    dplyr::filter(!is.na(strata))
+    dplyr::filter(!is.na(.)) %>%
+    dplyr::select(-geometry)
   
   if(isTRUE(plot)){
     
@@ -125,7 +127,13 @@ sample_grid <- function(raster,
   
   if (!is.null(filename)){
     
-    writeVector(gridSamp, filename, overwrite = TRUE, ...)
+    if(!is.logical(overwrite))
+      stop("'overwrite' must be either TRUE or FALSE")
+    
+    if(file.exists(filename) & isFALSE(overwrite))
+      stop(paste0(filename, " already exists and overwrite = FALSE"))
+    
+    sf::st_write(gridSamp, filename, delete_layer = overwrite)
     
   }
   

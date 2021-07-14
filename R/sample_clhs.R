@@ -1,6 +1,6 @@
 #' CLHS sampling
 #' 
-#' @description Conditioned Latin Hypercube Sampling using the \code{clhs} package functionality
+#' @description Conditioned Latin Hypercube Sampling using the \code{\link[=clhs-package]{clhs}} package functionality
 #' 
 #' @family sample functions
 #' 
@@ -9,7 +9,7 @@
 #' @inheritParams strat_kmeans
 #' @inheritParams extract_existing
 #' 
-#' @param ... Additional arguments for clhs sampling. See \link[clhs]{clhs}.
+#' @param ... Additional arguments for clhs sampling. See \code{\link[clhs]{clhs}}.
 #'
 #' @importFrom magrittr %>%
 #' @importFrom methods is
