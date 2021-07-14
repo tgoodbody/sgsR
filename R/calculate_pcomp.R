@@ -24,6 +24,12 @@ calculate_pcomp <- function(mraster = NULL,
                             plot = FALSE,
                             details = FALSE,
                             ...) {
+  
+  #--- check for required packages ---#
+  if (!requireNamespace("FactoMineR", quietly = TRUE)) {
+    stop("Package \"FactoMineR\" needed for this function to work. Please install it.",
+         call. = FALSE)
+  }
 
   #--- error handling ---#
 
@@ -85,12 +91,10 @@ calculate_pcomp <- function(mraster = NULL,
 
   names(pcaRout) <- rep(paste0("PC", seq(1, nComp, 1)))
 
-  #--- plot scree plot ---#
-
   if (isTRUE(plot)) {
 
     #--- visualize scree plot ---#
-    print(factoextra::fviz_screeplot(PCA))
+    terra::plot(pcaRout[[1:nComp]])
   }
 
   if (isTRUE(details)) {

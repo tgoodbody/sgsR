@@ -164,25 +164,36 @@ strat_breaks <- function(mraster,
 
   if (isTRUE(plot)) {
     data <- terra::as.data.frame(rastermetric)
-    names(data) <- "metric"
+    names(data) <- "val"
+    
+    data$var <- metric
 
     #--- plot histogram of metric with associated break lines ---#
 
-    p1 <- ggplot2::ggplot(data, ggplot2::aes(metric)) +
+    p1 <- ggplot2::ggplot(data, ggplot2::aes(val)) +
       ggplot2::geom_histogram() +
       ggplot2::geom_vline(xintercept = breaks, linetype = "dashed") +
       ggplot2::ggtitle(paste0(metric, " histogram with defined breaks"))
 
     if (!is.null(metric2)) {
       data2 <- terra::as.data.frame(rastermetric2)
-      names(data2) <- "metric2"
+      names(data2) <- "val"
+      
+      data2$var <- metric2
+      
+      data2 <- rbind(data,data2)
+      
+      b1 <- data.frame(var = metric, brk = breaks)
+      b2 <- data.frame(var = metric2, brk = breaks2)
+      
+      bs <- rbind(b1,b2)
 
-      p2 <- ggplot2::ggplot(data2, ggplot2::aes(metric2)) +
+      p2 <- ggplot2::ggplot(data2, ggplot2::aes(val)) +
         ggplot2::geom_histogram() +
-        ggplot2::geom_vline(xintercept = breaks2, linetype = "dashed") +
-        ggplot2::ggtitle(paste0(metric2, " histogram with defined breaks"))
+        ggplot2::geom_vline(linetype = "dashed", data = bs, mapping = aes(xintercept = brk)) +
+        ggplot2::facet_wrap(~var,scales = "free")
 
-      suppressMessages(print(ggpubr::ggarrange(p1, p2, ncol = 1, nrow = 2)))
+      suppressMessages(print(p2))
     } else {
       suppressMessages(print(p1))
     }

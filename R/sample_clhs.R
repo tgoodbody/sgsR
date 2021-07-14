@@ -29,6 +29,12 @@ sample_clhs <- function(mraster = mraster,
                         plot = FALSE,
                         details = FALSE,
                         ...) {
+  
+  #--- check for required packages ---#
+  if (!requireNamespace("clhs", quietly = TRUE)) {
+    stop("Package \"clhs\" needed for this function to work. Please install it.",
+         call. = FALSE)
+  }
 
   #--- Set global vars ---#
 

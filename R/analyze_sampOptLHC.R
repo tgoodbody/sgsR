@@ -34,6 +34,17 @@ analyze_sampOptLHC <- function(popLHC = NULL,
                                rep = 10,
                                iter = 10000) {
 
+  #--- check for required packages ---#
+  if (!requireNamespace("clhs", quietly = TRUE)) {
+    stop("Package \"clhs\" needed for this function to work. Please install it.",
+         call. = FALSE)
+  }
+  
+  if (!requireNamespace("entropy", quietly = TRUE)) {
+    stop("Package \"entropy\" needed for this function to work. Please install it.",
+         call. = FALSE)
+  }
+
   #--- Set global vars ---#
   x <- y <- NULL
 

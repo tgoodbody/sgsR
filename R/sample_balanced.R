@@ -37,6 +37,12 @@ sample_balanced <- function(mraster,
                             buff_outer = NULL,
                             plot = FALSE,
                             ...) {
+  
+  #--- check for required packages ---#
+  if (!requireNamespace("BalancedSampling", quietly = TRUE)) {
+    stop("Package \"BalancedSampling\" needed for this function to work. Please install it.",
+         call. = FALSE)
+  }
 
   #--- Set global vars ---#
   x <- y <- X <- Y <- strata <- NULL
@@ -157,6 +163,14 @@ sample_balanced <- function(mraster,
 
 
   if (algorithm == "lpm2") {
+    
+    #--- check for required packages ---#
+    
+    if (!requireNamespace("SamplingBigData", quietly = TRUE)) {
+      stop("Package \"SamplingBigData\" needed for the 'lpm2' algorithm. Please install it.",
+           call. = FALSE)
+    }
+    
     sampled <- SamplingBigData::lpm2_kdtree(prob = p, x = vals_m, ...)
   }
 

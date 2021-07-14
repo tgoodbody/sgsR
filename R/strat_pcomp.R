@@ -26,6 +26,12 @@ strat_pcomp <- function(mraster,
                         details = FALSE,
                         filename = NULL,
                         ...) {
+  
+  #--- check for required packages ---#
+  if (!requireNamespace("FactoMineR", quietly = TRUE)) {
+    stop("Package \"FactoMineR\" needed for this function to work. Please install it.",
+         call. = FALSE)
+  }
 
   #--- set global vars ---#
 

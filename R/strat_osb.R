@@ -29,6 +29,12 @@ strat_osb <- function(mraster,
                       details = FALSE,
                       filename = NULL,
                       ...) {
+  
+  #--- check for required packages ---#
+  if (!requireNamespace("stratifyR", quietly = TRUE)) {
+    stop("Package \"stratifyR\" needed for this function to work. Please install it.",
+         call. = FALSE)
+  }
 
   #--- Set global vars ---#
 
