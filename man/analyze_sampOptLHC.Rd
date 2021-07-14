@@ -19,13 +19,13 @@ analyze_sampOptLHC(
 \arguments{
 \item{popLHC}{List. Output from \code{analyze_popLHC} function.}
 
-\item{PCA}{Logical. Calculates principal component loadings of the population for PCA similarity factor testing. 
+\item{PCA}{Logical. Calculates principal component loadings of the population for PCA similarity factor testing.
 \code{default = TRUE}.}
 
-\item{quant}{Logical. Calculates quantile matrix of the population for quantile comparison testing. 
+\item{quant}{Logical. Calculates quantile matrix of the population for quantile comparison testing.
 \code{default = TRUE}.}
 
-\item{KLdiv}{Logical. Calculates covariate matrix of the population for Kullback–Leibler divergence testing. 
+\item{KLdiv}{Logical. Calculates covariate matrix of the population for Kullback–Leibler divergence testing.
 \code{default = TRUE}. Relies on \code{quant = TRUE} to calculate.}
 
 \item{minSamp}{Numeric. Minimum sample size to test. \code{default = 10}.}
@@ -36,7 +36,7 @@ analyze_sampOptLHC(
 
 \item{rep}{Numeric. Internal repetitions for each sample size. \code{default = 10}.}
 
-\item{iter}{Numeric. Internal to \code{clhs} - A positive number, giving the number of 
+\item{iter}{Numeric. Internal to \code{clhs} - A positive number, giving the number of
 iterations for the Metropolis-Hastings annealing process. Defaults to \code{10000}.}
 }
 \value{

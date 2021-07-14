@@ -23,8 +23,8 @@ sample_aHELS(
 \item{nSamp}{Numeric. Maximum number of new samples to allocate. If provided, the algorithm
 will default to allocating number of samples provided.}
 
-\item{threshold}{Numeric. A sample quantile ratio threshold for establishing whether 
-additional samples should be added. \code{default = 0.9}. Values close to 1 can cause the algorithm to 
+\item{threshold}{Numeric. A sample quantile ratio threshold for establishing whether
+additional samples should be added. \code{default = 0.9}. Values close to 1 can cause the algorithm to
 continually loop and should be used sparingly.}
 
 \item{plot}{Logial. Plots existing (circles) and new (crosses) samples on the first band of mraster.}
@@ -33,7 +33,7 @@ continually loop and should be used sparingly.}
 
 }
 \description{
-Perform the adapted Hypercube Evaluation of a Legacy Sample (aHELS) algorithm using 
+Perform the adapted Hypercube Evaluation of a Legacy Sample (aHELS) algorithm using
 existing site data and raster metrics. New samples are allocated based on quantile ratios between
 the existing sampleand covariate dataset.
 }

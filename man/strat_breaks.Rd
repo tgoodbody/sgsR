@@ -19,7 +19,7 @@ strat_breaks(
 \arguments{
 \item{mraster}{spatRaster. ALS metrics raster.}
 
-\item{metric}{Character. Name of primary metric to stratify. If 
+\item{metric}{Character. Name of primary metric to stratify. If
 \code{mraster} is has 1 layer it is taken as default.}
 
 \item{metric2}{Character. Name of secondary metric to stratify.}

@@ -13,13 +13,14 @@ strat_quantiles(
   plot = FALSE,
   samp = 1,
   details = FALSE,
-  filename = NULL
+  filename = NULL,
+  ..deparseOpts
 )
 }
 \arguments{
 \item{mraster}{spatRaster. ALS metrics raster.}
 
-\item{metric}{Character. Name of primary metric to stratify. If 
+\item{metric}{Character. Name of primary metric to stratify. If
 \code{mraster} is has 1 layer it is taken as default.}
 
 \item{metric2}{Character. Name of secondary metric to stratify.}
@@ -31,7 +32,7 @@ strat_quantiles(
 \item{plot}{Logical. Plots output strata raster and visualized
 strata with boundary dividers.}
 
-\item{samp}{Numeric. For plotting - Determines proportion of cells 
+\item{samp}{Numeric. For plotting - Determines proportion of cells
 for strata visualization. Lower values reduce processing time.}
 
 \item{details}{Logical. If \code{FALSE} (default) output is only

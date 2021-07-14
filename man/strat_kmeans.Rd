@@ -23,7 +23,7 @@ strat_kmeans(
 
 \item{iter.max}{Numeric. The maximum number of iterations allowed.}
 
-\item{algorithm}{Character. \code{Lloyd} (default) or 
+\item{algorithm}{Character. \code{Lloyd} (default) or
 \code{MacQueen} algorithms.}
 
 \item{scale}{Logical. Determines whether scaling and centering

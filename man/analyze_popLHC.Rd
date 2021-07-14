@@ -9,16 +9,16 @@ analyze_popLHC(mraster, PCA = TRUE, quant = TRUE, nQuant = 20, KLdiv = TRUE)
 \arguments{
 \item{mraster}{spatRaster. ALS metrics raster.}
 
-\item{PCA}{Logical. Calculates principal component loadings of the population for PCA similarity factor testing. 
+\item{PCA}{Logical. Calculates principal component loadings of the population for PCA similarity factor testing.
 \code{default = TRUE}.}
 
-\item{quant}{Logical. Calculates quantile matrix of the population for quantile comparison testing. 
+\item{quant}{Logical. Calculates quantile matrix of the population for quantile comparison testing.
 \code{default = TRUE}.}
 
-\item{nQuant}{Numeric. Number of quantiles to divide the population into for \code{quant}. 
+\item{nQuant}{Numeric. Number of quantiles to divide the population into for \code{quant}.
 \code{default = 20}.}
 
-\item{KLdiv}{Logical. Calculates covariate matrix of the population for Kullback–Leibler divergence testing. 
+\item{KLdiv}{Logical. Calculates covariate matrix of the population for Kullback–Leibler divergence testing.
 \code{default = TRUE}. Relies on \code{quant = TRUE} to calculate.}
 }
 \value{

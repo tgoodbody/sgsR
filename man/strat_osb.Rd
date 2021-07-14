@@ -23,10 +23,10 @@ strat_osb(
 
 \item{nstrata}{Numeric. Number of desired output strata.}
 
-\item{n}{Numeric. Number of desired samples - used within 
+\item{n}{Numeric. Number of desired samples - used within
 OSB algorithm to help determine break points.}
 
-\item{subset}{- Numeric. Value between 0 and 1 (default) 
+\item{subset}{- Numeric. Value between 0 and 1 (default)
 denoting proportion of data to use to determine break points}
 
 \item{plot}{Logical. Plots output strata raster and visualized

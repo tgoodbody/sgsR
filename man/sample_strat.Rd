@@ -45,9 +45,9 @@ from access where plots can be sampled.}
 
 \item{plot}{Logial. Plots existing (circles) and new (crosses) samples on the first band of mraster.}
 
-\item{details}{Logical. If \code{FALSE} (default) output is sf object of 
+\item{details}{Logical. If \code{FALSE} (default) output is sf object of
 stratified samples. If \code{TRUE} return a list
-where \code{$details} additional sampling information and \code{$raster} 
+where \code{$details} additional sampling information and \code{$raster}
 is an sf object of stratified samples.}
 }
 \value{

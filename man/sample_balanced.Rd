@@ -23,7 +23,7 @@ sample_balanced(
 
 \item{algorithm}{Character. One of \code{lpm2 lcube lcubestratified}}
 
-\item{p}{Numeric. Inclusion probability for each candidate sample. 
+\item{p}{Numeric. Inclusion probability for each candidate sample.
 Default is \code{n / N}}
 
 \item{access}{sf. Road access network - must be lines.}
@@ -43,7 +43,7 @@ strata with boundary dividers.}
 An sf object with \code{n} randomly sampled points.
 }
 \description{
-Balanced raster sampling using BalancedSampling and 
+Balanced raster sampling using BalancedSampling and
 SamplingBigData methods
 }
 \references{

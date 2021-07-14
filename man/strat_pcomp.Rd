@@ -29,7 +29,7 @@ of data should be conducted prior to analysis.}
 \item{plot}{Logical. Plots output strata raster and visualized
 strata with boundary dividers.}
 
-\item{samp}{Numeric. For plotting - Determines proportion of cells 
+\item{samp}{Numeric. For plotting - Determines proportion of cells
 for strata visualization. Lower values reduce processing time.}
 
 \item{details}{Logical. If \code{FALSE} (default) output is only

@@ -1,7 +1,7 @@
 #' Simple random sampling
-#'  
+#'
 #' @description Randomly sample within a stratification raster extent.
-#' 
+#'
 #' @family sample functions
 #'
 #' @param sraster spatRaster. Stratification raster to be used for sampling.
@@ -14,12 +14,12 @@
 #' @param buff_outer Numeric. Outer buffer boundary specifying distance
 #'  from access where plots can be sampled.
 #' @param plot Logical. Plots output strata raster with samples.
-#' 
+#'
 #' @return An sf object with \code{n} randomly sampled points.
-#' 
+#'
 #' @importFrom magrittr %>%
 #' @importFrom methods is
-#' 
+#'
 #' @export
 
 sample_srs <- function(sraster,
@@ -28,53 +28,61 @@ sample_srs <- function(sraster,
                        access = NULL,
                        buff_inner = NULL,
                        buff_outer = NULL,
-                       plot = FALSE)
-{
-  
+                       plot = FALSE) {
+
   #--- Error management ---#
-  
-  if (!inherits(sraster, "SpatRaster"))
+
+  if (!inherits(sraster, "SpatRaster")) {
     stop("'sraster' must be type SpatRaster", call. = FALSE)
+  }
 
-  if (!is.numeric(n))
+  if (!is.numeric(n)) {
     stop("'n' must be type numeric")
+  }
 
-  if (!is.numeric(mindist))
+  if (!is.numeric(mindist)) {
     stop("'mindist' must be type numeric")
-  
-  if (!is.logical(plot))
+  }
+
+  if (!is.logical(plot)) {
     stop("'plot' must be type logical")
-  
+  }
+
   ######################################
-  ##DETERMINE NULL / NA SYNTAX FOR CRS##
+  ## DETERMINE NULL / NA SYNTAX FOR CRS##
   ######################################
 
-  if (is.na(crs(sraster)))
+  if (is.na(crs(sraster))) {
     stop("'sraster' does not have a coordinate system")
+  }
 
   sraster <- sraster[[1]]
-  
+
   #--- determine crs of input sraster ---#
   crs <- crs(sraster)
 
   if (!is.null(access)) {
 
     #--- error handling in the presence of 'access' ---#
-    if (!inherits(access,"sf"))
+    if (!inherits(access, "sf")) {
       stop("'access' must be an 'sf' object")
-    
-    if(!inherits(sf::st_geometry(access),"sfc_MULTILINESTRING"))
+    }
+
+    if (!inherits(sf::st_geometry(access), "sfc_MULTILINESTRING")) {
       stop("'access' geometry type must be 'sfc_MULTILINESTRING'")
-    
+    }
+
     #--- list all buffers to catch NULL values within error handling ---#
     buffers <- list(buff_inner, buff_outer)
 
     #--- error handling in the presence of 'access' ---#
-    if (any(vapply(buffers, is.null, TRUE)))
+    if (any(vapply(buffers, is.null, TRUE))) {
       stop("All 'buff_*' paramaters must be provided when 'access' is defined.")
+    }
 
-    if (!any(vapply(buffers, is.numeric, FALSE)))
+    if (!any(vapply(buffers, is.numeric, FALSE))) {
       stop("All 'buff_*' paramaters must be type numeric")
+    }
 
     message(
       paste0(
@@ -88,25 +96,28 @@ sample_srs <- function(sraster,
 
     #--- convert vectors to spatVector to synergize with terra raster functions---#
     roads <- terra::vect(access)
-    
+
     #--- make access buffer with user defined values ---#
 
-    buff_in <- terra::buffer(x = roads,
-                             width = buff_inner)
+    buff_in <- terra::buffer(
+      x = roads,
+      width = buff_inner
+    )
 
-    buff_out <- terra::buffer(x = roads,
-                              width = buff_outer)
+    buff_out <- terra::buffer(
+      x = roads,
+      width = buff_outer
+    )
 
     #--- make difference and aggregate inner and outer buffers to prevent sampling too close to access ---#
     buffer <- terra::aggregate(buff_out - buff_in)
 
     sraster <- terra::mask(sraster, mask = buffer)
-
   }
-  
+
   #--- create empty dataframe for samples to be populated to ---#
   add_strata <- data.frame()
-  
+
   #--- create indices for all, NA, and valid sampling candidates ---#
 
   idx_all <- 1:terra::ncell(sraster)
@@ -114,7 +125,7 @@ sample_srs <- function(sraster,
   validCandidates <- idx_all[!idx_na]
 
   #--- Rule 1 sampling ---#
-  nCount <- 0 #Number of sampled cells
+  nCount <- 0 # Number of sampled cells
 
   # While loop for RULE 1
   while (length(validCandidates) > 0 & nCount < n) {
@@ -138,47 +149,39 @@ sample_srs <- function(sraster,
     #--- If add_strata is empty, sampled cell accepted ---#
 
     if (nrow(add_strata) == 0) {
-
       add_strata <- add_temp[, c("X", "Y")]
 
-      nCount <-  nCount + 1
+      nCount <- nCount + 1
 
       #--- If add_strata isnt empty, check distance with all other sampled cells in strata ---#
     } else {
-
-      dist <- spatstat.geom::crossdist(add_temp$X, add_temp$Y , add_strata$X , add_strata$Y)
+      dist <- spatstat.geom::crossdist(add_temp$X, add_temp$Y, add_strata$X, add_strata$Y)
 
       #--- If all less than 'mindist' - accept sampled cell otherwise reject ---#
       if (all(as.numeric(dist) > mindist)) {
-
         add_strata <- rbind(add_strata, add_temp[, c("X", "Y")])
 
-        nCount <-  nCount + 1
-
+        nCount <- nCount + 1
       }
     }
   }
-  
-    #--- convert coordinates to a spatial points object ---#
-    samples <- add_strata %>%
-      as.data.frame() %>%
-      sf::st_as_sf(., coords = c("X", "Y"))
 
-    #--- assign sraster crs to spatial points object ---#
-    sf::st_crs(samples) <- crs
-    
-    if(isTRUE(plot)){
+  #--- convert coordinates to a spatial points object ---#
+  samples <- add_strata %>%
+    as.data.frame() %>%
+    sf::st_as_sf(., coords = c("X", "Y"))
+
+  #--- assign sraster crs to spatial points object ---#
+  sf::st_crs(samples) <- crs
+
+  if (isTRUE(plot)) {
 
     #--- plot input sraster and random samples ---#
     terra::plot(sraster[[1]])
     suppressWarnings(terra::plot(samples, add = T, col = "black"))
+  }
 
-    }
-      
-      #--- output samples sf ---#
-      
-      return(samples)
+  #--- output samples sf ---#
 
+  return(samples)
 }
-
-
