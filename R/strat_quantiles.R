@@ -28,6 +28,7 @@ strat_quantiles <- function(mraster,
                             samp = 1,
                             details = FALSE,
                             filename = NULL,
+                            overwrite = FALSE,
                             ...) {
 
   #--- Set global vars ---#
@@ -236,7 +237,7 @@ strat_quantiles <- function(mraster,
     #--- write file to disc ---#
 
     if (!is.null(filename)) {
-      writeRaster(rout, filename, overwrite = TRUE, ...)
+      terra::writeRaster(rout, filename, overwrite = overwrite, ...)
     }
 
     #--- Output based on 'details' to return raster alone or list with details ---#

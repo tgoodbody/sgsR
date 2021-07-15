@@ -13,6 +13,7 @@ strat_pcomp(
   samp = 1,
   details = FALSE,
   filename = NULL,
+  overwrite = FALSE,
   ...
 )
 }
@@ -38,6 +39,8 @@ where \code{$details} is additional stratification information and
  \code{$raster} is the output stratification spatRaster.}
 
 \item{filename}{Character. Path to write stratified raster to disc.}
+
+\item{overwrite}{Logical. Choice to overwrite existing \code{filename} if it exists.}
 
 \item{...}{Additional arguments for PCA implementation and writing files. See \link[FactoMineR]{PCA}
 and \link[terra]{writeRaster}.}

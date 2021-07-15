@@ -10,7 +10,6 @@
 #' @param algorithm Character. One of \code{lpm2 lcube lcubestratified}
 #' @param p Numeric. Inclusion probability for each candidate sample.
 #' Default is \code{n / N}
-#' @param ...
 #'
 #' @return An sf object with \code{n} randomly sampled points.
 #'
@@ -35,13 +34,13 @@ sample_balanced <- function(mraster,
                             access = NULL,
                             buff_inner = NULL,
                             buff_outer = NULL,
-                            plot = FALSE,
-                            ...) {
-  
+                            plot = FALSE) {
+
   #--- check for required packages ---#
   if (!requireNamespace("BalancedSampling", quietly = TRUE)) {
     stop("Package \"BalancedSampling\" needed for this function to work. Please install it.",
-         call. = FALSE)
+      call. = FALSE
+    )
   }
 
   #--- Set global vars ---#
@@ -163,19 +162,20 @@ sample_balanced <- function(mraster,
 
 
   if (algorithm == "lpm2") {
-    
+
     #--- check for required packages ---#
-    
+
     if (!requireNamespace("SamplingBigData", quietly = TRUE)) {
       stop("Package \"SamplingBigData\" needed for the 'lpm2' algorithm. Please install it.",
-           call. = FALSE)
+        call. = FALSE
+      )
     }
-    
-    sampled <- SamplingBigData::lpm2_kdtree(prob = p, x = vals_m, ...)
+
+    sampled <- SamplingBigData::lpm2_kdtree(prob = p, x = vals_m)
   }
 
   if (algorithm == "lcube") {
-    sampled <- BalancedSampling::lcube(prob = p, Xspread = vals_m, Xbal = cbind(p), ...)
+    sampled <- BalancedSampling::lcube(prob = p, Xspread = vals_m, Xbal = cbind(p))
   }
 
   if (algorithm == "lcubestratified") {
@@ -198,8 +198,7 @@ sample_balanced <- function(mraster,
       prob = p,
       Xspread = vals_m,
       Xbal = cbind(p),
-      integerStrata = strata_v,
-      ...
+      integerStrata = strata_v
     )
 
     #--- extract all 1 (sampled) cells ---#

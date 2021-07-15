@@ -25,12 +25,14 @@ strat_pcomp <- function(mraster,
                         samp = 1,
                         details = FALSE,
                         filename = NULL,
+                        overwrite = FALSE,
                         ...) {
-  
+
   #--- check for required packages ---#
   if (!requireNamespace("FactoMineR", quietly = TRUE)) {
     stop("Package \"FactoMineR\" needed for this function to work. Please install it.",
-         call. = FALSE)
+      call. = FALSE
+    )
   }
 
   #--- set global vars ---#
@@ -240,7 +242,7 @@ strat_pcomp <- function(mraster,
   #--- write file to disc ---#
 
   if (!is.null(filename)) {
-    writeRaster(pca, filename, overwrite = TRUE, ...)
+    terra::writeRaster(pca, filename, overwrite = overwrite, ...)
   }
 
   #--- Output based on 'details' to return raster alone or list with details ---#

@@ -21,7 +21,6 @@
 #'
 #' @importFrom magrittr %>%
 #' @importFrom methods is
-#' @importFrom foreach %dopar%
 #'
 #' @export
 

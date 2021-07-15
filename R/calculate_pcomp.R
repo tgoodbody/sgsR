@@ -8,7 +8,6 @@
 #' @inheritParams strat_kmeans
 #'
 #' @param nComp Numeric. Value indicating number of principal components to be rasterized.
-#' @param ...
 #'
 #'
 #' @importFrom magrittr %>%
@@ -22,13 +21,13 @@ calculate_pcomp <- function(mraster = NULL,
                             nComp = NULL,
                             scale = TRUE,
                             plot = FALSE,
-                            details = FALSE,
-                            ...) {
-  
+                            details = FALSE) {
+
   #--- check for required packages ---#
   if (!requireNamespace("FactoMineR", quietly = TRUE)) {
     stop("Package \"FactoMineR\" needed for this function to work. Please install it.",
-         call. = FALSE)
+      call. = FALSE
+    )
   }
 
   #--- error handling ---#

@@ -28,12 +28,14 @@ strat_osb <- function(mraster,
                       plot = FALSE,
                       details = FALSE,
                       filename = NULL,
+                      overwrite = FALSE,
                       ...) {
-  
+
   #--- check for required packages ---#
   if (!requireNamespace("stratifyR", quietly = TRUE)) {
     stop("Package \"stratifyR\" needed for this function to work. Please install it.",
-         call. = FALSE)
+      call. = FALSE
+    )
   }
 
   #--- Set global vars ---#
@@ -148,7 +150,7 @@ strat_osb <- function(mraster,
   #--- write file to disc ---#
 
   if (!is.null(filename)) {
-    writeRaster(rcl, filename, overwrite = TRUE, ...)
+    terra::writeRaster(rcl, filename, overwrite = overwrite, ...)
   }
 
   #--- Output based on 'details' to return raster alone or list with details ---#

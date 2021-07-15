@@ -12,8 +12,7 @@ sample_balanced(
   access = NULL,
   buff_inner = NULL,
   buff_outer = NULL,
-  plot = FALSE,
-  ...
+  plot = FALSE
 )
 }
 \arguments{
@@ -36,8 +35,6 @@ from access where plots can be sampled.}
 
 \item{plot}{Logical. Plots output strata raster and visualized
 strata with boundary dividers.}
-
-\item{...}{}
 }
 \value{
 An sf object with \code{n} randomly sampled points.

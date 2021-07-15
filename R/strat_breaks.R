@@ -5,6 +5,7 @@
 #'
 #' @inheritParams strat_kmeans
 #' @inheritParams strat_quantiles
+#' @inheritParams sample_grid
 #' @param breaks Numeric. Vector of breakpoints for \code{metric}
 #' @param breaks2 Numeric. Vector of breakpoints for \code{metric2} (if provided)
 #' @param filename Character. Path to write stratified raster to disc.
@@ -25,10 +26,11 @@ strat_breaks <- function(mraster,
                          plot = FALSE,
                          details = FALSE,
                          filename = NULL,
+                         overwrite = FALSE,
                          ...) {
 
   #--- Set global vars ---#
-  from <- strata <- strata2 <- NULL
+  from <- strata <- strata2 <- val <- brk <-  NULL
 
   #--- Error management ---#
 
@@ -165,7 +167,7 @@ strat_breaks <- function(mraster,
   if (isTRUE(plot)) {
     data <- terra::as.data.frame(rastermetric)
     names(data) <- "val"
-    
+
     data$var <- metric
 
     #--- plot histogram of metric with associated break lines ---#
@@ -178,20 +180,20 @@ strat_breaks <- function(mraster,
     if (!is.null(metric2)) {
       data2 <- terra::as.data.frame(rastermetric2)
       names(data2) <- "val"
-      
+
       data2$var <- metric2
-      
-      data2 <- rbind(data,data2)
-      
+
+      data2 <- rbind(data, data2)
+
       b1 <- data.frame(var = metric, brk = breaks)
       b2 <- data.frame(var = metric2, brk = breaks2)
-      
-      bs <- rbind(b1,b2)
+
+      bs <- rbind(b1, b2)
 
       p2 <- ggplot2::ggplot(data2, ggplot2::aes(val)) +
         ggplot2::geom_histogram() +
         ggplot2::geom_vline(linetype = "dashed", data = bs, mapping = aes(xintercept = brk)) +
-        ggplot2::facet_wrap(~var,scales = "free")
+        ggplot2::facet_wrap(~var, scales = "free")
 
       suppressMessages(print(p2))
     } else {
@@ -206,7 +208,7 @@ strat_breaks <- function(mraster,
   #--- write file to disc ---#
 
   if (!is.null(filename)) {
-    writeRaster(rcl, filename, overwrite = TRUE, ...)
+    terra::writeRaster(rcl, filename, overwrite = overwrite, ...)
   }
 
   #--- Output based on 'details' to return raster alone or list with details ---#

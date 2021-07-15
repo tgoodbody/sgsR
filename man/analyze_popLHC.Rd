@@ -32,7 +32,6 @@ Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of c
 }
 \seealso{
 Other analyze functions: 
-\code{\link{analyze_HELSrem}()},
 \code{\link{analyze_sampOptLHC}()}
 }
 \concept{analyze functions}

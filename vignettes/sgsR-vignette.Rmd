@@ -284,7 +284,7 @@ strat_w_a <- sample_strat(sraster = sraster,
 ## Balanced Sampling - uses metrics rasters
 ### `lpm2` method
 
-```{r}
+```{r,eval=FALSE}
 
 #--- stratified sampling with access and buffers provided ---#
 bal_wo <- sample_balanced(mraster = wall_poly,
@@ -295,7 +295,7 @@ bal_wo <- sample_balanced(mraster = wall_poly,
 
 ### `lpm2` with access provided
 
-```{r}
+```{r,eval=FALSE}
 #--- stratified sampling with access and buffers provided ---#
 bal_w_a <- sample_balanced(mraster = wall_poly,
                         n = 200, 
@@ -308,7 +308,7 @@ bal_w_a <- sample_balanced(mraster = wall_poly,
 
 ### `lcube` algorithm - Slower
 
-```{r}
+```{r,eval=FALSE}
 
 #--- stratified sampling with access and buffers provided ---#
 bal_wo <- sample_balanced(mraster = wall_poly,
@@ -319,7 +319,7 @@ bal_wo <- sample_balanced(mraster = wall_poly,
 
 ### `lcube` with access provided - Slower
 
-```{r}
+```{r,eval=FALSE}
 #--- stratified sampling with access and buffers provided ---#
 bal_w_a <- sample_balanced(mraster = wall_poly,
                         n = 200, 
@@ -332,7 +332,7 @@ bal_w_a <- sample_balanced(mraster = wall_poly,
 
 ### `lcubestratified` algorithm
 
-```{r}
+```{r,eval=FALSE}
 #--- need to add a variable named strata to enable stratified sampling ---#
 mraster <- c(wall_poly,kmeans)
 
@@ -345,7 +345,7 @@ bal_wo <- sample_balanced(mraster = mraster,
 
 ## `lcubestratified` - with access provided
 
-```{r}
+```{r,eval=FALSE}
 #--- stratified sampling with access and buffers provided ---#
 bal_w_a <- sample_balanced(mraster = mraster,
                         n = 200, 

@@ -13,6 +13,7 @@ strat_breaks(
   plot = FALSE,
   details = FALSE,
   filename = NULL,
+  overwrite = FALSE,
   ...
 )
 }
@@ -37,6 +38,8 @@ where \code{$details} is additional stratification information and
  \code{$raster} is the output stratification spatRaster.}
 
 \item{filename}{Character. Path to write stratified raster to disc.}
+
+\item{overwrite}{Logical. Choice to overwrite existing \code{filename} if it exists.}
 
 \item{...}{Additional arguments for writing files. See \link[terra]{writeRaster}.}
 }

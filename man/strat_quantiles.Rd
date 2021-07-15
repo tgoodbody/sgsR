@@ -14,7 +14,8 @@ strat_quantiles(
   samp = 1,
   details = FALSE,
   filename = NULL,
-  ..deparseOpts
+  overwrite = FALSE,
+  ...
 )
 }
 \arguments{
@@ -41,6 +42,8 @@ where \code{$details} is additional stratification information and
  \code{$raster} is the output stratification spatRaster.}
 
 \item{filename}{Character. Path to write stratified raster to disc.}
+
+\item{...}{Additional arguments for writing files. See \link[terra]{writeRaster}.}
 }
 \value{
 output stratification \code{spatRaster}, or a list when \code{details = TRUE}.

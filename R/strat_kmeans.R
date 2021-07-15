@@ -34,6 +34,7 @@ strat_kmeans <- function(mraster,
                          plot = FALSE,
                          details = FALSE,
                          filename = NULL,
+                         overwrite = FALSE,
                          ...) {
 
   #--- Error management ---#
@@ -133,7 +134,7 @@ strat_kmeans <- function(mraster,
   #--- write file to disc ---#
 
   if (!is.null(filename)) {
-    writeRaster(kmv, filename, overwrite = TRUE, ...)
+    terra::writeRaster(kmv, filename, overwrite = overwrite, ...)
   }
 
   #--- Output based on 'details' to return raster alone or list with details ---#
