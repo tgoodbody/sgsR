@@ -6,7 +6,7 @@
 \usage{
 sample_strat(
   sraster,
-  n,
+  nSamp,
   mindist = 100,
   existing = NULL,
   include = FALSE,
@@ -20,16 +20,14 @@ sample_strat(
 )
 }
 \arguments{
-\item{sraster}{spatRaster. Stratification raster to be used for sampling.}
-
-\item{n}{Numeric. Number of desired samples.}
+\item{nSamp}{Numeric. Number of desired samples.}
 
 \item{mindist}{Numeric. Minimum allowable distance between selected
 samples. Default = 100.}
 
 \item{existing}{sf or data.frame.  Existing plot network.}
 
-\item{include}{Logical. If \code{TRUE} include existing plots in \code{n} total.}
+\item{include}{Logical. If \code{TRUE} include existing plots in \code{nSamp} total.}
 
 \item{access}{sf. Road access network - must be lines.}
 
@@ -51,7 +49,7 @@ where \code{$details} additional sampling information and \code{$raster}
 is an sf object of stratified samples.}
 }
 \value{
-An sf object with \code{n} stratified samples.
+An sf object with \code{nSamp} stratified samples.
 }
 \description{
 Sampling based on a stratified raster.

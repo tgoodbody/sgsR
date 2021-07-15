@@ -6,7 +6,7 @@
 \usage{
 sample_balanced(
   mraster,
-  n,
+  nSamp,
   algorithm = "lpm2",
   p = NULL,
   access = NULL,
@@ -18,12 +18,12 @@ sample_balanced(
 \arguments{
 \item{mraster}{spatRaster. ALS metrics raster.}
 
-\item{n}{Numeric. Number of desired samples.}
+\item{nSamp}{Numeric. Number of desired samples.}
 
 \item{algorithm}{Character. One of \code{lpm2 lcube lcubestratified}}
 
 \item{p}{Numeric. Inclusion probability for each candidate sample.
-Default is \code{n / N}}
+Default is \code{nSamp / N}}
 
 \item{access}{sf. Road access network - must be lines.}
 
@@ -37,7 +37,7 @@ from access where plots can be sampled.}
 strata with boundary dividers.}
 }
 \value{
-An sf object with \code{n} randomly sampled points.
+An sf object with \code{nSamp} randomly sampled points.
 }
 \description{
 Balanced raster sampling using BalancedSampling and

@@ -7,7 +7,7 @@
 #' @family sample functions
 #'
 #' @inheritParams strat_kmeans
-#' @inheritParams extract_existing
+#' @inheritParams extract_strata
 #'
 #' @param nSamp Numeric. Maximum number of new samples to allocate. If provided, the algorithm
 #' will default to allocating number of samples provided.
@@ -20,7 +20,7 @@
 #' @references
 #' Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451
 #'
-#' @return
+#' @return Returns sf point object with existing samples and supplemental samples added by the aHELS algorithm.
 #'
 #' @importFrom magrittr %>%
 #' @importFrom methods is
@@ -36,7 +36,7 @@ sample_aHELS <- function(mraster = NULL,
 
   #--- Set global vars ---#
 
-  x <- y <- X <- Y <- n <- type <- NULL
+  x <- y <- X <- Y <- n <- type <- geometry <- NULL
 
   #--- Error handling ---#
 

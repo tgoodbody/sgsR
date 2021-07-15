@@ -5,8 +5,8 @@
 \title{CLHS sampling}
 \usage{
 sample_clhs(
-  mraster = mraster,
-  n = NULL,
+  mraster,
+  nSamp,
   existing = NULL,
   access = NULL,
   buff_inner = NULL,
@@ -19,9 +19,9 @@ sample_clhs(
 \arguments{
 \item{mraster}{spatRaster. ALS metrics raster.}
 
-\item{n}{Numeric. Number of desired samples.}
+\item{nSamp}{Numeric. Number of desired samples.}
 
-\item{existing}{sf or data.frame.  Existing plot network.}
+\item{existing}{sf. Samples resulting from sample_* functions.}
 
 \item{access}{sf. Road access network - must be lines.}
 
@@ -41,7 +41,7 @@ where \code{$details} is additional stratification information and
 \item{...}{Additional arguments for clhs sampling. See \code{\link[clhs]{clhs}}.}
 }
 \value{
-An sf object with \code{n} stratified samples.
+An sf object with \code{nSamp} stratified samples.
 }
 \description{
 Conditioned Latin Hypercube Sampling using the \code{\link[clhs]{clhs-package}} package functionality

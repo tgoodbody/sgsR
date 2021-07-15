@@ -3,7 +3,7 @@
 #' Create covariate and sample matrices
 #'
 #' @param vals Covariate / sample data
-#' @param nQuant Number of quantiles to be used
+#' @param nQuant Number of quantiles
 #' @param nb Number of bands
 #' @family matrices
 #' @name matrices

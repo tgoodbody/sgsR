@@ -7,8 +7,8 @@
 #' @inheritParams strat_breaks
 #'
 #' @param metric Character. Name of metric to be used for stratification
-#' @param nstrata Numeric. Number of desired output strata.
-#' @param n Numeric. Number of desired samples - used within
+#' @param nStrata Numeric. Number of desired output strata.
+#' @param nSamp Numeric. Number of desired samples - used within
 #' OSB algorithm to help determine break points.
 #' @param subset - Numeric. Value between 0 and 1 (default)
 #' denoting proportion of data to use to determine break points
@@ -22,8 +22,8 @@
 
 strat_osb <- function(mraster,
                       metric = NULL,
-                      nstrata,
-                      n,
+                      nStrata,
+                      nSamp,
                       subset = 1,
                       plot = FALSE,
                       details = FALSE,
@@ -52,12 +52,12 @@ strat_osb <- function(mraster,
     stop(paste0("mraster does not have a variable named ", metric))
   }
 
-  if (!is.numeric(nstrata)) {
-    stop("'nstrata' must be type numeric")
+  if (!is.numeric(nStrata)) {
+    stop("'nStrata' must be type numeric")
   }
 
-  if (!is.numeric(n)) {
-    stop("'n' must be type numeric")
+  if (!is.numeric(nSamp)) {
+    stop("'nSamp' must be type numeric")
   }
 
   if (!is.numeric(subset)) {
@@ -102,7 +102,7 @@ strat_osb <- function(mraster,
 
     #--- Extract values from mraster removing any NA/INF/NaN ---#
 
-    OSB <- perform_osb_sample(rastermetric, nstrata, n, subset)
+    OSB <- perform_osb_sample(rastermetric, nStrata, nSamp, subset)
   } else {
     if (terra::ncell(rastermetric) > 100000) {
       message("The raster you are using has over 100,000 cells. Consider using 'subset' to improve processing times.")
@@ -110,12 +110,12 @@ strat_osb <- function(mraster,
 
     #--- Extract values from raster removing any NA/INF/NaN ---#
 
-    OSB <- perform_osb(rastermetric, nstrata, n)
+    OSB <- perform_osb(rastermetric, nStrata, nSamp)
   }
 
   #--- reclassify values based on breaks ---#
 
-  breaks <- data.frame(from = c(-Inf, OSB[[2]]$OSB[1:(nstrata - 1)], Inf)) %>%
+  breaks <- data.frame(from = c(-Inf, OSB[[2]]$OSB[1:(nStrata - 1)], Inf)) %>%
     dplyr::mutate(
       to = dplyr::lead(from),
       becomes = seq(1:length(from))
@@ -141,7 +141,7 @@ strat_osb <- function(mraster,
 
     #--- set colour palette ---#
 
-    ncols <- nstrata
+    ncols <- nStrata
     col <- RColorBrewer::brewer.pal(ncols, "Set3")
 
     terra::plot(rcl, main = "OSB breaks", col = col, type = "classes")
@@ -170,7 +170,7 @@ strat_osb <- function(mraster,
   }
 }
 
-perform_osb_sample <- function(rastermetric, nstrata, n, subset) {
+perform_osb_sample <- function(rastermetric, nStrata, nSamp, subset) {
   vals <- rastermetric %>%
     terra::values(dataframe = TRUE) %>%
     dplyr::filter(stats::complete.cases(.)) %>%
@@ -178,21 +178,21 @@ perform_osb_sample <- function(rastermetric, nstrata, n, subset) {
     dplyr::pull()
 
   OSB_result <- vals %>%
-    stratifyR::strata.data(h = nstrata, n = n)
+    stratifyR::strata.data(h = nStrata, nSamp = nSamp)
 
   out <- list(vals, OSB_result)
 
   out
 }
 
-perform_osb <- function(rastermetric, nstrata, n) {
+perform_osb <- function(rastermetric, nStrata, nSamp) {
   vals <- rastermetric %>%
     terra::values(dataframe = TRUE) %>%
     dplyr::filter(stats::complete.cases(.)) %>%
     dplyr::pull()
 
   OSB_result <- vals %>%
-    stratifyR::strata.data(h = nstrata, n = n)
+    stratifyR::strata.data(h = nStrata, nSamp = nSamp)
 
   out <- list(vals, OSB_result)
 

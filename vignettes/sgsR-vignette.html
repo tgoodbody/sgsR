@@ -524,7 +524,7 @@ bal_w_a &lt;- sample_balanced(mraster = mraster,
 <pre class="r"><code>#--- extract strata from raster for already existing sample network ---#
 #--- we use random samples defined above ---#
 
-existing &lt;- extract_existing(sraster = kmeans,
+existing &lt;- extract_strata(sraster = kmeans,
                              existing = srs_wo)
 
 existing</code></pre>

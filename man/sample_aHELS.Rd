@@ -16,7 +16,7 @@ sample_aHELS(
 \arguments{
 \item{mraster}{spatRaster. ALS metrics raster.}
 
-\item{existing}{sf or data.frame.  Existing plot network.}
+\item{existing}{sf. Samples resulting from sample_* functions.}
 
 \item{nQuant}{Numeric. Number of quantiles to divide covariates and samples into.}
 
@@ -30,7 +30,7 @@ continually loop and should be used sparingly.}
 \item{plot}{Logial. Plots existing (circles) and new (crosses) samples on the first band of mraster.}
 }
 \value{
-
+Returns sf point object with existing samples and supplemental samples added by the aHELS algorithm.
 }
 \description{
 Perform the adapted Hypercube Evaluation of a Legacy Sample (aHELS) algorithm using

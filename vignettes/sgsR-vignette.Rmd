@@ -363,7 +363,7 @@ bal_w_a <- sample_balanced(mraster = mraster,
 #--- extract strata from raster for already existing sample network ---#
 #--- we use random samples defined above ---#
 
-existing <- extract_existing(sraster = kmeans,
+existing <- extract_strata(sraster = kmeans,
                              existing = existing)
 
 #--- if 'data.frame = TRUE -- output will be a dataframe instead of an sf object ---#

@@ -7,7 +7,7 @@
 #' @family calculate functions
 #'
 #' @inheritParams strat_kmeans
-#' @inheritParams extract_existing
+#' @inheritParams extract_strata
 #'
 #' @param mraster spatRaster. ALS metrics raster. Requires at least 2 layers to calculate covariance matrix
 #' @param threshold Numeric. Proxy maximum pixel quantile to avoid outliers. \code{default = 0.95}
@@ -55,7 +55,7 @@ calculate_COOBS <- function(mraster = NULL,
   
   #--- set global vars ---#
 
-  i <- NULL
+  i <- geometry <- NULL
 
   #--- Error handling ---#
 

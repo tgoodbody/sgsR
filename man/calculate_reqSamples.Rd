@@ -4,12 +4,10 @@
 \alias{calculate_reqSamples}
 \title{Determine required samples in strata}
 \usage{
-calculate_reqSamples(sraster, n, existing = NULL)
+calculate_reqSamples(sraster, nSamp, existing = NULL)
 }
 \arguments{
-\item{sraster}{spatRaster. Stratification raster to be used for sampling.}
-
-\item{n}{Numeric. Number of desired samples.}
+\item{nSamp}{Numeric. Number of desired samples.}
 
 \item{existing}{sf or data.frame.  Existing plot network.}
 }

@@ -5,8 +5,8 @@
 \title{Simple random sampling}
 \usage{
 sample_srs(
-  sraster,
-  n,
+  raster,
+  nSamp,
   mindist = 100,
   access = NULL,
   buff_inner = NULL,
@@ -15,9 +15,9 @@ sample_srs(
 )
 }
 \arguments{
-\item{sraster}{spatRaster. Stratification raster to be used for sampling.}
+\item{raster}{spatRaster. Raster to be used for random sampling.}
 
-\item{n}{Numeric. Number of desired samples.}
+\item{nSamp}{Numeric. Number of desired samples.}
 
 \item{mindist}{Numeric. Minimum allowable distance between selected
 samples. Default = 100.}
@@ -33,7 +33,7 @@ from access where plots can be sampled.}
 \item{plot}{Logical. Plots output strata raster with samples.}
 }
 \value{
-An sf object with \code{n} randomly sampled points.
+An sf object with \code{nSamp} randomly sampled points.
 }
 \description{
 Randomly sample within a stratification raster extent.

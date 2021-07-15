@@ -6,7 +6,7 @@
 #'
 #' @inheritParams sample_srs
 #' @param existing sf or data.frame.  Existing plot network.
-#' @param include Logical. If \code{TRUE} include existing plots in \code{n} total.
+#' @param include Logical. If \code{TRUE} include existing plots in \code{nSamp} total.
 #' @param wrow Numeric. Number of row in the focal window (default is 3).
 #' @param wcol Numeric. Number of columns in the focal window (default is 3).
 #' @param details Logical. If \code{FALSE} (default) output is sf object of
@@ -18,12 +18,12 @@
 #' @importFrom magrittr %>%
 #' @importFrom methods is
 #'
-#' @return An sf object with \code{n} stratified samples.
+#' @return An sf object with \code{nSamp} stratified samples.
 #'
 #' @export
 
 sample_strat <- function(sraster,
-                         n,
+                         nSamp,
                          mindist = 100,
                          existing = NULL,
                          include = FALSE,
@@ -51,8 +51,8 @@ sample_strat <- function(sraster,
     stop("'mindist' must be type numeric")
   }
 
-  if (!is.numeric(n)) {
-    stop("'n' must be type numeric")
+  if (!is.numeric(nSamp)) {
+    stop("'nSamp' must be type numeric")
   }
 
   if (!is.numeric(wrow)) {
@@ -156,9 +156,9 @@ sample_strat <- function(sraster,
   if (isTRUE(include)) {
     message("'existing' samples being included in 'n' calculation")
 
-    toSample <- calculate_reqSamples(sraster, n, existing)
+    toSample <- calculate_reqSamples(sraster, nSamp, existing)
   } else {
-    toSample <- calculate_reqSamples(sraster, n)
+    toSample <- calculate_reqSamples(sraster, nSamp)
   }
 
 
@@ -179,51 +179,9 @@ sample_strat <- function(sraster,
       stop("'buff_inner' must be < 'buff_outer'")
     }
 
-    #--- convert vectors to spatVector to synergize with terra sraster functions---#
-
-    access <- terra::vect(access)
-
-    #--- list all buffers to catch NULL values within error handling ---#
-    buffers <- list(buff_inner, buff_outer)
-
-    if (any(vapply(buffers, is.null, TRUE))) {
-      stop("All 'buff_*' paramaters must be provided when 'access' is defined.")
-    }
-
-    if (!any(vapply(buffers, is.numeric, FALSE))) {
-      stop("All 'buff_*' paramaters must be type numeric")
-    }
-
-    message(
-      paste0(
-        "An access layer has been provided. An internal buffer of ",
-        buff_inner,
-        " m and an external buffer of ",
-        buff_outer,
-        " m have been applied"
-      )
-    )
-
-    #--- make access buffer with user defined values ---#
-
-    buff_in <- terra::buffer(
-      x = access,
-      width = buff_inner
-    )
-
-    buff_out <- terra::buffer(
-      x = access,
-      width = buff_outer
-    )
-
-    #--- make difference and aggregate inner and outer buffers to prevent sampling too close to access ---#
-
-    buffer <- terra::aggregate(buff_out - buff_in)
-
-    #--- mask sraster for plotting ---#
-    raster_masked <- terra::mask(sraster,
-      mask = buffer
-    )
+    access_buff <- mask_access(raster = mraster, access = access, buff_inner = buff_inner, buff_outer = buff_outer)
+    
+    raster_masked <- access_buff$rast
   }
 
   ####################################
@@ -232,11 +190,11 @@ sample_strat <- function(sraster,
 
   for (i in 1:nrow(toSample)) {
     s <- as.numeric(toSample[i, 1])
-    nSamp <- as.numeric(toSample[i, 2])
+    n <- as.numeric(toSample[i, 2])
 
     message(paste0("Processing strata : ", s))
 
-    if (nSamp > 0) {
+    if (n > 0) {
       #--- mask for individual strata ---#
 
       strata_m <- terra::mask(sraster,
@@ -250,18 +208,18 @@ sample_strat <- function(sraster,
 
       if (!missing(access)) {
         strata_m_buff <- terra::mask(strata_m,
-          mask = buffer
+          mask = access_buff$buff
         )
 
         sampAvail <- sum(!is.na(terra::values(strata_m_buff)))
 
-        if (sampAvail > nSamp) {
+        if (sampAvail > n) {
           message(
             paste0(
               "Buffered area contains ",
               sampAvail,
               " available  candidates. Sampling to reach ",
-              nSamp,
+              n,
               " samples starting."
             )
           )
@@ -315,7 +273,7 @@ sample_strat <- function(sraster,
       nCount <- 0 # Number of sampled cells
 
       # While loop for RULE 1
-      while (length(validCandidates) > 0 & nCount < nSamp) {
+      while (length(validCandidates) > 0 & nCount < n) {
         #-- identify potential sample from candidates ---#
         smp <- sample(1:length(validCandidates), size = 1)
 
@@ -361,12 +319,12 @@ sample_strat <- function(sraster,
 
       #---- RULE 3 sampling ---#
 
-      if (nCount < nSamp) {
+      if (nCount < n) {
         idx_all <- 1:terra::ncell(strata_m)
         idx_na <- is.na(terra::values(strata_m))
         validCandidates <- idx_all[!idx_na]
 
-        while (length(validCandidates) > 0 & nCount < nSamp) {
+        while (length(validCandidates) > 0 & nCount < n) {
 
           #-- identify potential sample from candidates ---#
           smp <- sample(1:length(validCandidates), size = 1)
@@ -407,8 +365,8 @@ sample_strat <- function(sraster,
         }
       }
 
-      if (nCount < nSamp) {
-        message(sprintf("Strata %s: couldn't select required number of samples: %i instead of %i \n", s, nCount, nSamp))
+      if (nCount < n) {
+        message(sprintf("Strata %s: couldn't select required number of samples: %i instead of %i \n", s, nCount, n))
       }
     }
 
@@ -441,12 +399,13 @@ sample_strat <- function(sraster,
       #--- if access is also missing plot the full sraster extent ---#
 
       if (missing(access)) {
-        terra::plot(sraster)
+        terra::plot(sraster[[1]])
         suppressWarnings(terra::plot(samples, add = T, col = "black", pch = ifelse(samples$type == "existing", 1, 3)))
 
         #--- if access is provided plot the masked access sraster ---#
       } else {
-        terra::plot(raster_masked)
+        terra::plot(sraster[[1]])
+        suppressWarnings(terra::plot(access_buff$buff, add = T, border = c("gray30"), col = "gray10", alpha = 0.1))
         suppressWarnings(terra::plot(samples, add = T, col = "black", pch = ifelse(samples$type == "existing", 1, 3)))
       }
 
@@ -455,7 +414,7 @@ sample_strat <- function(sraster,
 
       #--- plot input sraster and random samples ---#
 
-      terra::plot(sraster)
+      terra::plot(sraster[[1]])
       suppressWarnings(terra::plot(samples, add = T, col = "black", pch = ifelse(samples$type == "existing", 1, 3)))
     }
   }

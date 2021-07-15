@@ -9,9 +9,9 @@
 #' @inheritParams sample_srs
 #' @param algorithm Character. One of \code{lpm2 lcube lcubestratified}
 #' @param p Numeric. Inclusion probability for each candidate sample.
-#' Default is \code{n / N}
+#' Default is \code{nSamp / N}
 #'
-#' @return An sf object with \code{n} randomly sampled points.
+#' @return An sf object with \code{nSamp} randomly sampled points.
 #'
 #' @importFrom magrittr %>%
 #' @importFrom methods is
@@ -28,7 +28,7 @@
 #' @export
 
 sample_balanced <- function(mraster,
-                            n,
+                            nSamp,
                             algorithm = "lpm2",
                             p = NULL,
                             access = NULL,
@@ -51,8 +51,8 @@ sample_balanced <- function(mraster,
     stop("'mraster' must be type SpatRaster", call. = FALSE)
   }
 
-  if (!is.numeric(n)) {
-    stop("'n' must be type numeric")
+  if (!is.numeric(nSamp)) {
+    stop("'nSamp' must be type numeric")
   }
 
   if (!is.logical(plot)) {
@@ -80,6 +80,10 @@ sample_balanced <- function(mraster,
 
   #--- determine crs of input mraster ---#
   crs <- crs(mraster)
+  
+  #--- set mraster for plotting who area in case of masking ---#
+  
+  mrasterP <- mraster
 
   if (!is.null(access)) {
 
@@ -91,48 +95,12 @@ sample_balanced <- function(mraster,
     if (!inherits(sf::st_geometry(access), "sfc_MULTILINESTRING")) {
       stop("'access' geometry type must be 'sfc_MULTILINESTRING'")
     }
+    
+    #--- buffer roads and mask ---#
 
-    #--- list all buffers to catch NULL values within error handling ---#
-    buffers <- list(buff_inner, buff_outer)
-
-    #--- error handling in the presence of 'access' ---#
-    if (any(vapply(buffers, is.null, TRUE))) {
-      stop("All 'buff_*' paramaters must be provided when 'access' is defined.")
-    }
-
-    if (!any(vapply(buffers, is.numeric, FALSE))) {
-      stop("All 'buff_*' paramaters must be type numeric")
-    }
-
-    message(
-      paste0(
-        "An access layer has been provided. An internal buffer of ",
-        buff_inner,
-        " m and an external buffer of ",
-        buff_outer,
-        " m have been applied"
-      )
-    )
-
-    #--- convert vectors to spatVector to synergize with terra raster functions---#
-    roads <- terra::vect(access)
-
-    #--- make access buffer with user defined values ---#
-
-    buff_in <- terra::buffer(
-      x = roads,
-      width = buff_inner
-    )
-
-    buff_out <- terra::buffer(
-      x = roads,
-      width = buff_outer
-    )
-
-    #--- make difference and aggregate inner and outer buffers to prevent sampling too close to access ---#
-    buffer <- terra::aggregate(buff_out - buff_in)
-
-    mraster <- terra::mask(mraster, mask = buffer)
+    access_buff <- mask_access(raster = mraster, access = access, buff_inner = buff_inner, buff_outer = buff_outer)
+    
+    mraster <- access_buff$rast
   }
 
   #--- extract XY coordinates from raster ---#
@@ -153,7 +121,7 @@ sample_balanced <- function(mraster,
 
     #--- if 'p' is not defined use the default ---#
 
-    p <- rep(n / N, N)
+    p <- rep(nSamp / N, N)
   } else {
     if (!is.numeric(p)) {
       stop("'p' must be type numeric")
@@ -219,7 +187,8 @@ sample_balanced <- function(mraster,
   if (isTRUE(plot)) {
 
     #--- plot input mraster and random samples ---#
-    terra::plot(mraster[[1]])
+    terra::plot(mrasterP[[1]])
+    suppressWarnings(terra::plot(access_buff$buff, add = T, border = c("gray30"), col = "gray10", alpha = 0.1))
     suppressWarnings(terra::plot(samples, add = T, col = "black"))
   }
 

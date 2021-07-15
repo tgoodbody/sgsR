@@ -43,6 +43,8 @@ where \code{$details} is additional stratification information and
 
 \item{filename}{Character. Path to write stratified raster to disc.}
 
+\item{overwrite}{Logical. Specify whether \code{filename} should be overwritten on disc.}
+
 \item{...}{Additional arguments for writing files. See \link[terra]{writeRaster}.}
 }
 \value{

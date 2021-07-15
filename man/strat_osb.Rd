@@ -7,8 +7,8 @@
 strat_osb(
   mraster,
   metric = NULL,
-  nstrata,
-  n,
+  nStrata,
+  nSamp,
   subset = 1,
   plot = FALSE,
   details = FALSE,
@@ -22,9 +22,9 @@ strat_osb(
 
 \item{metric}{Character. Name of metric to be used for stratification}
 
-\item{nstrata}{Numeric. Number of desired output strata.}
+\item{nStrata}{Numeric. Number of desired output strata.}
 
-\item{n}{Numeric. Number of desired samples - used within
+\item{nSamp}{Numeric. Number of desired samples - used within
 OSB algorithm to help determine break points.}
 
 \item{subset}{- Numeric. Value between 0 and 1 (default)
@@ -40,7 +40,7 @@ where \code{$details} is additional stratification information and
 
 \item{filename}{Character. Path to write stratified raster to disc.}
 
-\item{overwrite}{Logical. Choice to overwrite existing \code{filename} if it exists.}
+\item{overwrite}{Logical. Specify whether \code{filename} should be overwritten on disc.}
 
 \item{...}{Additional arguments for writing files. See \link[terra]{writeRaster}.}
 }

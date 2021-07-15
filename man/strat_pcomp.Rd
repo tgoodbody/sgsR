@@ -40,7 +40,7 @@ where \code{$details} is additional stratification information and
 
 \item{filename}{Character. Path to write stratified raster to disc.}
 
-\item{overwrite}{Logical. Choice to overwrite existing \code{filename} if it exists.}
+\item{overwrite}{Logical. Specify whether \code{filename} should be overwritten on disc.}
 
 \item{...}{Additional arguments for PCA implementation and writing files. See \link[FactoMineR]{PCA}
 and \link[terra]{writeRaster}.}

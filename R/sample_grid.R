@@ -57,6 +57,10 @@ sample_grid <- function(raster,
 
   #--- determine crs of input raster ---#
   crs <- crs(raster)
+  
+  #--- set mraster for plotting who area in case of masking ---#
+  
+  rasterP <- raster
 
   if (!is.null(access)) {
 
@@ -69,47 +73,9 @@ sample_grid <- function(raster,
       stop("'access' geometry type must be 'sfc_MULTILINESTRING'")
     }
 
-    #--- list all buffers to catch NULL values within error handling ---#
-    buffers <- list(buff_inner, buff_outer)
-
-    #--- error handling in the presence of 'access' ---#
-    if (any(vapply(buffers, is.null, TRUE))) {
-      stop("All 'buff_*' paramaters must be provided when 'access' is defined.")
-    }
-
-    if (!any(vapply(buffers, is.numeric, FALSE))) {
-      stop("All 'buff_*' paramaters must be type numeric")
-    }
-
-    message(
-      paste0(
-        "An access layer has been provided. An internal buffer of ",
-        buff_inner,
-        " m and an external buffer of ",
-        buff_outer,
-        " m have been applied"
-      )
-    )
-
-    #--- convert vectors to spatVector to synergize with terra raster functions---#
-    roads <- terra::vect(access)
-
-    #--- make access buffer with user defined values ---#
-
-    buff_in <- terra::buffer(
-      x = roads,
-      width = buff_inner
-    )
-
-    buff_out <- terra::buffer(
-      x = roads,
-      width = buff_outer
-    )
-
-    #--- make difference and aggregate inner and outer buffers to prevent sampling too close to access ---#
-    buffer <- terra::aggregate(buff_out - buff_in)
-
-    raster <- terra::mask(raster, mask = buffer)
+    access_buff <- mask_access(raster = raster, access = access, buff_inner = buff_inner, buff_outer = buff_outer)
+    
+    raster <- access_buff$rast
   }
 
   #--- convert raster extent into a polygon ---#
@@ -134,8 +100,9 @@ sample_grid <- function(raster,
 
     #--- plot input raster and random samples ---#
 
-    terra::plot(raster)
-    terra::plot(gridSamp, add = TRUE, col = "black")
+    suppressWarnings(terra::plot(rasterP[[1]]))
+    suppressWarnings(terra::plot(access_buff$buff, add = T, border = c("gray30"), col = "gray10", alpha = 0.1))
+    suppressWarnings(terra::plot(gridSamp, add = TRUE, col = "black"))
   }
 
   if (!is.null(filename)) {

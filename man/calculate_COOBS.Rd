@@ -16,7 +16,7 @@ calculate_COOBS(
 \arguments{
 \item{mraster}{spatRaster. ALS metrics raster. Requires at least 2 layers to calculate covariance matrix}
 
-\item{existing}{sf or data.frame.  Existing plot network.}
+\item{existing}{sf. Samples resulting from sample_* functions.}
 
 \item{cores}{Numeric. Number of CPU cores to use for parallel processing. \code{default = 1}}
 

@@ -14,7 +14,7 @@
 
 
 calculate_reqSamples <- function(sraster,
-                                 n,
+                                 nSamp,
                                  existing = NULL) {
 
   #--- set global vars ---#
@@ -36,7 +36,7 @@ calculate_reqSamples <- function(sraster,
     dplyr::summarize(count = n()) %>%
     dplyr::mutate(
       freq = count / sum(count),
-      total = freq * n
+      total = freq * nSamp
     ) %>%
     #--- if a value equates to <1 it will have 0 samples --- change 0 to 1 ---#
 
@@ -51,7 +51,7 @@ calculate_reqSamples <- function(sraster,
 
   #--- determine whether there is a difference between 'n' and the number of samples provided based on count ---#
 
-  diff <- sum(toSample$total) - n
+  diff <- sum(toSample$total) - nSamp
 
   #--- if there is a difference remove samples from classes with the most samples ---#
 
@@ -107,7 +107,7 @@ calculate_reqSamples <- function(sraster,
       stop("Strata for 'sraster' and 'existing' are not identical")
     }
 
-    #--- join the 2 df together and subtrace the number of existing plots by strata from toSample ---#
+    #--- join the 2 df together and subtract the number of existing plots by strata from toSample ---#
     toSample <- toSample %>%
       dplyr::left_join(existing, by = "strata") %>%
       dplyr::mutate(total = total - eTotal) %>%

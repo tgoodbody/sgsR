@@ -7,7 +7,7 @@
 #' @inheritParams analyze_sampOptLHC
 #' @inheritParams sample_srs
 #' @inheritParams strat_kmeans
-#' @inheritParams extract_existing
+#' @inheritParams extract_strata
 #'
 #' @param ... Additional arguments for clhs sampling. See \code{\link[clhs]{clhs}}.
 #'
@@ -16,12 +16,12 @@
 #' @importFrom stats coef complete.cases median quantile sd
 #' @importFrom utils setTxtProgressBar
 #'
-#' @return An sf object with \code{n} stratified samples.
+#' @return An sf object with \code{nSamp} stratified samples.
 #'
 #' @export
 
-sample_clhs <- function(mraster = mraster,
-                        n = NULL,
+sample_clhs <- function(mraster,
+                        nSamp,
                         existing = NULL,
                         access = NULL,
                         buff_inner = NULL,
@@ -47,8 +47,8 @@ sample_clhs <- function(mraster = mraster,
     stop("'mraster' must be type SpatRaster", call. = FALSE)
   }
 
-  if (!is.numeric(n)) {
-    stop("'n' must be type numeric")
+  if (!is.numeric(nSamp)) {
+    stop("'nSamp' must be type numeric")
   }
 
   if (is.na(crs(mraster))) {
@@ -80,48 +80,11 @@ sample_clhs <- function(mraster = mraster,
       stop("'access' geometry type must be 'sfc_MULTILINESTRING'")
     }
 
-    #--- list all buffers to catch NULL values within error handling ---#
-    buffers <- list(buff_inner, buff_outer)
-
-    #--- error handling in the presence of 'access' ---#
-    if (any(vapply(buffers, is.null, TRUE))) {
-      stop("All 'buff_*' paramaters must be provided when 'access' is defined.")
-    }
-
-    if (!any(vapply(buffers, is.numeric, FALSE))) {
-      stop("All 'buff_*' paramaters must be type numeric")
-    }
-
-    message(
-      paste0(
-        "An access layer has been provided. An internal buffer of ",
-        buff_inner,
-        " m and an external buffer of ",
-        buff_outer,
-        " m have been applied"
-      )
-    )
-
-    #--- convert vectors to spatVector to synergize with terra raster functions---#
-    access <- terra::vect(access)
-
-    #--- make access buffer with user defined values ---#
-
-    buff_in <- terra::buffer(
-      x = access,
-      width = buff_inner
-    )
-
-    buff_out <- terra::buffer(
-      x = access,
-      width = buff_outer
-    )
-
-    #--- make difference and aggregate inner and outer buffers to prevent sampling too close to access ---#
-
-    buffer <- terra::aggregate(buff_out - buff_in)
-
-    mraster_access <- terra::mask(mraster, mask = buffer)
+    #--- buffer roads and mask ---#
+    
+    access_buff <- mask_access(raster = mraster, access = access, buff_inner = buff_inner, buff_outer = buff_outer)
+    
+    mraster_access <- access_buff$rast
 
     #--- extract covariate data from mraster ---#
 
@@ -204,7 +167,7 @@ sample_clhs <- function(mraster = mraster,
 
     #--- remove 'type' during sampling ---#
 
-    clhsOut <- clhs::clhs(x = vals_tp, size = n, ...)
+    clhsOut <- clhs::clhs(x = vals_tp, size = nSamp, ...)
 
 
     #--- if ... variables are provided the output is sometimes a list object ---#
@@ -221,7 +184,7 @@ sample_clhs <- function(mraster = mraster,
 
     #--- same as above but this time including existing samples ---#
 
-    clhsOut <- clhs::clhs(x = vals_tp, size = n, include = 1:nrow(existingSamples), ...)
+    clhsOut <- clhs::clhs(x = vals_tp, size = nSamp, include = 1:nrow(existingSamples), ...)
 
     if (inherits(clhsOut, "list")) {
 
@@ -249,7 +212,7 @@ sample_clhs <- function(mraster = mraster,
       #--- plot samples as well as aggregated access buffers ---#
 
       terra::plot(mraster[[1]])
-      suppressWarnings(terra::plot(buffer, add = T, border = c("gray60"), col = "gray10", alpha = 0.1))
+      suppressWarnings(terra::plot(access_buff$buff, add = T, border = c("gray30"), col = "gray10", alpha = 0.1))
       suppressWarnings(terra::plot(samples, add = T, col = ifelse(samples$type == "existing", "Black", "Red")))
     } else {
       terra::plot(mraster[[1]])

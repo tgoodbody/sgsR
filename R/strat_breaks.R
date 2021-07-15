@@ -9,6 +9,7 @@
 #' @param breaks Numeric. Vector of breakpoints for \code{metric}
 #' @param breaks2 Numeric. Vector of breakpoints for \code{metric2} (if provided)
 #' @param filename Character. Path to write stratified raster to disc.
+#' @param overwrite Logical. Specify whether \code{filename} should be overwritten on disc.
 #' @param ... Additional arguments for writing files. See \link[terra]{writeRaster}.
 #'
 #' @return output stratification \code{spatRaster}, or a list when \code{details = TRUE}.
@@ -192,7 +193,7 @@ strat_breaks <- function(mraster,
 
       p2 <- ggplot2::ggplot(data2, ggplot2::aes(val)) +
         ggplot2::geom_histogram() +
-        ggplot2::geom_vline(linetype = "dashed", data = bs, mapping = aes(xintercept = brk)) +
+        ggplot2::geom_vline(linetype = "dashed", data = bs, mapping = ggplot2::aes(xintercept = brk)) +
         ggplot2::facet_wrap(~var, scales = "free")
 
       suppressMessages(print(p2))
