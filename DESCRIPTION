@@ -37,7 +37,6 @@ Suggests:
     snow (>= 0.4.3),
     foreach (>= 1.5.1),
     entropy (>= 1.3.0),
-    FactoMineR (>= 2.4.0),
     stratifyR (>= 1.0.0)
 VignetteBuilder: 
     knitr

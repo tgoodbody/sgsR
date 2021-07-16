@@ -8,7 +8,10 @@
 #' @inheritParams strat_kmeans
 #'
 #' @param nComp Numeric. Value indicating number of principal components to be rasterized.
-#'
+#' @param center Logical. Value indicating whether the variables should be shifted to be zero centered.
+#' @param scale Logical. Value indicating whether the variables should be scaled to have unit variance
+#' prior to analysis.
+#' @param ... Additional arguments to be passed to \code{\link[stats]{prcomp}}.
 #'
 #' @importFrom magrittr %>%
 #' @importFrom methods is
@@ -19,16 +22,11 @@
 
 calculate_pcomp <- function(mraster = NULL,
                             nComp = NULL,
+                            center = TRUE,
                             scale = TRUE,
                             plot = FALSE,
-                            details = FALSE) {
-
-  #--- check for required packages ---#
-  if (!requireNamespace("FactoMineR", quietly = TRUE)) {
-    stop("Package \"FactoMineR\" needed for this function to work. Please install it.",
-      call. = FALSE
-    )
-  }
+                            details = FALSE,
+                            ...) {
 
   #--- error handling ---#
 
@@ -38,6 +36,10 @@ calculate_pcomp <- function(mraster = NULL,
 
   if (!is.numeric(nComp)) {
     stop("'ncomp' must be type numeric")
+  }
+  
+  if (!is.logical(center)) {
+    stop("'center' must be type logical")
   }
 
   if (!is.logical(scale)) {
@@ -56,30 +58,24 @@ calculate_pcomp <- function(mraster = NULL,
 
   vals <- terra::values(mraster)
 
-  vals[!is.finite(vals)] <- NA
-
-  #--- Determine index of each cell so to map values correctly without NA ---#
-
-  idx <- !is.na(vals)
-
   #--- perform PCA using rasterPCA -- requires conversion to raster* format ---#
 
-  PCA <- suppressWarnings(FactoMineR::PCA(vals, ncp = nComp, scale.unit = scale, graph = FALSE))
-
-  ########################################################
-  ### WHICH PRINCIPAL COMPONENT METHOD SHOULD BE USED? ###
-  ########################################################
+  PCA <- prcomp(formula = ~.,
+                data = as.data.frame(vals),
+                center = center,
+                scale. = scale,
+                na.action = na.exclude,
+                ...)
 
   #--- extract cell level pca values ---#
-  pcavals <- as.data.frame(PCA$ind$coord)
+  pcavals <- as.data.frame(PCA$x)
 
   #--- create loop to allocate values to cell level taking into account potential NA using 'idx' ---#
   rs <- list()
 
   for (i in 1:nComp) {
-    vals[idx] <- pcavals[idx, i]
 
-    rs[[i]] <- terra::setValues(mraster[[1]], vals)
+    rs[[i]] <- terra::setValues(mraster[[1]], pcavals[, i, drop = FALSE])
   }
 
   #--- stack pca rasters ---#

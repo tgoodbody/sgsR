@@ -7,9 +7,11 @@
 calculate_pcomp(
   mraster = NULL,
   nComp = NULL,
+  center = TRUE,
   scale = TRUE,
   plot = FALSE,
-  details = FALSE
+  details = FALSE,
+  ...
 )
 }
 \arguments{
@@ -17,8 +19,10 @@ calculate_pcomp(
 
 \item{nComp}{Numeric. Value indicating number of principal components to be rasterized.}
 
-\item{scale}{Logical. Determines whether scaling and centering
-of data should be conducted prior to analysis.}
+\item{center}{Logical. Value indicating whether the variables should be shifted to be zero centered.}
+
+\item{scale}{Logical. Value indicating whether the variables should be scaled to have unit variance
+prior to analysis.}
 
 \item{plot}{Logical. Plots output strata raster with samples.}
 
@@ -26,6 +30,8 @@ of data should be conducted prior to analysis.}
  stratification raster. If \code{TRUE} return a list
 where \code{$details} is additional stratification information and
  \code{$raster} is the output stratification spatRaster.}
+
+\item{...}{Additional arguments to be passed to \code{\link[stats]{prcomp}}.}
 }
 \value{
 Output raster with specified number of principal components as layers.

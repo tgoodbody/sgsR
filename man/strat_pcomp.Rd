@@ -8,6 +8,7 @@ strat_pcomp(
   mraster,
   nStrata,
   nStrata2 = NULL,
+  center = TRUE,
   scale = TRUE,
   plot = FALSE,
   samp = 1,
@@ -23,6 +24,8 @@ strat_pcomp(
 \item{nStrata}{Character. Number of desired strata.}
 
 \item{nStrata2}{Numeric.  Number of secondary strata within \code{nStrata}.}
+
+\item{center}{Logical. Value indicating whether the variables should be shifted to be zero centered.}
 
 \item{scale}{Logical. Determines whether scaling and centering
 of data should be conducted prior to analysis.}
@@ -42,8 +45,7 @@ where \code{$details} is additional stratification information and
 
 \item{overwrite}{Logical. Specify whether \code{filename} should be overwritten on disc.}
 
-\item{...}{Additional arguments for PCA implementation and writing files. See \link[FactoMineR]{PCA}
-and \link[terra]{writeRaster}.}
+\item{...}{Additional arguments to be passed to \code{\link[stats]{prcomp}}.}
 }
 \description{
 Stratify metrics raster using principal components and quantile breaks

@@ -48,11 +48,11 @@ where \code{$details} is additional stratification information and
 Returns an output stratification \code{spatRaster} or a list when \code{details = TRUE}.
  
 When a list is returned:
-\describe{
-\item{details}{is a list output of the \code{\link[stratifyR]{strata.data}} function where
+\enumerate{
+\item \code{details} is a list output of the \code{\link[stratifyR]{strata.data}} function where
 \code{OSB} are the optimum stratum boundaries and \code{nh} are the optimum sample sizes 
-for each strata}
-\item{raster}{is a stratified \code{spatRaster} based on \code{OSB}}
+for each strata
+\item \code{raster} is a stratified \code{spatRaster} based on \code{OSB}
 }
 }
 \description{
