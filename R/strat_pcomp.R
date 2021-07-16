@@ -10,7 +10,6 @@
 #' @param ... Additional arguments for PCA implementation and writing files. See \link[FactoMineR]{PCA}
 #' and \link[terra]{writeRaster}.
 #'
-#' @importFrom magrittr %>%
 #' @importFrom methods is
 #'
 #'
@@ -18,8 +17,8 @@
 #' @export
 
 strat_pcomp <- function(mraster,
-                        nstrata,
-                        nstrata2 = NULL,
+                        nStrata,
+                        nStrata2 = NULL,
                         scale = TRUE,
                         plot = FALSE,
                         samp = 1,
@@ -45,8 +44,8 @@ strat_pcomp <- function(mraster,
     stop("mraster must be type SpatRaster", call. = FALSE)
   }
 
-  if (!is.numeric(nstrata)) {
-    stop("'nstrata' must be type numeric")
+  if (!is.numeric(nStrata)) {
+    stop("'nStrata' must be type numeric")
   }
 
   if (!is.logical(scale)) {
@@ -76,7 +75,7 @@ strat_pcomp <- function(mraster,
   idx <- !is.na(vals)
 
   if (scale == TRUE) {
-    if (is.null(nstrata2)) {
+    if (is.null(nStrata2)) {
 
       #--- perform PCA using rasterPCA -- requires conversion to raster* format ---#
 
@@ -90,11 +89,11 @@ strat_pcomp <- function(mraster,
 
       pcavals <- as.data.frame(pca$ind$coord)
 
-      #--- Split PCA distribution into number specified by 'nstrata' ---#
+      #--- Split PCA distribution into number specified by 'nStrata' ---#
 
       pcagrps <- pcavals[idx, ] %>%
-        #--- define nstrata classes ---#
-        dplyr::mutate(class = dplyr::ntile(Dim.1, nstrata))
+        #--- define nStrata classes ---#
+        dplyr::mutate(class = dplyr::ntile(Dim.1, nStrata))
 
       #--- convert back to original mraster extent ---#
 
@@ -105,8 +104,8 @@ strat_pcomp <- function(mraster,
       rout <- terra::setValues(mraster[[1]], vals)
       names(rout) <- "strata"
     } else {
-      if (!is.numeric(nstrata2)) {
-        stop("'nstrata2' must be type numeric")
+      if (!is.numeric(nStrata2)) {
+        stop("'nStrata2' must be type numeric")
       }
 
       #--- perform PCA using rasterPCA -- requires conversion to raster* format ---#
@@ -121,15 +120,15 @@ strat_pcomp <- function(mraster,
 
       pcavals <- as.data.frame(pca$ind$coord)
 
-      #--- Split PCA distribution in to number specified by 'nstrata' ---#
+      #--- Split PCA distribution in to number specified by 'nStrata' ---#
 
       pcagrps <- pcavals[idx, ] %>%
-        #--- define nstrata classes ---#
-        dplyr::mutate(class1 = dplyr::ntile(Dim.1, nstrata)) %>%
+        #--- define nStrata classes ---#
+        dplyr::mutate(class1 = dplyr::ntile(Dim.1, nStrata)) %>%
         #--- group by class to sub stratify ---#
         dplyr::group_by(class1) %>%
-        #--- define nstrata2 classes ---#
-        dplyr::mutate(class2 = dplyr::ntile(Dim.2, nstrata2)) %>%
+        #--- define nStrata2 classes ---#
+        dplyr::mutate(class2 = dplyr::ntile(Dim.2, nStrata2)) %>%
         #--- combine classes ---#
         dplyr::group_by(class1, class2) %>%
         #--- establish newly formed unique class ---#
@@ -145,7 +144,7 @@ strat_pcomp <- function(mraster,
       names(rout) <- "strata"
     }
   } else {
-    if (is.null(nstrata2)) {
+    if (is.null(nStrata2)) {
 
       #--- perform PCA using rasterPCA -- requires conversion to raster* format ---#
 
@@ -159,11 +158,11 @@ strat_pcomp <- function(mraster,
 
       pcavals <- as.data.frame(pca$ind$coord)
 
-      #--- Split PCA distribution in to number specified by 'nstrata' ---#
+      #--- Split PCA distribution in to number specified by 'nStrata' ---#
 
       pcagrps <- pcavals[idx, ] %>%
-        #--- define nstrata classes ---#
-        dplyr::mutate(class = dplyr::ntile(Dim.1, nstrata))
+        #--- define nStrata classes ---#
+        dplyr::mutate(class = dplyr::ntile(Dim.1, nStrata))
 
       #--- convert back to original raster extent ---#
 
@@ -174,8 +173,8 @@ strat_pcomp <- function(mraster,
       rout <- terra::setValues(raster[[1]], vals)
       names(rout) <- "strata"
     } else {
-      if (!is.numeric(nstrata2)) {
-        stop("'nstrata2' must be type numeric")
+      if (!is.numeric(nStrata2)) {
+        stop("'nStrata2' must be type numeric")
       }
 
       #--- perform PCA using rasterPCA -- requires conversion to raster* format ---#
@@ -190,15 +189,15 @@ strat_pcomp <- function(mraster,
 
       pcavals <- as.data.frame(pca$ind$coord)
 
-      #--- Split PCA distribution in to number specified by 'nstrata' ---#
+      #--- Split PCA distribution in to number specified by 'nStrata' ---#
 
       pcagrps <- pcavals[idx, ] %>%
-        #--- define nstrata classes ---#
-        dplyr::mutate(class1 = dplyr::ntile(Dim.1, nstrata)) %>%
+        #--- define nStrata classes ---#
+        dplyr::mutate(class1 = dplyr::ntile(Dim.1, nStrata)) %>%
         #--- group by class to sub stratify ---#
         dplyr::group_by(class1) %>%
         #--- define b2 classes ---#
-        dplyr::mutate(class2 = dplyr::ntile(Dim.2, nstrata2)) %>%
+        dplyr::mutate(class2 = dplyr::ntile(Dim.2, nStrata2)) %>%
         #--- combine classes ---#
         dplyr::group_by(class1, class2) %>%
         #--- establish newly formed unique class ---#

@@ -80,9 +80,9 @@ sample_balanced <- function(mraster,
 
   #--- determine crs of input mraster ---#
   crs <- crs(mraster)
-  
+
   #--- set mraster for plotting who area in case of masking ---#
-  
+
   mrasterP <- mraster
 
   if (!is.null(access)) {
@@ -95,11 +95,11 @@ sample_balanced <- function(mraster,
     if (!inherits(sf::st_geometry(access), "sfc_MULTILINESTRING")) {
       stop("'access' geometry type must be 'sfc_MULTILINESTRING'")
     }
-    
+
     #--- buffer roads and mask ---#
 
     access_buff <- mask_access(raster = mraster, access = access, buff_inner = buff_inner, buff_outer = buff_outer)
-    
+
     mraster <- access_buff$rast
   }
 

@@ -1,6 +1,8 @@
-#' Optimum sample breaks stratification
+#' Determine optimum sample boundaries
 #'
-#' @description Stratify metrics raster using optimum sample breaks algorithm
+#' @description Determine optimum sample boundaries algorithm of univariate populations
+#' using the \code{\link[stratifyR]{strata.data}} algorithm.
+#' 
 #' @family stratify functions
 #'
 #' @inheritParams strat_kmeans
@@ -10,13 +12,34 @@
 #' @param nStrata Numeric. Number of desired output strata.
 #' @param nSamp Numeric. Number of desired samples - used within
 #' OSB algorithm to help determine break points.
-#' @param subset - Numeric. Value between 0 and 1 (default)
+#' @param subset Numeric. Value between 0 and 1 (default)
 #' denoting proportion of data to use to determine break points
 #'
-#' @importFrom magrittr %>%
 #' @importFrom methods is
+#' 
+#' @references 
+#' Khan, E. A., Khan, M. G. M., & Ahsan, M. J. (2002). Optimum Stratification:
+#' A Mathematical Programming Approach. Calcutta Statistical Association Bulletin,
+#' 52(1–4), 323–334. https://doi.org/10.1177/0008068320020518
+#' 
+#' Khan, M. G. M., Nand, N., & Ahmad, N. (2008). Determining the optimum strata
+#' boundary points using dynamic programming. Survey methodology, 34(2), 205-214.
+#' 
+#' M.G.M. Khan, K.G. Reddy & D.K. Rao (2015) Designing stratified sampling in economic
+#' and business surveys, Journal of Applied Statistics, 42:10, 2080-2099,
+#' DOI: 10.1080/02664763.2015.1018674  
 #'
-#' @return output stratification \code{spatRaster}, or a list when \code{details = TRUE}.
+#' @return Returns an output stratification \code{spatRaster} or a list when \code{details = TRUE}.
+#'  
+#' When a list is returned:
+#' \enumerate{
+#' \item \code{details} is a list output of the \code{\link[stratifyR]{strata.data}} function where
+#' \code{OSB} are the optimum stratum boundaries and \code{nh} are the optimum sample sizes 
+#' for each strata
+#' \item \code{raster} is a stratified \code{spatRaster} based on \code{OSB}
+#' }
+#' 
+#' 
 #'
 #' @export
 
@@ -159,7 +182,7 @@ strat_osb <- function(mraster,
 
     #--- output OSB break points raster with associated breaks ---#
 
-    breaks_rcl <- list(details = OSB[[2]]$OSB, raster = rcl)
+    breaks_rcl <- list(details = OSB, raster = rcl)
 
     return(breaks_rcl)
   } else {
@@ -178,7 +201,7 @@ perform_osb_sample <- function(rastermetric, nStrata, nSamp, subset) {
     dplyr::pull()
 
   OSB_result <- vals %>%
-    stratifyR::strata.data(h = nStrata, nSamp = nSamp)
+    stratifyR::strata.data(h = nStrata, n = nSamp)
 
   out <- list(vals, OSB_result)
 
@@ -192,7 +215,7 @@ perform_osb <- function(rastermetric, nStrata, nSamp) {
     dplyr::pull()
 
   OSB_result <- vals %>%
-    stratifyR::strata.data(h = nStrata, nSamp = nSamp)
+    stratifyR::strata.data(h = nStrata, n = nSamp)
 
   out <- list(vals, OSB_result)
 

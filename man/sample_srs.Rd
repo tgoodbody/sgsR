@@ -11,7 +11,9 @@ sample_srs(
   access = NULL,
   buff_inner = NULL,
   buff_outer = NULL,
-  plot = FALSE
+  plot = FALSE,
+  filename = NULL,
+  overwrite = FALSE
 )
 }
 \arguments{

@@ -2,7 +2,7 @@
 % Please edit documentation in R/strat_osb.R
 \name{strat_osb}
 \alias{strat_osb}
-\title{Optimum sample breaks stratification}
+\title{Determine optimum sample boundaries}
 \usage{
 strat_osb(
   mraster,
@@ -27,7 +27,7 @@ strat_osb(
 \item{nSamp}{Numeric. Number of desired samples - used within
 OSB algorithm to help determine break points.}
 
-\item{subset}{- Numeric. Value between 0 and 1 (default)
+\item{subset}{Numeric. Value between 0 and 1 (default)
 denoting proportion of data to use to determine break points}
 
 \item{plot}{Logical. Plots output strata raster and visualized
@@ -45,10 +45,31 @@ where \code{$details} is additional stratification information and
 \item{...}{Additional arguments for writing files. See \link[terra]{writeRaster}.}
 }
 \value{
-output stratification \code{spatRaster}, or a list when \code{details = TRUE}.
+Returns an output stratification \code{spatRaster} or a list when \code{details = TRUE}.
+ 
+When a list is returned:
+\describe{
+\item{details}{is a list output of the \code{\link[stratifyR]{strata.data}} function where
+\code{OSB} are the optimum stratum boundaries and \code{nh} are the optimum sample sizes 
+for each strata}
+\item{raster}{is a stratified \code{spatRaster} based on \code{OSB}}
+}
 }
 \description{
-Stratify metrics raster using optimum sample breaks algorithm
+Determine optimum sample boundaries algorithm of univariate populations
+using the \code{\link[stratifyR]{strata.data}} algorithm.
+}
+\references{
+Khan, E. A., Khan, M. G. M., & Ahsan, M. J. (2002). Optimum Stratification:
+A Mathematical Programming Approach. Calcutta Statistical Association Bulletin,
+52(1–4), 323–334. https://doi.org/10.1177/0008068320020518
+
+Khan, M. G. M., Nand, N., & Ahmad, N. (2008). Determining the optimum strata
+boundary points using dynamic programming. Survey methodology, 34(2), 205-214.
+
+M.G.M. Khan, K.G. Reddy & D.K. Rao (2015) Designing stratified sampling in economic
+and business surveys, Journal of Applied Statistics, 42:10, 2080-2099,
+DOI: 10.1080/02664763.2015.1018674
 }
 \seealso{
 Other stratify functions: 

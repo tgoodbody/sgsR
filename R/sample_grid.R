@@ -34,11 +34,11 @@ sample_grid <- function(raster,
                         filename = NULL,
                         overwrite = FALSE,
                         ...) {
-  
+
   #--- Set global vars ---#
-  
+
   ext <- geometry <- NULL
-  
+
   if (!inherits(raster, "SpatRaster")) {
     stop("'raster' must be type SpatRaster", call. = FALSE)
   }
@@ -56,10 +56,10 @@ sample_grid <- function(raster,
   }
 
   #--- determine crs of input raster ---#
-  crs <- crs(raster)
-  
+  crs <- crs(raster, proj = TRUE)
+
   #--- set mraster for plotting who area in case of masking ---#
-  
+
   rasterP <- raster
 
   if (!is.null(access)) {
@@ -74,7 +74,7 @@ sample_grid <- function(raster,
     }
 
     access_buff <- mask_access(raster = raster, access = access, buff_inner = buff_inner, buff_outer = buff_outer)
-    
+
     raster <- access_buff$rast
   }
 
@@ -88,7 +88,7 @@ sample_grid <- function(raster,
 
   #--- extract values from raster for each sample ---#
 
-  gridSamp <- extract_metrics(mraster = raster, samples = gridSamp)
+  gridSamp <- extract_metrics(mraster = raster, existing = gridSamp)
 
   #--- remove samples with NA values ---#
 

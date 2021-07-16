@@ -180,7 +180,7 @@ sample_strat <- function(sraster,
     }
 
     access_buff <- mask_access(raster = mraster, access = access, buff_inner = buff_inner, buff_outer = buff_outer)
-    
+
     raster_masked <- access_buff$rast
   }
 

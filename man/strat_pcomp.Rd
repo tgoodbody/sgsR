@@ -6,8 +6,8 @@
 \usage{
 strat_pcomp(
   mraster,
-  nstrata,
-  nstrata2 = NULL,
+  nStrata,
+  nStrata2 = NULL,
   scale = TRUE,
   plot = FALSE,
   samp = 1,
@@ -20,9 +20,9 @@ strat_pcomp(
 \arguments{
 \item{mraster}{spatRaster. ALS metrics raster.}
 
-\item{nstrata}{Character. Number of desired strata.}
+\item{nStrata}{Character. Number of desired strata.}
 
-\item{nstrata2}{Numeric.  Number of secondary strata within \code{nstrata}.}
+\item{nStrata2}{Numeric.  Number of secondary strata within \code{nStrata}.}
 
 \item{scale}{Logical. Determines whether scaling and centering
 of data should be conducted prior to analysis.}

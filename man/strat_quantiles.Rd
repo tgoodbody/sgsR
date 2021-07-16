@@ -8,8 +8,8 @@ strat_quantiles(
   mraster,
   metric = NULL,
   metric2 = NULL,
-  nstrata,
-  nstrata2 = NULL,
+  nStrata,
+  nStrata2 = NULL,
   plot = FALSE,
   samp = 1,
   details = FALSE,
@@ -26,9 +26,9 @@ strat_quantiles(
 
 \item{metric2}{Character. Name of secondary metric to stratify.}
 
-\item{nstrata}{Character. Number of desired strata.}
+\item{nStrata}{Character. Number of desired strata.}
 
-\item{nstrata2}{Numeric.  Number of secondary strata within \code{nstrata}.}
+\item{nStrata2}{Numeric.  Number of secondary strata within \code{nStrata}.}
 
 \item{plot}{Logical. Plots output strata raster and visualized
 strata with boundary dividers.}

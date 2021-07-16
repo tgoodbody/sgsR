@@ -31,7 +31,7 @@ strat_breaks <- function(mraster,
                          ...) {
 
   #--- Set global vars ---#
-  from <- strata <- strata2 <- val <- brk <-  NULL
+  from <- strata <- strata2 <- val <- brk <- NULL
 
   #--- Error management ---#
 
@@ -41,6 +41,20 @@ strat_breaks <- function(mraster,
 
   if (!metric %in% names(mraster)) {
     stop(paste0("mraster does not have a variable named ", metric))
+  }
+  
+  if (!is.null(metric2)) {
+    if (!is.character(metric2)) {
+      stop("'metric2' must be type character")
+    }
+    
+    if (is.null(breaks2)) {
+      stop("If using metrics2 to stratify, 'breaks2' must be defined")
+    }
+    
+    if (any(!metric2 %in% names(mraster))) {
+      stop(paste0("'mraster' must have an attribute named ", metric2))
+    }
   }
 
   if (!is.numeric(breaks)) {
@@ -106,17 +120,6 @@ strat_breaks <- function(mraster,
   #--- if secondary metric is provided ---#
 
   if (!is.null(metric2)) {
-    if (!is.character(metric2)) {
-      stop("'metric2' must be type character")
-    }
-
-    if (is.null(breaks2)) {
-      stop("If using metrics2 to stratify, 'breaks2' must be defined")
-    }
-
-    if (any(!metric2 %in% names(mraster))) {
-      stop(paste0("'mraster' must have an attribute named ", metric2))
-    }
 
     #--- extract metric2 from mraster ---#
 

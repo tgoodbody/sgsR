@@ -8,7 +8,7 @@
 #' @param metric Character. Name of primary metric to stratify. If
 #' \code{mraster} is has 1 layer it is taken as default.
 #' @param metric2 Character. Name of secondary metric to stratify.
-#' @param nstrata2 Numeric.  Number of secondary strata within \code{nstrata}.
+#' @param nStrata2 Numeric.  Number of secondary strata within \code{nStrata}.
 #' @param samp Numeric. For plotting - Determines proportion of cells
 #' for strata visualization. Lower values reduce processing time.
 #'
@@ -22,8 +22,8 @@
 strat_quantiles <- function(mraster,
                             metric = NULL,
                             metric2 = NULL,
-                            nstrata,
-                            nstrata2 = NULL,
+                            nStrata,
+                            nStrata2 = NULL,
                             plot = FALSE,
                             samp = 1,
                             details = FALSE,
@@ -40,8 +40,8 @@ strat_quantiles <- function(mraster,
     stop("all specified bands must be type SpatRaster", call. = FALSE)
   }
 
-  if (!is.numeric(nstrata)) {
-    stop("'nstrata' must be type numeric")
+  if (!is.numeric(nStrata)) {
+    stop("'nStrata' must be type numeric")
   }
 
   if (!is.logical(plot)) {
@@ -57,8 +57,8 @@ strat_quantiles <- function(mraster,
   }
 
   if (is.null(metric2)) {
-    if (!is.null(nstrata2)) {
-      message("You are stratifying with only 1 metric but specified 'nstrata2' - ignoring.")
+    if (!is.null(nStrata2)) {
+      message("You are stratifying with only 1 metric but specified 'nStrata2' - ignoring.")
     }
 
     #--- if there is only 1 metric in the raster use it as default ---#
@@ -108,7 +108,7 @@ strat_quantiles <- function(mraster,
     #--- Split metric distribution in to number specified by 'breaks' ---#
 
     dfc <- df %>%
-      dplyr::mutate(class = dplyr::ntile(!!metric, nstrata))
+      dplyr::mutate(class = dplyr::ntile(!!metric, nStrata))
 
     #--- convert back to original mraster extent ---#
 
@@ -125,8 +125,8 @@ strat_quantiles <- function(mraster,
       stop("'metric2' must be type character")
     }
 
-    if (is.null(nstrata2)) {
-      stop("If using 2 metrics to stratify, 'nstrata2' must be defined")
+    if (is.null(nStrata2)) {
+      stop("If using 2 metrics to stratify, 'nStrata2' must be defined")
     }
 
     if (any(!metric2 %in% names(mraster))) {
@@ -156,12 +156,12 @@ strat_quantiles <- function(mraster,
     #--- Split metric distribution in to number specified by 'breaks' ---#
 
     dfc <- df %>%
-      #--- define nstrata classes ---#
-      dplyr::mutate(class1 = dplyr::ntile(!!metric, nstrata)) %>%
+      #--- define nStrata classes ---#
+      dplyr::mutate(class1 = dplyr::ntile(!!metric, nStrata)) %>%
       #--- group by class to sub stratify ---#
       dplyr::group_by(class1) %>%
-      #--- define nstrata2 classes ---#
-      dplyr::mutate(class2 = dplyr::ntile(!!metric2, nstrata2)) %>%
+      #--- define nStrata2 classes ---#
+      dplyr::mutate(class2 = dplyr::ntile(!!metric2, nStrata2)) %>%
       #--- combine classes ---#
       dplyr::group_by(class1, class2) %>%
       #--- establish newly formed unique class ---#
@@ -194,7 +194,7 @@ strat_quantiles <- function(mraster,
         dplyr::select(breaks) %>%
         as.data.frame()
 
-      breaks <- breaks[1:(nstrata - 1), ]
+      breaks <- breaks[1:(nStrata - 1), ]
 
       df.p <- dfc %>%
         dplyr::select(metric)
@@ -211,7 +211,7 @@ strat_quantiles <- function(mraster,
 
       #--- set up colour palette ---#
 
-      ncol <- nstrata * nstrata2
+      ncol <- nStrata * nStrata2
       qual_col_pals <- RColorBrewer::brewer.pal.info[RColorBrewer::brewer.pal.info$category == "seq", ]
       col_vector <- unlist(mapply(RColorBrewer::brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))
 

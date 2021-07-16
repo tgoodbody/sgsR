@@ -16,7 +16,7 @@ mat_covNB(vals, nQuant, nb, matQ)
 \arguments{
 \item{vals}{Covariate / sample data}
 
-\item{nQuant}{Number of quantiles to be used}
+\item{nQuant}{Number of quantiles}
 
 \item{nb}{Number of bands}
 

@@ -81,9 +81,9 @@ sample_clhs <- function(mraster,
     }
 
     #--- buffer roads and mask ---#
-    
+
     access_buff <- mask_access(raster = mraster, access = access, buff_inner = buff_inner, buff_outer = buff_outer)
-    
+
     mraster_access <- access_buff$rast
 
     #--- extract covariate data from mraster ---#

@@ -31,28 +31,32 @@ calculate_COOBS <- function(mraster = NULL,
                             threshold = 0.95,
                             plot = FALSE,
                             details = FALSE) {
-  
+
   #--- check for required packages ---#
   if (!requireNamespace("doParallel", quietly = TRUE)) {
     stop("Packages \"doParallel\" needed for this function to work. Please install it.",
-         call. = FALSE)
+      call. = FALSE
+    )
   }
-  
+
   if (!requireNamespace("doSNOW", quietly = TRUE)) {
     stop("Package \"doSNOW\" needed for this function to work. Please install it.",
-         call. = FALSE)
+      call. = FALSE
+    )
   }
-  
+
   if (!requireNamespace("foreach", quietly = TRUE)) {
     stop("Packages \"foreach\" needed for this function to work. Please install it.",
-         call. = FALSE)
+      call. = FALSE
+    )
   }
-  
+
   if (!requireNamespace("snow", quietly = TRUE)) {
     stop("Package \"snow\" needed for this function to work. Please install it.",
-         call. = FALSE)
+      call. = FALSE
+    )
   }
-  
+
   #--- set global vars ---#
 
   i <- geometry <- NULL

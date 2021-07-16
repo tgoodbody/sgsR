@@ -6,7 +6,7 @@
 \usage{
 strat_kmeans(
   mraster,
-  nstrata,
+  nStrata,
   iter.max = 500,
   algorithm = "Lloyd",
   scale = TRUE,
@@ -20,7 +20,7 @@ strat_kmeans(
 \arguments{
 \item{mraster}{spatRaster. ALS metrics raster.}
 
-\item{nstrata}{Character. Number of desired strata.}
+\item{nStrata}{Character. Number of desired strata.}
 
 \item{iter.max}{Numeric. The maximum number of iterations allowed.}
 
