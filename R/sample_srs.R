@@ -139,34 +139,29 @@ sample_srs <- function(raster,
   sf::st_crs(samples) <- crs
 
   if (isTRUE(plot)) {
-    
-    if(!is.null(access)){
-      
+    if (!is.null(access)) {
+
       #--- plot input raster and random samples ---#
       terra::plot(rasterP[[1]])
       suppressWarnings(terra::plot(access_buff$buff, add = T, border = c("gray30"), col = "gray10", alpha = 0.1))
       suppressWarnings(terra::plot(samples, add = T, col = "black"))
-      
-      
     } else {
-      
+
       #--- plot input raster and random samples ---#
       terra::plot(rasterP[[1]])
       suppressWarnings(terra::plot(samples, add = T, col = "black"))
-      
     }
-    
   }
-  
+
   if (!is.null(filename)) {
     if (!is.logical(overwrite)) {
       stop("'overwrite' must be either TRUE or FALSE")
     }
-    
+
     if (file.exists(filename) & isFALSE(overwrite)) {
       stop(paste0(filename, " already exists and overwrite = FALSE"))
     }
-    
+
     sf::st_write(samples, filename, delete_layer = overwrite)
   }
 

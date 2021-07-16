@@ -91,7 +91,7 @@ sample_grid <- function(raster,
   gridSamp <- extract_metrics(mraster = raster, existing = gridSamp)
 
   #--- set geometry column and remove samples with NA values ---#
-  
+
   st_geometry(gridSamp) <- "geometry"
 
   gridSamp <- gridSamp %>%
@@ -101,22 +101,15 @@ sample_grid <- function(raster,
   if (isTRUE(plot)) {
 
     #--- plot input raster and random samples ---#
-    
-    if(!is.null(access)){
-      
+
+    if (!is.null(access)) {
       suppressWarnings(terra::plot(rasterP[[1]]))
       suppressWarnings(terra::plot(access_buff$buff, add = T, border = c("gray30"), col = "gray10", alpha = 0.1))
       suppressWarnings(terra::plot(gridSamp, add = TRUE, col = "black"))
-      
-      
     } else {
-      
       suppressWarnings(terra::plot(rasterP[[1]]))
       suppressWarnings(terra::plot(gridSamp, add = TRUE, col = "black"))
-      
     }
-
-
   }
 
   if (!is.null(filename)) {

@@ -2,7 +2,7 @@
 #'
 #' @description Determine optimum sample boundaries algorithm of univariate populations
 #' using the \code{\link[stratifyR]{strata.data}} algorithm.
-#' 
+#'
 #' @family stratify functions
 #'
 #' @inheritParams strat_kmeans
@@ -16,30 +16,30 @@
 #' denoting proportion of data to use to determine break points
 #'
 #' @importFrom methods is
-#' 
-#' @references 
+#'
+#' @references
 #' Khan, E. A., Khan, M. G. M., & Ahsan, M. J. (2002). Optimum Stratification:
 #' A Mathematical Programming Approach. Calcutta Statistical Association Bulletin,
 #' 52(1–4), 323–334. https://doi.org/10.1177/0008068320020518
-#' 
+#'
 #' Khan, M. G. M., Nand, N., & Ahmad, N. (2008). Determining the optimum strata
 #' boundary points using dynamic programming. Survey methodology, 34(2), 205-214.
-#' 
+#'
 #' M.G.M. Khan, K.G. Reddy & D.K. Rao (2015) Designing stratified sampling in economic
 #' and business surveys, Journal of Applied Statistics, 42:10, 2080-2099,
-#' DOI: 10.1080/02664763.2015.1018674  
+#' DOI: 10.1080/02664763.2015.1018674
 #'
 #' @return Returns an output stratification \code{spatRaster} or a list when \code{details = TRUE}.
-#'  
+#'
 #' When a list is returned:
 #' \enumerate{
 #' \item \code{details} is a list output of the \code{\link[stratifyR]{strata.data}} function where
-#' \code{OSB} are the optimum stratum boundaries and \code{nh} are the optimum sample sizes 
+#' \code{OSB} are the optimum stratum boundaries and \code{nh} are the optimum sample sizes
 #' for each strata
 #' \item \code{raster} is a stratified \code{spatRaster} based on \code{OSB}
 #' }
-#' 
-#' 
+#'
+#'
 #'
 #' @export
 

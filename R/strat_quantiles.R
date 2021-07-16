@@ -15,7 +15,7 @@
 #' @importFrom methods is
 #'
 #' @return Returns an output stratification \code{spatRaster} or a list when \code{details = TRUE}.
-#'  
+#'
 #' When a list is returned:
 #' \enumerate{
 #' \item \code{details} is a list output of the \code{\link[stats]{prcomp}} function
@@ -219,7 +219,6 @@ strat_quantiles <- function(mraster,
       #--- set up colour palette ---#
 
       terra::plot(rout, main = "Classes")
-
     }
 
     #--- write file to disc ---#
@@ -231,15 +230,15 @@ strat_quantiles <- function(mraster,
     #--- Output based on 'details' to return raster alone or list with details ---#
 
     if (isTRUE(details)) {
-      
+
       #--- create classplot summary ---#
-      
+
       coordsgrps <- dfc %>%
         dplyr::group_by(class) %>%
         dplyr::arrange(class) %>%
         tidyr::nest() %>%
         dplyr::ungroup()
-      
+
       p <- classPlot(
         dfc = dfc,
         coordsgrps = coordsgrps,

@@ -60,7 +60,7 @@ strat_kmeans <- function(mraster,
   if (algorithm != "Lloyd" && algorithm != "MacQueen") {
     stop("Unknown algorithm '", algorithm, "' selected. Please use 'Lloyd' (default) or 'MacQueen'")
   }
-  
+
   if (!is.logical(center)) {
     stop("'center' must be type logical")
   }
@@ -88,9 +88,9 @@ strat_kmeans <- function(mraster,
 
   #--- conduct unsupervised k-means with center/scale parameters based on algorithm ---#
 
-      message("K-means being performed on ", terra::nlyr(mraster), " layers with ", nStrata, " centers.")
+  message("K-means being performed on ", terra::nlyr(mraster), " layers with ", nStrata, " centers.")
 
-      km_clust <- stats::kmeans(scale(na.omit(vals), center = center, scale = scale), centers = nStrata, iter.max = iter, algorithm = algorithm, ...)
+  km_clust <- stats::kmeans(scale(na.omit(vals), center = center, scale = scale), centers = nStrata, iter.max = iter, algorithm = algorithm, ...)
 
   #--- convert k-means values back to original mraster extent ---#
 
@@ -103,8 +103,7 @@ strat_kmeans <- function(mraster,
   #--- plot if requested ---#
 
   if (isTRUE(plot)) {
-
-    terra::plot(kmv, main = "K-means clusters",type = "classes")
+    terra::plot(kmv, main = "K-means clusters", type = "classes")
   }
 
   #--- write file to disc ---#

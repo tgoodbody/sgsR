@@ -35,7 +35,7 @@ calculate_pcomp <- function(mraster = NULL,
   if (!is.numeric(nComp)) {
     stop("'ncomp' must be type numeric")
   }
-  
+
   if (!is.logical(center)) {
     stop("'center' must be type logical")
   }
@@ -58,12 +58,14 @@ calculate_pcomp <- function(mraster = NULL,
 
   #--- perform PCA using rasterPCA -- requires conversion to raster* format ---#
 
-  PCA <- prcomp(formula = ~.,
-                data = as.data.frame(vals),
-                center = center,
-                scale. = scale,
-                na.action = na.exclude,
-                ...)
+  PCA <- prcomp(
+    formula = ~.,
+    data = as.data.frame(vals),
+    center = center,
+    scale. = scale,
+    na.action = na.exclude,
+    ...
+  )
 
   #--- extract cell level pca values ---#
   pcavals <- as.data.frame(PCA$x)
@@ -72,7 +74,6 @@ calculate_pcomp <- function(mraster = NULL,
   rs <- list()
 
   for (i in 1:nComp) {
-
     rs[[i]] <- terra::setValues(mraster[[1]], pcavals[, i, drop = FALSE])
   }
 
