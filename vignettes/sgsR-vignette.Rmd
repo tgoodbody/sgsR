@@ -72,7 +72,7 @@ terra::plot(wall_poly[[1:2]])
 ### k-means stratification
 ```{r}
 #--- perform stratification using k-means ---#
-kmeans <- strat_kmeans(mraster = wall_poly[[1]], nstrata = 6)
+kmeans <- strat_kmeans(mraster = wall_poly[[1]], nStrata = 6)
 
 plot(kmeans)
 
@@ -206,12 +206,12 @@ plot(metrics3)
 ```{r}
 
 #--- define desired stratification raster ---#
-sraster <- kmeans
+raster <- kmeans
 
 #--- SRS **without** access defined---#
 
 #--- 'mindist' between samples defaults to 100 ---#
-existing <- sample_srs(sraster = sraster, #srs_wo
+existing <- sample_srs(raster = raster, #srs_wo
                   n = 75,
                   plot = TRUE)
 

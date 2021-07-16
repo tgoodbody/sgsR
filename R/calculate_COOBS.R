@@ -121,7 +121,7 @@ calculate_COOBS <- function(mraster = NULL,
 
   #--- iterate parallel processing of mahalanobis distance ---#
 
-  loop <- foreach::foreach(i = 1:iterations, .combine = "c", .options.snow = opts) %dopar% {
+  loop <- foreach::foreach(i = 1:iterations, .combine = "c", .options.snow = opts, .packages=c("foreach")) %dopar% {
     cell <- vals[i, 3:ncol(vals)]
 
     #--- Determine distance for each pixel in raster ---#
