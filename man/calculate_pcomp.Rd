@@ -17,19 +17,20 @@ calculate_pcomp(
 \arguments{
 \item{mraster}{spatRaster. ALS metrics raster.}
 
-\item{nComp}{Numeric. Value indicating number of principal components to be rasterized.}
+\item{nComp}{Numeric. Value indicating number of principal components to be rasterized.
+prior to analysis.}
 
 \item{center}{Logical. Value indicating whether the variables should be shifted to be zero centered.}
 
-\item{scale}{Logical. Value indicating whether the variables should be scaled to have unit variance
-prior to analysis.}
+\item{scale}{Logical. Value indicating whether the variables should be scaled to have unit variance}
 
 \item{plot}{Logical. Plots output strata raster with samples.}
 
 \item{details}{Logical. If \code{FALSE} (default) output is only
  stratification raster. If \code{TRUE} return a list
 where \code{$details} is additional stratification information and
- \code{$raster} is the output stratification spatRaster.}
+ \code{$raster} is the output stratification spatRaster.
+ @param ... Additional arguments to be passed to \code{\link[stats]{kmeans}} function.}
 
 \item{...}{Additional arguments to be passed to \code{\link[stats]{prcomp}}.}
 }

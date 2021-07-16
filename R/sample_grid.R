@@ -19,7 +19,7 @@
 #'
 #' @return An sf object with sampled points at intersections of fishnet grid.
 #'
-#' @importFrom magrittr %>%
+
 #' @importFrom methods is
 #'
 #' @export
@@ -90,19 +90,33 @@ sample_grid <- function(raster,
 
   gridSamp <- extract_metrics(mraster = raster, existing = gridSamp)
 
-  #--- remove samples with NA values ---#
+  #--- set geometry column and remove samples with NA values ---#
+  
+  st_geometry(gridSamp) <- "geometry"
 
   gridSamp <- gridSamp %>%
     dplyr::filter(!is.na(.)) %>%
-    dplyr::select(-geometry)
+    dplyr::select(-x)
 
   if (isTRUE(plot)) {
 
     #--- plot input raster and random samples ---#
+    
+    if(!is.null(access)){
+      
+      suppressWarnings(terra::plot(rasterP[[1]]))
+      suppressWarnings(terra::plot(access_buff$buff, add = T, border = c("gray30"), col = "gray10", alpha = 0.1))
+      suppressWarnings(terra::plot(gridSamp, add = TRUE, col = "black"))
+      
+      
+    } else {
+      
+      suppressWarnings(terra::plot(rasterP[[1]]))
+      suppressWarnings(terra::plot(gridSamp, add = TRUE, col = "black"))
+      
+    }
 
-    suppressWarnings(terra::plot(rasterP[[1]]))
-    suppressWarnings(terra::plot(access_buff$buff, add = T, border = c("gray30"), col = "gray10", alpha = 0.1))
-    suppressWarnings(terra::plot(gridSamp, add = TRUE, col = "black"))
+
   }
 
   if (!is.null(filename)) {

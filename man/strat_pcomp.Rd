@@ -27,25 +27,36 @@ strat_pcomp(
 
 \item{center}{Logical. Value indicating whether the variables should be shifted to be zero centered.}
 
-\item{scale}{Logical. Determines whether scaling and centering
-of data should be conducted prior to analysis.}
+\item{scale}{Logical. Value indicating whether the variables should be scaled to have unit variance}
 
 \item{plot}{Logical. Plots output strata raster and visualized
 strata with boundary dividers.}
 
-\item{samp}{Numeric. For plotting - Determines proportion of cells
-for strata visualization. Lower values reduce processing time.}
+\item{samp}{Numeric. Determines proportion of cells to plot in scatterplot (see \code{values})
+for strata visualization. Lower values reduce visualization time.}
 
 \item{details}{Logical. If \code{FALSE} (default) output is only
  stratification raster. If \code{TRUE} return a list
 where \code{$details} is additional stratification information and
- \code{$raster} is the output stratification spatRaster.}
+ \code{$raster} is the output stratification spatRaster.
+ @param ... Additional arguments to be passed to \code{\link[stats]{kmeans}} function.}
 
 \item{filename}{Character. Path to write stratified raster to disc.}
 
 \item{overwrite}{Logical. Specify whether \code{filename} should be overwritten on disc.}
 
 \item{...}{Additional arguments to be passed to \code{\link[stats]{prcomp}}.}
+}
+\value{
+Returns an output stratification \code{spatRaster} or a list when \code{details = TRUE}.
+ 
+When a list is returned:
+\enumerate{
+\item \code{details} is a list output of the \code{\link[stats]{prcomp}} function
+\item \code{raster} is a stratified \code{spatRaster} based on the PCA
+\item \code{plot} is a \code{ggplot} scatter plot object where strata are colour coded
+and strata boundaries are delineated
+}
 }
 \description{
 Stratify metrics raster using principal components and quantile breaks

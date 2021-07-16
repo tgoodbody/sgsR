@@ -8,7 +8,7 @@
 #' for strata visualization. Lower values reduce processing time.
 #' @keywords internal
 #'
-#' @importFrom magrittr %>%
+
 #' @importFrom methods is
 
 

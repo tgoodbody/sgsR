@@ -7,19 +7,20 @@
 #'
 #' @param mraster spatRaster. ALS metrics raster.
 #' @param nStrata Character. Number of desired strata.
-#' @param iter.max Numeric. The maximum number of iterations allowed.
+#' @param iter Numeric. The maximum number of iterations allowed.
 #' @param algorithm Character. \code{Lloyd} (default) or
 #' \code{MacQueen} algorithms.
-#' @param scale Logical. Determines whether scaling and centering
-#'  of data should be conducted prior to analysis.
+#' @param center Logical. Value indicating whether the variables should be shifted to be zero centered.
+#' @param scale Logical. Value indicating whether the variables should be scaled to have unit variance
 #' @param plot Logical. Plots output strata raster and visualized
 #'  strata with boundary dividers.
 #' @param details Logical. If \code{FALSE} (default) output is only
 #'  stratification raster. If \code{TRUE} return a list
 #' where \code{$details} is additional stratification information and
 #'  \code{$raster} is the output stratification spatRaster.
+#'  @param ... Additional arguments to be passed to \code{\link[stats]{kmeans}} function.
 #'
-#' @importFrom magrittr %>%
+
 #' @importFrom methods is
 #'
 #' @return output stratification \code{spatRaster}, or a list when \code{details = TRUE}.
@@ -28,8 +29,9 @@
 
 strat_kmeans <- function(mraster,
                          nStrata,
-                         iter.max = 500,
+                         iter = 500,
                          algorithm = "Lloyd",
+                         center = TRUE,
                          scale = TRUE,
                          plot = FALSE,
                          details = FALSE,
@@ -47,7 +49,7 @@ strat_kmeans <- function(mraster,
     stop("'nStrata' must be type numeric")
   }
 
-  if (!is.numeric(iter.max)) {
+  if (!is.numeric(iter)) {
     stop("'iter.max' must be type numeric")
   }
 
@@ -57,6 +59,10 @@ strat_kmeans <- function(mraster,
 
   if (algorithm != "Lloyd" && algorithm != "MacQueen") {
     stop("Unknown algorithm '", algorithm, "' selected. Please use 'Lloyd' (default) or 'MacQueen'")
+  }
+  
+  if (!is.logical(center)) {
+    stop("'center' must be type logical")
   }
 
   if (!is.logical(scale)) {
@@ -80,55 +86,25 @@ strat_kmeans <- function(mraster,
 
   vals[!is.finite(vals)] <- NA
 
-  idx <- !is.na(vals)
-
   #--- conduct unsupervised k-means with center/scale parameters based on algorithm ---#
 
-  if (algorithm == "Lloyd") {
-    if (isTRUE(scale)) {
-      message("K-means being performed on ", terra::nlyr(mraster), " layers with ", nStrata, " centers. Data have been centered and scaled")
+      message("K-means being performed on ", terra::nlyr(mraster), " layers with ", nStrata, " centers.")
 
-      km_clust <- stats::kmeans(scale(vals[idx], center = TRUE, scale = TRUE), centers = nStrata, iter.max = iter.max, algorithm = algorithm)
-    } else {
-      message("K-means being performed on ", terra::nlyr(mraster), " layers with ", nStrata, " centers, Data have not been centered or scaled.")
-
-      km_clust <- stats::kmeans(scale(vals[idx], center = FALSE, scale = FALSE), centers = nStrata, iter.max = iter.max, algorithm = algorithm)
-    }
-  }
-
-  #--- conduct unsupervised k-means with center/scale parameters based on algorithm ---#
-
-  else if (algorithm == "MacQueen") {
-    if (isTRUE(scale)) {
-      message("K-means being performed on ", terra::nlyr(mraster), " layers with ", nStrata, " centers. Data have been centered and scaled")
-
-      km_clust <- stats::kmeans(scale(vals[idx], center = TRUE, scale = TRUE), centers = nStrata, iter.max = iter.max, algorithm = algorithm)
-    } else {
-      message("K-means being performed on ", terra::nlyr(mraster), " layers with ", nStrata, " centers, Data have not been centered or scaled.")
-
-      km_clust <- stats::kmeans(scale(vals[idx], center = FALSE, scale = FALSE), centers = nStrata, iter.max = iter.max, algorithm = algorithm)
-    }
-  }
+      km_clust <- stats::kmeans(scale(na.omit(vals), center = center, scale = scale), centers = nStrata, iter.max = iter, algorithm = algorithm, ...)
 
   #--- convert k-means values back to original mraster extent ---#
 
-  vals[idx] <- km_clust$cluster
+  vals[is.finite(vals)] <- km_clust$cluster
 
   kmv <- terra::setValues(mraster[[1]], vals)
   names(kmv) <- "strata"
-
 
 
   #--- plot if requested ---#
 
   if (isTRUE(plot)) {
 
-    #--- make plot using diverging colour palette ---#
-
-    ncols <- nStrata
-    col <- RColorBrewer::brewer.pal(ncols, "Set3")
-
-    terra::plot(kmv, main = "K-means clusters", col = col, type = "classes")
+    terra::plot(kmv, main = "K-means clusters",type = "classes")
   }
 
   #--- write file to disc ---#

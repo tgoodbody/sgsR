@@ -9,7 +9,7 @@
 #'
 #' @param raster spatRaster. Raster to be used to calculate pixel level distance to access layer.
 #'
-#' @importFrom magrittr %>%
+
 #' @importFrom methods is
 #'
 #' @return Input raster with `dist2access` layer appended.

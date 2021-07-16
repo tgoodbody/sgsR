@@ -8,12 +8,10 @@
 #' @inheritParams strat_kmeans
 #'
 #' @param nComp Numeric. Value indicating number of principal components to be rasterized.
-#' @param center Logical. Value indicating whether the variables should be shifted to be zero centered.
-#' @param scale Logical. Value indicating whether the variables should be scaled to have unit variance
 #' prior to analysis.
 #' @param ... Additional arguments to be passed to \code{\link[stats]{prcomp}}.
 #'
-#' @importFrom magrittr %>%
+
 #' @importFrom methods is
 #'
 #' @return Output raster with specified number of principal components as layers.

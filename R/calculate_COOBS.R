@@ -19,7 +19,7 @@
 #'
 #' @return output raster with COOBS and classified COOBS layers.
 #'
-#' @importFrom magrittr %>%
+
 #' @importFrom methods is
 #'
 #' @export

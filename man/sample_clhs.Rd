@@ -36,7 +36,8 @@ from access where plots can be sampled.}
 \item{details}{Logical. If \code{FALSE} (default) output is only
  stratification raster. If \code{TRUE} return a list
 where \code{$details} is additional stratification information and
- \code{$raster} is the output stratification spatRaster.}
+ \code{$raster} is the output stratification spatRaster.
+ @param ... Additional arguments to be passed to \code{\link[stats]{kmeans}} function.}
 
 \item{...}{Additional arguments for clhs sampling. See \code{\link[clhs]{clhs}}.}
 }

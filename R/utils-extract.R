@@ -8,7 +8,7 @@
 #' @param existing sf. Samples resulting from sample_* functions.
 #' @param data.frame Logical. If true outputs as data.frame
 #' @name extract
-#' @importFrom magrittr %>%
+
 #' @importFrom methods is
 NULL
 

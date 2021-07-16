@@ -7,7 +7,7 @@
 #' @inheritParams sample_srs
 #' @inheritParams sample_strat
 #'
-#' @importFrom magrittr %>%
+
 #' @importFrom methods is
 #'
 #' @return data.frame of strata and associates samples

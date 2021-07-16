@@ -11,7 +11,7 @@
 #'
 #' @param ... Additional arguments for clhs sampling. See \code{\link[clhs]{clhs}}.
 #'
-#' @importFrom magrittr %>%
+
 #' @importFrom methods is
 #' @importFrom stats coef complete.cases median quantile sd
 #' @importFrom utils setTxtProgressBar

@@ -13,7 +13,7 @@
 #'
 #' @return An sf object with \code{nSamp} randomly sampled points.
 #'
-#' @importFrom magrittr %>%
+
 #' @importFrom methods is
 #'
 #' @references

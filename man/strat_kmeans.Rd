@@ -7,8 +7,9 @@
 strat_kmeans(
   mraster,
   nStrata,
-  iter.max = 500,
+  iter = 500,
   algorithm = "Lloyd",
+  center = TRUE,
   scale = TRUE,
   plot = FALSE,
   details = FALSE,
@@ -22,13 +23,14 @@ strat_kmeans(
 
 \item{nStrata}{Character. Number of desired strata.}
 
-\item{iter.max}{Numeric. The maximum number of iterations allowed.}
+\item{iter}{Numeric. The maximum number of iterations allowed.}
 
 \item{algorithm}{Character. \code{Lloyd} (default) or
 \code{MacQueen} algorithms.}
 
-\item{scale}{Logical. Determines whether scaling and centering
-of data should be conducted prior to analysis.}
+\item{center}{Logical. Value indicating whether the variables should be shifted to be zero centered.}
+
+\item{scale}{Logical. Value indicating whether the variables should be scaled to have unit variance}
 
 \item{plot}{Logical. Plots output strata raster and visualized
 strata with boundary dividers.}
@@ -36,7 +38,8 @@ strata with boundary dividers.}
 \item{details}{Logical. If \code{FALSE} (default) output is only
  stratification raster. If \code{TRUE} return a list
 where \code{$details} is additional stratification information and
- \code{$raster} is the output stratification spatRaster.}
+ \code{$raster} is the output stratification spatRaster.
+ @param ... Additional arguments to be passed to \code{\link[stats]{kmeans}} function.}
 
 \item{filename}{Character. Path to write stratified raster to disc.}
 

@@ -14,7 +14,7 @@
 #'
 #' @return output stratification \code{spatRaster}, or a list when \code{details = TRUE}.
 #'
-#' @importFrom magrittr %>%
+
 #' @importFrom methods is
 #'
 #' @export

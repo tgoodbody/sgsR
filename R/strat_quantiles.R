@@ -9,13 +9,20 @@
 #' \code{mraster} is has 1 layer it is taken as default.
 #' @param metric2 Character. Name of secondary metric to stratify.
 #' @param nStrata2 Numeric.  Number of secondary strata within \code{nStrata}.
-#' @param samp Numeric. For plotting - Determines proportion of cells
-#' for strata visualization. Lower values reduce processing time.
+#' @param samp Numeric. Determines proportion of cells to plot in scatterplot (see \code{values})
+#' for strata visualization. Lower values reduce visualization time.
 #'
-#' @importFrom magrittr %>%
 #' @importFrom methods is
 #'
-#' @return output stratification \code{spatRaster}, or a list when \code{details = TRUE}.
+#' @return Returns an output stratification \code{spatRaster} or a list when \code{details = TRUE}.
+#'  
+#' When a list is returned:
+#' \enumerate{
+#' \item \code{details} is a list output of the \code{\link[stats]{prcomp}} function
+#' \item \code{raster} is a stratified \code{spatRaster} based on quantiles
+#' \item \code{scatter} is a \code{ggplot} histogram / scatter plot object (depends on whether metric2 was supplied).
+#' Histogram shows distribution and break points while scatter plot shows colour coded and strata boundaries.
+#' }
 #'
 #' @export
 
@@ -25,8 +32,8 @@ strat_quantiles <- function(mraster,
                             nStrata,
                             nStrata2 = NULL,
                             plot = FALSE,
-                            samp = 1,
                             details = FALSE,
+                            samp = 1,
                             filename = NULL,
                             overwrite = FALSE,
                             ...) {
@@ -201,37 +208,18 @@ strat_quantiles <- function(mraster,
 
       #--- plot histogram of metric with associated break lines ---#
 
-      p1 <- ggplot2::ggplot(df.p, ggplot2::aes(!!metric)) +
+      p <- ggplot2::ggplot(df.p, ggplot2::aes(!!metric)) +
         ggplot2::geom_histogram() +
         ggplot2::geom_vline(xintercept = breaks, linetype = "dashed") +
         ggplot2::ggtitle(paste0(metric, " histogram with defined breaks"))
 
-      print(p1)
+      print(p)
     } else {
 
       #--- set up colour palette ---#
 
-      ncol <- nStrata * nStrata2
-      qual_col_pals <- RColorBrewer::brewer.pal.info[RColorBrewer::brewer.pal.info$category == "seq", ]
-      col_vector <- unlist(mapply(RColorBrewer::brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))
+      terra::plot(rout, main = "Classes")
 
-      terra::plot(rout, main = "Classes", col = sample(col_vector, ncol))
-
-      coordsgrps <- dfc %>%
-        dplyr::group_by(class) %>%
-        dplyr::arrange(class) %>%
-        tidyr::nest() %>%
-        dplyr::ungroup()
-
-      q <- classPlot(
-        dfc = dfc,
-        coordsgrps = coordsgrps,
-        metric = metric,
-        metric2 = metric2,
-        samp = samp
-      )
-
-      print(q)
     }
 
     #--- write file to disc ---#
@@ -243,12 +231,29 @@ strat_quantiles <- function(mraster,
     #--- Output based on 'details' to return raster alone or list with details ---#
 
     if (isTRUE(details)) {
+      
+      #--- create classplot summary ---#
+      
+      coordsgrps <- dfc %>%
+        dplyr::group_by(class) %>%
+        dplyr::arrange(class) %>%
+        tidyr::nest() %>%
+        dplyr::ungroup()
+      
+      p <- classPlot(
+        dfc = dfc,
+        coordsgrps = coordsgrps,
+        metric = metric,
+        metric2 = metric2,
+        samp = samp
+      )
 
       #--- output metrics details along with stratification raster ---#
 
       out <- list(
         details = dfc,
-        raster = rout
+        raster = rout,
+        plot = p
       )
 
       return(out)

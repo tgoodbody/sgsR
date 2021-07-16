@@ -12,6 +12,15 @@
 #'
 #' @importFrom methods is
 #'
+#' @return Returns an output stratification \code{spatRaster} or a list when \code{details = TRUE}.
+#'  
+#' When a list is returned:
+#' \enumerate{
+#' \item \code{details} is a list output of the \code{\link[stats]{prcomp}} function
+#' \item \code{raster} is a stratified \code{spatRaster} based on the PCA
+#' \item \code{plot} is a \code{ggplot} scatter plot object where strata are colour coded
+#' and strata boundaries are delineated
+#' }
 #'
 #'
 #' @export
@@ -115,7 +124,7 @@ strat_pcomp <- function(mraster,
       #--- group by class to sub stratify ---#
       dplyr::group_by(class1) %>%
       #--- define nStrata2 classes ---#
-      dplyr::mutate(class2 = dplyr::ntile(PC1, nStrata2)) %>%
+      dplyr::mutate(class2 = dplyr::ntile(PC2, nStrata2)) %>%
       #--- combine classes ---#
       dplyr::group_by(class1, class2) %>%
       #--- establish newly formed unique class ---#
@@ -137,21 +146,6 @@ strat_pcomp <- function(mraster,
     
     terra::plot(rout)
     
-    # coordsgrps <- pcagrps %>%
-    #   dplyr::group_by(class) %>%
-    #   dplyr::arrange(class) %>%
-    #   stats::na.omit() %>%
-    #   tidyr::nest() %>%
-    #   dplyr::ungroup()
-    # 
-    # p <- classPlot(as.data.frame(pcagrps),
-    #   coordsgrps,
-    #   metric = "PC1",
-    #   metric2 = "PC2",
-    #   samp
-    # )
-    
-    # print(p)
   }
   
   #--- write file to disc ---#
@@ -164,9 +158,25 @@ strat_pcomp <- function(mraster,
   
   if (isTRUE(details)) {
     
+    #--- create classplot summary ---#
+    
+    coordsgrps <- pcagrps %>%
+      dplyr::group_by(class) %>%
+      dplyr::arrange(class) %>%
+      stats::na.omit() %>%
+      tidyr::nest() %>%
+      dplyr::ungroup()
+    
+    p <- classPlot(as.data.frame(pcagrps),
+                   coordsgrps,
+                   metric = "PC1",
+                   metric2 = "PC2",
+                   samp
+    )
+    
     #--- create list to assign pca info and output raster ---#
     
-    out <- list(details = PCA, raster = rout)
+    out <- list(details = PCA, raster = rout, plot = p)
     
     return(out)
   } else {

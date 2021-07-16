@@ -22,7 +22,7 @@
 #'
 #' @return Returns sf point object with existing samples and supplemental samples added by the aHELS algorithm.
 #'
-#' @importFrom magrittr %>%
+
 #' @importFrom methods is
 #'
 #' @export

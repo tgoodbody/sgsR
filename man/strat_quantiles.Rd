@@ -11,8 +11,8 @@ strat_quantiles(
   nStrata,
   nStrata2 = NULL,
   plot = FALSE,
-  samp = 1,
   details = FALSE,
+  samp = 1,
   filename = NULL,
   overwrite = FALSE,
   ...
@@ -33,13 +33,14 @@ strat_quantiles(
 \item{plot}{Logical. Plots output strata raster and visualized
 strata with boundary dividers.}
 
-\item{samp}{Numeric. For plotting - Determines proportion of cells
-for strata visualization. Lower values reduce processing time.}
-
 \item{details}{Logical. If \code{FALSE} (default) output is only
  stratification raster. If \code{TRUE} return a list
 where \code{$details} is additional stratification information and
- \code{$raster} is the output stratification spatRaster.}
+ \code{$raster} is the output stratification spatRaster.
+ @param ... Additional arguments to be passed to \code{\link[stats]{kmeans}} function.}
+
+\item{samp}{Numeric. Determines proportion of cells to plot in scatterplot (see \code{values})
+for strata visualization. Lower values reduce visualization time.}
 
 \item{filename}{Character. Path to write stratified raster to disc.}
 
@@ -48,7 +49,15 @@ where \code{$details} is additional stratification information and
 \item{...}{Additional arguments for writing files. See \link[terra]{writeRaster}.}
 }
 \value{
-output stratification \code{spatRaster}, or a list when \code{details = TRUE}.
+Returns an output stratification \code{spatRaster} or a list when \code{details = TRUE}.
+ 
+When a list is returned:
+\enumerate{
+\item \code{details} is a list output of the \code{\link[stats]{prcomp}} function
+\item \code{raster} is a stratified \code{spatRaster} based on quantiles
+\item \code{scatter} is a \code{ggplot} histogram / scatter plot object (depends on whether metric2 was supplied).
+Histogram shows distribution and break points while scatter plot shows colour coded and strata boundaries.
+}
 }
 \description{
 Stratify metric raster using metric quantiles.
