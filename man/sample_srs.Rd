@@ -33,6 +33,10 @@ from access where plots cannot be sampled.}
 from access where plots can be sampled.}
 
 \item{plot}{Logical. Plots output strata raster with samples.}
+
+\item{filename}{Character. Path to write output samples.}
+
+\item{overwrite}{Logical. Choice to overwrite existing \code{filename} if it exists.}
 }
 \value{
 An sf object with \code{nSamp} randomly sampled points.

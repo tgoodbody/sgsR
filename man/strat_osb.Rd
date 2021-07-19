@@ -20,7 +20,7 @@ strat_osb(
 \arguments{
 \item{mraster}{spatRaster. ALS metrics raster.}
 
-\item{metric}{Character. Name of metric to be used for stratification}
+\item{metric}{Character. Name of metric to be used for stratification.}
 
 \item{nStrata}{Numeric. Number of desired output strata.}
 
@@ -28,7 +28,7 @@ strat_osb(
 OSB algorithm to help determine break points.}
 
 \item{subset}{Numeric. Value between 0 and 1 (default)
-denoting proportion of data to use to determine break points}
+denoting proportion of data to use to determine break points.}
 
 \item{plot}{Logical. Plots output strata raster and visualized
 strata with boundary dividers.}
@@ -52,8 +52,10 @@ When a list is returned:
 \enumerate{
 \item \code{details} is a list output of the \code{\link[stratifyR]{strata.data}} function where
 \code{OSB} are the optimum stratum boundaries and \code{nh} are the optimum sample sizes
-for each stratum
-\item \code{raster} is a stratified \code{spatRaster} based on \code{OSB}
+for each stratum.
+\item \code{osb} vector of optimum stratum boundaries.
+\item \code{breaks} matrix associated metric and strata break values.
+\item \code{raster} is a stratified \code{spatRaster} based on \code{OSB}.
 }
 }
 \description{

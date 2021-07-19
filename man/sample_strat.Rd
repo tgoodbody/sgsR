@@ -20,6 +20,8 @@ sample_strat(
 )
 }
 \arguments{
+\item{sraster}{spatRaster. Stratification raster to be used for random sampling.}
+
 \item{nSamp}{Numeric. Number of desired samples.}
 
 \item{mindist}{Numeric. Minimum allowable distance between selected
@@ -41,7 +43,7 @@ from access where plots can be sampled.}
 
 \item{wcol}{Numeric. Number of columns in the focal window (default is 3).}
 
-\item{plot}{Logial. Plots existing (circles) and new (crosses) samples on the first band of mraster.}
+\item{plot}{Logial. Plots existing (circles) and new (crosses) samples.}
 
 \item{details}{Logical. If \code{FALSE} (default) output is sf object of
 stratified samples. If \code{TRUE} return a list

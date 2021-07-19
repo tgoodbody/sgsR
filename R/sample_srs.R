@@ -3,6 +3,8 @@
 #' @description Randomly sample within a stratification raster extent.
 #'
 #' @family sample functions
+#' 
+#' @inheritParams sample_grid
 #'
 #' @param raster spatRaster. Raster to be used for random sampling.
 #' @param nSamp Numeric. Number of desired samples.

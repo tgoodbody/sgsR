@@ -78,7 +78,7 @@ strat_pcomp <- function(mraster,
 
     #--- perform PCA using rasterPCA -- requires conversion to raster* format ---#
 
-    PCA <- prcomp(
+    PCA <- stats::prcomp(
       formula = ~.,
       data = as.data.frame(vals),
       center = center,
@@ -106,7 +106,7 @@ strat_pcomp <- function(mraster,
 
     #--- perform PCA using rasterPCA -- requires conversion to raster* format ---#
 
-    PCA <- prcomp(
+    PCA <- stats::prcomp(
       formula = ~.,
       data = as.data.frame(vals),
       center = center,

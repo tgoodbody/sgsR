@@ -5,6 +5,7 @@
 #' @family sample functions
 #'
 #' @inheritParams sample_srs
+#' @param sraster spatRaster. Stratification raster to be used for random sampling.
 #' @param existing sf or data.frame.  Existing plot network.
 #' @param include Logical. If \code{TRUE} include existing plots in \code{nSamp} total.
 #' @param wrow Numeric. Number of row in the focal window (default is 3).
@@ -13,7 +14,7 @@
 #' stratified samples. If \code{TRUE} return a list
 #' where \code{$details} additional sampling information and \code{$raster}
 #' is an sf object of stratified samples.
-#' @param plot Logial. Plots existing (circles) and new (crosses) samples on the first band of mraster.
+#' @param plot Logial. Plots existing (circles) and new (crosses) samples.
 #'
 #' @importFrom methods is
 #'
@@ -196,7 +197,7 @@ sample_strat <- function(sraster,
       stop("'buff_inner' must be < 'buff_outer'")
     }
 
-    access_buff <- mask_access(raster = mraster, access = access, buff_inner = buff_inner, buff_outer = buff_outer)
+    access_buff <- mask_access(raster = sraster, access = access, buff_inner = buff_inner, buff_outer = buff_outer)
 
     raster_masked <- access_buff$rast
   }

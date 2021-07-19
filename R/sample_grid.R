@@ -35,7 +35,7 @@ sample_grid <- function(raster,
 
   #--- Set global vars ---#
 
-  ext <- geometry <- NULL
+  ext <- geometry <- x <-  NULL
 
   if (!inherits(raster, "SpatRaster")) {
     stop("'raster' must be type SpatRaster", call. = FALSE)

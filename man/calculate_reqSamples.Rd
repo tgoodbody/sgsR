@@ -7,6 +7,8 @@
 calculate_reqSamples(sraster, nSamp, existing = NULL)
 }
 \arguments{
+\item{sraster}{spatRaster. Stratification raster to be used for random sampling.}
+
 \item{nSamp}{Numeric. Number of desired samples.}
 
 \item{existing}{sf or data.frame.  Existing plot network.}
