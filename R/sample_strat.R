@@ -33,26 +33,25 @@ sample_strat <- function(sraster,
                          wcol = 3,
                          plot = FALSE,
                          details = FALSE) {
-  
+
   #--- check for required packages ---#
-  
+
   #--- both packages required only if 'mindist' is defined ---#
-  if(!is.null(mindist)){
-  
+  if (!is.null(mindist)) {
     if (!requireNamespace("spatstat", quietly = TRUE)) {
       stop("Package \"spatstat\" needed for this function to work. Please install it.",
-           call. = FALSE
+        call. = FALSE
       )
     }
-    
+
     #--- check for required packages ---#
     if (!requireNamespace("spatstat.geom", quietly = TRUE)) {
       stop("Package \"spatstat.geom\" needed for this function to work. Please install it.",
-           call. = FALSE
+        call. = FALSE
       )
     }
   }
-  
+
   #--- Set global vars ---#
   x <- y <- NULL
 
@@ -323,8 +322,8 @@ sample_strat <- function(sraster,
 
           #--- If add_strata isn't empty, check distance with all other sampled cells in strata ---#
         }
-        
-        if(!is.null(mindist)){
+
+        if (!is.null(mindist)) {
           dist <- spatstat.geom::crossdist(add_temp$X, add_temp$Y, add_strata$X, add_strata$Y)
 
           #--- If all less than 'mindist' - accept sampled cell otherwise reject ---#
@@ -334,13 +333,12 @@ sample_strat <- function(sraster,
             nCount <- nCount + 1
           }
         } else {
-          
+
           #--- if mindist is not defined ---#
-          
+
           add_strata <- rbind(add_strata, add_temp[, c("X", "Y", "strata", "type", "rule", extraCols)])
-          
+
           nCount <- nCount + 1
-          
         }
       }
 
@@ -378,29 +376,28 @@ sample_strat <- function(sraster,
 
           if (nrow(add_strata) == 0) {
             add_strata <- add_temp[, c("X", "Y", "strata", "type", "rule", extraCols)]
-            
+
             nCount <- nCount + 1
-            
+
             #--- If add_strata isn't empty, check distance with all other sampled cells in strata ---#
           }
-          
-          if(!is.null(mindist)){
+
+          if (!is.null(mindist)) {
             dist <- spatstat.geom::crossdist(add_temp$X, add_temp$Y, add_strata$X, add_strata$Y)
-            
+
             #--- If all less than 'mindist' - accept sampled cell otherwise reject ---#
             if (all(as.numeric(dist) > mindist)) {
               add_strata <- rbind(add_strata, add_temp[, c("X", "Y", "strata", "type", "rule", extraCols)])
-              
+
               nCount <- nCount + 1
             }
           } else {
-            
+
             #--- if mindist is not defined ---#
-            
+
             add_strata <- rbind(add_strata, add_temp[, c("X", "Y", "strata", "type", "rule", extraCols)])
-            
+
             nCount <- nCount + 1
-            
           }
         }
       }
