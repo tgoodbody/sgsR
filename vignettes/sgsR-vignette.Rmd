@@ -72,7 +72,7 @@ terra::plot(wall_poly[[1:2]])
 ### k-means stratification
 ```{r}
 #--- perform stratification using k-means ---#
-kmeans <- strat_kmeans(mraster = wall_poly[[1]], nStrata = 6)
+kmeans <- strat_kmeans(mraster = wall_poly[[1:6]], nStrata = 10)
 
 plot(kmeans)
 
