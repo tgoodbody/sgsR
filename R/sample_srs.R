@@ -17,8 +17,6 @@
 #'
 #' @return An sf object with \code{nSamp} randomly sampled points.
 #'
-
-#' @importFrom methods is
 #'
 #' @export
 

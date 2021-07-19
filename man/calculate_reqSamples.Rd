@@ -24,6 +24,7 @@ Count the required number of samples for each raster strata
 Other calculate functions: 
 \code{\link{calculate_COOBS}()},
 \code{\link{calculate_distance}()},
+\code{\link{calculate_lhsPop}()},
 \code{\link{calculate_pcomp}()}
 }
 \concept{calculate functions}

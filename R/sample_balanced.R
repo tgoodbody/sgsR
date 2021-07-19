@@ -1,7 +1,7 @@
 #' Balanced sampling
 #'
-#' @description Balanced raster sampling using BalancedSampling and
-#' SamplingBigData methods
+#' @description Balanced raster sampling using \code{\link[BalancedSampling]{lpm2}} and
+#' \code{\link[SamplingBigData]{lpm2_kdtree}} methods
 #'
 #' @family sample functions
 #'
@@ -13,8 +13,6 @@
 #'
 #' @return An sf object with \code{nSamp} randomly sampled points.
 #'
-
-#' @importFrom methods is
 #'
 #' @references
 #'

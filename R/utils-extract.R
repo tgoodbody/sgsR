@@ -8,8 +8,6 @@
 #' @param existing sf. Samples resulting from sample_* functions.
 #' @param data.frame Logical. If true outputs as data.frame
 #' @name extract
-
-#' @importFrom methods is
 NULL
 
 #' @export
@@ -18,8 +16,6 @@ NULL
 #' @param sraster spatRaster. Stratification raster.
 #' @keywords internal
 #' @return An sf or data.frame object of samples with strata attributes
-#' #--- function for Extract and buffering access ---#
-
 
 extract_strata <- function(sraster,
                            existing,
@@ -118,7 +114,6 @@ extract_strata <- function(sraster,
 #' @family extract
 #' @description Extract metric raster attributes to existing
 #' @return An sf or data.frame object of samples with associated raster cell attributes
-#' #--- Extract raster metrics to existing sample ---#
 
 extract_metrics <- function(mraster,
                             existing,

@@ -13,7 +13,6 @@ NULL
 #' @rdname masking
 #' @family masking
 #' @keywords internal
-#' #--- function for masking and buffering access ---#
 
 mask_access <- function(raster,
                         access,

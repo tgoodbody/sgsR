@@ -1,7 +1,7 @@
 #' distance to access
 #'
 #' @description Per pixel distance to nearest access vector. Intended to be used as a `cost` constraint
-#' within the \code{sample_clhs} function
+#' within the \code{\link{sample_clhs}} function
 #'
 #' @family calculate functions
 #'
@@ -9,10 +9,8 @@
 #'
 #' @param raster spatRaster. Raster to be used to calculate pixel level distance to access layer.
 #'
-
-#' @importFrom methods is
 #'
-#' @return Input raster with `dist2access` layer appended.
+#' @return Input raster with \code{dist2access} layer appended.
 #'
 #' @export
 

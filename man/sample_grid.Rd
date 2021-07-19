@@ -35,7 +35,7 @@ from access where plots can be sampled.}
 
 \item{overwrite}{Logical. Choice to overwrite existing \code{filename} if it exists.}
 
-\item{...}{Additional arguments for \link[sf]{st_make_grid}.}
+\item{...}{Additional arguments for \code{\link[sf]{st_make_grid}}.}
 }
 \value{
 An sf object with sampled points at intersections of fishnet grid.

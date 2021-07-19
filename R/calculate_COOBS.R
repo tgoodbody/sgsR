@@ -19,8 +19,6 @@
 #'
 #' @return output raster with COOBS and classified COOBS layers.
 #'
-
-#' @importFrom methods is
 #'
 #' @export
 

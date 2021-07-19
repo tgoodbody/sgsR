@@ -40,8 +40,8 @@ strata with boundary dividers.}
 An sf object with \code{nSamp} randomly sampled points.
 }
 \description{
-Balanced raster sampling using BalancedSampling and
-SamplingBigData methods
+Balanced raster sampling using \code{\link[BalancedSampling]{lpm2}} and
+\code{\link[SamplingBigData]{lpm2_kdtree}} methods
 }
 \references{
 Anton Grafstrom and Jonathan Lisic (2019). BalancedSampling: Balanced and Spatially

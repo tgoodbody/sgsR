@@ -15,12 +15,10 @@
 #' @param filename Character.
 #' @param filename Character. Path to write output samples.
 #' @param overwrite Logical. Choice to overwrite existing \code{filename} if it exists.
-#' @param ... Additional arguments for \link[sf]{st_make_grid}.
+#' @param ... Additional arguments for \code{\link[sf]{st_make_grid}}.
 #'
 #' @return An sf object with sampled points at intersections of fishnet grid.
 #'
-
-#' @importFrom methods is
 #'
 #' @export
 

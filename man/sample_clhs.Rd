@@ -45,7 +45,7 @@ where \code{$details} is additional stratification information and
 An sf object with \code{nSamp} stratified samples.
 }
 \description{
-Conditioned Latin Hypercube Sampling using the \code{\link[clhs]{clhs-package}} package functionality
+Conditioned Latin Hypercube Sampling using the \code{\link[clhs]{clhs}} functionality
 }
 \seealso{
 Other sample functions: 

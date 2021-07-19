@@ -44,6 +44,7 @@ Calculate and rasterize principal components from a metric raster
 Other calculate functions: 
 \code{\link{calculate_COOBS}()},
 \code{\link{calculate_distance}()},
+\code{\link{calculate_lhsPop}()},
 \code{\link{calculate_reqSamples}()}
 }
 \concept{calculate functions}

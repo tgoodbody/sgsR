@@ -7,7 +7,7 @@
 sample_strat(
   sraster,
   nSamp,
-  mindist = 100,
+  mindist = NULL,
   existing = NULL,
   include = FALSE,
   access = NULL,

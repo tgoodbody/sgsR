@@ -1,18 +1,16 @@
 #' CLHS sampling
 #'
-#' @description Conditioned Latin Hypercube Sampling using the \code{\link[clhs]{clhs-package}} package functionality
+#' @description Conditioned Latin Hypercube Sampling using the \code{\link[clhs]{clhs}} functionality
 #'
 #' @family sample functions
 #'
-#' @inheritParams analyze_sampOptLHC
+#' @inheritParams calculate_lhsOpt
 #' @inheritParams sample_srs
 #' @inheritParams strat_kmeans
 #' @inheritParams extract_strata
 #'
 #' @param ... Additional arguments for clhs sampling. See \code{\link[clhs]{clhs}}.
 #'
-
-#' @importFrom methods is
 #' @importFrom stats coef complete.cases median quantile sd
 #' @importFrom utils setTxtProgressBar
 #'

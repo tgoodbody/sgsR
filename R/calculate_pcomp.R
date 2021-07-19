@@ -11,8 +11,6 @@
 #' prior to analysis.
 #' @param ... Additional arguments to be passed to \code{\link[stats]{prcomp}}.
 #'
-
-#' @importFrom methods is
 #'
 #' @return Output raster with specified number of principal components as layers.
 #'

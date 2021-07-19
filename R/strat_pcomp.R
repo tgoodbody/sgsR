@@ -10,8 +10,6 @@
 #'
 #' @param ... Additional arguments to be passed to \code{\link[stats]{prcomp}}.
 #'
-#' @importFrom methods is
-#'
 #' @return Returns an output stratification \code{spatRaster} or a list when \code{details = TRUE}.
 #'
 #' When a list is returned:

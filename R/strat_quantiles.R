@@ -12,7 +12,6 @@
 #' @param samp Numeric. Determines proportion of cells to plot in scatterplot (see \code{values})
 #' for strata visualization. Lower values reduce visualization time.
 #'
-#' @importFrom methods is
 #'
 #' @return Returns an output stratification \code{spatRaster} or a list when \code{details = TRUE}.
 #'

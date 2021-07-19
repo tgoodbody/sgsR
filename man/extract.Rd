@@ -21,10 +21,8 @@ extract_metrics(mraster, existing, data.frame = FALSE)
 }
 \value{
 An sf or data.frame object of samples with strata attributes
-#--- function for Extract and buffering access ---#
 
 An sf or data.frame object of samples with associated raster cell attributes
-#--- Extract raster metrics to existing sample ---#
 }
 \description{
 Extract raster values to samples

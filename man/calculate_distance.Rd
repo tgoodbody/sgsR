@@ -14,15 +14,16 @@ calculate_distance(raster = NULL, access = NULL, plot = FALSE)
 \item{plot}{Logical. Plots output strata raster with samples.}
 }
 \value{
-Input raster with `dist2access` layer appended.
+Input raster with \code{dist2access} layer appended.
 }
 \description{
 Per pixel distance to nearest access vector. Intended to be used as a `cost` constraint
-within the \code{sample_clhs} function
+within the \code{\link{sample_clhs}} function
 }
 \seealso{
 Other calculate functions: 
 \code{\link{calculate_COOBS}()},
+\code{\link{calculate_lhsPop}()},
 \code{\link{calculate_pcomp}()},
 \code{\link{calculate_reqSamples}()}
 }

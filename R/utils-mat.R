@@ -13,7 +13,6 @@ NULL
 #' @rdname matrices
 #' @family matrices
 #' @keywords internal
-#' #--- function for calculating quantile matrix ---#
 
 mat_quant <- function(vals,
                       nQuant,
@@ -48,7 +47,6 @@ mat_quant <- function(vals,
 #' @family matrices
 #' @param matQ Quantile matrix
 #' @keywords internal
-#' #--- function for calculating covariance matrix with a progress bar---#
 
 mat_cov <- function(vals,
                     nQuant,
@@ -108,7 +106,6 @@ mat_cov <- function(vals,
 #' @family matrices
 #' @param matQ Quantile matrix
 #' @keywords internal
-#' #--- function for calculating covariance matrix without a progress bar---#
 
 mat_covNB <- function(vals,
                       nQuant,

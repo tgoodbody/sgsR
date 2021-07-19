@@ -26,17 +26,4 @@ mat_covNB(vals, nQuant, nb, matQ)
 Create covariate and sample matrices
 }
 \concept{matrices}
-\keyword{#---}
-\keyword{---#}
-\keyword{a}
-\keyword{bar---#}
-\keyword{calculating}
-\keyword{covariance}
-\keyword{for}
-\keyword{function}
 \keyword{internal}
-\keyword{matrix}
-\keyword{progress}
-\keyword{quantile}
-\keyword{with}
-\keyword{without}

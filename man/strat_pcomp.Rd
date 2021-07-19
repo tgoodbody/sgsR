@@ -49,7 +49,7 @@ where \code{$details} is additional stratification information and
 }
 \value{
 Returns an output stratification \code{spatRaster} or a list when \code{details = TRUE}.
- 
+
 When a list is returned:
 \enumerate{
 \item \code{details} is a list output of the \code{\link[stats]{prcomp}} function

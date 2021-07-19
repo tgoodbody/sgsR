@@ -22,8 +22,6 @@
 #'
 #' @return Returns sf point object with existing samples and supplemental samples added by the aHELS algorithm.
 #'
-
-#' @importFrom methods is
 #'
 #' @export
 
@@ -82,7 +80,7 @@ sample_aHELS <- function(mraster = NULL,
 
   #--- Generate quantile matrix ---#
 
-  mats <- analyze_popLHC(mraster = mraster, PCA = FALSE, nQuant = nQuant)
+  mats <- calculate_lhsPop(mraster = mraster, PCA = FALSE, nQuant = nQuant)
 
   #--- Change 0's to very small number to avoid division issues ---#
 

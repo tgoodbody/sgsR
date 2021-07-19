@@ -46,11 +46,11 @@ for strata visualization. Lower values reduce visualization time.}
 
 \item{overwrite}{Logical. Specify whether \code{filename} should be overwritten on disc.}
 
-\item{...}{Additional arguments for writing files. See \link[terra]{writeRaster}.}
+\item{...}{Additional arguments for writing files. See \code{\link[terra]{writeRaster}}.}
 }
 \value{
 Returns an output stratification \code{spatRaster} or a list when \code{details = TRUE}.
- 
+
 When a list is returned:
 \enumerate{
 \item \code{details} is a list output of the \code{\link[stats]{prcomp}} function

@@ -15,7 +15,6 @@
 #' is an sf object of stratified samples.
 #' @param plot Logial. Plots existing (circles) and new (crosses) samples on the first band of mraster.
 #'
-#' @importFrom magrittr %>%
 #' @importFrom methods is
 #'
 #' @return An sf object with \code{nSamp} stratified samples.

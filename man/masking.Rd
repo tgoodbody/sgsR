@@ -22,12 +22,4 @@ from access where plots can be sampled.}
 Create covariate and sample matrices
 }
 \concept{masking}
-\keyword{#---}
-\keyword{---#}
-\keyword{access}
-\keyword{and}
-\keyword{buffering}
-\keyword{for}
-\keyword{function}
 \keyword{internal}
-\keyword{masking}

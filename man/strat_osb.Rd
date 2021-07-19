@@ -43,16 +43,16 @@ where \code{$details} is additional stratification information and
 
 \item{overwrite}{Logical. Specify whether \code{filename} should be overwritten on disc.}
 
-\item{...}{Additional arguments for writing files. See \link[terra]{writeRaster}.}
+\item{...}{Additional arguments for writing files. See \code{\link[terra]{writeRaster}}.}
 }
 \value{
 Returns an output stratification \code{spatRaster} or a list when \code{details = TRUE}.
- 
+
 When a list is returned:
 \enumerate{
 \item \code{details} is a list output of the \code{\link[stratifyR]{strata.data}} function where
-\code{OSB} are the optimum stratum boundaries and \code{nh} are the optimum sample sizes 
-for each strata
+\code{OSB} are the optimum stratum boundaries and \code{nh} are the optimum sample sizes
+for each stratum
 \item \code{raster} is a stratified \code{spatRaster} based on \code{OSB}
 }
 }

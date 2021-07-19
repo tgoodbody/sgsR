@@ -10,12 +10,10 @@
 #' @param breaks2 Numeric. Vector of breakpoints for \code{metric2} (if provided)
 #' @param filename Character. Path to write stratified raster to disc.
 #' @param overwrite Logical. Specify whether \code{filename} should be overwritten on disc.
-#' @param ... Additional arguments for writing files. See \link[terra]{writeRaster}.
+#' @param ... Additional arguments for writing files. See \code{\link[terra]{writeRaster}}.
 #'
 #' @return output stratification \code{spatRaster}, or a list when \code{details = TRUE}.
 #'
-
-#' @importFrom methods is
 #'
 #' @export
 

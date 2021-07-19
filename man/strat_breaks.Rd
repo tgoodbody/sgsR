@@ -42,7 +42,7 @@ where \code{$details} is additional stratification information and
 
 \item{overwrite}{Logical. Specify whether \code{filename} should be overwritten on disc.}
 
-\item{...}{Additional arguments for writing files. See \link[terra]{writeRaster}.}
+\item{...}{Additional arguments for writing files. See \code{\link[terra]{writeRaster}}.}
 }
 \value{
 output stratification \code{spatRaster}, or a list when \code{details = TRUE}.

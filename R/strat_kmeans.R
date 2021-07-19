@@ -1,6 +1,6 @@
 #' k-means stratification
 #'
-#' @description Stratify metrics raster using k-means algorithm
+#' @description Stratify metrics raster using \code{\link[stats]{kmeans}} algorithm
 #' @family stratify functions
 #'
 #' @inheritParams strat_breaks
@@ -20,8 +20,6 @@
 #'  \code{$raster} is the output stratification spatRaster.
 #'  @param ... Additional arguments to be passed to \code{\link[stats]{kmeans}} function.
 #'
-
-#' @importFrom methods is
 #'
 #' @return output stratification \code{spatRaster}, or a list when \code{details = TRUE}.
 #'
@@ -109,7 +107,7 @@ strat_kmeans <- function(mraster,
   #--- write file to disc ---#
 
   if (!is.null(filename)) {
-    terra::writeRaster(kmv, filename, overwrite = overwrite, ...)
+    terra::writeRaster(kmv, filename, overwrite = overwrite)
   }
 
   #--- Output based on 'details' to return raster alone or list with details ---#
