@@ -16,8 +16,19 @@
 #' @references
 #' Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451
 #'
+#'@importFrom foreach %dopar%
 #'
 #' @return output raster with COOBS and classified COOBS layers.
+#' 
+#' @examples
+#' #--- Load raster and access files ---#
+#' r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+#' sr <- terra::rast(r)
+#' 
+#' e <- system.file("extdata","existing.shp", package = "sgsR")
+#' e <- sf::st_read(e)
+#' 
+#' calculate_COOBS(raster = sr, existing = e, cores = 4, details = TRUE, filename = tempfile(fileext = ".shp"))
 #'
 #'
 #' @export
@@ -28,7 +39,9 @@ calculate_COOBS <- function(mraster = NULL,
                             cores = 1,
                             threshold = 0.95,
                             plot = FALSE,
-                            details = FALSE) {
+                            details = FALSE,
+                            filename = NULL,
+                            overwrite = FALSE) {
 
   #--- check for required packages ---#
   if (!requireNamespace("doParallel", quietly = TRUE)) {
@@ -116,10 +129,12 @@ calculate_COOBS <- function(mraster = NULL,
   pb <- utils::txtProgressBar(max = iterations, style = 3)
   progress <- function(n) utils::setTxtProgressBar(pb, n)
   opts <- list(progress = progress)
+  
+  `%dopar%` <- foreach::`%dopar%`
 
   #--- iterate parallel processing of mahalanobis distance ---#
 
-  loop <- foreach::foreach(i = 1:iterations, .combine = "c", .options.snow = opts, .packages = c("foreach")) %dopar% {
+  loop <- foreach::foreach(i = 1:iterations, .combine = "c", .options.snow = opts) %dopar% {
     cell <- vals[i, 3:ncol(vals)]
 
     #--- Determine distance for each pixel in raster ---#
@@ -189,6 +204,10 @@ calculate_COOBS <- function(mraster = NULL,
 
     terra::plot(rc, col = cols)
     terra::plot(existing, add = TRUE)
+  }
+  
+  if (!is.null(filename)) {
+    terra::writeRaster(rout, filename, overwrite = overwrite)
   }
 
   return(rout)

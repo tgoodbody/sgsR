@@ -4,7 +4,13 @@
 \alias{calculate_distance}
 \title{distance to access}
 \usage{
-calculate_distance(raster = NULL, access = NULL, plot = FALSE)
+calculate_distance(
+  raster = NULL,
+  access = NULL,
+  plot = FALSE,
+  filename = NULL,
+  overwrite = FALSE
+)
 }
 \arguments{
 \item{raster}{spatRaster. Raster to be used to calculate pixel level distance to access layer.}
@@ -12,6 +18,10 @@ calculate_distance(raster = NULL, access = NULL, plot = FALSE)
 \item{access}{sf. Road access network - must be lines.}
 
 \item{plot}{Logical. Plots output strata raster with samples.}
+
+\item{filename}{Character. Path to write output samples.}
+
+\item{overwrite}{Logical. Choice to overwrite existing \code{filename} if it exists.}
 }
 \value{
 Input raster with \code{dist2access} layer appended.
@@ -19,6 +29,19 @@ Input raster with \code{dist2access} layer appended.
 \description{
 Per pixel distance to nearest access vector. Intended to be used as a `cost` constraint
 within the \code{\link{sample_clhs}} function
+}
+\examples{
+#--- Load raster and access files ---#
+r <- system.file("extdata","kmeans.tif", package = "sgsR")
+sr <- terra::rast(r)
+
+a <- system.file("extdata","roads.shp", package = "sgsR")
+ac <- sf::st_read(a)
+
+calculate_distance(raster = sr, access = ac, plot = TRUE)
+
+calculate_distance(raster = sr, access = ac, plot = TRUE, filename = tempfile(fileext = ".shp"))
+
 }
 \seealso{
 Other calculate functions: 

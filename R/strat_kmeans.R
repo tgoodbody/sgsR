@@ -20,8 +20,19 @@
 #'  \code{$raster} is the output stratification spatRaster.
 #'  @param ... Additional arguments to be passed to \code{\link[stats]{kmeans}} function.
 #'
-#'
 #' @return output stratification \code{spatRaster}, or a list when \code{details = TRUE}.
+#' 
+#' @examples 
+#' #--- Load raster and access files ---#
+#' r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR"
+#' mr <- terra::rast(r)
+#' 
+#' #--- perform stratification using k-means ---#
+#' kmeans <- strat_kmeans(mraster = mr, nStrata = 5)
+#' 
+#' kmeans <- strat_kmeans(mraster = mr, nStrata = 5, iter = 1000, plot = TRUE, details = TRUE)
+#' 
+#' kmeans <- strat_kmeans(mraster = mr, nStrata = 5, iter = 1000, plot = TRUE, tempfile(fileext = ".tif"), overwrite = TRUE)
 #'
 #' @export
 

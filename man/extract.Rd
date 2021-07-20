@@ -6,9 +6,21 @@
 \alias{extract_metrics}
 \title{Extract}
 \usage{
-extract_strata(sraster, existing, data.frame = FALSE)
+extract_strata(
+  sraster,
+  existing,
+  data.frame = FALSE,
+  filename = NULL,
+  overwrite = FALSE
+)
 
-extract_metrics(mraster, existing, data.frame = FALSE)
+extract_metrics(
+  mraster,
+  existing,
+  data.frame = FALSE,
+  filename = NULL,
+  overwrite = FALSE
+)
 }
 \arguments{
 \item{sraster}{spatRaster. Stratification raster.}
@@ -16,6 +28,10 @@ extract_metrics(mraster, existing, data.frame = FALSE)
 \item{existing}{sf. Samples resulting from sample_* functions.}
 
 \item{data.frame}{Logical. If true outputs as data.frame}
+
+\item{filename}{Character. Path to write stratified raster to disc.}
+
+\item{overwrite}{Logical. Specify whether \code{filename} should be overwritten on disc.}
 
 \item{mraster}{spatRaster. ALS metrics raster.}
 }

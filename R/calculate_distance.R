@@ -9,14 +9,27 @@
 #'
 #' @param raster spatRaster. Raster to be used to calculate pixel level distance to access layer.
 #'
-#'
 #' @return Input raster with \code{dist2access} layer appended.
+#' 
+#' @examples 
+#' #--- Load raster and access files ---#
+#' r <- system.file("extdata","kmeans.tif", package = "sgsR")
+#' sr <- terra::rast(r)
+#' 
+#' a <- system.file("extdata","roads.shp", package = "sgsR")
+#' ac <- sf::st_read(a)
+#' 
+#' calculate_distance(raster = sr, access = ac, plot = TRUE)
+#' 
+#' calculate_distance(raster = sr, access = ac, plot = TRUE, filename = tempfile(fileext = ".shp"))
 #'
 #' @export
 
 calculate_distance <- function(raster = NULL,
                                access = NULL,
-                               plot = FALSE) {
+                               plot = FALSE,
+                               filename = NULL,
+                               overwrite = FALSE) {
 
   #--- error handling ---#
 
@@ -53,6 +66,10 @@ calculate_distance <- function(raster = NULL,
   if (isTRUE(plot)) {
     terra::plot(dist2access)
     suppressWarnings(terra::plot(access, add = T))
+  }
+  
+  if (!is.null(filename)) {
+    terra::writeRaster(raster, filename, overwrite = overwrite)
   }
 
   return(raster)

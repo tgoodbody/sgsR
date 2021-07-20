@@ -56,6 +56,25 @@ An sf object with \code{nSamp} stratified samples.
 \description{
 Sampling based on a stratified raster.
 }
+\examples{
+#--- Load raster and access files ---#
+r <- system.file("extdata","kmeans.tif", package = "sgsR")
+sr <- terra::rast(r)
+
+a <- system.file("extdata","roads.shp", package = "sgsR")
+ac <- sf::st_read(a)
+
+e <- system.file("extdata","existing.shp", package = "sgsR")
+e <- sf::st_read(e)
+
+#--- perform stratified sampling random sampling ---#
+sample_strat(sraster = sr, nSamp = 200, plot = TRUE)
+
+sample_strat(sraster = sr, nSamp = 200, access = ac, existing = e, mindist = 200, buff_inner = 50, buff_outer = 200)
+
+sample_strat(sraster = sr, nSamp = 200, access = ac, buff_inner = 50, buff_outer = 200, filename = tempfile(fileext = ".shp"))
+
+}
 \seealso{
 Other sample functions: 
 \code{\link{sample_aHELS}()},

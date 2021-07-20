@@ -18,6 +18,15 @@
 #' Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451
 #'
 #' @return List of matrices to be used as input for \code{\link{calculate_lhsOpt}}.
+#' 
+#' @examples 
+#' #--- Load raster and access files ---#
+#' r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+#' mr <- terra::rast(r)
+#' 
+#' calculate_lhsPop(mraster = mr)
+#' 
+#' calculate_lhsPop(mraster = mr, nQuant = 10, PCA = FALSE)
 #'
 #' @export
 

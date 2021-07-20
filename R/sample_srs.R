@@ -19,6 +19,20 @@
 #'
 #' @return An sf object with \code{nSamp} randomly sampled points.
 #'
+#' @examples
+#' #--- Load raster and access files ---#
+#' r <- system.file("extdata","kmeans.tif", package = "sgsR")
+#' sr <- terra::rast(r)
+#' 
+#' a <- system.file("extdata","roads.shp", package = "sgsR")
+#' ac <- sf::st_read(a)
+#' 
+#' #--- perform simple random sampling ---#
+#' sample_srs(raster = sr, nSamp = 200, plot = TRUE)
+#' 
+#' sample_srs(raster = sr, nSamp = 200, access = ac, mindist = 200, buff_inner = 50, buff_outer = 200)
+#' 
+#' sample_srs(raster = sr, nSamp = 200, access = ac, buff_inner = 50, buff_outer = 200, filename = tempfile(fileext = ".shp"))
 #'
 #' @export
 
@@ -117,8 +131,10 @@ sample_srs <- function(raster,
 
       nCount <- nCount + 1
 
-      #--- If add_strata isnt empty, check distance with all other sampled cells in strata ---#
-    } else {
+      #--- If awdd_strata isnt empty, check distance with all other sampled cells in strata ---#
+    } 
+    
+    if (!is.null(mindist)) {
       dist <- spatstat.geom::crossdist(add_temp$X, add_temp$Y, add_strata$X, add_strata$Y)
 
       #--- If all less than 'mindist' - accept sampled cell otherwise reject ---#
@@ -127,6 +143,11 @@ sample_srs <- function(raster,
 
         nCount <- nCount + 1
       }
+    } else {
+      add_strata <- rbind(add_strata, add_temp[, c("X", "Y")])
+      
+      nCount <- nCount + 1
+      
     }
   }
 

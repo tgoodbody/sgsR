@@ -10,7 +10,9 @@ calculate_COOBS(
   cores = 1,
   threshold = 0.95,
   plot = FALSE,
-  details = FALSE
+  details = FALSE,
+  filename = NULL,
+  overwrite = FALSE
 )
 }
 \arguments{
@@ -30,6 +32,10 @@ strata with boundary dividers.}
 where \code{$details} is additional stratification information and
  \code{$raster} is the output stratification spatRaster.
  @param ... Additional arguments to be passed to \code{\link[stats]{kmeans}} function.}
+
+\item{filename}{Character. Path to write stratified raster to disc.}
+
+\item{overwrite}{Logical. Specify whether \code{filename} should be overwritten on disc.}
 }
 \value{
 output raster with COOBS and classified COOBS layers.
@@ -39,6 +45,20 @@ Perform the COunt of OBServations (COOBS) algorithm using existing site data
 and raster metrics. This algorithm aids the user in determining where additional samples
 could be located by comparing existing samples to each pixel and associated covariates.
 The output COOBS raster could be used to constrain clhs sampling to areas that are underreprented.
+}
+\examples{
+#--- Load raster and access files ---#
+r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+sr <- terra::rast(r)
+
+e <- system.file("extdata","existing.shp", package = "sgsR")
+e <- sf::st_read(e)
+
+calculate_COOBS(raster = sr, existing = e, plot = TRUE)
+
+calculate_COOBS(raster = sr, existing = e, cores = 4, details = TRUE, filename = tempfile(fileext = ".shp"))
+
+
 }
 \references{
 Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451
