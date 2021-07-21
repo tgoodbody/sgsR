@@ -70,9 +70,11 @@ e <- sf::st_read(e)
 #--- perform stratified sampling random sampling ---#
 sample_strat(sraster = sr, nSamp = 200, plot = TRUE)
 
-sample_strat(sraster = sr, nSamp = 200, access = ac, existing = e, mindist = 200, buff_inner = 50, buff_outer = 200)
+sample_strat(sraster = sr, nSamp = 200, access = ac, 
+existing = e, mindist = 200, buff_inner = 50, buff_outer = 200)
 
-sample_strat(sraster = sr, nSamp = 200, access = ac, buff_inner = 50, buff_outer = 200, filename = tempfile(fileext = ".shp"))
+sample_strat(sraster = sr, nSamp = 200, access = ac, 
+buff_inner = 50, buff_outer = 200, filename = tempfile(fileext = ".shp"))
 
 }
 \seealso{

@@ -55,9 +55,11 @@ ac <- sf::st_read(a)
 #--- perform simple random sampling ---#
 sample_srs(raster = sr, nSamp = 200, plot = TRUE)
 
-sample_srs(raster = sr, nSamp = 200, access = ac, mindist = 200, buff_inner = 50, buff_outer = 200)
+sample_srs(raster = sr, nSamp = 200, access = ac, 
+mindist = 200, buff_inner = 50, buff_outer = 200)
 
-sample_srs(raster = sr, nSamp = 200, access = ac, buff_inner = 50, buff_outer = 200, filename = tempfile(fileext = ".shp"))
+sample_srs(raster = sr, nSamp = 200, access = ac, 
+buff_inner = 50, buff_outer = 200, filename = tempfile(fileext = ".shp"))
 
 }
 \seealso{

@@ -57,9 +57,11 @@ e <- sf::st_read(e)
 #--- perform grid sampling ---#
 sample_grid(raster = sr, gridsize = 200, plot = TRUE)
 
-sample_grid(raster = sr, gridsize = 100, access = ac, buff_inner = 50, buff_outer = 200)
+sample_grid(raster = sr, gridsize = 100, access = ac, 
+buff_inner = 50, buff_outer = 200)
 
-sample_grid(raster = sr, gridsize = 200, access = ac, buff_inner = 100, buff_outer = 400, filename = tempfile(fileext = ".shp"), plot = TRUE)
+sample_grid(raster = sr, gridsize = 200, access = ac, buff_inner = 100,
+ buff_outer = 400, filename = tempfile(fileext = ".shp"), plot = TRUE)
 
 }
 \seealso{

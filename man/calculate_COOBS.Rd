@@ -50,6 +50,7 @@ The output COOBS raster could be used to constrain clhs sampling to areas that a
 Special thanks to Brendan Malone for the original implementation of this algorithm.
 }
 \examples{
+\dontrun{
 #--- Load raster and existing plots---#
 r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
 mr <- terra::rast(r)
@@ -57,8 +58,9 @@ mr <- terra::rast(r)
 e <- system.file("extdata","existing.shp", package = "sgsR")
 e <- sf::st_read(e)
 
-calculate_COOBS(mraster = mr, existing = e, cores = 4, details = TRUE, filename = tempfile(fileext = ".shp"))
-
+calculate_COOBS(mraster = mr, existing = e, cores = 4, details = TRUE, 
+filename = tempfile(fileext = ".shp"))
+}
 }
 \references{
 Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451

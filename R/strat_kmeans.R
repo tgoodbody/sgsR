@@ -30,9 +30,11 @@
 #' #--- perform stratification using k-means ---#
 #' kmeans <- strat_kmeans(mraster = mr, nStrata = 5)
 #' 
-#' kmeans <- strat_kmeans(mraster = mr, nStrata = 5, iter = 1000, plot = TRUE, details = TRUE)
+#' kmeans <- strat_kmeans(mraster = mr, nStrata = 5, iter = 1000,
+#'  plot = TRUE, details = TRUE)
 #' 
-#' kmeans <- strat_kmeans(mraster = mr, nStrata = 5, iter = 1000, plot = TRUE, tempfile(fileext = ".tif"), overwrite = TRUE)
+#' kmeans <- strat_kmeans(mraster = mr, nStrata = 5, iter = 1000,
+#'  plot = TRUE, tempfile(fileext = ".tif"), overwrite = TRUE)
 #'
 #' @export
 

@@ -32,7 +32,8 @@
 #' 
 #' sample_aHELS(mraster = mr[[1:3]], existing = e, plot = TRUE)
 #' 
-#' sample_aHELS(mraster = mr[[1:3]], existing = e, nQuant = 20, nSamp = 300, filename = tempfile(fileext = ".shp"))
+#' sample_aHELS(mraster = mr[[1:3]], existing = e, nQuant = 20, nSamp = 300, 
+#' filename = tempfile(fileext = ".shp"))
 #'
 #' @note 
 #' Special thanks to Brendan Malone for the original implementation of this algorithm.

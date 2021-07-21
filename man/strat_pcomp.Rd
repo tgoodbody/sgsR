@@ -21,7 +21,9 @@ strat_pcomp(
 \arguments{
 \item{mraster}{spatRaster. ALS metrics raster.}
 
-\item{nStrata}{Character. Number of desired strata.}
+\item{nStrata}{Numeric. Number of strata for primary principal component.}
+
+\item{nStrata2}{Numeric. Number of strata for secondary principal component.}
 
 \item{center}{Logical. Value indicating whether the variables should be shifted to be zero centered.}
 
