@@ -8,8 +8,8 @@ strat_quantiles(
   mraster,
   metric = NULL,
   metric2 = NULL,
-  nStrata,
-  nStrata2 = NULL,
+  nQuant,
+  nQuant2 = NULL,
   plot = FALSE,
   details = FALSE,
   samp = 1,
@@ -21,14 +21,13 @@ strat_quantiles(
 \arguments{
 \item{mraster}{spatRaster. ALS metrics raster.}
 
-\item{metric}{Character. Name of primary metric to stratify. If
-\code{mraster} is has 1 layer it is taken as default.}
+\item{metric}{Numeric/Character. Index or name of primary covariate within \code{mraster} to stratify.}
 
-\item{metric2}{Character. Name of secondary metric to stratify.}
+\item{metric2}{Numeric/Character. Index or name of secondary covariate within \code{mraster} to stratify.}
 
-\item{nStrata}{Character. Number of desired strata.}
+\item{nQuant}{Numeric. Number of quantiles to stratify primary covariate.}
 
-\item{nStrata2}{Numeric.  Number of secondary strata within \code{nStrata}.}
+\item{nQuant2}{Numeric. Number of quantiles to stratify secondary covariate.}
 
 \item{plot}{Logical. Plots output strata raster and visualized
 strata with boundary dividers.}
@@ -39,7 +38,7 @@ where \code{$details} is additional stratification information and
  \code{$raster} is the output stratification spatRaster.
  @param ... Additional arguments to be passed to \code{\link[stats]{kmeans}} function.}
 
-\item{samp}{Numeric. Determines proportion of cells to plot in scatterplot (see \code{values})
+\item{samp}{Numeric. Determines proportion of cells to plot in scatterplot - see \code{values}
 for strata visualization. Lower values reduce visualization time.}
 
 \item{filename}{Character. Path to write stratified raster to disc.}
@@ -55,12 +54,24 @@ When a list is returned:
 \enumerate{
 \item \code{details} is a list output of the \code{\link[stats]{prcomp}} function
 \item \code{raster} is a stratified \code{spatRaster} based on quantiles
-\item \code{scatter} is a \code{ggplot} histogram / scatter plot object (depends on whether metric2 was supplied).
+\item \code{plot} is a \code{ggplot} histogram / scatter plot object (depends on whether metric2 was supplied).
 Histogram shows distribution and break points while scatter plot shows colour coded and strata boundaries.
 }
 }
 \description{
 Stratify metric raster using metric quantiles.
+}
+\examples{
+#--- Load raster and existing plots---#
+r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+mr <- terra::rast(r)
+
+strat_quantiles(mraster = mr, metric = 4, nQuant = 10, plot = TRUE, details = TRUE)
+
+strat_quantiles(mraster = mr, metric = "zsd", metric2 = "zq95", nQuant = 3, nQuant2 = 4)
+
+strat_quantiles(mraster = mr, metric = 1, metric2 = "zsd", nQuant = 2, nQuant2 = 2, filename = tempfile(fileext = ".tif"))
+
 }
 \seealso{
 Other stratify functions: 
@@ -68,5 +79,8 @@ Other stratify functions:
 \code{\link{strat_kmeans}()},
 \code{\link{strat_osb}()},
 \code{\link{strat_pcomp}()}
+}
+\author{
+Tristan R.H. Goodbody
 }
 \concept{stratify functions}

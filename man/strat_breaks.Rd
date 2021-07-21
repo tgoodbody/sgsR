@@ -20,10 +20,9 @@ strat_breaks(
 \arguments{
 \item{mraster}{spatRaster. ALS metrics raster.}
 
-\item{metric}{Character. Name of primary metric to stratify. If
-\code{mraster} is has 1 layer it is taken as default.}
+\item{metric}{Numeric/Character. Index or name of primary covariate within \code{mraster} to stratify.}
 
-\item{metric2}{Character. Name of secondary metric to stratify.}
+\item{metric2}{Numeric/Character. Index or name of secondary covariate within \code{mraster} to stratify.}
 
 \item{breaks}{Numeric. Vector of breakpoints for \code{metric}}
 
@@ -45,10 +44,33 @@ where \code{$details} is additional stratification information and
 \item{...}{Additional arguments for writing files. See \code{\link[terra]{writeRaster}}.}
 }
 \value{
-output stratification \code{spatRaster}, or a list when \code{details = TRUE}.
+Returns an output stratification \code{spatRaster} or a list when \code{details = TRUE}.
+
+When a list is returned:
+\enumerate{
+\item \code{details} is a list output of the \code{\link[stats]{prcomp}} function
+\item \code{raster} is a stratified \code{spatRaster} based on quantiles
+\item \code{plot} is a \code{ggplot} histogram object showsing distribution and break points.
+}
 }
 \description{
 Stratify metrics raster using user defined breaks
+}
+\examples{
+#--- Load raster ---#
+r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+mr <- terra::rast(r)
+
+#--- create vector breaks ---#
+br.max <- c(3,5,11,18)
+br.sd <- c(1,2,5)
+
+strat_breaks(mraster = mr, metric = "zmax", breaks = br.max, plot = TRUE, details = TRUE)
+
+strat_breaks(mraster = mr, metric = 1, metric2 = "zsd", breaks = br.max, breaks2 = br.sd, plot = TRUE)
+
+strat_breaks(mraster = mr, metric = "zmax", breaks = br.max, filename = tempfile(fileext = ".tif"))
+
 }
 \seealso{
 Other stratify functions: 
@@ -56,5 +78,8 @@ Other stratify functions:
 \code{\link{strat_osb}()},
 \code{\link{strat_pcomp}()},
 \code{\link{strat_quantiles}()}
+}
+\author{
+Tristan R.H. Goodbody
 }
 \concept{stratify functions}
