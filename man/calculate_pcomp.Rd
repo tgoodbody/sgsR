@@ -11,6 +11,8 @@ calculate_pcomp(
   scale = TRUE,
   plot = FALSE,
   details = FALSE,
+  filename = NULL,
+  overwrite = FALSE,
   ...
 )
 }
@@ -32,6 +34,10 @@ where \code{$details} is additional stratification information and
  \code{$raster} is the output stratification spatRaster.
  @param ... Additional arguments to be passed to \code{\link[stats]{kmeans}} function.}
 
+\item{filename}{Character. Path to write output samples.}
+
+\item{overwrite}{Logical. Choice to overwrite existing \code{filename} if it exists.}
+
 \item{...}{Additional arguments to be passed to \code{\link[stats]{prcomp}}.}
 }
 \value{
@@ -49,6 +55,7 @@ calculate_pcomp(mraster = mr, nComp = 5)
 
 calculate_pcomp(mraster = mr, nComp = 3, plot = TRUE, details = TRUE)
 
+
 }
 \seealso{
 Other calculate functions: 
@@ -56,5 +63,8 @@ Other calculate functions:
 \code{\link{calculate_distance}()},
 \code{\link{calculate_lhsPop}()},
 \code{\link{calculate_reqSamples}()}
+}
+\author{
+Tristan R.H. Goodbody
 }
 \concept{calculate functions}

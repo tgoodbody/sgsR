@@ -34,6 +34,8 @@
 #' 
 #' sample_srs(raster = sr, nSamp = 200, access = ac, buff_inner = 50, buff_outer = 200, filename = tempfile(fileext = ".shp"))
 #'
+#' @author Tristan R.H. Goodbody & Martin Queinnec
+#'
 #' @export
 
 sample_srs <- function(raster,

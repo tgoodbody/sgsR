@@ -37,6 +37,8 @@
 #'
 #' sample_grid(raster = sr, gridsize = 200, access = ac, buff_inner = 100, buff_outer = 400, filename = tempfile(fileext = ".shp"), plot = TRUE)
 #'
+#' @author Tristan R.H. Goodbody 
+#'
 #' @export
 
 
@@ -99,17 +101,17 @@ sample_grid <- function(raster,
 
   #--- create grid and locate samples at intersections ---#
 
-  gridSamp <- sf::st_as_sf(sf::st_make_grid(sfObj, gridsize, what = "corners", crs = terra::crs(raster), ...))
+  samples <- sf::st_as_sf(sf::st_make_grid(sfObj, gridsize, what = "corners", crs = terra::crs(raster), ...))
 
   #--- extract values from raster for each sample ---#
 
-  gridSamp <- extract_metrics(mraster = raster, existing = gridSamp)
+  samples <- extract_metrics(mraster = raster, existing = samples)
 
   #--- set geometry column and remove samples with NA values ---#
 
-  st_geometry(gridSamp) <- "geometry"
+  st_geometry(samples) <- "geometry"
 
-  gridSamp <- gridSamp %>%
+  samples <- samples %>%
     dplyr::filter(!is.na(.)) %>%
     dplyr::select(-x)
 
@@ -120,10 +122,10 @@ sample_grid <- function(raster,
     if (!is.null(access)) {
       suppressWarnings(terra::plot(rasterP[[1]]))
       suppressWarnings(terra::plot(access_buff$buff, add = T, border = c("gray30"), col = "gray10", alpha = 0.1))
-      suppressWarnings(terra::plot(gridSamp, add = TRUE, col = "black"))
+      suppressWarnings(terra::plot(samples, add = TRUE, col = "black"))
     } else {
       suppressWarnings(terra::plot(rasterP[[1]]))
-      suppressWarnings(terra::plot(gridSamp, add = TRUE, col = "black"))
+      suppressWarnings(terra::plot(samples, add = TRUE, col = "black"))
     }
   }
 
@@ -136,10 +138,10 @@ sample_grid <- function(raster,
       stop(paste0(filename, " already exists and overwrite = FALSE"))
     }
 
-    sf::st_write(gridSamp, filename, delete_layer = overwrite)
+    sf::st_write(samples, filename, delete_layer = overwrite)
   }
 
   #--- output ---#
 
-  return(gridSamp)
+  return(samples)
 }

@@ -45,6 +45,9 @@ data.frame with summary statistics.
 \description{
 Population level analysis of metric raster data to determine optimal Latin Hypercube sample size
 }
+\note{
+Special thanks to Brendan Malone for the original implementation of this algorithm.
+}
 \examples{
 #--- Load raster and access files ---#
 r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
@@ -60,5 +63,8 @@ calculate lhsOpt(popLHS = poplhs, PCA = FALSE, iter = 200)
 }
 \references{
 Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451
+}
+\author{
+Tristan R.H. Goodbody
 }
 \concept{analyze functions}

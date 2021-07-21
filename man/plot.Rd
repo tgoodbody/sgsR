@@ -12,10 +12,9 @@ classPlot(dfc, coordsgrps, metric, metric2, samp)
 
 \item{coordsgrps}{List. Cartesian coordinates of each strata}
 
-\item{metric}{Character. Name of primary metric to stratify. If
-\code{mraster} is has 1 layer it is taken as default.}
+\item{metric}{Numeric/Character. Index or name of primary covariate within \code{mraster} to stratify.}
 
-\item{metric2}{Character. Name of secondary metric to stratify.}
+\item{metric2}{Numeric/Character. Index or name of secondary covariate within \code{mraster} to stratify.}
 
 \item{samp}{Numeric. Determines proportion of cells to plot}
 }

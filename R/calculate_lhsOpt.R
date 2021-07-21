@@ -30,6 +30,11 @@
 #' calculate lhsOpt(popLHS = poplhs)
 #' 
 #' calculate lhsOpt(popLHS = poplhs, PCA = FALSE, iter = 200)
+#' 
+#' @note 
+#' Special thanks to Brendan Malone for the original implementation of this algorithm.
+#' 
+#' @author Tristan R.H. Goodbody 
 #'
 #' @export
 

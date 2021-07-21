@@ -23,8 +23,6 @@ strat_pcomp(
 
 \item{nStrata}{Character. Number of desired strata.}
 
-\item{nStrata2}{Numeric.  Number of secondary strata within \code{nStrata}.}
-
 \item{center}{Logical. Value indicating whether the variables should be shifted to be zero centered.}
 
 \item{scale}{Logical. Value indicating whether the variables should be scaled to have unit variance}
@@ -32,7 +30,7 @@ strat_pcomp(
 \item{plot}{Logical. Plots output strata raster and visualized
 strata with boundary dividers.}
 
-\item{samp}{Numeric. Determines proportion of cells to plot in scatterplot (see \code{values})
+\item{samp}{Numeric. Determines proportion of cells to plot in scatterplot - see \code{values}
 for strata visualization. Lower values reduce visualization time.}
 
 \item{details}{Logical. If \code{FALSE} (default) output is only

@@ -19,8 +19,6 @@ classPlot <- function(dfc,
                       metric,
                       metric2,
                       samp) {
-  metric <- ggplot2::sym(metric)
-  metric2 <- ggplot2::sym(metric2)
 
   #--- sample cells based on 'samp' parameter ---#
 

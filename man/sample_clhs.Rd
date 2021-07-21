@@ -7,12 +7,16 @@
 sample_clhs(
   mraster,
   nSamp,
+  iter = 10000,
+  cost = NULL,
   existing = NULL,
   access = NULL,
   buff_inner = NULL,
   buff_outer = NULL,
   plot = FALSE,
   details = FALSE,
+  filename = NULL,
+  overwrite = FALSE,
   ...
 )
 }
@@ -20,6 +24,11 @@ sample_clhs(
 \item{mraster}{spatRaster. ALS metrics raster.}
 
 \item{nSamp}{Numeric. Number of desired samples.}
+
+\item{iter}{Numeric. Value giving the number of iterations within the Metropolis-Hastings process.}
+
+\item{cost}{Numeric/Character. Index or name of covariate within \code{mraster} to be used to constrain cLHS sampling.
+If default - \code{NULL} then a cost constraint is not used.}
 
 \item{existing}{sf. Samples resulting from sample_* functions.}
 
@@ -39,13 +48,57 @@ where \code{$details} is additional stratification information and
  \code{$raster} is the output stratification spatRaster.
  @param ... Additional arguments to be passed to \code{\link[stats]{kmeans}} function.}
 
+\item{filename}{Character. Path to write output samples.}
+
+\item{overwrite}{Logical. Choice to overwrite existing \code{filename} if it exists.}
+
 \item{...}{Additional arguments for clhs sampling. See \code{\link[clhs]{clhs}}.}
 }
 \value{
 An sf object with \code{nSamp} stratified samples.
 }
 \description{
-Conditioned Latin Hypercube Sampling using the \code{\link[clhs]{clhs}} functionality
+Conditioned Latin Hypercube Sampling using \code{\link[clhs]{clhs}} functionality.
+}
+\examples{
+#--- Load raster and existing plots---#
+r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+mr <- terra::rast(r)
+
+e <- system.file("extdata","existing.shp", package = "sgsR")
+e <- sf::st_read(e)
+
+a <- system.file("extdata","roads.shp", package = "sgsR")
+ac <- sf::st_read(a)
+
+sample_clhs(mraster = mr, nSamp = 200, plot = TRUE, iter = 100)
+
+sample_clhs(mraster = mr, nSamp = 400, existing = e, iter = 250, details = TRUE)
+
+sample_clhs(mraster = mr, nSamp = 200, iter = 200, existing = e, access = ac, buff_inner = 100, buff_outer = 300, plot = TRUE)
+
+#--- cost constrained examples ---#
+#--- calculate distance to access layer for each pixel in mr ---#
+mr.c <- calculate_distance(raster = mr, access = ac)
+
+sample_clhs(mraster = mr.c, nSamp = 250, iter = 200, cost = "dist2access", plot = TRUE)
+
+sample_clhs(mraster = mr.c, nSamp = 250, existing = e, iter = 200, cost = "dist2access", plot = TRUE)
+
+}
+\references{
+Minasny, B. and McBratney, A.B. 2006. A conditioned Latin hypercube method
+for sampling in the presence of ancillary information. Computers and
+Geosciences, 32:1378-1388.
+
+Minasny, B. and A. B. McBratney, A.B.. 2010. Conditioned Latin Hypercube 
+Sampling for Calibrating Soil Sensor Data to Soil Properties. In: Proximal 
+Soil Sensing, Progress in Soil Science, pages 111-119. 
+
+Roudier, P., Beaudette, D.E. and Hewitt, A.E. 2012. A conditioned Latin
+hypercube sampling algorithm incorporating operational constraints. In:
+Digital Soil Assessments and Beyond. Proceedings of the 5th Global Workshop
+on Digital Soil Mapping, Sydney, Australia.
 }
 \seealso{
 Other sample functions: 
@@ -54,5 +107,8 @@ Other sample functions:
 \code{\link{sample_grid}()},
 \code{\link{sample_srs}()},
 \code{\link{sample_strat}()}
+}
+\author{
+Tristan R.H. Goodbody
 }
 \concept{sample functions}

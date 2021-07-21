@@ -27,6 +27,11 @@
 #' calculate_lhsPop(mraster = mr)
 #' 
 #' calculate_lhsPop(mraster = mr, nQuant = 10, PCA = FALSE)
+#' 
+#' @note 
+#' Special thanks to Brendan Malone for the original implementation of this algorithm.
+#' 
+#' @author Tristan R.H. Goodbody 
 #'
 #' @export
 

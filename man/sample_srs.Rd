@@ -68,4 +68,7 @@ Other sample functions:
 \code{\link{sample_grid}()},
 \code{\link{sample_strat}()}
 }
+\author{
+Tristan R.H. Goodbody & Martin Queinnec
+}
 \concept{sample functions}

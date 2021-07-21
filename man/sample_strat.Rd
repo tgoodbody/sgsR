@@ -83,4 +83,7 @@ Other sample functions:
 \code{\link{sample_grid}()},
 \code{\link{sample_srs}()}
 }
+\author{
+Tristan R.H. Goodbody & Martin Queinnec
+}
 \concept{sample functions}

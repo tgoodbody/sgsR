@@ -22,6 +22,9 @@
 #' calculate_pcomp(mraster = mr, nComp = 5)
 #' 
 #' calculate_pcomp(mraster = mr, nComp = 3, plot = TRUE, details = TRUE)
+#' 
+#' 
+#' @author Tristan R.H. Goodbody 
 #'
 #' @export
 
@@ -31,6 +34,8 @@ calculate_pcomp <- function(mraster = NULL,
                             scale = TRUE,
                             plot = FALSE,
                             details = FALSE,
+                            filename = NULL,
+                            overwrite = FALSE,
                             ...) {
 
   #--- error handling ---#
@@ -91,6 +96,12 @@ calculate_pcomp <- function(mraster = NULL,
   #--- rename ---#
 
   names(pcaRout) <- rep(paste0("PC", seq(1, nComp, 1)))
+  
+  #--- write file to disc ---#
+  
+  if (!is.null(filename)) {
+    terra::writeRaster(rout, filename, overwrite = overwrite)
+  }
 
   if (isTRUE(plot)) {
 

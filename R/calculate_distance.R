@@ -21,7 +21,7 @@
 #' 
 #' calculate_distance(raster = sr, access = ac, plot = TRUE)
 #' 
-#' calculate_distance(raster = sr, access = ac, plot = TRUE, filename = tempfile(fileext = ".shp"))
+#' calculate_distance(raster = sr, access = ac, plot = TRUE, filename = tempfile(fileext = ".tif"))
 #'
 #' @export
 

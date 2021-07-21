@@ -70,4 +70,7 @@ Other sample functions:
 \code{\link{sample_srs}()},
 \code{\link{sample_strat}()}
 }
+\author{
+Tristan R.H. Goodbody
+}
 \concept{sample functions}

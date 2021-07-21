@@ -27,6 +27,9 @@ List of matrices to be used as input for \code{\link{calculate_lhsOpt}}.
 \description{
 Population level analysis of metric raster data
 }
+\note{
+Special thanks to Brendan Malone for the original implementation of this algorithm.
+}
 \examples{
 #--- Load raster and access files ---#
 r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
@@ -46,5 +49,8 @@ Other calculate functions:
 \code{\link{calculate_distance}()},
 \code{\link{calculate_pcomp}()},
 \code{\link{calculate_reqSamples}()}
+}
+\author{
+Tristan R.H. Goodbody
 }
 \concept{calculate functions}

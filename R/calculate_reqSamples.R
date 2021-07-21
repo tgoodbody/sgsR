@@ -23,6 +23,8 @@
 #' 
 #' calculate_reqSamples(sraster = sr, nSamp = 200, existing = e)
 #' 
+#' @author Tristan R.H. Goodbody 
+#' 
 #' @export
 
 

@@ -43,6 +43,9 @@ Perform the adapted Hypercube Evaluation of a Legacy Sample (aHELS) algorithm us
 existing site data and raster metrics. New samples are allocated based on quantile ratios between
 the existing sampleand covariate dataset.
 }
+\note{
+Special thanks to Brendan Malone for the original implementation of this algorithm.
+}
 \examples{
 #--- Load raster and existing plots---#
 r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
@@ -66,5 +69,8 @@ Other sample functions:
 \code{\link{sample_grid}()},
 \code{\link{sample_srs}()},
 \code{\link{sample_strat}()}
+}
+\author{
+Tristan R.H. Goodbody
 }
 \concept{sample functions}

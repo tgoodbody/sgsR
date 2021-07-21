@@ -34,6 +34,11 @@
 #' 
 #' sample_aHELS(mraster = mr[[1:3]], existing = e, nQuant = 20, nSamp = 300, filename = tempfile(fileext = ".shp"))
 #'
+#' @note 
+#' Special thanks to Brendan Malone for the original implementation of this algorithm.
+#' 
+#' @author Tristan R.H. Goodbody 
+#'
 #' @export
 
 sample_aHELS <- function(mraster,
@@ -76,7 +81,7 @@ sample_aHELS <- function(mraster,
   nb <- terra::nlyr(mraster)
 
   #--- determine crs of input sraster ---#
-  crs <- terra::crs(mraster)
+  crs <- terra::crs(mraster, proj = TRUE)
 
   #--- extract covariates data from mraster ---#
 

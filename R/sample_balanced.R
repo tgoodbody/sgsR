@@ -8,11 +8,24 @@
 #' @inheritParams strat_kmeans
 #' @inheritParams sample_srs
 #' @param algorithm Character. One of \code{lpm2 lcube lcubestratified}
-#' @param p Numeric. Inclusion probability for each candidate sample.
-#' Default is \code{nSamp / N}
+#' @param p Numeric. Vector with length equal to the number of cells in \code{mraster} representing
+#' the inclusion probability for each candidate sample. Default = \code{nSamp / N}, where \code{N}
+#' is the number of cells.
 #'
 #' @return An sf object with \code{nSamp} randomly sampled points.
 #'
+#' @examples 
+#' #--- Load raster and existing plots---#
+#' r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+#' mr <- terra::rast(r)
+#' 
+#' a <- system.file("extdata","roads.shp", package = "sgsR")
+#' ac <- sf::st_read(a)
+#' 
+#' sample_balanced(mraster = mr, nSamp = 200, plot = TRUE)
+#' 
+#' sample_balanced(mraster = mr, nSamp = 100, algorithm = "lcube", access = ac, buff_inner = 50, buff_outer = 200)
+#' 
 #'
 #' @references
 #'
@@ -22,6 +35,7 @@
 #' Jonathan Lisic and Anton Grafstrom (2018). SamplingBigData: Sampling Methods for
 #' Big Data. R package version 1.0.0. https://CRAN.R-project.org/package=SamplingBigData
 #'
+#' @author Tristan R.H. Goodbody 
 #'
 #' @export
 
@@ -32,7 +46,9 @@ sample_balanced <- function(mraster,
                             access = NULL,
                             buff_inner = NULL,
                             buff_outer = NULL,
-                            plot = FALSE) {
+                            plot = FALSE,
+                            filename = NULL,
+                            overwrite = FALSE) {
 
   #--- check for required packages ---#
   if (!requireNamespace("BalancedSampling", quietly = TRUE)) {
@@ -72,12 +88,12 @@ sample_balanced <- function(mraster,
   ## DETERMINE NULL / NA SYNTAX FOR CRS##
   ######################################
 
-  if (is.na(crs(mraster))) {
+  if (is.na(terra::crs(mraster, proj = TRUE))) {
     stop("'mraster' does not have a coordinate system")
   }
 
   #--- determine crs of input mraster ---#
-  crs <- crs(mraster)
+  crs <- terra::crs(mraster, proj = TRUE)
 
   #--- set mraster for plotting who area in case of masking ---#
 
@@ -183,11 +199,29 @@ sample_balanced <- function(mraster,
   sf::st_crs(samples) <- crs
 
   if (isTRUE(plot)) {
-
+    
     #--- plot input mraster and random samples ---#
-    terra::plot(mrasterP[[1]])
-    suppressWarnings(terra::plot(access_buff$buff, add = T, border = c("gray30"), col = "gray10", alpha = 0.1))
-    suppressWarnings(terra::plot(samples, add = T, col = "black"))
+    if (!is.null(access)) {
+      terra::plot(mrasterP[[1]])
+      suppressWarnings(terra::plot(access_buff$buff, add = T, border = c("gray30"), col = "gray10", alpha = 0.1))
+      suppressWarnings(terra::plot(samples, add = T, col = "black"))
+    } else {
+      terra::plot(mrasterP[[1]])
+      suppressWarnings(terra::plot(samples, add = T, col = "black"))
+    }
+
+  }
+  
+  if (!is.null(filename)) {
+    if (!is.logical(overwrite)) {
+      stop("'overwrite' must be either TRUE or FALSE")
+    }
+    
+    if (file.exists(filename) & isFALSE(overwrite)) {
+      stop(paste0(filename, " already exists and overwrite = FALSE"))
+    }
+    
+    sf::st_write(samples, filename, delete_layer = overwrite)
   }
 
   #--- output samples sf ---#

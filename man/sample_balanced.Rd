@@ -12,7 +12,9 @@ sample_balanced(
   access = NULL,
   buff_inner = NULL,
   buff_outer = NULL,
-  plot = FALSE
+  plot = FALSE,
+  filename = NULL,
+  overwrite = FALSE
 )
 }
 \arguments{
@@ -22,8 +24,9 @@ sample_balanced(
 
 \item{algorithm}{Character. One of \code{lpm2 lcube lcubestratified}}
 
-\item{p}{Numeric. Inclusion probability for each candidate sample.
-Default is \code{nSamp / N}}
+\item{p}{Numeric. Vector with length equal to the number of cells in \code{mraster} representing
+the inclusion probability for each candidate sample. Default = \code{nSamp / N}, where \code{N}
+is the number of cells.}
 
 \item{access}{sf. Road access network - must be lines.}
 
@@ -35,6 +38,10 @@ from access where plots can be sampled.}
 
 \item{plot}{Logical. Plots output strata raster and visualized
 strata with boundary dividers.}
+
+\item{filename}{Character. Path to write stratified raster to disc.}
+
+\item{overwrite}{Logical. Specify whether \code{filename} should be overwritten on disc.}
 }
 \value{
 An sf object with \code{nSamp} randomly sampled points.
@@ -42,6 +49,20 @@ An sf object with \code{nSamp} randomly sampled points.
 \description{
 Balanced raster sampling using \code{\link[BalancedSampling]{lpm2}} and
 \code{\link[SamplingBigData]{lpm2_kdtree}} methods
+}
+\examples{
+#--- Load raster and existing plots---#
+r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+mr <- terra::rast(r)
+
+a <- system.file("extdata","roads.shp", package = "sgsR")
+ac <- sf::st_read(a)
+
+sample_balanced(mraster = mr, nSamp = 200, plot = TRUE)
+
+sample_balanced(mraster = mr, nSamp = 100, algorithm = "lcube", access = ac, buff_inner = 50, buff_outer = 200)
+
+
 }
 \references{
 Anton Grafstrom and Jonathan Lisic (2019). BalancedSampling: Balanced and Spatially
@@ -57,5 +78,8 @@ Other sample functions:
 \code{\link{sample_grid}()},
 \code{\link{sample_srs}()},
 \code{\link{sample_strat}()}
+}
+\author{
+Tristan R.H. Goodbody
 }
 \concept{sample functions}

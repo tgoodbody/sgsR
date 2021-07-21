@@ -178,7 +178,7 @@ extract_metrics <- function(mraster,
 
     #--- assign mraster crs to spatial points object ---#
 
-    sf::st_crs(samples) <- terra::crs(mraster)
+    sf::st_crs(samples) <- terra::crs(mraster, proj = TRUE)
     
     if (!is.null(filename)) {
       if (!is.logical(overwrite)) {
