@@ -30,9 +30,9 @@
 #' e <- system.file("extdata","existing.shp", package = "sgsR")
 #' e <- sf::st_read(e)
 #' 
-#' sample_aHELS(mraster = mr, existing = e, plot = TRUE)
+#' sample_aHELS(mraster = mr[[1:3]], existing = e, plot = TRUE)
 #' 
-#' sample_aHELS(mraster = mr, existing = e, nQuant = 20, nSamp = 300, filename = tempfile(fileext = ".shp"))
+#' sample_aHELS(mraster = mr[[1:3]], existing = e, nQuant = 20, nSamp = 300, filename = tempfile(fileext = ".shp"))
 #'
 #' @export
 

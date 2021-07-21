@@ -5,8 +5,8 @@
 \title{Adapted Hypercube Evaluation of a Legacy Sample (aHELS)}
 \usage{
 sample_aHELS(
-  mraster = NULL,
-  existing = NULL,
+  mraster,
+  existing,
   nQuant = 10,
   nSamp = NULL,
   threshold = 0.9,
@@ -42,6 +42,19 @@ Returns sf point object with existing samples and supplemental samples added by 
 Perform the adapted Hypercube Evaluation of a Legacy Sample (aHELS) algorithm using
 existing site data and raster metrics. New samples are allocated based on quantile ratios between
 the existing sampleand covariate dataset.
+}
+\examples{
+#--- Load raster and existing plots---#
+r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+mr <- terra::rast(r)
+
+e <- system.file("extdata","existing.shp", package = "sgsR")
+e <- sf::st_read(e)
+
+sample_aHELS(mraster = mr[[1:3]], existing = e, plot = TRUE)
+
+sample_aHELS(mraster = mr[[1:3]], existing = e, nQuant = 20, nSamp = 300, filename = tempfile(fileext = ".shp"))
+
 }
 \references{
 Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451
