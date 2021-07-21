@@ -44,7 +44,7 @@ An sf object with sampled points at intersections of fishnet grid.
 Sample landscape using a fishnet grid pattern.
 }
 \examples{
-#' #--- Load raster and access files ---#
+#--- Load raster and access files ---#
 r <- system.file("extdata","kmeans.tif", package = "sgsR")
 sr <- terra::rast(r)
 

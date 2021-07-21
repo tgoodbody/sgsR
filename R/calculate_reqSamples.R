@@ -9,6 +9,21 @@
 #'
 #'
 #' @return data.frame of strata and associates samples
+#' 
+#' @examples 
+#' #--- Load strata raster and existing samples---#
+#' r <- system.file("extdata","kmeans.tif", package = "sgsR")
+#' sr <- terra::rast(r)
+#' 
+#' e <- system.file("extdata","existing.shp", package = "sgsR")
+#' e <- sf::st_read(e)
+#'
+#' #--- perform grid sampling ---#
+#' calculate_reqSamples(sraster = sr, nSamp = 200)
+#' 
+#' calculate_reqSamples(sraster = sr, nSamp = 200, existing = e)
+#' 
+#' @export
 
 
 calculate_reqSamples <- function(sraster,

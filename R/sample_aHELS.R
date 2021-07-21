@@ -22,15 +22,28 @@
 #'
 #' @return Returns sf point object with existing samples and supplemental samples added by the aHELS algorithm.
 #'
+#' @examples
+#' #--- Load raster and existing plots---#
+#' r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+#' mr <- terra::rast(r)
+#' 
+#' e <- system.file("extdata","existing.shp", package = "sgsR")
+#' e <- sf::st_read(e)
+#' 
+#' sample_aHELS(mraster = mr, existing = e, plot = TRUE)
+#' 
+#' sample_aHELS(mraster = mr, existing = e, nQuant = 20, nSamp = 300, filename = tempfile(fileext = ".shp"))
 #'
 #' @export
 
-sample_aHELS <- function(mraster = NULL,
-                         existing = NULL,
+sample_aHELS <- function(mraster,
+                         existing,
                          nQuant = 10,
                          nSamp = NULL,
                          threshold = 0.9,
-                         plot = FALSE) {
+                         plot = FALSE,
+                         filename = NULL,
+                         overwrite = FALSE) {
 
   #--- Set global vars ---#
 
@@ -407,6 +420,18 @@ sample_aHELS <- function(mraster = NULL,
   if (isTRUE(plot)) {
     terra::plot(mraster[[1]])
     suppressWarnings(terra::plot(samples, add = T, col = "black", pch = ifelse(samples$type == "existing", 1, 3)))
+  }
+  
+  if (!is.null(filename)) {
+    if (!is.logical(overwrite)) {
+      stop("'overwrite' must be either TRUE or FALSE")
+    }
+    
+    if (file.exists(filename) & isFALSE(overwrite)) {
+      stop(paste0(filename, " already exists and overwrite = FALSE"))
+    }
+    
+    sf::st_write(samples, filename, delete_layer = overwrite)
   }
 
   return(samples)

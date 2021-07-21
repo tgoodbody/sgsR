@@ -5,7 +5,7 @@
 #'
 #' @inheritParams calculate_lhsPop
 #'
-#' @param popLHC List. Output from \code{\link{calculate_lhsPop}} function.
+#' @param popLHS List. Output from \code{\link{calculate_lhsPop}} function.
 #' @param minSamp Numeric. Minimum sample size to test. \code{default = 10}.
 #' @param maxSamp Numeric. Maximum sample size to test. \code{default = 100}.
 #' @param step Numeric. Sample step size for each iteration. \code{default = 10}.
@@ -18,11 +18,23 @@
 #' Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451
 #'
 #' @return data.frame with summary statistics.
+#' 
+#' @examples 
+#' #--- Load raster and access files ---#
+#' r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+#' mr <- terra::rast(r)
+#' 
+#' #--- calculate lhsPop details ---#
+#' poplhs <- calculate_lhsPop(mraster = mr)
+#' 
+#' calculate lhsOpt(popLHS = poplhs)
+#' 
+#' calculate lhsOpt(popLHS = poplhs, PCA = FALSE, iter = 200)
 #'
 #' @export
 
 
-calculate_lhsOpt <- function(popLHC = NULL,
+calculate_lhsOpt <- function(popLHS = NULL,
                              PCA = TRUE,
                              quant = TRUE,
                              KLdiv = TRUE,
@@ -50,12 +62,12 @@ calculate_lhsOpt <- function(popLHC = NULL,
 
   #--- Error handling ---#
 
-  if (!is.list(popLHC)) {
-    stop("'popLHC' must be a list")
+  if (!is.list(popLHS)) {
+    stop("'popLHS' must be a list")
   }
 
-  if (any(!names(popLHC) %in% c("values", "pcaLoad", "matQ", "matCov"))) {
-    stop(paste0("'popLHC' must be the output from the 'calculate_lhsPop()' function"))
+  if (any(!names(popLHS) %in% c("values", "pcaLoad", "matQ", "matCov"))) {
+    stop(paste0("'popLHS' must be the output from the 'calculate_lhsPop()' function"))
   }
 
   if (!is.logical(PCA)) {
@@ -85,7 +97,7 @@ calculate_lhsOpt <- function(popLHC = NULL,
 
   #--- set global variables ---#
 
-  nb <- ncol(popLHC$values)
+  nb <- ncol(popLHS$values)
 
   #--- Establish sampling sequence ---#
 
@@ -107,9 +119,9 @@ calculate_lhsOpt <- function(popLHC = NULL,
 
       #--- perform conditionel Latin Hypercube Sampling ---#
 
-      ss <- clhs::clhs(popLHC$values, size = sampSeq[tSamp], progress = TRUE, iter = iter)
+      ss <- clhs::clhs(popLHS$values, size = sampSeq[tSamp], progress = TRUE, iter = iter)
 
-      samples <- popLHC$values[ss, ]
+      samples <- popLHS$values[ss, ]
 
       # --- PCA similarity factor testing ---#
 
@@ -133,7 +145,7 @@ calculate_lhsOpt <- function(popLHC = NULL,
 
         #--- Perfrom the Krznowski 1979 calculation ---#
 
-        pop <- popLHC$pcaLoad[, 1:2]
+        pop <- popLHS$pcaLoad[, 1:2]
         samp <- pcaLoadSamp[, 1:2]
 
         #--- transpose matrices ---#
@@ -159,7 +171,7 @@ calculate_lhsOpt <- function(popLHC = NULL,
 
           #--- Calculate population quantiles ---#
 
-          popQuant <- stats::quantile(popLHC$values[, var], probs = seq(0, 1, 0.25), names = F, type = 7)
+          popQuant <- stats::quantile(popLHS$values[, var], probs = seq(0, 1, 0.25), names = F, type = 7)
 
           #--- populate quantile differences into matFinal ---#
 
@@ -180,9 +192,9 @@ calculate_lhsOpt <- function(popLHC = NULL,
 
         sampleCov <- mat_cov(
           vals = samples,
-          nQuant = nrow(popLHC$matCov),
+          nQuant = nrow(popLHS$matCov),
           nb = nb,
-          matQ = popLHC$matQ
+          matQ = popLHS$matQ
         )
 
         #--- calculate KL divergence ---#
@@ -197,7 +209,7 @@ calculate_lhsOpt <- function(popLHC = NULL,
 
           #--- calculate divergence ---#
 
-          kld <- entropy::KL.empirical(popLHC$matCov[, kl], sampleCov[, kl])
+          kld <- entropy::KL.empirical(popLHS$matCov[, kl], sampleCov[, kl])
 
           #--- populate vector ---#
 

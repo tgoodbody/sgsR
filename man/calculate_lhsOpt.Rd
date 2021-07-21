@@ -5,7 +5,7 @@
 \title{Analyze optimal Latin hypercube sample number}
 \usage{
 calculate_lhsOpt(
-  popLHC = NULL,
+  popLHS = NULL,
   PCA = TRUE,
   quant = TRUE,
   KLdiv = TRUE,
@@ -17,7 +17,7 @@ calculate_lhsOpt(
 )
 }
 \arguments{
-\item{popLHC}{List. Output from \code{\link{calculate_lhsPop}} function.}
+\item{popLHS}{List. Output from \code{\link{calculate_lhsPop}} function.}
 
 \item{PCA}{Logical. Calculates principal component loadings of the population for PCA similarity factor testing.
 \code{default = TRUE}.}
@@ -44,6 +44,19 @@ data.frame with summary statistics.
 }
 \description{
 Population level analysis of metric raster data to determine optimal Latin Hypercube sample size
+}
+\examples{
+#--- Load raster and access files ---#
+r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+mr <- terra::rast(r)
+
+#--- calculate lhsPop details ---#
+poplhs <- calculate_lhsPop(mraster = mr)
+
+calculate lhsOpt(popLHS = poplhs)
+
+calculate lhsOpt(popLHS = poplhs, PCA = FALSE, iter = 200)
+
 }
 \references{
 Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451

@@ -10,7 +10,9 @@ sample_aHELS(
   nQuant = 10,
   nSamp = NULL,
   threshold = 0.9,
-  plot = FALSE
+  plot = FALSE,
+  filename = NULL,
+  overwrite = FALSE
 )
 }
 \arguments{
@@ -28,6 +30,10 @@ additional samples should be added. \code{default = 0.9}. Values close to 1 can 
 continually loop and should be used sparingly.}
 
 \item{plot}{Logial. Plots existing (circles) and new (crosses) samples on the first band of mraster.}
+
+\item{filename}{Character. Path to write stratified raster to disc.}
+
+\item{overwrite}{Logical. Specify whether \code{filename} should be overwritten on disc.}
 }
 \value{
 Returns sf point object with existing samples and supplemental samples added by the aHELS algorithm.

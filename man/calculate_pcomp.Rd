@@ -40,6 +40,16 @@ Output raster with specified number of principal components as layers.
 \description{
 Calculate and rasterize principal components from a metric raster
 }
+\examples{
+#--- Load raster ---#
+r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+mr <- terra::rast(r)
+
+calculate_pcomp(mraster = mr, nComp = 5)
+
+calculate_pcomp(mraster = mr, nComp = 3, plot = TRUE, details = TRUE)
+
+}
 \seealso{
 Other calculate functions: 
 \code{\link{calculate_COOBS}()},

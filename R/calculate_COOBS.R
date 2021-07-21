@@ -21,21 +21,21 @@
 #' @return output raster with COOBS and classified COOBS layers.
 #' 
 #' @examples
-#' #--- Load raster and access files ---#
+#' #--- Load raster and existing plots---#
 #' r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
-#' sr <- terra::rast(r)
+#' mr <- terra::rast(r)
 #' 
 #' e <- system.file("extdata","existing.shp", package = "sgsR")
 #' e <- sf::st_read(e)
 #' 
-#' calculate_COOBS(raster = sr, existing = e, cores = 4, details = TRUE, filename = tempfile(fileext = ".shp"))
+#' calculate_COOBS(mraster = mr, existing = e, cores = 4, details = TRUE, filename = tempfile(fileext = ".shp"))
 #'
 #'
 #' @export
 
 
-calculate_COOBS <- function(mraster = NULL,
-                            existing = NULL,
+calculate_COOBS <- function(mraster,
+                            existing,
                             cores = 1,
                             threshold = 0.95,
                             plot = FALSE,
