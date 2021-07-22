@@ -85,7 +85,7 @@ buff_inner = 50, buff_outer = 200, filename = tempfile(fileext = ".shp"))
 }
 \seealso{
 Other sample functions: 
-\code{\link{sample_aHELS}()},
+\code{\link{sample_ahels}()},
 \code{\link{sample_balanced}()},
 \code{\link{sample_clhs}()},
 \code{\link{sample_grid}()},

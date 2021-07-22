@@ -24,17 +24,17 @@
 #' 
 #' @examples 
 #' #--- Load raster and access files ---#
-#' r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR"
+#' r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
 #' mr <- terra::rast(r)
 #' 
 #' #--- perform stratification using k-means ---#
 #' kmeans <- strat_kmeans(mraster = mr, nStrata = 5)
 #' 
 #' kmeans <- strat_kmeans(mraster = mr, nStrata = 5, iter = 1000,
-#'  plot = TRUE, details = TRUE)
+#'  algorithm = "MacQueen", plot = TRUE, details = TRUE)
 #' 
 #' kmeans <- strat_kmeans(mraster = mr, nStrata = 5, iter = 1000,
-#'  plot = TRUE, tempfile(fileext = ".tif"), overwrite = TRUE)
+#'  plot = TRUE, filename = tempfile(fileext = ".tif"), overwrite = TRUE)
 #'
 #' @export
 

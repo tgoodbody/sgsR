@@ -20,7 +20,7 @@ strat_osb(
 \arguments{
 \item{mraster}{spatRaster. ALS metrics raster.}
 
-\item{metric}{Character. Name of metric to be used for stratification.}
+\item{metric}{Numeric/Character. Index or name of primary covariate within \code{mraster} to stratify.}
 
 \item{nStrata}{Numeric. Number of desired output strata.}
 
@@ -28,7 +28,7 @@ strat_osb(
 OSB algorithm to help determine break points.}
 
 \item{subset}{Numeric. Value between 0 and 1 (default)
-denoting proportion of data to use to determine break points.}
+denoting proportion of data to use to determine optimum sample boundaries.}
 
 \item{plot}{Logical. Plots output strata raster and visualized
 strata with boundary dividers.}
@@ -61,6 +61,21 @@ for each stratum.
 \description{
 Determine optimum sample boundaries algorithm of univariate populations
 using the \code{\link[stratifyR]{strata.data}} algorithm.
+}
+\examples{
+\dontrun{
+#--- Load raster and access files ---#
+r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+mr <- terra::rast(r)
+
+#--- perform optimum sample boundary stratification ---#
+strat_osb(mraster = mr, metric = "zsd", nSamp = 200, nStrata = 4, plot = TRUE)
+
+strat_osb(mraster = mr, metric = 4, nSamp = 20, nStrata = 3,  plot = TRUE, details = TRUE)
+
+strat_osb(mraster = mr, metric = "zmax", nSamp = 100, nStrata = 5, subset = 0.75, filename = tempfile(fileext = ".tif"))
+}
+
 }
 \references{
 Khan, E. A., Khan, M. G. M., & Ahsan, M. J. (2002). Optimum Stratification:

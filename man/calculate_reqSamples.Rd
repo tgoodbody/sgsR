@@ -23,7 +23,6 @@ Determine required samples in strata
 Count the required number of samples for each raster strata
 }
 \examples{
-\dontrun{
 #--- Load strata raster and existing samples---#
 r <- system.file("extdata","kmeans.tif", package = "sgsR")
 sr <- terra::rast(r)
@@ -34,12 +33,14 @@ e <- sf::st_read(e)
 #--- perform grid sampling ---#
 calculate_reqSamples(sraster = sr, nSamp = 200)
 
-calculate_reqSamples(sraster = sr, nSamp = 200, existing = e)
-}
+e.sr <- extract_strata(sraster = sr, existing = e)
+
+calculate_reqSamples(sraster = sr, nSamp = 200, existing = e.sr)
+
 }
 \seealso{
 Other calculate functions: 
-\code{\link{calculate_COOBS}()},
+\code{\link{calculate_coobs}()},
 \code{\link{calculate_distance}()},
 \code{\link{calculate_lhsPop}()},
 \code{\link{calculate_pcomp}()}

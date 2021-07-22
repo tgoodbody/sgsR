@@ -59,7 +59,7 @@ calculate_pcomp(mraster = mr, nComp = 3, plot = TRUE, details = TRUE)
 }
 \seealso{
 Other calculate functions: 
-\code{\link{calculate_COOBS}()},
+\code{\link{calculate_coobs}()},
 \code{\link{calculate_distance}()},
 \code{\link{calculate_lhsPop}()},
 \code{\link{calculate_reqSamples}()}

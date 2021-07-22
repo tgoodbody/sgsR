@@ -66,13 +66,11 @@ br.max <- c(3,5,11,18)
 br.sd <- c(1,2,5)
 
 strat_breaks(mraster = mr, metric = "zmax", breaks = br.max,
- plot = TRUE, details = TRUE)
+plot = TRUE, details = TRUE)
 
 strat_breaks(mraster = mr, metric = 1, metric2 = "zsd",
- breaks = br.max, breaks2 = br.sd, plot = TRUE)
+breaks = br.max, breaks2 = br.sd, plot = TRUE)
 
-strat_breaks(mraster = mr, metric = "zmax", breaks = br.max,
- filename = tempfile(fileext = ".tif"))
 
 }
 \seealso{

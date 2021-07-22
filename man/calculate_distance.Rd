@@ -45,7 +45,7 @@ calculate_distance(raster = sr, access = ac, plot = TRUE, filename = tempfile(fi
 }
 \seealso{
 Other calculate functions: 
-\code{\link{calculate_COOBS}()},
+\code{\link{calculate_coobs}()},
 \code{\link{calculate_lhsPop}()},
 \code{\link{calculate_pcomp}()},
 \code{\link{calculate_reqSamples}()}

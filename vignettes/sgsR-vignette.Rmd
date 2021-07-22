@@ -76,6 +76,7 @@ kmeans <- strat_kmeans(mraster = wall_poly[[1:6]], nStrata = 10)
 
 plot(kmeans)
 
+
 #--- set 'details' = TRUE to get algorithm details and outputs ---#
 
 ```

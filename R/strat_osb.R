@@ -7,13 +7,13 @@
 #'
 #' @inheritParams strat_kmeans
 #' @inheritParams strat_breaks
+#' @inheritParams strat_quantiles
 #'
-#' @param metric Character. Name of metric to be used for stratification.
 #' @param nStrata Numeric. Number of desired output strata.
 #' @param nSamp Numeric. Number of desired samples - used within
 #' OSB algorithm to help determine break points.
 #' @param subset Numeric. Value between 0 and 1 (default)
-#' denoting proportion of data to use to determine break points.
+#' denoting proportion of data to use to determine optimum sample boundaries.
 #'
 #'
 #' @references
@@ -41,6 +41,19 @@
 #' }
 #'
 #'
+#' @examples 
+#' \dontrun{
+#' #--- Load raster and access files ---#
+#' r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+#' mr <- terra::rast(r)
+#' 
+#' #--- perform optimum sample boundary stratification ---#
+#' strat_osb(mraster = mr, metric = "zsd", nSamp = 200, nStrata = 4, plot = TRUE)
+#' 
+#' strat_osb(mraster = mr, metric = 4, nSamp = 20, nStrata = 3,  plot = TRUE, details = TRUE)
+#' 
+#' strat_osb(mraster = mr, metric = "zmax", nSamp = 100, nStrata = 5, subset = 0.75, filename = tempfile(fileext = ".tif"))
+#' }
 #'
 #' @export
 
@@ -72,10 +85,6 @@ strat_osb <- function(mraster,
     stop("'mraster' must be type SpatRaster", call. = FALSE)
   }
 
-  if (!metric %in% names(mraster)) {
-    stop(paste0("mraster does not have a variable named ", metric))
-  }
-
   if (!is.numeric(nStrata)) {
     stop("'nStrata' must be type numeric")
   }
@@ -101,12 +110,33 @@ strat_osb <- function(mraster,
   if (terra::nlyr(mraster) == 1) {
     rastermetric <- mraster
   } else {
+    
+    #--- subset metric based on whether it is a character of number ---#  
+    
     if (is.null(metric)) {
       stop(" multiple layers detected in 'mraster'. Please define a 'metric' to stratify")
-    }
-
-    if (!is.character(metric)) {
-      stop("'metric' must be type character")
+      
+    } else {
+      
+      #--- Numeric ---#
+      
+      if (is.numeric(metric)){
+        
+        if((metric) > (terra::nlyr(mraster)) | metric < 0){
+          stop("'metric' index doest not exist within 'mraster'")
+        }
+        
+        #--- Character ---#  
+        
+      } else if (is.character(metric)){
+        
+        if (!metric %in% names(mraster)) {
+          stop(paste0("'mraster' must have an attribute named ", metric))
+        }
+        
+        metric <- which(names(mraster) == metric)
+        
+      }
     }
 
     #--- extract mraster metric ---#
@@ -152,24 +182,26 @@ strat_osb <- function(mraster,
   names(rcl) <- "strata"
 
   if (isTRUE(plot)) {
+    
+    metric <- as.character(names(rastermetric))
+    
+    met <- ggplot2::ensym(metric)
+    
     data <- as.data.frame(OSB[[1]])
-    names(data) <- "metric"
+    names(data) <- metric
 
     #--- plot histogram of metric with associated break lines ---#
 
-    p1 <- ggplot2::ggplot(data, ggplot2::aes(metric)) +
+    p1 <- ggplot2::ggplot(data, ggplot2::aes(!!met)) +
       ggplot2::geom_histogram() +
       ggplot2::geom_vline(xintercept = OSB[[2]]$OSB, linetype = "dashed") +
-      ggplot2::ggtitle("Metric histogram with OSB break lines")
+      ggplot2::ggtitle(paste0(metric, " histogram with optimum sample boundaries."))
 
     print(p1)
 
     #--- set colour palette ---#
 
-    ncols <- nStrata
-    col <- RColorBrewer::brewer.pal(ncols, "Set3")
-
-    terra::plot(rcl, main = "OSB breaks", col = col, type = "classes")
+    terra::plot(rcl, main = paste0(metric, " optimum sample boundaries"), type = "classes")
   }
 
   #--- write file to disc ---#

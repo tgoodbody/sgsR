@@ -46,7 +46,7 @@ Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of c
 }
 \seealso{
 Other calculate functions: 
-\code{\link{calculate_COOBS}()},
+\code{\link{calculate_coobs}()},
 \code{\link{calculate_distance}()},
 \code{\link{calculate_pcomp}()},
 \code{\link{calculate_reqSamples}()}

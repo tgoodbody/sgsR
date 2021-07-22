@@ -75,7 +75,7 @@ Big Data. R package version 1.0.0. https://CRAN.R-project.org/package=SamplingBi
 }
 \seealso{
 Other sample functions: 
-\code{\link{sample_aHELS}()},
+\code{\link{sample_ahels}()},
 \code{\link{sample_clhs}()},
 \code{\link{sample_grid}()},
 \code{\link{sample_srs}()},
