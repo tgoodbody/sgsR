@@ -37,7 +37,8 @@ Suggests:
     entropy (>= 1.3.0),
     stratifyR (>= 1.0.0),
     spatstat (>= 2.1.0),
-    spatstat.geom (>= 2.1.0)
+    spatstat.geom (>= 2.1.0),
+    roxygen2
 VignetteBuilder: 
     knitr
 Config/testthat/edition: 3
