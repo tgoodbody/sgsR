@@ -11,6 +11,7 @@
 #' prior to analysis.
 #' @param ... Additional arguments to be passed to \code{\link[stats]{prcomp}}.
 #'
+#' @importFrom stats na.exclude na.omit prcomp
 #'
 #' @return Output raster with specified number of principal components as layers.
 #'
@@ -41,6 +42,10 @@ calculate_pcomp <- function(mraster = NULL,
                             overwrite = FALSE,
                             ...) {
 
+  #--- set global vars ---#
+  
+  rout <- NULL
+  
   #--- error handling ---#
 
   if (!inherits(mraster, "SpatRaster")) {
@@ -73,7 +78,7 @@ calculate_pcomp <- function(mraster = NULL,
 
   #--- perform PCA using rasterPCA -- requires conversion to raster* format ---#
 
-  PCA <- prcomp(
+  PCA <- stats::prcomp(
     formula = ~.,
     data = as.data.frame(vals),
     center = center,
