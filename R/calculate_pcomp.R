@@ -86,7 +86,7 @@ calculate_pcomp <- function(mraster = NULL,
   rs <- list()
 
   for (i in 1:nComp) {
-    rs[[i]] <- terra::setValues(mraster[[1]], pcavals[, i, drop = FALSE])
+    rs[[i]] <- terra::setValues(mraster[[1]], pcavals[, i])
   }
 
   #--- stack pca rasters ---#

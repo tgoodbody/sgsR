@@ -72,14 +72,14 @@ sample_srs <- function(raster,
   ## DETERMINE NULL / NA SYNTAX FOR CRS##
   ######################################
 
-  if (is.na(crs(raster))) {
+  if (is.na(terra::crs(raster))) {
     stop("'raster' does not have a coordinate system")
   }
 
   rasterP <- raster <- raster[[1]]
 
   #--- determine crs of input raster ---#
-  crs <- crs(raster, proj = TRUE)
+  crs <- terra::crs(raster, proj = TRUE)
 
   if (!is.null(access)) {
 

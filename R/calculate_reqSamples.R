@@ -11,6 +11,7 @@
 #' @return data.frame of strata and associates samples
 #' 
 #' @examples 
+#' \dontrun{
 #' #--- Load strata raster and existing samples---#
 #' r <- system.file("extdata","kmeans.tif", package = "sgsR")
 #' sr <- terra::rast(r)
@@ -22,7 +23,7 @@
 #' calculate_reqSamples(sraster = sr, nSamp = 200)
 #' 
 #' calculate_reqSamples(sraster = sr, nSamp = 200, existing = e)
-#' 
+#' }
 #' @author Tristan R.H. Goodbody 
 #' 
 #' @export
@@ -48,7 +49,7 @@ calculate_reqSamples <- function(sraster,
   toSample <- vals %>%
     stats::na.omit() %>%
     dplyr::group_by(strata) %>%
-    dplyr::summarize(count = n()) %>%
+    dplyr::summarize(count = dplyr::n()) %>%
     dplyr::mutate(
       freq = count / sum(count),
       total = freq * nSamp
@@ -115,7 +116,7 @@ calculate_reqSamples <- function(sraster,
     existing <- existing %>%
       dplyr::group_by(strata) %>%
       dplyr::arrange() %>%
-      dplyr::summarize(eTotal = n())
+      dplyr::summarize(eTotal = dplyr::n())
 
     #--- if the strata for toSample and existing are not identical throw an error ---#
     if (!identical(unique(existing$strata), unique(toSample$strata))) {

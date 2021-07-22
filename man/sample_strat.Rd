@@ -16,7 +16,9 @@ sample_strat(
   wrow = 3,
   wcol = 3,
   plot = FALSE,
-  details = FALSE
+  details = FALSE,
+  filename = NULL,
+  overwrite = FALSE
 )
 }
 \arguments{
@@ -49,6 +51,10 @@ from access where plots can be sampled.}
 stratified samples. If \code{TRUE} return a list
 where \code{$details} additional sampling information and \code{$raster}
 is an sf object of stratified samples.}
+
+\item{filename}{Character. Path to write output samples.}
+
+\item{overwrite}{Logical. Choice to overwrite existing \code{filename} if it exists.}
 }
 \value{
 An sf object with \code{nSamp} stratified samples.

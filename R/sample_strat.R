@@ -55,7 +55,9 @@ sample_strat <- function(sraster,
                          wrow = 3,
                          wcol = 3,
                          plot = FALSE,
-                         details = FALSE) {
+                         details = FALSE,
+                         filename = NULL,
+                         overwrite = FALSE) {
 
   #--- check for required packages ---#
 
@@ -479,6 +481,18 @@ sample_strat <- function(sraster,
       terra::plot(sraster[[1]])
       suppressWarnings(terra::plot(samples, add = T, col = "black", pch = ifelse(samples$type == "existing", 1, 3)))
     }
+  }
+  
+  if (!is.null(filename)) {
+    if (!is.logical(overwrite)) {
+      stop("'overwrite' must be either TRUE or FALSE")
+    }
+    
+    if (file.exists(filename) & isFALSE(overwrite)) {
+      stop(paste0(filename, " already exists and overwrite = FALSE"))
+    }
+    
+    sf::st_write(samples, filename, delete_layer = overwrite)
   }
 
   if (isTRUE(details)) {

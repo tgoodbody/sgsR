@@ -31,6 +31,7 @@ Population level analysis of metric raster data
 Special thanks to Brendan Malone for the original implementation of this algorithm.
 }
 \examples{
+\dontrun{
 #--- Load raster and access files ---#
 r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
 mr <- terra::rast(r)
@@ -38,7 +39,7 @@ mr <- terra::rast(r)
 calculate_lhsPop(mraster = mr)
 
 calculate_lhsPop(mraster = mr, nQuant = 10, PCA = FALSE)
-
+}
 }
 \references{
 Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451

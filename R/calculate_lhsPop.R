@@ -20,6 +20,7 @@
 #' @return List of matrices to be used as input for \code{\link{calculate_lhsOpt}}.
 #' 
 #' @examples 
+#' \dontrun{
 #' #--- Load raster and access files ---#
 #' r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
 #' mr <- terra::rast(r)
@@ -27,7 +28,7 @@
 #' calculate_lhsPop(mraster = mr)
 #' 
 #' calculate_lhsPop(mraster = mr, nQuant = 10, PCA = FALSE)
-#' 
+#' }
 #' @note 
 #' Special thanks to Brendan Malone for the original implementation of this algorithm.
 #' 

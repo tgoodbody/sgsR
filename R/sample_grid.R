@@ -75,7 +75,7 @@ sample_grid <- function(raster,
   }
 
   #--- determine crs of input raster ---#
-  crs <- crs(raster, proj = TRUE)
+  crs <- terra::crs(raster, proj = TRUE)
 
   #--- set mraster for plotting who area in case of masking ---#
 
@@ -99,7 +99,7 @@ sample_grid <- function(raster,
 
   #--- convert raster extent into a polygon ---#
 
-  sfObj <- sf::st_as_sf(terra::as.polygons(ext(raster), crs = terra::crs(raster)))
+  sfObj <- sf::st_as_sf(terra::as.polygons(terra::ext(raster), crs = terra::crs(raster)))
 
   #--- create grid and locate samples at intersections ---#
 
@@ -111,7 +111,7 @@ sample_grid <- function(raster,
 
   #--- set geometry column and remove samples with NA values ---#
 
-  st_geometry(samples) <- "geometry"
+  sf::st_geometry(samples) <- "geometry"
 
   samples <- samples %>%
     dplyr::filter(!is.na(.)) %>%
