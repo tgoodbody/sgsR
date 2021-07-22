@@ -77,6 +77,7 @@ sample_strat(sraster = sr,
              nSamp = 200, 
              plot = TRUE)
              
+#--- extract strata values to existing samples ---#              
 e.sr <- extract_strata(sraster = sr, existing = e)              
 
 sample_strat(sraster = sr, 
