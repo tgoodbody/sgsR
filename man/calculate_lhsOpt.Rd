@@ -51,7 +51,7 @@ Special thanks to Brendan Malone for the original implementation of this algorit
 \examples{
 \dontrun{
 #--- Load raster and access files ---#
-r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
 mr <- terra::rast(r)
 
 #--- calculate lhsPop details ---#
@@ -59,7 +59,9 @@ poplhs <- calculate_lhsPop(mraster = mr)
 
 calculate_lhsOpt(popLHS = poplhs)
 
-calculate_lhsOpt(popLHS = poplhs, PCA = FALSE, iter = 200)
+calculate_lhsOpt(popLHS = poplhs, 
+                 PCA = FALSE, 
+                 iter = 200)
 }
 
 }

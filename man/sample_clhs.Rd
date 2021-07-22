@@ -62,42 +62,61 @@ Conditioned Latin Hypercube Sampling using \code{\link[clhs]{clhs}} functionalit
 }
 \examples{
 #--- Load raster and existing plots---#
-r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
 mr <- terra::rast(r)
 
-e <- system.file("extdata","existing.shp", package = "sgsR")
+e <- system.file("extdata", "existing.shp", package = "sgsR")
 e <- sf::st_read(e)
 
-a <- system.file("extdata","roads.shp", package = "sgsR")
+a <- system.file("extdata", "roads.shp", package = "sgsR")
 ac <- sf::st_read(a)
 
-sample_clhs(mraster = mr, nSamp = 200, plot = TRUE, iter = 100)
+sample_clhs(mraster = mr, 
+            nSamp = 200, 
+            plot = TRUE, 
+            iter = 100)
 
-sample_clhs(mraster = mr, nSamp = 400, existing = e, iter = 250, 
-details = TRUE)
+sample_clhs(mraster = mr, 
+            nSamp = 400, 
+            existing = e, 
+            iter = 250,
+            details = TRUE)
 
-sample_clhs(mraster = mr, nSamp = 200, iter = 200, existing = e, 
-access = ac, buff_inner = 100, buff_outer = 300, plot = TRUE)
+sample_clhs(mraster = mr, 
+            nSamp = 200, 
+            iter = 200, 
+            existing = e,
+            access = ac, 
+            buff_inner = 100,
+            buff_outer = 300, 
+            plot = TRUE)
 
 #--- cost constrained examples ---#
 #--- calculate distance to access layer for each pixel in mr ---#
-mr.c <- calculate_distance(raster = mr, access = ac)
+mr.c <- calculate_distance(raster = mr, 
+                           access = ac)
 
-sample_clhs(mraster = mr.c, nSamp = 250, iter = 200, 
-cost = "dist2access", plot = TRUE)
+sample_clhs(mraster = mr.c, 
+            nSamp = 250, 
+            iter = 200,
+            cost = "dist2access",
+            plot = TRUE)
 
-sample_clhs(mraster = mr.c, nSamp = 250, existing = e, iter = 200, 
-cost = "dist2access", plot = TRUE)
-
+sample_clhs(mraster = mr.c, 
+            nSamp = 250, 
+            existing = e, 
+            iter = 200,
+            cost = "dist2access", 
+            plot = TRUE)
 }
 \references{
 Minasny, B. and McBratney, A.B. 2006. A conditioned Latin hypercube method
 for sampling in the presence of ancillary information. Computers and
 Geosciences, 32:1378-1388.
 
-Minasny, B. and A. B. McBratney, A.B.. 2010. Conditioned Latin Hypercube 
-Sampling for Calibrating Soil Sensor Data to Soil Properties. In: Proximal 
-Soil Sensing, Progress in Soil Science, pages 111-119. 
+Minasny, B. and A. B. McBratney, A.B.. 2010. Conditioned Latin Hypercube
+Sampling for Calibrating Soil Sensor Data to Soil Properties. In: Proximal
+Soil Sensing, Progress in Soil Science, pages 111-119.
 
 Roudier, P., Beaudette, D.E. and Hewitt, A.E. 2012. A conditioned Latin
 hypercube sampling algorithm incorporating operational constraints. In:

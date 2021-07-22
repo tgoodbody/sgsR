@@ -32,16 +32,20 @@ within the \code{\link{sample_clhs}} function
 }
 \examples{
 #--- Load raster and access files ---#
-r <- system.file("extdata","kmeans.tif", package = "sgsR")
+r <- system.file("extdata", "kmeans.tif", package = "sgsR")
 sr <- terra::rast(r)
 
-a <- system.file("extdata","roads.shp", package = "sgsR")
+a <- system.file("extdata", "roads.shp", package = "sgsR")
 ac <- sf::st_read(a)
 
-calculate_distance(raster = sr, access = ac, plot = TRUE)
+calculate_distance(raster = sr, 
+                   access = ac, 
+                   plot = TRUE)
 
-calculate_distance(raster = sr, access = ac, plot = TRUE, filename = tempfile(fileext = ".tif"))
-
+calculate_distance(raster = sr, 
+                   access = ac, 
+                   plot = TRUE, 
+                   filename = tempfile(fileext = ".tif"))
 }
 \seealso{
 Other calculate functions: 

@@ -20,28 +20,42 @@
 #'
 #' @return An sf object with \code{nSamp} stratified samples.
 #'
-#' @examples 
+#' @examples
 #' #--- Load raster and access files ---#
-#' r <- system.file("extdata","kmeans.tif", package = "sgsR")
+#' r <- system.file("extdata", "kmeans.tif", package = "sgsR")
 #' sr <- terra::rast(r)
 #'
-#' a <- system.file("extdata","roads.shp", package = "sgsR")
+#' a <- system.file("extdata", "roads.shp", package = "sgsR")
 #' ac <- sf::st_read(a)
 #'
-#' e <- system.file("extdata","existing.shp", package = "sgsR")
+#' e <- system.file("extdata", "existing.shp", package = "sgsR")
 #' e <- sf::st_read(e)
+#'
+#--- perform stratified sampling random sampling ---#
+#' sample_strat(sraster = sr, 
+#'              nSamp = 200, 
+#'              plot = TRUE)
+#'              
+#' #--- extract strata values to existing samples ---#              
+#' e.sr <- extract_strata(sraster = sr, existing = e)              
 #' 
-#' #--- perform stratified sampling random sampling ---#
-#' sample_strat(sraster = sr, nSamp = 200, plot = TRUE)
-#'
-#' sample_strat(sraster = sr, nSamp = 200, access = ac, 
-#' existing = e, mindist = 200, buff_inner = 50, buff_outer = 200)
-#'
-#' sample_strat(sraster = sr, nSamp = 200, access = ac, 
-#' buff_inner = 50, buff_outer = 200, filename = tempfile(fileext = ".shp"))
-#'
+#' sample_strat(sraster = sr, 
+#'              nSamp = 200, 
+#'              access = ac,
+#'              existing = e.sr, 
+#'              mindist = 200, 
+#'              buff_inner = 50, 
+#'              buff_outer = 200)
+#' 
+#' sample_strat(sraster = sr, 
+#'              nSamp = 200, 
+#'              access = ac,
+#'              buff_inner = 50, 
+#'              buff_outer = 200, 
+#'              filename = tempfile(fileext = ".shp"))
+#'              
 #' @author Tristan R.H. Goodbody & Martin Queinnec
-#' 
+#'
 #' @export
 
 sample_strat <- function(sraster,
@@ -90,7 +104,7 @@ sample_strat <- function(sraster,
   }
 
   if (!is.null(mindist)) {
-    if(!is.numeric(mindist)){
+    if (!is.numeric(mindist)) {
       stop("'mindist' must be type numeric")
     }
   }
@@ -482,16 +496,16 @@ sample_strat <- function(sraster,
       suppressWarnings(terra::plot(samples, add = T, col = "black", pch = ifelse(samples$type == "existing", 1, 3)))
     }
   }
-  
+
   if (!is.null(filename)) {
     if (!is.logical(overwrite)) {
       stop("'overwrite' must be either TRUE or FALSE")
     }
-    
+
     if (file.exists(filename) & isFALSE(overwrite)) {
       stop(paste0(filename, " already exists and overwrite = FALSE"))
     }
-    
+
     sf::st_write(samples, filename, delete_layer = overwrite)
   }
 

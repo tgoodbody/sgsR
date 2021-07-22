@@ -18,25 +18,27 @@
 #' Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451
 #'
 #' @return data.frame with summary statistics.
-#' 
-#' @examples 
+#'
+#' @examples
 #' \dontrun{
 #' #--- Load raster and access files ---#
-#' r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+#' r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
 #' mr <- terra::rast(r)
-#' 
+#'
 #' #--- calculate lhsPop details ---#
 #' poplhs <- calculate_lhsPop(mraster = mr)
 #' 
 #' calculate_lhsOpt(popLHS = poplhs)
 #' 
-#' calculate_lhsOpt(popLHS = poplhs, PCA = FALSE, iter = 200)
+#' calculate_lhsOpt(popLHS = poplhs, 
+#'                  PCA = FALSE, 
+#'                  iter = 200)
 #' }
-#' 
-#' @note 
+#'
+#' @note
 #' Special thanks to Brendan Malone for the original implementation of this algorithm.
-#' 
-#' @author Tristan R.H. Goodbody 
+#'
+#' @author Tristan R.H. Goodbody
 #'
 #' @export
 

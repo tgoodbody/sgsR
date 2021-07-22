@@ -41,19 +41,35 @@
 #' }
 #'
 #'
-#' @examples 
+#' @examples
 #' \dontrun{
 #' #--- Load raster and access files ---#
-#' r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+#' r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
 #' mr <- terra::rast(r)
-#' 
+#'
 #' #--- perform optimum sample boundary stratification ---#
-#' strat_osb(mraster = mr, metric = "zsd", nSamp = 200, nStrata = 4, plot = TRUE)
+#' strat_osb(mraster = mr, 
+#'           metric = "zsd", 
+#'           nSamp = 200, 
+#'           nStrata = 4, 
+#'           plot = TRUE)
 #' 
-#' strat_osb(mraster = mr, metric = 4, nSamp = 20, nStrata = 3,  plot = TRUE, details = TRUE)
+#' strat_osb(mraster = mr, 
+#'           metric = 4, 
+#'           nSamp = 20, 
+#'           nStrata = 3, 
+#'           plot = TRUE, 
+#'           details = TRUE)
 #' 
-#' strat_osb(mraster = mr, metric = "zmax", nSamp = 100, nStrata = 5, subset = 0.75, filename = tempfile(fileext = ".tif"))
+#' strat_osb(mraster = mr, 
+#'           metric = "zmax", 
+#'           nSamp = 100, 
+#'           nStrata = 5, 
+#'           subset = 0.75, 
+#'           filename = tempfile(fileext = ".tif"))
 #' }
+#'
+#' @author Tristan R.H. Goodbody
 #'
 #' @export
 
@@ -110,32 +126,27 @@ strat_osb <- function(mraster,
   if (terra::nlyr(mraster) == 1) {
     rastermetric <- mraster
   } else {
-    
-    #--- subset metric based on whether it is a character of number ---#  
-    
+
+    #--- subset metric based on whether it is a character of number ---#
+
     if (is.null(metric)) {
       stop(" multiple layers detected in 'mraster'. Please define a 'metric' to stratify")
-      
     } else {
-      
+
       #--- Numeric ---#
-      
-      if (is.numeric(metric)){
-        
-        if((metric) > (terra::nlyr(mraster)) | metric < 0){
+
+      if (is.numeric(metric)) {
+        if ((metric) > (terra::nlyr(mraster)) | metric < 0) {
           stop("'metric' index doest not exist within 'mraster'")
         }
-        
-        #--- Character ---#  
-        
-      } else if (is.character(metric)){
-        
+
+        #--- Character ---#
+      } else if (is.character(metric)) {
         if (!metric %in% names(mraster)) {
           stop(paste0("'mraster' must have an attribute named ", metric))
         }
-        
+
         metric <- which(names(mraster) == metric)
-        
       }
     }
 
@@ -182,11 +193,10 @@ strat_osb <- function(mraster,
   names(rcl) <- "strata"
 
   if (isTRUE(plot)) {
-    
     metric <- as.character(names(rastermetric))
-    
+
     met <- ggplot2::ensym(metric)
-    
+
     data <- as.data.frame(OSB[[1]])
     names(data) <- metric
 

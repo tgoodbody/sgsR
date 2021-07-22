@@ -65,15 +65,29 @@ using the \code{\link[stratifyR]{strata.data}} algorithm.
 \examples{
 \dontrun{
 #--- Load raster and access files ---#
-r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
 mr <- terra::rast(r)
 
 #--- perform optimum sample boundary stratification ---#
-strat_osb(mraster = mr, metric = "zsd", nSamp = 200, nStrata = 4, plot = TRUE)
+strat_osb(mraster = mr, 
+          metric = "zsd", 
+          nSamp = 200, 
+          nStrata = 4, 
+          plot = TRUE)
 
-strat_osb(mraster = mr, metric = 4, nSamp = 20, nStrata = 3,  plot = TRUE, details = TRUE)
+strat_osb(mraster = mr, 
+          metric = 4, 
+          nSamp = 20, 
+          nStrata = 3, 
+          plot = TRUE, 
+          details = TRUE)
 
-strat_osb(mraster = mr, metric = "zmax", nSamp = 100, nStrata = 5, subset = 0.75, filename = tempfile(fileext = ".tif"))
+strat_osb(mraster = mr, 
+          metric = "zmax", 
+          nSamp = 100, 
+          nStrata = 5, 
+          subset = 0.75, 
+          filename = tempfile(fileext = ".tif"))
 }
 
 }
@@ -95,5 +109,8 @@ Other stratify functions:
 \code{\link{strat_kmeans}()},
 \code{\link{strat_pcomp}()},
 \code{\link{strat_quantiles}()}
+}
+\author{
+Tristan R.H. Goodbody
 }
 \concept{stratify functions}

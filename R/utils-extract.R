@@ -104,16 +104,16 @@ extract_strata <- function(sraster,
     #--- assign sraster crs to spatial points object ---#
 
     sf::st_crs(samples) <- terra::crs(sraster)
-    
+
     if (!is.null(filename)) {
       if (!is.logical(overwrite)) {
         stop("'overwrite' must be either TRUE or FALSE")
       }
-      
+
       if (file.exists(filename) & isFALSE(overwrite)) {
         stop(paste0(filename, " already exists and overwrite = FALSE"))
       }
-      
+
       sf::st_write(samples, filename, delete_layer = overwrite)
     }
 
@@ -179,16 +179,16 @@ extract_metrics <- function(mraster,
     #--- assign mraster crs to spatial points object ---#
 
     sf::st_crs(samples) <- terra::crs(mraster, proj = TRUE)
-    
+
     if (!is.null(filename)) {
       if (!is.logical(overwrite)) {
         stop("'overwrite' must be either TRUE or FALSE")
       }
-      
+
       if (file.exists(filename) & isFALSE(overwrite)) {
         stop(paste0(filename, " already exists and overwrite = FALSE"))
       }
-      
+
       sf::st_write(samples, filename, delete_layer = overwrite)
     }
 

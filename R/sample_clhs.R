@@ -13,56 +13,75 @@
 #' @param cost Numeric/Character. Index or name of covariate within \code{mraster} to be used to constrain cLHS sampling.
 #' If default - \code{NULL} then a cost constraint is not used.
 #' @param ... Additional arguments for clhs sampling. See \code{\link[clhs]{clhs}}.
-#' 
+#'
 #' @importFrom stats coef complete.cases median quantile sd
 #' @importFrom utils setTxtProgressBar
 #'
 #' @return An sf object with \code{nSamp} stratified samples.
-#' 
-#' @examples 
+#'
+#' @examples
 #' #--- Load raster and existing plots---#
-#' r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+#' r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
 #' mr <- terra::rast(r)
-#' 
-#' e <- system.file("extdata","existing.shp", package = "sgsR")
+#'
+#' e <- system.file("extdata", "existing.shp", package = "sgsR")
 #' e <- sf::st_read(e)
-#' 
-#' a <- system.file("extdata","roads.shp", package = "sgsR")
+#'
+#' a <- system.file("extdata", "roads.shp", package = "sgsR")
 #' ac <- sf::st_read(a)
+#'
+#' sample_clhs(mraster = mr, 
+#'             nSamp = 200, 
+#'             plot = TRUE, 
+#'             iter = 100)
 #' 
-#' sample_clhs(mraster = mr, nSamp = 200, plot = TRUE, iter = 100)
+#' sample_clhs(mraster = mr, 
+#'             nSamp = 400, 
+#'             existing = e, 
+#'             iter = 250,
+#'             details = TRUE)
 #' 
-#' sample_clhs(mraster = mr, nSamp = 400, existing = e, iter = 250, 
-#' details = TRUE)
-#' 
-#' sample_clhs(mraster = mr, nSamp = 200, iter = 200, existing = e, 
-#' access = ac, buff_inner = 100, buff_outer = 300, plot = TRUE)
+#' sample_clhs(mraster = mr, 
+#'             nSamp = 200, 
+#'             iter = 200, 
+#'             existing = e,
+#'             access = ac, 
+#'             buff_inner = 100,
+#'             buff_outer = 300, 
+#'             plot = TRUE)
 #' 
 #' #--- cost constrained examples ---#
 #' #--- calculate distance to access layer for each pixel in mr ---#
-#' mr.c <- calculate_distance(raster = mr, access = ac)
+#' mr.c <- calculate_distance(raster = mr, 
+#'                            access = ac)
 #' 
-#' sample_clhs(mraster = mr.c, nSamp = 250, iter = 200, 
-#' cost = "dist2access", plot = TRUE)
+#' sample_clhs(mraster = mr.c, 
+#'             nSamp = 250, 
+#'             iter = 200,
+#'             cost = "dist2access",
+#'             plot = TRUE)
 #' 
-#' sample_clhs(mraster = mr.c, nSamp = 250, existing = e, iter = 200, 
-#' cost = "dist2access", plot = TRUE)
-#' 
-#' @references 
+#' sample_clhs(mraster = mr.c, 
+#'             nSamp = 250, 
+#'             existing = e, 
+#'             iter = 200,
+#'             cost = "dist2access", 
+#'             plot = TRUE)
+#' @references
 #' Minasny, B. and McBratney, A.B. 2006. A conditioned Latin hypercube method
 #' for sampling in the presence of ancillary information. Computers and
 #' Geosciences, 32:1378-1388.
-#' 
-#' Minasny, B. and A. B. McBratney, A.B.. 2010. Conditioned Latin Hypercube 
-#' Sampling for Calibrating Soil Sensor Data to Soil Properties. In: Proximal 
-#' Soil Sensing, Progress in Soil Science, pages 111-119. 
-#' 
+#'
+#' Minasny, B. and A. B. McBratney, A.B.. 2010. Conditioned Latin Hypercube
+#' Sampling for Calibrating Soil Sensor Data to Soil Properties. In: Proximal
+#' Soil Sensing, Progress in Soil Science, pages 111-119.
+#'
 #' Roudier, P., Beaudette, D.E. and Hewitt, A.E. 2012. A conditioned Latin
 #' hypercube sampling algorithm incorporating operational constraints. In:
 #' Digital Soil Assessments and Beyond. Proceedings of the 5th Global Workshop
 #' on Digital Soil Mapping, Sydney, Australia.
-#' 
-#' @author Tristan R.H. Goodbody 
+#'
+#' @author Tristan R.H. Goodbody
 #'
 #' @export
 
@@ -100,7 +119,7 @@ sample_clhs <- function(mraster,
   if (!is.numeric(nSamp)) {
     stop("'nSamp' must be type numeric")
   }
-  
+
   if (!is.numeric(iter)) {
     stop("'iter' must be type numeric")
   }
@@ -157,28 +176,22 @@ sample_clhs <- function(mraster,
         Y = y
       )
   }
-  
+
   #--- incorporate cost constraint ---#
-  
-  if(!is.null(cost)){
-    if (is.numeric(cost)){
-      
-      if((cost + 2) > (ncol(vals)) | cost < 0){
+
+  if (!is.null(cost)) {
+    if (is.numeric(cost)) {
+      if ((cost + 2) > (ncol(vals)) | cost < 0) {
         stop("'cost' index doest not exist within 'mraster'")
       }
-      
+
       #--- need to add 2 because X and Y are added to vals ---#
-      
+
       cost <- cost + 2
-      
-    } else if (is.character(cost)){
-      
+    } else if (is.character(cost)) {
       cost <- which(names(vals) == cost)
-      
-    }  else {
-      
+    } else {
       stop("'cost' must be either a numeric index or name of covariate within 'mraster'")
-      
     }
   }
 
@@ -187,7 +200,7 @@ sample_clhs <- function(mraster,
   vals <- vals %>%
     dplyr::filter(complete.cases(.)) %>%
     dplyr::mutate(type = "new")
-  
+
   namesvals <- names(vals)
 
   #--- error handing and existing samples preparation ---#
@@ -221,11 +234,8 @@ sample_clhs <- function(mraster,
       }
 
       existingSamples <- existing
-      
     } else {
-      
       existingSamples <- extract_metrics(mraster, existing, data.frame = TRUE)
-      
     }
 
     #--- create dataset with labels for plotting ---#
@@ -302,16 +312,16 @@ sample_clhs <- function(mraster,
       suppressWarnings(terra::plot(samples, add = T, col = "black", pch = ifelse(samples$type == "existing", 1, 3)))
     }
   }
-  
+
   if (!is.null(filename)) {
     if (!is.logical(overwrite)) {
       stop("'overwrite' must be either TRUE or FALSE")
     }
-    
+
     if (file.exists(filename) & isFALSE(overwrite)) {
       stop(paste0(filename, " already exists and overwrite = FALSE"))
     }
-    
+
     sf::st_write(samples, filename, delete_layer = overwrite)
   }
 

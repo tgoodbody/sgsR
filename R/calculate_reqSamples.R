@@ -9,24 +9,28 @@
 #'
 #'
 #' @return data.frame of strata and associates samples
-#' 
-#' @examples 
+#'
+#' @examples
 #' #--- Load strata raster and existing samples---#
-#' r <- system.file("extdata","kmeans.tif", package = "sgsR")
+#' r <- system.file("extdata", "kmeans.tif", package = "sgsR")
 #' sr <- terra::rast(r)
-#' 
-#' e <- system.file("extdata","existing.shp", package = "sgsR")
+#'
+#' e <- system.file("extdata", "existing.shp", package = "sgsR")
 #' e <- sf::st_read(e)
-#' 
+#'
 #' #--- perform grid sampling ---#
-#' calculate_reqSamples(sraster = sr, nSamp = 200)
+#' calculate_reqSamples(sraster = sr, 
+#'                      nSamp = 200)
 #' 
-#' e.sr <- extract_strata(sraster = sr, existing = e)
+#' e.sr <- extract_strata(sraster = sr, 
+#'                        existing = e)
 #' 
-#' calculate_reqSamples(sraster = sr, nSamp = 200, existing = e.sr)
-#' 
-#' @author Tristan R.H. Goodbody 
-#' 
+#' calculate_reqSamples(sraster = sr, 
+#'                      nSamp = 200, 
+#'                      existing = e.sr)
+#'                      
+#' @author Tristan R.H. Goodbody
+#'
 #' @export
 
 

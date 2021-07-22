@@ -53,16 +53,22 @@ Balanced raster sampling using \code{\link[BalancedSampling]{lpm2}} and
 \examples{
 \dontrun{
 #--- Load raster and existing plots---#
-r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
 mr <- terra::rast(r)
 
-a <- system.file("extdata","roads.shp", package = "sgsR")
+a <- system.file("extdata", "roads.shp", package = "sgsR")
 ac <- sf::st_read(a)
 
-sample_balanced(mraster = mr, nSamp = 200, plot = TRUE)
+sample_balanced(mraster = mr, 
+                nSamp = 200, 
+                plot = TRUE)
 
-sample_balanced(mraster = mr, nSamp = 100, algorithm = "lcube", 
-access = ac, buff_inner = 50, buff_outer = 200)
+sample_balanced(mraster = mr, 
+                nSamp = 100, 
+                algorithm = "lcube",
+                access = ac, 
+                buff_inner = 50, 
+                buff_outer = 200)
 }
 
 }

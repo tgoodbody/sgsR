@@ -3,7 +3,7 @@
 #' @description Randomly sample within a stratification raster extent.
 #'
 #' @family sample functions
-#' 
+#'
 #' @inheritParams sample_grid
 #'
 #' @param raster spatRaster. Raster to be used for random sampling.
@@ -21,21 +21,31 @@
 #'
 #' @examples
 #' #--- Load raster and access files ---#
-#' r <- system.file("extdata","kmeans.tif", package = "sgsR")
+#' r <- system.file("extdata", "kmeans.tif", package = "sgsR")
 #' sr <- terra::rast(r)
-#' 
-#' a <- system.file("extdata","roads.shp", package = "sgsR")
-#' ac <- sf::st_read(a)
-#' 
-#' #--- perform simple random sampling ---#
-#' sample_srs(raster = sr, nSamp = 200, plot = TRUE)
-#' 
-#' sample_srs(raster = sr, nSamp = 200, access = ac, 
-#' mindist = 200, buff_inner = 50, buff_outer = 200)
-#' 
-#' sample_srs(raster = sr, nSamp = 200, access = ac, 
-#' buff_inner = 50, buff_outer = 200, filename = tempfile(fileext = ".shp"))
 #'
+#' a <- system.file("extdata", "roads.shp", package = "sgsR")
+#' ac <- sf::st_read(a)
+#'
+#' #--- perform simple random sampling ---#
+#' sample_srs(raster = sr, 
+#'            nSamp = 200, 
+#'            plot = TRUE)
+#' 
+#' sample_srs(raster = sr, 
+#'            nSamp = 200, 
+#'            access = ac,
+#'            mindist = 200,
+#'            buff_inner = 50,
+#'            buff_outer = 200)
+#' 
+#' sample_srs(raster = sr,
+#'            nSamp = 200,
+#'            access = ac,
+#'            buff_inner = 50,
+#'            buff_outer = 200,
+#'            filename = tempfile(fileext = ".shp"))
+#'            
 #' @author Tristan R.H. Goodbody & Martin Queinnec
 #'
 #' @export
@@ -136,8 +146,8 @@ sample_srs <- function(raster,
       nCount <- nCount + 1
 
       #--- If awdd_strata isnt empty, check distance with all other sampled cells in strata ---#
-    } 
-    
+    }
+
     if (!is.null(mindist)) {
       dist <- spatstat.geom::crossdist(add_temp$X, add_temp$Y, add_strata$X, add_strata$Y)
 
@@ -149,9 +159,8 @@ sample_srs <- function(raster,
       }
     } else {
       add_strata <- rbind(add_strata, add_temp[, c("X", "Y")])
-      
+
       nCount <- nCount + 1
-      
     }
   }
 

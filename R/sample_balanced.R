@@ -14,19 +14,25 @@
 #'
 #' @return An sf object with \code{nSamp} randomly sampled points.
 #'
-#' @examples 
+#' @examples
 #' \dontrun{
 #' #--- Load raster and existing plots---#
-#' r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+#' r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
 #' mr <- terra::rast(r)
-#' 
-#' a <- system.file("extdata","roads.shp", package = "sgsR")
+#'
+#' a <- system.file("extdata", "roads.shp", package = "sgsR")
 #' ac <- sf::st_read(a)
+#'
+#' sample_balanced(mraster = mr, 
+#'                 nSamp = 200, 
+#'                 plot = TRUE)
 #' 
-#' sample_balanced(mraster = mr, nSamp = 200, plot = TRUE)
-#' 
-#' sample_balanced(mraster = mr, nSamp = 100, algorithm = "lcube", 
-#' access = ac, buff_inner = 50, buff_outer = 200)
+#' sample_balanced(mraster = mr, 
+#'                 nSamp = 100, 
+#'                 algorithm = "lcube",
+#'                 access = ac, 
+#'                 buff_inner = 50, 
+#'                 buff_outer = 200)
 #' }
 #'
 #' @references
@@ -37,7 +43,7 @@
 #' Jonathan Lisic and Anton Grafstrom (2018). SamplingBigData: Sampling Methods for
 #' Big Data. R package version 1.0.0. https://CRAN.R-project.org/package=SamplingBigData
 #'
-#' @author Tristan R.H. Goodbody 
+#' @author Tristan R.H. Goodbody
 #'
 #' @export
 
@@ -201,7 +207,7 @@ sample_balanced <- function(mraster,
   sf::st_crs(samples) <- crs
 
   if (isTRUE(plot)) {
-    
+
     #--- plot input mraster and random samples ---#
     if (!is.null(access)) {
       terra::plot(mrasterP[[1]])
@@ -211,18 +217,17 @@ sample_balanced <- function(mraster,
       terra::plot(mrasterP[[1]])
       suppressWarnings(terra::plot(samples, add = T, col = "black"))
     }
-
   }
-  
+
   if (!is.null(filename)) {
     if (!is.logical(overwrite)) {
       stop("'overwrite' must be either TRUE or FALSE")
     }
-    
+
     if (file.exists(filename) & isFALSE(overwrite)) {
       stop(paste0(filename, " already exists and overwrite = FALSE"))
     }
-    
+
     sf::st_write(samples, filename, delete_layer = overwrite)
   }
 

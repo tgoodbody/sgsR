@@ -21,17 +21,15 @@ classPlot <- function(dfc,
                       samp) {
 
   #--- if the variables are not symbols convert them ---#
-  
-  if (is.character(metric)){
-    
+
+  if (is.character(metric)) {
     metric <- ggplot2::ensym(metric)
   }
-  
-  if (is.character(metric2)){
-    
+
+  if (is.character(metric2)) {
     metric2 <- ggplot2::ensym(metric2)
   }
-  
+
   #--- sample cells based on 'samp' parameter ---#
 
   dfc <- dfc %>%

@@ -13,18 +13,21 @@
 #'
 #'
 #' @return Output raster with specified number of principal components as layers.
-#' 
-#' @examples 
+#'
+#' @examples
 #' #--- Load raster ---#
-#' r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+#' r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
 #' mr <- terra::rast(r)
+#'
+#' calculate_pcomp(mraster = mr, 
+#'                 nComp = 5)
 #' 
-#' calculate_pcomp(mraster = mr, nComp = 5)
-#' 
-#' calculate_pcomp(mraster = mr, nComp = 3, plot = TRUE, details = TRUE)
-#' 
-#' 
-#' @author Tristan R.H. Goodbody 
+#' calculate_pcomp(mraster = mr, 
+#'                 nComp = 3, 
+#'                 plot = TRUE, 
+#'                 details = TRUE)
+#'                 
+#' @author Tristan R.H. Goodbody
 #'
 #' @export
 
@@ -96,9 +99,9 @@ calculate_pcomp <- function(mraster = NULL,
   #--- rename ---#
 
   names(pcaRout) <- rep(paste0("PC", seq(1, nComp, 1)))
-  
+
   #--- write file to disc ---#
-  
+
   if (!is.null(filename)) {
     terra::writeRaster(rout, filename, overwrite = overwrite)
   }

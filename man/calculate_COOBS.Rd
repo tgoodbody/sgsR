@@ -52,14 +52,17 @@ Special thanks to Brendan Malone for the original implementation of this algorit
 \examples{
 \dontrun{
 #--- Load raster and existing plots---#
-r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
 mr <- terra::rast(r)
 
-e <- system.file("extdata","existing.shp", package = "sgsR")
+e <- system.file("extdata", "existing.shp", package = "sgsR")
 e <- sf::st_read(e)
 
-calculate_coobs(mraster = mr, existing = e, cores = 4, details = TRUE, 
-filename = tempfile(fileext = ".shp"))
+calculate_coobs(mraster = mr,
+                existing = e,
+                cores = 4,
+                details = TRUE,
+                filename = tempfile(fileext = ".shp"))
 }
 }
 \references{

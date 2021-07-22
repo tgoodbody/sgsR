@@ -5,7 +5,7 @@
 #'
 #' @inheritParams strat_kmeans
 #' @inheritParams strat_breaks
-#' @param metric Numeric/Character. Index or name of primary covariate within \code{mraster} to stratify. 
+#' @param metric Numeric/Character. Index or name of primary covariate within \code{mraster} to stratify.
 #' @param metric2 Numeric/Character. Index or name of secondary covariate within \code{mraster} to stratify.
 #' @param nQuant Numeric. Number of quantiles to stratify primary covariate.
 #' @param nQuant2 Numeric. Number of quantiles to stratify secondary covariate.
@@ -22,21 +22,31 @@
 #' \item \code{plot} is a \code{ggplot} histogram / scatter plot object (depends on whether metric2 was supplied).
 #' Histogram shows distribution and break points while scatter plot shows colour coded and strata boundaries.
 #' }
-#' 
+#'
 #' @examples
 #' #--- Load raster and existing plots---#
-#' r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+#' r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
 #' mr <- terra::rast(r)
+#'
+#' strat_quantiles(mraster = mr, 
+#'                 metric = 4, 
+#'                 nQuant = 10,
+#'                 plot = TRUE, 
+#'                 details = TRUE)
 #' 
-#' strat_quantiles(mraster = mr, metric = 4, nQuant = 10,
-#'  plot = TRUE, details = TRUE)
+#' strat_quantiles(mraster = mr, 
+#'                 metric = "zsd",
+#'                 metric2 = "zq95", 
+#'                 nQuant = 3, 
+#'                 nQuant2 = 4)
 #' 
-#' strat_quantiles(mraster = mr, metric = "zsd",
-#'  metric2 = "zq95", nQuant = 3, nQuant2 = 4)
-#' 
-#' strat_quantiles(mraster = mr, metric = 1, metric2 = "zsd",
-#'  nQuant = 2, nQuant2 = 2, filename = tempfile(fileext = ".tif"))
-#' 
+#' strat_quantiles(mraster = mr, 
+#'                 metric = 1, 
+#'                 metric2 = "zsd",
+#'                 nQuant = 2, 
+#'                 nQuant2 = 2, 
+#'                 filename = tempfile(fileext = ".tif"))
+#'                 
 #' @author Tristan R.H. Goodbody
 #'
 #' @export
@@ -84,44 +94,38 @@ strat_quantiles <- function(mraster,
     }
 
     #--- if there is only 1 metric in the raster use it as default ---#
-    
+
     if (terra::nlyr(mraster) == 1) {
-      
+
       #--- Extract values from mraster ---#
-      
+
       vals <- terra::values(mraster)
-      
+
       #--- set name of raster band to 'metric' ---#
-      
+
       metric <- names(mraster)
-      
     } else {
-      
-      #--- subset metric based on whether it is a character of number ---#  
-      
+
+      #--- subset metric based on whether it is a character of number ---#
+
       if (is.null(metric)) {
         stop(" multiple layers detected in 'mraster'. Please define a 'metric' to stratify")
-        
       } else {
-        
+
         #--- Numeric ---#
-        
-        if (is.numeric(metric)){
-          
-          if((metric) > (terra::nlyr(mraster)) | metric < 0){
+
+        if (is.numeric(metric)) {
+          if ((metric) > (terra::nlyr(mraster)) | metric < 0) {
             stop("'metric' index doest not exist within 'mraster'")
           }
-          
-          #--- Character ---#  
-          
-        } else if (is.character(metric)){
-          
+
+          #--- Character ---#
+        } else if (is.character(metric)) {
           if (!metric %in% names(mraster)) {
             stop(paste0("'mraster' must have an attribute named ", metric))
           }
-          
+
           metric <- which(names(vals) == metric)
-          
         }
       }
 
@@ -144,7 +148,7 @@ strat_quantiles <- function(mraster,
       dplyr::filter(!is.na(.))
 
     metric <- as.character(names(df))
-    
+
     metric <- ggplot2::ensym(metric)
 
     #--- Split metric distribution in to number specified by 'breaks' ---#
@@ -160,56 +164,47 @@ strat_quantiles <- function(mraster,
 
     rout <- terra::setValues(mraster[[1]], vals)
     names(rout) <- "strata"
-    
   } else {
 
     #--- subset metric2 based on whether it is a character of number ---#
-    
+
     if (is.null(nQuant2)) {
       stop("If using 2 metrics to stratify, 'nQuant2' must be defined")
     }
-    
+
     #--- metric 1 ---#
-    
+
     #--- numeric ---#
-    if (is.numeric(metric)){
-      
-      if((metric) > (terra::nlyr(mraster)) | metric < 0){
+    if (is.numeric(metric)) {
+      if ((metric) > (terra::nlyr(mraster)) | metric < 0) {
         stop("'metric' index doest not exist within 'mraster'")
       }
-      
-      #--- Character ---#  
-      
-    } else if (is.character(metric)){
-      
+
+      #--- Character ---#
+    } else if (is.character(metric)) {
       if (!metric %in% names(mraster)) {
         stop(paste0("'mraster' must have an attribute named ", metric))
       }
-      
+
       metric <- which(names(mraster) == metric)
-      
     }
-    
+
     #--- metric 2 ---#
-    
+
     #--- Numeric ---#
-    
-    if (is.numeric(metric2)){
-      
-      if((metric2) > (terra::nlyr(mraster)) | metric2 < 0){
+
+    if (is.numeric(metric2)) {
+      if ((metric2) > (terra::nlyr(mraster)) | metric2 < 0) {
         stop("'metric' index doest not exist within 'mraster'")
       }
-      
-      #--- Character ---#  
-      
-    } else if (is.character(metric2)){
-      
+
+      #--- Character ---#
+    } else if (is.character(metric2)) {
       if (!metric2 %in% names(mraster)) {
         stop(paste0("'mraster' must have an attribute named ", metric2))
       }
-      
+
       metric2 <- which(names(mraster) == metric2)
-      
     }
     #--- Extract values from mraster ---#
 
@@ -229,10 +224,10 @@ strat_quantiles <- function(mraster,
       dplyr::filter(!is.na(.))
 
     nm <- as.character(names(df))
-    
+
     metric <- nm[1]
     metric2 <- nm[2]
-    
+
     metric <- ggplot2::ensym(metric)
     metric2 <- ggplot2::ensym(metric2)
 
@@ -290,11 +285,9 @@ strat_quantiles <- function(mraster,
         ggplot2::ggtitle(paste0(metric, " histogram with defined breaks"))
 
       print(p)
-      
-      terra::plot(rout, main = "Classes")
-      
-    } else {
 
+      terra::plot(rout, main = "Classes")
+    } else {
       terra::plot(rout, main = "Classes")
     }
 
@@ -307,25 +300,23 @@ strat_quantiles <- function(mraster,
     #--- Output based on 'details' to return raster alone or list with details ---#
 
     if (isTRUE(details)) {
-      
-      if(!is.null(metric2)){
+      if (!is.null(metric2)) {
 
-      #--- create classplot summary ---#
+        #--- create classplot summary ---#
 
-      coordsgrps <- dfc %>%
-        dplyr::group_by(class) %>%
-        dplyr::arrange(class) %>%
-        tidyr::nest() %>%
-        dplyr::ungroup()
+        coordsgrps <- dfc %>%
+          dplyr::group_by(class) %>%
+          dplyr::arrange(class) %>%
+          tidyr::nest() %>%
+          dplyr::ungroup()
 
-      p <- classPlot(
-        dfc = dfc,
-        coordsgrps = coordsgrps,
-        metric = metric,
-        metric2 = metric2,
-        samp = samp
-      )
-      
+        p <- classPlot(
+          dfc = dfc,
+          coordsgrps = coordsgrps,
+          metric = metric,
+          metric2 = metric2,
+          samp = samp
+        )
       }
 
       #--- output metrics details along with stratification raster ---#

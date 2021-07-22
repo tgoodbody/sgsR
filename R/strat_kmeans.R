@@ -21,21 +21,32 @@
 #'  @param ... Additional arguments to be passed to \code{\link[stats]{kmeans}} function.
 #'
 #' @return output stratification \code{spatRaster}, or a list when \code{details = TRUE}.
-#' 
-#' @examples 
-#' #--- Load raster and access files ---#
-#' r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
-#' mr <- terra::rast(r)
-#' 
-#' #--- perform stratification using k-means ---#
-#' kmeans <- strat_kmeans(mraster = mr, nStrata = 5)
-#' 
-#' kmeans <- strat_kmeans(mraster = mr, nStrata = 5, iter = 1000,
-#'  algorithm = "MacQueen", plot = TRUE, details = TRUE)
-#' 
-#' kmeans <- strat_kmeans(mraster = mr, nStrata = 5, iter = 1000,
-#'  plot = TRUE, filename = tempfile(fileext = ".tif"), overwrite = TRUE)
 #'
+#' @examples
+#' #--- Load raster and access files ---#
+#' r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
+#' mr <- terra::rast(r)
+#'
+#' #--- perform stratification using k-means ---#
+#' kmeans <- strat_kmeans(mraster = mr, 
+#'                        nStrata = 5)
+#' 
+#' kmeans <- strat_kmeans(mraster = mr, 
+#'                        nStrata = 5, 
+#'                        iter = 1000,
+#'                        algorithm = "MacQueen",
+#'                        plot = TRUE, 
+#'                        details = TRUE)
+#' 
+#' kmeans <- strat_kmeans(mraster = mr, 
+#'                        nStrata = 5, 
+#'                        iter = 1000,
+#'                        plot = TRUE, 
+#'                        filename = tempfile(fileext = ".tif"), 
+#'                        overwrite = TRUE)
+#'                        
+#' @author Tristan R.H. Goodbody
+#'                         
 #' @export
 
 strat_kmeans <- function(mraster,

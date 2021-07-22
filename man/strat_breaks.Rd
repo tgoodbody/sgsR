@@ -58,20 +58,26 @@ Stratify metrics raster using user defined breaks
 }
 \examples{
 #--- Load raster ---#
-r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
 mr <- terra::rast(r)
 
 #--- create vector breaks ---#
-br.max <- c(3,5,11,18)
-br.sd <- c(1,2,5)
+br.max <- c(3, 5, 11, 18)
+br.sd <- c(1, 2, 5)
 
-strat_breaks(mraster = mr, metric = "zmax", breaks = br.max,
-plot = TRUE, details = TRUE)
+strat_breaks(mraster = mr, 
+            metric = "zmax", 
+            breaks = br.max,
+            plot = TRUE, 
+            details = TRUE)
 
-strat_breaks(mraster = mr, metric = 1, metric2 = "zsd",
-breaks = br.max, breaks2 = br.sd, plot = TRUE)
-
-
+strat_breaks(mraster = mr, 
+            metric = 1, 
+            metric2 = "zsd",
+            breaks = br.max, 
+            breaks2 = br.sd, 
+            plot = TRUE)
+            
 }
 \seealso{
 Other stratify functions: 

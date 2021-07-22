@@ -20,23 +20,29 @@
 #' \item \code{raster} is a stratified \code{spatRaster} based on quantiles
 #' \item \code{plot} is a \code{ggplot} histogram object showsing distribution and break points.
 #' }
-#' 
-#' @examples 
+#'
+#' @examples
 #' #--- Load raster ---#
-#' r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+#' r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
 #' mr <- terra::rast(r)
-#' 
+#'
 #' #--- create vector breaks ---#
-#' br.max <- c(3,5,11,18)
-#' br.sd <- c(1,2,5)
-#' 
-#' strat_breaks(mraster = mr, metric = "zmax", breaks = br.max,
-#' plot = TRUE, details = TRUE)
-#' 
-#' strat_breaks(mraster = mr, metric = 1, metric2 = "zsd",
-#' breaks = br.max, breaks2 = br.sd, plot = TRUE)
-#' 
-#' 
+#' br.max <- c(3, 5, 11, 18)
+#' br.sd <- c(1, 2, 5)
+#'
+#'strat_breaks(mraster = mr, 
+#'             metric = "zmax", 
+#'             breaks = br.max,
+#'             plot = TRUE, 
+#'             details = TRUE)
+#'
+#'strat_breaks(mraster = mr, 
+#'             metric = 1, 
+#'             metric2 = "zsd",
+#'             breaks = br.max, 
+#'             breaks2 = br.sd, 
+#'             plot = TRUE)
+#'             
 #' @author Tristan R.H. Goodbody
 #'
 #' @export
@@ -78,32 +84,27 @@ strat_breaks <- function(mraster,
   if (terra::nlyr(mraster) == 1) {
     rastermetric <- mraster
   } else {
-    
-  #--- subset metric based on whether it is a character of number ---#  
-    
+
+    #--- subset metric based on whether it is a character of number ---#
+
     if (is.null(metric)) {
       stop(" multiple layers detected in 'mraster'. Please define a 'metric' to stratify")
-      
     } else {
-      
+
       #--- Numeric ---#
-      
-      if (is.numeric(metric)){
-        
-        if((metric) > (terra::nlyr(mraster)) | metric < 0){
+
+      if (is.numeric(metric)) {
+        if ((metric) > (terra::nlyr(mraster)) | metric < 0) {
           stop("'metric' index doest not exist within 'mraster'")
         }
-      
-      #--- Character ---#  
-        
-      } else if (is.character(metric)){
-        
+
+        #--- Character ---#
+      } else if (is.character(metric)) {
         if (!metric %in% names(mraster)) {
           stop(paste0("'mraster' must have an attribute named ", metric))
         }
-        
+
         metric <- which(names(mraster) == metric)
-        
       }
     }
 
@@ -111,35 +112,30 @@ strat_breaks <- function(mraster,
 
     rastermetric <- terra::subset(mraster, metric)
   }
-  
+
   if (!is.null(metric2)) {
-    
+
     #--- subset metric2 based on whether it is a character of number ---#
-    
+
     if (is.null(breaks2)) {
       stop("If using metrics2 to stratify, 'breaks2' must be defined")
     }
-    
+
     #--- Numeric ---#
-    
-    if (is.numeric(metric2)){
-      
-      if((metric2) > (terra::nlyr(mraster)) | metric2 < 0){
+
+    if (is.numeric(metric2)) {
+      if ((metric2) > (terra::nlyr(mraster)) | metric2 < 0) {
         stop("'metric' index doest not exist within 'mraster'")
       }
-      
-      #--- Character ---#  
-      
-    } else if (is.character(metric2)){
-      
+
+      #--- Character ---#
+    } else if (is.character(metric2)) {
       if (!metric2 %in% names(mraster)) {
         stop(paste0("'mraster' must have an attribute named ", metric))
       }
-      
+
       metric2 <- which(names(mraster) == metric2)
-      
     }
-    
   }
 
   minmax <- terra::minmax(rastermetric)
@@ -224,7 +220,7 @@ strat_breaks <- function(mraster,
     names(data) <- "val"
 
     nm <- as.character(names(rastermetric))
-    
+
     data$var <- nm
 
     #--- plot histogram of metric with associated break lines ---#
@@ -239,7 +235,7 @@ strat_breaks <- function(mraster,
       names(data2) <- "val"
 
       nm2 <- as.character(names(rastermetric2))
-      
+
       data2$var <- nm2
 
       data2 <- rbind(data, data2)
@@ -253,9 +249,8 @@ strat_breaks <- function(mraster,
         ggplot2::geom_histogram() +
         ggplot2::geom_vline(linetype = "dashed", data = bs, mapping = ggplot2::aes(xintercept = brk)) +
         ggplot2::facet_wrap(~var, scales = "free")
+    }
 
-    } 
-    
     suppressMessages(print(p))
 
     #--- set colour palette ---#
@@ -274,17 +269,16 @@ strat_breaks <- function(mraster,
   if (isTRUE(details)) {
 
     #--- output break points raster with associated breaks ---#
-      breaks_rcl <- list(
-        details = list(
-          breaks = breaks,
-          breaks2 = if (!missing(breaks2)) breaks2
-        ),
-        raster = rcl,
-        plot = if (exists("p")) p
-      )
+    breaks_rcl <- list(
+      details = list(
+        breaks = breaks,
+        breaks2 = if (!missing(breaks2)) breaks2
+      ),
+      raster = rcl,
+      plot = if (exists("p")) p
+    )
 
-      return(breaks_rcl)
-
+    return(breaks_rcl)
   } else {
 
     #--- just output raster ---#

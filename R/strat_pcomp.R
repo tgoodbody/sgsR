@@ -21,19 +21,29 @@
 #' \item \code{plot} is a \code{ggplot} scatter plot object where strata are colour coded
 #' and strata boundaries are delineated
 #' }
-#' 
-#' @examples 
-#' #--- Load raster and access files ---#
-#' r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
-#' mr <- terra::rast(r)
-#' 
-#' strat_pcomp(mraster = mr, nStrata = 5, plot = TRUE)  
-#' 
-#' strat_pcomp(mraster = mr, nStrata = 4, nStrata2 = 4, plot = TRUE, details = TRUE)
-#' 
-#' strat_pcomp(mraster = mr, nStrata = 3, nStrata2 = 3, filename = tempfile(fileext = ".tif"))
-#' 
 #'
+#' @examples
+#' #--- Load raster and access files ---#
+#' r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
+#' mr <- terra::rast(r)
+#'
+#' strat_pcomp(mraster = mr, 
+#'             nStrata = 5, 
+#'             plot = TRUE)
+#' 
+#' strat_pcomp(mraster = mr, 
+#'             nStrata = 4, 
+#'             nStrata2 = 4, 
+#'             plot = TRUE, 
+#'             details = TRUE)
+#' 
+#' strat_pcomp(mraster = mr, 
+#'             nStrata = 3, 
+#'             nStrata2 = 3, 
+#'             filename = tempfile(fileext = ".tif"))
+#'             
+#' @author Tristan R.H. Goodbody
+#' 
 #' @export
 
 strat_pcomp <- function(mraster,

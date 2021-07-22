@@ -63,16 +63,24 @@ Stratify metrics raster using principal components and quantile breaks
 }
 \examples{
 #--- Load raster and access files ---#
-r <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
+r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
 mr <- terra::rast(r)
 
-strat_pcomp(mraster = mr, nStrata = 5, plot = TRUE)  
+strat_pcomp(mraster = mr, 
+            nStrata = 5, 
+            plot = TRUE)
 
-strat_pcomp(mraster = mr, nStrata = 4, nStrata2 = 4, plot = TRUE, details = TRUE)
+strat_pcomp(mraster = mr, 
+            nStrata = 4, 
+            nStrata2 = 4, 
+            plot = TRUE, 
+            details = TRUE)
 
-strat_pcomp(mraster = mr, nStrata = 3, nStrata2 = 3, filename = tempfile(fileext = ".tif"))
-
-
+strat_pcomp(mraster = mr, 
+            nStrata = 3, 
+            nStrata2 = 3, 
+            filename = tempfile(fileext = ".tif"))
+            
 }
 \seealso{
 Other stratify functions: 
@@ -80,5 +88,8 @@ Other stratify functions:
 \code{\link{strat_kmeans}()},
 \code{\link{strat_osb}()},
 \code{\link{strat_quantiles}()}
+}
+\author{
+Tristan R.H. Goodbody
 }
 \concept{stratify functions}

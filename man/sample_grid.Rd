@@ -45,24 +45,34 @@ Sample landscape using a fishnet grid pattern.
 }
 \examples{
 #--- Load raster and access files ---#
-r <- system.file("extdata","kmeans.tif", package = "sgsR")
+r <- system.file("extdata", "kmeans.tif", package = "sgsR")
 sr <- terra::rast(r)
 
-a <- system.file("extdata","roads.shp", package = "sgsR")
+a <- system.file("extdata", "roads.shp", package = "sgsR")
 ac <- sf::st_read(a)
 
-e <- system.file("extdata","existing.shp", package = "sgsR")
+e <- system.file("extdata", "existing.shp", package = "sgsR")
 e <- sf::st_read(e)
 
 #--- perform grid sampling ---#
-sample_grid(raster = sr, gridsize = 200, plot = TRUE)
+sample_grid(raster = sr, 
+            gridsize = 200, 
+            plot = TRUE)
 
-sample_grid(raster = sr, gridsize = 100, access = ac, 
-buff_inner = 50, buff_outer = 200)
+sample_grid(raster = sr, 
+            gridsize = 100, 
+            access = ac,
+            buff_inner = 50,
+            buff_outer = 200)
 
-sample_grid(raster = sr, gridsize = 200, access = ac, buff_inner = 100,
- buff_outer = 400, filename = tempfile(fileext = ".shp"), plot = TRUE)
-
+sample_grid(raster = sr,
+            gridsize = 200,
+            access = ac,
+            buff_inner = 100,
+            buff_outer = 400,
+            filename = tempfile(fileext = ".shp"),
+            plot = TRUE)
+            
 }
 \seealso{
 Other sample functions: 
