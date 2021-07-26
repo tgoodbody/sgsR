@@ -55,6 +55,21 @@
 #'              filename = tempfile(fileext = ".shp"))
 #'              
 #' @author Tristan R.H. Goodbody & Martin Queinnec
+#' 
+#' @note 
+#' The sampling is performed in 2 stages:
+#' \enumerate{
+#' 
+#' \item \code{Rule 1} - Sample within grouped stratum pixels defined within the
+#' \code{wrow, wcol} parameters
+#' 
+#' \item \code{Rule 2} - If no more samples exist to satisfy desired sampling count,
+#'  individual stratum pixels are sampled.
+#'  
+#'  The rule applied to a select a particular sample is defined in the \code{rule} attribute of output samples.
+#' 
+#' }
+#'
 #'
 #' @export
 
@@ -383,7 +398,7 @@ sample_strat <- function(sraster,
         }
       }
 
-      #---- RULE 3 sampling ---#
+      #---- RULE 2 sampling ---#
 
       if (nCount < n) {
         idx_all <- 1:terra::ncell(strata_m)
@@ -410,7 +425,7 @@ sample_strat <- function(sraster,
 
           validCandidates <- validCandidates[-smp]
 
-          add_temp$rule <- "isolated"
+          add_temp$rule <- "rule2"
           add_temp$type <- "new"
           add_temp[, extraCols] <- NA
           add_temp$strata <- s
@@ -446,6 +461,32 @@ sample_strat <- function(sraster,
       if (nCount < n) {
         message(sprintf("Strata %s: couldn't select required number of samples: %i instead of %i \n", s, nCount, n))
       }
+      
+      #--- if number of samples is < 0 based on `include` parameter ---#
+      
+    } else {
+      
+      #--- need to remove samples from over represented strata ---#
+
+        rem <- toSample %>% 
+          dplyr::filter(strata == s) %>%
+          dplyr::select(total) %>%
+          dplyr::pull()
+        
+        message(paste0("'include = TRUE` - Stratum ", s, " overrepresented - ", abs(rem), " samples removed." ))
+        
+        add_strata <- addSamples %>% 
+          dplyr::filter(strata == s) %>%
+          dplyr::sample_n(abs(rem)) %>%
+          suppressMessages(dplyr::anti_join(addSamples, .))
+
+      
+      #--- add type and rule attributes ---#
+      
+        add_strata$type <- "existing"
+        add_strata$rule <- "existing"
+
+      
     }
 
     # Create out object if first iteration of loop
