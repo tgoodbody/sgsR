@@ -209,6 +209,13 @@ sample_clhs <- function(mraster,
     if (!inherits(existing, "data.frame") && !inherits(existing, "sf")) {
       stop("'existing' must be a data.frame or sf object")
     }
+    
+    #--- check that nSamp is > than existing ---#
+    
+    if (nSamp > nrow(existing)){
+      stop("nSamp must be > than number of existing samples")
+      
+    }
 
     #--- combined existing samples with vals dataframe ---#
 

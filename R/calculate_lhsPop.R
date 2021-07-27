@@ -10,7 +10,7 @@
 #' @param quant Logical. Calculates quantile matrix of the population for quantile comparison testing.
 #' \code{default = TRUE}.
 #' @param nQuant Numeric. Number of quantiles to divide the population into for \code{quant}.
-#' \code{default = 20}.
+#' \code{default = 10}.
 #' @param KLdiv Logical. Calculates covariate matrix of the population for Kullback–Leibler divergence testing.
 #' \code{default = TRUE}. Relies on \code{quant = TRUE} to calculate.
 #'
@@ -41,7 +41,7 @@
 calculate_lhsPop <- function(mraster,
                              PCA = TRUE,
                              quant = TRUE,
-                             nQuant = 20,
+                             nQuant = 10,
                              KLdiv = TRUE) {
   if (!inherits(mraster, "SpatRaster")) {
     stop("'mraster' must be type SpatRaster", call. = FALSE)
