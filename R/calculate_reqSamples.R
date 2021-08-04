@@ -9,28 +9,20 @@
 #'
 #'
 #' @return data.frame of strata and associates samples
-#'
-#' @examples
+#' 
+#' @examples 
 #' #--- Load strata raster and existing samples---#
-#' r <- system.file("extdata", "kmeans.tif", package = "sgsR")
+#' r <- system.file("extdata","kmeans.tif", package = "sgsR")
 #' sr <- terra::rast(r)
-#'
-#' e <- system.file("extdata", "existing.shp", package = "sgsR")
+#' 
+#' e <- system.file("extdata","existing.shp", package = "sgsR")
 #' e <- sf::st_read(e)
 #'
 #' #--- perform grid sampling ---#
-#' calculate_reqSamples(sraster = sr, 
-#'                      nSamp = 200)
+#' calculate_reqSamples(sraster = sr, nSamp = 200)
 #' 
-#' e.sr <- extract_strata(sraster = sr, 
-#'                        existing = e)
+#' calculate_reqSamples(sraster = sr, nSamp = 200, existing = e)
 #' 
-#' calculate_reqSamples(sraster = sr, 
-#'                      nSamp = 200, 
-#'                      existing = e.sr)
-#'                      
-#' @author Tristan R.H. Goodbody
-#'
 #' @export
 
 
@@ -54,7 +46,7 @@ calculate_reqSamples <- function(sraster,
   toSample <- vals %>%
     stats::na.omit() %>%
     dplyr::group_by(strata) %>%
-    dplyr::summarize(count = dplyr::n()) %>%
+    dplyr::summarize(count = n()) %>%
     dplyr::mutate(
       freq = count / sum(count),
       total = freq * nSamp
@@ -121,11 +113,11 @@ calculate_reqSamples <- function(sraster,
     existing <- existing %>%
       dplyr::group_by(strata) %>%
       dplyr::arrange() %>%
-      dplyr::summarize(eTotal = dplyr::n())
+      dplyr::summarize(eTotal = n())
 
     #--- if the strata for toSample and existing are not identical throw an error ---#
     if (!identical(unique(existing$strata), unique(toSample$strata))) {
-      stop("Strata for 'sraster' and 'existing' are not identical")
+      stop("Strata for 'sraster' and 'existing' are not identical. Consider using `extract_strata()`.")
     }
 
     #--- join the 2 df together and subtract the number of existing plots by strata from toSample ---#
