@@ -266,8 +266,12 @@ sample_strat <- function(sraster,
     n <- as.numeric(toSample[i, 2])
 
     message(paste0("Processing strata : ", s))
-
-    if (n > 0) {
+    
+    if (n == 0){
+      
+      message(paste0("Strata : ", s, " requires no changes."))
+      
+    } else if (n > 0) {
       #--- mask for individual strata ---#
 
       strata_m <- terra::mask(sraster,
@@ -464,7 +468,7 @@ sample_strat <- function(sraster,
       
       #--- if number of samples is < 0 based on `include` parameter ---#
       
-    } else {
+    } else if (n < 0) {
       
       #--- need to remove samples from over represented strata ---#
 
