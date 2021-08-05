@@ -62,7 +62,7 @@ calculate_coobs(mraster = mr,
                 existing = e,
                 cores = 4,
                 details = TRUE,
-                filename = tempfile(fileext = ".shp"))
+                filename = tempfile(fileext = ".tif"))
 }
 }
 \references{
