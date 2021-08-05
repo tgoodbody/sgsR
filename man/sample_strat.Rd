@@ -13,6 +13,7 @@ sample_strat(
   access = NULL,
   buff_inner = NULL,
   buff_outer = NULL,
+  force = FALSE,
   wrow = 3,
   wcol = 3,
   plot = FALSE,
@@ -22,9 +23,9 @@ sample_strat(
 )
 }
 \arguments{
-\item{sraster}{spatRaster. Stratification raster to be used for random sampling.}
+\item{sraster}{spatRaster. Stratification raster to be used for sampling.}
 
-\item{nSamp}{Numeric. Number of desired samples.}
+\item{nSamp}{Numeric. Number of desired samples. \code{existing include} and \code{force} influence this value.}
 
 \item{mindist}{Numeric. Minimum allowable distance between selected
 samples. Default = 100.}
@@ -40,6 +41,10 @@ from access where plots cannot be sampled.}
 
 \item{buff_outer}{Numeric. Outer buffer boundary specifying distance
 from access where plots can be sampled.}
+
+\item{force}{Logical. \code{Default = FALSE} - force \code{nSamp} to be exactly the user defined value
+in cases where nSamp and \code{sraster} strata count are not equally divisible. Has no effect when \code{existing}
+is provided.}
 
 \item{wrow}{Numeric. Number of row in the focal window (default is 3).}
 
@@ -61,6 +66,20 @@ An sf object with \code{nSamp} stratified samples.
 }
 \description{
 Sampling based on a stratified raster.
+}
+\note{
+The sampling is performed in 2 stages:
+\enumerate{
+
+\item \code{Rule 1} - Sample within grouped stratum pixels defined within the
+\code{wrow, wcol} parameters
+
+\item \code{Rule 2} - If no more samples exist to satisfy desired sampling count,
+ individual stratum pixels are sampled.
+ 
+ The rule applied to a allocate each sample is defined in the \code{rule} attribute of output samples.
+
+}
 }
 \examples{
 #--- Load raster and access files ---#

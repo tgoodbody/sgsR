@@ -5,7 +5,9 @@
 #' @family sample functions
 #'
 #' @inheritParams sample_srs
-#' @param sraster spatRaster. Stratification raster to be used for random sampling.
+#' @inheritParams calculate_reqSamples
+#' @param sraster spatRaster. Stratification raster to be used for sampling.
+#' @param nSamp Numeric. Number of desired samples. \code{existing include} and \code{force} influence this value. 
 #' @param existing sf or data.frame.  Existing plot network.
 #' @param include Logical. If \code{TRUE} include existing plots in \code{nSamp} total.
 #' @param wrow Numeric. Number of row in the focal window (default is 3).
@@ -66,7 +68,7 @@
 #' \item \code{Rule 2} - If no more samples exist to satisfy desired sampling count,
 #'  individual stratum pixels are sampled.
 #'  
-#'  The rule applied to a select a particular sample is defined in the \code{rule} attribute of output samples.
+#'  The rule applied to a allocate each sample is defined in the \code{rule} attribute of output samples.
 #' 
 #' }
 #'
@@ -81,6 +83,7 @@ sample_strat <- function(sraster,
                          access = NULL,
                          buff_inner = NULL,
                          buff_outer = NULL,
+                         force = FALSE,
                          wrow = 3,
                          wcol = 3,
                          plot = FALSE,
@@ -127,6 +130,10 @@ sample_strat <- function(sraster,
   if (!is.numeric(nSamp)) {
     stop("'nSamp' must be type numeric")
   }
+  
+  if (!is.logical(force)) {
+    stop("'force' must be type logical")
+  }
 
   if (!is.numeric(wrow)) {
     stop("'wrow' must be type numeric")
@@ -150,7 +157,7 @@ sample_strat <- function(sraster,
   }
 
   #--- determine crs of input sraster ---#
-  crs <- terra::crs(sraster)
+  crs <- terra::crs(sraster, proj=TRUE)
 
   #--- if existing samples are provided ensure they are in the proper format ---#
 
@@ -172,11 +179,6 @@ sample_strat <- function(sraster,
 
     if (any(!c("strata") %in% names(existing))) {
       stop("'existing' must have an attribute named 'strata'")
-    }
-
-    #--- error handling in the presence of 'existing' ---#
-    if (!inherits(existing, "sf")) {
-      stop("'existing' must be an 'sf' object")
     }
 
     if (inherits(sf::st_geometry(existing), "sfc_POINT")) {
@@ -229,9 +231,11 @@ sample_strat <- function(sraster,
   if (isTRUE(include)) {
     message("'existing' samples being included in 'n' calculation")
 
-    toSample <- calculate_reqSamples(sraster, nSamp, existing)
+    toSample <- calculate_reqSamples(sraster = sraster, nSamp = nSamp, existing = existing, force = force)
+    
   } else {
-    toSample <- calculate_reqSamples(sraster, nSamp)
+    
+    toSample <- calculate_reqSamples(sraster = sraster, nSamp = nSamp, force = force)
   }
 
 
@@ -267,9 +271,22 @@ sample_strat <- function(sraster,
 
     message(paste0("Processing strata : ", s))
     
+    #--- if the number of samples required is equal to zero (if `include == TRUE`) just keep existing samples only ---#
     if (n == 0){
       
-      message(paste0("Strata : ", s, " requires no changes."))
+      #--- Initiate number of sampled cells ---#
+      add_strata <- addSamples %>%
+        dplyr::filter(strata == s)
+      
+      if (nrow(add_strata) > 0) {
+        add_strata$type <- "existing"
+        
+        if (!"rule" %in% colnames(add_strata)) {
+          add_strata$rule <- "existing"
+        }
+      }
+
+      message(paste0("Strata : ", s, " required no sample additions. Keeping all existing samples."))
       
     } else if (n > 0) {
       #--- mask for individual strata ---#
@@ -472,24 +489,19 @@ sample_strat <- function(sraster,
       
       #--- need to remove samples from over represented strata ---#
 
-        rem <- toSample %>% 
-          dplyr::filter(strata == s) %>%
-          dplyr::select(total) %>%
-          dplyr::pull()
-        
-        message(paste0("'include = TRUE` - Stratum ", s, " overrepresented - ", abs(rem), " samples removed." ))
+      #--- sample total needed from existing ---#
+      need <- as.numeric(toSample[i, 3])
+      
+        message(paste0("'include = TRUE` - Stratum ", s, " overrepresented - ", abs(n), " samples removed." ))
         
         add_strata <- addSamples %>% 
           dplyr::filter(strata == s) %>%
-          dplyr::sample_n(abs(rem)) %>%
-          suppressMessages(dplyr::anti_join(addSamples, .))
-
+          dplyr::sample_n(need)
       
       #--- add type and rule attributes ---#
       
         add_strata$type <- "existing"
         add_strata$rule <- "existing"
-
       
     }
 
