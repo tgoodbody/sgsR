@@ -212,7 +212,7 @@ sample_clhs <- function(mraster,
     
     #--- check that nSamp is > than existing ---#
     
-    if (nSamp > nrow(existing)){
+    if (nrow(existing) > nSamp){
       stop("nSamp must be > than number of existing samples")
       
     }
