@@ -4,7 +4,7 @@
 \alias{calculate_lhsPop}
 \title{Analyze covariates for lhs}
 \usage{
-calculate_lhsPop(mraster, PCA = TRUE, quant = TRUE, nQuant = 20, KLdiv = TRUE)
+calculate_lhsPop(mraster, PCA = TRUE, quant = TRUE, nQuant = 10, KLdiv = TRUE)
 }
 \arguments{
 \item{mraster}{spatRaster. ALS metrics raster.}
@@ -16,7 +16,7 @@ calculate_lhsPop(mraster, PCA = TRUE, quant = TRUE, nQuant = 20, KLdiv = TRUE)
 \code{default = TRUE}.}
 
 \item{nQuant}{Numeric. Number of quantiles to divide the population into for \code{quant}.
-\code{default = 20}.}
+\code{default = 10}.}
 
 \item{KLdiv}{Logical. Calculates covariate matrix of the population for Kullback–Leibler divergence testing.
 \code{default = TRUE}. Relies on \code{quant = TRUE} to calculate.}
