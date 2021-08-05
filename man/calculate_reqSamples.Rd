@@ -4,17 +4,26 @@
 \alias{calculate_reqSamples}
 \title{Determine required samples in strata}
 \usage{
-calculate_reqSamples(sraster, nSamp, existing = NULL)
+calculate_reqSamples(sraster, nSamp, existing = NULL, force = FALSE)
 }
 \arguments{
-\item{sraster}{spatRaster. Stratification raster to be used for random sampling.}
+\item{sraster}{spatRaster. Stratification raster to be used for sampling.}
 
 \item{nSamp}{Numeric. Number of desired samples.}
 
 \item{existing}{sf or data.frame.  Existing plot network.}
+
+\item{force}{Logical. \code{Default = FALSE} - force \code{nSamp} to be exactly the user defined value
+in cases where nSamp and \code{sraster} strata count are not equally divisible. Has no effect when \code{existing}
+is provided.}
 }
 \value{
-data.frame of strata and associates samples
+data.frame of:
+\itemize{
+\item{strata} - Strata ID.
+\item{total} - Total samples to be allocated (positive) or removed (negative).
+\item{need} - Total required samples per strata.
+}
 }
 \description{
 Determine required samples in strata
