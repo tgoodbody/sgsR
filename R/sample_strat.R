@@ -5,7 +5,7 @@
 #' @family sample functions
 #'
 #' @inheritParams sample_srs
-#' @inheritParams calculate_reqSamples
+#' @inheritParams calculate_allocation
 #' @param sraster spatRaster. Stratification raster to be used for sampling.
 #' @param nSamp Numeric. Number of desired samples. \code{existing include} and \code{force} influence this value. 
 #' @param existing sf or data.frame.  Existing plot network.
@@ -77,6 +77,9 @@
 
 sample_strat <- function(sraster,
                          nSamp,
+                         allocation = "prop",
+                         mraster = NULL,
+                         metric = NULL,
                          mindist = NULL,
                          existing = NULL,
                          include = FALSE,
@@ -229,13 +232,24 @@ sample_strat <- function(sraster,
   #--- determine number of samples for each strata ---#
 
   if (isTRUE(include)) {
-    message("'existing' samples being included in 'n' calculation")
+    message("'existing' samples being included in 'nSamp' total")
 
-    toSample <- calculate_reqSamples(sraster = sraster, nSamp = nSamp, existing = existing, force = force)
+    toSample <- calculate_allocation(sraster = sraster, 
+                                     nSamp = nSamp, 
+                                     existing = existing, 
+                                     force = force, 
+                                     allocation = allocation, 
+                                     mraster = mraster, 
+                                     metric = metric)
     
   } else {
     
-    toSample <- calculate_reqSamples(sraster = sraster, nSamp = nSamp, force = force)
+    toSample <- calculate_allocation(sraster = sraster, 
+                                     nSamp = nSamp, 
+                                     force = force, 
+                                     allocation = allocation, 
+                                     mraster = mraster, 
+                                     metric = metric)
   }
 
 
