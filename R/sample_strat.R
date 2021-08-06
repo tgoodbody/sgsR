@@ -38,6 +38,12 @@
 #'              nSamp = 200, 
 #'              plot = TRUE)
 #'              
+#--- perform stratified sampling random sampling ---#
+#' sample_strat(sraster = sr, 
+#'              nSamp = 200, 
+#'              plot = TRUE,
+#'              force = TRUE)
+#'              
 #' #--- extract strata values to existing samples ---#              
 #' e.sr <- extract_strata(sraster = sr, existing = e)              
 #' 
@@ -51,6 +57,20 @@
 #' 
 #' sample_strat(sraster = sr, 
 #'              nSamp = 200, 
+#'              access = ac,
+#'              buff_inner = 50, 
+#'              buff_outer = 200, 
+#'              filename = tempfile(fileext = ".shp"))
+#'              
+#' #--- Load mraster for optimal allocation ---#                     
+#' mr <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
+#' mr <- terra::rast(mr)
+#' 
+#' sample_strat(sraster = sr, 
+#'              nSamp = 200, 
+#'              allocation = "optim",
+#'              mraster = mr,
+#'              metric = 1,
 #'              access = ac,
 #'              buff_inner = 50, 
 #'              buff_outer = 200, 
@@ -77,6 +97,7 @@
 
 sample_strat <- function(sraster,
                          nSamp,
+                         force = FALSE,
                          allocation = "prop",
                          mraster = NULL,
                          metric = NULL,
@@ -86,7 +107,6 @@ sample_strat <- function(sraster,
                          access = NULL,
                          buff_inner = NULL,
                          buff_outer = NULL,
-                         force = FALSE,
                          wrow = 3,
                          wcol = 3,
                          plot = FALSE,
