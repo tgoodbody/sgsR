@@ -62,10 +62,10 @@ calculate_pcomp(mraster = mr,
 }
 \seealso{
 Other calculate functions: 
+\code{\link{calculate_allocation}()},
 \code{\link{calculate_coobs}()},
 \code{\link{calculate_distance}()},
-\code{\link{calculate_lhsPop}()},
-\code{\link{calculate_reqSamples}()}
+\code{\link{calculate_lhsPop}()}
 }
 \author{
 Tristan R.H. Goodbody

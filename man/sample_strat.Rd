@@ -7,6 +7,9 @@
 sample_strat(
   sraster,
   nSamp,
+  allocation = "prop",
+  mraster = NULL,
+  metric = NULL,
   mindist = NULL,
   existing = NULL,
   include = FALSE,
@@ -26,6 +29,14 @@ sample_strat(
 \item{sraster}{spatRaster. Stratification raster to be used for sampling.}
 
 \item{nSamp}{Numeric. Number of desired samples. \code{existing include} and \code{force} influence this value.}
+
+\item{allocation}{Character. Allocation algorithm to be used. Either \code{prop} (default) for proportional allocation
+or \code{optim} for optimal allocation.}
+
+\item{mraster}{spatRaster. ALS metrics raster. Required when \code{allocation = optim}.}
+
+\item{metric}{Numeric/Character. Index or name of primary covariate within mraster to stratify.
+Required when \code{allocation = optim}.}
 
 \item{mindist}{Numeric. Minimum allowable distance between selected
 samples. Default = 100.}
