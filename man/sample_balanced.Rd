@@ -83,9 +83,9 @@ Big Data. R package version 1.0.0. https://CRAN.R-project.org/package=SamplingBi
 Other sample functions: 
 \code{\link{sample_ahels}()},
 \code{\link{sample_clhs}()},
-\code{\link{sample_grid}()},
 \code{\link{sample_srs}()},
-\code{\link{sample_strat}()}
+\code{\link{sample_strat}()},
+\code{\link{sample_systematic}()}
 }
 \author{
 Tristan R.H. Goodbody

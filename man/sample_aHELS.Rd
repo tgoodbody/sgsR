@@ -71,9 +71,9 @@ Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of c
 Other sample functions: 
 \code{\link{sample_balanced}()},
 \code{\link{sample_clhs}()},
-\code{\link{sample_grid}()},
 \code{\link{sample_srs}()},
-\code{\link{sample_strat}()}
+\code{\link{sample_strat}()},
+\code{\link{sample_systematic}()}
 }
 \author{
 Tristan R.H. Goodbody

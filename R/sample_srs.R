@@ -4,7 +4,7 @@
 #'
 #' @family sample functions
 #'
-#' @inheritParams sample_grid
+#' @inheritParams sample_systematic
 #'
 #' @param raster spatRaster. Raster to be used for random sampling.
 #' @param nSamp Numeric. Number of desired samples.

@@ -127,9 +127,9 @@ on Digital Soil Mapping, Sydney, Australia.
 Other sample functions: 
 \code{\link{sample_ahels}()},
 \code{\link{sample_balanced}()},
-\code{\link{sample_grid}()},
 \code{\link{sample_srs}()},
-\code{\link{sample_strat}()}
+\code{\link{sample_strat}()},
+\code{\link{sample_systematic}()}
 }
 \author{
 Tristan R.H. Goodbody

@@ -74,12 +74,30 @@ e <- sf::st_read(e)
 calculate_allocation(sraster = sr, 
                      nSamp = 200)
 
+calculate_allocation(sraster = sr, 
+                     nSamp = 200,
+                     force = TRUE)
+                     
+#--- extract strata from existing samples ---#
 e.sr <- extract_strata(sraster = sr, 
                        existing = e)
 
 calculate_allocation(sraster = sr, 
                      nSamp = 200, 
                      existing = e.sr)
+
+#--- Load mraster for optimal allocation ---#                     
+mr <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
+mr <- terra::rast(mr)
+                     
+calculate_allocation(sraster = sr, 
+                     nSamp = 200, 
+                     existing = e.sr,
+                     allocation = "optim",
+                     mraster = mr,
+                     metric = 1,
+                     force = TRUE)
+                     
                      
 }
 \seealso{

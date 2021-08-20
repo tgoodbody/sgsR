@@ -5,7 +5,7 @@
 #'
 #' @inheritParams strat_kmeans
 #' @inheritParams strat_quantiles
-#' @inheritParams sample_grid
+#' @inheritParams sample_systematic
 #' @param breaks Numeric. Vector of breakpoints for \code{metric}
 #' @param breaks2 Numeric. Vector of breakpoints for \code{metric2} (if provided)
 #' @param filename Character. Path to write stratified raster to disc.

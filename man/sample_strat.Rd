@@ -7,6 +7,7 @@
 sample_strat(
   sraster,
   nSamp,
+  force = FALSE,
   allocation = "prop",
   mraster = NULL,
   metric = NULL,
@@ -16,7 +17,6 @@ sample_strat(
   access = NULL,
   buff_inner = NULL,
   buff_outer = NULL,
-  force = FALSE,
   wrow = 3,
   wcol = 3,
   plot = FALSE,
@@ -29,6 +29,10 @@ sample_strat(
 \item{sraster}{spatRaster. Stratification raster to be used for sampling.}
 
 \item{nSamp}{Numeric. Number of desired samples. \code{existing include} and \code{force} influence this value.}
+
+\item{force}{Logical. \code{Default = FALSE} - force \code{nSamp} to be exactly the user defined value
+in cases where nSamp and \code{sraster} strata count are not equally divisible. Has no effect when \code{existing}
+is provided.}
 
 \item{allocation}{Character. Allocation algorithm to be used. Either \code{prop} (default) for proportional allocation
 or \code{optim} for optimal allocation.}
@@ -52,10 +56,6 @@ from access where plots cannot be sampled.}
 
 \item{buff_outer}{Numeric. Outer buffer boundary specifying distance
 from access where plots can be sampled.}
-
-\item{force}{Logical. \code{Default = FALSE} - force \code{nSamp} to be exactly the user defined value
-in cases where nSamp and \code{sraster} strata count are not equally divisible. Has no effect when \code{existing}
-is provided.}
 
 \item{wrow}{Numeric. Number of row in the focal window (default is 3).}
 
@@ -107,6 +107,11 @@ sample_strat(sraster = sr,
              nSamp = 200, 
              plot = TRUE)
              
+sample_strat(sraster = sr, 
+             nSamp = 200, 
+             plot = TRUE,
+             force = TRUE)
+             
 #--- extract strata values to existing samples ---#              
 e.sr <- extract_strata(sraster = sr, existing = e)              
 
@@ -125,14 +130,28 @@ sample_strat(sraster = sr,
              buff_outer = 200, 
              filename = tempfile(fileext = ".shp"))
              
+#--- Load mraster for optimal allocation ---#                     
+mr <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
+mr <- terra::rast(mr)
+
+sample_strat(sraster = sr, 
+             nSamp = 200, 
+             allocation = "optim",
+             mraster = mr,
+             metric = 1,
+             access = ac,
+             buff_inner = 50, 
+             buff_outer = 200, 
+             filename = tempfile(fileext = ".shp"))
+             
 }
 \seealso{
 Other sample functions: 
 \code{\link{sample_ahels}()},
 \code{\link{sample_balanced}()},
 \code{\link{sample_clhs}()},
-\code{\link{sample_grid}()},
-\code{\link{sample_srs}()}
+\code{\link{sample_srs}()},
+\code{\link{sample_systematic}()}
 }
 \author{
 Tristan R.H. Goodbody & Martin Queinnec
