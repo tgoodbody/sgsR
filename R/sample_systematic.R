@@ -147,7 +147,8 @@ sample_systematic <- function(raster,
   
   #--- create grid and locate samples ---#
   
-  samples <- sf::st_as_sf(sf::st_make_grid(sfObj, cellsize, square = square, what = location, crs = terra::crs(raster), ...))
+  samples <- sf::st_as_sf(sf::st_make_grid(sfObj, cellsize, square = square, what = location, crs = terra::crs(raster), ...)) %>%
+    dplyr::rename(geometry = x)
   
   #--- create tessellation ---#
   
