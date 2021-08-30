@@ -148,20 +148,18 @@ sample_systematic <- function(raster,
   #--- create grid and locate samples ---#
   
   samples <- sf::st_as_sf(sf::st_make_grid(sfObj, cellsize, square = square, what = location, crs = terra::crs(raster), ...)) %>%
-    dplyr::rename(geometry = x)
+    dplyr::rename(geometry = x) %>%
+    #--- need to extract a metric to determine if values are NA ---#
+    extract_metrics(mraster = raster[[1]], existing = .) %>%
+    #--- remove samples with NA ---#
+    dplyr::filter(!is.na(.)) %>%
+    dplyr::select(geometry)
   
   #--- create tessellation ---#
   
   grid <- sf::st_as_sf(sf::st_make_grid(sfObj, cellsize, square = square, what = "polygons", crs = terra::crs(raster), ...))
   
-  #--- set geometry column and remove samples with NA values ---#
-  
-  sf::st_geometry(samples) <- "geometry"
-  
-  samples <- samples %>%
-    dplyr::filter(!is.na(.)) %>%
-    dplyr::select(-x)
-  
+
   if (isTRUE(plot)) {
     
     #--- plot input raster and random samples ---#
