@@ -153,10 +153,6 @@ sample_systematic <- function(raster,
   
   grid <- sf::st_as_sf(sf::st_make_grid(sfObj, cellsize, square = square, what = "polygons", crs = terra::crs(raster), ...))
   
-  #--- extract values from raster for each sample ---#
-  
-  samples <- extract_metrics(mraster = raster, existing = samples)
-  
   #--- set geometry column and remove samples with NA values ---#
   
   sf::st_geometry(samples) <- "geometry"
