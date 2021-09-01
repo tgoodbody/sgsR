@@ -132,8 +132,8 @@ sample_systematic <- function(raster,
       stop("'access' must be an 'sf' object")
     }
     
-    if (!inherits(sf::st_geometry(access), "sfc_MULTILINESTRING")) {
-      stop("'access' geometry type must be 'sfc_MULTILINESTRING'")
+    if (!inherits(sf::st_geometry(access), "sfc_MULTILINESTRING") && !inherits(sf::st_geometry(access), "sfc_LINESTRING")) {
+      stop("'access' geometry type must be 'LINESTRING' or 'MULTILINESTRING'")
     }
     
     access_buff <- mask_access(raster = raster, access = access, buff_inner = buff_inner, buff_outer = buff_outer)

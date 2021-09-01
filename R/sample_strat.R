@@ -282,8 +282,8 @@ sample_strat <- function(sraster,
       stop("'access' must be an 'sf' object")
     }
 
-    if (!inherits(sf::st_geometry(access), "sfc_MULTILINESTRING")) {
-      stop("'access' geometry type must be 'sfc_MULTILINESTRING'")
+    if (!inherits(sf::st_geometry(access), "sfc_MULTILINESTRING") && !inherits(sf::st_geometry(access), "sfc_LINESTRING")) {
+      stop("'access' geometry type must be 'LINESTRING' or 'MULTILINESTRING'")
     }
 
     if (buff_inner > buff_outer) {
