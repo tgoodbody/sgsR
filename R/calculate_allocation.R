@@ -7,7 +7,7 @@
 #' @inheritParams sample_srs
 #' @inheritParams sample_strat
 #' @param allocation Character. Allocation algorithm to be used. Either \code{prop} (default) for proportional allocation
-#' or \code{optim} for optimal allocation.
+#' or \code{optim} for optimal allocation or \code{equal} for equal number of samples for each strata.
 #' @param mraster spatRaster. ALS metrics raster. Required when \code{allocation = optim}.
 #' @param metric Numeric/Character. Index or name of primary covariate within mraster to stratify.
 #' Required when \code{allocation = optim}.
@@ -95,8 +95,8 @@ calculate_allocation <- function(sraster,
     stop("'nSamp' must be type numeric")
   }
   
-  if (allocation != "prop" && allocation != "optim") {
-    stop("Unknown allocation '", allocation, "' selected. Please use 'prop' (default) or 'optim'")
+  if (allocation != "prop" && allocation != "optim" && allocation != "equal") {
+    stop("Unknown allocation: '", allocation, "' selected. Please use 'prop' (default) or 'optim' or 'equal'")
   }
   
   if (!is.logical(force)) {
@@ -222,6 +222,31 @@ calculate_allocation <- function(sraster,
       #--- optimal allocation equation ---#
       dplyr::mutate(total = round((nSamp*count*sd)/denom)) %>%
       dplyr::select(strata, total)
+    
+    
+  }
+  
+  if(allocation == "equal"){
+    
+    #--- error handling when allocation algorithm is 'unique' ---#
+    
+    vals <- terra::values(sraster) %>%
+      as.data.frame() %>%
+      stats::na.omit()
+    
+    #--- determine total strata ---#
+    
+    totStrat <- length(unique(vals$strata))
+    
+    if (!(nSamp %% totStrat == 0)) {
+      stop("allocation = 'equal' - nSamp must be divisible by number of strata in 'sraster'.")
+    }
+    
+    
+    toSample <- vals %>%
+      group_by(strata) %>%
+      dplyr::summarize(count = dplyr::n(),
+                       total = nSamp / totStrat)
     
     
   }

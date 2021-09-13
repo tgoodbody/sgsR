@@ -20,7 +20,7 @@ calculate_allocation(
 \item{nSamp}{Numeric. Number of desired samples.}
 
 \item{allocation}{Character. Allocation algorithm to be used. Either \code{prop} (default) for proportional allocation
-or \code{optim} for optimal allocation.}
+or \code{optim} for optimal allocation or \code{equal} for equal number of samples for each strata.}
 
 \item{mraster}{spatRaster. ALS metrics raster. Required when \code{allocation = optim}.}
 
