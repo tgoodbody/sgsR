@@ -116,7 +116,8 @@ strat_kmeans <- function(mraster,
 
   #--- convert k-means values back to original mraster extent ---#
 
-  vals[is.finite(vals)] <- km_clust$cluster
+  #--- suppress warning due to difference in data frame with and without NA values ---#
+  suppressWarnings(vals[is.finite(vals)] <- km_clust$cluster)
 
   kmv <- terra::setValues(mraster[[1]], vals)
   names(kmv) <- "strata"
