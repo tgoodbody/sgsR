@@ -81,6 +81,7 @@ strat_breaks(mraster = mr,
 }
 \seealso{
 Other stratify functions: 
+\code{\link{strat_fri}()},
 \code{\link{strat_kmeans}()},
 \code{\link{strat_osb}()},
 \code{\link{strat_pcomp}()},

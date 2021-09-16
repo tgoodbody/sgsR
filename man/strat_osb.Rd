@@ -106,6 +106,7 @@ DOI: 10.1080/02664763.2015.1018674
 \seealso{
 Other stratify functions: 
 \code{\link{strat_breaks}()},
+\code{\link{strat_fri}()},
 \code{\link{strat_kmeans}()},
 \code{\link{strat_pcomp}()},
 \code{\link{strat_quantiles}()}

@@ -80,6 +80,7 @@ kmeans <- strat_kmeans(mraster = mr,
 \seealso{
 Other stratify functions: 
 \code{\link{strat_breaks}()},
+\code{\link{strat_fri}()},
 \code{\link{strat_osb}()},
 \code{\link{strat_pcomp}()},
 \code{\link{strat_quantiles}()}
