@@ -14,7 +14,8 @@ strat_fri(
   filename = NULL,
   overwrite = FALSE,
   plot = FALSE,
-  details = FALSE
+  details = FALSE,
+  ...
 )
 }
 \arguments{
@@ -45,6 +46,8 @@ stratified forest resources inventory attributes. If \code{TRUE} return a list
 where \code{$outRaster} is the stratified forest resources inventory attributes,
 \code{$lookUp} is the lookup table for the stratification, and \code{fripoly} is the
 forest resources inventory poly with \code{attribute} and corresponding \code{class}}
+
+\item{...}{Additional arguments for writing files. See \code{\link[terra]{writeRaster}}.}
 }
 \value{
 A spatRaster object.

@@ -36,7 +36,8 @@ strat_fri <- function(fri,
                       filename = NULL,
                       overwrite = FALSE,
                       plot = FALSE,
-                      details = FALSE
+                      details = FALSE,
+                      ...
 ){
   
   #--- error handling ---#
