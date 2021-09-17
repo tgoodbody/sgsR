@@ -2,10 +2,10 @@
 % Please edit documentation in R/strat_fri.R
 \name{strat_fri}
 \alias{strat_fri}
-\title{Stratify Forest Resources Inventory}
+\title{Stratify Forest Resources Inventory (FRI)}
 \usage{
 strat_fri(
-  FRI,
+  fri,
   attribute,
   features,
   raster,
@@ -18,9 +18,9 @@ strat_fri(
 )
 }
 \arguments{
-\item{FRI}{sf. Forest resources inventory polygon coverage.}
+\item{fri}{sf. Forest resources inventory polygon coverage.}
 
-\item{attribute}{Character. Name of attribute within \code{FRI} that will be stratified}
+\item{attribute}{Character. Name of attribute within \code{fri} that will be stratified}
 
 \item{features}{vector/list. Vector or list of vectors of features within \code{attribute}
 to guide stratification.}
@@ -28,11 +28,11 @@ to guide stratification.}
 \item{raster}{spatRaster. Raster for polygon to raster conversion. If \code{map = TRUE}
 raster must contain a layer named "strata".}
 
-\item{map}{Logical. Default = \code{FALSE}. If \code{TRUE}, map values from FRIstrata 
+\item{map}{Logical. Default = \code{FALSE}. If \code{TRUE}, map values from fristrata 
 with strata from \code{raster} to create secondary strata tier.}
 
 \item{stack}{Logical. Default = \code{FALSE}. If \code{TRUE}, output raster will be
-3 layers: \code{FRIstrata, rasterstrata, FRIrasterStrata}.}
+3 layers: \code{fristrata, rasterstrata, frirasterStrata}.}
 
 \item{filename}{Character. Path to write stratified raster to disc.}
 
@@ -43,14 +43,14 @@ with strata from \code{raster} to create secondary strata tier.}
 \item{details}{Logical. If \code{FALSE} (default) output is spatRaster object of
 stratified forest resources inventory attributes. If \code{TRUE} return a list
 where \code{$outRaster} is the stratified forest resources inventory attributes,
-\code{$lookUp} is the lookup table for the stratification, and \code{FRIpoly} is the
+\code{$lookUp} is the lookup table for the stratification, and \code{fripoly} is the
 forest resources inventory poly with \code{attribute} and corresponding \code{class}}
 }
 \value{
 A spatRaster object.
 }
 \description{
-Stratify an input forest resources inventory polygon.
+Stratify an input forest resources inventory (FRI) polygon.
 }
 \seealso{
 Other stratify functions: 

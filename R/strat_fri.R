@@ -25,7 +25,7 @@
 #' @importFrom methods is
 #'
 #' @return A spatRaster object.
-
+#' @export
 
 strat_fri <- function(fri,
                       attribute,
