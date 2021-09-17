@@ -9,8 +9,6 @@ strat_fri(
   attribute,
   features,
   raster,
-  map = FALSE,
-  stack = FALSE,
   filename = NULL,
   overwrite = FALSE,
   plot = FALSE,
@@ -29,12 +27,6 @@ to guide stratification.}
 \item{raster}{spatRaster. Raster for polygon to raster conversion. If \code{map = TRUE}
 raster must contain a layer named "strata".}
 
-\item{map}{Logical. Default = \code{FALSE}. If \code{TRUE}, map values from fristrata 
-with strata from \code{raster} to create secondary strata tier.}
-
-\item{stack}{Logical. Default = \code{FALSE}. If \code{TRUE}, output raster will be
-3 layers: \code{fristrata, rasterstrata, frirasterStrata}.}
-
 \item{filename}{Character. Path to write stratified raster to disc.}
 
 \item{overwrite}{Logical. Specify whether \code{filename} should be overwritten on disc.}
@@ -45,7 +37,7 @@ with strata from \code{raster} to create secondary strata tier.}
 stratified forest resources inventory attributes. If \code{TRUE} return a list
 where \code{$outRaster} is the stratified forest resources inventory attributes,
 \code{$lookUp} is the lookup table for the stratification, and \code{fripoly} is the
-forest resources inventory poly with \code{attribute} and corresponding \code{class}}
+forest resources inventory poly with \code{attribute} and corresponding \code{strata}}
 
 \item{...}{Additional arguments for writing files. See \code{\link[terra]{writeRaster}}.}
 }
@@ -59,6 +51,7 @@ Stratify an input forest resources inventory (FRI) polygon.
 Other stratify functions: 
 \code{\link{strat_breaks}()},
 \code{\link{strat_kmeans}()},
+\code{\link{strat_map}()},
 \code{\link{strat_osb}()},
 \code{\link{strat_pcomp}()},
 \code{\link{strat_quantiles}()}
