@@ -96,7 +96,7 @@ strat_map <- function(sraster,
     as.data.frame() %>%
     dplyr::group_by(strata, strata2) %>%
     #--- establish newly formed unique class ---#
-    dplyr::mutate(stratamapped = paste0(strata,strata2)) %>%
+    dplyr::mutate(stratamapped = ifelse(is.na(strata) | is.na(strata2), NA, paste0(strata,strata2))) %>%
     #--- ensure NA's are transfered ---#
     dplyr::mutate(stratamapped = ifelse(is.na(strata) | is.na(strata2), NA, stratamapped))
   
