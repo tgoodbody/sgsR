@@ -12,6 +12,7 @@ Depends:
     R (>= 2.10)
 Imports:
     dplyr (>= 1.0.6),
+    glue (>= 1.4.2),
     ggplot2 (>= 3.3.3),
     magrittr (>= 2.0.1),
     methods (>= 4.0.5),
