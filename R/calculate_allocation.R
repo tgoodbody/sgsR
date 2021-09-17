@@ -194,14 +194,14 @@ calculate_allocation <- function(sraster,
           #--- Character ---#
         } else if (is.character(metric)) {
           if (!metric %in% names(mraster)) {
-            stop(paste0("'mraster' must have an attribute named ", metric))
+            stop(glue::glue("'mraster' must have an attribute named {metric}"))
           }
           
         }
       }
     }
     
-    message(paste0("Implementing optimal allocation of samples based on variability of ", metric))
+    message(glue::glue('Implementing optimal allocation of samples based on variability of {metric}'))
     
     #--- merge sraster and mraster metric together ---#
     
@@ -312,7 +312,7 @@ calculate_allocation <- function(sraster,
     
     if(force == TRUE){
       
-      message(paste0("Forcing ", nSamp, " total samples."))
+      message(glue::glue('Forcing {nSamp} total samples.'))
       
       #--- if samples need to removed ---#
       
@@ -361,10 +361,7 @@ calculate_allocation <- function(sraster,
     } else {
       
       
-      message(paste0("nSamp of ", nSamp, 
-                     " is not perfectly divisible based on strata distribution.",
-                     " nSamp of ", tot, " will be returned.",
-                     " Use 'force = TRUE' to brute force to ", nSamp, "."))
+      message(glue::glue('nSamp of {nSamp} is not perfectly divisible based on strata distribution. nSamp of {tot} will be returned. Use "force = TRUE" to brute force to {nSamp}.'))
     }
   }
   

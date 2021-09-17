@@ -303,7 +303,7 @@ sample_strat <- function(sraster,
     s <- as.numeric(toSample[i, 1])
     n <- as.numeric(toSample[i, 2])
 
-    message(paste0("Processing strata : ", s))
+    message(glue::glue('Processing strata : {s}'))
     
     #--- if the number of samples required is equal to zero (if `include == TRUE`) just keep existing samples only ---#
     if (n == 0){
@@ -320,7 +320,7 @@ sample_strat <- function(sraster,
         }
       }
 
-      message(paste0("Strata : ", s, " required no sample additions. Keeping all existing samples."))
+      message(glue::glue('Strata : {s} required no sample additions. Keeping all existing samples.'))
       
     } else if (n > 0) {
       #--- mask for individual strata ---#
@@ -343,13 +343,7 @@ sample_strat <- function(sraster,
 
         if (sampAvail > n) {
           message(
-            paste0(
-              "Buffered area contains ",
-              sampAvail,
-              " available  candidates. Sampling to reach ",
-              n,
-              " samples starting."
-            )
+            glue::glue('Buffered area contains {sampAvail} available candidates. Sampling to reach {n} samples starting.')
           )
 
           #--- rename to original strata sraster that will be used for sampling ---#
@@ -526,7 +520,7 @@ sample_strat <- function(sraster,
       #--- sample total needed from existing ---#
       need <- as.numeric(toSample[i, 3])
       
-        message(paste0("'include = TRUE` - Stratum ", s, " overrepresented - ", abs(n), " samples removed." ))
+        message(glue::glue("'include = TRUE' - Stratum {s} overrepresented - {abs(n)} samples removed."))
         
         add_strata <- addSamples %>% 
           dplyr::filter(strata == s) %>%
@@ -594,7 +588,7 @@ sample_strat <- function(sraster,
     }
 
     if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(paste0(filename, " already exists and overwrite = FALSE"))
+      stop(glue::glue('{filename} already exists and overwrite = FALSE'))
     }
 
     sf::st_write(samples, filename, delete_layer = overwrite)

@@ -143,7 +143,7 @@ strat_osb <- function(mraster,
         #--- Character ---#
       } else if (is.character(metric)) {
         if (!metric %in% names(mraster)) {
-          stop(paste0("'mraster' must have an attribute named ", metric))
+          stop(glue::glue("'mraster' must have an attribute named {metric}."))
         }
 
         metric <- which(names(mraster) == metric)
@@ -163,7 +163,7 @@ strat_osb <- function(mraster,
       stop("'subset' must be between 0 and 1")
     }
 
-    message(paste0("'subset' was specified. Taking ", subset * 100, "% of available pixels to determine OSB"))
+    message(glue::glue("'subset' was specified. Taking {subset * 100}% of available pixels to determine OSB"))
 
     #--- Extract values from mraster removing any NA/INF/NaN ---#
 
@@ -205,13 +205,13 @@ strat_osb <- function(mraster,
     p1 <- ggplot2::ggplot(data, ggplot2::aes(!!met)) +
       ggplot2::geom_histogram() +
       ggplot2::geom_vline(xintercept = OSB[[2]]$OSB, linetype = "dashed") +
-      ggplot2::ggtitle(paste0(metric, " histogram with optimum sample boundaries."))
+      ggplot2::ggtitle(glue::glue('{metric} histogram with optimum sample boundaries.'))
 
     print(p1)
 
     #--- set colour palette ---#
 
-    terra::plot(rcl, main = paste0(metric, " optimum sample boundaries"), type = "classes")
+    terra::plot(rcl, main = glue::glue('{metric} optimum sample boundaries'), type = "classes")
   }
 
   #--- write file to disc ---#

@@ -101,7 +101,7 @@ strat_breaks <- function(mraster,
         #--- Character ---#
       } else if (is.character(metric)) {
         if (!metric %in% names(mraster)) {
-          stop(paste0("'mraster' must have an attribute named ", metric))
+          stop(glue::glue("'mraster' must have an attribute named {metric}."))
         }
 
         metric <- which(names(mraster) == metric)
@@ -131,7 +131,7 @@ strat_breaks <- function(mraster,
       #--- Character ---#
     } else if (is.character(metric2)) {
       if (!metric2 %in% names(mraster)) {
-        stop(paste0("'mraster' must have an attribute named ", metric))
+        stop(glue::glue("'mraster' must have an attribute named {metric}."))
       }
 
       metric2 <- which(names(mraster) == metric2)
@@ -228,7 +228,7 @@ strat_breaks <- function(mraster,
     p <- ggplot2::ggplot(data, ggplot2::aes(val)) +
       ggplot2::geom_histogram() +
       ggplot2::geom_vline(xintercept = breaks, linetype = "dashed") +
-      ggplot2::ggtitle(paste0(nm, " histogram with defined breaks"))
+      ggplot2::ggtitle(glue::glue('{nm} histogram with defined breaks'))
 
     if (!is.null(metric2)) {
       data2 <- terra::as.data.frame(rastermetric2)

@@ -76,7 +76,7 @@ calculate_lhsOpt <- function(popLHS = NULL,
   }
 
   if (any(!names(popLHS) %in% c("values", "pcaLoad", "matQ", "matCov"))) {
-    stop(paste0("'popLHS' must be the output from the 'calculate_lhsPop()' function"))
+    stop(glue::glue("'popLHS' must be the output from the 'calculate_lhsPop()' function"))
   }
 
   if (!is.logical(PCA)) {
@@ -304,7 +304,7 @@ plot_LHCOptim <- function(dfFinal,
     dplyr::select(df.x) %>%
     dplyr::pull()
 
-  message(paste0("Your optimum estimated sample size based on KL divergence is: ", num))
+  message(glue::glue('Your optimum estimated sample size based on KL divergence is: {num}'))
 
   x2 <- c(num, num)
   y2 <- c(0, 1)

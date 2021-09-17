@@ -193,7 +193,7 @@ sample_srs <- function(raster,
     }
 
     if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(paste0(filename, " already exists and overwrite = FALSE"))
+      stop(glue::glue('{filename} already exists and overwrite = FALSE'))
     }
 
     sf::st_write(samples, filename, delete_layer = overwrite)

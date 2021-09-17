@@ -122,7 +122,7 @@ strat_quantiles <- function(mraster,
           #--- Character ---#
         } else if (is.character(metric)) {
           if (!metric %in% names(mraster)) {
-            stop(paste0("'mraster' must have an attribute named ", metric))
+            stop(glue::glue("'mraster' must have an attribute named {metric}."))
           }
 
           metric <- which(names(vals) == metric)
@@ -183,7 +183,7 @@ strat_quantiles <- function(mraster,
       #--- Character ---#
     } else if (is.character(metric)) {
       if (!metric %in% names(mraster)) {
-        stop(paste0("'mraster' must have an attribute named ", metric))
+        stop(glue::glue("'mraster' must have an attribute named {metric}."))
       }
 
       metric <- which(names(mraster) == metric)
@@ -201,7 +201,7 @@ strat_quantiles <- function(mraster,
       #--- Character ---#
     } else if (is.character(metric2)) {
       if (!metric2 %in% names(mraster)) {
-        stop(paste0("'mraster' must have an attribute named ", metric2))
+        stop(glue::glue("'mraster' must have an attribute named {metric}."))
       }
 
       metric2 <- which(names(mraster) == metric2)
@@ -282,7 +282,7 @@ strat_quantiles <- function(mraster,
       p <- ggplot2::ggplot(df.p, ggplot2::aes(!!metric)) +
         ggplot2::geom_histogram() +
         ggplot2::geom_vline(xintercept = breaks, linetype = "dashed") +
-        ggplot2::ggtitle(paste0(metric, " histogram with defined breaks"))
+        ggplot2::ggtitle(glue::glue('{metric} histogram with defined breaks'))
 
       print(p)
 
