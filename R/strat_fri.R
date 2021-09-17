@@ -11,16 +11,12 @@
 #' to guide stratification.
 #' @param raster spatRaster. Raster for polygon to raster conversion. If \code{map = TRUE}
 #' raster must contain a layer named "strata".
-#' @param map Logical. Default = \code{FALSE}. If \code{TRUE}, map values from fristrata 
-#' with strata from \code{raster} to create secondary strata tier.
-#' @param stack Logical. Default = \code{FALSE}. If \code{TRUE}, output raster will be
-#' 3 layers: \code{fristrata, rasterstrata, frirasterStrata}.
 #' @param plot Logical. Plots output spatRaster.
 #' @param details Logical. If \code{FALSE} (default) output is spatRaster object of
 #' stratified forest resources inventory attributes. If \code{TRUE} return a list
 #' where \code{$outRaster} is the stratified forest resources inventory attributes,
 #' \code{$lookUp} is the lookup table for the stratification, and \code{fripoly} is the
-#' forest resources inventory poly with \code{attribute} and corresponding \code{class}
+#' forest resources inventory poly with \code{attribute} and corresponding \code{strata}
 #'
 #' @importFrom methods is
 #'
@@ -31,8 +27,6 @@ strat_fri <- function(fri,
                       attribute,
                       features,
                       raster,
-                      map = FALSE,
-                      stack = FALSE,
                       filename = NULL,
                       overwrite = FALSE,
                       plot = FALSE,
@@ -50,10 +44,6 @@ strat_fri <- function(fri,
     stop("'fri' geometry type must be 'POLYGON' or 'MULTIPOLYGON'")
   }
   
-  if (!inherits(raster, "SpatRaster")) {
-    stop("'raster' must be type SpatRaster", call. = FALSE)
-  }
-  
   if (!is.character(attribute)) {
     stop("'attribute' must be type character")
   }
@@ -62,12 +52,12 @@ strat_fri <- function(fri,
     stop("'features' must supply a vector or a list of vectors")
   }
   
-  if (!is.logical(map)) {
-    stop("'map' must be type logical")
+  if (!inherits(raster, "SpatRaster")) {
+    stop("'raster' must be type SpatRaster", call. = FALSE)
   }
   
-  if (!is.logical(stack)) {
-    stop("'stack' must be type logical")
+  if (!is.logical(overwrite)) {
+    stop("'overwrite' must be either TRUE or FALSE")
   }
   
   if (!is.logical(plot)) {
@@ -89,11 +79,11 @@ strat_fri <- function(fri,
   
   #--- generate number of groups ---#
 
-  class <- as.list(seq(1,length(features),1))
+  strata <- as.list(seq(1,length(features),1))
   
-  #--- create lookup table for values and associated classes ---#
+  #--- create lookup table for values and associated strataes ---#
   
-  lookUp <- do.call(rbind, Map(data.frame, class=class, features=features))
+  lookUp <- do.call(rbind, Map(data.frame, strata=strata, features=features))
   
   #--- check if features specifiec are included within fri attribute ---#
   
@@ -104,7 +94,7 @@ strat_fri <- function(fri,
   #--- create new column with mutated values based on features and associated group ---#
   
   fripoly <- fri %>% 
-    dplyr::mutate(class = dplyr::case_when(!!!rlang::parse_exprs(glue::glue('{attribute} %in% "{lookUp$features}" ~ "{lookUp$class}"')))) %>%
+    dplyr::mutate(strata = dplyr::case_when(!!!rlang::parse_exprs(glue::glue('{attribute} %in% "{lookUp$features}" ~ "{lookUp$strata}"')))) %>%
     na.omit() %>%
     terra::vect()
   
@@ -112,64 +102,7 @@ strat_fri <- function(fri,
   raster <- raster[[1]]
   
   #--- rasterize vector ---#
-  outfri <- terra::rasterize(x = fripoly, y = raster, field = "class")
-  
-  #--- combine fri raster with stratification raster ---#
-  
-  if(isTRUE(map)){
-    
-    message("fri stratification complete. Mapping stratified fri with 'raster' strata")
-    
-    if (any(!c("strata") %in% names(raster))) {
-      stop("'map = TRUE' but 'raster' does not have a layer named 'strata'")
-    }
-    
-    joined <- c(outfri,raster[["strata"]])
-    
-    featuresJoin <- terra::values(joined)
-    
-    oclass <- featuresJoin %>%
-      as.data.frame() %>%
-      dplyr::group_by(class, strata) %>%
-      #--- establish newly formed unique class ---#
-      dplyr::mutate(strata_combined = paste0(class,strata)) %>%
-      #--- ensure NA's are transfered ---#
-      dplyr::mutate(strata_combined = ifelse(is.na(class) | is.na(strata), NA, strata_combined)) %>%
-      dplyr::rename(fristrata = class,
-                    rasterstrata = strata,
-                    frirasterStrata = strata_combined)
-    
-    #--- create lookUp table ---#
-    
-    lookUp <- distinct(oclass) %>% 
-      na.omit() %>%
-      as.data.frame()
-    
-    #--- set newly stratified values ---#
-    
-    outfrijoin <- terra::setValues(raster, oclass$frirasterStrata)
-    names(outfri) <- "frirasterStrata"
-    
-  }
-  
-  if(isTRUE(stack)){
-    
-    message("Stacking fri strata, raster strata, and their combination.")
-    
-    #--- stack 3 rasters if requested ---#
-    
-    outfri <- c(outfri,raster,outfrijoin)
-    names(outfri) <- c("fristrata","rasterstrata","frirasterStrata")
-    
-  }
-  
-  #--- if not stacking rename for output ---#
-  
-  if(exists("outfrijoin")){
-
-    outfri <- outfrijoin
-    
-  }
+  outfri <- terra::rasterize(x = fripoly, y = raster, field = "strata")
   
   #--- write file to disc ---#
   
