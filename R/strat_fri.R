@@ -1,6 +1,6 @@
 #' Stratify Forest Resources Inventory (FRI)
 #'
-#' @description Stratify an input forest resources inventory (FRI) polygon.
+#' @description Stratify an input inventory polygon coverage.
 #'
 #' @family stratify functions
 #'
@@ -9,8 +9,7 @@
 #' @param attribute Character. Name of attribute within \code{fri} that will be stratified
 #' @param features vector/list. Vector or list of vectors of features within \code{attribute}
 #' to guide stratification.
-#' @param raster spatRaster. Raster for polygon to raster conversion. If \code{map = TRUE}
-#' raster must contain a layer named "strata".
+#' @param raster spatRaster. Raster enabling polygon to raster conversion.
 #' @param plot Logical. Plots output spatRaster.
 #' @param details Logical. If \code{FALSE} (default) output is spatRaster object of
 #' stratified forest resources inventory attributes. If \code{TRUE} return a list

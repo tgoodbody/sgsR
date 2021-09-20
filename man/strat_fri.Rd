@@ -45,7 +45,7 @@ forest resources inventory poly with \code{attribute} and corresponding \code{st
 A spatRaster object.
 }
 \description{
-Stratify an input forest resources inventory (FRI) polygon.
+Stratify an input inventory (FRI) polygon coverage.
 }
 \examples{
 #--- load input metrics raster ---#
