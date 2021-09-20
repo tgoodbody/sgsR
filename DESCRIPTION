@@ -1,7 +1,7 @@
 Type: Package
 Package: sgsR
-Title: Structurally Guided Sampling Approaches using ALS Data for R
-Version: 0.1.0
+Title: Structurally Guided Sampling Approaches using ALS Data
+Version: 1.0.0
 Date: 2021
 Author: Tristan RH Goodbody
 Maintainer: Tristan RH Goodbody <goodbody.t@gmail.com>
