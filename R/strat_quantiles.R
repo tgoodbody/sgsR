@@ -247,7 +247,7 @@ strat_quantiles <- function(mraster,
 
     #--- convert back to original mraster extent ---#
 
-    vals[, 1][idx] <- dfc$class
+    suppressWarnings(vals[, 1][idx] <- dfc$class)
 
     #--- set newly stratified values ---#
 
