@@ -18,6 +18,49 @@
 #' \code{$lookUp} is the lookup table for the stratification, and \code{fripoly} is the
 #' forest resources inventory poly with \code{attribute} and corresponding \code{strata}
 #'
+#' @examples
+#' #--- load input metrics raster ---#
+#' raster <- system.file("extdata","kmeans.tif", package = "sgsR")
+#' srasterkmeans <- terra::rast(raster)
+#' 
+#' #--- read polygon coverage ---#
+#' poly <- system.file("extdata","inventory_polygons.shp", package = "sgsR")
+#' fri <- sf::st_read(poly)
+#'
+#' #--- stratify polygon coverage ---#
+#' #--- specify polygon attribute to stratify ---#
+#' 
+#' attribute <- "NUTRIENTS"
+#' 
+#' #--- specify features within attribute & how they should be grouped ---#
+#' #--- as a single vector ---#
+#' 
+#' features <- c("poor","rich","medium")
+#' 
+#' srasterfri <- strat_fri(fri = fri, 
+#'                         attribute = attribute, 
+#'                         features = features, 
+#'                         raster = mraster, 
+#'                         plot = TRUE)
+#'                         
+#' #--- or as multiple lists ---#
+#' 
+#' g1 <- "poor"
+#' g2 <- c("rich", "medium")
+#' 
+#' features <- list(g1,g2)
+#' 
+#' srasterfri <- strat_fri(fri = fri, 
+#'                         attribute = attribute, 
+#'                         features = features, 
+#'                         raster = mraster,
+#'                         stack = TRUE, 
+#'                         plot = TRUE,
+#'                         details = TRUE)
+#' 
+#'
+#' @author Tristan R.H. Goodbody
+#'
 #' @importFrom methods is
 #'
 #' @return A spatRaster object.

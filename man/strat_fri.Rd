@@ -47,6 +47,48 @@ A spatRaster object.
 \description{
 Stratify an input forest resources inventory (FRI) polygon.
 }
+\examples{
+#--- load input metrics raster ---#
+raster <- system.file("extdata","kmeans.tif", package = "sgsR")
+srasterkmeans <- terra::rast(raster)
+
+#--- read polygon coverage ---#
+poly <- system.file("extdata","inventory_polygons.shp", package = "sgsR")
+fri <- sf::st_read(poly)
+
+#--- stratify polygon coverage ---#
+#--- specify polygon attribute to stratify ---#
+
+attribute <- "NUTRIENTS"
+
+#--- specify features within attribute & how they should be grouped ---#
+#--- as a single vector ---#
+
+features <- c("poor","rich","medium")
+
+srasterfri <- strat_fri(fri = fri, 
+                        attribute = attribute, 
+                        features = features, 
+                        raster = mraster, 
+                        plot = TRUE)
+                        
+#--- or as multiple lists ---#
+
+g1 <- "poor"
+g2 <- c("rich", "medium")
+
+features <- list(g1,g2)
+
+srasterfri <- strat_fri(fri = fri, 
+                        attribute = attribute, 
+                        features = features, 
+                        raster = mraster,
+                        stack = TRUE, 
+                        plot = TRUE,
+                        details = TRUE)
+
+
+}
 \seealso{
 Other stratify functions: 
 \code{\link{strat_breaks}()},
@@ -55,5 +97,8 @@ Other stratify functions:
 \code{\link{strat_osb}()},
 \code{\link{strat_pcomp}()},
 \code{\link{strat_quantiles}()}
+}
+\author{
+Tristan R.H. Goodbody
 }
 \concept{stratify functions}

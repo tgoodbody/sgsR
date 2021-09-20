@@ -25,11 +25,46 @@
 #' 
 #' If \code{strata = 2} and \code{strata2 = 14} then \code{stratamapped = 214}.
 #'
+#'@examples
+#' #--- load input metrics raster ---#
+#' raster <- system.file("extdata","kmeans.tif", package = "sgsR")
+#' srasterkmeans <- terra::rast(raster)
+#' 
+#' #--- read polygon coverage ---#
+#' poly <- system.file("extdata","inventory_polygons.shp", package = "sgsR")
+#' fri <- sf::st_read(poly)
+#'
+#' #--- stratify polygon coverage ---#
+#' #--- specify polygon attribute to stratify ---#
+#' 
+#' attribute <- "NUTRIENTS"
+#' 
+#' #--- specify features within attribute & how they should be grouped ---#
+#' #--- as a single vector ---#
+#' 
+#' features <- c("poor","rich","medium")
+#' 
+#' srasterfri <- strat_fri(fri = fri, 
+#'                         attribute = attribute, 
+#'                         features = features, 
+#'                         raster = mraster, 
+#'                         plot = TRUE)
+#' 
+#' #--- map srasters ---#
+#' strat_map(sraster = srasterfri,
+#'           sraster2 = srasterkmeans,
+#'           plot = TRUE)
+#' 
+#' strat_map(sraster = srasterfri,
+#'           sraster2 = srasterkmeans,
+#'           stack = TRUE,
+#'           details = TRUE,
+#'           plot = TRUE)
+#'           
 #' @importFrom methods is
 #'
 #' @return A spatRaster object.
 #' @export
-
 
 
 strat_map <- function(sraster,

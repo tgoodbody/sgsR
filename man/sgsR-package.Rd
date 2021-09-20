@@ -4,7 +4,7 @@
 \name{sgsR-package}
 \alias{sgsR}
 \alias{sgsR-package}
-\title{sgsR: Structurally Guided Sampling Approaches using ALS Data for R}
+\title{sgsR: Structurally Guided Sampling Approaches using ALS Data}
 \description{
 This package provides functions to enable stratification and
     sampling for structurally guided sampling using ALS data.
