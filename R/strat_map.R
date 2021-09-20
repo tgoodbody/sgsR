@@ -163,6 +163,16 @@ strat_map <- function(sraster,
     rout <- routstack
     
   }
+  
+  
+  #--- plot if requested
+  
+  if(isTRUE(plot)){
+    
+    terra::plot(rout)
+    
+  }
+  
   #--- write file to disc ---#
   
   if (!is.null(filename)) {
@@ -179,14 +189,6 @@ strat_map <- function(sraster,
       
     }
 
-  }
-  
-  #--- plot if requested
-  
-  if(isTRUE(plot)){
-    
-    terra::plot(rout)
-    
   }
   
   #--- output details if desired ---#
