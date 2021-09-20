@@ -42,6 +42,7 @@ strat_map <- function(sraster,
                       ...){
   
   #--- error handling ---#
+  
   if (!inherits(sraster, "SpatRaster")) {
     stop("'sraster' must be type SpatRaster", call. = FALSE)
   }
@@ -73,7 +74,7 @@ strat_map <- function(sraster,
   }
   
   if(terra::nlyr(sraster2) > 1){
-    stop("sraster mustonly contain 1 layer. Please subset the layer you would like to use for mapping.")
+    stop("sraster2 mustonly contain 1 layer. Please subset the layer you would like to use for mapping.")
   }
   
   if (!stringr::str_detect(names(sraster),"strata")) {
