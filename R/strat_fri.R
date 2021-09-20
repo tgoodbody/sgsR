@@ -74,6 +74,19 @@ strat_fri <- function(fri,
     stop(glue('fri does not have a layer named {attribute}'))
   }
   
+  #--- check that features are not duplicated across proposed attribute classes ---#
+  
+  unFeat <- unlist(features)
+  
+  unFeatObjs <- unFeat[duplicated(unFeat)]
+  
+  if(length(unFeatObjs) > 0){
+    stop(glue::glue("{unFeatObjs*}", .transformer = collapse_transformer(sep = ", ", last = " and ")), ". Are duplicated in 'features'.")
+    
+  }
+  
+  #--- begin fri polygon manipulation ---#
+  
   fri <- fri %>% 
     dplyr::select(glue::glue('{attribute}'))
   
@@ -135,5 +148,22 @@ strat_fri <- function(fri,
     #--- just output raster ---#
     
     return(outfri)
+  }
+}
+
+#--- glue transformer ---#
+
+collapse_transformer <- function(regex = "[*]$", ...) {
+  function(text, envir) {
+    collapse <- grepl(regex, text)
+    if (collapse) {
+      text <- sub(regex, "", text)
+    }
+    res <- identity_transformer(text, envir)
+    if (collapse) {
+      glue_collapse(res, ...)  
+    } else {
+      res
+    }
   }
 }
