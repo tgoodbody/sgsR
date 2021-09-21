@@ -201,9 +201,9 @@ collapse_transformer <- function(regex = "[*]$", ...) {
     if (collapse) {
       text <- sub(regex, "", text)
     }
-    res <- identity_transformer(text, envir)
+    res <- glue::identity_transformer(text, envir)
     if (collapse) {
-      glue_collapse(res, ...)  
+      glue::glue_collapse(res, ...)  
     } else {
       res
     }
