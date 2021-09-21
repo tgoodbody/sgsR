@@ -105,7 +105,7 @@ calculate_allocation <- function(sraster,
   
   #--- set global vars ---#
   
-  strata <- count <- freq <- total <- eTotal <- NULL
+  strata <- count <- freq <- total <- eTotal <- denom <- NULL
   
   #--- determine crs of input sraster ---#
   crs <- terra::crs(sraster, proj=TRUE)
@@ -244,7 +244,7 @@ calculate_allocation <- function(sraster,
     
     
     toSample <- vals %>%
-      group_by(strata) %>%
+      dplyr::group_by(strata) %>%
       dplyr::summarize(count = dplyr::n(),
                        total = nSamp / totStrat)
     
@@ -323,7 +323,7 @@ calculate_allocation <- function(sraster,
         while(diffAbs > 0){
           
           stratAdd <- toSample %>%
-            {if (nrow(dplyr::filter(toSample, total == max(total))) > 0) as.data.frame(dplyr::filter(toSample,total == max(total))) else as.data.frame(filter(toSample,total < max(total)))} %>%
+            {if (nrow(dplyr::filter(toSample, total == max(total))) > 0) as.data.frame(dplyr::filter(toSample,total == max(total))) else as.data.frame(dplyr::filter(toSample,total < max(total)))} %>%
             dplyr::sample_n(1) %>%
             dplyr::select(strata) %>%
             dplyr::pull()
@@ -344,7 +344,7 @@ calculate_allocation <- function(sraster,
         while(diffAbs > 0){
           
           stratAdd <- toSample %>%
-            {if (nrow(dplyr::filter(toSample, total == min(total))) > 0) as.data.frame(dplyr::filter(toSample,total == min(total))) else as.data.frame(filter(toSample,total > min(total)))} %>%
+            {if (nrow(dplyr::filter(toSample, total == min(total))) > 0) as.data.frame(dplyr::filter(toSample,total == min(total))) else as.data.frame(dplyr::filter(toSample,total > min(total)))} %>%
             dplyr::sample_n(1) %>%
             dplyr::select(strata) %>%
             dplyr::pull()

@@ -24,8 +24,7 @@ strat_fri(
 \item{features}{vector/list. Vector or list of vectors of features within \code{attribute}
 to guide stratification.}
 
-\item{raster}{spatRaster. Raster for polygon to raster conversion. If \code{map = TRUE}
-raster must contain a layer named "strata".}
+\item{raster}{spatRaster. Raster enabling polygon to raster conversion.}
 
 \item{filename}{Character. Path to write stratified raster to disc.}
 
@@ -45,12 +44,12 @@ forest resources inventory poly with \code{attribute} and corresponding \code{st
 A spatRaster object.
 }
 \description{
-Stratify an input inventory (FRI) polygon coverage.
+Stratify an input inventory polygon coverage.
 }
 \examples{
 #--- load input metrics raster ---#
 raster <- system.file("extdata","kmeans.tif", package = "sgsR")
-srasterkmeans <- terra::rast(raster)
+sraster <- terra::rast(raster)
 
 #--- read polygon coverage ---#
 poly <- system.file("extdata","inventory_polygons.shp", package = "sgsR")
@@ -69,7 +68,7 @@ features <- c("poor","rich","medium")
 srasterfri <- strat_fri(fri = fri, 
                         attribute = attribute, 
                         features = features, 
-                        raster = mraster, 
+                        raster = sraster, 
                         plot = TRUE)
                         
 #--- or as multiple lists ---#
@@ -82,7 +81,7 @@ features <- list(g1,g2)
 srasterfri <- strat_fri(fri = fri, 
                         attribute = attribute, 
                         features = features, 
-                        raster = mraster,
+                        raster = sraster,
                         stack = TRUE, 
                         plot = TRUE,
                         details = TRUE)

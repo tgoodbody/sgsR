@@ -20,7 +20,7 @@
 #' @examples
 #' #--- load input metrics raster ---#
 #' raster <- system.file("extdata","kmeans.tif", package = "sgsR")
-#' srasterkmeans <- terra::rast(raster)
+#' sraster <- terra::rast(raster)
 #' 
 #' #--- read polygon coverage ---#
 #' poly <- system.file("extdata","inventory_polygons.shp", package = "sgsR")
@@ -39,7 +39,7 @@
 #' srasterfri <- strat_fri(fri = fri, 
 #'                         attribute = attribute, 
 #'                         features = features, 
-#'                         raster = mraster, 
+#'                         raster = sraster, 
 #'                         plot = TRUE)
 #'                         
 #' #--- or as multiple lists ---#
@@ -52,7 +52,7 @@
 #' srasterfri <- strat_fri(fri = fri, 
 #'                         attribute = attribute, 
 #'                         features = features, 
-#'                         raster = mraster,
+#'                         raster = sraster,
 #'                         stack = TRUE, 
 #'                         plot = TRUE,
 #'                         details = TRUE)
@@ -113,7 +113,7 @@ strat_fri <- function(fri,
   #--- subset inventory polygon ---#
   
   if (any(!glue::glue('{attribute}') %in% names(fri))) {
-    stop(glue('fri does not have a layer named {attribute}'))
+    stop(glue::glue('fri does not have a layer named {attribute}'))
   }
   
   #--- check that features are not duplicated across proposed attribute classes ---#

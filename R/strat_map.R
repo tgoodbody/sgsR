@@ -47,7 +47,7 @@
 #' srasterfri <- strat_fri(fri = fri, 
 #'                         attribute = attribute, 
 #'                         features = features, 
-#'                         raster = mraster, 
+#'                         raster = srasterkmeans, 
 #'                         plot = TRUE)
 #' 
 #' #--- map srasters ---#
