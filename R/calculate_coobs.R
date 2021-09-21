@@ -28,11 +28,13 @@
 #' e <- system.file("extdata", "existing.shp", package = "sgsR")
 #' e <- sf::st_read(e)
 #'
-#' calculate_coobs(mraster = mr,
-#'                 existing = e,
-#'                 cores = 4,
-#'                 details = TRUE,
-#'                 filename = tempfile(fileext = ".tif"))
+#' calculate_coobs(
+#'   mraster = mr,
+#'   existing = e,
+#'   cores = 4,
+#'   details = TRUE,
+#'   filename = tempfile(fileext = ".tif")
+#' )
 #' }
 #' @note
 #' Special thanks to Brendan Malone for the original implementation of this algorithm.

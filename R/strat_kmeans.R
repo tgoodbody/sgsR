@@ -28,25 +28,30 @@
 #' mr <- terra::rast(r)
 #'
 #' #--- perform stratification using k-means ---#
-#' kmeans <- strat_kmeans(mraster = mr, 
-#'                        nStrata = 5)
-#' 
-#' kmeans <- strat_kmeans(mraster = mr, 
-#'                        nStrata = 5, 
-#'                        iter = 1000,
-#'                        algorithm = "MacQueen",
-#'                        plot = TRUE, 
-#'                        details = TRUE)
-#' 
-#' kmeans <- strat_kmeans(mraster = mr, 
-#'                        nStrata = 5, 
-#'                        iter = 1000,
-#'                        plot = TRUE, 
-#'                        filename = tempfile(fileext = ".tif"), 
-#'                        overwrite = TRUE)
-#'                        
+#' kmeans <- strat_kmeans(
+#'   mraster = mr,
+#'   nStrata = 5
+#' )
+#'
+#' kmeans <- strat_kmeans(
+#'   mraster = mr,
+#'   nStrata = 5,
+#'   iter = 1000,
+#'   algorithm = "MacQueen",
+#'   plot = TRUE,
+#'   details = TRUE
+#' )
+#'
+#' kmeans <- strat_kmeans(
+#'   mraster = mr,
+#'   nStrata = 5,
+#'   iter = 1000,
+#'   plot = TRUE,
+#'   filename = tempfile(fileext = ".tif"),
+#'   overwrite = TRUE
+#' )
 #' @author Tristan R.H. Goodbody
-#'                         
+#'
 #' @export
 
 strat_kmeans <- function(mraster,

@@ -7,7 +7,7 @@
 #' @inheritParams sample_srs
 #' @inheritParams calculate_allocation
 #' @param sraster spatRaster. Stratification raster to be used for sampling.
-#' @param nSamp Numeric. Number of desired samples. \code{existing include} and \code{force} influence this value. 
+#' @param nSamp Numeric. Number of desired samples. \code{existing include} and \code{force} influence this value.
 #' @param existing sf or data.frame.  Existing plot network.
 #' @param include Logical. If \code{TRUE} include existing plots in \code{nSamp} total.
 #' @param wrow Numeric. Number of row in the focal window (default is 3).
@@ -33,63 +33,72 @@
 #' e <- system.file("extdata", "existing.shp", package = "sgsR")
 #' e <- sf::st_read(e)
 #'
-#--- perform stratified sampling random sampling ---#
-#' sample_strat(sraster = sr, 
-#'              nSamp = 200, 
-#'              plot = TRUE)
-#'              
-#--- perform stratified sampling random sampling ---#
-#' sample_strat(sraster = sr, 
-#'              nSamp = 200, 
-#'              plot = TRUE,
-#'              force = TRUE)
-#'              
-#' #--- extract strata values to existing samples ---#              
-#' e.sr <- extract_strata(sraster = sr, existing = e)              
-#' 
-#' sample_strat(sraster = sr, 
-#'              nSamp = 200, 
-#'              access = ac,
-#'              existing = e.sr, 
-#'              mindist = 200, 
-#'              buff_inner = 50, 
-#'              buff_outer = 200)
-#' 
-#' sample_strat(sraster = sr, 
-#'              nSamp = 200, 
-#'              access = ac,
-#'              buff_inner = 50, 
-#'              buff_outer = 200, 
-#'              filename = tempfile(fileext = ".shp"))
-#'              
-#' #--- Load mraster for optimal allocation ---#                     
+#' #--- perform stratified sampling random sampling ---#
+#' sample_strat(
+#'   sraster = sr,
+#'   nSamp = 200,
+#'   plot = TRUE
+#' )
+#'
+#' #--- perform stratified sampling random sampling ---#
+#' sample_strat(
+#'   sraster = sr,
+#'   nSamp = 200,
+#'   plot = TRUE,
+#'   force = TRUE
+#' )
+#'
+#' #--- extract strata values to existing samples ---#
+#' e.sr <- extract_strata(sraster = sr, existing = e)
+#'
+#' sample_strat(
+#'   sraster = sr,
+#'   nSamp = 200,
+#'   access = ac,
+#'   existing = e.sr,
+#'   mindist = 200,
+#'   buff_inner = 50,
+#'   buff_outer = 200
+#' )
+#'
+#' sample_strat(
+#'   sraster = sr,
+#'   nSamp = 200,
+#'   access = ac,
+#'   buff_inner = 50,
+#'   buff_outer = 200,
+#'   filename = tempfile(fileext = ".shp")
+#' )
+#'
+#' #--- Load mraster for optimal allocation ---#
 #' mr <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
 #' mr <- terra::rast(mr)
-#' 
-#' sample_strat(sraster = sr, 
-#'              nSamp = 200, 
-#'              allocation = "optim",
-#'              mraster = mr,
-#'              metric = 1,
-#'              access = ac,
-#'              buff_inner = 50, 
-#'              buff_outer = 200, 
-#'              filename = tempfile(fileext = ".shp"))
-#'              
+#'
+#' sample_strat(
+#'   sraster = sr,
+#'   nSamp = 200,
+#'   allocation = "optim",
+#'   mraster = mr,
+#'   metric = 1,
+#'   access = ac,
+#'   buff_inner = 50,
+#'   buff_outer = 200,
+#'   filename = tempfile(fileext = ".shp")
+#' )
 #' @author Tristan R.H. Goodbody & Martin Queinnec
-#' 
-#' @note 
+#'
+#' @note
 #' The sampling is performed in 2 stages:
 #' \enumerate{
-#' 
+#'
 #' \item \code{Rule 1} - Sample within grouped stratum pixels defined within the
 #' \code{wrow, wcol} parameters
-#' 
+#'
 #' \item \code{Rule 2} - If no more samples exist to satisfy desired sampling count,
 #'  individual stratum pixels are sampled.
-#'  
+#'
 #'  The rule applied to a allocate each sample is defined in the \code{rule} attribute of output samples.
-#' 
+#'
 #' }
 #'
 #'
@@ -153,7 +162,7 @@ sample_strat <- function(sraster,
   if (!is.numeric(nSamp)) {
     stop("'nSamp' must be type numeric")
   }
-  
+
   if (!is.logical(force)) {
     stop("'force' must be type logical")
   }
@@ -180,7 +189,7 @@ sample_strat <- function(sraster,
   }
 
   #--- determine crs of input sraster ---#
-  crs <- terra::crs(sraster, proj=TRUE)
+  crs <- terra::crs(sraster, proj = TRUE)
 
   #--- if existing samples are provided ensure they are in the proper format ---#
 
@@ -254,22 +263,24 @@ sample_strat <- function(sraster,
   if (isTRUE(include)) {
     message("'existing' samples being included in 'nSamp' total")
 
-    toSample <- calculate_allocation(sraster = sraster, 
-                                     nSamp = nSamp, 
-                                     existing = existing, 
-                                     force = force, 
-                                     allocation = allocation, 
-                                     mraster = mraster, 
-                                     metric = metric)
-    
+    toSample <- calculate_allocation(
+      sraster = sraster,
+      nSamp = nSamp,
+      existing = existing,
+      force = force,
+      allocation = allocation,
+      mraster = mraster,
+      metric = metric
+    )
   } else {
-    
-    toSample <- calculate_allocation(sraster = sraster, 
-                                     nSamp = nSamp, 
-                                     force = force, 
-                                     allocation = allocation, 
-                                     mraster = mraster, 
-                                     metric = metric)
+    toSample <- calculate_allocation(
+      sraster = sraster,
+      nSamp = nSamp,
+      force = force,
+      allocation = allocation,
+      mraster = mraster,
+      metric = metric
+    )
   }
 
 
@@ -303,25 +314,24 @@ sample_strat <- function(sraster,
     s <- as.numeric(toSample[i, 1])
     n <- as.numeric(toSample[i, 2])
 
-    message(glue::glue('Processing strata : {s}'))
-    
+    message(glue::glue("Processing strata : {s}"))
+
     #--- if the number of samples required is equal to zero (if `include == TRUE`) just keep existing samples only ---#
-    if (n == 0){
-      
+    if (n == 0) {
+
       #--- Initiate number of sampled cells ---#
       add_strata <- addSamples %>%
         dplyr::filter(strata == s)
-      
+
       if (nrow(add_strata) > 0) {
         add_strata$type <- "existing"
-        
+
         if (!"rule" %in% colnames(add_strata)) {
           add_strata$rule <- "existing"
         }
       }
 
-      message(glue::glue('Strata : {s} required no sample additions. Keeping all existing samples.'))
-      
+      message(glue::glue("Strata : {s} required no sample additions. Keeping all existing samples."))
     } else if (n > 0) {
       #--- mask for individual strata ---#
 
@@ -343,7 +353,7 @@ sample_strat <- function(sraster,
 
         if (sampAvail > n) {
           message(
-            glue::glue('Buffered area contains {sampAvail} available candidates. Sampling to reach {n} samples starting.')
+            glue::glue("Buffered area contains {sampAvail} available candidates. Sampling to reach {n} samples starting.")
           )
 
           #--- rename to original strata sraster that will be used for sampling ---#
@@ -510,27 +520,25 @@ sample_strat <- function(sraster,
       if (nCount < n) {
         message(sprintf("Strata %s: couldn't select required number of samples: %i instead of %i \n", s, nCount, n))
       }
-      
+
       #--- if number of samples is < 0 based on `include` parameter ---#
-      
     } else if (n < 0) {
-      
+
       #--- need to remove samples from over represented strata ---#
 
       #--- sample total needed from existing ---#
       need <- as.numeric(toSample[i, 3])
-      
-        message(glue::glue("'include = TRUE' - Stratum {s} overrepresented - {abs(n)} samples removed."))
-        
-        add_strata <- addSamples %>% 
-          dplyr::filter(strata == s) %>%
-          dplyr::sample_n(need)
-      
+
+      message(glue::glue("'include = TRUE' - Stratum {s} overrepresented - {abs(n)} samples removed."))
+
+      add_strata <- addSamples %>%
+        dplyr::filter(strata == s) %>%
+        dplyr::sample_n(need)
+
       #--- add type and rule attributes ---#
-      
-        add_strata$type <- "existing"
-        add_strata$rule <- "existing"
-      
+
+      add_strata$type <- "existing"
+      add_strata$rule <- "existing"
     }
 
     # Create out object if first iteration of loop
@@ -588,7 +596,7 @@ sample_strat <- function(sraster,
     }
 
     if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(glue::glue('{filename} already exists and overwrite = FALSE'))
+      stop(glue::glue("{filename} already exists and overwrite = FALSE"))
     }
 
     sf::st_write(samples, filename, delete_layer = overwrite)

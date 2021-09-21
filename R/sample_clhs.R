@@ -30,43 +30,55 @@
 #' a <- system.file("extdata", "roads.shp", package = "sgsR")
 #' ac <- sf::st_read(a)
 #'
-#' sample_clhs(mraster = mr, 
-#'             nSamp = 200, 
-#'             plot = TRUE, 
-#'             iter = 100)
-#' 
-#' sample_clhs(mraster = mr, 
-#'             nSamp = 400, 
-#'             existing = e, 
-#'             iter = 250,
-#'             details = TRUE)
-#' 
-#' sample_clhs(mraster = mr, 
-#'             nSamp = 200, 
-#'             iter = 200, 
-#'             existing = e,
-#'             access = ac, 
-#'             buff_inner = 100,
-#'             buff_outer = 300, 
-#'             plot = TRUE)
-#' 
+#' sample_clhs(
+#'   mraster = mr,
+#'   nSamp = 200,
+#'   plot = TRUE,
+#'   iter = 100
+#' )
+#'
+#' sample_clhs(
+#'   mraster = mr,
+#'   nSamp = 400,
+#'   existing = e,
+#'   iter = 250,
+#'   details = TRUE
+#' )
+#'
+#' sample_clhs(
+#'   mraster = mr,
+#'   nSamp = 200,
+#'   iter = 200,
+#'   existing = e,
+#'   access = ac,
+#'   buff_inner = 100,
+#'   buff_outer = 300,
+#'   plot = TRUE
+#' )
+#'
 #' #--- cost constrained examples ---#
 #' #--- calculate distance to access layer for each pixel in mr ---#
-#' mr.c <- calculate_distance(raster = mr, 
-#'                            access = ac)
-#' 
-#' sample_clhs(mraster = mr.c, 
-#'             nSamp = 250, 
-#'             iter = 200,
-#'             cost = "dist2access",
-#'             plot = TRUE)
-#' 
-#' sample_clhs(mraster = mr.c, 
-#'             nSamp = 250, 
-#'             existing = e, 
-#'             iter = 200,
-#'             cost = "dist2access", 
-#'             plot = TRUE)
+#' mr.c <- calculate_distance(
+#'   raster = mr,
+#'   access = ac
+#' )
+#'
+#' sample_clhs(
+#'   mraster = mr.c,
+#'   nSamp = 250,
+#'   iter = 200,
+#'   cost = "dist2access",
+#'   plot = TRUE
+#' )
+#'
+#' sample_clhs(
+#'   mraster = mr.c,
+#'   nSamp = 250,
+#'   existing = e,
+#'   iter = 200,
+#'   cost = "dist2access",
+#'   plot = TRUE
+#' )
 #' @references
 #' Minasny, B. and McBratney, A.B. 2006. A conditioned Latin hypercube method
 #' for sampling in the presence of ancillary information. Computers and
@@ -209,12 +221,11 @@ sample_clhs <- function(mraster,
     if (!inherits(existing, "data.frame") && !inherits(existing, "sf")) {
       stop("'existing' must be a data.frame or sf object")
     }
-    
+
     #--- check that nSamp is > than existing ---#
-    
-    if (nrow(existing) > nSamp){
+
+    if (nrow(existing) > nSamp) {
       stop("nSamp must be > than number of existing samples")
-      
     }
 
     #--- combined existing samples with vals dataframe ---#
@@ -326,7 +337,7 @@ sample_clhs <- function(mraster,
     }
 
     if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(glue::glue('{filename} already exists and overwrite = FALSE'))
+      stop(glue::glue("{filename} already exists and overwrite = FALSE"))
     }
 
     sf::st_write(samples, filename, delete_layer = overwrite)

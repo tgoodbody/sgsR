@@ -27,12 +27,14 @@
 #'
 #' #--- calculate lhsPop details ---#
 #' poplhs <- calculate_lhsPop(mraster = mr)
-#' 
+#'
 #' calculate_lhsOpt(popLHS = poplhs)
-#' 
-#' calculate_lhsOpt(popLHS = poplhs, 
-#'                  PCA = FALSE, 
-#'                  iter = 200)
+#'
+#' calculate_lhsOpt(
+#'   popLHS = poplhs,
+#'   PCA = FALSE,
+#'   iter = 200
+#' )
 #' }
 #'
 #' @note
@@ -304,7 +306,7 @@ plot_LHCOptim <- function(dfFinal,
     dplyr::select(df.x) %>%
     dplyr::pull()
 
-  message(glue::glue('Your optimum estimated sample size based on KL divergence is: {num}'))
+  message(glue::glue("Your optimum estimated sample size based on KL divergence is: {num}"))
 
   x2 <- c(num, num)
   y2 <- c(0, 1)

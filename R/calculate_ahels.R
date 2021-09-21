@@ -29,16 +29,20 @@
 #'
 #' e <- system.file("extdata", "existing.shp", package = "sgsR")
 #' e <- sf::st_read(e)
-#' 
-#' sample_ahels(mraster = mr[[1:3]], 
-#'              existing = e, 
-#'              plot = TRUE)
-#' 
-#' sample_ahels(mraster = mr[[1:3]], 
-#'              existing = e, 
-#'              nQuant = 20, 
-#'              nSamp = 300,
-#'              filename = tempfile(fileext = ".shp"))
+#'
+#' sample_ahels(
+#'   mraster = mr[[1:3]],
+#'   existing = e,
+#'   plot = TRUE
+#' )
+#'
+#' sample_ahels(
+#'   mraster = mr[[1:3]],
+#'   existing = e,
+#'   nQuant = 20,
+#'   nSamp = 300,
+#'   filename = tempfile(fileext = ".shp")
+#' )
 #' @note
 #' Special thanks to Brendan Malone for the original implementation of this algorithm.
 #'
@@ -193,7 +197,7 @@ sample_ahels <- function(mraster,
       stop("'nSamp' must be type numeric")
     }
 
-    message(glue::glue('nSamp of {nSamp} has been provided. Samples will be added until this number is reached'))
+    message(glue::glue("nSamp of {nSamp} has been provided. Samples will be added until this number is reached"))
 
     while (newSamp != 0) {
 
@@ -303,7 +307,7 @@ sample_ahels <- function(mraster,
       underRep <- cbind(underRep, which(ratio < 1))
     }
   } else {
-    message(glue::glue('threshold of {threshold} has been provided. Samples will be added until quantile ratio is reached'))
+    message(glue::glue("threshold of {threshold} has been provided. Samples will be added until quantile ratio is reached"))
 
     #---
     #--- If 'nSamp' is not provided a threshold is used ---#
@@ -414,7 +418,7 @@ sample_ahels <- function(mraster,
     }
   }
 
-  message(glue::glue('A total of {sTot} new samples added'))
+  message(glue::glue("A total of {sTot} new samples added"))
 
   print(ratio)
 
@@ -438,7 +442,7 @@ sample_ahels <- function(mraster,
     }
 
     if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(glue::glue('{filename} already exists and overwrite = FALSE'))
+      stop(glue::glue("{filename} already exists and overwrite = FALSE"))
     }
 
     sf::st_write(samples, filename, delete_layer = overwrite)

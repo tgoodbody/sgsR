@@ -23,16 +23,20 @@
 #' a <- system.file("extdata", "roads.shp", package = "sgsR")
 #' ac <- sf::st_read(a)
 #'
-#' sample_balanced(mraster = mr, 
-#'                 nSamp = 200, 
-#'                 plot = TRUE)
-#' 
-#' sample_balanced(mraster = mr, 
-#'                 nSamp = 100, 
-#'                 algorithm = "lcube",
-#'                 access = ac, 
-#'                 buff_inner = 50, 
-#'                 buff_outer = 200)
+#' sample_balanced(
+#'   mraster = mr,
+#'   nSamp = 200,
+#'   plot = TRUE
+#' )
+#'
+#' sample_balanced(
+#'   mraster = mr,
+#'   nSamp = 100,
+#'   algorithm = "lcube",
+#'   access = ac,
+#'   buff_inner = 50,
+#'   buff_outer = 200
+#' )
 #' }
 #'
 #' @references
@@ -225,7 +229,7 @@ sample_balanced <- function(mraster,
     }
 
     if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(glue::glue('{filename} already exists and overwrite = FALSE'))
+      stop(glue::glue("{filename} already exists and overwrite = FALSE"))
     }
 
     sf::st_write(samples, filename, delete_layer = overwrite)

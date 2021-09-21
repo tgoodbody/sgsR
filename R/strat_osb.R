@@ -48,25 +48,31 @@
 #' mr <- terra::rast(r)
 #'
 #' #--- perform optimum sample boundary stratification ---#
-#' strat_osb(mraster = mr, 
-#'           metric = "zsd", 
-#'           nSamp = 200, 
-#'           nStrata = 4, 
-#'           plot = TRUE)
-#' 
-#' strat_osb(mraster = mr, 
-#'           metric = 4, 
-#'           nSamp = 20, 
-#'           nStrata = 3, 
-#'           plot = TRUE, 
-#'           details = TRUE)
-#' 
-#' strat_osb(mraster = mr, 
-#'           metric = "zmax", 
-#'           nSamp = 100, 
-#'           nStrata = 5, 
-#'           subset = 0.75, 
-#'           filename = tempfile(fileext = ".tif"))
+#' strat_osb(
+#'   mraster = mr,
+#'   metric = "zsd",
+#'   nSamp = 200,
+#'   nStrata = 4,
+#'   plot = TRUE
+#' )
+#'
+#' strat_osb(
+#'   mraster = mr,
+#'   metric = 4,
+#'   nSamp = 20,
+#'   nStrata = 3,
+#'   plot = TRUE,
+#'   details = TRUE
+#' )
+#'
+#' strat_osb(
+#'   mraster = mr,
+#'   metric = "zmax",
+#'   nSamp = 100,
+#'   nStrata = 5,
+#'   subset = 0.75,
+#'   filename = tempfile(fileext = ".tif")
+#' )
 #' }
 #'
 #' @author Tristan R.H. Goodbody
@@ -205,13 +211,13 @@ strat_osb <- function(mraster,
     p1 <- ggplot2::ggplot(data, ggplot2::aes(!!met)) +
       ggplot2::geom_histogram() +
       ggplot2::geom_vline(xintercept = OSB[[2]]$OSB, linetype = "dashed") +
-      ggplot2::ggtitle(glue::glue('{metric} histogram with optimum sample boundaries.'))
+      ggplot2::ggtitle(glue::glue("{metric} histogram with optimum sample boundaries."))
 
     print(p1)
 
     #--- set colour palette ---#
 
-    terra::plot(rcl, main = glue::glue('{metric} optimum sample boundaries'), type = "classes")
+    terra::plot(rcl, main = glue::glue("{metric} optimum sample boundaries"), type = "classes")
   }
 
   #--- write file to disc ---#

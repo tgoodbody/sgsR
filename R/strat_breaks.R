@@ -30,19 +30,22 @@
 #' br.max <- c(3, 5, 11, 18)
 #' br.sd <- c(1, 2, 5)
 #'
-#'strat_breaks(mraster = mr, 
-#'             metric = "zmax", 
-#'             breaks = br.max,
-#'             plot = TRUE, 
-#'             details = TRUE)
+#' strat_breaks(
+#'   mraster = mr,
+#'   metric = "zmax",
+#'   breaks = br.max,
+#'   plot = TRUE,
+#'   details = TRUE
+#' )
 #'
-#'strat_breaks(mraster = mr, 
-#'             metric = 1, 
-#'             metric2 = "zsd",
-#'             breaks = br.max, 
-#'             breaks2 = br.sd, 
-#'             plot = TRUE)
-#'             
+#' strat_breaks(
+#'   mraster = mr,
+#'   metric = 1,
+#'   metric2 = "zsd",
+#'   breaks = br.max,
+#'   breaks2 = br.sd,
+#'   plot = TRUE
+#' )
 #' @author Tristan R.H. Goodbody
 #'
 #' @export
@@ -228,7 +231,7 @@ strat_breaks <- function(mraster,
     p <- ggplot2::ggplot(data, ggplot2::aes(val)) +
       ggplot2::geom_histogram() +
       ggplot2::geom_vline(xintercept = breaks, linetype = "dashed") +
-      ggplot2::ggtitle(glue::glue('{nm} histogram with defined breaks'))
+      ggplot2::ggtitle(glue::glue("{nm} histogram with defined breaks"))
 
     if (!is.null(metric2)) {
       data2 <- terra::as.data.frame(rastermetric2)
