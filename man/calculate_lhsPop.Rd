@@ -38,9 +38,11 @@ mr <- terra::rast(r)
 
 calculate_lhsPop(mraster = mr)
 
-calculate_lhsPop(mraster = mr, 
-                 nQuant = 10, 
-                 PCA = FALSE)
+calculate_lhsPop(
+  mraster = mr,
+  nQuant = 10,
+  PCA = FALSE
+)
 }
 }
 \references{

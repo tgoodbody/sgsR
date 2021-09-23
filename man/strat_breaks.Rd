@@ -65,27 +65,30 @@ mr <- terra::rast(r)
 br.max <- c(3, 5, 11, 18)
 br.sd <- c(1, 2, 5)
 
-strat_breaks(mraster = mr, 
-            metric = "zmax", 
-            breaks = br.max,
-            plot = TRUE, 
-            details = TRUE)
+strat_breaks(
+  mraster = mr,
+  metric = "zmax",
+  breaks = br.max,
+  plot = TRUE,
+  details = TRUE
+)
 
-strat_breaks(mraster = mr, 
-            metric = 1, 
-            metric2 = "zsd",
-            breaks = br.max, 
-            breaks2 = br.sd, 
-            plot = TRUE)
-            
+strat_breaks(
+  mraster = mr,
+  metric = 1,
+  metric2 = "zsd",
+  breaks = br.max,
+  breaks2 = br.sd,
+  plot = TRUE
+)
 }
 \seealso{
 Other stratify functions: 
-\code{\link{strat_fri}()},
 \code{\link{strat_kmeans}()},
 \code{\link{strat_map}()},
 \code{\link{strat_osb}()},
 \code{\link{strat_pcomp}()},
+\code{\link{strat_poly}()},
 \code{\link{strat_quantiles}()}
 }
 \author{

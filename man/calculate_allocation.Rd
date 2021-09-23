@@ -71,34 +71,42 @@ e <- system.file("extdata", "existing.shp", package = "sgsR")
 e <- sf::st_read(e)
 
 #--- perform grid sampling ---#
-calculate_allocation(sraster = sr, 
-                     nSamp = 200)
+calculate_allocation(
+  sraster = sr,
+  nSamp = 200
+)
 
-calculate_allocation(sraster = sr, 
-                     nSamp = 200,
-                     force = TRUE)
-                     
+calculate_allocation(
+  sraster = sr,
+  nSamp = 200,
+  force = TRUE
+)
+
 #--- extract strata from existing samples ---#
-e.sr <- extract_strata(sraster = sr, 
-                       existing = e)
+e.sr <- extract_strata(
+  sraster = sr,
+  existing = e
+)
 
-calculate_allocation(sraster = sr, 
-                     nSamp = 200, 
-                     existing = e.sr)
+calculate_allocation(
+  sraster = sr,
+  nSamp = 200,
+  existing = e.sr
+)
 
-#--- Load mraster for optimal allocation ---#                     
+#--- Load mraster for optimal allocation ---#
 mr <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
 mr <- terra::rast(mr)
-                     
-calculate_allocation(sraster = sr, 
-                     nSamp = 200, 
-                     existing = e.sr,
-                     allocation = "optim",
-                     mraster = mr,
-                     metric = 1,
-                     force = TRUE)
-                     
-                     
+
+calculate_allocation(
+  sraster = sr,
+  nSamp = 200,
+  existing = e.sr,
+  allocation = "optim",
+  mraster = mr,
+  metric = 1,
+  force = TRUE
+)
 }
 \seealso{
 Other calculate functions: 

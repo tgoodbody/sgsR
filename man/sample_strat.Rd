@@ -87,7 +87,7 @@ The sampling is performed in 2 stages:
 
 \item \code{Rule 2} - If no more samples exist to satisfy desired sampling count,
  individual stratum pixels are sampled.
- 
+
  The rule applied to a allocate each sample is defined in the \code{rule} attribute of output samples.
 
 }
@@ -103,47 +103,58 @@ ac <- sf::st_read(a)
 e <- system.file("extdata", "existing.shp", package = "sgsR")
 e <- sf::st_read(e)
 
-sample_strat(sraster = sr, 
-             nSamp = 200, 
-             plot = TRUE)
-             
-sample_strat(sraster = sr, 
-             nSamp = 200, 
-             plot = TRUE,
-             force = TRUE)
-             
-#--- extract strata values to existing samples ---#              
-e.sr <- extract_strata(sraster = sr, existing = e)              
+#--- perform stratified sampling random sampling ---#
+sample_strat(
+  sraster = sr,
+  nSamp = 200,
+  plot = TRUE
+)
 
-sample_strat(sraster = sr, 
-             nSamp = 200, 
-             access = ac,
-             existing = e.sr, 
-             mindist = 200, 
-             buff_inner = 50, 
-             buff_outer = 200)
+#--- perform stratified sampling random sampling ---#
+sample_strat(
+  sraster = sr,
+  nSamp = 200,
+  plot = TRUE,
+  force = TRUE
+)
 
-sample_strat(sraster = sr, 
-             nSamp = 200, 
-             access = ac,
-             buff_inner = 50, 
-             buff_outer = 200, 
-             filename = tempfile(fileext = ".shp"))
-             
-#--- Load mraster for optimal allocation ---#                     
+#--- extract strata values to existing samples ---#
+e.sr <- extract_strata(sraster = sr, existing = e)
+
+sample_strat(
+  sraster = sr,
+  nSamp = 200,
+  access = ac,
+  existing = e.sr,
+  mindist = 200,
+  buff_inner = 50,
+  buff_outer = 200
+)
+
+sample_strat(
+  sraster = sr,
+  nSamp = 200,
+  access = ac,
+  buff_inner = 50,
+  buff_outer = 200,
+  filename = tempfile(fileext = ".shp")
+)
+
+#--- Load mraster for optimal allocation ---#
 mr <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
 mr <- terra::rast(mr)
 
-sample_strat(sraster = sr, 
-             nSamp = 200, 
-             allocation = "optim",
-             mraster = mr,
-             metric = 1,
-             access = ac,
-             buff_inner = 50, 
-             buff_outer = 200, 
-             filename = tempfile(fileext = ".shp"))
-             
+sample_strat(
+  sraster = sr,
+  nSamp = 200,
+  allocation = "optim",
+  mraster = mr,
+  metric = 1,
+  access = ac,
+  buff_inner = 50,
+  buff_outer = 200,
+  filename = tempfile(fileext = ".shp")
+)
 }
 \seealso{
 Other sample functions: 

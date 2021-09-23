@@ -66,34 +66,39 @@ Stratify metric raster using metric quantiles.
 r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
 mr <- terra::rast(r)
 
-strat_quantiles(mraster = mr, 
-                metric = 4, 
-                nQuant = 10,
-                plot = TRUE, 
-                details = TRUE)
+strat_quantiles(
+  mraster = mr,
+  metric = 4,
+  nQuant = 10,
+  plot = TRUE,
+  details = TRUE
+)
 
-strat_quantiles(mraster = mr, 
-                metric = "zsd",
-                metric2 = "zq95", 
-                nQuant = 3, 
-                nQuant2 = 4)
+strat_quantiles(
+  mraster = mr,
+  metric = "zsd",
+  metric2 = "zq95",
+  nQuant = 3,
+  nQuant2 = 4
+)
 
-strat_quantiles(mraster = mr, 
-                metric = 1, 
-                metric2 = "zsd",
-                nQuant = 2, 
-                nQuant2 = 2, 
-                filename = tempfile(fileext = ".tif"))
-                
+strat_quantiles(
+  mraster = mr,
+  metric = 1,
+  metric2 = "zsd",
+  nQuant = 2,
+  nQuant2 = 2,
+  filename = tempfile(fileext = ".tif")
+)
 }
 \seealso{
 Other stratify functions: 
 \code{\link{strat_breaks}()},
-\code{\link{strat_fri}()},
 \code{\link{strat_kmeans}()},
 \code{\link{strat_map}()},
 \code{\link{strat_osb}()},
-\code{\link{strat_pcomp}()}
+\code{\link{strat_pcomp}()},
+\code{\link{strat_poly}()}
 }
 \author{
 Tristan R.H. Goodbody

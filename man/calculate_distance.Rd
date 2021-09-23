@@ -38,14 +38,18 @@ sr <- terra::rast(r)
 a <- system.file("extdata", "roads.shp", package = "sgsR")
 ac <- sf::st_read(a)
 
-calculate_distance(raster = sr, 
-                   access = ac, 
-                   plot = TRUE)
+calculate_distance(
+  raster = sr,
+  access = ac,
+  plot = TRUE
+)
 
-calculate_distance(raster = sr, 
-                   access = ac, 
-                   plot = TRUE, 
-                   filename = tempfile(fileext = ".tif"))
+calculate_distance(
+  raster = sr,
+  access = ac,
+  plot = TRUE,
+  filename = tempfile(fileext = ".tif")
+)
 }
 \seealso{
 Other calculate functions: 

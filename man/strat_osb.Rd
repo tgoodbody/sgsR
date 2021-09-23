@@ -69,25 +69,31 @@ r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
 mr <- terra::rast(r)
 
 #--- perform optimum sample boundary stratification ---#
-strat_osb(mraster = mr, 
-          metric = "zsd", 
-          nSamp = 200, 
-          nStrata = 4, 
-          plot = TRUE)
+strat_osb(
+  mraster = mr,
+  metric = "zsd",
+  nSamp = 200,
+  nStrata = 4,
+  plot = TRUE
+)
 
-strat_osb(mraster = mr, 
-          metric = 4, 
-          nSamp = 20, 
-          nStrata = 3, 
-          plot = TRUE, 
-          details = TRUE)
+strat_osb(
+  mraster = mr,
+  metric = 4,
+  nSamp = 20,
+  nStrata = 3,
+  plot = TRUE,
+  details = TRUE
+)
 
-strat_osb(mraster = mr, 
-          metric = "zmax", 
-          nSamp = 100, 
-          nStrata = 5, 
-          subset = 0.75, 
-          filename = tempfile(fileext = ".tif"))
+strat_osb(
+  mraster = mr,
+  metric = "zmax",
+  nSamp = 100,
+  nStrata = 5,
+  subset = 0.75,
+  filename = tempfile(fileext = ".tif")
+)
 }
 
 }
@@ -106,10 +112,10 @@ DOI: 10.1080/02664763.2015.1018674
 \seealso{
 Other stratify functions: 
 \code{\link{strat_breaks}()},
-\code{\link{strat_fri}()},
 \code{\link{strat_kmeans}()},
 \code{\link{strat_map}()},
 \code{\link{strat_pcomp}()},
+\code{\link{strat_poly}()},
 \code{\link{strat_quantiles}()}
 }
 \author{

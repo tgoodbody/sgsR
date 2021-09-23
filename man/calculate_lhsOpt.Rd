@@ -59,9 +59,11 @@ poplhs <- calculate_lhsPop(mraster = mr)
 
 calculate_lhsOpt(popLHS = poplhs)
 
-calculate_lhsOpt(popLHS = poplhs, 
-                 PCA = FALSE, 
-                 iter = 200)
+calculate_lhsOpt(
+  popLHS = poplhs,
+  PCA = FALSE,
+  iter = 200
+)
 }
 
 }

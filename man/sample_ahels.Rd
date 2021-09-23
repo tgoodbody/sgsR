@@ -54,15 +54,19 @@ mr <- terra::rast(r)
 e <- system.file("extdata", "existing.shp", package = "sgsR")
 e <- sf::st_read(e)
 
-sample_ahels(mraster = mr[[1:3]], 
-             existing = e, 
-             plot = TRUE)
+sample_ahels(
+  mraster = mr[[1:3]],
+  existing = e,
+  plot = TRUE
+)
 
-sample_ahels(mraster = mr[[1:3]], 
-             existing = e, 
-             nQuant = 20, 
-             nSamp = 300,
-             filename = tempfile(fileext = ".shp"))
+sample_ahels(
+  mraster = mr[[1:3]],
+  existing = e,
+  nQuant = 20,
+  nSamp = 300,
+  filename = tempfile(fileext = ".shp")
+)
 }
 \references{
 Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451

@@ -58,11 +58,13 @@ mr <- terra::rast(r)
 e <- system.file("extdata", "existing.shp", package = "sgsR")
 e <- sf::st_read(e)
 
-calculate_coobs(mraster = mr,
-                existing = e,
-                cores = 4,
-                details = TRUE,
-                filename = tempfile(fileext = ".tif"))
+calculate_coobs(
+  mraster = mr,
+  existing = e,
+  cores = 4,
+  details = TRUE,
+  filename = tempfile(fileext = ".tif")
+)
 }
 }
 \references{

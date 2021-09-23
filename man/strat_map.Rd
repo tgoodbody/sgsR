@@ -46,7 +46,7 @@ Map stratified rasters to a combined stratification.
 
 The mapping algorithm will take the stratification from \code{sraster} and combine it with
 overlying strata values in \code{sraster2}. This will result in a \code{stratamapped} attribute
-where the values from both inputs are combined. 
+where the values from both inputs are combined.
 
 i.e.
 
@@ -57,11 +57,11 @@ If \code{strata = 2} and \code{strata2 = 14} then \code{stratamapped = 214}.
 
 \examples{
 #--- load input metrics raster ---#
-raster <- system.file("extdata","kmeans.tif", package = "sgsR")
+raster <- system.file("extdata", "kmeans.tif", package = "sgsR")
 srasterkmeans <- terra::rast(raster)
 
 #--- read polygon coverage ---#
-poly <- system.file("extdata","inventory_polygons.shp", package = "sgsR")
+poly <- system.file("extdata", "inventory_polygons.shp", package = "sgsR")
 fri <- sf::st_read(poly)
 
 #--- stratify polygon coverage ---#
@@ -72,33 +72,41 @@ attribute <- "NUTRIENTS"
 #--- specify features within attribute & how they should be grouped ---#
 #--- as a single vector ---#
 
-features <- c("poor","rich","medium")
+features <- c("poor", "rich", "medium")
 
-srasterfri <- strat_fri(fri = fri, 
-                        attribute = attribute, 
-                        features = features, 
-                        raster = srasterkmeans, 
-                        plot = TRUE)
+srasterfri <- strat_poly(
+  poly = fri,
+  attribute = attribute,
+  features = features,
+  raster = srasterkmeans,
+  plot = TRUE
+)
 
 #--- map srasters ---#
-strat_map(sraster = srasterfri,
-          sraster2 = srasterkmeans,
-          plot = TRUE)
+strat_map(
+  sraster = srasterfri,
+  sraster2 = srasterkmeans,
+  plot = TRUE
+)
 
-strat_map(sraster = srasterfri,
-          sraster2 = srasterkmeans,
-          stack = TRUE,
-          details = TRUE,
-          plot = TRUE)
-          
+strat_map(
+  sraster = srasterfri,
+  sraster2 = srasterkmeans,
+  stack = TRUE,
+  details = TRUE,
+  plot = TRUE
+)
 }
 \seealso{
 Other stratify functions: 
 \code{\link{strat_breaks}()},
-\code{\link{strat_fri}()},
 \code{\link{strat_kmeans}()},
 \code{\link{strat_osb}()},
 \code{\link{strat_pcomp}()},
+\code{\link{strat_poly}()},
 \code{\link{strat_quantiles}()}
+}
+\author{
+Tristan R.H. Goodbody
 }
 \concept{stratify functions}
