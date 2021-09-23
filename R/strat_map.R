@@ -44,8 +44,8 @@
 #'
 #' features <- c("poor", "rich", "medium")
 #'
-#' srasterfri <- strat_fri(
-#'   fri = fri,
+#' srasterfri <- strat_poly(
+#'   poly = fri,
 #'   attribute = attribute,
 #'   features = features,
 #'   raster = srasterkmeans,
@@ -69,6 +69,9 @@
 #' @importFrom methods is
 #'
 #' @return A spatRaster object.
+#' 
+#' @author Tristan R.H. Goodbody
+#' 
 #' @export
 
 

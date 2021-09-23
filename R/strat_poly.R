@@ -1,21 +1,21 @@
-#' Stratify Forest Resources Inventory (FRI)
+#' Stratify using polygons
 #'
-#' @description Stratify an input inventory polygon coverage.
+#' @description Stratify based on polygon coverage attributes and features.
 #'
 #' @family stratify functions
 #'
 #' @inheritParams strat_breaks
-#' @param fri sf. Forest resources inventory polygon coverage.
-#' @param attribute Character. Name of attribute within \code{fri} that will be stratified
+#' @param poly sf. Input polygon coverage. e.g. - forest resources inventory coverage.
+#' @param attribute Character. Name of attribute within \code{poly} that will be stratified
 #' @param features vector/list. Vector or list of vectors of features within \code{attribute}
 #' to guide stratification.
-#' @param raster spatRaster. Raster enabling polygon to raster conversion.
+#' @param raster spatRaster. Raster template to enable polygon to raster conversion.
 #' @param plot Logical. Plots output spatRaster.
 #' @param details Logical. If \code{FALSE} (default) output is spatRaster object of
-#' stratified forest resources inventory attributes. If \code{TRUE} return a list
-#' where \code{$outRaster} is the stratified forest resources inventory attributes,
-#' \code{$lookUp} is the lookup table for the stratification, and \code{fripoly} is the
-#' forest resources inventory poly with \code{attribute} and corresponding \code{strata}
+#' stratified polygon attributes. If \code{TRUE} return a list
+#' where \code{$outRaster} is the stratified attributes, \code{$lookUp} is the lookup table
+#' for the stratification, and \code{poly} is the defined polygon \code{attribute} with corresponding
+#' \code{features / strata}
 #'
 #' @examples
 #' #--- load input metrics raster ---#
@@ -36,8 +36,8 @@
 #'
 #' features <- c("poor", "rich", "medium")
 #'
-#' srasterfri <- strat_fri(
-#'   fri = fri,
+#' srasterpoly <- strat_poly(
+#'   poly = fri,
 #'   attribute = attribute,
 #'   features = features,
 #'   raster = sraster,
@@ -51,8 +51,8 @@
 #'
 #' features <- list(g1, g2)
 #'
-#' srasterfri <- strat_fri(
-#'   fri = fri,
+#' srasterpoly <- strat_poly(
+#'   poly = fri,
 #'   attribute = attribute,
 #'   features = features,
 #'   raster = sraster,
@@ -67,126 +67,123 @@
 #' @return A spatRaster object.
 #' @export
 
-strat_fri <- function(fri,
-                      attribute,
-                      features,
-                      raster,
-                      filename = NULL,
-                      overwrite = FALSE,
-                      plot = FALSE,
-                      details = FALSE,
-                      ...) {
-
+strat_poly <- function(poly,
+                       attribute,
+                       features,
+                       raster,
+                       filename = NULL,
+                       overwrite = FALSE,
+                       plot = FALSE,
+                       details = FALSE,
+                       ...) {
+  
   #--- error handling ---#
-
-  if (!inherits(fri, "sf")) {
-    stop("'access' must be an 'sf' object")
+  
+  if (!inherits(poly, "sf")) {
+    stop("'poly' must be an 'sf' object")
   }
-
-  if (!inherits(sf::st_geometry(fri), "sfc_POLYGON") && !inherits(sf::st_geometry(fri), "sfc_MULTIPOLYGON")) {
-    stop("'fri' geometry type must be 'POLYGON' or 'MULTIPOLYGON'")
+  
+  if (!inherits(sf::st_geometry(poly), "sfc_POLYGON") && !inherits(sf::st_geometry(poly), "sfc_MULTIPOLYGON")) {
+    stop("'poly' geometry type must be 'POLYGON' or 'MULTIPOLYGON'")
   }
-
+  
   if (!is.character(attribute)) {
     stop("'attribute' must be type character")
   }
-
+  
   if (!is.vector(features) && !is.list(features)) {
     stop("'features' must supply a vector or a list of vectors")
   }
-
+  
   if (!inherits(raster, "SpatRaster")) {
     stop("'raster' must be type SpatRaster", call. = FALSE)
   }
-
+  
   if (!is.logical(overwrite)) {
     stop("'overwrite' must be either TRUE or FALSE")
   }
-
+  
   if (!is.logical(plot)) {
     stop("'plot' must be type logical")
   }
-
+  
   if (!is.logical(details)) {
     stop("'details' must be type logical")
   }
-
+  
   #--- subset inventory polygon ---#
-
-  if (any(!glue::glue("{attribute}") %in% names(fri))) {
-    stop(glue::glue("fri does not have a layer named {attribute}"))
+  
+  if (any(!glue::glue("{attribute}") %in% names(poly))) {
+    stop(glue::glue("poly does not have a layer named {attribute}"))
   }
-
+  
   #--- check that features are not duplicated across proposed attribute classes ---#
-
+  
   unFeat <- unlist(features)
-
+  
   unFeatObjs <- unFeat[duplicated(unFeat)]
-
+  
   if (length(unFeatObjs) > 0) {
     stop(glue::glue("{unFeatObjs*}", .transformer = collapse_transformer(sep = ", ", last = " and ")), ". Are duplicated in 'features'.")
   }
-
-  #--- begin fri polygon manipulation ---#
-
-  fri <- fri %>%
+  
+  #--- begin polygon manipulation ---#
+  
+  poly <- poly %>%
     dplyr::select(glue::glue("{attribute}"))
-
+  
   #--- generate number of groups ---#
-
+  
   strata <- as.list(seq(1, length(features), 1))
-
+  
   #--- create lookup table for values and associated strataes ---#
-
+  
   lookUp <- do.call(rbind, Map(data.frame, strata = strata, features = features))
-
-  #--- check if features specifiec are included within fri attribute ---#
-
-  if (any(!lookUp$features %in% fri[[1]])) {
+  
+  #--- check if features specifiec are included within poly attribute ---#
+  
+  if (any(!lookUp$features %in% poly[[1]])) {
     stop("'attribute' does not have specified 'features'.")
   }
-
+  
   #--- create new column with mutated values based on features and associated group ---#
-
-  fripoly <- fri %>%
+  
+  poly <- poly %>%
     dplyr::mutate(strata = dplyr::case_when(!!!rlang::parse_exprs(glue::glue('{attribute} %in% "{lookUp$features}" ~ "{lookUp$strata}"')))) %>%
     na.omit() %>%
     terra::vect()
-
-  #--- define raster ---#
-  raster <- raster[[1]]
-
+  
   #--- rasterize vector ---#
-  outfri <- terra::rasterize(x = fripoly, y = raster, field = "strata")
-
+  outpolyrast <- terra::rasterize(x = poly, y = raster[[1]], field = "strata")
+  
   #--- write file to disc ---#
-
+  
   if (!is.null(filename)) {
-    terra::writeRaster(outfri, filename, overwrite = overwrite, ...)
+    terra::writeRaster(x = outpolyrast, filename = filename, overwrite = overwrite, ...)
   }
-
+  
   #--- plot if requested
-
+  
   if (isTRUE(plot)) {
-    terra::plot(outfri)
+    terra::plot(outpolyrast)
   }
-
+  
   #--- output details if desired ---#
-
+  
   if (isTRUE(details)) {
-
+    
     #--- output metrics details along with stratification raster ---#
-
-    output <- list(outRaster = outfri, lookUp = lookUp, fripoly = fripoly)
-
+    
+    output <- list(outRaster = outpolyrast, lookUp = lookUp, poly = poly)
+    
     #--- output samples dataframe ---#
-
+    
     return(output)
   } else {
-
+    
     #--- just output raster ---#
-
-    return(outfri)
+    
+    return(outpolyrast)
   }
 }
 
