@@ -121,6 +121,10 @@ strat_poly <- function(poly,
   
   unFeat <- unlist(features)
   
+  if(any(is.na(unFeat))){
+    message("'features' contains NA. Is this on purpose?")
+  }
+  
   unFeatObjs <- unFeat[duplicated(unFeat)]
   
   if (length(unFeatObjs) > 0) {
@@ -152,6 +156,10 @@ strat_poly <- function(poly,
     dplyr::mutate(strata = dplyr::case_when(!!!rlang::parse_exprs(glue::glue('{attribute} %in% "{lookUp$features}" ~ "{lookUp$strata}"')))) %>%
     na.omit() %>%
     terra::vect()
+  
+  #--- ensure that strata values are integer for mapping ---#
+  
+  poly$strata <- as.integer(poly$strata)
   
   #--- rasterize vector ---#
   outpolyrast <- terra::rasterize(x = poly, y = raster[[1]], field = "strata")

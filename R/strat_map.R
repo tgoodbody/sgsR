@@ -149,7 +149,7 @@ strat_map <- function(sraster,
 
   #--- set newly stratified values ---#
 
-  rout <- terra::setValues(sraster, oclass$stratamapped)
+  rout <- terra::setValues(sraster, as.integer(oclass$stratamapped))
   names(rout) <- "strata"
 
 
