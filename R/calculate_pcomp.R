@@ -79,7 +79,7 @@ calculate_pcomp <- function(mraster = NULL,
 
   vals <- terra::values(mraster)
 
-  #--- perform PCA using rasterPCA -- requires conversion to raster* format ---#
+  #--- perform PCA ---#
 
   PCA <- stats::prcomp(
     formula = ~.,
@@ -93,12 +93,9 @@ calculate_pcomp <- function(mraster = NULL,
   #--- extract cell level pca values ---#
   pcavals <- as.data.frame(PCA$x)
 
-  #--- create loop to allocate values to cell level taking into account potential NA using 'idx' ---#
-  rs <- list()
-
-  for (i in 1:nComp) {
-    rs[[i]] <- terra::setValues(mraster[[1]], pcavals[, i])
-  }
+  #--- apply cell-level allocation of values---#
+  
+  rs <- apply(X = pcavals, MARGIN = 2, FUN = terra::setValues, x = mraster[[1]])
 
   #--- stack pca rasters ---#
 
