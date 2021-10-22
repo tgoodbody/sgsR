@@ -267,6 +267,8 @@ sample_clhs <- function(mraster,
     vals <- rbind(existingSamples, vals)
   }
 
+  #--- remove 'type' during sampling ---#
+  
   vals_tp <- vals %>% dplyr::select(-type)
 
   ##########################
@@ -276,8 +278,6 @@ sample_clhs <- function(mraster,
   #--- if existing samples are not provided ---#
 
   if (is.null(existing)) {
-
-    #--- remove 'type' during sampling ---#
 
     clhsOut <- clhs::clhs(x = vals_tp, size = nSamp, iter = iter, cost = cost, ...)
 

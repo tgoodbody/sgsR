@@ -16,7 +16,6 @@
 #' @references
 #' Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451
 #'
-#'
 #' @return output raster with coobs and classified coobs layers.
 #'
 #' @examples
@@ -37,7 +36,7 @@
 #' )
 #' }
 #' @note
-#' Special thanks to Brendan Malone for the original implementation of this algorithm.
+#' Special thanks to Dr. Brendan Malone for the original implementation of this algorithm.
 #'
 #' @author Tristan R.H. Goodbody
 #'
@@ -119,7 +118,7 @@ calculate_coobs <- function(mraster,
 
   covMat <- as.matrix(stats::cov(vals[, 3:ncol(vals)]))
 
-  #--- remove any attributes that are not geometry ---#
+  #--- select geometry attribute ---#
 
   existing <- existing %>%
     dplyr::select(geometry)
@@ -130,7 +129,7 @@ calculate_coobs <- function(mraster,
 
   #--- create parallel processing structure ---#
 
-  cl <- snow::makeCluster(spec = cores)
+  cl <- snow::makeCluster(spec = cores, type = "SOCK")
   doSNOW::registerDoSNOW(cl)
 
   #--- create progress text bar ---#

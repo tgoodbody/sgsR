@@ -2,7 +2,7 @@
 #'
 #' @description Perform the adapted Hypercube Evaluation of a Legacy Sample (ahels) algorithm using
 #' existing site data and raster metrics. New samples are allocated based on quantile ratios between
-#' the existing sampleand covariate dataset.
+#' the existing sample and covariate dataset.
 #'
 #' @family sample functions
 #'
@@ -44,7 +44,7 @@
 #'   filename = tempfile(fileext = ".shp")
 #' )
 #' @note
-#' Special thanks to Brendan Malone for the original implementation of this algorithm.
+#' Special thanks to Dr. Brendan Malone for the original implementation of this algorithm.
 #'
 #' @author Tristan R.H. Goodbody
 #'
@@ -117,13 +117,13 @@ sample_ahels <- function(mraster,
 
   matCovDens <- mats$matCov / nrow(vals)
 
-  #--- Remove quantiles that do not cover at least 1% area in eac covariate ---#
+  #--- Remove quantiles that do not cover at least 1% area in each covariate ---#
 
   matCovDens[which(matCovDens <= 0.01)] <- NA
 
   ### --- Prepare existing sample data ---###
 
-  #--- remove any attributes that are not geometry ---#
+  #--- select geometry attribute ---#
 
   existing <- existing %>%
     dplyr::select(geometry)
@@ -132,12 +132,12 @@ sample_ahels <- function(mraster,
 
   samples <- extract_metrics(mraster, existing, data.frame = TRUE)
 
-  #--- remove already existing samples from vals to no repeat sample ---#
+  #--- remove already existing samples from vals to not repeat sample ---#
 
   vals <- vals %>%
     dplyr::anti_join(samples, by = c("X", "Y"))
 
-  #--- Assign code to differentiate between original samples and those added during HELS algorithm ---#
+  #--- Assign attribute to differentiate between original samples and those added during HELS algorithm ---#
 
   samples$type <- "existing"
   samples$n <- seq(1:nrow(samples))
@@ -159,7 +159,7 @@ sample_ahels <- function(mraster,
 
   matCovSampDens <- matCovSamp / nrow(samples)
 
-  ### --- Selection of new samples based on density ---###
+  ###--- Selection of new samples based on density ---###
 
   #--- Ratio and ordering of data density and covariate density ---#
 

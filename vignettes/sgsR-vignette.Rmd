@@ -213,7 +213,7 @@ raster <- kmeans
 
 #--- 'mindist' between samples defaults to 100 ---#
 existing <- sample_srs(raster = raster, #srs_wo
-                  n = 75,
+                  n = 250,
                   plot = TRUE)
 
 ```

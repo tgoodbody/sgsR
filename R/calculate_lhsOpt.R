@@ -38,14 +38,14 @@
 #' }
 #'
 #' @note
-#' Special thanks to Brendan Malone for the original implementation of this algorithm.
+#' Special thanks to Dr. Brendan Malone for the original implementation of this algorithm.
 #'
 #' @author Tristan R.H. Goodbody
 #'
 #' @export
 
 
-calculate_lhsOpt <- function(popLHS = NULL,
+calculate_lhsOpt <- function(popLHS,
                              PCA = TRUE,
                              quant = TRUE,
                              KLdiv = TRUE,
@@ -74,7 +74,7 @@ calculate_lhsOpt <- function(popLHS = NULL,
   #--- Error handling ---#
 
   if (!is.list(popLHS)) {
-    stop("'popLHS' must be a list")
+    stop("'popLHS' must be a list - see output from sgsR::calculate_lhsPop()")
   }
 
   if (any(!names(popLHS) %in% c("values", "pcaLoad", "matQ", "matCov"))) {

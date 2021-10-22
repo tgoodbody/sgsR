@@ -104,7 +104,7 @@ sample_srs <- function(raster,
     }
 
     if (!inherits(sf::st_geometry(access), "sfc_MULTILINESTRING") && !inherits(sf::st_geometry(access), "sfc_LINESTRING")) {
-      stop("'access' geometry type must be 'LINESTRING' or MULTILINESTRING'")
+      stop("'access' geometry type must be 'LINESTRING' or 'MULTILINESTRING'")
     }
 
     access_buff <- mask_access(raster = raster, access = access, buff_inner = buff_inner, buff_outer = buff_outer)
@@ -150,7 +150,7 @@ sample_srs <- function(raster,
 
       nCount <- nCount + 1
 
-      #--- If awdd_strata isnt empty, check distance with all other sampled cells in strata ---#
+      #--- If add_strata isnt empty, check distance with all other sampled cells in strata ---#
     }
 
     if (!is.null(mindist)) {

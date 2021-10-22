@@ -1,4 +1,4 @@
-#' distance to access
+#' Distance to access layer
 #'
 #' @description Per pixel distance to nearest access vector. Intended to be used as a `cost` constraint
 #' within the \code{\link{sample_clhs}} function
@@ -33,8 +33,8 @@
 #' )
 #' @export
 
-calculate_distance <- function(raster = NULL,
-                               access = NULL,
+calculate_distance <- function(raster,
+                               access,
                                plot = FALSE,
                                filename = NULL,
                                overwrite = FALSE) {

@@ -163,19 +163,19 @@ strat_poly <- function(poly,
   #--- rasterize vector ---#
   outpolyrast <- terra::rasterize(x = poly, y = raster[[1]], field = "strata")
   
-  #--- write file to disc ---#
+  #--- write file to disc if requested ---#
   
   if (!is.null(filename)) {
     terra::writeRaster(x = outpolyrast, filename = filename, overwrite = overwrite, ...)
   }
   
-  #--- plot if requested
+  #--- plot if requested ---#
   
   if (isTRUE(plot)) {
     terra::plot(outpolyrast)
   }
   
-  #--- output details if desired ---#
+  #--- output details if requested ---#
   
   if (isTRUE(details)) {
     
@@ -194,7 +194,7 @@ strat_poly <- function(poly,
   }
 }
 
-#--- glue transformer ---#
+#--- glue transformer internal to strat_poly() ---#
 
 collapse_transformer <- function(regex = "[*]$", ...) {
   function(text, envir) {
