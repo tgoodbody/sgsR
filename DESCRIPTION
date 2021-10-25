@@ -7,7 +7,7 @@ Author: Tristan RH Goodbody
 Maintainer: Tristan RH Goodbody <goodbody.t@gmail.com>
 Description: This package provides functions to enable stratification and
     sampling for structurally guided sampling using ALS data.
-License: MIT + file LICENSE
+License: GPL (>= 3)
 Depends: 
     R (>= 2.10)
 Imports:
