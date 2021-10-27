@@ -41,10 +41,10 @@ Returns sf point object with existing samples and supplemental samples added by 
 \description{
 Perform the adapted Hypercube Evaluation of a Legacy Sample (ahels) algorithm using
 existing site data and raster metrics. New samples are allocated based on quantile ratios between
-the existing sampleand covariate dataset.
+the existing sample and covariate dataset.
 }
 \note{
-Special thanks to Brendan Malone for the original implementation of this algorithm.
+Special thanks to Dr. Brendan Malone for the original implementation of this algorithm.
 }
 \examples{
 #--- Load raster and existing plots---#

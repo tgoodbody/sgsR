@@ -25,7 +25,7 @@
 #' @examples
 #' \dontrun{
 #' #--- Load raster and access files ---#
-#' r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
+#' r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 #' mr <- terra::rast(r)
 #'
 #' calculate_lhsPop(mraster = mr)

@@ -13,7 +13,6 @@
 #' @param iter Numeric. Internal to \code{\link[clhs]{clhs}} - A positive number, giving the number of
 #' iterations for the Metropolis-Hastings annealing process. Defaults to \code{10000}.
 #'
-#'
 #' @references
 #' Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451
 #'
@@ -22,7 +21,7 @@
 #' @examples
 #' \dontrun{
 #' #--- Load raster and access files ---#
-#' r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
+#' r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 #' mr <- terra::rast(r)
 #'
 #' #--- calculate lhsPop details ---#

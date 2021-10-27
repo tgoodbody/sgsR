@@ -17,7 +17,7 @@
 #'
 #' @examples
 #' #--- Load raster ---#
-#' r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
+#' r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 #' mr <- terra::rast(r)
 #'
 #' calculate_pcomp(

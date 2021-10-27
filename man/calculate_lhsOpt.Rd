@@ -5,7 +5,7 @@
 \title{Analyze optimal Latin hypercube sample number}
 \usage{
 calculate_lhsOpt(
-  popLHS = NULL,
+  popLHS,
   PCA = TRUE,
   quant = TRUE,
   KLdiv = TRUE,
@@ -46,7 +46,7 @@ data.frame with summary statistics.
 Population level analysis of metric raster data to determine optimal Latin Hypercube sample size
 }
 \note{
-Special thanks to Brendan Malone for the original implementation of this algorithm.
+Special thanks to Dr. Brendan Malone for the original implementation of this algorithm.
 }
 \examples{
 \dontrun{

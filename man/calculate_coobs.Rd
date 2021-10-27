@@ -47,7 +47,7 @@ could be located by comparing existing samples to each pixel and associated cova
 The output coobs raster could be used to constrain clhs sampling to areas that are underreprented.
 }
 \note{
-Special thanks to Brendan Malone for the original implementation of this algorithm.
+Special thanks to Dr. Brendan Malone for the original implementation of this algorithm.
 }
 \examples{
 \dontrun{

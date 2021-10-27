@@ -85,7 +85,6 @@ srasterpoly <- strat_poly(
   attribute = attribute,
   features = features,
   raster = sraster,
-  stack = TRUE,
   plot = TRUE,
   details = TRUE
 )

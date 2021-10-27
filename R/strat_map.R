@@ -5,7 +5,7 @@
 #' @family stratify functions
 #'
 #' @inheritParams strat_breaks
-#' @inheritParams strat_fri
+#' @inheritParams strat_poly
 #' @param sraster spatRaster. Primary stratification raster.
 #' @param sraster2 spatRaster. Secondary stratification raster.
 #' @param stack Logical. Default = \code{FALSE}. If \code{TRUE}, output raster will be
@@ -113,11 +113,11 @@ strat_map <- function(sraster,
   #--- error handling for raster inputs ---#
 
   if (terra::nlyr(sraster) > 1) {
-    stop("sraster mustonly contain 1 layer. Please subset the layer you would like to use for mapping.")
+    stop("'sraster' must only contain 1 layer. Please subset the layer you would like to use for mapping.")
   }
 
   if (terra::nlyr(sraster2) > 1) {
-    stop("sraster2 mustonly contain 1 layer. Please subset the layer you would like to use for mapping.")
+    stop("'sraster2' must only contain 1 layer. Please subset the layer you would like to use for mapping.")
   }
 
   if (!stringr::str_detect(names(sraster), "strata")) {
@@ -127,8 +127,17 @@ strat_map <- function(sraster,
   if (!stringr::str_detect(names(sraster2), "strata")) {
     stop("A layer name containing 'strata' does not exist within 'sraster2'.")
   }
-
-
+  
+  #--- check that extents and resolutions of sraster and sraster2 match ---#
+  
+  if(!identical(terra::ext(sraster),terra::ext(sraster2))){
+    stop("Extents of 'sraster' and 'sraster2' do not match.")
+  }
+  
+  if(!identical(terra::res(sraster),terra::res(sraster2))){
+    stop("Spatial resolutions of 'sraster' and 'sraster2' do not match.")
+  }
+  
   #--- map stratification rasters ---#
 
   joined <- c(sraster, sraster2)
