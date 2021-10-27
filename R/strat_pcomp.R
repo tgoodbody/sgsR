@@ -4,10 +4,9 @@
 #' @family stratify functions
 #'
 #' @inheritParams strat_kmeans
-#' @inheritParams strat_quantiles
 #' @inheritParams strat_breaks
 #' @inheritParams calculate_pcomp
-#'
+#' @param mraster Spatraster. Covariate raster to stratify.
 #' @param nStrata Numeric. Number of strata for primary principal component.
 #' @param nStrata2 Numeric. Number of strata for secondary principal component.
 #' @param ... Additional arguments to be passed to \code{\link[stats]{prcomp}}.

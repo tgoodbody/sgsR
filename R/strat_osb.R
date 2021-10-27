@@ -7,7 +7,6 @@
 #'
 #' @inheritParams strat_kmeans
 #' @inheritParams strat_breaks
-#' @inheritParams strat_quantiles
 #'
 #' @param nStrata Numeric. Number of desired output strata.
 #' @param nSamp Numeric. Number of desired samples - used within
@@ -49,16 +48,14 @@
 #'
 #' #--- perform optimum sample boundary stratification ---#
 #' strat_osb(
-#'   mraster = mr,
-#'   metric = "zsd",
+#'   mraster = mr$zsd,
 #'   nSamp = 200,
 #'   nStrata = 4,
 #'   plot = TRUE
 #' )
 #'
 #' strat_osb(
-#'   mraster = mr,
-#'   metric = 4,
+#'   mraster = mr$zmax
 #'   nSamp = 20,
 #'   nStrata = 3,
 #'   plot = TRUE,
@@ -66,8 +63,7 @@
 #' )
 #'
 #' strat_osb(
-#'   mraster = mr,
-#'   metric = "zmax",
+#'   mraster = mr$zmax
 #'   nSamp = 100,
 #'   nStrata = 5,
 #'   subset = 0.75,
@@ -80,7 +76,6 @@
 #' @export
 
 strat_osb <- function(mraster,
-                      metric = NULL,
                       nStrata,
                       nSamp,
                       subset = 1,
@@ -132,33 +127,8 @@ strat_osb <- function(mraster,
   if (terra::nlyr(mraster) == 1) {
     rastermetric <- mraster
   } else {
-
-    #--- subset metric based on whether it is a character of number ---#
-
-    if (is.null(metric)) {
-      stop(" multiple layers detected in 'mraster'. Please define a 'metric' to stratify")
-    } else {
-
-      #--- Numeric ---#
-
-      if (is.numeric(metric)) {
-        if ((metric) > (terra::nlyr(mraster)) | metric < 0) {
-          stop("'metric' index doest not exist within 'mraster'")
-        }
-
-        #--- Character ---#
-      } else if (is.character(metric)) {
-        if (!metric %in% names(mraster)) {
-          stop(glue::glue("'mraster' must have an attribute named {metric}."))
-        }
-
-        metric <- which(names(mraster) == metric)
-      }
-    }
-
-    #--- extract mraster metric ---#
-
-    rastermetric <- terra::subset(mraster, metric)
+    
+    stop("Multiple layers detected in 'mraster'. Please define a singular band to stratify.")
   }
 
   #--- Perform OSB ---#

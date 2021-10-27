@@ -31,7 +31,7 @@ library(spatstat)
 ```{r}
 #--- import ALS metrics raster ---#
 
-raster <- system.file("extdata","wall_metrics.tif", package = "sgsR")
+raster <- system.file("extdata","wall_metrics_small.tif", package = "sgsR")
 
 mraster <- terra::rast(raster)
 

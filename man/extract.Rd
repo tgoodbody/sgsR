@@ -33,7 +33,7 @@ extract_metrics(
 
 \item{overwrite}{Logical. Specify whether \code{filename} should be overwritten on disc.}
 
-\item{mraster}{spatRaster. ALS metrics raster.}
+\item{mraster}{Spatraster. Primary covariate raster to stratify.}
 }
 \value{
 An sf or data.frame object of samples with strata attributes

@@ -141,7 +141,7 @@ sample_strat(
 )
 
 #--- Load mraster for optimal allocation ---#
-mr <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
+mr <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 mr <- terra::rast(mr)
 
 sample_strat(

@@ -95,8 +95,7 @@ Other stratify functions:
 \code{\link{strat_kmeans}()},
 \code{\link{strat_map}()},
 \code{\link{strat_osb}()},
-\code{\link{strat_pcomp}()},
-\code{\link{strat_quantiles}()}
+\code{\link{strat_pcomp}()}
 }
 \author{
 Tristan R.H. Goodbody

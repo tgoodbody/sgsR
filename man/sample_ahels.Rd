@@ -48,7 +48,7 @@ Special thanks to Dr. Brendan Malone for the original implementation of this alg
 }
 \examples{
 #--- Load raster and existing plots---#
-r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
+r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 mr <- terra::rast(r)
 
 e <- system.file("extdata", "existing.shp", package = "sgsR")

@@ -6,7 +6,6 @@
 \usage{
 strat_osb(
   mraster,
-  metric = NULL,
   nStrata,
   nSamp,
   subset = 1,
@@ -19,8 +18,6 @@ strat_osb(
 }
 \arguments{
 \item{mraster}{spatRaster. ALS metrics raster.}
-
-\item{metric}{Numeric/Character. Index or name of primary covariate within \code{mraster} to stratify.}
 
 \item{nStrata}{Numeric. Number of desired output strata.}
 
@@ -65,21 +62,19 @@ using the \code{\link[stratifyR]{strata.data}} algorithm.
 \examples{
 \dontrun{
 #--- Load raster and access files ---#
-r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
+r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 mr <- terra::rast(r)
 
 #--- perform optimum sample boundary stratification ---#
 strat_osb(
-  mraster = mr,
-  metric = "zsd",
+  mraster = mr$zsd,
   nSamp = 200,
   nStrata = 4,
   plot = TRUE
 )
 
 strat_osb(
-  mraster = mr,
-  metric = 4,
+  mraster = mr$zmax
   nSamp = 20,
   nStrata = 3,
   plot = TRUE,
@@ -87,8 +82,7 @@ strat_osb(
 )
 
 strat_osb(
-  mraster = mr,
-  metric = "zmax",
+  mraster = mr$zmax
   nSamp = 100,
   nStrata = 5,
   subset = 0.75,
@@ -115,8 +109,7 @@ Other stratify functions:
 \code{\link{strat_kmeans}()},
 \code{\link{strat_map}()},
 \code{\link{strat_pcomp}()},
-\code{\link{strat_poly}()},
-\code{\link{strat_quantiles}()}
+\code{\link{strat_poly}()}
 }
 \author{
 Tristan R.H. Goodbody

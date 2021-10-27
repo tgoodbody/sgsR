@@ -55,7 +55,7 @@ Stratify metrics raster using \code{\link[stats]{kmeans}} algorithm
 }
 \examples{
 #--- Load raster and access files ---#
-r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
+r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 mr <- terra::rast(r)
 
 #--- perform stratification using k-means ---#
@@ -88,8 +88,7 @@ Other stratify functions:
 \code{\link{strat_map}()},
 \code{\link{strat_osb}()},
 \code{\link{strat_pcomp}()},
-\code{\link{strat_poly}()},
-\code{\link{strat_quantiles}()}
+\code{\link{strat_poly}()}
 }
 \author{
 Tristan R.H. Goodbody
