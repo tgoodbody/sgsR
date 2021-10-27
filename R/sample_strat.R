@@ -199,7 +199,7 @@ sample_strat <- function(sraster,
     }
 
     #--- if existing samples do not exist make an empty data.frame called addSamples ---#
-    addSamples <- data.frame(strata = NA, X = NA, Y = NA)
+    addSamples <- data.frame(cell = NA, strata = NA, X = NA, Y = NA)
     extraCols <- character(0)
   } else {
 
@@ -248,10 +248,14 @@ sample_strat <- function(sraster,
       }
     }
 
+    #--- add cell value for future checking for duplicate samples ---#
+    
+    existing$cell <- NA
+    
     addSamples <- existing
   }
 
-  extraCols <- colnames(existing)[!colnames(existing) %in% c("X", "Y", "strata")]
+  extraCols <- colnames(existing)[!colnames(existing) %in% c("cell", "X", "Y", "strata")]
 
   # Transform strata to numeric if factor
   if (is(addSamples$strata, "factor")) {
@@ -410,6 +414,9 @@ sample_strat <- function(sraster,
         smp <- sample(1:length(validCandidates), size = 1)
 
         smp_cell <- validCandidates[smp]
+        
+        #--- Remove sampled cell from validCandidates so that it cannot be sampled again later ---#
+        validCandidates <- validCandidates[-smp]
 
         #--- extract coordinates and sample details ---#
 
@@ -420,9 +427,6 @@ sample_strat <- function(sraster,
           strata = strata_m_clust[smp_cell]
         )
 
-        #--- Remove sampled cell from validCandidates so that it cannot be sampled again later ---#
-        validCandidates <- validCandidates[-smp]
-
         #--- populate add_temp with values ---#
         add_temp$type <- "new"
         add_temp$rule <- "rule1"
@@ -431,7 +435,7 @@ sample_strat <- function(sraster,
         #--- If add_strata is empty, sampled cell accepted ---#
 
         if (nrow(add_strata) == 0) {
-          add_strata <- add_temp[, c("X", "Y", "strata", "type", "rule", extraCols)]
+          add_strata <- add_temp[, c("cell", "X", "Y", "strata", "type", "rule", extraCols)]
 
           nCount <- nCount + 1
 
@@ -443,15 +447,17 @@ sample_strat <- function(sraster,
 
           #--- If all less than 'mindist' - accept sampled cell otherwise reject ---#
           if (all(as.numeric(dist) > mindist)) {
-            add_strata <- rbind(add_strata, add_temp[, c("X", "Y", "strata", "type", "rule", extraCols)])
+            add_strata <- rbind(add_strata, add_temp[, c("cell", "X", "Y", "strata", "type", "rule", extraCols)])
 
             nCount <- nCount + 1
           }
         } else {
 
           #--- if mindist is not defined ---#
+          
+          if(add_temp$cell %in% add_strata$cell) next
 
-          add_strata <- rbind(add_strata, add_temp[, c("X", "Y", "strata", "type", "rule", extraCols)])
+          add_strata <- rbind(add_strata, add_temp[, c("cell", "X", "Y", "strata", "type", "rule", extraCols)])
 
           nCount <- nCount + 1
         }
@@ -470,6 +476,10 @@ sample_strat <- function(sraster,
           smp <- sample(1:length(validCandidates), size = 1)
 
           smp_cell <- validCandidates[smp]
+          
+          #--- Remove sampled cell from validCandidates so that it cannot be sampled again later ---#
+          
+          validCandidates <- validCandidates[-smp]
 
           #--- extract coordinates and sample details ---#
 
@@ -480,17 +490,13 @@ sample_strat <- function(sraster,
             strata = validCandidates[smp_cell]
           )
 
-          #--- Remove sampled cell from validCandidates so that it cannot be sampled again later ---#
-
-          validCandidates <- validCandidates[-smp]
-
           add_temp$rule <- "rule2"
           add_temp$type <- "new"
           add_temp[, extraCols] <- NA
           add_temp$strata <- s
 
           if (nrow(add_strata) == 0) {
-            add_strata <- add_temp[, c("X", "Y", "strata", "type", "rule", extraCols)]
+            add_strata <- add_temp[, c("cell", "X", "Y", "strata", "type", "rule", extraCols)]
 
             nCount <- nCount + 1
 
@@ -502,15 +508,17 @@ sample_strat <- function(sraster,
 
             #--- If all less than 'mindist' - accept sampled cell otherwise reject ---#
             if (all(as.numeric(dist) > mindist)) {
-              add_strata <- rbind(add_strata, add_temp[, c("X", "Y", "strata", "type", "rule", extraCols)])
+              add_strata <- rbind(add_strata, add_temp[, c("cell", "X", "Y", "strata", "type", "rule", extraCols)])
 
               nCount <- nCount + 1
             }
           } else {
 
             #--- if mindist is not defined ---#
+            
+            if(add_temp$cell %in% add_strata$cell) next
 
-            add_strata <- rbind(add_strata, add_temp[, c("X", "Y", "strata", "type", "rule", extraCols)])
+            add_strata <- rbind(add_strata, add_temp[, c("cell", "X", "Y", "strata", "type", "rule", extraCols)])
 
             nCount <- nCount + 1
           }
@@ -552,6 +560,7 @@ sample_strat <- function(sraster,
 
   #--- convert coordinates to a spatial points object ---#
   samples <- out %>%
+    dplyr::select(-cell) %>%
     as.data.frame() %>%
     sf::st_as_sf(., coords = c("X", "Y"))
 
