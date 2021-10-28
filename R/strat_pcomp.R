@@ -197,8 +197,8 @@ strat_pcomp <- function(mraster,
 
     p <- classPlot(as.data.frame(pcagrps),
       coordsgrps,
-      mraster = "PC1",
-      mraster2 = "PC2",
+      mraster = PC1,
+      mraster2 = PC2,
       samp
     )
 
