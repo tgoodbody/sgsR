@@ -78,8 +78,7 @@
 #'   sraster = sr,
 #'   nSamp = 200,
 #'   allocation = "optim",
-#'   mraster = mr,
-#'   metric = 1,
+#'   mraster = mr$zmax,
 #'   access = ac,
 #'   buff_inner = 50,
 #'   buff_outer = 200,
@@ -109,7 +108,6 @@ sample_strat <- function(sraster,
                          force = FALSE,
                          allocation = "prop",
                          mraster = NULL,
-                         metric = NULL,
                          mindist = NULL,
                          existing = NULL,
                          include = FALSE,
@@ -273,8 +271,7 @@ sample_strat <- function(sraster,
       existing = existing,
       force = force,
       allocation = allocation,
-      mraster = mraster,
-      metric = metric
+      mraster = mraster
     )
   } else {
     toSample <- calculate_allocation(
@@ -282,8 +279,7 @@ sample_strat <- function(sraster,
       nSamp = nSamp,
       force = force,
       allocation = allocation,
-      mraster = mraster,
-      metric = metric
+      mraster = mraster
     )
   }
 
@@ -400,126 +396,126 @@ sample_strat <- function(sraster,
       }
 
       #--- create indices for all, NA, and valid sampling candidates ---#
-
+      
       idx_all <- 1:terra::ncell(strata_m_clust)
       idx_na <- is.na(terra::values(strata_m_clust))
       validCandidates <- idx_all[!idx_na]
-
+      
       #--- Rule 1 sampling ---#
       nCount <- 0 # Number of sampled cells
-
+      
       # While loop for RULE 1
       while (length(validCandidates) > 0 & nCount < n) {
         #-- identify potential sample from candidates ---#
         smp <- sample(1:length(validCandidates), size = 1)
-
+        
         smp_cell <- validCandidates[smp]
         
         #--- Remove sampled cell from validCandidates so that it cannot be sampled again later ---#
         validCandidates <- validCandidates[-smp]
-
+        
         #--- extract coordinates and sample details ---#
-
+        
         add_temp <- data.frame(
           cell = smp_cell,
           X = terra::xFromCell(strata_m_clust, smp_cell),
           Y = terra::yFromCell(strata_m_clust, smp_cell),
           strata = strata_m_clust[smp_cell]
         )
-
+        
         #--- populate add_temp with values ---#
         add_temp$type <- "new"
         add_temp$rule <- "rule1"
         add_temp[, extraCols] <- NA
-
+        
         #--- If add_strata is empty, sampled cell accepted ---#
-
+        
         if (nrow(add_strata) == 0) {
           add_strata <- add_temp[, c("cell", "X", "Y", "strata", "type", "rule", extraCols)]
-
+          
           nCount <- nCount + 1
-
+          
           #--- If add_strata isn't empty, check distance with all other sampled cells in strata ---#
         }
-
+        
         if (!is.null(mindist)) {
           dist <- spatstat.geom::crossdist(add_temp$X, add_temp$Y, add_strata$X, add_strata$Y)
-
+          
           #--- If all less than 'mindist' - accept sampled cell otherwise reject ---#
           if (all(as.numeric(dist) > mindist)) {
             add_strata <- rbind(add_strata, add_temp[, c("cell", "X", "Y", "strata", "type", "rule", extraCols)])
-
+            
             nCount <- nCount + 1
           }
         } else {
-
+          
           #--- if mindist is not defined ---#
           
           if(add_temp$cell %in% add_strata$cell) next
-
+          
           add_strata <- rbind(add_strata, add_temp[, c("cell", "X", "Y", "strata", "type", "rule", extraCols)])
-
+          
           nCount <- nCount + 1
         }
       }
-
+      
       #---- RULE 2 sampling ---#
-
+      
       if (nCount < n) {
         idx_all <- 1:terra::ncell(strata_m)
         idx_na <- is.na(terra::values(strata_m))
         validCandidates <- idx_all[!idx_na]
-
+        
         while (length(validCandidates) > 0 & nCount < n) {
-
+          
           #-- identify potential sample from candidates ---#
           smp <- sample(1:length(validCandidates), size = 1)
-
+          
           smp_cell <- validCandidates[smp]
           
           #--- Remove sampled cell from validCandidates so that it cannot be sampled again later ---#
           
           validCandidates <- validCandidates[-smp]
-
+          
           #--- extract coordinates and sample details ---#
-
+          
           add_temp <- data.frame(
             cell = smp_cell,
             X = terra::xFromCell(strata_m, smp_cell),
             Y = terra::yFromCell(strata_m, smp_cell),
             strata = validCandidates[smp_cell]
           )
-
+          
           add_temp$rule <- "rule2"
           add_temp$type <- "new"
           add_temp[, extraCols] <- NA
           add_temp$strata <- s
-
+          
           if (nrow(add_strata) == 0) {
             add_strata <- add_temp[, c("cell", "X", "Y", "strata", "type", "rule", extraCols)]
-
+            
             nCount <- nCount + 1
-
+            
             #--- If add_strata isn't empty, check distance with all other sampled cells in strata ---#
           }
-
+          
           if (!is.null(mindist)) {
             dist <- spatstat.geom::crossdist(add_temp$X, add_temp$Y, add_strata$X, add_strata$Y)
-
+            
             #--- If all less than 'mindist' - accept sampled cell otherwise reject ---#
             if (all(as.numeric(dist) > mindist)) {
               add_strata <- rbind(add_strata, add_temp[, c("cell", "X", "Y", "strata", "type", "rule", extraCols)])
-
+              
               nCount <- nCount + 1
             }
           } else {
-
+            
             #--- if mindist is not defined ---#
             
             if(add_temp$cell %in% add_strata$cell) next
-
+            
             add_strata <- rbind(add_strata, add_temp[, c("cell", "X", "Y", "strata", "type", "rule", extraCols)])
-
+            
             nCount <- nCount + 1
           }
         }

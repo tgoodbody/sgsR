@@ -10,7 +10,6 @@ sample_strat(
   force = FALSE,
   allocation = "prop",
   mraster = NULL,
-  metric = NULL,
   mindist = NULL,
   existing = NULL,
   include = FALSE,
@@ -35,12 +34,9 @@ in cases where nSamp and \code{sraster} strata count are not equally divisible. 
 is provided.}
 
 \item{allocation}{Character. Allocation algorithm to be used. Either \code{prop} (default) for proportional allocation
-or \code{optim} for optimal allocation or \code{equal} for equal number of samples for each strata.}
+or \code{optim} for optimal allocation or \code{equal} for equal number of samples (defined by \code{nSamp}) for each strata.}
 
-\item{mraster}{spatRaster. ALS metrics raster. Required when \code{allocation = optim}.}
-
-\item{metric}{Numeric/Character. Index or name of primary covariate within mraster to stratify.
-Required when \code{allocation = optim}.}
+\item{mraster}{spatRaster. ALS metric raster. Required when \code{allocation = optim}.}
 
 \item{mindist}{Numeric. Minimum allowable distance between selected
 samples. Default = 100.}
@@ -148,8 +144,7 @@ sample_strat(
   sraster = sr,
   nSamp = 200,
   allocation = "optim",
-  mraster = mr,
-  metric = 1,
+  mraster = mr$zmax,
   access = ac,
   buff_inner = 50,
   buff_outer = 200,
