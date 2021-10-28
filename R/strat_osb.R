@@ -171,14 +171,12 @@ strat_osb <- function(mraster,
   if (isTRUE(plot)) {
     metric <- as.character(names(rastermetric))
 
-    met <- ggplot2::ensym(metric)
-
     data <- as.data.frame(OSB[[1]])
     names(data) <- metric
 
     #--- plot histogram of metric with associated break lines ---#
 
-    p1 <- ggplot2::ggplot(data, ggplot2::aes(!!met)) +
+    p1 <- ggplot2::ggplot(data, ggplot2::aes(.data[[metric]])) +
       ggplot2::geom_histogram() +
       ggplot2::geom_vline(xintercept = OSB[[2]]$OSB, linetype = "dashed") +
       ggplot2::ggtitle(glue::glue("{metric} histogram with optimum sample boundaries."))
