@@ -89,10 +89,9 @@ plot(kmeans)
 
 osb <- strat_osb(mraster = wall_poly$pzabove2,
                  nStrata = 2,
-                 nSamp = 20,
-                 details = TRUE)
-
-plot(osb$raster)
+                 nSamp = 10,
+                 details = TRUE,
+                 plot = TRUE)
 
 osb$details
 
@@ -158,9 +157,16 @@ bk2 <- strat_breaks(mraster = wall_poly$zmean,
 
 #--- perform stratification using principal components on P1 only ---#
 pcomp1 <- strat_pcomp(mraster = wall_poly,
-                      nStrata = 4)
+                      nStrata = 4,
+                      plot = TRUE,
+                      details = TRUE)
 
-plot(pcomp1)
+pcomp1 <- strat_pcomp(mraster = wall_poly,
+                      nStrata = 4,
+                      nStrata2 = 6,
+                      plot = TRUE,
+                      details = TRUE)
+
 ```
 
 ```{r}
@@ -240,7 +246,7 @@ strat_wo <- sample_strat(sraster = kmeans,
 ```{r}
 #--- change mindist parameter ---#
 strat_md <- sample_strat(sraster = kmeans,
-                      n = 200, 
+                      nSamp = 362, 
                       mindist = 200,
                       plot = TRUE)
 
@@ -250,12 +256,37 @@ strat_md <- sample_strat(sraster = kmeans,
 
 #--- stratified sampling with access and buffers provided ---#
 strat_w_a <- sample_strat(sraster = kmeans,
-                        n = 200, 
+                        nSamp = 200, 
                         mindist = 200,
                         access = roads,
                         buff_inner = 50,
                         buff_outer = 200,
                         plot = TRUE)
+
+#--- optimal allocation ---#
+
+sample_strat(sraster = kmeans,
+             nSamp = 200, 
+             mindist = 200,
+             force = TRUE,
+             allocation = "optim",
+             mraster = mraster$zmean,
+             access = roads,
+             buff_inner = 170,
+             buff_outer = 264,
+             plot = TRUE)
+
+#--- equal allocation ---#
+
+o <- sample_strat(sraster = kmeans,
+             nSamp = 20, 
+             mindist = 400,
+             existing = existing,
+             include = FALSE,
+             allocation = "equal",
+             force = TRUE,
+             plot = TRUE)
+
 ```
 
 ## Balanced Sampling - uses metrics rasters
