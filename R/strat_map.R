@@ -130,11 +130,11 @@ strat_map <- function(sraster,
   
   #--- check that extents and resolutions of sraster and sraster2 match ---#
   
-  if(!identical(terra::ext(sraster),terra::ext(sraster2))){
+  if(!all.equal(terra::ext(sraster),terra::ext(sraster2))){
     stop("Extents of 'sraster' and 'sraster2' do not match.")
   }
   
-  if(!identical(terra::res(sraster),terra::res(sraster2))){
+  if(!all.equal(terra::res(sraster),terra::res(sraster2))){
     stop("Spatial resolutions of 'sraster' and 'sraster2' do not match.")
   }
   
