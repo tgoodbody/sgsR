@@ -236,7 +236,7 @@ srs_w <- sample_srs(raster = raster,
 
 #--- stratified sampling **without** access defined---#
 
-#--- 'mindist' between samples defaults to 100 ---#
+#--- 'mindist' between samples defaults to 0 ---#
 strat_wo <- sample_strat(sraster = kmeans, 
                          nSamp = 200,
                          plot = TRUE)
@@ -274,17 +274,6 @@ sample_strat(sraster = kmeans,
              access = roads,
              buff_inner = 170,
              buff_outer = 264,
-             plot = TRUE)
-
-#--- equal allocation ---#
-
-o <- sample_strat(sraster = kmeans,
-             nSamp = 20, 
-             mindist = 400,
-             existing = existing,
-             include = FALSE,
-             allocation = "equal",
-             force = TRUE,
              plot = TRUE)
 
 ```
@@ -402,6 +391,18 @@ strat_w_e <- sample_strat(sraster = kmeans,
 
 #--- how many samples did we get total? ---#
 strat_w_e
+
+
+#--- equal allocation ---#
+
+o <- sample_strat(sraster = kmeans,
+             nSamp = 20, 
+             mindist = 400,
+             existing = existing,
+             include = FALSE,
+             allocation = "equal",
+             force = TRUE,
+             plot = TRUE)
 
 ```
 
