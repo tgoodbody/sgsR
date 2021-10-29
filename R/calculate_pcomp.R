@@ -99,7 +99,7 @@ calculate_pcomp <- function(mraster = NULL,
 
   #--- stack pca rasters ---#
 
-  pcaRout <- terra::rast(rs)
+  pcaRout <- terra::rast(rs[1:nComp])
 
   #--- rename ---#
 
@@ -113,8 +113,8 @@ calculate_pcomp <- function(mraster = NULL,
 
   if (isTRUE(plot)) {
 
-    #--- visualize scree plot ---#
-    terra::plot(pcaRout[[1:nComp]])
+    #--- Plot components ---#
+    terra::plot(pcaRout)
   }
 
   if (isTRUE(details)) {
