@@ -112,21 +112,21 @@ strat_kmeans <- function(mraster,
   #--- Determine index of each cell so to map values correctly without NA ---#
 
   vals[!is.finite(vals)] <- NA
+  idx <- !is.na(vals)
 
   #--- conduct unsupervised k-means with center/scale parameters based on algorithm ---#
 
   message("K-means being performed on ", terra::nlyr(mraster), " layers with ", nStrata, " centers.")
 
-  km_clust <- stats::kmeans(scale(na.omit(vals), center = center, scale = scale), centers = nStrata, iter.max = iter, algorithm = algorithm, ...)
+  km_clust <- stats::kmeans(scale(vals[idx], center = center, scale = scale), centers = nStrata, iter.max = iter, algorithm = algorithm)
 
   #--- convert k-means values back to original mraster extent ---#
 
   #--- suppress warning due to difference in data frame with and without NA values ---#
-  suppressWarnings(vals[is.finite(vals)] <- km_clust$cluster)
+  vals[idx] <- km_clust$cluster
 
   kmv <- terra::setValues(mraster[[1]], vals)
   names(kmv) <- "strata"
-
 
   #--- plot if requested ---#
 
