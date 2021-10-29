@@ -118,11 +118,11 @@ strat_breaks <- function(mraster,
   minmax <- terra::minmax(rastermetric)
   
   if (any(breaks < minmax[1])) {
-    stop("'breaks' contains values < the minimum 'mraster' value.")
+    message("'breaks' contains values < the minimum 'mraster' value.")
   }
   
   if (any(breaks > minmax[2])) {
-    stop("'breaks' contains values > the maximum 'mraster' value.")
+    message("'breaks' contains values > the maximum 'mraster' value.")
   }
   
   #--- apply breaks to primary metric ---#
