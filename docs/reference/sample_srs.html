@@ -23,6 +23,9 @@
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav"><li>
+  <a href="../articles/sgsR.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -33,12 +36,6 @@
   </a>
   <ul class="dropdown-menu" role="menu"><li>
       <a href="../articles/calculating.html">calculating</a>
-    </li>
-    <li>
-      <a href="../articles/crashcourse.html">crashcourse</a>
-    </li>
-    <li>
-      <a href="../articles/fundamentals.html">fundamentals</a>
     </li>
     <li>
       <a href="../articles/sampling.html">sampling</a>
@@ -130,7 +127,7 @@ from access where plots can be sampled.</p></dd>
 <span class="r-in"><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"roads.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">ac</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `roads' from data source </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\tgood.stu\AppData\Local\Temp\RtmpA3NsZl\temp_libpath49886e72f7\sgsR\extdata\roads.shp' </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\tgood.stu\Documents\R\win-library\4.1\sgsR\extdata\roads.shp' </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   using driver `ESRI Shapefile'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 167 features and 2 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: MULTILINESTRING</span>
@@ -148,20 +145,20 @@ from access where plots can be sampled.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 200 features and 0 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431110 ymin: 5337710 xmax: 438550 ymax: 5343130</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431130 ymin: 5337730 xmax: 438470 ymax: 5343230</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                  geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (436350 5339550)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (438370 5339810)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (435750 5341670)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  POINT (437490 5338130)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (432110 5338330)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POINT (433050 5340890)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POINT (434270 5341970)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (434070 5338570)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (434750 5341710)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (431470 5342330)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (431170 5339910)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (436170 5340210)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (433990 5340390)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  POINT (437710 5340690)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (435970 5340890)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POINT (434730 5338710)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POINT (434690 5342790)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (433950 5339930)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (438290 5342790)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (437330 5340310)</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">sample_srs</span><span class="op">(</span></span>
 <span class="r-in">  raster <span class="op">=</span> <span class="va">sr</span>,</span>
@@ -175,20 +172,20 @@ from access where plots can be sampled.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 200 features and 0 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431250 ymin: 5337730 xmax: 438550 ymax: 5343210</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431130 ymin: 5337770 xmax: 438550 ymax: 5343230</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                  geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (432870 5341490)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (435930 5342890)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (433530 5343190)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  POINT (435610 5339850)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (433950 5342930)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POINT (434710 5341010)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POINT (437730 5338850)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (433830 5340530)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (437130 5338190)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (438250 5340510)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (438250 5339710)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (436210 5340990)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (433250 5340790)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  POINT (438210 5338050)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (432690 5339070)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POINT (438030 5342450)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POINT (433410 5342810)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (432030 5337930)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (434630 5341770)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (434870 5339590)</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">sample_srs</span><span class="op">(</span></span>
 <span class="r-in">  raster <span class="op">=</span> <span class="va">sr</span>,</span>
@@ -199,26 +196,26 @@ from access where plots can be sampled.</p></dd>
 <span class="r-in">  filename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".shp"</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> An access layer has been provided. An internal buffer of 50 m and an external buffer of 200 m have been applied</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Writing layer `file40d4452720ce' to data source </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\tgood.stu\AppData\Local\Temp\Rtmp2lD0MW\file40d4452720ce.shp' using driver `ESRI Shapefile'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Writing layer `file546874c1476d' to data source </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\tgood.stu\AppData\Local\Temp\Rtmps12dWI\file546874c1476d.shp' using driver `ESRI Shapefile'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Writing 200 features with 0 fields and geometry type Point.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 200 features and 0 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431430 ymin: 5337710 xmax: 438490 ymax: 5343190</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431110 ymin: 5337710 xmax: 438550 ymax: 5343230</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                  geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (431990 5338610)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (431530 5340650)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (434130 5339010)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  POINT (437030 5341410)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (437790 5343190)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POINT (432370 5341010)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POINT (435670 5339870)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (433870 5342910)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (432490 5342230)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (435950 5339270)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (432510 5341170)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (434390 5342330)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (438350 5341190)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  POINT (434850 5342590)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (432530 5340390)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POINT (437550 5343050)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POINT (434550 5338890)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (433570 5340590)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (431130 5340950)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (438170 5339630)</span>
 </code></pre></div>
     </div>
   </div>
@@ -229,7 +226,7 @@ from access where plots can be sampled.</p></dd>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Tristan RH Goodbody.</p>
+  <p></p><p>Developed by <a href="https://scholar.google.ca/citations?user=C_qdYDsAAAAJ&amp;hl=en" class="external-link">Tristan RH Goodbody</a>, <a href="https://forestry.ubc.ca/faculty-profile/nicholas-coops/" class="external-link">Nicholas C Coops</a>.</p>
 </div>
 
 <div class="pkgdown">

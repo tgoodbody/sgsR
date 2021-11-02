@@ -1,14 +1,19 @@
 ---
 title: "sgsR"
 output: rmarkdown::html_vignette
+description: >
+  Learn how to use sgsR.
 vignette: >
   %\VignetteIndexEntry{sgsR}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, echo=FALSE, eval = FALSE}
-knitr::opts_chunk$set(error = TRUE)
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
 ```
 
 # `sgsR` fundamentals {#fund .unnumbered}

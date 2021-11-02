@@ -1,24 +1,19 @@
 ---
 title: "stratification"
 output: rmarkdown::html_vignette
+description: >
+  Learn how to use strat* functions.
 vignette: >
   %\VignetteIndexEntry{stratification}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-```{css, echo=FALSE}
-pre {
-  max-height: 500px;
-  overflow-y: auto;
-}
-pre[class] {
-  max-height: 500px;
-}
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
 ```
 
 ```{r,warning=F,message=F,echo=FALSE,results=FALSE}
@@ -35,18 +30,16 @@ mraster <- terra::rast(r)
 a <- system.file("extdata", "roads.shp", package = "sgsR")
 
 #--- load the access vector using the sf package ---#
-access <- sf::st_read(a)
+access <- sf::st_read(a, quiet = TRUE)
 
 #--- apply kmeans algorithm to metrics raster ---#
 sraster <- strat_kmeans(mraster = mraster, # use mraster for stratification
-                        nStrata = 4, # number of desired output strata
-                        plot = TRUE) # algorithm will plot output
+                        nStrata = 4) # algorithm will plot output
 
 #--- apply kmeans algorithm to metrics raster ---#
 existing <- sample_srs(raster = sraster, # use sraster as input for sampling
                        nSamp = 200, # request 200 samples be taken
-                       mindist = 100, # desired minimum distance between each sample
-                       plot = TRUE) # algorithm will plot output
+                       mindist = 100) # algorithm will plot output
 
 ```
 
@@ -121,8 +114,7 @@ strat_pcomp(mraster = mraster, # input
 strat_pcomp(mraster = mraster, # input
             nStrata = 4, # 4 strata with primary
             nStrata2 = 4, # 4 strata with secondary PC - will produce 16 output strata
-            plot = TRUE, # plot
-            details = TRUE) # produce output details
+            plot = TRUE) # produce output details
 ```
 
 ```{r,warning=F,message=F}

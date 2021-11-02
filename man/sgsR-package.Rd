@@ -9,4 +9,13 @@
 This package provides functions to enable stratification and
     sampling for structurally guided sampling using ALS data.
 }
+\author{
+\strong{Maintainer}: Tristan RH Goodbody \email{goodbody.t@gmail.com} (\href{https://orcid.org/0000-0002-6894-7925}{ORCID})
+
+Authors:
+\itemize{
+  \item Nicholas C Coops \email{nicholas.coops@ubc.ca} (\href{https://orcid.org/0000-0002-0151-9037}{ORCID})
+}
+
+}
 \keyword{internal}
