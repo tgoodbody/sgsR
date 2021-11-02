@@ -1,0 +1,19 @@
+reference:
+- title: "Stratification functions"
+- contents:
+  - starts_with("strat_")
+- title: "Sampling functions"
+- contents:
+  - starts_with("sample_")
+- title: "Calculating functions"
+- contents:
+  - starts_with("calculate_")
+  
+authors:
+  Tristan RH Goodbody:
+    href: "https://scholar.google.ca/citations?user=C_qdYDsAAAAJ&hl=en"
+  Nicholas C Coops:
+    href: "https://forestry.ubc.ca/faculty-profile/nicholas-coops/"
+    
+code:
+  width: 72

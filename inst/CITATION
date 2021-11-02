@@ -3,7 +3,7 @@ citHeader("To cite sgsR in publications use:")
 citEntry(
   entry    = "Article",
   title    = "sgsR: Structurally Guided Sampling Approaches using ALS Data for R",
-  author   = person(given = "Tristan", middle = "RH", last = "Goodbody"),
+  author   = person(given = "Tristan RH", family = "Goodbody"),
   journal  = "NA",
   year     = sub("-.*", "", meta$Date),
   volume   = "NA",
@@ -17,7 +17,7 @@ citEntry(
   
   bibentry(bibtype = "Manual",
   title = "sgsR: Structurally Guided Sampling Approaches using ALS Data for R",
-  author = person(given = "Tristan", middle = c("R","H"), last = "Goodbody"),
+  author = person(given = "Tristan RH", family = "Goodbody"),
   year = year,
   note = note,
   url = "https://github.com/tgoodbody/sgsR")

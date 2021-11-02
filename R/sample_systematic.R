@@ -39,13 +39,13 @@
 #' #--- perform grid sampling ---#
 #' sample_systematic(
 #'   raster = sr,
-#'   cellsize = 200,
+#'   cellsize = 1000,
 #'   plot = TRUE
 #' )
 #'
 #' sample_systematic(
 #'   raster = sr,
-#'   cellsize = 200,
+#'   cellsize = 1000,
 #'   square = FALSE,
 #'   centers = FALSE,
 #'   plot = TRUE
@@ -53,7 +53,7 @@
 #'
 #' sample_systematic(
 #'   raster = sr,
-#'   cellsize = 100,
+#'   cellsize = 1000,
 #'   access = ac,
 #'   buff_inner = 50,
 #'   buff_outer = 200
@@ -61,7 +61,7 @@
 #'
 #' sample_systematic(
 #'   raster = sr,
-#'   cellsize = 200,
+#'   cellsize = 1000,
 #'   access = ac,
 #'   buff_inner = 100,
 #'   buff_outer = 400,

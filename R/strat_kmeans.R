@@ -118,7 +118,7 @@ strat_kmeans <- function(mraster,
 
   message("K-means being performed on ", terra::nlyr(mraster), " layers with ", nStrata, " centers.")
 
-  km_clust <- stats::kmeans(scale(vals[idx], center = center, scale = scale), centers = nStrata, iter.max = iter, algorithm = algorithm)
+  km_clust <- stats::kmeans(scale(na.omit(vals), center = center, scale = scale), centers = nStrata, iter.max = iter, algorithm = algorithm)
 
   #--- convert k-means values back to original mraster extent ---#
 
