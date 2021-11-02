@@ -24,7 +24,7 @@ library(sgsR)
 
 ## Implementation
 
--   Describe package fundamentals - `vignette("fundamentals")`
+-   Describe package fundamentals - `vignette("sgsR")`
 
 -   Overview of sampling algorithms - `vignette("sampling")`
 
