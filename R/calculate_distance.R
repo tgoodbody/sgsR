@@ -31,6 +31,8 @@
 #'   plot = TRUE,
 #'   filename = tempfile(fileext = ".tif")
 #' )
+#' @author Tristan R.H. Goodbody
+#'
 #' @export
 
 calculate_distance <- function(raster,

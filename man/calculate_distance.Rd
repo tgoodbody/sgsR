@@ -58,4 +58,7 @@ Other calculate functions:
 \code{\link{calculate_lhsPop}()},
 \code{\link{calculate_pcomp}()}
 }
+\author{
+Tristan R.H. Goodbody
+}
 \concept{calculate functions}
