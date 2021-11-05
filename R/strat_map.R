@@ -181,7 +181,7 @@ strat_map <- function(sraster,
   #--- plot if requested
 
   if (isTRUE(plot)) {
-    terra::plot(rout)
+    terra::plot(rout, type = "classes")
   }
 
   #--- write file to disc ---#
