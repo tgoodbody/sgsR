@@ -46,6 +46,9 @@
 #'
 #' Jonathan Lisic and Anton Grafstrom (2018). SamplingBigData: Sampling Methods for
 #' Big Data. R package version 1.0.0. https://CRAN.R-project.org/package=SamplingBigData
+#' 
+#' Grafström, A. Lisic, J (2018). BalancedSampling: Balanced and Spatially Balanced Sampling.
+#'  R package version 1.5.4. http://www.antongrafstrom.se/balancedsampling
 #'
 #' @author Tristan R.H. Goodbody
 #'

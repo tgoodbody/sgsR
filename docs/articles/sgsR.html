@@ -98,16 +98,9 @@
 <p><code>sgsR</code> has been scripted primarily using the <code>terra</code> package for raster processing and the <code>sf</code> package for vector manipulation. There are 3 primary function verbs that the package currently uses:</p>
 <ul>
 <li><p><code>strat_*</code> - The stratify verb implies that functions are applying stratification algorithms to an input metrics raster <code>mraster</code> and output a stratified raster <code>sraster</code>.</p></li>
-<li><p><code>sample_*</code> - The sample verb implies that functions are extracting samples from <code>srasters</code> produced from <code>strat_*</code> functions. A few algorithms (e.g. <code>sample_srs</code>, <code>sample_balanced</code>, <code>sample_systematic</code>) are able to take <code>mrasters</code> as inputs as they are not dependent on stratified inputs for sampling.</p></li>
-<li><p><code>calculate_*</code> - The calculate verb implies that functions are performing calculations to be used in consequent processing. The use of predefined sample analysis algorithms <code>calculate_ahels</code>, <code>calculate_coobs</code> are also included.</p></li>
+<li><p><code>sample_*</code> - The sample verb implies that functions are extracting samples from <code>srasters</code> produced from <code>strat_*</code> functions. A few algorithms (e.g. <code><a href="../reference/sample_srs.html">sample_srs()</a></code>, <code><a href="../reference/sample_balanced.html">sample_balanced()</a></code>, <code><a href="../reference/sample_systematic.html">sample_systematic()</a></code>) are able to take <code>mrasters</code> as inputs as they are not dependent on stratified inputs for sampling.</p></li>
+<li><p><code>calculate_*</code> - The calculate verb implies that functions are performing calculations to be used in consequent processing. The use of predefined sample analysis algorithms <code>calculate_ahels()</code>, <code><a href="../reference/calculate_coobs.html">calculate_coobs()</a></code> are also included.</p></li>
 </ul>
-<div class="box-content vig-content">
-<div class="section level3 unnumbered box-title vig-content-top">
-<h3 class="unnumbered" id="package-documentation">Package Documentation<a class="anchor" aria-label="anchor" href="#package-documentation"></a>
-</h3>
-</div>
-<p>I do not go into detail about the intricacies of each function in this document. Please see the documentation for functions e.g. <code><a href="../reference/strat_kmeans.html">?sgsR::strat_kmeans</a></code> for intended application and use of each function.</p>
-</div>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="example-data">Example data<a class="anchor" aria-label="anchor" href="#example-data"></a>
@@ -154,14 +147,14 @@
 <h2 class="unnumbered" id="srast">Stratified rasters - <code>sraster</code><a class="anchor" aria-label="anchor" href="#srast"></a>
 </h2>
 <p>For the purposes of this tutorial I am also going to show how to produce a basic <code>sraster</code> and <code>existing</code> sample data that we will used in examples below.</p>
-<p>To make the <code>sraster</code> we will use the <code>strat_kmeans</code> function where the input <code>mraster</code> will be stratified using a kmeans algorithm.</p>
+<p>To make the <code>sraster</code> we will use the <code><a href="../reference/strat_kmeans.html">strat_kmeans()</a></code> function where the input <code>mraster</code> will be stratified using a kmeans algorithm.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- apply kmeans algorithm to metrics raster ---#</span>
 <span class="va">sraster</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat_kmeans.html">strat_kmeans</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, <span class="co"># use mraster as input for sampling</span>
                         nStrata <span class="op">=</span> <span class="fl">4</span>, <span class="co"># algorithm will produce 4 strata</span>
                         plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># algorithm will plot output</span></code></pre></div>
 <p><img src="sgsR_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
-<p>After the <code>sraster</code> is produced we apply the <code>sample_srs</code> algorithm which randomly samples points within our <code>sraster</code> to produce an <code>existing</code> sample dataset.</p>
+<p>After the <code>sraster</code> is produced we apply the <code><a href="../reference/sample_srs.html">sample_srs()</a></code> algorithm which randomly samples points within our <code>sraster</code> to produce an <code>existing</code> sample dataset.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- set seed ---#</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span>
@@ -184,83 +177,20 @@
 <span class="va">sraster</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat_kmeans.html">strat_kmeans</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, <span class="co"># use mraster as input for sampling</span>
                         nStrata <span class="op">=</span> <span class="fl">4</span>, <span class="co"># algorithm will produce 4 strata</span>
                         plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># algorithm will plot output</span>
-<span class="co">#&gt; K-means being performed on 9 layers with 4 centers.</span></code></pre></div>
-<p><img src="sgsR_files/figure-html/pipe-1.png" width="700"></p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
+
 <span class="va">existing</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sample_srs.html">sample_srs</a></span><span class="op">(</span>raster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># use mraster as input for sampling</span>
                        nSamp <span class="op">=</span> <span class="fl">200</span>, <span class="co"># request 200 samples be taken</span>
                        mindist <span class="op">=</span> <span class="fl">100</span>, <span class="co"># define that samples must be 100 m apart</span>
-                       plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># algorithm will plot output</span></code></pre></div>
-<p><img src="sgsR_files/figure-html/pipe-2.png" width="700"></p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
+                       plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># algorithm will plot output</span>
+
 <span class="fu"><a href="../reference/extract.html">extract_metrics</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>,
                 existing <span class="op">=</span> <span class="va">existing</span><span class="op">)</span>
-<span class="co">#&gt; Simple feature collection with 200 features and 9 fields</span>
-<span class="co">#&gt; Geometry type: POINT</span>
-<span class="co">#&gt; Dimension:     XY</span>
-<span class="co">#&gt; Bounding box:  xmin: 431150 ymin: 5337730 xmax: 438550 ymax: 5343230</span>
-<span class="co">#&gt; CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
-<span class="co">#&gt; First 10 features:</span>
-<span class="co">#&gt;        zmax zmean  zsd pzabove2 zq20      zq50  zq70      zq90  zq95</span>
-<span class="co">#&gt; 1  2.560000  27.4 1.14     1.48 1.65  2.240000  2.80  4.980000  6.47</span>
-<span class="co">#&gt; 2  2.410000  36.1 0.70     1.53 1.75  2.320000  2.77  3.680000  4.24</span>
-<span class="co">#&gt; 3  7.640000  70.5 5.85     1.75 2.13  5.680000 10.70 19.189999 21.37</span>
-<span class="co">#&gt; 4  3.510000  23.4 2.28     1.53 1.75  2.550000  4.01  8.599999 10.46</span>
-<span class="co">#&gt; 5  8.820000  89.4 3.08     4.85 6.05  8.820000 10.54 14.130000 15.57</span>
-<span class="co">#&gt; 6  9.280000  72.6 4.26     4.03 5.36  8.809999 11.81 16.709999 18.18</span>
-<span class="co">#&gt; 7  6.430000  69.7 3.28     2.18 3.12  6.250000  8.07 12.290000 15.04</span>
-<span class="co">#&gt; 8  5.680000  65.9 2.86     1.94 2.72  5.530000  7.36 10.429999 12.11</span>
-<span class="co">#&gt; 9  8.520000  74.4 3.92     2.94 4.61  8.740000 10.92 14.830000 16.16</span>
-<span class="co">#&gt; 10 9.929999  92.0 3.87     4.40 6.34 10.190000 12.33 15.960000 18.58</span>
-<span class="co">#&gt;                  geometry</span>
-<span class="co">#&gt; 1  POINT (435390 5342230)</span>
-<span class="co">#&gt; 2  POINT (434350 5341570)</span>
-<span class="co">#&gt; 3  POINT (432830 5341610)</span>
-<span class="co">#&gt; 4  POINT (433070 5341770)</span>
-<span class="co">#&gt; 5  POINT (433710 5341710)</span>
-<span class="co">#&gt; 6  POINT (437650 5339690)</span>
-<span class="co">#&gt; 7  POINT (435250 5342730)</span>
-<span class="co">#&gt; 8  POINT (435630 5338910)</span>
-<span class="co">#&gt; 9  POINT (437690 5341530)</span>
-<span class="co">#&gt; 10 POINT (436330 5340610)</span>
 
 
 <span class="co">#--- piped ---#</span>
-<span class="fu"><a href="../reference/strat_kmeans.html">strat_kmeans</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, nStrata <span class="op">=</span> <span class="fl">4</span>, plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+<span class="fu"><a href="../reference/strat_kmeans.html">strat_kmeans</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, nStrata <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/sample_srs.html">sample_srs</a></span><span class="op">(</span><span class="va">.</span>, nSamp <span class="op">=</span> <span class="fl">200</span>, mindist <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/extract.html">extract_metrics</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, existing <span class="op">=</span> <span class="va">.</span><span class="op">)</span>
-<span class="co">#&gt; K-means being performed on 9 layers with 4 centers.</span></code></pre></div>
-<p><img src="sgsR_files/figure-html/pipe-3.png" width="700"></p>
-<pre><code><span class="co">#&gt; Simple feature collection with 200 features and 9 fields</span>
-<span class="co">#&gt; Geometry type: POINT</span>
-<span class="co">#&gt; Dimension:     XY</span>
-<span class="co">#&gt; Bounding box:  xmin: 431110 ymin: 5337750 xmax: 438550 ymax: 5343230</span>
-<span class="co">#&gt; CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
-<span class="co">#&gt; First 10 features:</span>
-<span class="co">#&gt;     zmax zmean  zsd pzabove2      zq20      zq50  zq70  zq90  zq95</span>
-<span class="co">#&gt; 1   6.97  58.5 4.32     1.81  2.640000  6.130000  9.02 15.06 17.03</span>
-<span class="co">#&gt; 2   6.45  52.3 2.40     3.08  4.200000  6.510000  8.03 10.06 11.15</span>
-<span class="co">#&gt; 3   4.79  65.1 2.90     1.72  2.200000  4.000000  5.88 10.54 12.76</span>
-<span class="co">#&gt; 4   7.20  80.7 3.33     2.10  3.680000  7.650000  9.33 12.20 13.82</span>
-<span class="co">#&gt; 5  13.13  93.6 4.12     7.59  9.940000 13.520000 15.35 19.28 20.83</span>
-<span class="co">#&gt; 6   8.58  57.2 6.16     1.69  2.330000  6.590000 13.41 18.56 20.52</span>
-<span class="co">#&gt; 7   9.74  90.3 4.91     2.75  4.200000 10.300000 12.97 17.25 19.48</span>
-<span class="co">#&gt; 8   8.34  87.6 3.60     2.94  4.750000  8.639999 10.46 13.79 16.05</span>
-<span class="co">#&gt; 9  16.21  92.0 5.20     7.96 12.460000 18.160000 19.58 21.53 22.24</span>
-<span class="co">#&gt; 10 13.33  95.7 3.56     7.64  9.599999 14.480000 15.63 17.73 18.60</span>
-<span class="co">#&gt;                  geometry</span>
-<span class="co">#&gt; 1  POINT (435710 5338150)</span>
-<span class="co">#&gt; 2  POINT (432650 5342830)</span>
-<span class="co">#&gt; 3  POINT (437790 5338750)</span>
-<span class="co">#&gt; 4  POINT (431290 5342210)</span>
-<span class="co">#&gt; 5  POINT (432410 5338790)</span>
-<span class="co">#&gt; 6  POINT (435610 5339610)</span>
-<span class="co">#&gt; 7  POINT (432130 5338610)</span>
-<span class="co">#&gt; 8  POINT (435650 5338890)</span>
-<span class="co">#&gt; 9  POINT (437250 5341630)</span>
-<span class="co">#&gt; 10 POINT (434470 5338770)</span></code></pre>
+  <span class="fu"><a href="../reference/extract.html">extract_metrics</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, existing <span class="op">=</span> <span class="va">.</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
   </div>

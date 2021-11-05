@@ -5,8 +5,8 @@
 \title{Raster principal components}
 \usage{
 calculate_pcomp(
-  mraster = NULL,
-  nComp = NULL,
+  mraster,
+  nComp,
   center = TRUE,
   scale = TRUE,
   plot = FALSE,

@@ -99,7 +99,12 @@
 #'  The rule applied to a allocate each sample is defined in the \code{rule} attribute of output samples.
 #'
 #' }
-#'
+#' @references 
+#' Queinnec, M., White, J. C., & Coops, N. C. (2021). 
+#' Comparing airborne and spaceborne photon-counting LiDAR canopy 
+#' structural estimates across different boreal forest types. 
+#' Remote Sensing of Environment, 262 (August 2020), 112510. 
+#' https://doi.org/10.1016/j.rse.2021.112510
 #'
 #' @export
 

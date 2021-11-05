@@ -129,113 +129,46 @@ where the values from both inputs are combined.</p>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#--- load input metrics raster ---#</span></span>
-<span class="r-in"><span class="va">raster</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"kmeans.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">srasterkmeans</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">raster</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#--- read polygon coverage ---#</span></span>
-<span class="r-in"><span class="va">poly</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"inventory_polygons.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fri</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">poly</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `inventory_polygons' from data source </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\tgood.stu\Documents\R\win-library\4.1\sgsR\extdata\inventory_polygons.shp' </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   using driver `ESRI Shapefile'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 632 features and 3 fields</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: MULTIPOLYGON</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431100 ymin: 5337700 xmax: 438560 ymax: 5343240</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: UTM_Zone_17_Northern_Hemisphere</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#--- stratify polygon coverage ---#</span></span>
-<span class="r-in"><span class="co">#--- specify polygon attribute to stratify ---#</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">attribute</span> <span class="op">&lt;-</span> <span class="st">"NUTRIENTS"</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#--- specify features within attribute &amp; how they should be grouped ---#</span></span>
-<span class="r-in"><span class="co">#--- as a single vector ---#</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">features</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"poor"</span>, <span class="st">"rich"</span>, <span class="st">"medium"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">srasterfri</span> <span class="op">&lt;-</span> <span class="fu"><a href="strat_poly.html">strat_poly</a></span><span class="op">(</span></span>
-<span class="r-in">  poly <span class="op">=</span> <span class="va">fri</span>,</span>
-<span class="r-in">  attribute <span class="op">=</span> <span class="va">attribute</span>,</span>
-<span class="r-in">  features <span class="op">=</span> <span class="va">features</span>,</span>
-<span class="r-in">  raster <span class="op">=</span> <span class="va">srasterkmeans</span>,</span>
-<span class="r-in">  plot <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-plt img"><img src="strat_map-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#--- map srasters ---#</span></span>
-<span class="r-in"><span class="fu">strat_map</span><span class="op">(</span></span>
-<span class="r-in">  sraster <span class="op">=</span> <span class="va">srasterfri</span>,</span>
-<span class="r-in">  sraster2 <span class="op">=</span> <span class="va">srasterkmeans</span>,</span>
-<span class="r-in">  plot <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-plt img"><img src="strat_map-2.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> class       : SpatRaster </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dimensions  : 277, 373, 1  (nrow, ncol, nlyr)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> resolution  : 20, 20  (x, y)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> extent      : 431100, 438560, 5337700, 5343240  (xmin, xmax, ymin, ymax)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> coord. ref. : +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> source      : memory </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> name        : strata </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> min value   :     11 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> max value   :    310 </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">strat_map</span><span class="op">(</span></span>
-<span class="r-in">  sraster <span class="op">=</span> <span class="va">srasterfri</span>,</span>
-<span class="r-in">  sraster2 <span class="op">=</span> <span class="va">srasterkmeans</span>,</span>
-<span class="r-in">  stack <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">  details <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">  plot <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Stacking sraster, sraster2, and their combination (stratamapped).</span>
-<span class="r-plt img"><img src="strat_map-3.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $outRaster</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> class       : SpatRaster </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dimensions  : 277, 373, 3  (nrow, ncol, nlyr)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> resolution  : 20, 20  (x, y)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> extent      : 431100, 438560, 5337700, 5343240  (xmin, xmax, ymin, ymax)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> coord. ref. : +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sources     : memory  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               kmeans.tif  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               memory  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> names       : strata, strata2, stratamapped </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> min values  :      1,       1,           11 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> max values  :      3,      10,          310 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $lookUp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    strata strata2 stratamapped</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       3       2           32</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       3       8           38</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       3       7           37</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       3       5           35</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       1       4           14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       1       1           11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7       1       3           13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8       1       6           16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9       1      10          110</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10      3       4           34</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11      3       6           36</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12      3       1           31</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13      1       7           17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14      1       5           15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15      1       9           19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16      1       8           18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17      1       2           12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18      2       8           28</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19      2       7           27</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20      2      10          210</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21      2       4           24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22      2       5           25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23      2       2           22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24      3       3           33</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25      3      10          310</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26      3       9           39</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27      2       6           26</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28      2       3           23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29      2       1           21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30      2       9           29</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="co">#--- load input metrics raster ---#</span>
+<span class="va">raster</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"kmeans.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span>
+<span class="va">srasterkmeans</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">raster</span><span class="op">)</span>
+
+<span class="co">#--- read polygon coverage ---#</span>
+<span class="va">poly</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"inventory_polygons.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span>
+<span class="va">fri</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">poly</span><span class="op">)</span>
+
+<span class="co">#--- stratify polygon coverage ---#</span>
+<span class="co">#--- specify polygon attribute to stratify ---#</span>
+
+<span class="va">attribute</span> <span class="op">&lt;-</span> <span class="st">"NUTRIENTS"</span>
+
+<span class="co">#--- specify features within attribute &amp; how they should be grouped ---#</span>
+<span class="co">#--- as a single vector ---#</span>
+
+<span class="va">features</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"poor"</span>, <span class="st">"rich"</span>, <span class="st">"medium"</span><span class="op">)</span>
+
+<span class="va">srasterfri</span> <span class="op">&lt;-</span> <span class="fu"><a href="strat_poly.html">strat_poly</a></span><span class="op">(</span>
+  poly <span class="op">=</span> <span class="va">fri</span>,
+  attribute <span class="op">=</span> <span class="va">attribute</span>,
+  features <span class="op">=</span> <span class="va">features</span>,
+  raster <span class="op">=</span> <span class="va">srasterkmeans</span>,
+  plot <span class="op">=</span> <span class="cn">TRUE</span>
+<span class="op">)</span>
+
+<span class="co">#--- map srasters ---#</span>
+<span class="fu">strat_map</span><span class="op">(</span>
+  sraster <span class="op">=</span> <span class="va">srasterfri</span>,
+  sraster2 <span class="op">=</span> <span class="va">srasterkmeans</span>,
+  plot <span class="op">=</span> <span class="cn">TRUE</span>
+<span class="op">)</span>
+
+<span class="fu">strat_map</span><span class="op">(</span>
+  sraster <span class="op">=</span> <span class="va">srasterfri</span>,
+  sraster2 <span class="op">=</span> <span class="va">srasterkmeans</span>,
+  stack <span class="op">=</span> <span class="cn">TRUE</span>,
+  details <span class="op">=</span> <span class="cn">TRUE</span>,
+  plot <span class="op">=</span> <span class="cn">TRUE</span>
+<span class="op">)</span>
 </code></pre></div>
     </div>
   </div>

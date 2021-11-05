@@ -120,102 +120,37 @@ from access where plots can be sampled.</p></dd>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#--- Load raster and access files ---#</span></span>
-<span class="r-in"><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"kmeans.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">sr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"roads.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">ac</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `roads' from data source </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\tgood.stu\Documents\R\win-library\4.1\sgsR\extdata\roads.shp' </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   using driver `ESRI Shapefile'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 167 features and 2 fields</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: MULTILINESTRING</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431100 ymin: 5337700 xmax: 438560 ymax: 5343240</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: UTM_Zone_17_Northern_Hemisphere</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#--- perform simple random sampling ---#</span></span>
-<span class="r-in"><span class="fu">sample_srs</span><span class="op">(</span></span>
-<span class="r-in">  raster <span class="op">=</span> <span class="va">sr</span>,</span>
-<span class="r-in">  nSamp <span class="op">=</span> <span class="fl">200</span>,</span>
-<span class="r-in">  plot <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-plt img"><img src="sample_srs-1.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 200 features and 0 fields</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431130 ymin: 5337730 xmax: 438470 ymax: 5343230</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (431170 5339910)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (436170 5340210)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (433990 5340390)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  POINT (437710 5340690)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (435970 5340890)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POINT (434730 5338710)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POINT (434690 5342790)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (433950 5339930)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (438290 5342790)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (437330 5340310)</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">sample_srs</span><span class="op">(</span></span>
-<span class="r-in">  raster <span class="op">=</span> <span class="va">sr</span>,</span>
-<span class="r-in">  nSamp <span class="op">=</span> <span class="fl">200</span>,</span>
-<span class="r-in">  access <span class="op">=</span> <span class="va">ac</span>,</span>
-<span class="r-in">  mindist <span class="op">=</span> <span class="fl">200</span>,</span>
-<span class="r-in">  buff_inner <span class="op">=</span> <span class="fl">50</span>,</span>
-<span class="r-in">  buff_outer <span class="op">=</span> <span class="fl">200</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> An access layer has been provided. An internal buffer of 50 m and an external buffer of 200 m have been applied</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 200 features and 0 fields</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431130 ymin: 5337770 xmax: 438550 ymax: 5343230</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (438250 5339710)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (436210 5340990)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (433250 5340790)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  POINT (438210 5338050)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (432690 5339070)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POINT (438030 5342450)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POINT (433410 5342810)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (432030 5337930)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (434630 5341770)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (434870 5339590)</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">sample_srs</span><span class="op">(</span></span>
-<span class="r-in">  raster <span class="op">=</span> <span class="va">sr</span>,</span>
-<span class="r-in">  nSamp <span class="op">=</span> <span class="fl">200</span>,</span>
-<span class="r-in">  access <span class="op">=</span> <span class="va">ac</span>,</span>
-<span class="r-in">  buff_inner <span class="op">=</span> <span class="fl">50</span>,</span>
-<span class="r-in">  buff_outer <span class="op">=</span> <span class="fl">200</span>,</span>
-<span class="r-in">  filename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".shp"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> An access layer has been provided. An internal buffer of 50 m and an external buffer of 200 m have been applied</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Writing layer `file546874c1476d' to data source </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\tgood.stu\AppData\Local\Temp\Rtmps12dWI\file546874c1476d.shp' using driver `ESRI Shapefile'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Writing 200 features with 0 fields and geometry type Point.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 200 features and 0 fields</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431110 ymin: 5337710 xmax: 438550 ymax: 5343230</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (432510 5341170)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (434390 5342330)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (438350 5341190)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  POINT (434850 5342590)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (432530 5340390)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POINT (437550 5343050)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POINT (434550 5338890)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (433570 5340590)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (431130 5340950)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (438170 5339630)</span>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="co">#--- Load raster and access files ---#</span>
+<span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"kmeans.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span>
+<span class="va">sr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span>
+
+<span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"roads.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span>
+<span class="va">ac</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>
+
+<span class="co">#--- perform simple random sampling ---#</span>
+<span class="fu">sample_srs</span><span class="op">(</span>
+  raster <span class="op">=</span> <span class="va">sr</span>,
+  nSamp <span class="op">=</span> <span class="fl">200</span>,
+  plot <span class="op">=</span> <span class="cn">TRUE</span>
+<span class="op">)</span>
+
+<span class="fu">sample_srs</span><span class="op">(</span>
+  raster <span class="op">=</span> <span class="va">sr</span>,
+  nSamp <span class="op">=</span> <span class="fl">200</span>,
+  access <span class="op">=</span> <span class="va">ac</span>,
+  mindist <span class="op">=</span> <span class="fl">200</span>,
+  buff_inner <span class="op">=</span> <span class="fl">50</span>,
+  buff_outer <span class="op">=</span> <span class="fl">200</span>
+<span class="op">)</span>
+
+<span class="fu">sample_srs</span><span class="op">(</span>
+  raster <span class="op">=</span> <span class="va">sr</span>,
+  nSamp <span class="op">=</span> <span class="fl">200</span>,
+  access <span class="op">=</span> <span class="va">ac</span>,
+  buff_inner <span class="op">=</span> <span class="fl">50</span>,
+  buff_outer <span class="op">=</span> <span class="fl">200</span>,
+  filename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".shp"</span><span class="op">)</span>
+<span class="op">)</span>
 </code></pre></div>
     </div>
   </div>

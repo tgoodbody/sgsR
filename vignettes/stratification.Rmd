@@ -47,23 +47,23 @@ existing <- sample_srs(raster = sraster, # use sraster as input for sampling
 
 Fundamental to many structurally guided sampling approaches is the use of stratification methods that allow for more effective and representative sampling protocols. Below I define the stratification methods that are included thus far in `sgsR` and provide some worked examples for each.
 
-A total of 5 `strat` functions currently exist in the package:
+A total of 6 `strat` functions currently exist in the package:
 
-*   `strat_kmeans` - kmeans stratification
+*   `strat_kmeans()` - kmeans stratification
 
-*   `strat_pcomp`- principal component stratification
+*   `strat_pcomp()`- principal component stratification
 
-*   `strat_breaks` - user-defined break stratification
+*   `strat_breaks()` - user-defined break stratification
 
-*   `strat_osb` - optimum sample boundary stratification
+*   `strat_osb()` - optimum sample boundary stratification
 
-*   `strat_poly` - polygon attribute stratification
+*   `strat_poly()` - polygon attribute stratification
 
-*   `strat_map` - maps (combines) 2 stratification
+*   `strat_map()` - maps (combines) 2 stratification
 
 ## `strat_kmeans` {#kmeans .unnumbered}
 
-We provide a preliminary example of the `strat_kmeans` algorithm to prepare our `sraster` input data but here are a few more.
+We provide a preliminary example of the `strat_kmeans()` algorithm to prepare our `sraster` input data but here are a few more.
 
 ```{r,warning=F,message=F}
 #--- perform stratification using k-means ---#
@@ -72,20 +72,14 @@ strat_kmeans(mraster = mraster, # input
 
 ```
 
-::: {.box-content .vig-content}
-::: {.box-title .vig-content-top}
-### Plot {.unnumbered}
-:::
 Notice that nothing plotted... That's because `plot = FALSE` is the default for all functions in `sgsR`. See examples below where `plot = TRUE`.
-:::
 
 ```{r,warning=F,message=F}
 strat_kmeans(mraster = mraster, # input
              nStrata = 10, # algorithm will produce 10 strata
              iter = 1000, # set minimum number of iterations to determine kmeans centers
              algorithm = "MacQueen", # use MacQueen algorithm
-             plot = TRUE, # plot output
-             details = TRUE) # output details - kmeans stratification data and output sraster
+             plot = TRUE) # plot output
 ```
 
 ```{r,warning=F,message=F}
@@ -101,7 +95,7 @@ strat_kmeans(mraster = mraster, # input
 
 ## `strat_pcomp` {.unnumbered}
 
-The `strat_pcomp` algorithm calculates principal components on the input `mraster` then divides data into equal sized strata. Strata can be defined by using the primary (PC1) only (`nStrata`), or primary & secondary (PC2 - `nStata2`) principal components. If `nStata2` is defined, PC2 is used and the total number of strata will be $$nStrata * nStrata2$$.
+The `strat_pcomp()` algorithm calculates principal components on the input `mraster` then divides data into equal sized strata. Strata can be defined by using the primary (PC1) only (`nStrata`), or primary & secondary (PC2 - `nStata2`) principal components. If `nStata2` is defined, PC2 is used and the total number of strata will be $$nStrata * nStrata2$$.
 
 ```{r,warning=F,message=F}
 #--- perform stratification using principal components ---#
@@ -126,7 +120,7 @@ strat_pcomp(mraster = mraster, # input
 
 ## `strat_breaks` {.unnumbered}
 
-The `strat_breaks` function stratifies data based on user-defined breaks in covariates. A single `metric` can be defined or an additional `metric2` can be supplied. `breaks` and `breaks2` correspond to the user-defined breaks for `metric` and `metric2` respectively.
+The `strat_breaks()` function stratifies data based on user-defined breaks in covariates. A single `metric` can be defined or an additional `metric2` can be supplied. `breaks` and `breaks2` correspond to the user-defined breaks for `metric` and `metric2` respectively.
 
 ```{r,warning=F,message=F}
 #--- perform stratification using user-defined breaks ---#
@@ -169,9 +163,7 @@ strat_breaks(mraster = mraster$zmax,
 
 ## `strat_osb` {.unnumbered}
 
-The `strat_osb` algorithm implements the optimum sample boundaries algorithm implmented in the `stratifyR` package. For further details about the algorithms used check out their package and also consult `?sgsR::strat_osb` for references.
-
-The basics of this algorithm are to provide the number of desired strata `nStrata` and samples `nSamp`. The algorithm then analyzes the data for the optimal locations to establish breaks in the covariate `metric`, which are used as stratum boundaries. 
+The `strat_osb()` algorithm implements the optimum sample boundaries algorithm implmented in the `stratifyR` package. The basics of this algorithm are to provide the number of desired strata `nStrata` and samples `nSamp`. The algorithm then analyzes the data for the optimal locations to establish breaks in the covariate `metric`, which are used as stratum boundaries. 
 
 This function can take a bit longer to run so please be patient! For the purpses of this example I have used a limited number of `nStrata` and `nSamp` to ensure they run and render quickly.
 
@@ -201,7 +193,7 @@ strat_osb(mraster = mraster$zmax, # input
 
 ## `strat_poly` {.unnumbered}
 
-The `strat_poly` algorithm stratifies based on spatial polygon attributes and features. A user may wish to stratify based on categorical or empirical variables that are not given by ALS data (e.g. species from forest inventory polygons). This method allows the user to define the attribute of interest as well as how features within attributes should be grouped for stratification.
+The `strat_poly()` algorithm stratifies based on spatial polygon attributes and features. A user may wish to stratify based on categorical or empirical variables that are not given by ALS data (e.g. species from forest inventory polygons). This method allows the user to define the attribute of interest as well as how features within attributes should be grouped for stratification.
 
 The user defines the input `poly` and associated `attribute`. A `raster` layer must be provided as a guide for spatial extent and resolution for the output stratification polygon. Based on a vector or list of `features`, stratification is applied, and the polygon is rasterized into appropriate strata.
 

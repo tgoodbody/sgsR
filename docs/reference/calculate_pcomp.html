@@ -63,8 +63,8 @@
     </div>
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">calculate_pcomp</span><span class="op">(</span>
-  mraster <span class="op">=</span> <span class="cn">NULL</span>,
-  nComp <span class="op">=</span> <span class="cn">NULL</span>,
+  <span class="va">mraster</span>,
+  <span class="va">nComp</span>,
   center <span class="op">=</span> <span class="cn">TRUE</span>,
   scale <span class="op">=</span> <span class="cn">TRUE</span>,
   plot <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -121,74 +121,21 @@ where <code>$details</code> is additional stratification information and
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#--- Load raster ---#</span></span>
-<span class="r-in"><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"wall_metrics.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">calculate_pcomp</span><span class="op">(</span></span>
-<span class="r-in">  mraster <span class="op">=</span> <span class="va">mr</span>,</span>
-<span class="r-in">  nComp <span class="op">=</span> <span class="fl">5</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> class       : SpatRaster </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dimensions  : 277, 373, 5  (nrow, ncol, nlyr)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> resolution  : 20, 20  (x, y)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> extent      : 431100, 438560, 5337700, 5343240  (xmin, xmax, ymin, ymax)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> coord. ref. : +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sources     : memory  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               memory  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               memory  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               ... and 2 more source(s)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> names       :        PC1,        PC2,        PC3,        PC4,        PC5 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> min values  :  -6.675657, -14.741405,  -1.735068,  -9.384677,  -1.272558 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> max values  :  13.828171,   4.197435,   4.022076,   1.821104,   2.243303 </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">calculate_pcomp</span><span class="op">(</span></span>
-<span class="r-in">  mraster <span class="op">=</span> <span class="va">mr</span>,</span>
-<span class="r-in">  nComp <span class="op">=</span> <span class="fl">3</span>,</span>
-<span class="r-in">  plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">  details <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-plt img"><img src="calculate_pcomp-1.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $pca</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Standard deviations (1, .., p=9):</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2.66328897 1.09805898 0.66339469 0.41858538 0.22109594 0.14478794</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [7] 0.09669328 0.07739106 0.02581106</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Rotation (n x k) = (9 x 9):</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                PC1         PC2         PC3         PC4         PC5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zmax     0.3718561  0.05890652  0.13655303  0.18644188 -0.02967021</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zmean    0.2892076  0.11179079 -0.94037185  0.11669464 -0.01101177</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zsd      0.2902484 -0.57132611  0.07358411 -0.03485495 -0.12710815</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> pzabove2 0.2762415  0.57389014  0.11046261 -0.48982874 -0.53278380</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zq20     0.3222793  0.42913513  0.17765055  0.04688184  0.69772164</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zq50     0.3621931  0.06711670  0.16260903  0.50497308 -0.03554264</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zq70     0.3669446 -0.07622676  0.13483825  0.33474905 -0.33679147</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zq90     0.3576125 -0.24286784  0.04467110 -0.28486752  0.00494469</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zq95     0.3463317 -0.27351876 -0.03548477 -0.50997312  0.31217248</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   PC6          PC7         PC8          PC9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zmax     -0.022902433  0.058181544  0.12813760 -0.885232514</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zmean     0.061423536  0.005559276 -0.04493042  0.001085691</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zsd       0.373461072 -0.062831197 -0.65029797 -0.015746780</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> pzabove2  0.007219003  0.005909104 -0.23569527  0.052045306</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zq20      0.371793616 -0.128585416 -0.12943905  0.141020587</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zq50     -0.525190662  0.398814446 -0.24627692  0.293390931</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zq70      0.136444231 -0.587797301  0.42249155  0.270652072</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zq90      0.287643242  0.607152727  0.49439800  0.184814994</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zq95     -0.583751620 -0.320739852  0.05279230  0.005601089</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $raster</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> class       : SpatRaster </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dimensions  : 277, 373, 3  (nrow, ncol, nlyr)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> resolution  : 20, 20  (x, y)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> extent      : 431100, 438560, 5337700, 5343240  (xmin, xmax, ymin, ymax)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> coord. ref. : +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sources     : memory  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               memory  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               memory  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> names       :        PC1,        PC2,        PC3 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> min values  :  -6.675657, -14.741405,  -1.735068 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> max values  :  13.828171,   4.197435,   4.022076 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="co">#--- Load raster ---#</span>
+<span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"wall_metrics.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span>
+<span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span>
+
+<span class="fu">calculate_pcomp</span><span class="op">(</span>
+  mraster <span class="op">=</span> <span class="va">mr</span>,
+  nComp <span class="op">=</span> <span class="fl">5</span>
+<span class="op">)</span>
+
+<span class="fu">calculate_pcomp</span><span class="op">(</span>
+  mraster <span class="op">=</span> <span class="va">mr</span>,
+  nComp <span class="op">=</span> <span class="fl">3</span>,
+  plot <span class="op">=</span> <span class="cn">TRUE</span>,
+  details <span class="op">=</span> <span class="cn">TRUE</span>
+<span class="op">)</span>
 </code></pre></div>
     </div>
   </div>

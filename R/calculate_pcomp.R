@@ -35,8 +35,8 @@
 #'
 #' @export
 
-calculate_pcomp <- function(mraster = NULL,
-                            nComp = NULL,
+calculate_pcomp <- function(mraster,
+                            nComp,
                             center = TRUE,
                             scale = TRUE,
                             plot = FALSE,
