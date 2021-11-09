@@ -175,7 +175,7 @@ sample_systematic <- function(raster,
       
       xy <- data.frame(X=X,Y=Y)
       
-      #--- test whether the sample will be within the bounds of the hexagon ---#
+      #--- test whether the sample will be within the bounds of the hexagon --X#
       xy$pass <- abs(xy$X) < 1 - .5*(abs(xy$Y)/.866)
       
       #--- filter only values with TRUE in $pass ---#
@@ -191,12 +191,12 @@ sample_systematic <- function(raster,
     
     samples <- sf::st_as_sf(sf::st_make_grid(sfObj, cellsize, square = square, what = location, crs = terra::crs(raster), ...)) %>%
       dplyr::rename(geometry = x) %>%
-      st_coordinates(.) %>%
+      sf::st_coordinates(.) %>%
       as.data.frame() %>%
       #--- apply random movement by row ---#
       dplyr::mutate(X = X + vals$X,
                     Y = Y + vals$Y) %>%
-      st_as_sf(.,coords = c("X", "Y")) %>%
+      sf::st_as_sf(.,coords = c("X", "Y")) %>%
       #--- need to extract a metric to determine if values are NA ---#
       extract_metrics(mraster = raster[[1]], existing = .) %>%
       #--- remove samples with NA ---#

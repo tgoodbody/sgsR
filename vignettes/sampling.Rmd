@@ -132,7 +132,7 @@ sample_systematic(raster = sraster, # input sraster
 
 The `sample_strat()` function contains a hierarchical sampling algorithm originally developed my Martin Queinnec.
 
-_Queinnec, M., White, J. C., & Coops, N. C. (2021). Comparing airborne and spaceborne photon-counting LiDAR canopy structural estimates across different boreal forest types. Remote Sensing of Environment, 262(August 2020), 112510. https://doi.org/10.1016/j.rse.2021.112510_
+_Queinnec, M., White, J. C., & Coops, N. C. (2021). Comparing airborne and spaceborne photon-counting LiDAR canopy structural estimates across different boreal forest types. Remote Sensing of Environment, 262(August 2020), 112510._
 
 The algorithm uses a moving window (`wrow` and `wcol` parameters) to filter the input `sraster` for locations where stratum pixels are spatially grouped rather than dispersed individually across the landscape.
 
