@@ -8,7 +8,7 @@ sample_systematic(
   raster,
   cellsize,
   square = TRUE,
-  centers = TRUE,
+  location = "centers",
   access = NULL,
   buff_inner = NULL,
   buff_outer = NULL,
@@ -27,8 +27,9 @@ sample_systematic(
 \item{square}{Logical. Tessellation shape. Default is regular square grid,
 if \code{FALSE} hexagons are returned.}
 
-\item{centers}{Logical. Sample location within tessellation. Default (\code{TRUE})
-returns samples at centers. If \code{FALSE}, corners are returned.}
+\item{location}{Character. Sample location within tessellation. Default (\code{"centers"})
+returns samples at tessellation centers, \code{"corners"} - corners are returned, \code{"random"} - samples
+are randomly located within tessellations.}
 
 \item{access}{sf. Road access network - must be lines.}
 
@@ -78,7 +79,7 @@ sample_systematic(
   raster = sr,
   cellsize = 1000,
   square = FALSE,
-  centers = FALSE,
+  location = "corners",
   plot = TRUE
 )
 
@@ -93,11 +94,8 @@ sample_systematic(
 sample_systematic(
   raster = sr,
   cellsize = 1000,
-  access = ac,
-  buff_inner = 100,
-  buff_outer = 400,
-  filename = tempfile(fileext = ".shp"),
-  plot = TRUE
+  square = FALSE,
+  location = "random"
 )
 }
 \seealso{
