@@ -180,7 +180,7 @@ sample_systematic <- function(raster,
       
       #--- filter only values with TRUE in $pass ---#
       vals <- xy %>% 
-               dplyr::filter(passX == TRUE) %>%
+               dplyr::filter(pass == TRUE) %>%
                dplyr::slice_sample(., n = nrow(grid)) %>%
                dplyr::mutate(X = X * radius,
                              Y = Y * radius)
@@ -204,7 +204,6 @@ sample_systematic <- function(raster,
       dplyr::select(geometry)
 
   } else {
-
 
   samples <- sf::st_as_sf(sf::st_make_grid(sfObj, cellsize, square = square, what = location, crs = terra::crs(raster), ...)) %>%
     dplyr::rename(geometry = x) %>%

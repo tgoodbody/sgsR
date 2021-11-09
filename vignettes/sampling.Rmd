@@ -100,7 +100,7 @@ sample_srs(raster = sraster, # input
 
 ## `sample_systematic` {#systematic .unnumbered}
 
-The `sample_systematic()` function applies systematic sampling across an area where the `cellsize` parameter defines resolution of the tessellation. Tesselation shape options are defined by the `square` parameter, which is a regular grid when `TRUE` (default) and hexagonal when `FALSE`. The location of samples can also be adjusted using the `centers` parameter, where `TRUE` takes the center of each tessellation, and `FALSE` takes all corners.
+The `sample_systematic()` function applies systematic sampling across an area where the `cellsize` parameter defines resolution of the tessellation. Tesselation shape options are defined by the `square` parameter, which is a regular grid when `TRUE` (default) and hexagonal when `FALSE`. The location of samples can also be adjusted using the `locations` parameter, where `centers` takes the center, `corners` takes all corners, and `random` takes a random location within each tessellation.
 
 ```{r,warning=F,message=F} 
 #--- perform grid sampling ---#
@@ -114,6 +114,7 @@ sample_systematic(raster = sraster, # input sraster
 sample_systematic(raster = sraster, # input sraster
                   cellsize = 500, # grid distance
                   square = FALSE, # hexagonal tessellation
+                  location = "random", # random sample within tessellation
                   plot = TRUE) # plot
 ```      
 
@@ -124,7 +125,7 @@ sample_systematic(raster = sraster, # input sraster
             buff_inner = 50, # inner buffer - no samples within this distance from road
             buff_outer = 200, # outer buffer - no samples further than this distance from road
             square = FALSE, # hexagonal tessellation
-            centers = FALSE, # take corners instead of centers
+            location = "corners", # take corners instead of centers
             plot = TRUE)
 ```
 ## `sample_strat` {#sstrat .unnumbered}
