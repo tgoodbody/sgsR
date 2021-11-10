@@ -1,13 +1,13 @@
 #' Balanced sampling
 #'
-#' @description Balanced raster sampling using \code{\link[BalancedSampling]{lpm2}} and
+#' @description Balanced raster sampling using \code{\link[BalancedSampling]{lcube}} and
 #' \code{\link[SamplingBigData]{lpm2_kdtree}} methods
 #'
 #' @family sample functions
 #'
 #' @inheritParams strat_kmeans
 #' @inheritParams sample_srs
-#' @param algorithm Character. One of \code{lpm2 lcube lcubestratified}
+#' @param algorithm Character. One of \code{lpm2_kdtree, lcube, lcubestratified}
 #' @param p Numeric. Vector with length equal to the number of cells in \code{mraster} representing
 #' the inclusion probability for each candidate sample. Default = \code{nSamp / N}, where \code{N}
 #' is the number of cells.
@@ -56,7 +56,7 @@
 
 sample_balanced <- function(mraster,
                             nSamp,
-                            algorithm = "lpm2",
+                            algorithm = "lpm2_kdtree",
                             p = NULL,
                             access = NULL,
                             buff_inner = NULL,
@@ -93,10 +93,10 @@ sample_balanced <- function(mraster,
   }
 
   #--- list all available algorithms to determine if a valid one has been supplied ---#
-  algs <- c("lpm2", "lcube", "lcubestratified")
+  algs <- c("lpm2_kdtree", "lcube", "lcubestratified")
 
   if (!algorithm %in% algs) {
-    stop("Unknown algorithm specified. Please use one of 'lpm2' 'lcube' 'lcubestratified'")
+    stop("Unknown algorithm specified. Please use one of 'lpm2_kdtree' 'lcube' 'lcubestratified'")
   }
 
   ######################################
@@ -158,12 +158,12 @@ sample_balanced <- function(mraster,
   }
 
 
-  if (algorithm == "lpm2") {
+  if (algorithm == "lpm2_kdtree") {
 
     #--- check for required packages ---#
 
     if (!requireNamespace("SamplingBigData", quietly = TRUE)) {
-      stop("Package \"SamplingBigData\" needed for the 'lpm2' algorithm. Please install it.",
+      stop("Package \"SamplingBigData\" needed for the 'lpm2_kdtree' algorithm. Please install it.",
         call. = FALSE
       )
     }
