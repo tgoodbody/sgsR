@@ -66,7 +66,7 @@
   <span class="va">raster</span>,
   <span class="va">cellsize</span>,
   square <span class="op">=</span> <span class="cn">TRUE</span>,
-  centers <span class="op">=</span> <span class="cn">TRUE</span>,
+  location <span class="op">=</span> <span class="st">"centers"</span>,
   access <span class="op">=</span> <span class="cn">NULL</span>,
   buff_inner <span class="op">=</span> <span class="cn">NULL</span>,
   buff_outer <span class="op">=</span> <span class="cn">NULL</span>,
@@ -87,9 +87,10 @@
 <dt>square</dt>
 <dd><p>Logical. Tessellation shape. Default is regular square grid,
 if <code>FALSE</code> hexagons are returned.</p></dd>
-<dt>centers</dt>
-<dd><p>Logical. Sample location within tessellation. Default (<code>TRUE</code>)
-returns samples at centers. If <code>FALSE</code>, corners are returned.</p></dd>
+<dt>location</dt>
+<dd><p>Character. Sample location within tessellation. Default (<code>"centers"</code>)
+returns samples at tessellation centers, <code>"corners"</code> - corners are returned, <code>"random"</code> - samples
+are randomly located within tessellations.</p></dd>
 <dt>access</dt>
 <dd><p>sf. Road access network - must be lines.</p></dd>
 <dt>buff_inner</dt>
@@ -153,7 +154,7 @@ is the tessellation grid for sampling, and <code>samples</code> are the systemat
   raster <span class="op">=</span> <span class="va">sr</span>,
   cellsize <span class="op">=</span> <span class="fl">1000</span>,
   square <span class="op">=</span> <span class="cn">FALSE</span>,
-  centers <span class="op">=</span> <span class="cn">FALSE</span>,
+  location <span class="op">=</span> <span class="st">"corners"</span>,
   plot <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span>
 
@@ -168,11 +169,8 @@ is the tessellation grid for sampling, and <code>samples</code> are the systemat
 <span class="fu">sample_systematic</span><span class="op">(</span>
   raster <span class="op">=</span> <span class="va">sr</span>,
   cellsize <span class="op">=</span> <span class="fl">1000</span>,
-  access <span class="op">=</span> <span class="va">ac</span>,
-  buff_inner <span class="op">=</span> <span class="fl">100</span>,
-  buff_outer <span class="op">=</span> <span class="fl">400</span>,
-  filename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".shp"</span><span class="op">)</span>,
-  plot <span class="op">=</span> <span class="cn">TRUE</span>
+  square <span class="op">=</span> <span class="cn">FALSE</span>,
+  location <span class="op">=</span> <span class="st">"random"</span>
 <span class="op">)</span>
 </code></pre></div>
     </div>
