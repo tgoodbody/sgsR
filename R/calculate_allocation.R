@@ -7,7 +7,8 @@
 #' @inheritParams sample_srs
 #' @inheritParams sample_strat
 #' @param allocation Character. Allocation algorithm to be used. Either \code{prop} (default) for proportional allocation
-#' or \code{optim} for optimal allocation or \code{equal} for equal number of samples (defined by \code{nSamp}) for each strata.
+#' or \code{optim} for optimal allocation (equal sampling cost) or \code{equal} for equal number of samples (defined by \code{nSamp})
+#'  for each strata.
 #' @param mraster spatRaster. ALS metric raster. Required when \code{allocation = optim}.
 #' @param force Logical. \code{Default = FALSE} - force \code{nSamp} to be exactly the user defined value
 #' in cases where nSamp and \code{sraster} strata count are not equally divisible. Has no effect when \code{existing}
@@ -20,19 +21,9 @@
 #' \item{need} - Total required samples per strata.
 #' }
 #'
-#' @section Details:
-#' \itemize{
-#' \item{nSamp = Desired sample count}
-#' \item{Nh = Count of cells within strata 'h'}
-#' \item{N = Total cound of cells}
-#' \item{\eqn{\sigma}h = Sample standard deviation}
-#' \item{nh = samples allocated with strata 'h'}
-#' }
-#'
-#' \eqn{nh = nSamp * Nh / N}
-#'
-#' \eqn{nh = nSamp  Nh * Nh * \sigma h / \sum Nk * \sigma k}
-#'
+#' @references
+#' Gregoire, T.G., & Valentine, H.T. (2007). Sampling Strategies for Natural Resources and the Environment (1st ed.).
+#'  Chapman and Hall/CRC. https://doi.org/10.1201/9780203498880
 #'
 #' @examples
 #' #--- Load strata raster and existing samples---#
@@ -197,11 +188,11 @@ calculate_allocation <- function(sraster,
         ) %>%
         dplyr::mutate(denom = sum(count * sd)) %>%
         dplyr::rowwise() %>%
-        #--- optimal allocation equation ---#
-        dplyr::mutate(total = round(((nSamp * count) * sd) / denom)) %>%
+        #--- optimal allocation (equal sampling cost) equation. See Gregoire & Valentine (2007) Section 5.4.4 ---#
+        dplyr::mutate(total = round(nSamp * ((count * sd) / denom))) %>%
         dplyr::select(strata, total)
     }
-    
+
     #--- calculate total samples allocated ---#
     
     tot <- sum(toSample$total)
