@@ -40,6 +40,37 @@ library(sgsR)
 
 * Overview of calculate algorithms - `vignette("calculating")`
 
+## Collaborators {.unnumbered}
+
+We are thankful for continued collaboration with academic, private industry, and government institutions to help improve `sgsR`. Special thanks to to:
+
+```{r,echo=FALSE, results = 'asis'}
+library(knitr)
+names <- c("Martin Queinnec", "Joanne C. White", "Piotr Tompalski", "Andrew T. Hudak", "Ruben Valbuena", "Antoine LeBoeuf", "Ian Sinclair", "Grant McCartney", "Jean-Francois Prieur", "Murray Woods")
+
+aff <- c("University of British Columbia", "Canadian Forest Service", "Canadian Forest Service", "United States Forest Service", " Bangor University", "Ministère des Forêts, de la Faune et des Parcs", "Ministry of Northern Development, Mines, Natural Resources and Forestry", "Forsite Consulting", "Laurentian Forestry Centre", "Ontario Ministry of Natural Resources")
+
+urls <- c("https://www.researchgate.net/profile/Martin-Queinnec",
+          "https://scholar.google.ca/citations?user=bqjk4skAAAAJ&hl=en",
+          "https://scholar.google.ca/citations?user=RtYdz0cAAAAJ&hl=en",
+          "https://scholar.google.ca/citations?hl=en&user=bdn7YVoAAAAJ",
+          "https://scholar.google.com/citations?user=Nx336TQAAAAJ&hl=en",
+          "https://scholar.google.com/citations?user=wGsKOK8AAAAJ&hl=en",
+          "http://www.infogo.gov.on.ca/infogo/home.html#empProfile/332620/en",
+          "https://www.signalhire.com/profiles/grant-mccartney%27s-email/99719223",
+          "https://scf.rncan.gc.ca/employees/read/jprieur",
+          "https://www.researchgate.net/profile/Murray-Woods")
+
+df <- data.frame(Collaborator = names, Affiliation = aff)
+
+
+df$Collaborator <- paste0("[", df$Collaborator, "](", urls, ")")
+
+kable(df)
+
+```
+
+
 ## Funding {.unnumbered}
 Development of sgsR was made possible thanks to the financial support of the Canadian Wood Fibre Centre.
 

@@ -19,7 +19,8 @@ calculate_allocation(
 \item{nSamp}{Numeric. Number of desired samples.}
 
 \item{allocation}{Character. Allocation algorithm to be used. Either \code{prop} (default) for proportional allocation
-or \code{optim} for optimal allocation or \code{equal} for equal number of samples (defined by \code{nSamp}) for each strata.}
+or \code{optim} for optimal allocation (equal sampling cost) or \code{equal} for equal number of samples (defined by \code{nSamp})
+ for each strata.}
 
 \item{mraster}{spatRaster. ALS metric raster. Required when \code{allocation = optim}.}
 
@@ -43,21 +44,6 @@ Determine required samples in strata
 \details{
 Determine how many samples to allocate within strata
 }
-\section{Details}{
-
-\itemize{
-\item{nSamp = Desired sample count}
-\item{Nh = Count of cells within strata 'h'}
-\item{N = Total cound of cells}
-\item{\eqn{\sigma}h = Sample standard deviation}
-\item{nh = samples allocated with strata 'h'}
-}
-
-\eqn{nh = nSamp * Nh / N}
-
-\eqn{nh = nSamp  Nh * Nh * \sigma h / \sum Nk * \sigma k}
-}
-
 \examples{
 #--- Load strata raster and existing samples---#
 r <- system.file("extdata", "kmeans.tif", package = "sgsR")
@@ -102,6 +88,10 @@ calculate_allocation(
   mraster = mr$zmax,
   force = TRUE
 )
+}
+\references{
+Gregoire, T.G., & Valentine, H.T. (2007). Sampling Strategies for Natural Resources and the Environment (1st ed.).
+ Chapman and Hall/CRC. https://doi.org/10.1201/9780203498880
 }
 \seealso{
 Other calculate functions: 

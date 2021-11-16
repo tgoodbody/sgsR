@@ -7,7 +7,7 @@
 sample_balanced(
   mraster,
   nSamp,
-  algorithm = "lpm2",
+  algorithm = "lpm2_kdtree",
   p = NULL,
   access = NULL,
   buff_inner = NULL,
@@ -22,7 +22,7 @@ sample_balanced(
 
 \item{nSamp}{Numeric. Number of desired samples.}
 
-\item{algorithm}{Character. One of \code{lpm2 lcube lcubestratified}}
+\item{algorithm}{Character. One of \code{lpm2_kdtree, lcube, lcubestratified}}
 
 \item{p}{Numeric. Vector with length equal to the number of cells in \code{mraster} representing
 the inclusion probability for each candidate sample. Default = \code{nSamp / N}, where \code{N}
@@ -47,7 +47,7 @@ strata with boundary dividers.}
 An sf object with \code{nSamp} randomly sampled points.
 }
 \description{
-Balanced raster sampling using \code{\link[BalancedSampling]{lpm2}} and
+Balanced raster sampling using \code{\link[BalancedSampling]{lcube}} and
 \code{\link[SamplingBigData]{lpm2_kdtree}} methods
 }
 \examples{
