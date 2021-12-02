@@ -206,7 +206,29 @@
                    increment <span class="op">=</span> <span class="fl">0.01</span>,
                    plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; 'rse' not perfectly divisible by 'incremenent. </span>
-<span class="co">#&gt; Selecting closest sample size (rse = 0.03) based on values.</span></code></pre></div>
+<span class="co">#&gt; Selecting closest sample size (rse = 0.03) based on values.</span>
+
+<span class="va">p</span>
+<span class="co">#&gt; $nSamp</span>
+<span class="co">#&gt; Registered S3 method overwritten by 'cli':</span>
+<span class="co">#&gt;   method     from         </span>
+<span class="co">#&gt;   print.boxx spatstat.geom</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 9 x 3</span></span>
+<span class="co">#&gt; <span style="color: #949494;"># Groups:   var [9]</span></span>
+<span class="co">#&gt;   nSamp   rse var     </span>
+<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span>   230  0.03 zmax    </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span>   151  0.03 zmean   </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">3</span>   211  0.03 zsd     </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">4</span>   474  0.03 pzabove2</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">5</span>   421  0.03 zq20    </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">6</span>   295  0.03 zq50    </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">7</span>   240  0.03 zq70    </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">8</span>   158  0.03 zq90    </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">9</span>   128  0.03 zq95    </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $plot</span></code></pre></div>
+<p><img src="calculating_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="calculate_allocation">
@@ -226,10 +248,10 @@
 <span class="fu"><a href="../reference/calculate_allocation.html">calculate_allocation</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, 
                      nSamp <span class="op">=</span> <span class="fl">200</span><span class="op">)</span>
 <span class="co">#&gt;   strata total</span>
-<span class="co">#&gt; 1      1    47</span>
-<span class="co">#&gt; 2      2    57</span>
-<span class="co">#&gt; 3      3    41</span>
-<span class="co">#&gt; 4      4    54</span></code></pre></div>
+<span class="co">#&gt; 1      1    57</span>
+<span class="co">#&gt; 2      2    48</span>
+<span class="co">#&gt; 3      3    55</span>
+<span class="co">#&gt; 4      4    40</span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- calculate existing samples to include ---#</span>
 <span class="va">e.sr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract.html">extract_strata</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, 
@@ -239,10 +261,10 @@
                      nSamp <span class="op">=</span> <span class="fl">200</span>, 
                      existing <span class="op">=</span> <span class="va">e.sr</span><span class="op">)</span>
 <span class="co">#&gt;   strata total need</span>
-<span class="co">#&gt; 1      1     1   47</span>
-<span class="co">#&gt; 2      2   -12   57</span>
-<span class="co">#&gt; 3      3     8   41</span>
-<span class="co">#&gt; 4      4     2   54</span></code></pre></div>
+<span class="co">#&gt; 1      1     4   57</span>
+<span class="co">#&gt; 2      2    -8   48</span>
+<span class="co">#&gt; 3      3   -10   55</span>
+<span class="co">#&gt; 4      4    14   40</span></code></pre></div>
 <p>Notice that some of the results in <code>total</code> above are negative. This indicates that the <code>existing</code> samples over represent those strata and that some samples should be removed to avoid over representation. The number that should be added/removed is details in <code>$total</code>.</p>
 </div>
 <div class="section level3 unnumbered">
@@ -257,10 +279,10 @@
                      mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zmax</span>, <span class="co"># metric raster</span>
                      force <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># force nSamp number</span>
 <span class="co">#&gt;   strata total need</span>
-<span class="co">#&gt; 1      1     2   48</span>
-<span class="co">#&gt; 2      2   -18   51</span>
-<span class="co">#&gt; 3      3    18   51</span>
-<span class="co">#&gt; 4      4    -2   50</span></code></pre></div>
+<span class="co">#&gt; 1      1    -3   50</span>
+<span class="co">#&gt; 2      2    -6   50</span>
+<span class="co">#&gt; 3      3   -14   51</span>
+<span class="co">#&gt; 4      4    23   49</span></code></pre></div>
 </div>
 <div class="section level3 unnumbered">
 <h3 class="unnumbered" id="equal">Equal allocation<a class="anchor" aria-label="anchor" href="#equal"></a>
@@ -270,9 +292,6 @@
 <code class="sourceCode R"><span class="fu"><a href="../reference/calculate_allocation.html">calculate_allocation</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># stratified raster</span>
                      nSamp <span class="op">=</span> <span class="fl">20</span>, <span class="co"># desired sample number</span>
                      allocation <span class="op">=</span> <span class="st">"equal"</span><span class="op">)</span> <span class="co"># optimal allocation</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'cli':</span>
-<span class="co">#&gt;   method     from         </span>
-<span class="co">#&gt;   print.boxx spatstat.geom</span>
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 x 2</span></span>
 <span class="co">#&gt;   strata total</span>
 <span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
