@@ -50,6 +50,8 @@ A total of 7 `calculate` functions currently exist in the package:
 
 *   `calculate_pcomp()`- principal components on input `mraster`
 
+*   `calculate_sampsize()` - Determine appropriate sample sizes based on relative standard error thresholds
+
 *   `calculate_allocation()` - sample allocation algorithm - proportional / optimal / equal sampling
 
 *   `calculate_ahels()` - Adapted hypercube evaluation of a legacy sample (ahels) algorithm
@@ -58,7 +60,7 @@ A total of 7 `calculate` functions currently exist in the package:
 
 *   `calculate_lhsPop()` - Population covariate statistics for latin hypercube sampling
 
-*   `calculate_lhsOpt()` -Optimal latin hypercube sampling paramters including sample number
+*   `calculate_lhsOpt()` - Optimal latin hypercube sampling paramters including sample number
 
 `calculate_*` functions serve as helper functions. In this section we outline how these functions can be used.
 
@@ -82,6 +84,28 @@ calculate_pcomp(mraster = mraster, # input
                 plot = TRUE, # plot
                 details = TRUE) # details about the principal component analysis appended
 
+```
+
+## `calculate_sampsize` {.unnumbered}
+
+The `calculate_sampsize()` function allows users to determine what an appropriate sample size would be using the relative standard error of input metric. If an `mraster` with multiple layers is provided, sample sizes will be determined for all layers. If `plot = TRUE` and `rse` is defined, a sequence of rse values will be visualized with indicators and a value for the matching sample size.
+
+```{r, warning = F}
+#--- determine sample size based on relative standard error (rse) of 1% ---#
+calculate_sampsize(mraster = mraster,
+                   rse = 0.01)
+
+#--- visualize sample sizes without defining an rse ---#                
+calculate_sampsize(mraster = mraster,
+                   plot = TRUE)
+
+#--- change default threshold sequence values ---#              
+calculate_sampsize(mraster = mraster,
+                   rse = 0.025,
+                   start = 0.01,
+                   end = 0.08,
+                   increment = 0.01,
+                   plot = TRUE)
 ```
 
 ## `calculate_allocation` {.unnumbered}

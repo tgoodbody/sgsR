@@ -58,7 +58,7 @@ from access where plots can be sampled.}
 
 \item{wcol}{Numeric. Number of columns in the focal window (default is 3).}
 
-\item{plot}{Logial. Plots existing (circles) and new (crosses) samples.}
+\item{plot}{Logical. Plots existing (circles) and new (crosses) samples.}
 
 \item{details}{Logical. If \code{FALSE} (default) output is sf object of
 stratified samples. If \code{TRUE} return a list
