@@ -16,7 +16,7 @@
 #'
 #' @examples
 #' 
-#' #' #--- Load raster ---#
+#' #--- Load raster ---#
 #' r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 #' mr <- terra::rast(r)
 #' 
@@ -172,19 +172,20 @@ calculate_sampsize <- function(mraster,
     
     if(rse %% increment != 0){
       
-    lines <- sampsize %>%
-      dplyr::filter(rse_var == rse)
-    
-    } else if(nrow(lines) == 0) {
-      
       lines <- sampsize %>%
         group_by(var) %>%
         dplyr::mutate(rse_var_dif = abs(rse-rse_var)) %>%
         dplyr::filter(rse_var_dif == min(rse_var_dif)) %>%
         dplyr::select(-rse_var_dif)
       
-      message(glue::glue("'rse' & 'increment' are not perfectly divisible - consider adjusting values.\n Selecting closest sample size (rse = {unique(lines$rse_var)}) based on values."))
+      message(glue::glue("'rse' not perfectly divisible by 'incremenent. \n Selecting closest sample size (rse = {unique(lines$rse_var)}) based on values."))
+
+    
+    } else {
       
+      lines <- sampsize %>%
+        dplyr::filter(rse_var == rse)
+
     }
     
     #--- plot ---#
@@ -199,12 +200,12 @@ calculate_sampsize <- function(mraster,
         ggplot2::geom_text(data = lines, mapping = aes(label = glue::glue('nSamp = {nSamp}'), x = Inf, y = Inf, vjust = 2, hjust = 1.2), colour = "red")+
         ggplot2::xlim(min(sampsize$rse_var),max(sampsize$rse_var))+
         ggplot2::facet_wrap(.~var, scales = "free")+
-        ggplot2::ggtitle(glue::glue("Samples size with rse = {rse}"))+
+        ggplot2::ggtitle(glue::glue("Samples size with rse = {unique(lines$rse_var)}"))+
         ggplot2::xlab("Required relative standard error")+
         ggplot2::ylab("Sample size") +
         ggplot2::theme_bw()
       
-      print(p)
+      suppressMessages(print(p))
       
     }
     
@@ -212,8 +213,18 @@ calculate_sampsize <- function(mraster,
     
   }
   
-  return(list(nSamp = lines, 
-              plot = if (!missing(plot)) p))
+  if(exists("p")){
+    
+    out <- list(nSamp = lines,
+                plot = p)
+  
+  } else {
+    
+    out <- lines
+    
+  }
+  
+  return(out)
   
 }
 

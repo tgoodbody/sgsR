@@ -46,7 +46,7 @@ Where:
 }
 \examples{
 
-#' #--- Load raster ---#
+#--- Load raster ---#
 r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 mr <- terra::rast(r)
 

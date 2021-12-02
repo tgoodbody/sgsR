@@ -99,7 +99,11 @@ calculate_sampsize(mraster = mraster,
 calculate_sampsize(mraster = mraster,
                    plot = TRUE)
 
-#--- change default threshold sequence values ---#              
+```
+
+```{r, warning = FALSE}
+#--- change default threshold sequence values ---# 
+#--- if increment and rse are not divisible the closes value will be taken ---#
 calculate_sampsize(mraster = mraster,
                    rse = 0.025,
                    start = 0.01,
