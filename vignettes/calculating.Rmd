@@ -104,7 +104,8 @@ p <- calculate_sampsize(mraster = mraster,
                    rse = 0.025,
                    start = 0.01,
                    end = 0.08,
-                   increment = 0.01)
+                   increment = 0.01,
+                   plot = TRUE)
 ```
 
 ## `calculate_allocation` {.unnumbered}
