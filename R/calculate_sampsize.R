@@ -133,7 +133,6 @@ calculate_sampsize <- function(mraster,
         ggplot2::ylab("Sample size") +
         ggplot2::theme_bw()
       
-      print(p)
     }
     
     names(sampsize) <- c("nSamp","rse","var")
@@ -204,8 +203,6 @@ calculate_sampsize <- function(mraster,
         ggplot2::xlab("Required relative standard error")+
         ggplot2::ylab("Sample size") +
         ggplot2::theme_bw()
-      
-      suppressMessages(print(p))
       
     }
     

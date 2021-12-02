@@ -95,21 +95,16 @@ The `calculate_sampsize()` function allows users to determine what an appropriat
 calculate_sampsize(mraster = mraster,
                    rse = 0.01)
 
-#--- visualize sample sizes without defining an rse ---#                
-calculate_sampsize(mraster = mraster,
-                   plot = TRUE)
-
 ```
 
 ```{r, warning = FALSE}
 #--- change default threshold sequence values ---# 
 #--- if increment and rse are not divisible the closes value will be taken ---#
-calculate_sampsize(mraster = mraster,
+p <- calculate_sampsize(mraster = mraster,
                    rse = 0.025,
                    start = 0.01,
                    end = 0.08,
-                   increment = 0.01,
-                   plot = TRUE)
+                   increment = 0.01)
 ```
 
 ## `calculate_allocation` {.unnumbered}
