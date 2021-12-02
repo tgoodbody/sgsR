@@ -124,7 +124,7 @@ calculate_sampsize <- function(mraster,
 
     if(isTRUE(plot)){
       
-      p <- ggplot2::ggplot(sampsize, aes(x = rse_var, y = nSamp)) +
+      p <- ggplot2::ggplot(sampsize, ggplot2::aes(x = rse_var, y = nSamp)) +
         ggplot2::geom_point(colour = "#333333") +
         ggplot2::geom_line() +
         ggplot2::facet_wrap(.~var, scales = "free")+
@@ -192,12 +192,12 @@ calculate_sampsize <- function(mraster,
     
     if(isTRUE(plot)){
       
-      p <- ggplot2::ggplot(sampsize, aes(x = rse_var, y = nSamp)) +
+      p <- ggplot2::ggplot(sampsize, ggplot2::aes(x = rse_var, y = nSamp)) +
         ggplot2::geom_point(colour = "#333333") +
         ggplot2::geom_line() +
-        ggplot2::geom_segment(data = lines, aes(x = -Inf, xend = rse_var, y = nSamp, yend = nSamp), linetype = "dashed", colour = "red")+
-        ggplot2::geom_segment(data = lines, aes(x = rse_var, xend = rse_var, y = -Inf, yend = nSamp), linetype = "dashed", colour = "red")+
-        ggplot2::geom_text(data = lines, mapping = aes(label = glue::glue('nSamp = {nSamp}'), x = Inf, y = Inf, vjust = 2, hjust = 1.2), colour = "red")+
+        ggplot2::geom_segment(data = lines, ggplot2::aes(x = -Inf, xend = rse_var, y = nSamp, yend = nSamp), linetype = "dashed", colour = "red")+
+        ggplot2::geom_segment(data = lines, ggplot2::aes(x = rse_var, xend = rse_var, y = -Inf, yend = nSamp), linetype = "dashed", colour = "red")+
+        ggplot2::geom_text(data = lines, mapping = ggplot2::aes(label = glue::glue('nSamp = {nSamp}'), x = Inf, y = Inf, vjust = 2, hjust = 1.2), colour = "red")+
         ggplot2::xlim(min(sampsize$rse_var),max(sampsize$rse_var))+
         ggplot2::facet_wrap(.~var, scales = "free")+
         ggplot2::ggtitle(glue::glue("Samples size with rse = {unique(lines$rse_var)}"))+
