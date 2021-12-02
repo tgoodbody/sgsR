@@ -173,7 +173,7 @@ calculate_sampsize <- function(mraster,
     if(rse %% increment != 0){
       
       lines <- sampsize %>%
-        group_by(var) %>%
+        dplyr::group_by(var) %>%
         dplyr::mutate(rse_var_dif = abs(rse-rse_var)) %>%
         dplyr::filter(rse_var_dif == min(rse_var_dif)) %>%
         dplyr::select(-rse_var_dif)
