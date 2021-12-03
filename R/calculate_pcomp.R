@@ -22,15 +22,22 @@
 #'
 #' calculate_pcomp(
 #'   mraster = mr,
-#'   nComp = 5
+#'   nComp = 5,
+#'   plot = TRUE
 #' )
 #'
-#' calculate_pcomp(
-#'   mraster = mr,
-#'   nComp = 3,
-#'   plot = TRUE,
-#'   details = TRUE
-#' )
+#' pcomp <- calculate_pcomp(
+#'            mraster = mr,
+#'            nComp = 3,
+#'            details = TRUE
+#'          )
+#'
+#' #--- Display principal component details ---#
+#' pcomp$pca
+#' 
+#' #--- Display importance of components ---#
+#' summary(pcomp$pca)
+#' 
 #' @author Tristan R.H. Goodbody
 #'
 #' @export
