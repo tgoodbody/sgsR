@@ -26,7 +26,7 @@ You can install the released version of sgsR from [Github](https://github.com/tg
 
 ``` r
 install.packages("devtools")
-devtools::install_github("https://github.com/tgoodbody/sgsR", build_vignettes = TRUE)
+devtools::install_github("https://github.com/tgoodbody/sgsR")
 library(sgsR)
 ```
 
@@ -72,5 +72,5 @@ kable(df)
 
 
 ## Funding {.unnumbered}
-Development of sgsR was made possible thanks to the financial support of the Canadian Wood Fibre Centre.
+Development of sgsR was made possible thanks to the financial support of the [Canadian Wood Fibre Centre's Forest Innovation Program](https://www.nrcan.gc.ca/science-and-data/funding-partnerships/funding-opportunities/forest-sector-funding-programs/forest-innovation-program/13137).
 
