@@ -403,7 +403,7 @@ sample_strat <- function(sraster,
       #--- create indices for all, NA, and valid sampling candidates ---#
       
       idx_all <- 1:terra::ncell(strata_m_clust)
-      idx_na <- is.na(terra::values(strata_m_clust))
+      idx_na <- !complete.cases(terra::values(strata_m_clust))
       validCandidates <- idx_all[!idx_na]
       
       #--- Rule 1 sampling ---#
@@ -468,7 +468,7 @@ sample_strat <- function(sraster,
       
       if (nCount < n) {
         idx_all <- 1:terra::ncell(strata_m)
-        idx_na <- is.na(terra::values(strata_m))
+        idx_na <- !complete.cases(terra::values(strata_m))
         validCandidates <- idx_all[!idx_na]
         
         while (length(validCandidates) > 0 & nCount < n) {
