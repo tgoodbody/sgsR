@@ -110,7 +110,7 @@ strat_kmeans <- function(mraster,
 
   #--- Determine index of each cell so to map values correctly without NA ---#
 
-  idx <- which(!is.na(vals[,1]))
+  idx <- which(complete.cases(vals))
   
   valsOut <- vals
   
