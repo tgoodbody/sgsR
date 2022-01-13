@@ -402,9 +402,13 @@ sample_strat <- function(sraster,
 
       #--- create indices for all, NA, and valid sampling candidates ---#
       
-      idx_all <- 1:terra::ncell(strata_m_clust)
-      idx_na <- !complete.cases(terra::values(strata_m_clust))
-      validCandidates <- idx_all[!idx_na]
+      idx_all <- values(strata_m_clust, dataframe = TRUE)
+      idx_all$rn <- as.numeric(row.names(idx_all))
+      validCandidates <- idx_all[complete.cases(idx_all),]
+      
+      # idx_all <- 1:terra::ncell(strata_m_clust)
+      # idx_na <- is.na(terra::values(strata_m_clust))
+      # validCandidates <- idx_all[!idx_na]
       
       #--- Rule 1 sampling ---#
       nCount <- 0 # Number of sampled cells
@@ -412,20 +416,20 @@ sample_strat <- function(sraster,
       # While loop for RULE 1
       while (length(validCandidates) > 0 & nCount < n) {
         #-- identify potential sample from candidates ---#
-        smp <- sample(1:length(validCandidates), size = 1)
+        smp <- sample(validCandidates$rn, size = 1)
         
-        smp_cell <- validCandidates[smp]
+        smp_cell <- validCandidates %>% dplyr::filter(rn == smp)
         
         #--- Remove sampled cell from validCandidates so that it cannot be sampled again later ---#
-        validCandidates <- validCandidates[-smp]
+        validCandidates <- validCandidates %>% dplyr::filter(rn != smp)
         
         #--- extract coordinates and sample details ---#
         
         add_temp <- data.frame(
-          cell = smp_cell,
-          X = terra::xFromCell(strata_m_clust, smp_cell),
-          Y = terra::yFromCell(strata_m_clust, smp_cell),
-          strata = strata_m_clust[smp_cell]
+          cell = smp_cell$rn,
+          X = terra::xFromCell(strata_m_clust, smp_cell$rn),
+          Y = terra::yFromCell(strata_m_clust, smp_cell$rn),
+          strata = smp_cell$strata
         )
         
         #--- populate add_temp with values ---#
@@ -467,20 +471,19 @@ sample_strat <- function(sraster,
       #---- RULE 2 sampling ---#
       
       if (nCount < n) {
-        idx_all <- 1:terra::ncell(strata_m)
-        idx_na <- !complete.cases(terra::values(strata_m))
-        validCandidates <- idx_all[!idx_na]
+        idx_all <- values(strata_m, dataframe = TRUE)
+        idx_all$rn <- as.numeric(row.names(idx_all))
+        validCandidates <- idx_all[complete.cases(idx_all),]
         
         while (length(validCandidates) > 0 & nCount < n) {
           
           #-- identify potential sample from candidates ---#
-          smp <- sample(1:length(validCandidates), size = 1)
+          smp <- sample(validCandidates$rn, size = 1)
           
-          smp_cell <- validCandidates[smp]
+          smp_cell <- validCandidates %>% dplyr::filter(rn == smp)
           
           #--- Remove sampled cell from validCandidates so that it cannot be sampled again later ---#
-          
-          validCandidates <- validCandidates[-smp]
+          validCandidates <- validCandidates %>% dplyr::filter(rn != smp)
           
           #--- extract coordinates and sample details ---#
           
@@ -567,7 +570,6 @@ sample_strat <- function(sraster,
 
   #--- assign sraster crs to spatial points object ---#
   sf::st_crs(samples) <- crs
-
 
   #--- plot the raster and samples if desired ---#
 
