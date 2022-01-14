@@ -561,7 +561,7 @@ sample_strat <- function(sraster,
 
   #--- convert coordinates to a spatial points object ---#
   samples <- out %>%
-    # dplyr::select(-cell) %>%
+    dplyr::select(-cell) %>%
     as.data.frame() %>%
     sf::st_as_sf(., coords = c("X", "Y"))
 
