@@ -383,8 +383,7 @@ sample_strat <- function(sraster,
         terra::focal(
           strata_m,
           w = w,
-          na.rm = FALSE,
-          na.only = FALSE
+          na.rm = FALSE
         ))
       names(strata_m_clust) <- "strata"
 
