@@ -253,7 +253,7 @@ sample_clhs <- function(mraster,
 
       existingSamples <- existing
     } else {
-      existingSamples <- extract_metrics(mraster, existing, data.frame = TRUE)
+      existingSamples <- existing
     }
 
     #--- create dataset with labels for plotting ---#
