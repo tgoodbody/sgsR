@@ -248,10 +248,10 @@
 <span class="fu"><a href="../reference/calculate_allocation.html">calculate_allocation</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, 
                      nSamp <span class="op">=</span> <span class="fl">200</span><span class="op">)</span>
 <span class="co">#&gt;   strata total</span>
-<span class="co">#&gt; 1      1    41</span>
-<span class="co">#&gt; 2      2    54</span>
-<span class="co">#&gt; 3      3    57</span>
-<span class="co">#&gt; 4      4    47</span></code></pre></div>
+<span class="co">#&gt; 1      1    57</span>
+<span class="co">#&gt; 2      2    48</span>
+<span class="co">#&gt; 3      3    40</span>
+<span class="co">#&gt; 4      4    55</span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- calculate existing samples to include ---#</span>
 <span class="va">e.sr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract.html">extract_strata</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, 
@@ -261,10 +261,10 @@
                      nSamp <span class="op">=</span> <span class="fl">200</span>, 
                      existing <span class="op">=</span> <span class="va">e.sr</span><span class="op">)</span>
 <span class="co">#&gt;   strata total need</span>
-<span class="co">#&gt; 1      1     4   41</span>
-<span class="co">#&gt; 2      2    -3   54</span>
-<span class="co">#&gt; 3      3    -2   57</span>
-<span class="co">#&gt; 4      4     0   47</span></code></pre></div>
+<span class="co">#&gt; 1      1    13   57</span>
+<span class="co">#&gt; 2      2    -1   48</span>
+<span class="co">#&gt; 3      3    -8   40</span>
+<span class="co">#&gt; 4      4    -4   55</span></code></pre></div>
 <p>Notice that some of the results in <code>total</code> above are negative. This indicates that the <code>existing</code> samples over represent those strata and that some samples should be removed to avoid over representation. The number that should be added/removed is details in <code>$total</code>.</p>
 </div>
 <div class="section level3 unnumbered">
@@ -279,10 +279,10 @@
                      mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zmax</span>, <span class="co"># metric raster</span>
                      force <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># force nSamp number</span>
 <span class="co">#&gt;   strata total need</span>
-<span class="co">#&gt; 1      1    14   51</span>
-<span class="co">#&gt; 2      2    -7   50</span>
-<span class="co">#&gt; 3      3    -8   51</span>
-<span class="co">#&gt; 4      4     1   48</span></code></pre></div>
+<span class="co">#&gt; 1      1     6   50</span>
+<span class="co">#&gt; 2      2     1   50</span>
+<span class="co">#&gt; 3      3     1   49</span>
+<span class="co">#&gt; 4      4    -8   51</span></code></pre></div>
 </div>
 <div class="section level3 unnumbered">
 <h3 class="unnumbered" id="equal">Equal allocation<a class="anchor" aria-label="anchor" href="#equal"></a>

@@ -140,7 +140,7 @@ is the tessellation grid for sampling, and <code>samples</code> are the systemat
 <span class="r-in"><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"roads.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">ac</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `roads' from data source </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\tgood.stu\Documents\R\win-library\4.1\sgsR\extdata\roads.shp' </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\tgood.stu\AppData\Local\Temp\RtmpwjzfyE\temp_libpath29801e1871d0\sgsR\extdata\roads.shp' </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   using driver `ESRI Shapefile'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 167 features and 2 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: MULTILINESTRING</span>
@@ -151,7 +151,7 @@ is the tessellation grid for sampling, and <code>samples</code> are the systemat
 <span class="r-in"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"existing.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `existing' from data source </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\tgood.stu\Documents\R\win-library\4.1\sgsR\extdata\existing.shp' </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\tgood.stu\AppData\Local\Temp\RtmpwjzfyE\temp_libpath29801e1871d0\sgsR\extdata\existing.shp' </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   using driver `ESRI Shapefile'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 100 features and 1 field</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
@@ -242,23 +242,23 @@ is the tessellation grid for sampling, and <code>samples</code> are the systemat
 <span class="r-in">  square <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span class="r-in">  location <span class="op">=</span> <span class="st">"random"</span></span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 42 features and 0 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 37 features and 0 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431157.6 ymin: 5337831 xmax: 438308.3 ymax: 5343019</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431149.6 ymin: 5337881 xmax: 438515.8 ymax: 5343102</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (431157.6 5339264)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (431376.3 5338408)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (431204.4 5340291)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  POINT (431333.7 5341715)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (432300.6 5339807)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POINT (432395.9 5341058)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POINT (432203.4 5342999)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (432640.8 5338759)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (432353.4 5340302)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (432954.3 5341837)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (431149.6 5339502)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (431474.3 5338419)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (431981.6 5340234)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  POINT (431780.2 5342423)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (431683.6 5342970)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POINT (432642.7 5338500)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POINT (432731.9 5340231)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8    POINT (432393 5342066)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (432966.9 5339048)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (433299.2 5341302)</span>
 </code></pre></div>
     </div>
   </div>
