@@ -255,7 +255,7 @@ sample_clhs <- function(mraster,
 
     existingSamples <- existingSamples %>%
       dplyr::mutate(type = "existing") %>%
-      dplyr::select(namesvals)
+      dplyr::select(all_of(namesvals))
 
     #--- create conjoined existing dataset ---#
 
