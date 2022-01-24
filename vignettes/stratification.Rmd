@@ -161,36 +161,6 @@ strat_breaks(mraster = mraster$zmax,
              plot = TRUE)
 ```   
 
-## `strat_osb` {.unnumbered}
-
-The `strat_osb()` algorithm implements the optimum sample boundaries algorithm implmented in the `stratifyR` package. The basics of this algorithm are to provide the number of desired strata `nStrata` and samples `nSamp`. The algorithm then analyzes the data for the optimal locations to establish breaks in the covariate `metric`, which are used as stratum boundaries. 
-
-This function can take a bit longer to run so please be patient! For the purpses of this example I have used a limited number of `nStrata` and `nSamp` to ensure they run and render quickly.
-
-```{r,warning=F,message=F, eval = FALSE} 
-#--- perform optimum sample boundary stratification ---#
-strat_osb(mraster = mraster$zsd, # input
-	        nSamp = 50, # number of desired samples
-	        nStrata = 3, # number of desired strata
-	        plot = TRUE) # plot
-```
-
-```{r,warning=F,message=F, eval = FALSE} 
-strat_osb(mraster = mraster$zmax, # input
-	        nSamp = 25, # number of desired samples
-	        nStrata = 3, # number of desired strata
-	        plot = TRUE, # plot
-	        details = TRUE) # produce output details
-```
-
-```{r,warning=F,message=F, eval = FALSE} 
-strat_osb(mraster = mraster$zmax, # input
-	        nSamp = 50, # number of desired samples
-	        nStrata = 3, # number of desired strata
-	        subset = 0.75, # used a subset of covariate data to determine optimum breaks
-	        filename = tempfile(fileext = ".tif")) # write output sraster to file
-```
-
 ## `strat_poly` {.unnumbered}
 
 The `strat_poly()` algorithm stratifies based on spatial polygon attributes and features. A user may wish to stratify based on categorical or empirical variables that are not given by ALS data (e.g. species from forest inventory polygons). This method allows the user to define the attribute of interest as well as how features within attributes should be grouped for stratification.
