@@ -75,8 +75,10 @@ sample_srs <- function(raster,
     stop("'nSamp' must be type numeric")
   }
 
-  if (!is.numeric(mindist)) {
-    stop("'mindist' must be type numeric")
+  if(!is.null(mindist)){
+    if (!is.numeric(mindist)) {
+      stop("'mindist' must be type numeric")
+    }
   }
 
   if (!is.logical(plot)) {
