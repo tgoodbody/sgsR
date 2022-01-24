@@ -228,32 +228,27 @@ sample_clhs <- function(mraster,
       stop("nSamp must be > than number of existing samples")
     }
 
-    #--- combined existing samples with vals dataframe ---#
+    #--- combine existing samples with vals dataframe ---#
 
     if (!inherits(existing, "sf")) {
       if (any(!c("X", "Y") %in% colnames(existing))) {
-
         #--- if coordinate column names are lowercase change them to uppercase to match requirements ---#
-
         if (any(c("x", "y") %in% colnames(existing))) {
           existing <- existing %>%
             dplyr::rename(
               X = x,
               Y = y
             )
-
           message("Column coordinates names for 'existing' are lowercase - converting to uppercase")
         } else {
-
           #--- if no x/y columns are present stop ---#
-
           stop("'existing' must have columns named 'X' and 'Y'")
         }
       }
-
+      
       existingSamples <- existing
     } else {
-      existingSamples <- existing
+      existingSamples <- extract_metrics(mraster, existing, data.frame = TRUE)
     }
 
     #--- create dataset with labels for plotting ---#
@@ -357,4 +352,15 @@ sample_clhs <- function(mraster,
 
     return(samples)
   }
+}
+
+# https://github.com/r-spatial/sf/issues/231#issuecomment-290817623
+sfc_as_cols <- function(x, names = c("X","Y")) {
+  stopifnot(inherits(x,"sf") && inherits(sf::st_geometry(x),"sfc_POINT"))
+  ret <- sf::st_coordinates(x)
+  ret <- tibble::as_tibble(ret)
+  stopifnot(length(names) == ncol(ret))
+  x <- x[ , !names(x) %in% names]
+  ret <- setNames(ret,names)
+  dplyr::bind_cols(x,ret)
 }
