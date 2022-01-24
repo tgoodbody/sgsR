@@ -123,49 +123,108 @@ is provided.</p></dd>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="co">#--- Load strata raster and existing samples---#</span>
-<span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"kmeans.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span>
-<span class="va">sr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span>
-
-<span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"existing.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span>
-<span class="va">e</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span>
-
-<span class="co">#--- perform grid sampling ---#</span>
-<span class="fu">calculate_allocation</span><span class="op">(</span>
-  sraster <span class="op">=</span> <span class="va">sr</span>,
-  nSamp <span class="op">=</span> <span class="fl">200</span>
-<span class="op">)</span>
-
-<span class="fu">calculate_allocation</span><span class="op">(</span>
-  sraster <span class="op">=</span> <span class="va">sr</span>,
-  nSamp <span class="op">=</span> <span class="fl">200</span>,
-  force <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span>
-
-<span class="co">#--- extract strata from existing samples ---#</span>
-<span class="va">e.sr</span> <span class="op">&lt;-</span> <span class="fu"><a href="extract.html">extract_strata</a></span><span class="op">(</span>
-  sraster <span class="op">=</span> <span class="va">sr</span>,
-  existing <span class="op">=</span> <span class="va">e</span>
-<span class="op">)</span>
-
-<span class="fu">calculate_allocation</span><span class="op">(</span>
-  sraster <span class="op">=</span> <span class="va">sr</span>,
-  nSamp <span class="op">=</span> <span class="fl">200</span>,
-  existing <span class="op">=</span> <span class="va">e.sr</span>
-<span class="op">)</span>
-
-<span class="co">#--- Load mraster for optimal allocation ---#</span>
-<span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"wall_metrics.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span>
-<span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">mr</span><span class="op">)</span>
-
-<span class="fu">calculate_allocation</span><span class="op">(</span>
-  sraster <span class="op">=</span> <span class="va">sr</span>,
-  nSamp <span class="op">=</span> <span class="fl">200</span>,
-  existing <span class="op">=</span> <span class="va">e.sr</span>,
-  allocation <span class="op">=</span> <span class="st">"optim"</span>,
-  mraster <span class="op">=</span> <span class="va">mr</span><span class="op">$</span><span class="va">zmax</span>,
-  force <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#--- Load strata raster and existing samples---#</span></span>
+<span class="r-in"><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"kmeans.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">sr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"existing.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `existing' from data source </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\tgood.stu\Documents\R\win-library\4.1\sgsR\extdata\existing.shp' </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   using driver `ESRI Shapefile'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 100 features and 1 field</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431110 ymin: 5337750 xmax: 438550 ymax: 5343230</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           unknown</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">#--- perform grid sampling ---#</span></span>
+<span class="r-in"><span class="fu">calculate_allocation</span><span class="op">(</span></span>
+<span class="r-in">  sraster <span class="op">=</span> <span class="va">sr</span>,</span>
+<span class="r-in">  nSamp <span class="op">=</span> <span class="fl">200</span></span>
+<span class="r-in"><span class="op">)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Implementing porportional allocation of samples</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> nSamp of 200 is not perfectly divisible based on strata distribution. nSamp of 199 will be returned. Use "force = TRUE" to brute force to 200.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    strata total</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1    13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       2    29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       3    14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       4    21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       5    25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       6    24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7       7    24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8       8    16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9       9    23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     10    10</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="fu">calculate_allocation</span><span class="op">(</span></span>
+<span class="r-in">  sraster <span class="op">=</span> <span class="va">sr</span>,</span>
+<span class="r-in">  nSamp <span class="op">=</span> <span class="fl">200</span>,</span>
+<span class="r-in">  force <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span class="r-in"><span class="op">)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Implementing porportional allocation of samples</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Forcing 200 total samples.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    strata total</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1    13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       2    29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       3    14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       4    21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       5    25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       6    24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7       7    24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8       8    16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9       9    23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     10    11</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">#--- extract strata from existing samples ---#</span></span>
+<span class="r-in"><span class="va">e.sr</span> <span class="op">&lt;-</span> <span class="fu"><a href="extract.html">extract_strata</a></span><span class="op">(</span></span>
+<span class="r-in">  sraster <span class="op">=</span> <span class="va">sr</span>,</span>
+<span class="r-in">  existing <span class="op">=</span> <span class="va">e</span></span>
+<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="fu">calculate_allocation</span><span class="op">(</span></span>
+<span class="r-in">  sraster <span class="op">=</span> <span class="va">sr</span>,</span>
+<span class="r-in">  nSamp <span class="op">=</span> <span class="fl">200</span>,</span>
+<span class="r-in">  existing <span class="op">=</span> <span class="va">e.sr</span></span>
+<span class="r-in"><span class="op">)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Implementing porportional allocation of samples</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> nSamp of 200 is not perfectly divisible based on strata distribution. nSamp of 199 will be returned. Use "force = TRUE" to brute force to 200.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    strata total need</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1    11   13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       2    15   29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       3     2   14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       4    10   21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       5    10   25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       6    10   24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7       7    12   24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8       8     3   16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9       9    18   23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     10     8   10</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">#--- Load mraster for optimal allocation ---#</span></span>
+<span class="r-in"><span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"wall_metrics.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">mr</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="fu">calculate_allocation</span><span class="op">(</span></span>
+<span class="r-in">  sraster <span class="op">=</span> <span class="va">sr</span>,</span>
+<span class="r-in">  nSamp <span class="op">=</span> <span class="fl">200</span>,</span>
+<span class="r-in">  existing <span class="op">=</span> <span class="va">e.sr</span>,</span>
+<span class="r-in">  allocation <span class="op">=</span> <span class="st">"optim"</span>,</span>
+<span class="r-in">  mraster <span class="op">=</span> <span class="va">mr</span><span class="op">$</span><span class="va">zmax</span>,</span>
+<span class="r-in">  force <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span class="r-in"><span class="op">)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Implementing optimal allocation of samples based on variability of 'zmax'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    strata total need</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1    16   18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       2    15   29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       3     6   18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       4     7   18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       5     6   21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       6     9   23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7       7    12   24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8       8     6   19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9       9     9   14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     10    14   16</span>
 </code></pre></div>
     </div>
   </div>

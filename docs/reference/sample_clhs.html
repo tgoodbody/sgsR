@@ -149,65 +149,147 @@ on Digital Soil Mapping, Sydney, Australia.</p>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="co">#--- Load raster and existing plots---#</span>
-<span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"wall_metrics.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span>
-<span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span>
-
-<span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"existing.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span>
-<span class="va">e</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span>
-
-<span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"roads.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span>
-<span class="va">ac</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>
-
-<span class="fu">sample_clhs</span><span class="op">(</span>
-  mraster <span class="op">=</span> <span class="va">mr</span>,
-  nSamp <span class="op">=</span> <span class="fl">200</span>,
-  plot <span class="op">=</span> <span class="cn">TRUE</span>,
-  iter <span class="op">=</span> <span class="fl">100</span>
-<span class="op">)</span>
-
-<span class="fu">sample_clhs</span><span class="op">(</span>
-  mraster <span class="op">=</span> <span class="va">mr</span>,
-  nSamp <span class="op">=</span> <span class="fl">400</span>,
-  existing <span class="op">=</span> <span class="va">e</span>,
-  iter <span class="op">=</span> <span class="fl">250</span>,
-  details <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span>
-
-<span class="fu">sample_clhs</span><span class="op">(</span>
-  mraster <span class="op">=</span> <span class="va">mr</span>,
-  nSamp <span class="op">=</span> <span class="fl">200</span>,
-  iter <span class="op">=</span> <span class="fl">200</span>,
-  existing <span class="op">=</span> <span class="va">e</span>,
-  access <span class="op">=</span> <span class="va">ac</span>,
-  buff_inner <span class="op">=</span> <span class="fl">100</span>,
-  buff_outer <span class="op">=</span> <span class="fl">300</span>,
-  plot <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span>
-
-<span class="co">#--- cost constrained examples ---#</span>
-<span class="co">#--- calculate distance to access layer for each pixel in mr ---#</span>
-<span class="va">mr.c</span> <span class="op">&lt;-</span> <span class="fu"><a href="calculate_distance.html">calculate_distance</a></span><span class="op">(</span>
-  raster <span class="op">=</span> <span class="va">mr</span>,
-  access <span class="op">=</span> <span class="va">ac</span>
-<span class="op">)</span>
-
-<span class="fu">sample_clhs</span><span class="op">(</span>
-  mraster <span class="op">=</span> <span class="va">mr.c</span>,
-  nSamp <span class="op">=</span> <span class="fl">250</span>,
-  iter <span class="op">=</span> <span class="fl">200</span>,
-  cost <span class="op">=</span> <span class="st">"dist2access"</span>,
-  plot <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span>
-
-<span class="fu">sample_clhs</span><span class="op">(</span>
-  mraster <span class="op">=</span> <span class="va">mr.c</span>,
-  nSamp <span class="op">=</span> <span class="fl">250</span>,
-  existing <span class="op">=</span> <span class="va">e</span>,
-  iter <span class="op">=</span> <span class="fl">200</span>,
-  cost <span class="op">=</span> <span class="st">"dist2access"</span>,
-  plot <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#--- Load raster and existing plots---#</span></span>
+<span class="r-in"><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"wall_metrics.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"existing.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `existing' from data source </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\tgood.stu\Documents\R\win-library\4.1\sgsR\extdata\existing.shp' </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   using driver `ESRI Shapefile'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 100 features and 1 field</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431110 ymin: 5337750 xmax: 438550 ymax: 5343230</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           unknown</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"roads.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">ac</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `roads' from data source </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\tgood.stu\Documents\R\win-library\4.1\sgsR\extdata\roads.shp' </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   using driver `ESRI Shapefile'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 167 features and 2 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: MULTILINESTRING</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431100 ymin: 5337700 xmax: 438560 ymax: 5343240</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: UTM_Zone_17_Northern_Hemisphere</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="fu">sample_clhs</span><span class="op">(</span></span>
+<span class="r-in">  mraster <span class="op">=</span> <span class="va">mr</span>,</span>
+<span class="r-in">  nSamp <span class="op">=</span> <span class="fl">200</span>,</span>
+<span class="r-in">  plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span class="r-in">  iter <span class="op">=</span> <span class="fl">100</span></span>
+<span class="r-in"><span class="op">)</span></span>
+<span class="r-plt img"><img src="sample_clhs-1.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 200 features and 10 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431110 ymin: 5337730 xmax: 438490 ymax: 5343230</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            zmax zmean  zsd pzabove2  zq20  zq50  zq70      zq90  zq95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31665  8.770000  80.7 2.79     4.57  6.61  9.16 10.41 12.650000 14.22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79034  3.770000  36.2 2.30     1.54  1.83  2.98  4.51  8.510000 11.47</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35679  9.059999  76.1 4.53     2.59  4.31  9.36 12.26 16.070000 17.96</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 85898 16.709999  87.3 7.84     7.46 10.08 14.46 24.78 27.719999 28.43</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56703 12.929999  90.7 4.72     4.19  9.95 14.03 15.84 18.650000 20.55</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31475 13.920000  91.4 6.67     3.09  5.68 15.90 18.44 22.469999 23.35</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31754  3.020000  27.7 2.22     1.48  1.68  2.30  2.90  9.190000 11.57</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45664  4.370000   8.5 2.90     1.41  1.56  2.97  6.52  9.099999  9.83</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3509  10.040000  85.0 5.31     2.26  3.55 11.01 13.81 17.420000 20.06</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72123  7.690000  79.2 4.06     2.18  3.69  7.53  9.49 15.200000 17.49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       type               geometry</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31665  new POINT (432210 5341390)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79034  new POINT (437690 5338390)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35679  new POINT (436870 5341170)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 85898  new POINT (433290 5337990)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56703  new POINT (431870 5339910)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31475  new POINT (435670 5341410)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31754  new POINT (433990 5341390)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45664  new POINT (435270 5340570)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3509   new POINT (434190 5343010)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72123  new POINT (434550 5338890)</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="fu">sample_clhs</span><span class="op">(</span></span>
+<span class="r-in">  mraster <span class="op">=</span> <span class="va">mr</span>,</span>
+<span class="r-in">  nSamp <span class="op">=</span> <span class="fl">400</span>,</span>
+<span class="r-in">  existing <span class="op">=</span> <span class="va">e</span>,</span>
+<span class="r-in">  iter <span class="op">=</span> <span class="fl">250</span>,</span>
+<span class="r-in">  details <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span class="r-in"><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> Can't subset columns that don't exist.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">x</span> Columns `X`, `Y`, `zmax`, `zmean`, `zsd`, etc. don't exist.</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="fu">sample_clhs</span><span class="op">(</span></span>
+<span class="r-in">  mraster <span class="op">=</span> <span class="va">mr</span>,</span>
+<span class="r-in">  nSamp <span class="op">=</span> <span class="fl">200</span>,</span>
+<span class="r-in">  iter <span class="op">=</span> <span class="fl">200</span>,</span>
+<span class="r-in">  existing <span class="op">=</span> <span class="va">e</span>,</span>
+<span class="r-in">  access <span class="op">=</span> <span class="va">ac</span>,</span>
+<span class="r-in">  buff_inner <span class="op">=</span> <span class="fl">100</span>,</span>
+<span class="r-in">  buff_outer <span class="op">=</span> <span class="fl">300</span>,</span>
+<span class="r-in">  plot <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span class="r-in"><span class="op">)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> An access layer has been provided. An internal buffer of 100 m and an external buffer of 300 m have been applied</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> Can't subset columns that don't exist.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">x</span> Columns `X`, `Y`, `zmax`, `zmean`, `zsd`, etc. don't exist.</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">#--- cost constrained examples ---#</span></span>
+<span class="r-in"><span class="co">#--- calculate distance to access layer for each pixel in mr ---#</span></span>
+<span class="r-in"><span class="va">mr.c</span> <span class="op">&lt;-</span> <span class="fu"><a href="calculate_distance.html">calculate_distance</a></span><span class="op">(</span></span>
+<span class="r-in">  raster <span class="op">=</span> <span class="va">mr</span>,</span>
+<span class="r-in">  access <span class="op">=</span> <span class="va">ac</span></span>
+<span class="r-in"><span class="op">)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> calculating per pixel distance to provided access layer</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="fu">sample_clhs</span><span class="op">(</span></span>
+<span class="r-in">  mraster <span class="op">=</span> <span class="va">mr.c</span>,</span>
+<span class="r-in">  nSamp <span class="op">=</span> <span class="fl">250</span>,</span>
+<span class="r-in">  iter <span class="op">=</span> <span class="fl">200</span>,</span>
+<span class="r-in">  cost <span class="op">=</span> <span class="st">"dist2access"</span>,</span>
+<span class="r-in">  plot <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span class="r-in"><span class="op">)</span></span>
+<span class="r-plt img"><img src="sample_clhs-2.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 250 features and 11 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431110 ymin: 5337730 xmax: 438550 ymax: 5343210</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        zmax zmean  zsd pzabove2  zq20  zq50      zq70  zq90  zq95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66898  5.81  58.0 3.15     1.95  2.78  5.45  7.310000 11.85 13.96</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44483 10.08  84.9 5.12     2.40  4.39 10.50 12.840000 18.16 20.62</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33405 10.21  84.3 5.05     3.58  5.19  9.49 13.590000 18.45 19.91</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5007   7.45  77.9 3.27     2.66  4.09  7.94  9.450000 12.11 15.71</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 85267 10.79  85.9 3.48     6.02  8.01 11.22 12.920000 15.67 16.93</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26860  8.23  69.2 3.51     3.87  5.12  8.03  9.969999 14.55 17.41</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70980  8.86  79.9 4.75     2.62  3.92  8.44 12.799999 15.89 17.16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7585   1.79   2.0 0.48     1.36  1.41  1.67  1.880000  2.73  3.64</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21259 13.49  88.9 3.56     8.25 11.04 14.17 15.710000 17.93 18.89</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16468  7.64  73.3 4.07     2.16  3.12  7.53 10.090000 14.43 15.93</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       dist2access type               geometry</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66898    66.35368  new POINT (438270 5339290)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44483    92.39097  new POINT (431470 5340630)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33405    13.32311  new POINT (432390 5341290)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5007    230.34326  new POINT (437230 5342930)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 85267    85.79140  new POINT (435410 5338030)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26860   215.77616  new POINT (433810 5341670)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70980    54.63262  new POINT (435870 5338990)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7585    120.53088  new POINT (437810 5342790)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21259   226.24890  new POINT (432230 5341990)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16468   420.00026  new POINT (438370 5342270)</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="fu">sample_clhs</span><span class="op">(</span></span>
+<span class="r-in">  mraster <span class="op">=</span> <span class="va">mr.c</span>,</span>
+<span class="r-in">  nSamp <span class="op">=</span> <span class="fl">250</span>,</span>
+<span class="r-in">  existing <span class="op">=</span> <span class="va">e</span>,</span>
+<span class="r-in">  iter <span class="op">=</span> <span class="fl">200</span>,</span>
+<span class="r-in">  cost <span class="op">=</span> <span class="st">"dist2access"</span>,</span>
+<span class="r-in">  plot <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span class="r-in"><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> Can't subset columns that don't exist.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">x</span> Columns `X`, `Y`, `zmax`, `zmean`, `zsd`, etc. don't exist.</span>
 </code></pre></div>
     </div>
   </div>

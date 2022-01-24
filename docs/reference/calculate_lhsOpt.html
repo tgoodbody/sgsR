@@ -120,23 +120,23 @@ iterations for the Metropolis-Hastings annealing process. Defaults to <code>1000
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span>
-<span class="co">#--- Load raster and access files ---#</span>
-<span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"wall_metrics.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span>
-<span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span>
-
-<span class="co">#--- calculate lhsPop details ---#</span>
-<span class="va">poplhs</span> <span class="op">&lt;-</span> <span class="fu"><a href="calculate_lhsPop.html">calculate_lhsPop</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mr</span><span class="op">)</span>
-
-<span class="fu">calculate_lhsOpt</span><span class="op">(</span>popLHS <span class="op">=</span> <span class="va">poplhs</span><span class="op">)</span>
-
-<span class="fu">calculate_lhsOpt</span><span class="op">(</span>
-  popLHS <span class="op">=</span> <span class="va">poplhs</span>,
-  PCA <span class="op">=</span> <span class="cn">FALSE</span>,
-  iter <span class="op">=</span> <span class="fl">200</span>
-<span class="op">)</span>
-<span class="op">}</span>
-
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in"><span class="co">#--- Load raster and access files ---#</span></span>
+<span class="r-in"><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"wall_metrics.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">#--- calculate lhsPop details ---#</span></span>
+<span class="r-in"><span class="va">poplhs</span> <span class="op">&lt;-</span> <span class="fu"><a href="calculate_lhsPop.html">calculate_lhsPop</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mr</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="fu">calculate_lhsOpt</span><span class="op">(</span>popLHS <span class="op">=</span> <span class="va">poplhs</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="fu">calculate_lhsOpt</span><span class="op">(</span></span>
+<span class="r-in">  popLHS <span class="op">=</span> <span class="va">poplhs</span>,</span>
+<span class="r-in">  PCA <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span class="r-in">  iter <span class="op">=</span> <span class="fl">200</span></span>
+<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span class="op">}</span></span>
+<span class="r-in"></span>
 </code></pre></div>
     </div>
   </div>
