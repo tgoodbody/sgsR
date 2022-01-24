@@ -123,7 +123,7 @@ strat_kmeans <- function(mraster,
   #--- convert k-means values back to original mraster extent ---#
   valsOut[idx] <- km_clust$cluster
 
-  kmv <- terra::setValues(mraster[[1]], valsOut)
+  kmv <- suppressWarnings(terra::setValues(mraster[[1]], valsOut))
   names(kmv) <- "strata"
 
   #--- plot if requested ---#
