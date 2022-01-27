@@ -9,7 +9,7 @@
 #' @param raster spatRaster. Raster to be used for random sampling.
 #' @param nSamp Numeric. Number of desired samples.
 #' @param mindist Numeric. Minimum allowable distance between selected
-#'  samples. Default = 100.
+#'  samples. Default = NULL.
 #' @param access sf. Road access network - must be lines.
 #' @param buff_inner Numeric. Inner buffer boundary specifying distance
 #'  from access where plots cannot be sampled.
@@ -28,31 +28,36 @@
 #' ac <- sf::st_read(a)
 #'
 #' #--- perform simple random sampling ---#
-#' sample_srs(raster = sr, 
-#'            nSamp = 200, 
-#'            plot = TRUE)
-#' 
-#' sample_srs(raster = sr, 
-#'            nSamp = 200, 
-#'            access = ac,
-#'            mindist = 200,
-#'            buff_inner = 50,
-#'            buff_outer = 200)
-#' 
-#' sample_srs(raster = sr,
-#'            nSamp = 200,
-#'            access = ac,
-#'            buff_inner = 50,
-#'            buff_outer = 200,
-#'            filename = tempfile(fileext = ".shp"))
-#'            
+#' sample_srs(
+#'   raster = sr,
+#'   nSamp = 200,
+#'   plot = TRUE
+#' )
+#'
+#' sample_srs(
+#'   raster = sr,
+#'   nSamp = 200,
+#'   access = ac,
+#'   mindist = 200,
+#'   buff_inner = 50,
+#'   buff_outer = 200
+#' )
+#'
+#' sample_srs(
+#'   raster = sr,
+#'   nSamp = 200,
+#'   access = ac,
+#'   buff_inner = 50,
+#'   buff_outer = 200,
+#'   filename = tempfile(fileext = ".shp")
+#' )
 #' @author Tristan R.H. Goodbody & Martin Queinnec
 #'
 #' @export
 
 sample_srs <- function(raster,
                        nSamp,
-                       mindist = 100,
+                       mindist = NULL,
                        access = NULL,
                        buff_inner = NULL,
                        buff_outer = NULL,
@@ -70,8 +75,10 @@ sample_srs <- function(raster,
     stop("'nSamp' must be type numeric")
   }
 
-  if (!is.numeric(mindist)) {
-    stop("'mindist' must be type numeric")
+  if(!is.null(mindist)){
+    if (!is.numeric(mindist)) {
+      stop("'mindist' must be type numeric")
+    }
   }
 
   if (!is.logical(plot)) {
@@ -98,8 +105,8 @@ sample_srs <- function(raster,
       stop("'access' must be an 'sf' object")
     }
 
-    if (!inherits(sf::st_geometry(access), "sfc_MULTILINESTRING")) {
-      stop("'access' geometry type must be 'sfc_MULTILINESTRING'")
+    if (!inherits(sf::st_geometry(access), "sfc_MULTILINESTRING") && !inherits(sf::st_geometry(access), "sfc_LINESTRING")) {
+      stop("'access' geometry type must be 'LINESTRING' or 'MULTILINESTRING'")
     }
 
     access_buff <- mask_access(raster = raster, access = access, buff_inner = buff_inner, buff_outer = buff_outer)
@@ -145,7 +152,7 @@ sample_srs <- function(raster,
 
       nCount <- nCount + 1
 
-      #--- If awdd_strata isnt empty, check distance with all other sampled cells in strata ---#
+      #--- If add_strata isnt empty, check distance with all other sampled cells in strata ---#
     }
 
     if (!is.null(mindist)) {
@@ -193,7 +200,7 @@ sample_srs <- function(raster,
     }
 
     if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(paste0(filename, " already exists and overwrite = FALSE"))
+      stop(glue::glue("{filename} already exists and overwrite = FALSE"))
     }
 
     sf::st_write(samples, filename, delete_layer = overwrite)

@@ -19,7 +19,7 @@ strat_pcomp(
 )
 }
 \arguments{
-\item{mraster}{spatRaster. ALS metrics raster.}
+\item{mraster}{Spatraster. Covariate raster to stratify.}
 
 \item{nStrata}{Numeric. Number of strata for primary principal component.}
 
@@ -31,9 +31,6 @@ strat_pcomp(
 
 \item{plot}{Logical. Plots output strata raster and visualized
 strata with boundary dividers.}
-
-\item{samp}{Numeric. Determines proportion of cells to plot in scatterplot - see \code{values}
-for strata visualization. Lower values reduce visualization time.}
 
 \item{details}{Logical. If \code{FALSE} (default) output is only
  stratification raster. If \code{TRUE} return a list
@@ -63,31 +60,37 @@ Stratify metrics raster using principal components and quantile breaks
 }
 \examples{
 #--- Load raster and access files ---#
-r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
+r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 mr <- terra::rast(r)
 
-strat_pcomp(mraster = mr, 
-            nStrata = 5, 
-            plot = TRUE)
+strat_pcomp(
+  mraster = mr,
+  nStrata = 5,
+  plot = TRUE
+)
 
-strat_pcomp(mraster = mr, 
-            nStrata = 4, 
-            nStrata2 = 4, 
-            plot = TRUE, 
-            details = TRUE)
+strat_pcomp(
+  mraster = mr,
+  nStrata = 4,
+  nStrata2 = 4,
+  plot = TRUE,
+  details = TRUE
+)
 
-strat_pcomp(mraster = mr, 
-            nStrata = 3, 
-            nStrata2 = 3, 
-            filename = tempfile(fileext = ".tif"))
-            
+strat_pcomp(
+  mraster = mr,
+  nStrata = 3,
+  nStrata2 = 3,
+  filename = tempfile(fileext = ".tif")
+)
 }
 \seealso{
 Other stratify functions: 
 \code{\link{strat_breaks}()},
 \code{\link{strat_kmeans}()},
+\code{\link{strat_map}()},
 \code{\link{strat_osb}()},
-\code{\link{strat_quantiles}()}
+\code{\link{strat_poly}()}
 }
 \author{
 Tristan R.H. Goodbody

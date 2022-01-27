@@ -3,24 +3,30 @@ citHeader("To cite sgsR in publications use:")
 citEntry(
   entry    = "Article",
   title    = "sgsR: Structurally Guided Sampling Approaches using ALS Data for R",
-  author   = person(given = "Tristan", middle = "RH", last = "Goodbody"),
+  author   = c(
+    person("Tristan RH", "Goodbody"),
+    person("Nicholas C", "Coops")
+   ),
   journal  = "NA",
   year     = sub("-.*", "", meta$Date),
   volume   = "NA",
   number   = "NA",
   pages    = "NA",
   url      = "https://github.com/tgoodbody/sgsR",
-  textVersion = paste("Goodbody, TRH (2021). sgsR: Structurally Guided Sampling Approaches using ALS Data for R. https://github.com/tgoodbody/sgsR "))
+  textVersion = paste("Goodbody, TRH., Coops, NC. (2021). sgsR: Structurally Guided Sampling Approaches using ALS Data for R. https://github.com/tgoodbody/sgsR "))
   
   year <- sub("-.*", "", meta$Date)
   note <- sprintf("R package version %s", meta$Version)
   
   bibentry(bibtype = "Manual",
   title = "sgsR: Structurally Guided Sampling Approaches using ALS Data for R",
-  author = person(given = "Tristan", middle = c("R","H"), last = "Goodbody"),
+  author = c(
+    person("Tristan RH", "Goodbody"),
+    person("Nicholas C", "Coops")
+   ),
   year = year,
   note = note,
   url = "https://github.com/tgoodbody/sgsR")
-  textVersion = paste0("Goodbody TRH, (", year, ").",
+  textVersion = paste0("Goodbody TRH., Coops NC.", "(", year, ").",
   " sgsR: Structurally Guided Sampling Approaches using ALS Data for R.   ", note, ".",
   " https://github.com/tgoodbody/sgsR")

@@ -6,8 +6,7 @@
 \usage{
 strat_breaks(
   mraster,
-  metric = NULL,
-  metric2 = NULL,
+  mraster2 = NULL,
   breaks,
   breaks2 = NULL,
   plot = FALSE,
@@ -18,15 +17,13 @@ strat_breaks(
 )
 }
 \arguments{
-\item{mraster}{spatRaster. ALS metrics raster.}
+\item{mraster}{Spatraster. Primary covariate raster to stratify.}
 
-\item{metric}{Numeric/Character. Index or name of primary covariate within \code{mraster} to stratify.}
+\item{mraster2}{Spatraster. Secondary covariate raster to stratify.}
 
-\item{metric2}{Numeric/Character. Index or name of secondary covariate within \code{mraster} to stratify.}
+\item{breaks}{Numeric. Vector of breakpoints for \code{mraster}}
 
-\item{breaks}{Numeric. Vector of breakpoints for \code{metric}}
-
-\item{breaks2}{Numeric. Vector of breakpoints for \code{metric2} (if provided)}
+\item{breaks2}{Numeric. Vector of breakpoints for \code{mraster2} (if provided)}
 
 \item{plot}{Logical. Plots output strata raster and visualized
 strata with boundary dividers.}
@@ -50,7 +47,7 @@ When a list is returned:
 \enumerate{
 \item \code{details} is a list output of the \code{\link[stats]{prcomp}} function
 \item \code{raster} is a stratified \code{spatRaster} based on quantiles
-\item \code{plot} is a \code{ggplot} histogram object showsing distribution and break points.
+\item \code{plot} is a \code{ggplot} histogram object showing distribution and break points.
 }
 }
 \description{
@@ -58,33 +55,35 @@ Stratify metrics raster using user defined breaks
 }
 \examples{
 #--- Load raster ---#
-r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
+r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 mr <- terra::rast(r)
 
 #--- create vector breaks ---#
 br.max <- c(3, 5, 11, 18)
 br.sd <- c(1, 2, 5)
 
-strat_breaks(mraster = mr, 
-            metric = "zmax", 
-            breaks = br.max,
-            plot = TRUE, 
-            details = TRUE)
+strat_breaks(
+  mraster = mr$zmax,
+  breaks = br.max,
+  plot = TRUE,
+  details = TRUE
+)
 
-strat_breaks(mraster = mr, 
-            metric = 1, 
-            metric2 = "zsd",
-            breaks = br.max, 
-            breaks2 = br.sd, 
-            plot = TRUE)
-            
+strat_breaks(
+  mraster = mr$zmax,
+  mraster2 = mr$zsd,
+  breaks = br.max,
+  breaks2 = br.sd,
+  plot = TRUE
+)
 }
 \seealso{
 Other stratify functions: 
 \code{\link{strat_kmeans}()},
+\code{\link{strat_map}()},
 \code{\link{strat_osb}()},
 \code{\link{strat_pcomp}()},
-\code{\link{strat_quantiles}()}
+\code{\link{strat_poly}()}
 }
 \author{
 Tristan R.H. Goodbody

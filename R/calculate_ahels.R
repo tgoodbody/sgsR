@@ -2,7 +2,7 @@
 #'
 #' @description Perform the adapted Hypercube Evaluation of a Legacy Sample (ahels) algorithm using
 #' existing site data and raster metrics. New samples are allocated based on quantile ratios between
-#' the existing sampleand covariate dataset.
+#' the existing sample and covariate dataset.
 #'
 #' @family sample functions
 #'
@@ -24,23 +24,27 @@
 #'
 #' @examples
 #' #--- Load raster and existing plots---#
-#' r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
+#' r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 #' mr <- terra::rast(r)
 #'
 #' e <- system.file("extdata", "existing.shp", package = "sgsR")
 #' e <- sf::st_read(e)
-#' 
-#' sample_ahels(mraster = mr[[1:3]], 
-#'              existing = e, 
-#'              plot = TRUE)
-#' 
-#' sample_ahels(mraster = mr[[1:3]], 
-#'              existing = e, 
-#'              nQuant = 20, 
-#'              nSamp = 300,
-#'              filename = tempfile(fileext = ".shp"))
+#'
+#' sample_ahels(
+#'   mraster = mr[[1:3]],
+#'   existing = e,
+#'   plot = TRUE
+#' )
+#'
+#' sample_ahels(
+#'   mraster = mr[[1:3]],
+#'   existing = e,
+#'   nQuant = 20,
+#'   nSamp = 300,
+#'   filename = tempfile(fileext = ".shp")
+#' )
 #' @note
-#' Special thanks to Brendan Malone for the original implementation of this algorithm.
+#' Special thanks to Dr. Brendan Malone for the original implementation of this algorithm.
 #'
 #' @author Tristan R.H. Goodbody
 #'
@@ -113,13 +117,13 @@ sample_ahels <- function(mraster,
 
   matCovDens <- mats$matCov / nrow(vals)
 
-  #--- Remove quantiles that do not cover at least 1% area in eac covariate ---#
+  #--- Remove quantiles that do not cover at least 1% area in each covariate ---#
 
   matCovDens[which(matCovDens <= 0.01)] <- NA
 
   ### --- Prepare existing sample data ---###
 
-  #--- remove any attributes that are not geometry ---#
+  #--- select geometry attribute ---#
 
   existing <- existing %>%
     dplyr::select(geometry)
@@ -128,12 +132,12 @@ sample_ahels <- function(mraster,
 
   samples <- extract_metrics(mraster, existing, data.frame = TRUE)
 
-  #--- remove already existing samples from vals to no repeat sample ---#
+  #--- remove already existing samples from vals to not repeat sample ---#
 
   vals <- vals %>%
     dplyr::anti_join(samples, by = c("X", "Y"))
 
-  #--- Assign code to differentiate between original samples and those added during HELS algorithm ---#
+  #--- Assign attribute to differentiate between original samples and those added during HELS algorithm ---#
 
   samples$type <- "existing"
   samples$n <- seq(1:nrow(samples))
@@ -155,7 +159,7 @@ sample_ahels <- function(mraster,
 
   matCovSampDens <- matCovSamp / nrow(samples)
 
-  ### --- Selection of new samples based on density ---###
+  ###--- Selection of new samples based on density ---###
 
   #--- Ratio and ordering of data density and covariate density ---#
 
@@ -193,7 +197,7 @@ sample_ahels <- function(mraster,
       stop("'nSamp' must be type numeric")
     }
 
-    message(paste0("'nSamp' of ", nSamp, "  has been provided. Samples will be added until this number is reached"))
+    message(glue::glue("nSamp of {nSamp} has been provided. Samples will be added until this number is reached"))
 
     while (newSamp != 0) {
 
@@ -303,7 +307,7 @@ sample_ahels <- function(mraster,
       underRep <- cbind(underRep, which(ratio < 1))
     }
   } else {
-    message(paste0("'threshold' of ", threshold, "  has been provided. Samples will be added until quantile ratio is reached"))
+    message(glue::glue("threshold of {threshold} has been provided. Samples will be added until quantile ratio is reached"))
 
     #---
     #--- If 'nSamp' is not provided a threshold is used ---#
@@ -414,7 +418,7 @@ sample_ahels <- function(mraster,
     }
   }
 
-  message(paste0("A total of ", sTot, " new samples added"))
+  message(glue::glue("A total of {sTot} new samples added"))
 
   print(ratio)
 
@@ -438,7 +442,7 @@ sample_ahels <- function(mraster,
     }
 
     if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(paste0(filename, " already exists and overwrite = FALSE"))
+      stop(glue::glue("{filename} already exists and overwrite = FALSE"))
     }
 
     sf::st_write(samples, filename, delete_layer = overwrite)

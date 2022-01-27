@@ -1,7 +1,7 @@
 #' Plot
 #'
-#' @inheritParams strat_quantiles
-#' @param dfc data.frame. Values for metric1 and metric2
+#' @inheritParams strat_breaks
+#' @param dfc data.frame. Values for mraster and mraster2
 #' @param coordsgrps List. Cartesian coordinates of each strata
 #' @param samp Numeric. Determines proportion of cells to plot
 #' @family plot
@@ -16,19 +16,9 @@ NULL
 
 classPlot <- function(dfc,
                       coordsgrps,
-                      metric,
-                      metric2,
+                      mraster,
+                      mraster2,
                       samp) {
-
-  #--- if the variables are not symbols convert them ---#
-
-  if (is.character(metric)) {
-    metric <- ggplot2::ensym(metric)
-  }
-
-  if (is.character(metric2)) {
-    metric2 <- ggplot2::ensym(metric2)
-  }
 
   #--- sample cells based on 'samp' parameter ---#
 
@@ -39,7 +29,7 @@ classPlot <- function(dfc,
 
   #--- plot individual cells coloured by associated class ---#
 
-  p <- ggplot2::ggplot(mapping = ggplot2::aes(x = !!metric, y = !!metric2)) +
+  p <- ggplot2::ggplot(mapping = ggplot2::aes(x = {{ mraster }}, y = {{ mraster2 }})) +
     ggplot2::geom_point(data = dfc, alpha = 0.3, ggplot2::aes(color = as.factor(class))) +
     ggplot2::theme_bw() +
     ggplot2::theme(legend.position = "none")
@@ -52,10 +42,10 @@ classPlot <- function(dfc,
     p <- p + ggplot2::geom_rect(
       data = data,
       ggplot2::aes(
-        xmin = min(!!metric),
-        xmax = max(!!metric),
-        ymin = min(!!metric2),
-        ymax = max(!!metric2)
+        xmin = min({{ mraster }}),
+        xmax = max({{ mraster }}),
+        ymin = min({{ mraster2 }}),
+        ymax = max({{ mraster2 }})
       ),
       colour = "black",
       fill = NA

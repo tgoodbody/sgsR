@@ -24,29 +24,34 @@
 #'
 #' @examples
 #' #--- Load raster and access files ---#
-#' r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
+#' r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 #' mr <- terra::rast(r)
 #'
 #' #--- perform stratification using k-means ---#
-#' kmeans <- strat_kmeans(mraster = mr, 
-#'                        nStrata = 5)
-#' 
-#' kmeans <- strat_kmeans(mraster = mr, 
-#'                        nStrata = 5, 
-#'                        iter = 1000,
-#'                        algorithm = "MacQueen",
-#'                        plot = TRUE, 
-#'                        details = TRUE)
-#' 
-#' kmeans <- strat_kmeans(mraster = mr, 
-#'                        nStrata = 5, 
-#'                        iter = 1000,
-#'                        plot = TRUE, 
-#'                        filename = tempfile(fileext = ".tif"), 
-#'                        overwrite = TRUE)
-#'                        
+#' kmeans <- strat_kmeans(
+#'   mraster = mr,
+#'   nStrata = 5
+#' )
+#'
+#' kmeans <- strat_kmeans(
+#'   mraster = mr,
+#'   nStrata = 5,
+#'   iter = 1000,
+#'   algorithm = "MacQueen",
+#'   plot = TRUE,
+#'   details = TRUE
+#' )
+#'
+#' kmeans <- strat_kmeans(
+#'   mraster = mr,
+#'   nStrata = 5,
+#'   iter = 1000,
+#'   plot = TRUE,
+#'   filename = tempfile(fileext = ".tif"),
+#'   overwrite = TRUE
+#' )
 #' @author Tristan R.H. Goodbody
-#'                         
+#'
 #' @export
 
 strat_kmeans <- function(mraster,
@@ -99,28 +104,27 @@ strat_kmeans <- function(mraster,
     stop("'details' must be type logical")
   }
 
-
   #--- Extract values from mraster ---#
 
   vals <- terra::values(mraster)
 
   #--- Determine index of each cell so to map values correctly without NA ---#
 
-  vals[!is.finite(vals)] <- NA
-
+  idx <- which(complete.cases(vals))
+  
+  valsOut <- vals
+  
   #--- conduct unsupervised k-means with center/scale parameters based on algorithm ---#
 
   message("K-means being performed on ", terra::nlyr(mraster), " layers with ", nStrata, " centers.")
 
-  km_clust <- stats::kmeans(scale(na.omit(vals), center = center, scale = scale), centers = nStrata, iter.max = iter, algorithm = algorithm, ...)
+  km_clust <- stats::kmeans(scale(vals[idx], center = center, scale = scale), centers = nStrata, iter.max = iter, algorithm = algorithm)
 
   #--- convert k-means values back to original mraster extent ---#
+  valsOut[idx] <- km_clust$cluster
 
-  vals[is.finite(vals)] <- km_clust$cluster
-
-  kmv <- terra::setValues(mraster[[1]], vals)
+  kmv <- suppressWarnings(terra::setValues(mraster[[1]], valsOut))
   names(kmv) <- "strata"
-
 
   #--- plot if requested ---#
 

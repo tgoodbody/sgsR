@@ -5,8 +5,8 @@
 \title{Raster principal components}
 \usage{
 calculate_pcomp(
-  mraster = NULL,
-  nComp = NULL,
+  mraster,
+  nComp,
   center = TRUE,
   scale = TRUE,
   plot = FALSE,
@@ -48,24 +48,28 @@ Calculate and rasterize principal components from a metric raster
 }
 \examples{
 #--- Load raster ---#
-r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
+r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 mr <- terra::rast(r)
 
-calculate_pcomp(mraster = mr, 
-                nComp = 5)
+calculate_pcomp(
+  mraster = mr,
+  nComp = 5
+)
 
-calculate_pcomp(mraster = mr, 
-                nComp = 3, 
-                plot = TRUE, 
-                details = TRUE)
-                
+calculate_pcomp(
+  mraster = mr,
+  nComp = 3,
+  plot = TRUE,
+  details = TRUE
+)
 }
 \seealso{
 Other calculate functions: 
 \code{\link{calculate_allocation}()},
 \code{\link{calculate_coobs}()},
 \code{\link{calculate_distance}()},
-\code{\link{calculate_lhsPop}()}
+\code{\link{calculate_lhsPop}()},
+\code{\link{calculate_sampsize}()}
 }
 \author{
 Tristan R.H. Goodbody

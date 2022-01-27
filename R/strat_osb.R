@@ -7,7 +7,6 @@
 #'
 #' @inheritParams strat_kmeans
 #' @inheritParams strat_breaks
-#' @inheritParams strat_quantiles
 #'
 #' @param nStrata Numeric. Number of desired output strata.
 #' @param nSamp Numeric. Number of desired samples - used within
@@ -44,29 +43,32 @@
 #' @examples
 #' \dontrun{
 #' #--- Load raster and access files ---#
-#' r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
+#' r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 #' mr <- terra::rast(r)
 #'
 #' #--- perform optimum sample boundary stratification ---#
-#' strat_osb(mraster = mr, 
-#'           metric = "zsd", 
-#'           nSamp = 200, 
-#'           nStrata = 4, 
-#'           plot = TRUE)
-#' 
-#' strat_osb(mraster = mr, 
-#'           metric = 4, 
-#'           nSamp = 20, 
-#'           nStrata = 3, 
-#'           plot = TRUE, 
-#'           details = TRUE)
-#' 
-#' strat_osb(mraster = mr, 
-#'           metric = "zmax", 
-#'           nSamp = 100, 
-#'           nStrata = 5, 
-#'           subset = 0.75, 
-#'           filename = tempfile(fileext = ".tif"))
+#' strat_osb(
+#'   mraster = mr$zsd,
+#'   nSamp = 200,
+#'   nStrata = 4,
+#'   plot = TRUE
+#' )
+#'
+#' strat_osb(
+#'   mraster = mr$zmax
+#'   nSamp = 20,
+#'   nStrata = 3,
+#'   plot = TRUE,
+#'   details = TRUE
+#' )
+#'
+#' strat_osb(
+#'   mraster = mr$zmax
+#'   nSamp = 100,
+#'   nStrata = 5,
+#'   subset = 0.75,
+#'   filename = tempfile(fileext = ".tif")
+#' )
 #' }
 #'
 #' @author Tristan R.H. Goodbody
@@ -74,7 +76,6 @@
 #' @export
 
 strat_osb <- function(mraster,
-                      metric = NULL,
                       nStrata,
                       nSamp,
                       subset = 1,
@@ -126,33 +127,8 @@ strat_osb <- function(mraster,
   if (terra::nlyr(mraster) == 1) {
     rastermetric <- mraster
   } else {
-
-    #--- subset metric based on whether it is a character of number ---#
-
-    if (is.null(metric)) {
-      stop(" multiple layers detected in 'mraster'. Please define a 'metric' to stratify")
-    } else {
-
-      #--- Numeric ---#
-
-      if (is.numeric(metric)) {
-        if ((metric) > (terra::nlyr(mraster)) | metric < 0) {
-          stop("'metric' index doest not exist within 'mraster'")
-        }
-
-        #--- Character ---#
-      } else if (is.character(metric)) {
-        if (!metric %in% names(mraster)) {
-          stop(paste0("'mraster' must have an attribute named ", metric))
-        }
-
-        metric <- which(names(mraster) == metric)
-      }
-    }
-
-    #--- extract mraster metric ---#
-
-    rastermetric <- terra::subset(mraster, metric)
+    
+    stop("Multiple layers detected in 'mraster'. Please define a singular band to stratify.")
   }
 
   #--- Perform OSB ---#
@@ -163,7 +139,7 @@ strat_osb <- function(mraster,
       stop("'subset' must be between 0 and 1")
     }
 
-    message(paste0("'subset' was specified. Taking ", subset * 100, "% of available pixels to determine OSB"))
+    message(glue::glue("'subset' was specified. Taking {subset * 100}% of available pixels to determine OSB"))
 
     #--- Extract values from mraster removing any NA/INF/NaN ---#
 
@@ -195,23 +171,21 @@ strat_osb <- function(mraster,
   if (isTRUE(plot)) {
     metric <- as.character(names(rastermetric))
 
-    met <- ggplot2::ensym(metric)
-
     data <- as.data.frame(OSB[[1]])
     names(data) <- metric
 
     #--- plot histogram of metric with associated break lines ---#
 
-    p1 <- ggplot2::ggplot(data, ggplot2::aes(!!met)) +
+    p1 <- ggplot2::ggplot(data, ggplot2::aes(.data[[metric]])) +
       ggplot2::geom_histogram() +
       ggplot2::geom_vline(xintercept = OSB[[2]]$OSB, linetype = "dashed") +
-      ggplot2::ggtitle(paste0(metric, " histogram with optimum sample boundaries."))
+      ggplot2::ggtitle(glue::glue("{metric} histogram with optimum sample boundaries."))
 
     print(p1)
 
     #--- set colour palette ---#
 
-    terra::plot(rcl, main = paste0(metric, " optimum sample boundaries"), type = "classes")
+    terra::plot(rcl, main = glue::glue("{metric} optimum sample boundaries"), type = "classes")
   }
 
   #--- write file to disc ---#

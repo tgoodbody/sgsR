@@ -5,7 +5,7 @@
 \title{Analyze optimal Latin hypercube sample number}
 \usage{
 calculate_lhsOpt(
-  popLHS = NULL,
+  popLHS,
   PCA = TRUE,
   quant = TRUE,
   KLdiv = TRUE,
@@ -46,12 +46,12 @@ data.frame with summary statistics.
 Population level analysis of metric raster data to determine optimal Latin Hypercube sample size
 }
 \note{
-Special thanks to Brendan Malone for the original implementation of this algorithm.
+Special thanks to Dr. Brendan Malone for the original implementation of this algorithm.
 }
 \examples{
 \dontrun{
 #--- Load raster and access files ---#
-r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
+r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 mr <- terra::rast(r)
 
 #--- calculate lhsPop details ---#
@@ -59,9 +59,11 @@ poplhs <- calculate_lhsPop(mraster = mr)
 
 calculate_lhsOpt(popLHS = poplhs)
 
-calculate_lhsOpt(popLHS = poplhs, 
-                 PCA = FALSE, 
-                 iter = 200)
+calculate_lhsOpt(
+  popLHS = poplhs,
+  PCA = FALSE,
+  iter = 200
+)
 }
 
 }

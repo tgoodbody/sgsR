@@ -32,13 +32,7 @@ mask_access <- function(raster,
   }
 
   message(
-    paste0(
-      "An access layer has been provided. An internal buffer of ",
-      buff_inner,
-      " m and an external buffer of ",
-      buff_outer,
-      " m have been applied"
-    )
+    glue::glue("An access layer has been provided. An internal buffer of {buff_inner} m and an external buffer of {buff_outer} m have been applied")
   )
 
   #--- convert vectors to spatVector to synergize with terra raster functions---#

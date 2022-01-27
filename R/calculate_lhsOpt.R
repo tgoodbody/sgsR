@@ -13,7 +13,6 @@
 #' @param iter Numeric. Internal to \code{\link[clhs]{clhs}} - A positive number, giving the number of
 #' iterations for the Metropolis-Hastings annealing process. Defaults to \code{10000}.
 #'
-#'
 #' @references
 #' Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451
 #'
@@ -22,28 +21,30 @@
 #' @examples
 #' \dontrun{
 #' #--- Load raster and access files ---#
-#' r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
+#' r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 #' mr <- terra::rast(r)
 #'
 #' #--- calculate lhsPop details ---#
 #' poplhs <- calculate_lhsPop(mraster = mr)
-#' 
+#'
 #' calculate_lhsOpt(popLHS = poplhs)
-#' 
-#' calculate_lhsOpt(popLHS = poplhs, 
-#'                  PCA = FALSE, 
-#'                  iter = 200)
+#'
+#' calculate_lhsOpt(
+#'   popLHS = poplhs,
+#'   PCA = FALSE,
+#'   iter = 200
+#' )
 #' }
 #'
 #' @note
-#' Special thanks to Brendan Malone for the original implementation of this algorithm.
+#' Special thanks to Dr. Brendan Malone for the original implementation of this algorithm.
 #'
 #' @author Tristan R.H. Goodbody
 #'
 #' @export
 
 
-calculate_lhsOpt <- function(popLHS = NULL,
+calculate_lhsOpt <- function(popLHS,
                              PCA = TRUE,
                              quant = TRUE,
                              KLdiv = TRUE,
@@ -72,11 +73,11 @@ calculate_lhsOpt <- function(popLHS = NULL,
   #--- Error handling ---#
 
   if (!is.list(popLHS)) {
-    stop("'popLHS' must be a list")
+    stop("'popLHS' must be a list - see output from sgsR::calculate_lhsPop()")
   }
 
   if (any(!names(popLHS) %in% c("values", "pcaLoad", "matQ", "matCov"))) {
-    stop(paste0("'popLHS' must be the output from the 'calculate_lhsPop()' function"))
+    stop(glue::glue("'popLHS' must be the output from the 'calculate_lhsPop()' function"))
   }
 
   if (!is.logical(PCA)) {
@@ -304,7 +305,7 @@ plot_LHCOptim <- function(dfFinal,
     dplyr::select(df.x) %>%
     dplyr::pull()
 
-  message(paste0("Your optimum estimated sample size based on KL divergence is: ", num))
+  message(glue::glue("Your optimum estimated sample size based on KL divergence is: {num}"))
 
   x2 <- c(num, num)
   y2 <- c(0, 1)

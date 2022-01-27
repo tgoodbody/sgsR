@@ -9,7 +9,6 @@ calculate_allocation(
   nSamp,
   allocation = "prop",
   mraster = NULL,
-  metric = NULL,
   existing = NULL,
   force = FALSE
 )
@@ -20,12 +19,10 @@ calculate_allocation(
 \item{nSamp}{Numeric. Number of desired samples.}
 
 \item{allocation}{Character. Allocation algorithm to be used. Either \code{prop} (default) for proportional allocation
-or \code{optim} for optimal allocation.}
+or \code{optim} for optimal allocation (equal sampling cost) or \code{equal} for equal number of samples (defined by \code{nSamp})
+ for each strata.}
 
-\item{mraster}{spatRaster. ALS metrics raster. Required when \code{allocation = optim}.}
-
-\item{metric}{Numeric/Character. Index or name of primary covariate within mraster to stratify.
-Required when \code{allocation = optim}.}
+\item{mraster}{spatRaster. ALS metric raster. Required when \code{allocation = optim}.}
 
 \item{existing}{sf or data.frame.  Existing plot network.}
 
@@ -47,21 +44,6 @@ Determine required samples in strata
 \details{
 Determine how many samples to allocate within strata
 }
-\section{Details}{
-
-\itemize{
-\item{nSamp = Desired sample count}
-\item{Nh = Count of cells within strata 'h'}
-\item{N = Total cound of cells}
-\item{\eqn{\sigma}h = Sample standard deviation}
-\item{nh = samples allocated with strata 'h'}
-}
-
-\eqn{nh = nSamp * Nh / N}
-
-\eqn{nh = nSamp  Nh * Nh * \sigma h / \sum Nk * \sigma k}
-}
-
 \examples{
 #--- Load strata raster and existing samples---#
 r <- system.file("extdata", "kmeans.tif", package = "sgsR")
@@ -71,41 +53,53 @@ e <- system.file("extdata", "existing.shp", package = "sgsR")
 e <- sf::st_read(e)
 
 #--- perform grid sampling ---#
-calculate_allocation(sraster = sr, 
-                     nSamp = 200)
+calculate_allocation(
+  sraster = sr,
+  nSamp = 200
+)
 
-calculate_allocation(sraster = sr, 
-                     nSamp = 200,
-                     force = TRUE)
-                     
+calculate_allocation(
+  sraster = sr,
+  nSamp = 200,
+  force = TRUE
+)
+
 #--- extract strata from existing samples ---#
-e.sr <- extract_strata(sraster = sr, 
-                       existing = e)
+e.sr <- extract_strata(
+  sraster = sr,
+  existing = e
+)
 
-calculate_allocation(sraster = sr, 
-                     nSamp = 200, 
-                     existing = e.sr)
+calculate_allocation(
+  sraster = sr,
+  nSamp = 200,
+  existing = e.sr
+)
 
-#--- Load mraster for optimal allocation ---#                     
-mr <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
+#--- Load mraster for optimal allocation ---#
+mr <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 mr <- terra::rast(mr)
-                     
-calculate_allocation(sraster = sr, 
-                     nSamp = 200, 
-                     existing = e.sr,
-                     allocation = "optim",
-                     mraster = mr,
-                     metric = 1,
-                     force = TRUE)
-                     
-                     
+
+calculate_allocation(
+  sraster = sr,
+  nSamp = 200,
+  existing = e.sr,
+  allocation = "optim",
+  mraster = mr$zmax,
+  force = TRUE
+)
+}
+\references{
+Gregoire, T.G., & Valentine, H.T. (2007). Sampling Strategies for Natural Resources and the Environment (1st ed.).
+ Chapman and Hall/CRC. https://doi.org/10.1201/9780203498880
 }
 \seealso{
 Other calculate functions: 
 \code{\link{calculate_coobs}()},
 \code{\link{calculate_distance}()},
 \code{\link{calculate_lhsPop}()},
-\code{\link{calculate_pcomp}()}
+\code{\link{calculate_pcomp}()},
+\code{\link{calculate_sampsize}()}
 }
 \author{
 Tristan R.H. Goodbody

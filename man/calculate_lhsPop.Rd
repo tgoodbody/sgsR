@@ -26,21 +26,26 @@ List of matrices to be used as input for \code{\link{calculate_lhsOpt}}.
 }
 \description{
 Population level analysis of metric raster data
+
+Calculates population level statistics including principal components, quantile matrix, and Kullback-leibler 
+divergence neccesary for \code{\link{calculate_lhsOpt}}.
 }
 \note{
-Special thanks to Brendan Malone for the original implementation of this algorithm.
+Special thanks to Dr. Brendan Malone for the original implementation of this algorithm.
 }
 \examples{
 \dontrun{
 #--- Load raster and access files ---#
-r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
+r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 mr <- terra::rast(r)
 
 calculate_lhsPop(mraster = mr)
 
-calculate_lhsPop(mraster = mr, 
-                 nQuant = 10, 
-                 PCA = FALSE)
+calculate_lhsPop(
+  mraster = mr,
+  nQuant = 10,
+  PCA = FALSE
+)
 }
 }
 \references{
@@ -51,7 +56,8 @@ Other calculate functions:
 \code{\link{calculate_allocation}()},
 \code{\link{calculate_coobs}()},
 \code{\link{calculate_distance}()},
-\code{\link{calculate_pcomp}()}
+\code{\link{calculate_pcomp}()},
+\code{\link{calculate_sampsize}()}
 }
 \author{
 Tristan R.H. Goodbody

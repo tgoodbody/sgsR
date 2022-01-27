@@ -4,10 +4,9 @@
 #' @family stratify functions
 #'
 #' @inheritParams strat_kmeans
-#' @inheritParams strat_quantiles
 #' @inheritParams strat_breaks
 #' @inheritParams calculate_pcomp
-#'
+#' @param mraster Spatraster. Covariate raster to stratify.
 #' @param nStrata Numeric. Number of strata for primary principal component.
 #' @param nStrata2 Numeric. Number of strata for secondary principal component.
 #' @param ... Additional arguments to be passed to \code{\link[stats]{prcomp}}.
@@ -24,26 +23,31 @@
 #'
 #' @examples
 #' #--- Load raster and access files ---#
-#' r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
+#' r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 #' mr <- terra::rast(r)
 #'
-#' strat_pcomp(mraster = mr, 
-#'             nStrata = 5, 
-#'             plot = TRUE)
-#' 
-#' strat_pcomp(mraster = mr, 
-#'             nStrata = 4, 
-#'             nStrata2 = 4, 
-#'             plot = TRUE, 
-#'             details = TRUE)
-#' 
-#' strat_pcomp(mraster = mr, 
-#'             nStrata = 3, 
-#'             nStrata2 = 3, 
-#'             filename = tempfile(fileext = ".tif"))
-#'             
+#' strat_pcomp(
+#'   mraster = mr,
+#'   nStrata = 5,
+#'   plot = TRUE
+#' )
+#'
+#' strat_pcomp(
+#'   mraster = mr,
+#'   nStrata = 4,
+#'   nStrata2 = 4,
+#'   plot = TRUE,
+#'   details = TRUE
+#' )
+#'
+#' strat_pcomp(
+#'   mraster = mr,
+#'   nStrata = 3,
+#'   nStrata2 = 3,
+#'   filename = tempfile(fileext = ".tif")
+#' )
 #' @author Tristan R.H. Goodbody
-#' 
+#'
 #' @export
 
 strat_pcomp <- function(mraster,
@@ -193,8 +197,8 @@ strat_pcomp <- function(mraster,
 
     p <- classPlot(as.data.frame(pcagrps),
       coordsgrps,
-      metric = "PC1",
-      metric2 = "PC2",
+      mraster = PC1,
+      mraster2 = PC2,
       samp
     )
 

@@ -2,11 +2,11 @@
 % Please edit documentation in R/calculate_distance.R
 \name{calculate_distance}
 \alias{calculate_distance}
-\title{distance to access}
+\title{Distance to access layer}
 \usage{
 calculate_distance(
-  raster = NULL,
-  access = NULL,
+  raster,
+  access,
   plot = FALSE,
   filename = NULL,
   overwrite = FALSE
@@ -38,20 +38,28 @@ sr <- terra::rast(r)
 a <- system.file("extdata", "roads.shp", package = "sgsR")
 ac <- sf::st_read(a)
 
-calculate_distance(raster = sr, 
-                   access = ac, 
-                   plot = TRUE)
+calculate_distance(
+  raster = sr,
+  access = ac,
+  plot = TRUE
+)
 
-calculate_distance(raster = sr, 
-                   access = ac, 
-                   plot = TRUE, 
-                   filename = tempfile(fileext = ".tif"))
+calculate_distance(
+  raster = sr,
+  access = ac,
+  plot = TRUE,
+  filename = tempfile(fileext = ".tif")
+)
 }
 \seealso{
 Other calculate functions: 
 \code{\link{calculate_allocation}()},
 \code{\link{calculate_coobs}()},
 \code{\link{calculate_lhsPop}()},
-\code{\link{calculate_pcomp}()}
+\code{\link{calculate_pcomp}()},
+\code{\link{calculate_sampsize}()}
+}
+\author{
+Tristan R.H. Goodbody
 }
 \concept{calculate functions}

@@ -5,16 +5,16 @@
 \alias{classPlot}
 \title{Plot}
 \usage{
-classPlot(dfc, coordsgrps, metric, metric2, samp)
+classPlot(dfc, coordsgrps, mraster, mraster2, samp)
 }
 \arguments{
-\item{dfc}{data.frame. Values for metric1 and metric2}
+\item{dfc}{data.frame. Values for mraster and mraster2}
 
 \item{coordsgrps}{List. Cartesian coordinates of each strata}
 
-\item{metric}{Numeric/Character. Index or name of primary covariate within \code{mraster} to stratify.}
+\item{mraster}{Spatraster. Primary covariate raster to stratify.}
 
-\item{metric2}{Numeric/Character. Index or name of secondary covariate within \code{mraster} to stratify.}
+\item{mraster2}{Spatraster. Secondary covariate raster to stratify.}
 
 \item{samp}{Numeric. Determines proportion of cells to plot}
 }

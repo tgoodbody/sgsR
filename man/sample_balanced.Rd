@@ -7,7 +7,7 @@
 sample_balanced(
   mraster,
   nSamp,
-  algorithm = "lpm2",
+  algorithm = "lpm2_kdtree",
   p = NULL,
   access = NULL,
   buff_inner = NULL,
@@ -22,7 +22,7 @@ sample_balanced(
 
 \item{nSamp}{Numeric. Number of desired samples.}
 
-\item{algorithm}{Character. One of \code{lpm2 lcube lcubestratified}}
+\item{algorithm}{Character. One of \code{lpm2_kdtree, lcube, lcubestratified}}
 
 \item{p}{Numeric. Vector with length equal to the number of cells in \code{mraster} representing
 the inclusion probability for each candidate sample. Default = \code{nSamp / N}, where \code{N}
@@ -47,28 +47,32 @@ strata with boundary dividers.}
 An sf object with \code{nSamp} randomly sampled points.
 }
 \description{
-Balanced raster sampling using \code{\link[BalancedSampling]{lpm2}} and
+Balanced raster sampling using \code{\link[BalancedSampling]{lcube}} and
 \code{\link[SamplingBigData]{lpm2_kdtree}} methods
 }
 \examples{
 \dontrun{
 #--- Load raster and existing plots---#
-r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
+r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 mr <- terra::rast(r)
 
 a <- system.file("extdata", "roads.shp", package = "sgsR")
 ac <- sf::st_read(a)
 
-sample_balanced(mraster = mr, 
-                nSamp = 200, 
-                plot = TRUE)
+sample_balanced(
+  mraster = mr,
+  nSamp = 200,
+  plot = TRUE
+)
 
-sample_balanced(mraster = mr, 
-                nSamp = 100, 
-                algorithm = "lcube",
-                access = ac, 
-                buff_inner = 50, 
-                buff_outer = 200)
+sample_balanced(
+  mraster = mr,
+  nSamp = 100,
+  algorithm = "lcube",
+  access = ac,
+  buff_inner = 50,
+  buff_outer = 200
+)
 }
 
 }
@@ -78,6 +82,9 @@ Balanced Sampling. R package version 1.5.5. https://CRAN.R-project.org/package=B
 
 Jonathan Lisic and Anton Grafstrom (2018). SamplingBigData: Sampling Methods for
 Big Data. R package version 1.0.0. https://CRAN.R-project.org/package=SamplingBigData
+
+Grafström, A. Lisic, J (2018). BalancedSampling: Balanced and Spatially Balanced Sampling.
+ R package version 1.5.4. http://www.antongrafstrom.se/balancedsampling
 }
 \seealso{
 Other sample functions: 

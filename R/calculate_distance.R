@@ -1,4 +1,4 @@
-#' distance to access
+#' Distance to access layer
 #'
 #' @description Per pixel distance to nearest access vector. Intended to be used as a `cost` constraint
 #' within the \code{\link{sample_clhs}} function
@@ -19,18 +19,24 @@
 #' a <- system.file("extdata", "roads.shp", package = "sgsR")
 #' ac <- sf::st_read(a)
 #'
-#' calculate_distance(raster = sr, 
-#'                    access = ac, 
-#'                    plot = TRUE)
-#' 
-#' calculate_distance(raster = sr, 
-#'                    access = ac, 
-#'                    plot = TRUE, 
-#'                    filename = tempfile(fileext = ".tif"))
+#' calculate_distance(
+#'   raster = sr,
+#'   access = ac,
+#'   plot = TRUE
+#' )
+#'
+#' calculate_distance(
+#'   raster = sr,
+#'   access = ac,
+#'   plot = TRUE,
+#'   filename = tempfile(fileext = ".tif")
+#' )
+#' @author Tristan R.H. Goodbody
+#'
 #' @export
 
-calculate_distance <- function(raster = NULL,
-                               access = NULL,
+calculate_distance <- function(raster,
+                               access,
                                plot = FALSE,
                                filename = NULL,
                                overwrite = FALSE) {
@@ -49,8 +55,8 @@ calculate_distance <- function(raster = NULL,
     stop("'access' must be an 'sf' object")
   }
 
-  if (!inherits(sf::st_geometry(access), "sfc_MULTILINESTRING")) {
-    stop("'access' geometry type must be 'sfc_MULTILINESTRING'")
+  if (!inherits(sf::st_geometry(access), "sfc_MULTILINESTRING") && !inherits(sf::st_geometry(access), "sfc_LINESTRING")) {
+    stop("'access' geometry type must be 'LINESTRING' or 'MULTILINESTRING'")
   }
 
   #--- load access ---#

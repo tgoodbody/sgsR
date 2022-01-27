@@ -1,13 +1,13 @@
 #' Balanced sampling
 #'
-#' @description Balanced raster sampling using \code{\link[BalancedSampling]{lpm2}} and
+#' @description Balanced raster sampling using \code{\link[BalancedSampling]{lcube}} and
 #' \code{\link[SamplingBigData]{lpm2_kdtree}} methods
 #'
 #' @family sample functions
 #'
 #' @inheritParams strat_kmeans
 #' @inheritParams sample_srs
-#' @param algorithm Character. One of \code{lpm2 lcube lcubestratified}
+#' @param algorithm Character. One of \code{lpm2_kdtree, lcube, lcubestratified}
 #' @param p Numeric. Vector with length equal to the number of cells in \code{mraster} representing
 #' the inclusion probability for each candidate sample. Default = \code{nSamp / N}, where \code{N}
 #' is the number of cells.
@@ -17,22 +17,26 @@
 #' @examples
 #' \dontrun{
 #' #--- Load raster and existing plots---#
-#' r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
+#' r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 #' mr <- terra::rast(r)
 #'
 #' a <- system.file("extdata", "roads.shp", package = "sgsR")
 #' ac <- sf::st_read(a)
 #'
-#' sample_balanced(mraster = mr, 
-#'                 nSamp = 200, 
-#'                 plot = TRUE)
-#' 
-#' sample_balanced(mraster = mr, 
-#'                 nSamp = 100, 
-#'                 algorithm = "lcube",
-#'                 access = ac, 
-#'                 buff_inner = 50, 
-#'                 buff_outer = 200)
+#' sample_balanced(
+#'   mraster = mr,
+#'   nSamp = 200,
+#'   plot = TRUE
+#' )
+#'
+#' sample_balanced(
+#'   mraster = mr,
+#'   nSamp = 100,
+#'   algorithm = "lcube",
+#'   access = ac,
+#'   buff_inner = 50,
+#'   buff_outer = 200
+#' )
 #' }
 #'
 #' @references
@@ -42,6 +46,9 @@
 #'
 #' Jonathan Lisic and Anton Grafstrom (2018). SamplingBigData: Sampling Methods for
 #' Big Data. R package version 1.0.0. https://CRAN.R-project.org/package=SamplingBigData
+#' 
+#' Grafström, A. Lisic, J (2018). BalancedSampling: Balanced and Spatially Balanced Sampling.
+#'  R package version 1.5.4. http://www.antongrafstrom.se/balancedsampling
 #'
 #' @author Tristan R.H. Goodbody
 #'
@@ -49,7 +56,7 @@
 
 sample_balanced <- function(mraster,
                             nSamp,
-                            algorithm = "lpm2",
+                            algorithm = "lpm2_kdtree",
                             p = NULL,
                             access = NULL,
                             buff_inner = NULL,
@@ -86,10 +93,10 @@ sample_balanced <- function(mraster,
   }
 
   #--- list all available algorithms to determine if a valid one has been supplied ---#
-  algs <- c("lpm2", "lcube", "lcubestratified")
+  algs <- c("lpm2_kdtree", "lcube", "lcubestratified")
 
   if (!algorithm %in% algs) {
-    stop("Unknown algorithm specified. Please use one of 'lpm2' 'lcube' 'lcubestratified'")
+    stop("Unknown algorithm specified. Please use one of 'lpm2_kdtree' 'lcube' 'lcubestratified'")
   }
 
   ######################################
@@ -114,8 +121,8 @@ sample_balanced <- function(mraster,
       stop("'access' must be an 'sf' object")
     }
 
-    if (!inherits(sf::st_geometry(access), "sfc_MULTILINESTRING")) {
-      stop("'access' geometry type must be 'sfc_MULTILINESTRING'")
+    if (!inherits(sf::st_geometry(access), "sfc_MULTILINESTRING") && !inherits(sf::st_geometry(access), "sfc_LINESTRING")) {
+      stop("'access' geometry type must be 'LINESTRING' or 'MULTILINESTRING'")
     }
 
     #--- buffer roads and mask ---#
@@ -151,12 +158,12 @@ sample_balanced <- function(mraster,
   }
 
 
-  if (algorithm == "lpm2") {
+  if (algorithm == "lpm2_kdtree") {
 
     #--- check for required packages ---#
 
     if (!requireNamespace("SamplingBigData", quietly = TRUE)) {
-      stop("Package \"SamplingBigData\" needed for the 'lpm2' algorithm. Please install it.",
+      stop("Package \"SamplingBigData\" needed for the 'lpm2_kdtree' algorithm. Please install it.",
         call. = FALSE
       )
     }
@@ -225,7 +232,7 @@ sample_balanced <- function(mraster,
     }
 
     if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(paste0(filename, " already exists and overwrite = FALSE"))
+      stop(glue::glue("{filename} already exists and overwrite = FALSE"))
     }
 
     sf::st_write(samples, filename, delete_layer = overwrite)

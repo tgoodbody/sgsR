@@ -21,7 +21,7 @@
 #'
 #' @examples
 #' #--- Load raster and existing plots---#
-#' r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
+#' r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 #' mr <- terra::rast(r)
 #'
 #' e <- system.file("extdata", "existing.shp", package = "sgsR")
@@ -30,43 +30,55 @@
 #' a <- system.file("extdata", "roads.shp", package = "sgsR")
 #' ac <- sf::st_read(a)
 #'
-#' sample_clhs(mraster = mr, 
-#'             nSamp = 200, 
-#'             plot = TRUE, 
-#'             iter = 100)
-#' 
-#' sample_clhs(mraster = mr, 
-#'             nSamp = 400, 
-#'             existing = e, 
-#'             iter = 250,
-#'             details = TRUE)
-#' 
-#' sample_clhs(mraster = mr, 
-#'             nSamp = 200, 
-#'             iter = 200, 
-#'             existing = e,
-#'             access = ac, 
-#'             buff_inner = 100,
-#'             buff_outer = 300, 
-#'             plot = TRUE)
-#' 
+#' sample_clhs(
+#'   mraster = mr,
+#'   nSamp = 200,
+#'   plot = TRUE,
+#'   iter = 100
+#' )
+#'
+#' sample_clhs(
+#'   mraster = mr,
+#'   nSamp = 400,
+#'   existing = e,
+#'   iter = 250,
+#'   details = TRUE
+#' )
+#'
+#' sample_clhs(
+#'   mraster = mr,
+#'   nSamp = 200,
+#'   iter = 200,
+#'   existing = e,
+#'   access = ac,
+#'   buff_inner = 100,
+#'   buff_outer = 300,
+#'   plot = TRUE
+#' )
+#'
 #' #--- cost constrained examples ---#
 #' #--- calculate distance to access layer for each pixel in mr ---#
-#' mr.c <- calculate_distance(raster = mr, 
-#'                            access = ac)
-#' 
-#' sample_clhs(mraster = mr.c, 
-#'             nSamp = 250, 
-#'             iter = 200,
-#'             cost = "dist2access",
-#'             plot = TRUE)
-#' 
-#' sample_clhs(mraster = mr.c, 
-#'             nSamp = 250, 
-#'             existing = e, 
-#'             iter = 200,
-#'             cost = "dist2access", 
-#'             plot = TRUE)
+#' mr.c <- calculate_distance(
+#'   raster = mr,
+#'   access = ac
+#' )
+#'
+#' sample_clhs(
+#'   mraster = mr.c,
+#'   nSamp = 250,
+#'   iter = 200,
+#'   cost = "dist2access",
+#'   plot = TRUE
+#' )
+#'
+#' sample_clhs(
+#'   mraster = mr.c,
+#'   nSamp = 250,
+#'   existing = e,
+#'   iter = 200,
+#'   cost = "dist2access",
+#'   plot = TRUE
+#' )
 #' @references
 #' Minasny, B. and McBratney, A.B. 2006. A conditioned Latin hypercube method
 #' for sampling in the presence of ancillary information. Computers and
@@ -149,8 +161,8 @@ sample_clhs <- function(mraster,
       stop("'access' must be an 'sf' object")
     }
 
-    if (!inherits(sf::st_geometry(access), "sfc_MULTILINESTRING")) {
-      stop("'access' geometry type must be 'sfc_MULTILINESTRING'")
+    if (!inherits(sf::st_geometry(access), "sfc_MULTILINESTRING") && !inherits(sf::st_geometry(access), "sfc_LINESTRING")) {
+      stop("'access' geometry type must be 'LINESTRING' or 'MULTILINESTRING'")
     }
 
     #--- buffer roads and mask ---#
@@ -209,37 +221,31 @@ sample_clhs <- function(mraster,
     if (!inherits(existing, "data.frame") && !inherits(existing, "sf")) {
       stop("'existing' must be a data.frame or sf object")
     }
-    
+
     #--- check that nSamp is > than existing ---#
-    
-    if (nrow(existing) > nSamp){
+
+    if (nrow(existing) > nSamp) {
       stop("nSamp must be > than number of existing samples")
-      
     }
 
-    #--- combined existing samples with vals dataframe ---#
+    #--- combine existing samples with vals dataframe ---#
 
     if (!inherits(existing, "sf")) {
       if (any(!c("X", "Y") %in% colnames(existing))) {
-
         #--- if coordinate column names are lowercase change them to uppercase to match requirements ---#
-
         if (any(c("x", "y") %in% colnames(existing))) {
           existing <- existing %>%
             dplyr::rename(
               X = x,
               Y = y
             )
-
           message("Column coordinates names for 'existing' are lowercase - converting to uppercase")
         } else {
-
           #--- if no x/y columns are present stop ---#
-
           stop("'existing' must have columns named 'X' and 'Y'")
         }
       }
-
+      
       existingSamples <- existing
     } else {
       existingSamples <- extract_metrics(mraster, existing, data.frame = TRUE)
@@ -249,13 +255,15 @@ sample_clhs <- function(mraster,
 
     existingSamples <- existingSamples %>%
       dplyr::mutate(type = "existing") %>%
-      dplyr::select(namesvals)
+      dplyr::select(all_of(namesvals))
 
     #--- create conjoined existing dataset ---#
 
     vals <- rbind(existingSamples, vals)
   }
 
+  #--- remove 'type' during sampling ---#
+  
   vals_tp <- vals %>% dplyr::select(-type)
 
   ##########################
@@ -265,8 +273,6 @@ sample_clhs <- function(mraster,
   #--- if existing samples are not provided ---#
 
   if (is.null(existing)) {
-
-    #--- remove 'type' during sampling ---#
 
     clhsOut <- clhs::clhs(x = vals_tp, size = nSamp, iter = iter, cost = cost, ...)
 
@@ -326,7 +332,7 @@ sample_clhs <- function(mraster,
     }
 
     if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(paste0(filename, " already exists and overwrite = FALSE"))
+      stop(glue::glue("{filename} already exists and overwrite = FALSE"))
     }
 
     sf::st_write(samples, filename, delete_layer = overwrite)

@@ -55,34 +55,40 @@ Stratify metrics raster using \code{\link[stats]{kmeans}} algorithm
 }
 \examples{
 #--- Load raster and access files ---#
-r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
+r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 mr <- terra::rast(r)
 
 #--- perform stratification using k-means ---#
-kmeans <- strat_kmeans(mraster = mr, 
-                       nStrata = 5)
+kmeans <- strat_kmeans(
+  mraster = mr,
+  nStrata = 5
+)
 
-kmeans <- strat_kmeans(mraster = mr, 
-                       nStrata = 5, 
-                       iter = 1000,
-                       algorithm = "MacQueen",
-                       plot = TRUE, 
-                       details = TRUE)
+kmeans <- strat_kmeans(
+  mraster = mr,
+  nStrata = 5,
+  iter = 1000,
+  algorithm = "MacQueen",
+  plot = TRUE,
+  details = TRUE
+)
 
-kmeans <- strat_kmeans(mraster = mr, 
-                       nStrata = 5, 
-                       iter = 1000,
-                       plot = TRUE, 
-                       filename = tempfile(fileext = ".tif"), 
-                       overwrite = TRUE)
-                       
+kmeans <- strat_kmeans(
+  mraster = mr,
+  nStrata = 5,
+  iter = 1000,
+  plot = TRUE,
+  filename = tempfile(fileext = ".tif"),
+  overwrite = TRUE
+)
 }
 \seealso{
 Other stratify functions: 
 \code{\link{strat_breaks}()},
+\code{\link{strat_map}()},
 \code{\link{strat_osb}()},
 \code{\link{strat_pcomp}()},
-\code{\link{strat_quantiles}()}
+\code{\link{strat_poly}()}
 }
 \author{
 Tristan R.H. Goodbody

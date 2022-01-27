@@ -1,17 +1,22 @@
 Type: Package
 Package: sgsR
-Title: Structurally Guided Sampling Approaches using ALS Data for R
-Version: 0.1.0
+Title: Structurally Guided Sampling Approaches using ALS Data
+Version: 1.0.0
 Date: 2021
-Author: Tristan RH Goodbody
-Maintainer: Tristan RH Goodbody <goodbody.t@gmail.com>
+Authors@R: c(
+    person("Tristan RH", "Goodbody", , "goodbody.t@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-6894-7925")),
+    person("Nicholas C", "Coops", , "nicholas.coops@ubc.ca", role = "aut",
+           comment = c(ORCID = "0000-0002-0151-9037"))
+   )
 Description: This package provides functions to enable stratification and
     sampling for structurally guided sampling using ALS data.
-License: MIT + file LICENSE
+License: GPL (>= 3)
 Depends: 
     R (>= 2.10)
 Imports:
     dplyr (>= 1.0.6),
+    glue (>= 1.4.2),
     ggplot2 (>= 3.3.3),
     magrittr (>= 2.0.1),
     methods (>= 4.0.5),
@@ -44,4 +49,4 @@ VignetteBuilder:
 Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2

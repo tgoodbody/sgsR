@@ -10,7 +10,6 @@ sample_strat(
   force = FALSE,
   allocation = "prop",
   mraster = NULL,
-  metric = NULL,
   mindist = NULL,
   existing = NULL,
   include = FALSE,
@@ -35,12 +34,10 @@ in cases where nSamp and \code{sraster} strata count are not equally divisible. 
 is provided.}
 
 \item{allocation}{Character. Allocation algorithm to be used. Either \code{prop} (default) for proportional allocation
-or \code{optim} for optimal allocation.}
+or \code{optim} for optimal allocation (equal sampling cost) or \code{equal} for equal number of samples (defined by \code{nSamp})
+ for each strata.}
 
-\item{mraster}{spatRaster. ALS metrics raster. Required when \code{allocation = optim}.}
-
-\item{metric}{Numeric/Character. Index or name of primary covariate within mraster to stratify.
-Required when \code{allocation = optim}.}
+\item{mraster}{spatRaster. ALS metric raster. Required when \code{allocation = optim}.}
 
 \item{mindist}{Numeric. Minimum allowable distance between selected
 samples. Default = 100.}
@@ -61,7 +58,7 @@ from access where plots can be sampled.}
 
 \item{wcol}{Numeric. Number of columns in the focal window (default is 3).}
 
-\item{plot}{Logial. Plots existing (circles) and new (crosses) samples.}
+\item{plot}{Logical. Plots existing (circles) and new (crosses) samples.}
 
 \item{details}{Logical. If \code{FALSE} (default) output is sf object of
 stratified samples. If \code{TRUE} return a list
@@ -87,7 +84,7 @@ The sampling is performed in 2 stages:
 
 \item \code{Rule 2} - If no more samples exist to satisfy desired sampling count,
  individual stratum pixels are sampled.
- 
+
  The rule applied to a allocate each sample is defined in the \code{rule} attribute of output samples.
 
 }
@@ -103,47 +100,64 @@ ac <- sf::st_read(a)
 e <- system.file("extdata", "existing.shp", package = "sgsR")
 e <- sf::st_read(e)
 
-sample_strat(sraster = sr, 
-             nSamp = 200, 
-             plot = TRUE)
-             
-sample_strat(sraster = sr, 
-             nSamp = 200, 
-             plot = TRUE,
-             force = TRUE)
-             
-#--- extract strata values to existing samples ---#              
-e.sr <- extract_strata(sraster = sr, existing = e)              
+#--- perform stratified sampling random sampling ---#
+sample_strat(
+  sraster = sr,
+  nSamp = 200,
+  plot = TRUE
+)
 
-sample_strat(sraster = sr, 
-             nSamp = 200, 
-             access = ac,
-             existing = e.sr, 
-             mindist = 200, 
-             buff_inner = 50, 
-             buff_outer = 200)
+#--- perform stratified sampling random sampling ---#
+sample_strat(
+  sraster = sr,
+  nSamp = 200,
+  plot = TRUE,
+  force = TRUE
+)
 
-sample_strat(sraster = sr, 
-             nSamp = 200, 
-             access = ac,
-             buff_inner = 50, 
-             buff_outer = 200, 
-             filename = tempfile(fileext = ".shp"))
-             
-#--- Load mraster for optimal allocation ---#                     
-mr <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
+#--- extract strata values to existing samples ---#
+e.sr <- extract_strata(sraster = sr, existing = e)
+
+sample_strat(
+  sraster = sr,
+  nSamp = 200,
+  access = ac,
+  existing = e.sr,
+  mindist = 200,
+  buff_inner = 50,
+  buff_outer = 200
+)
+
+sample_strat(
+  sraster = sr,
+  nSamp = 200,
+  access = ac,
+  buff_inner = 50,
+  buff_outer = 200,
+  filename = tempfile(fileext = ".shp")
+)
+
+#--- Load mraster for optimal allocation ---#
+mr <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 mr <- terra::rast(mr)
 
-sample_strat(sraster = sr, 
-             nSamp = 200, 
-             allocation = "optim",
-             mraster = mr,
-             metric = 1,
-             access = ac,
-             buff_inner = 50, 
-             buff_outer = 200, 
-             filename = tempfile(fileext = ".shp"))
-             
+sample_strat(
+  sraster = sr,
+  nSamp = 200,
+  allocation = "optim",
+  mraster = mr$zmax,
+  access = ac,
+  buff_inner = 50,
+  buff_outer = 200,
+  filename = tempfile(fileext = ".shp")
+)
+}
+\references{
+Queinnec, M., White, J. C., & Coops, N. C. (2021). 
+Comparing airborne and spaceborne photon-counting LiDAR canopy 
+structural estimates across different boreal forest types. 
+Remote Sensing of Environment, 262 (August 2020), 112510. 
+https://doi.org/10.1016/j.rse.2021.112510
 }
 \seealso{
 Other sample functions: 
