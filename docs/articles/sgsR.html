@@ -146,7 +146,7 @@
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="srast">Stratified rasters - <code>sraster</code><a class="anchor" aria-label="anchor" href="#srast"></a>
 </h2>
-<p>For the purposes of this tutorial I am also going to show how to produce a basic <code>sraster</code> and <code>existing</code> sample data that we will used in examples below.</p>
+<p>For the purposes of this tutorial I am also going to show how to produce a basic <code>sraster</code> and <code>existing</code> sample data that we will use in examples below.</p>
 <p>To make the <code>sraster</code> we will use the <code><a href="../reference/strat_kmeans.html">strat_kmeans()</a></code> function where the input <code>mraster</code> will be stratified using a kmeans algorithm.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- apply kmeans algorithm to metrics raster ---#</span>
@@ -165,13 +165,13 @@
                        mindist <span class="op">=</span> <span class="fl">100</span>, <span class="co"># define that samples must be 100 m apart</span>
                        plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># algorithm will plot output</span></code></pre></div>
 <p><img src="sgsR_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
-<p>We now have <code>mraster</code>, <code>access</code>, <code>sraster</code> and <code>existing</code> data sets generated. Expect to see these data used in the all examples in this document.</p>
+<p>We now have <code>mraster</code>, <code>access</code>, <code>sraster</code> and <code>existing</code> data sets generated. Expect to see these data used in all the examples in this document.</p>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="pipe">
 <code>%&gt;%</code><a class="anchor" aria-label="anchor" href="#pipe"></a>
 </h2>
-<p>The sgsR package leverages the <code>%&gt;%</code> operator from the <code>magrittr</code> package. This allows us to “pipe” operations together to save in the amount of code needed to achieve an outcome. A simple example below.</p>
+<p>The <code>sgsR</code> package leverages the <code>%&gt;%</code> operator from the <code>magrittr</code> package. This allows us to “pipe” operations together to save in the amount of code needed to achieve an outcome. A simple example below.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- non piped ---#</span>
 <span class="va">sraster</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat_kmeans.html">strat_kmeans</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, <span class="co"># use mraster as input for sampling</span>
