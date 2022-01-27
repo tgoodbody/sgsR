@@ -312,8 +312,8 @@
 <h3 class="unnumbered" id="coobs">
 <code>calculate_coobs</code><a class="anchor" aria-label="anchor" href="#coobs"></a>
 </h3>
-<p>The <code><a href="../reference/calculate_coobs.html">calculate_coobs()</a></code> function perform the COunt of OBServations (coobs) algorithm using <code>existing</code> sample data and <code>mraster</code> covariates. This algorithm aids the user in understanding how an <code>existing</code> sample data set is distributed among the landscape with relation to <code>mraster</code> covariates. The output coobs raster could be used to constrain clhs sampling using the <code><a href="../reference/sample_clhs.html">sample_clhs()</a></code> to areas that are under reprented.</p>
-<p>The coobs raster determines how many observations are similar in terms of the covariate space at every pixel.This fucntion takes advantage of parallel processing routines.</p>
+<p>The <code><a href="../reference/calculate_coobs.html">calculate_coobs()</a></code> function perform the COunt of OBServations (coobs) algorithm using <code>existing</code> sample data and <code>mraster</code> covariates. This algorithm aids the user in understanding how an <code>existing</code> sample data set is distributed among the landscape with relation to <code>mraster</code> covariates. The output coobs raster could be used to constrain clhs sampling using the <code><a href="../reference/sample_clhs.html">sample_clhs()</a></code> to areas that are under represented.</p>
+<p>The coobs raster determines how many observations are similar in terms of the covariate space at every pixel. This fucntion takes advantage of parallel processing routines.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/calculate_coobs.html">calculate_coobs</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, <span class="co"># input</span>
                 existing <span class="op">=</span> <span class="va">existing</span>, <span class="co"># existing samples</span>
@@ -352,7 +352,7 @@
 <h3 class="unnumbered" id="lhsopt">
 <code>calculate_lhsOpt</code><a class="anchor" aria-label="anchor" href="#lhsopt"></a>
 </h3>
-<p>The <code><a href="../reference/calculate_lhsOpt.html">calculate_lhsOpt()</a></code> function performs a bootsrapped latin hypercube sampling approach where a population level analysis of <code>mraster</code> data is performed to determine the optimal Latin hypercube sample size.</p>
+<p>The <code><a href="../reference/calculate_lhsOpt.html">calculate_lhsOpt()</a></code> function performs a bootstrapped latin hypercube sampling approach where a population level analysis of <code>mraster</code> data is performed to determine the optimal Latin hypercube sample size.</p>
 <p>Using statistical data calculated using the <code><a href="../reference/calculate_lhsPop.html">calculate_lhsPop()</a></code> and varying sample sizes defined by <code>minSamp</code>, <code>maxSamp</code>, <code>step</code> and <code>rep</code>. Sampling protocols are conducted and statistical effectiveness of those sampling outcomes are evaluated to determine where sample size is minimized and statistical representation is maximized.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- calculate lhsPop details ---#</span>
