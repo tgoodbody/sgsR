@@ -101,14 +101,14 @@
 <li><p><code>calculate_ahels()</code> - Adapted hypercube evaluation of a legacy sample (ahels) algorithm</p></li>
 <li><p><code><a href="../reference/calculate_coobs.html">calculate_coobs()</a></code> - Count of observations algorithm</p></li>
 <li><p><code><a href="../reference/calculate_lhsPop.html">calculate_lhsPop()</a></code> - Population covariate statistics for latin hypercube sampling</p></li>
-<li><p><code><a href="../reference/calculate_lhsOpt.html">calculate_lhsOpt()</a></code> - Optimal latin hypercube sampling paramters including sample number</p></li>
+<li><p><code><a href="../reference/calculate_lhsOpt.html">calculate_lhsOpt()</a></code> - Optimal latin hypercube sampling parameters including sample number</p></li>
 </ul>
 <p><code>calculate_*</code> functions serve as helper functions. In this section we outline how these functions can be used.</p>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="dist">
 <code>calculate_distance</code><a class="anchor" aria-label="anchor" href="#dist"></a>
 </h2>
-<p>The <code><a href="../reference/calculate_distance.html">calculate_distance()</a></code> function takes input <code>raster</code> and <code>access</code> data and outputs a per pixel distance to the nearest access point. This function has particular value for constraining sampling protocols such the <code><a href="../reference/sample_clhs.html">sample_clhs()</a></code> function where the output raster layer can be used as a <code>cost</code> constraint.The output raster is the input with the calculated distance layer (<code>dist2access</code>) appended.</p>
+<p>The <code><a href="../reference/calculate_distance.html">calculate_distance()</a></code> function takes input <code>raster</code> and <code>access</code> data and outputs a per pixel distance to the nearest access point. This function has particular value for constraining sampling protocols such the <code><a href="../reference/sample_clhs.html">sample_clhs()</a></code> function where the output raster layer can be used as a <code>cost</code> constraint. The output raster is the input with the calculated distance layer (<code>dist2access</code>) appended.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/calculate_distance.html">calculate_distance</a></span><span class="op">(</span>raster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># input</span>
                    access <span class="op">=</span> <span class="va">access</span>, <span class="co"># define access road network</span>
@@ -270,7 +270,7 @@
 <div class="section level3 unnumbered">
 <h3 class="unnumbered" id="optimal">Optimal Allocation<a class="anchor" aria-label="anchor" href="#optimal"></a>
 </h3>
-<p>Optimal allocation utilizes within strata metric variation to allocate samples. This means that in addition to providing and <code>sraster</code>, that a specific metric (<code>mraster</code>) must be provided to calculate variation to optimally allocate samples.</p>
+<p>Optimal allocation utilizes within strata metric variation to allocate samples. This means that in addition to providing and <code>sraster</code>, a specific metric (<code>mraster</code>) must be provided to calculate variation to optimally allocate samples.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/calculate_allocation.html">calculate_allocation</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># stratified raster</span>
                      nSamp <span class="op">=</span> <span class="fl">200</span>, <span class="co"># desired sample number</span>
