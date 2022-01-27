@@ -18,7 +18,7 @@ You can install the released version of sgsR from
 
 ``` r
 install.packages("devtools")
-devtools::install_github("https://github.com/tgoodbody/sgsR", install_vignettes = TRUE, dependencies = TRUE)
+devtools::install_github("https://github.com/tgoodbody/sgsR", build_vignettes = TRUE, dependencies = TRUE)
 library(sgsR)
 ```
 
