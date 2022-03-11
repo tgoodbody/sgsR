@@ -24,11 +24,11 @@ mask_access <- function(raster,
 
   #--- error handling in the presence of 'access' ---#
   if (any(vapply(buffers, is.null, TRUE))) {
-    stop("All 'buff_*' paramaters must be provided when 'access' is defined.")
+    stop("All 'buff_*' paramaters must be provided when 'access' is defined.", call. = FALSE)
   }
 
   if (!any(vapply(buffers, is.numeric, FALSE))) {
-    stop("All 'buff_*' paramaters must be type numeric")
+    stop("All 'buff_*' paramaters must be type numeric", call. = FALSE)
   }
 
   message(

@@ -83,7 +83,7 @@ calculate_allocation <- function(sraster,
 
   #--- Error management ---#
   if (!inherits(sraster, "SpatRaster")) {
-    stop("'sraster' must be type SpatRaster", call. = FALSE)
+    stop("'sraster' must be type SpatRaster")
   }
 
   if (!is.numeric(nSamp)) {

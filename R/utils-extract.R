@@ -34,15 +34,15 @@ extract_strata <- function(sraster,
   }
 
   if (any(!c("strata") %in% names(sraster))) {
-    stop("'sraster' must have a layer named 'strata'")
+    stop("'sraster' must have a layer named 'strata'", call. = FALSE)
   }
 
   if (!inherits(existing, "sf") && inherits(sf::st_geometry(existing), "sfc_POINT")) {
-    stop("'existing' must be an 'sf' object of type 'sfc_POINT' geometry")
+    stop("'existing' must be an 'sf' object of type 'sfc_POINT' geometry", call. = FALSE)
   }
 
   if (!is(existing, "data.frame")) {
-    stop("existing must be a data.frame")
+    stop("existing must be a data.frame", call. = FALSE)
   }
 
   #--- if the existing plots are an sf object extract coordinates ---#
