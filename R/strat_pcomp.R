@@ -69,7 +69,7 @@ strat_pcomp <- function(mraster,
   #--- Error management ---#
 
   if (!inherits(mraster, "SpatRaster")) {
-    stop("mraster must be type SpatRaster", call. = FALSE)
+    stop("mraster must be type SpatRaster")
   }
 
   if (!is.numeric(nStrata)) {
@@ -207,6 +207,7 @@ strat_pcomp <- function(mraster,
     out <- list(details = PCA, raster = rout, plot = p)
 
     return(out)
+    
   } else {
 
     #--- just output raster ---#

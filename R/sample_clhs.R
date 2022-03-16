@@ -1,4 +1,4 @@
-#' CLHS sampling
+#' Conditioned Latin Hypercube Sampling
 #'
 #' @description Conditioned Latin Hypercube Sampling using \code{\link[clhs]{clhs}} functionality.
 #'
@@ -167,7 +167,10 @@ sample_clhs <- function(mraster,
 
     #--- buffer roads and mask ---#
 
-    access_buff <- mask_access(raster = mraster, access = access, buff_inner = buff_inner, buff_outer = buff_outer)
+    access_buff <- mask_access(raster = mraster, 
+                               access = access, 
+                               buff_inner = buff_inner, 
+                               buff_outer = buff_outer)
 
     mraster_access <- access_buff$rast
 
@@ -178,6 +181,7 @@ sample_clhs <- function(mraster,
         X = x,
         Y = y
       )
+    
   } else {
 
     #--- extract covariate data from mraster ---#
@@ -247,8 +251,11 @@ sample_clhs <- function(mraster,
       }
       
       existingSamples <- existing
+      
     } else {
-      existingSamples <- extract_metrics(mraster, existing, data.frame = TRUE)
+      
+      existingSamples <- extract_metrics(mraster = mraster, existing = existing, data.frame = TRUE)
+      
     }
 
     #--- create dataset with labels for plotting ---#
@@ -266,9 +273,7 @@ sample_clhs <- function(mraster,
   
   vals_tp <- vals %>% dplyr::select(-type)
 
-  ##########################
-  #### SAMPLING ############
-  ##########################
+  ###--- SAMPLING ---###
 
   #--- if existing samples are not provided ---#
 

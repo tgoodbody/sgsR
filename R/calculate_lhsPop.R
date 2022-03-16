@@ -49,7 +49,7 @@ calculate_lhsPop <- function(mraster,
                              nQuant = 10,
                              KLdiv = TRUE) {
   if (!inherits(mraster, "SpatRaster")) {
-    stop("'mraster' must be type SpatRaster", call. = FALSE)
+    stop("'mraster' must be type SpatRaster")
   }
 
   if (!is.logical(PCA)) {

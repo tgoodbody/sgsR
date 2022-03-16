@@ -68,7 +68,7 @@ calculate_sampsize <- function(mraster,
   #--- error management ---#
   
   if (!inherits(mraster, "SpatRaster")) {
-    stop("'mraster' must be type SpatRaster", call. = FALSE)
+    stop("'mraster' must be type SpatRaster")
   }
   
   if (!is.numeric(start)) {

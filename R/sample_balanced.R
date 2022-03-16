@@ -77,7 +77,7 @@ sample_balanced <- function(mraster,
 
   #--- Error management ---#
   if (!inherits(mraster, "SpatRaster")) {
-    stop("'mraster' must be type SpatRaster", call. = FALSE)
+    stop("'mraster' must be type SpatRaster")
   }
 
   if (!is.numeric(nSamp)) {
@@ -96,12 +96,10 @@ sample_balanced <- function(mraster,
   algs <- c("lpm2_kdtree", "lcube", "lcubestratified")
 
   if (!algorithm %in% algs) {
-    stop("Unknown algorithm specified. Please use one of 'lpm2_kdtree' 'lcube' 'lcubestratified'")
+    stop("Unknown algorithm specified. Please use one of 'lpm2_kdtree', 'lcube', 'lcubestratified'.")
   }
 
-  ######################################
-  ## DETERMINE NULL / NA SYNTAX FOR CRS##
-  ######################################
+  ###--- DETERMINE NULL / NA SYNTAX FOR CRS ---###
 
   if (is.na(terra::crs(mraster, proj = TRUE))) {
     stop("'mraster' does not have a coordinate system")
@@ -127,7 +125,10 @@ sample_balanced <- function(mraster,
 
     #--- buffer roads and mask ---#
 
-    access_buff <- mask_access(raster = mraster, access = access, buff_inner = buff_inner, buff_outer = buff_outer)
+    access_buff <- mask_access(raster = mraster, 
+                               access = access, 
+                               buff_inner = buff_inner, 
+                               buff_outer = buff_outer)
 
     mraster <- access_buff$rast
   }

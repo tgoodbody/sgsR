@@ -83,19 +83,19 @@ calculate_allocation <- function(sraster,
 
   #--- Error management ---#
   if (!inherits(sraster, "SpatRaster")) {
-    stop("'sraster' must be type SpatRaster")
+    stop("'sraster' must be type SpatRaster", call. = FALSE)
   }
 
   if (!is.numeric(nSamp)) {
-    stop("'nSamp' must be type numeric")
+    stop("'nSamp' must be type numeric", call. = FALSE)
   }
 
   if (allocation != "prop" && allocation != "optim" && allocation != "equal") {
-    stop(glue::glue("Unknown allocation: {allocation} selected. Please use 'prop' (default), 'optim' or 'equal'"))
+    stop(glue::glue("Unknown allocation: {allocation} selected. Please use 'prop' (default), 'optim' or 'equal'"), call. = FALSE)
   }
 
   if (!is.logical(force)) {
-    stop("'force' must be type logical")
+    stop("'force' must be type logical", call. = FALSE)
   }
 
   #--- set global vars ---#
@@ -151,7 +151,7 @@ calculate_allocation <- function(sraster,
       #--- error handling when allocation algorithm is 'optim' ---#
   
       if (is.null(mraster)) {
-        stop("'mraster' must be supplied if 'allocation = optim'.")
+        stop("'mraster' must be supplied if 'allocation = optim'.", call. = FALSE)
       }
   
       if (!inherits(mraster, "SpatRaster")) {
@@ -165,7 +165,7 @@ calculate_allocation <- function(sraster,
         nm <- names(rastermetric)
       } else {
         
-        stop("Multiple layers detected in 'mraster'. Please define a singular band to stratify.")
+        stop("Multiple layers detected in 'mraster'. Please define a singular band for allocation.", call. = FALSE)
       }
   
       message(glue::glue("Implementing optimal allocation of samples based on variability of '{nm}'"))
@@ -227,11 +227,11 @@ calculate_allocation <- function(sraster,
     #--- if existing is provided include already sampled plots to achieve the total number ---#
 
     if (!inherits(existing, "data.frame") && !inherits(existing, "sf")) {
-      stop("'existing' must be a data.frame or sf object")
+      stop("'existing' must be a data.frame or sf object", call. = FALSE)
     }
 
     if (any(!c("strata") %in% names(existing))) {
-      stop("'existing' must have an attribute named 'strata'. Consider using extract_strata().")
+      stop("'existing' must have an attribute named 'strata'. Consider using extract_strata().", call. = FALSE)
     }
 
     #--- convert existing to data frame of strata values ---#
@@ -247,7 +247,7 @@ calculate_allocation <- function(sraster,
 
     #--- if the strata for toSample and existing are not identical throw an error ---#
     if (!identical(unique(existing$strata), unique(toSample$strata))) {
-      stop("Strata for 'sraster' and 'existing' are not identical. Consider using extract_strata().")
+      stop("Strata for 'sraster' and 'existing' are not identical. Consider using extract_strata().", call. = FALSE)
     }
 
     #--- join the 2 df together and subtract the number of existing plots by strata from toSample ---#

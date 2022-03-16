@@ -89,7 +89,7 @@ sample_systematic <- function(raster,
   ext <- geometry <- x <- NULL
 
   if (!inherits(raster, "SpatRaster")) {
-    stop("'raster' must be type SpatRaster", call. = FALSE)
+    stop("'raster' must be type SpatRaster")
   }
 
   if (!is.numeric(cellsize)) {
@@ -175,7 +175,7 @@ sample_systematic <- function(raster,
       
       xy <- data.frame(X=X,Y=Y)
       
-      #--- test whether the sample will be within the bounds of the hexagon --X#
+      #--- test whether the sample will be within the bounds of the hexagon ---#
       xy$pass <- abs(xy$X) < 1 - .5*(abs(xy$Y)/.866)
       
       #--- filter only values with TRUE in $pass ---#
@@ -255,6 +255,7 @@ sample_systematic <- function(raster,
 
     #--- output samples dataframe ---#
     return(output)
+    
   } else {
 
     #--- just output raster ---#
