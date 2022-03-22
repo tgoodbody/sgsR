@@ -73,7 +73,6 @@
 #'
 #' @author Tristan R.H. Goodbody
 #'
-#' @export
 
 strat_osb <- function(mraster,
                       nStrata,
