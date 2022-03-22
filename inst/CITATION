@@ -2,7 +2,7 @@ citHeader("To cite sgsR in publications use:")
 
 citEntry(
   entry    = "Article",
-  title    = "sgsR: Structurally Guided Sampling Approaches using ALS Data for R",
+  title    = "sgsR: Structurally guided sampling approaches using ALS data",
   author   = c(
     person("Tristan RH", "Goodbody"),
     person("Nicholas C", "Coops")
@@ -13,20 +13,24 @@ citEntry(
   number   = "NA",
   pages    = "NA",
   url      = "https://github.com/tgoodbody/sgsR",
-  textVersion = paste("Goodbody, TRH., Coops, NC. (2021). sgsR: Structurally Guided Sampling Approaches using ALS Data for R. https://github.com/tgoodbody/sgsR "))
+  textVersion = paste("Goodbody, TRH., Coops, NC. (",year,"). sgsR: Structurally guided sampling approaches using ALS data. https://github.com/tgoodbody/sgsR "))
   
-  year <- sub("-.*", "", meta$Date)
-  note <- sprintf("R package version %s", meta$Version)
-  
-  bibentry(bibtype = "Manual",
-  title = "sgsR: Structurally Guided Sampling Approaches using ALS Data for R",
-  author = c(
-    person("Tristan RH", "Goodbody"),
-    person("Nicholas C", "Coops")
-   ),
-  year = year,
-  note = note,
-  url = "https://github.com/tgoodbody/sgsR")
-  textVersion = paste0("Goodbody TRH., Coops NC.", "(", year, ").",
-  " sgsR: Structurally Guided Sampling Approaches using ALS Data for R.   ", note, ".",
-  " https://github.com/tgoodbody/sgsR")
+year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date, perl = TRUE)
+vers <- paste("R package version", meta$Version)
+authors <- meta$`Authors@R`
+authors <- utils:::.read_authors_at_R_field(authors)
+authors <- Filter(function(e) {!(is.null(e$given) && is.null(e$family)) && !is.na(match("aut", e$role))}, authors)
+authors <- format(authors, include = c("given", "family"))
+authors <- paste(paste(head(authors, -1L), collapse = ", "), tail(authors, 1L), sep = " and ")
+
+citEntry(entry="Manual",
+         title = meta$Title,
+         author = authors,
+         year = year,
+         note = vers,
+         textVersion =
+           paste(authors, " (",
+                 year,
+                 "). ", meta$Title, ". ",
+                 vers, ". https://github.com/tgoodbody/sgsR", sep=""),
+         url = "https://github.com/tgoodbody/sgsR")
