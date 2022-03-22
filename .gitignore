@@ -3,4 +3,7 @@
 .RData
 .Ruserdata
 inst/doc
-.Rhistory
+Meta
+doc
+docs
+pkgdown
