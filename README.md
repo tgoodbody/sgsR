@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# sgsR - structurally guided sampling using ALS metrics
+# sgsR - structurally guided sampling <img src="https://raw.githubusercontent.com/tgoodbody/sgsR/main/man/figures/logo200x231.png" align="right"/>
 
 <!-- badges: start -->
 <!-- badges: end -->
@@ -18,7 +18,7 @@ You can install the released version of sgsR from
 
 ``` r
 install.packages("devtools")
-devtools::install_github("https://github.com/tgoodbody/sgsR", build_vignettes = TRUE, dependencies = TRUE)
+devtools::install_github("https://github.com/tgoodbody/sgsR")
 library(sgsR)
 ```
 
