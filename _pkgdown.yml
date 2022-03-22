@@ -1,3 +1,5 @@
+home:
+  title: sgsR
 reference:
 - title: "Stratification functions"
 - contents:
@@ -17,3 +19,23 @@ authors:
     
 code:
   width: 72
+
+template:
+  opengraph:
+    image:
+      src: "man/figures/logo.png"
+      
+  bootstrap: 5
+  bslib:
+    primary: "#0054AD"
+    border-radius: 0.5rem
+    btn-border-radius: 0.25rem
+
+  params:
+    ganalytics: UA-115082821-1
+  includes:
+    in_header:
+      <script defer data-domain="pkgdown.r-lib.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script>
+
+development:
+  mode: auto
