@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# sgsR - structurally guided sampling <img src="https://raw.githubusercontent.com/tgoodbody/sgsR/main/man/figures/logo200x231.png" align="right"/>
+# sgsR - structurally guided sampling <img src="https://raw.githubusercontent.com/tgoodbody/sgsR/main/man/figures/logo.png" align="right" width="250" height="288"/>
 
 <!-- badges: start -->
 <!-- badges: end -->

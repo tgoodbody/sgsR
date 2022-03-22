@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# sgsR - structurally guided sampling <img src="https://raw.githubusercontent.com/tgoodbody/sgsR/main/man/figures/logo200x231.png" align="right" width="250" height="288"/>
+# sgsR - structurally guided sampling <img src="https://raw.githubusercontent.com/tgoodbody/sgsR/main/man/figures/logo.png" align="right" width="250" height="288"/>
 
 <!-- badges: start -->
 <!-- badges: end -->
