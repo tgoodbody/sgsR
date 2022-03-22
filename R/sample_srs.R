@@ -68,7 +68,7 @@ sample_srs <- function(raster,
   #--- Error management ---#
 
   if (!inherits(raster, "SpatRaster")) {
-    stop("'raster' must be type SpatRaster", call. = FALSE)
+    stop("'raster' must be type SpatRaster")
   }
 
   if (!is.numeric(nSamp)) {

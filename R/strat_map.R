@@ -66,6 +66,7 @@
 #'   details = TRUE,
 #'   plot = TRUE
 #' )
+#' 
 #' @importFrom methods is
 #'
 #' @return A spatRaster object.
@@ -87,11 +88,11 @@ strat_map <- function(sraster,
   #--- error handling ---#
 
   if (!inherits(sraster, "SpatRaster")) {
-    stop("'sraster' must be type SpatRaster", call. = FALSE)
+    stop("'sraster' must be type SpatRaster")
   }
 
   if (!inherits(sraster2, "SpatRaster")) {
-    stop("'sraster' must be type SpatRaster", call. = FALSE)
+    stop("'sraster' must be type SpatRaster")
   }
 
   if (!is.logical(stack)) {

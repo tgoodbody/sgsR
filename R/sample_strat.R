@@ -93,10 +93,10 @@
 #' \item \code{Rule 1} - Sample within grouped stratum pixels defined within the
 #' \code{wrow, wcol} parameters
 #'
-#' \item \code{Rule 2} - If no more samples exist to satisfy desired sampling count,
+#' \item \code{Rule 2} - If no samples exist to satisfy Rule 1
 #'  individual stratum pixels are sampled.
 #'
-#'  The rule applied to a allocate each sample is defined in the \code{rule} attribute of output samples.
+#'  The rule applied to allocate each sample is defined in the \code{rule} attribute of output samples.
 #'
 #' }
 #' @references 
@@ -370,11 +370,9 @@ sample_strat <- function(sraster,
         }
       }
 
-      ##################
-      #--- sampling ---#
-      ##################
+      ###--- sampling ---###
 
-      #--- RULE 1: select only cells surrounded by cells with same strata ---#
+      ###--- RULE 1: select only cells surrounded by cells with same strata ---###
 
       #--- Define focal window ---#
       w <- matrix(1 / (wrow * wcol), nr = wrow, nc = wcol)
@@ -463,7 +461,7 @@ sample_strat <- function(sraster,
         }
       }
       
-      #---- RULE 2 sampling ---#
+      ###--- RULE 2 sampling ---###
       
       if (nCount < n) {
         idx_all <- 1:terra::ncell(strata_m)

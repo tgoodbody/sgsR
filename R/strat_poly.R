@@ -95,7 +95,7 @@ strat_poly <- function(poly,
   }
   
   if (!inherits(raster, "SpatRaster")) {
-    stop("'raster' must be type SpatRaster", call. = FALSE)
+    stop("'raster' must be type SpatRaster")
   }
   
   if (!is.logical(overwrite)) {

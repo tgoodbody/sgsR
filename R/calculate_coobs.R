@@ -11,7 +11,7 @@
 #'
 #' @param mraster spatRaster. ALS metrics raster. Requires at least 2 layers to calculate covariance matrix
 #' @param threshold Numeric. Proxy maximum pixel quantile to avoid outliers. \code{default = 0.95}
-#' @param cores Numeric. Number of CPU cores to use for parallel processing. \code{default = 1}
+#' @param cores Numeric. Number of cores to use for parallel processing. \code{default = 1}
 #'
 #' @references
 #' Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451
@@ -84,7 +84,7 @@ calculate_coobs <- function(mraster,
   #--- Error handling ---#
 
   if (!inherits(mraster, "SpatRaster")) {
-    stop("'mraster' must be type SpatRaster", call. = FALSE)
+    stop("'mraster' must be type SpatRaster")
   }
 
   if (!inherits(existing, "data.frame") && !inherits(existing, "sf")) {

@@ -69,7 +69,7 @@ strat_kmeans <- function(mraster,
   #--- Error management ---#
 
   if (!inherits(mraster, "SpatRaster")) {
-    stop("'mraster' must be type SpatRaster", call. = FALSE)
+    stop("'mraster' must be type SpatRaster")
   }
 
   if (!is.numeric(nStrata)) {

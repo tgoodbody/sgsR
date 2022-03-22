@@ -77,7 +77,7 @@ calculate_lhsOpt <- function(popLHS,
   }
 
   if (any(!names(popLHS) %in% c("values", "pcaLoad", "matQ", "matCov"))) {
-    stop(glue::glue("'popLHS' must be the output from the 'calculate_lhsPop()' function"))
+    stop(glue::glue("'popLHS' must be the output from the 'sgsR::calculate_lhsPop()' function"))
   }
 
   if (!is.logical(PCA)) {

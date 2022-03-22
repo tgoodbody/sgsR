@@ -15,7 +15,8 @@
 #' additional samples should be added. \code{default = 0.9}. Values close to 1 can cause the algorithm to
 #' continually loop and should be used sparingly.
 #' @param plot Logial. Plots existing (circles) and new (crosses) samples on the first band of mraster.
-#' @param nQuant Numeric. Number of quantiles to divide covariates and samples into.
+#' @param nQuant Numeric. Number of quantiles to divide covariates and samples into. Quantiles that do not
+#' cover at least 1% of the area of interest will be excluded and be returned as \code{NA}.
 #'
 #' @references
 #' Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451
@@ -56,6 +57,7 @@ sample_ahels <- function(mraster,
                          nSamp = NULL,
                          threshold = 0.9,
                          plot = FALSE,
+                         details = FALSE,
                          filename = NULL,
                          overwrite = FALSE) {
 
@@ -70,26 +72,31 @@ sample_ahels <- function(mraster,
   }
 
   if (!inherits(existing, "data.frame") && !inherits(existing, "sf")) {
-    stop("'existing' must be a data.frame or sf object")
+    stop("'existing' must be a data.frame or sf object", call. = FALSE)
   }
 
   if (!is.numeric(nQuant)) {
-    stop("'nQuant' must be type numeric")
+    stop("'nQuant' must be type numeric", call. = FALSE)
   }
 
   if (!is.numeric(threshold)) {
-    stop("'threshold' must be type numeric")
+    stop("'threshold' must be type numeric", call. = FALSE)
   }
 
   if (threshold < 0 | threshold > 1) {
-    stop("'threshold' must be > 0 and < 1")
+    stop("'threshold' must be > 0 and < 1", call. = FALSE)
+  }
+  
+  if (!is.logical(details)) {
+    stop("'details' must be type logical", call. = FALSE)
   }
 
-  #--- determine number of bands in 'mraster' ---#
+  #--- determine number of bands in mraster ---#
 
   nb <- terra::nlyr(mraster)
 
   #--- determine crs of input sraster ---#
+  
   crs <- terra::crs(mraster, proj = TRUE)
 
   #--- extract covariates data from mraster ---#
@@ -194,7 +201,7 @@ sample_ahels <- function(mraster,
     #--- ensure nSamp is numeric ---#
 
     if (!is.numeric(nSamp)) {
-      stop("'nSamp' must be type numeric")
+      stop("'nSamp' must be type numeric", call. = FALSE)
     }
 
     message(glue::glue("nSamp of {nSamp} has been provided. Samples will be added until this number is reached"))
@@ -309,9 +316,7 @@ sample_ahels <- function(mraster,
   } else {
     message(glue::glue("threshold of {threshold} has been provided. Samples will be added until quantile ratio is reached"))
 
-    #---
-    #--- If 'nSamp' is not provided a threshold is used ---#
-    #---
+    ###--- If 'nSamp' is not provided a threshold is used ---###
 
     while (isTRUE(any(ratio < threshold))) {
 
@@ -353,6 +358,7 @@ sample_ahels <- function(mraster,
       valsSubSamp <- valsSub[addSamp, ]
 
       valsSubSamp$type <- "new"
+      
       valsSubSamp$n <- row.names(valsSubSamp)
 
       #--- remove samples from pool to ensure same cells are not sampled again ---#
@@ -399,8 +405,6 @@ sample_ahels <- function(mraster,
 
       ratio <- matCovSampDens / matCovDens
 
-      # print(ratio)
-
       #--- order the densities based on representation ---#
 
       #--- low to high ---#
@@ -419,8 +423,6 @@ sample_ahels <- function(mraster,
   }
 
   message(glue::glue("A total of {sTot} new samples added"))
-
-  print(ratio)
 
   #--- convert coordinates to a spatial points object ---#
   samples <- samples %>%
@@ -448,5 +450,16 @@ sample_ahels <- function(mraster,
     sf::st_write(samples, filename, delete_layer = overwrite)
   }
 
-  return(samples)
+  #--- output samples & / or samples and details (ratio matrix) ---#
+  
+  if(isFALSE(details)){
+    
+    return(samples)
+    
+  } else {
+    
+    return(list(samples = samples, details = ratio))
+    
+  }
+  
 }
