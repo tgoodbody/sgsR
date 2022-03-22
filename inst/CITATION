@@ -1,19 +1,4 @@
 citHeader("To cite sgsR in publications use:")
-
-citEntry(
-  entry    = "Article",
-  title    = "sgsR: Structurally guided sampling approaches using ALS data",
-  author   = c(
-    person("Tristan RH", "Goodbody"),
-    person("Nicholas C", "Coops")
-   ),
-  journal  = "NA",
-  year     = sub("-.*", "", meta$Date),
-  volume   = "NA",
-  number   = "NA",
-  pages    = "NA",
-  url      = "https://github.com/tgoodbody/sgsR",
-  textVersion = paste("Goodbody, TRH., Coops, NC. (",year,"). sgsR: Structurally guided sampling approaches using ALS data. https://github.com/tgoodbody/sgsR "))
   
 year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date, perl = TRUE)
 vers <- paste("R package version", meta$Version)

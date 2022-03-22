@@ -2,7 +2,7 @@ Type: Package
 Package: sgsR
 Title: Structurally Guided Sampling Approaches using ALS Data
 Version: 1.0.0
-Date: 2021
+Date: 2022
 Authors@R: c(
     person("Tristan RH", "Goodbody", , "goodbody.t@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-6894-7925")),
@@ -11,6 +11,7 @@ Authors@R: c(
    )
 Description: This package provides functions to enable stratification and
     sampling for structurally guided sampling using ALS data.
+URL: https://github.com/tgoodbody/sgsR
 License: GPL (>= 3)
 Depends: 
     R (>= 2.10)
