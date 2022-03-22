@@ -42,8 +42,6 @@ existing <- sample_srs(raster = mraster, # use sraster as input for sampling
 
 ```
 
-# `sample_*` functions {#sample .unnumbered}
-
 A total of 5 `sample` functions currently exist in the package:
 
 *   `sample_srs()` - simple random sampling

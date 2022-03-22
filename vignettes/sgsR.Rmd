@@ -16,8 +16,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-# `sgsR` fundamentals {#fund .unnumbered}
-
 ## Algorithm structure {#str .unnumbered}
 
 `sgsR` has been scripted primarily using the `terra` package for raster processing and the `sf` package for vector manipulation. There are 3 primary function verbs that the package currently uses:

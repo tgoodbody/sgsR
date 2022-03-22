@@ -43,8 +43,6 @@ existing <- sample_srs(raster = sraster, # use sraster as input for sampling
 
 ```
 
-# `strat_*` functions {#strat .unnumbered}
-
 Fundamental to many structurally guided sampling approaches is the use of stratification methods that allow for more effective and representative sampling protocols. Below I define the stratification methods that are included thus far in `sgsR` and provide some worked examples for each.
 
 A total of 6 `strat` functions currently exist in the package:
@@ -54,8 +52,6 @@ A total of 6 `strat` functions currently exist in the package:
 *   `strat_pcomp()`- principal component stratification
 
 *   `strat_breaks()` - user-defined break stratification
-
-*   `strat_osb()` - optimum sample boundary stratification
 
 *   `strat_poly()` - polygon attribute stratification
 

@@ -6,6 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>stratification • sgsR</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -14,6 +20,7 @@
 <script src="../pkgdown.js"></script><meta property="og:title" content="stratification">
 <meta property="og:description" content="Learn how to use strat* functions.
 ">
+<meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -88,17 +95,12 @@
 
     
     
-<div class="section level1 unnumbered">
-<h1 class="unnumbered" id="strat">
-<code>strat_*</code> functions<a class="anchor" aria-label="anchor" href="#strat"></a>
-</h1>
 <p>Fundamental to many structurally guided sampling approaches is the use of stratification methods that allow for more effective and representative sampling protocols. Below I define the stratification methods that are included thus far in <code>sgsR</code> and provide some worked examples for each.</p>
 <p>A total of 6 <code>strat</code> functions currently exist in the package:</p>
 <ul>
 <li><p><code><a href="../reference/strat_kmeans.html">strat_kmeans()</a></code> - kmeans stratification</p></li>
 <li><p><code><a href="../reference/strat_pcomp.html">strat_pcomp()</a></code>- principal component stratification</p></li>
 <li><p><code><a href="../reference/strat_breaks.html">strat_breaks()</a></code> - user-defined break stratification</p></li>
-<li><p><code><a href="../reference/strat_osb.html">strat_osb()</a></code> - optimum sample boundary stratification</p></li>
 <li><p><code><a href="../reference/strat_poly.html">strat_poly()</a></code> - polygon attribute stratification</p></li>
 <li><p><code><a href="../reference/strat_map.html">strat_map()</a></code> - maps (combines) 2 stratification</p></li>
 </ul>
@@ -303,7 +305,7 @@
 
 <span class="va">fri</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">poly</span><span class="op">)</span>
 <span class="co">#&gt; Reading layer `inventory_polygons' from data source </span>
-<span class="co">#&gt;   `C:\Users\tgood.stu\AppData\Local\Temp\RtmpwjzfyE\temp_libpath29801e1871d0\sgsR\extdata\inventory_polygons.shp' </span>
+<span class="co">#&gt;   `C:\Users\tgood.stu\AppData\Local\Temp\RtmpCYYtR3\temp_libpath29b87c185037\sgsR\extdata\inventory_polygons.shp' </span>
 <span class="co">#&gt;   using driver `ESRI Shapefile'</span>
 <span class="co">#&gt; Simple feature collection with 632 features and 3 fields</span>
 <span class="co">#&gt; Geometry type: MULTIPOLYGON</span>
@@ -418,19 +420,18 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $lookUp</span>
 <span class="co">#&gt;    strata strata2 stratamapped</span>
-<span class="co">#&gt; 1       3       4           34</span>
-<span class="co">#&gt; 2       3       3           33</span>
-<span class="co">#&gt; 3       1       2           12</span>
+<span class="co">#&gt; 1       3       3           33</span>
+<span class="co">#&gt; 2       3       2           32</span>
+<span class="co">#&gt; 3       1       4           14</span>
 <span class="co">#&gt; 4       1       1           11</span>
-<span class="co">#&gt; 5       3       2           32</span>
+<span class="co">#&gt; 5       3       4           34</span>
 <span class="co">#&gt; 6       3       1           31</span>
-<span class="co">#&gt; 7       1       4           14</span>
-<span class="co">#&gt; 8       1       3           13</span>
-<span class="co">#&gt; 9       2       3           23</span>
-<span class="co">#&gt; 10      2       4           24</span>
-<span class="co">#&gt; 11      2       2           22</span>
+<span class="co">#&gt; 7       1       3           13</span>
+<span class="co">#&gt; 8       1       2           12</span>
+<span class="co">#&gt; 9       2       2           22</span>
+<span class="co">#&gt; 10      2       3           23</span>
+<span class="co">#&gt; 11      2       4           24</span>
 <span class="co">#&gt; 12      2       1           21</span></code></pre>
-</div>
 </div>
   </div>
 
@@ -451,7 +452,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>

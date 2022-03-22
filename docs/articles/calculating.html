@@ -6,6 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>calculating • sgsR</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -14,6 +20,7 @@
 <script src="../pkgdown.js"></script><meta property="og:title" content="calculating">
 <meta property="og:description" content="Learn how to use calculate_* functions.
 ">
+<meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -88,10 +95,6 @@
 
     
     
-<div class="section level1 unnumbered">
-<h1 class="unnumbered" id="calc">
-<code>calculate_*</code> functions<a class="anchor" aria-label="anchor" href="#calc"></a>
-</h1>
 <p>A total of 7 <code>calculate</code> functions currently exist in the package:</p>
 <ul>
 <li><p><code><a href="../reference/calculate_distance.html">calculate_distance()</a></code> - per pixel distance to closest access vector</p></li>
@@ -101,14 +104,14 @@
 <li><p><code>calculate_ahels()</code> - Adapted hypercube evaluation of a legacy sample (ahels) algorithm</p></li>
 <li><p><code><a href="../reference/calculate_coobs.html">calculate_coobs()</a></code> - Count of observations algorithm</p></li>
 <li><p><code><a href="../reference/calculate_lhsPop.html">calculate_lhsPop()</a></code> - Population covariate statistics for latin hypercube sampling</p></li>
-<li><p><code><a href="../reference/calculate_lhsOpt.html">calculate_lhsOpt()</a></code> - Optimal latin hypercube sampling parameters including sample number</p></li>
+<li><p><code><a href="../reference/calculate_lhsOpt.html">calculate_lhsOpt()</a></code> - Optimal latin hypercube sampling paramters including sample number</p></li>
 </ul>
 <p><code>calculate_*</code> functions serve as helper functions. In this section we outline how these functions can be used.</p>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="dist">
 <code>calculate_distance</code><a class="anchor" aria-label="anchor" href="#dist"></a>
 </h2>
-<p>The <code><a href="../reference/calculate_distance.html">calculate_distance()</a></code> function takes input <code>raster</code> and <code>access</code> data and outputs a per pixel distance to the nearest access point. This function has particular value for constraining sampling protocols such the <code><a href="../reference/sample_clhs.html">sample_clhs()</a></code> function where the output raster layer can be used as a <code>cost</code> constraint. The output raster is the input with the calculated distance layer (<code>dist2access</code>) appended.</p>
+<p>The <code><a href="../reference/calculate_distance.html">calculate_distance()</a></code> function takes input <code>raster</code> and <code>access</code> data and outputs a per pixel distance to the nearest access point. This function has particular value for constraining sampling protocols such the <code><a href="../reference/sample_clhs.html">sample_clhs()</a></code> function where the output raster layer can be used as a <code>cost</code> constraint.The output raster is the input with the calculated distance layer (<code>dist2access</code>) appended.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/calculate_distance.html">calculate_distance</a></span><span class="op">(</span>raster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># input</span>
                    access <span class="op">=</span> <span class="va">access</span>, <span class="co"># define access road network</span>
@@ -248,10 +251,10 @@
 <span class="fu"><a href="../reference/calculate_allocation.html">calculate_allocation</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, 
                      nSamp <span class="op">=</span> <span class="fl">200</span><span class="op">)</span>
 <span class="co">#&gt;   strata total</span>
-<span class="co">#&gt; 1      1    57</span>
-<span class="co">#&gt; 2      2    48</span>
-<span class="co">#&gt; 3      3    40</span>
-<span class="co">#&gt; 4      4    55</span></code></pre></div>
+<span class="co">#&gt; 1      1    40</span>
+<span class="co">#&gt; 2      2    55</span>
+<span class="co">#&gt; 3      3    57</span>
+<span class="co">#&gt; 4      4    48</span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- calculate existing samples to include ---#</span>
 <span class="va">e.sr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract.html">extract_strata</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, 
@@ -261,16 +264,16 @@
                      nSamp <span class="op">=</span> <span class="fl">200</span>, 
                      existing <span class="op">=</span> <span class="va">e.sr</span><span class="op">)</span>
 <span class="co">#&gt;   strata total need</span>
-<span class="co">#&gt; 1      1    13   57</span>
-<span class="co">#&gt; 2      2    -1   48</span>
-<span class="co">#&gt; 3      3    -8   40</span>
-<span class="co">#&gt; 4      4    -4   55</span></code></pre></div>
+<span class="co">#&gt; 1      1     0   40</span>
+<span class="co">#&gt; 2      2    -6   55</span>
+<span class="co">#&gt; 3      3     0   57</span>
+<span class="co">#&gt; 4      4     6   48</span></code></pre></div>
 <p>Notice that some of the results in <code>total</code> above are negative. This indicates that the <code>existing</code> samples over represent those strata and that some samples should be removed to avoid over representation. The number that should be added/removed is details in <code>$total</code>.</p>
 </div>
 <div class="section level3 unnumbered">
 <h3 class="unnumbered" id="optimal">Optimal Allocation<a class="anchor" aria-label="anchor" href="#optimal"></a>
 </h3>
-<p>Optimal allocation utilizes within strata metric variation to allocate samples. This means that in addition to providing and <code>sraster</code>, a specific metric (<code>mraster</code>) must be provided to calculate variation to optimally allocate samples.</p>
+<p>Optimal allocation utilizes within strata metric variation to allocate samples. This means that in addition to providing and <code>sraster</code>, that a specific metric (<code>mraster</code>) must be provided to calculate variation to optimally allocate samples.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/calculate_allocation.html">calculate_allocation</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># stratified raster</span>
                      nSamp <span class="op">=</span> <span class="fl">200</span>, <span class="co"># desired sample number</span>
@@ -279,10 +282,10 @@
                      mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zmax</span>, <span class="co"># metric raster</span>
                      force <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># force nSamp number</span>
 <span class="co">#&gt;   strata total need</span>
-<span class="co">#&gt; 1      1     6   50</span>
-<span class="co">#&gt; 2      2     1   50</span>
-<span class="co">#&gt; 3      3     1   49</span>
-<span class="co">#&gt; 4      4    -8   51</span></code></pre></div>
+<span class="co">#&gt; 1      1     9   49</span>
+<span class="co">#&gt; 2      2   -10   51</span>
+<span class="co">#&gt; 3      3    -7   50</span>
+<span class="co">#&gt; 4      4     8   50</span></code></pre></div>
 </div>
 <div class="section level3 unnumbered">
 <h3 class="unnumbered" id="equal">Equal allocation<a class="anchor" aria-label="anchor" href="#equal"></a>
@@ -312,8 +315,8 @@
 <h3 class="unnumbered" id="coobs">
 <code>calculate_coobs</code><a class="anchor" aria-label="anchor" href="#coobs"></a>
 </h3>
-<p>The <code><a href="../reference/calculate_coobs.html">calculate_coobs()</a></code> function perform the COunt of OBServations (coobs) algorithm using <code>existing</code> sample data and <code>mraster</code> covariates. This algorithm aids the user in understanding how an <code>existing</code> sample data set is distributed among the landscape with relation to <code>mraster</code> covariates. The output coobs raster could be used to constrain clhs sampling using the <code><a href="../reference/sample_clhs.html">sample_clhs()</a></code> to areas that are under represented.</p>
-<p>The coobs raster determines how many observations are similar in terms of the covariate space at every pixel. This fucntion takes advantage of parallel processing routines.</p>
+<p>The <code><a href="../reference/calculate_coobs.html">calculate_coobs()</a></code> function perform the COunt of OBServations (coobs) algorithm using <code>existing</code> sample data and <code>mraster</code> covariates. This algorithm aids the user in understanding how an <code>existing</code> sample data set is distributed among the landscape with relation to <code>mraster</code> covariates. The output coobs raster could be used to constrain clhs sampling using the <code><a href="../reference/sample_clhs.html">sample_clhs()</a></code> to areas that are under reprented.</p>
+<p>The coobs raster determines how many observations are similar in terms of the covariate space at every pixel.This fucntion takes advantage of parallel processing routines.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/calculate_coobs.html">calculate_coobs</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, <span class="co"># input</span>
                 existing <span class="op">=</span> <span class="va">existing</span>, <span class="co"># existing samples</span>
@@ -352,7 +355,7 @@
 <h3 class="unnumbered" id="lhsopt">
 <code>calculate_lhsOpt</code><a class="anchor" aria-label="anchor" href="#lhsopt"></a>
 </h3>
-<p>The <code><a href="../reference/calculate_lhsOpt.html">calculate_lhsOpt()</a></code> function performs a bootstrapped latin hypercube sampling approach where a population level analysis of <code>mraster</code> data is performed to determine the optimal Latin hypercube sample size.</p>
+<p>The <code><a href="../reference/calculate_lhsOpt.html">calculate_lhsOpt()</a></code> function performs a bootsrapped latin hypercube sampling approach where a population level analysis of <code>mraster</code> data is performed to determine the optimal Latin hypercube sample size.</p>
 <p>Using statistical data calculated using the <code><a href="../reference/calculate_lhsPop.html">calculate_lhsPop()</a></code> and varying sample sizes defined by <code>minSamp</code>, <code>maxSamp</code>, <code>step</code> and <code>rep</code>. Sampling protocols are conducted and statistical effectiveness of those sampling outcomes are evaluated to determine where sample size is minimized and statistical representation is maximized.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- calculate lhsPop details ---#</span>
@@ -363,7 +366,6 @@
 <code class="sourceCode R"><span class="fu"><a href="../reference/calculate_lhsOpt.html">calculate_lhsOpt</a></span><span class="op">(</span>popLHS <span class="op">=</span> <span class="va">poplhs</span>, 
                  PCA <span class="op">=</span> <span class="cn">FALSE</span>, 
                  iter <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></code></pre></div>
-</div>
 </div>
 </div>
   </div>
@@ -385,7 +387,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>

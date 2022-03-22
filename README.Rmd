@@ -8,12 +8,11 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
+  fig.path = "man/figures/"
 )
 ```
 
-# sgsR - structurally guided sampling <img src="man/figures/logo.png" align="right" width="200" height="233"/>
+# sgsR - structurally guided sampling <img src="man/figures/logo.png" align="right" width="200" />
 
 <!-- badges: start -->
 <!-- badges: end -->

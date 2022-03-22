@@ -42,8 +42,6 @@ existing <- sample_srs(raster = mraster, # use sraster as input for sampling
 
 ```
 
-# `calculate_*` functions {#calc .unnumbered}
-
 A total of 7 `calculate` functions currently exist in the package:
 
 *   `calculate_distance()` - per pixel distance to closest access vector
