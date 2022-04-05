@@ -53,18 +53,26 @@ mr <- terra::rast(r)
 
 calculate_pcomp(
   mraster = mr,
-  nComp = 5
+  nComp = 5,
+  plot = TRUE
 )
 
-calculate_pcomp(
-  mraster = mr,
-  nComp = 3,
-  plot = TRUE,
-  details = TRUE
-)
+pcomp <- calculate_pcomp(
+           mraster = mr,
+           nComp = 3,
+           details = TRUE
+         )
+
+#--- Display principal component details ---#
+pcomp$pca
+
+#--- Display importance of components ---#
+summary(pcomp$pca)
+
 }
 \seealso{
 Other calculate functions: 
+\code{\link{calculate_ahels}()},
 \code{\link{calculate_allocation}()},
 \code{\link{calculate_coobs}()},
 \code{\link{calculate_distance}()},

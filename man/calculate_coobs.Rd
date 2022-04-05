@@ -20,7 +20,7 @@ calculate_coobs(
 
 \item{existing}{sf. Samples resulting from sample_* functions.}
 
-\item{cores}{Numeric. Number of CPU cores to use for parallel processing. \code{default = 1}}
+\item{cores}{Numeric. Number of cores to use for parallel processing. \code{default = 1}}
 
 \item{threshold}{Numeric. Proxy maximum pixel quantile to avoid outliers. \code{default = 0.95}}
 
@@ -72,6 +72,7 @@ Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of c
 }
 \seealso{
 Other calculate functions: 
+\code{\link{calculate_ahels}()},
 \code{\link{calculate_allocation}()},
 \code{\link{calculate_distance}()},
 \code{\link{calculate_lhsPop}()},

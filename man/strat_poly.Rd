@@ -94,7 +94,6 @@ Other stratify functions:
 \code{\link{strat_breaks}()},
 \code{\link{strat_kmeans}()},
 \code{\link{strat_map}()},
-\code{\link{strat_osb}()},
 \code{\link{strat_pcomp}()}
 }
 \author{

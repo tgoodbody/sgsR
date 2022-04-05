@@ -7,7 +7,7 @@
 sample_srs(
   raster,
   nSamp,
-  mindist = 100,
+  mindist = NULL,
   access = NULL,
   buff_inner = NULL,
   buff_outer = NULL,
@@ -22,7 +22,7 @@ sample_srs(
 \item{nSamp}{Numeric. Number of desired samples.}
 
 \item{mindist}{Numeric. Minimum allowable distance between selected
-samples. Default = 100.}
+samples. Default = NULL.}
 
 \item{access}{sf. Road access network - must be lines.}
 
@@ -79,7 +79,6 @@ sample_srs(
 }
 \seealso{
 Other sample functions: 
-\code{\link{sample_ahels}()},
 \code{\link{sample_balanced}()},
 \code{\link{sample_clhs}()},
 \code{\link{sample_strat}()},

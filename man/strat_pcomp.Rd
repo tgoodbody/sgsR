@@ -32,6 +32,8 @@ strat_pcomp(
 \item{plot}{Logical. Plots output strata raster and visualized
 strata with boundary dividers.}
 
+\item{samp}{Numeric. Proportion of raster cells to plot between 0-1.}
+
 \item{details}{Logical. If \code{FALSE} (default) output is only
  stratification raster. If \code{TRUE} return a list
 where \code{$details} is additional stratification information and
@@ -89,7 +91,6 @@ Other stratify functions:
 \code{\link{strat_breaks}()},
 \code{\link{strat_kmeans}()},
 \code{\link{strat_map}()},
-\code{\link{strat_osb}()},
 \code{\link{strat_poly}()}
 }
 \author{

@@ -2,7 +2,7 @@
 % Please edit documentation in R/sample_clhs.R
 \name{sample_clhs}
 \alias{sample_clhs}
-\title{CLHS sampling}
+\title{Conditioned Latin Hypercube Sampling}
 \usage{
 sample_clhs(
   mraster,
@@ -137,7 +137,6 @@ on Digital Soil Mapping, Sydney, Australia.
 }
 \seealso{
 Other sample functions: 
-\code{\link{sample_ahels}()},
 \code{\link{sample_balanced}()},
 \code{\link{sample_srs}()},
 \code{\link{sample_strat}()},

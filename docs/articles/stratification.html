@@ -69,7 +69,14 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
 </form>
 
-      <ul class="navbar-nav"></ul>
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/tgoodbody/sgsR/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 
     
@@ -84,26 +91,37 @@
       <img src="../logo.png" class="logo" alt=""><h1>stratification</h1>
             
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/tgoodbody/sgsR/blob/HEAD/vignettes/stratification.Rmd" class="external-link"><code>vignettes/stratification.Rmd</code></a></small>
       <div class="d-none name"><code>stratification.Rmd</code></div>
     </div>
 
     
     
-<p>Fundamental to many structurally guided sampling approaches is the use of stratification methods that allow for more effective and representative sampling protocols. Below I define the stratification methods that are included thus far in <code>sgsR</code> and provide some worked examples for each.</p>
-<p>A total of 6 <code>strat</code> functions currently exist in the package:</p>
+<p>Fundamental to many structurally guided sampling approaches is the
+use of stratification methods that allow for more effective and
+representative sampling protocols. Below I define the stratification
+methods that are included thus far in <code>sgsR</code> and provide some
+worked examples for each.</p>
+<p>A total of 6 <code>strat</code> functions currently exist in the
+package:</p>
 <ul>
 <li><p><code><a href="../reference/strat_kmeans.html">strat_kmeans()</a></code> - kmeans stratification</p></li>
-<li><p><code><a href="../reference/strat_pcomp.html">strat_pcomp()</a></code>- principal component stratification</p></li>
-<li><p><code><a href="../reference/strat_breaks.html">strat_breaks()</a></code> - user-defined break stratification</p></li>
-<li><p><code><a href="../reference/strat_poly.html">strat_poly()</a></code> - polygon attribute stratification</p></li>
-<li><p><code><a href="../reference/strat_map.html">strat_map()</a></code> - maps (combines) 2 stratification</p></li>
+<li><p><code><a href="../reference/strat_pcomp.html">strat_pcomp()</a></code>- principal component
+stratification</p></li>
+<li><p><code><a href="../reference/strat_breaks.html">strat_breaks()</a></code> - user-defined break
+stratification</p></li>
+<li><p><code><a href="../reference/strat_poly.html">strat_poly()</a></code> - polygon attribute
+stratification</p></li>
+<li><p><code><a href="../reference/strat_map.html">strat_map()</a></code> - maps (combines) 2
+stratification</p></li>
 </ul>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="kmeans">
 <code>strat_kmeans</code><a class="anchor" aria-label="anchor" href="#kmeans"></a>
 </h2>
-<p>We provide a preliminary example of the <code><a href="../reference/strat_kmeans.html">strat_kmeans()</a></code> algorithm to prepare our <code>sraster</code> input data but here are a few more.</p>
+<p>We provide a preliminary example of the <code><a href="../reference/strat_kmeans.html">strat_kmeans()</a></code>
+algorithm to prepare our <code>sraster</code> input data but here are a
+few more.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- perform stratification using k-means ---#</span>
 <span class="fu"><a href="../reference/strat_kmeans.html">strat_kmeans</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, <span class="co"># input</span>
@@ -117,7 +135,9 @@
 <span class="co">#&gt; name        : strata </span>
 <span class="co">#&gt; min value   :      1 </span>
 <span class="co">#&gt; max value   :      5</span></code></pre></div>
-<p>Notice that nothing plotted… That’s because <code>plot = FALSE</code> is the default for all functions in <code>sgsR</code>. See examples below where <code>plot = TRUE</code>.</p>
+<p>Notice that nothing plotted… That’s because <code>plot = FALSE</code>
+is the default for all functions in <code>sgsR</code>. See examples
+below where <code>plot = TRUE</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/strat_kmeans.html">strat_kmeans</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, <span class="co"># input</span>
              nStrata <span class="op">=</span> <span class="fl">10</span>, <span class="co"># algorithm will produce 10 strata</span>
@@ -157,7 +177,12 @@
 <h2 class="unnumbered" id="strat_pcomp">
 <code>strat_pcomp</code><a class="anchor" aria-label="anchor" href="#strat_pcomp"></a>
 </h2>
-<p>The <code><a href="../reference/strat_pcomp.html">strat_pcomp()</a></code> algorithm calculates principal components on the input <code>mraster</code> then divides data into equal sized strata. Strata can be defined by using the primary (PC1) only (<code>nStrata</code>), or primary &amp; secondary (PC2 - <code>nStata2</code>) principal components. If <code>nStata2</code> is defined, PC2 is used and the total number of strata will be <span class="math display">\[nStrata * nStrata2\]</span>.</p>
+<p>The <code><a href="../reference/strat_pcomp.html">strat_pcomp()</a></code> algorithm calculates principal
+components on the input <code>mraster</code> then divides data into
+equal sized strata. Strata can be defined by using the primary (PC1)
+only (<code>nStrata</code>), or primary &amp; secondary (PC2 -
+<code>nStata2</code>) principal components. If <code>nStata2</code> is
+defined, PC2 is used and the total number of strata will be <span class="math display">\[nStrata * nStrata2\]</span>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- perform stratification using principal components ---#</span>
 <span class="fu"><a href="../reference/strat_pcomp.html">strat_pcomp</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, <span class="co"># input</span>
@@ -207,7 +232,12 @@
 <h2 class="unnumbered" id="strat_breaks">
 <code>strat_breaks</code><a class="anchor" aria-label="anchor" href="#strat_breaks"></a>
 </h2>
-<p>The <code><a href="../reference/strat_breaks.html">strat_breaks()</a></code> function stratifies data based on user-defined breaks in covariates. A single <code>metric</code> can be defined or an additional <code>metric2</code> can be supplied. <code>breaks</code> and <code>breaks2</code> correspond to the user-defined breaks for <code>metric</code> and <code>metric2</code> respectively.</p>
+<p>The <code><a href="../reference/strat_breaks.html">strat_breaks()</a></code> function stratifies data based on
+user-defined breaks in covariates. A single <code>metric</code> can be
+defined or an additional <code>metric2</code> can be supplied.
+<code>breaks</code> and <code>breaks2</code> correspond to the
+user-defined breaks for <code>metric</code> and <code>metric2</code>
+respectively.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- perform stratification using user-defined breaks ---#</span>
 
@@ -227,7 +257,8 @@
 <span class="va">breaks2</span>
 <span class="co">#&gt;    0%   25%   50%   75%  100% </span>
 <span class="co">#&gt;  0.00  5.62  9.07 12.16 23.82</span></code></pre></div>
-<p>Once the breaks have been created we can input them into the function using the <code>breaks</code> and <code>breaks2</code> parameters.</p>
+<p>Once the breaks have been created we can input them into the function
+using the <code>breaks</code> and <code>breaks2</code> parameters.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- stratify on 1 metric only ---#</span>
 
@@ -292,22 +323,37 @@
 <h2 class="unnumbered" id="strat_poly">
 <code>strat_poly</code><a class="anchor" aria-label="anchor" href="#strat_poly"></a>
 </h2>
-<p>The <code><a href="../reference/strat_poly.html">strat_poly()</a></code> algorithm stratifies based on spatial polygon attributes and features. A user may wish to stratify based on categorical or empirical variables that are not given by ALS data (e.g. species from forest inventory polygons). This method allows the user to define the attribute of interest as well as how features within attributes should be grouped for stratification.</p>
-<p>The user defines the input <code>poly</code> and associated <code>attribute</code>. A <code>raster</code> layer must be provided as a guide for spatial extent and resolution for the output stratification polygon. Based on a vector or list of <code>features</code>, stratification is applied, and the polygon is rasterized into appropriate strata.</p>
+<p>The <code><a href="../reference/strat_poly.html">strat_poly()</a></code> algorithm stratifies based on spatial
+polygon attributes and features. A user may wish to stratify based on
+categorical or empirical variables that are not given by ALS data
+(e.g. species from forest inventory polygons). This method allows the
+user to define the attribute of interest as well as how features within
+attributes should be grouped for stratification.</p>
+<p>The user defines the input <code>poly</code> and associated
+<code>attribute</code>. A <code>raster</code> layer must be provided as
+a guide for spatial extent and resolution for the output stratification
+polygon. Based on a vector or list of <code>features</code>,
+stratification is applied, and the polygon is rasterized into
+appropriate strata.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- load in polygon coverage ---#</span>
 <span class="va">poly</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"inventory_polygons.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span>
 
 <span class="va">fri</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">poly</span><span class="op">)</span>
 <span class="co">#&gt; Reading layer `inventory_polygons' from data source </span>
-<span class="co">#&gt;   `C:\Users\tgood.stu\AppData\Local\Temp\RtmpCYYtR3\temp_libpath29b8306a58fc\sgsR\extdata\inventory_polygons.shp' </span>
+<span class="co">#&gt;   `C:\Users\tgood.stu\Documents\R\win-library\4.1\sgsR\extdata\inventory_polygons.shp' </span>
 <span class="co">#&gt;   using driver `ESRI Shapefile'</span>
 <span class="co">#&gt; Simple feature collection with 632 features and 3 fields</span>
 <span class="co">#&gt; Geometry type: MULTIPOLYGON</span>
 <span class="co">#&gt; Dimension:     XY</span>
 <span class="co">#&gt; Bounding box:  xmin: 431100 ymin: 5337700 xmax: 438560 ymax: 5343240</span>
 <span class="co">#&gt; Projected CRS: UTM_Zone_17_Northern_Hemisphere</span></code></pre></div>
-<p>The <code>attribute</code> column must be defined, while the <code>features</code> within must be specified to define the number and composition of the output strata. In the case below the <code>attribute = "NUTRIENTS"</code> and features within <code>NUTRIENTS</code> (poor, rich, medium) will define the 3 desired output classes.</p>
+<p>The <code>attribute</code> column must be defined, while the
+<code>features</code> within must be specified to define the number and
+composition of the output strata. In the case below the
+<code>attribute = "NUTRIENTS"</code> and features within
+<code>NUTRIENTS</code> (poor, rich, medium) will define the 3 desired
+output classes.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- stratify polygon coverage ---#</span>
 <span class="co">#--- specify polygon attribute to stratify ---#</span>
@@ -325,7 +371,10 @@
                           raster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># raster to define extent and resolution for output</span>
                           plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># plot output</span></code></pre></div>
 <p><img src="stratification_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
-<p><code>features</code> can also be made to amalgamate classes. In the example below <code>rich</code> and <code>medium</code> features are combined while <code>low</code> is left alone. The 2 vectors are then added to a list, which outputs 2 classes (low &amp; rich/medium).</p>
+<p><code>features</code> can also be made to amalgamate classes. In the
+example below <code>rich</code> and <code>medium</code> features are
+combined while <code>low</code> is left alone. The 2 vectors are then
+added to a list, which outputs 2 classes (low &amp; rich/medium).</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- or as multiple lists ---#</span>
 <span class="va">g1</span> <span class="op">&lt;-</span> <span class="st">"poor"</span>
@@ -368,14 +417,24 @@
 <span class="co">#&gt;  values      :      poor      1</span>
 <span class="co">#&gt;                     poor      1</span>
 <span class="co">#&gt;                     poor      1</span></code></pre>
-<p>You will notice that the <code>details</code> parameter is present above. This returns the output <code>outRaster</code>, the <code>$lookUp</code> table associated with the strata, and the polygon (<code>$poly</code>) created to drive the stratification based on attribute and features provided by the users.</p>
+<p>You will notice that the <code>details</code> parameter is present
+above. This returns the output <code>outRaster</code>, the
+<code>$lookUp</code> table associated with the strata, and the polygon
+(<code>$poly</code>) created to drive the stratification based on
+attribute and features provided by the users.</p>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="strat_map">
 <code>strat_map</code><a class="anchor" aria-label="anchor" href="#strat_map"></a>
 </h2>
-<p>There may be an instance where multiple levels of stratification are desired. For instance a user may want to combine the output from <code><a href="../reference/strat_poly.html">strat_poly()</a></code> above with 3 classes, with the 4 class kmeans stratification <code>kmeans</code>.</p>
-<p>The total number of classes will always be the multiplicative of the number of strata. i.e. if <code>sraster</code> has 3 strata and <code>sraster2</code> has 4 strata the output of <code><a href="../reference/strat_map.html">strat_map()</a></code> will be 12 strata total.</p>
+<p>There may be an instance where multiple levels of stratification are
+desired. For instance a user may want to combine the output from
+<code><a href="../reference/strat_poly.html">strat_poly()</a></code> above with 3 classes, with the 4 class kmeans
+stratification <code>kmeans</code>.</p>
+<p>The total number of classes will always be the multiplicative of the
+number of strata. i.e. if <code>sraster</code> has 3 strata and
+<code>sraster2</code> has 4 strata the output of
+<code><a href="../reference/strat_map.html">strat_map()</a></code> will be 12 strata total.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- map srasters ---#</span>
 <span class="fu"><a href="../reference/strat_map.html">strat_map</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">srasterpoly</span>, <span class="co"># strat_poly 3 class stratification</span>
@@ -391,7 +450,9 @@
 <span class="co">#&gt; name        : strata </span>
 <span class="co">#&gt; min value   :     11 </span>
 <span class="co">#&gt; max value   :     34</span></code></pre>
-<p>The convention for the numeric value of output strata is the concatenation (merging) of sraster strata and sraster2 strata. See <code>$lookUp</code> for a clear depiction of this.</p>
+<p>The convention for the numeric value of output strata is the
+concatenation (merging) of sraster strata and sraster2 strata. See
+<code>$lookUp</code> for a clear depiction of this.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/strat_map.html">strat_map</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">srasterpoly</span>, <span class="co"># strat_poly 3 class stratification</span>
           sraster2 <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># strat_poly 3 class stratification</span>
@@ -415,18 +476,18 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $lookUp</span>
 <span class="co">#&gt;    strata strata2 stratamapped</span>
-<span class="co">#&gt; 1       3       3           33</span>
-<span class="co">#&gt; 2       3       1           31</span>
-<span class="co">#&gt; 3       1       2           12</span>
-<span class="co">#&gt; 4       1       4           14</span>
-<span class="co">#&gt; 5       3       2           32</span>
-<span class="co">#&gt; 6       3       4           34</span>
-<span class="co">#&gt; 7       1       3           13</span>
-<span class="co">#&gt; 8       1       1           11</span>
-<span class="co">#&gt; 9       2       1           21</span>
-<span class="co">#&gt; 10      2       3           23</span>
-<span class="co">#&gt; 11      2       2           22</span>
-<span class="co">#&gt; 12      2       4           24</span></code></pre>
+<span class="co">#&gt; 1       3       2           32</span>
+<span class="co">#&gt; 2       3       3           33</span>
+<span class="co">#&gt; 3       1       4           14</span>
+<span class="co">#&gt; 4       1       1           11</span>
+<span class="co">#&gt; 5       3       4           34</span>
+<span class="co">#&gt; 6       3       1           31</span>
+<span class="co">#&gt; 7       1       2           12</span>
+<span class="co">#&gt; 8       1       3           13</span>
+<span class="co">#&gt; 9       2       3           23</span>
+<span class="co">#&gt; 10      2       2           22</span>
+<span class="co">#&gt; 11      2       4           24</span>
+<span class="co">#&gt; 12      2       1           21</span></code></pre>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
@@ -436,12 +497,17 @@
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by <a href="https://scholar.google.ca/citations?user=C_qdYDsAAAAJ&amp;hl=en" class="external-link">Tristan RH Goodbody</a>, <a href="https://forestry.ubc.ca/faculty-profile/nicholas-coops/" class="external-link">Nicholas C Coops</a>.</p>
+<p>Developed by
+<a href="https://scholar.google.ca/citations?user=C_qdYDsAAAAJ&amp;hl=en" class="external-link">Tristan
+RH Goodbody</a>,
+<a href="https://forestry.ubc.ca/faculty-profile/nicholas-coops/" class="external-link">Nicholas
+C Coops</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
     </footer>

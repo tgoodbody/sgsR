@@ -40,7 +40,7 @@ or \code{optim} for optimal allocation (equal sampling cost) or \code{equal} for
 \item{mraster}{spatRaster. ALS metric raster. Required when \code{allocation = optim}.}
 
 \item{mindist}{Numeric. Minimum allowable distance between selected
-samples. Default = 100.}
+samples. Default = NULL.}
 
 \item{existing}{sf or data.frame.  Existing plot network.}
 
@@ -82,10 +82,10 @@ The sampling is performed in 2 stages:
 \item \code{Rule 1} - Sample within grouped stratum pixels defined within the
 \code{wrow, wcol} parameters
 
-\item \code{Rule 2} - If no more samples exist to satisfy desired sampling count,
+\item \code{Rule 2} - If no samples exist to satisfy Rule 1
  individual stratum pixels are sampled.
 
- The rule applied to a allocate each sample is defined in the \code{rule} attribute of output samples.
+ The rule applied to allocate each sample is defined in the \code{rule} attribute of output samples.
 
 }
 }
@@ -161,7 +161,6 @@ https://doi.org/10.1016/j.rse.2021.112510
 }
 \seealso{
 Other sample functions: 
-\code{\link{sample_ahels}()},
 \code{\link{sample_balanced}()},
 \code{\link{sample_clhs}()},
 \code{\link{sample_srs}()},

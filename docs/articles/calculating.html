@@ -69,7 +69,14 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
 </form>
 
-      <ul class="navbar-nav"></ul>
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/tgoodbody/sgsR/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 
     
@@ -84,29 +91,45 @@
       <img src="../logo.png" class="logo" alt=""><h1>calculating</h1>
             
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/tgoodbody/sgsR/blob/HEAD/vignettes/calculating.Rmd" class="external-link"><code>vignettes/calculating.Rmd</code></a></small>
       <div class="d-none name"><code>calculating.Rmd</code></div>
     </div>
 
     
     
-<p>A total of 7 <code>calculate</code> functions currently exist in the package:</p>
+<p>A total of 7 <code>calculate</code> functions currently exist in the
+package:</p>
 <ul>
-<li><p><code><a href="../reference/calculate_distance.html">calculate_distance()</a></code> - per pixel distance to closest access vector</p></li>
-<li><p><code><a href="../reference/calculate_pcomp.html">calculate_pcomp()</a></code>- principal components on input <code>mraster</code></p></li>
-<li><p><code><a href="../reference/calculate_sampsize.html">calculate_sampsize()</a></code> - Determine appropriate sample sizes based on relative standard error thresholds</p></li>
-<li><p><code><a href="../reference/calculate_allocation.html">calculate_allocation()</a></code> - sample allocation algorithm - proportional / optimal / equal sampling</p></li>
-<li><p><code>calculate_ahels()</code> - Adapted hypercube evaluation of a legacy sample (ahels) algorithm</p></li>
-<li><p><code><a href="../reference/calculate_coobs.html">calculate_coobs()</a></code> - Count of observations algorithm</p></li>
-<li><p><code><a href="../reference/calculate_lhsPop.html">calculate_lhsPop()</a></code> - Population covariate statistics for latin hypercube sampling</p></li>
-<li><p><code><a href="../reference/calculate_lhsOpt.html">calculate_lhsOpt()</a></code> - Optimal latin hypercube sampling paramters including sample number</p></li>
+<li><p><code><a href="../reference/calculate_distance.html">calculate_distance()</a></code> - per pixel distance to closest
+access vector</p></li>
+<li><p><code><a href="../reference/calculate_pcomp.html">calculate_pcomp()</a></code>- principal components on input
+<code>mraster</code></p></li>
+<li><p><code><a href="../reference/calculate_sampsize.html">calculate_sampsize()</a></code> - Determine appropriate sample
+sizes based on relative standard error thresholds</p></li>
+<li><p><code><a href="../reference/calculate_allocation.html">calculate_allocation()</a></code> - sample allocation algorithm
+- proportional / optimal / equal sampling</p></li>
+<li><p><code><a href="../reference/calculate_ahels.html">calculate_ahels()</a></code> - Adapted hypercube evaluation of
+a legacy sample (ahels) algorithm</p></li>
+<li><p><code><a href="../reference/calculate_coobs.html">calculate_coobs()</a></code> - Count of observations
+algorithm</p></li>
+<li><p><code><a href="../reference/calculate_lhsPop.html">calculate_lhsPop()</a></code> - Population covariate statistics
+for latin hypercube sampling</p></li>
+<li><p><code><a href="../reference/calculate_lhsOpt.html">calculate_lhsOpt()</a></code> - Optimal latin hypercube
+sampling paramters including sample number</p></li>
 </ul>
-<p><code>calculate_*</code> functions serve as helper functions. In this section we outline how these functions can be used.</p>
+<p><code>calculate_*</code> functions serve as helper functions. In this
+section we outline how these functions can be used.</p>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="dist">
 <code>calculate_distance</code><a class="anchor" aria-label="anchor" href="#dist"></a>
 </h2>
-<p>The <code><a href="../reference/calculate_distance.html">calculate_distance()</a></code> function takes input <code>raster</code> and <code>access</code> data and outputs a per pixel distance to the nearest access point. This function has particular value for constraining sampling protocols such the <code><a href="../reference/sample_clhs.html">sample_clhs()</a></code> function where the output raster layer can be used as a <code>cost</code> constraint.The output raster is the input with the calculated distance layer (<code>dist2access</code>) appended.</p>
+<p>The <code><a href="../reference/calculate_distance.html">calculate_distance()</a></code> function takes input
+<code>raster</code> and <code>access</code> data and outputs a per pixel
+distance to the nearest access point. This function has particular value
+for constraining sampling protocols such the <code><a href="../reference/sample_clhs.html">sample_clhs()</a></code>
+function where the output raster layer can be used as a
+<code>cost</code> constraint.The output raster is the input with the
+calculated distance layer (<code>dist2access</code>) appended.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/calculate_distance.html">calculate_distance</a></span><span class="op">(</span>raster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># input</span>
                    access <span class="op">=</span> <span class="va">access</span>, <span class="co"># define access road network</span>
@@ -127,7 +150,11 @@
 <h2 class="unnumbered" id="calculate_pcomp">
 <code>calculate_pcomp</code><a class="anchor" aria-label="anchor" href="#calculate_pcomp"></a>
 </h2>
-<p>The <code><a href="../reference/calculate_pcomp.html">calculate_pcomp()</a></code> function take a <code>mraster</code> as input and perform principal component analysis. The number of components defined by the <code>nComp</code> parameter specify the number of components that should be rasterized to output.</p>
+<p>The <code><a href="../reference/calculate_pcomp.html">calculate_pcomp()</a></code> function take a
+<code>mraster</code> as input and perform principal component analysis.
+The number of components defined by the <code>nComp</code> parameter
+specify the number of components that should be rasterized to
+output.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/calculate_pcomp.html">calculate_pcomp</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, <span class="co"># input</span>
                 nComp <span class="op">=</span> <span class="fl">5</span>, <span class="co"># number of components to output</span>
@@ -179,7 +206,13 @@
 <h2 class="unnumbered" id="calculate_sampsize">
 <code>calculate_sampsize</code><a class="anchor" aria-label="anchor" href="#calculate_sampsize"></a>
 </h2>
-<p>The <code><a href="../reference/calculate_sampsize.html">calculate_sampsize()</a></code> function allows users to determine what an appropriate sample size would be using the relative standard error of input metric. If an <code>mraster</code> with multiple layers is provided, sample sizes will be determined for all layers. If <code>plot = TRUE</code> and <code>rse</code> is defined, a sequence of rse values will be visualized with indicators and a value for the matching sample size.</p>
+<p>The <code><a href="../reference/calculate_sampsize.html">calculate_sampsize()</a></code> function allows users to
+determine what an appropriate sample size would be using the relative
+standard error of input metric. If an <code>mraster</code> with multiple
+layers is provided, sample sizes will be determined for all layers. If
+<code>plot = TRUE</code> and <code>rse</code> is defined, a sequence of
+rse values will be visualized with indicators and a value for the
+matching sample size.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- determine sample size based on relative standard error (rse) of 1% ---#</span>
 <span class="fu"><a href="../reference/calculate_sampsize.html">calculate_sampsize</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>,
@@ -232,11 +265,20 @@
 <h2 class="unnumbered" id="calculate_allocation">
 <code>calculate_allocation</code><a class="anchor" aria-label="anchor" href="#calculate_allocation"></a>
 </h2>
-<p>The <code><a href="../reference/calculate_allocation.html">calculate_allocation()</a></code> function calculates the total number of samples that should be allocated for sampling based on a total sample value (<code>nSamp</code>) and an input <code>sraster</code>. This function is utilized in a number of functions including <a href="#strat"><code>sample_strat</code></a>. Three methods for allocation are currently included: proportional (<code>prop</code>; default), optimal (<code>optim</code>) allocation, and equal (<code>equal</code>) allocation.</p>
+<p>The <code><a href="../reference/calculate_allocation.html">calculate_allocation()</a></code> function calculates the total
+number of samples that should be allocated for sampling based on a total
+sample value (<code>nSamp</code>) and an input <code>sraster</code>.
+This function is utilized in a number of functions including <a href="#strat"><code>sample_strat</code></a>. Three methods for
+allocation are currently included: proportional (<code>prop</code>;
+default), optimal (<code>optim</code>) allocation, and equal
+(<code>equal</code>) allocation.</p>
 <ul>
-<li>Proportional - Samples are allocated based on the area coverage of strata. This is the default method.</li>
-<li>Optimal - Samples are allocated based on the within strata variation.</li>
-<li>Equal - The same number of samples (<code>nSamp</code>) are allocated to each strata.</li>
+<li>Proportional - Samples are allocated based on the area coverage of
+strata. This is the default method.</li>
+<li>Optimal - Samples are allocated based on the within strata
+variation.</li>
+<li>Equal - The same number of samples (<code>nSamp</code>) are
+allocated to each strata.</li>
 </ul>
 <div class="section level3 unnumbered">
 <h3 class="unnumbered" id="proportional">Proportional allocation<a class="anchor" aria-label="anchor" href="#proportional"></a>
@@ -246,10 +288,10 @@
 <span class="fu"><a href="../reference/calculate_allocation.html">calculate_allocation</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, 
                      nSamp <span class="op">=</span> <span class="fl">200</span><span class="op">)</span>
 <span class="co">#&gt;   strata total</span>
-<span class="co">#&gt; 1      1    47</span>
-<span class="co">#&gt; 2      2    57</span>
-<span class="co">#&gt; 3      3    41</span>
-<span class="co">#&gt; 4      4    54</span></code></pre></div>
+<span class="co">#&gt; 1      1    48</span>
+<span class="co">#&gt; 2      2    40</span>
+<span class="co">#&gt; 3      3    57</span>
+<span class="co">#&gt; 4      4    55</span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- calculate existing samples to include ---#</span>
 <span class="va">e.sr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract.html">extract_strata</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, 
@@ -259,16 +301,23 @@
                      nSamp <span class="op">=</span> <span class="fl">200</span>, 
                      existing <span class="op">=</span> <span class="va">e.sr</span><span class="op">)</span>
 <span class="co">#&gt;   strata total need</span>
-<span class="co">#&gt; 1      1    -5   47</span>
-<span class="co">#&gt; 2      2     8   57</span>
-<span class="co">#&gt; 3      3     1   41</span>
-<span class="co">#&gt; 4      4    -5   54</span></code></pre></div>
-<p>Notice that some of the results in <code>total</code> above are negative. This indicates that the <code>existing</code> samples over represent those strata and that some samples should be removed to avoid over representation. The number that should be added/removed is details in <code>$total</code>.</p>
+<span class="co">#&gt; 1      1     1   48</span>
+<span class="co">#&gt; 2      2    -3   40</span>
+<span class="co">#&gt; 3      3     1   57</span>
+<span class="co">#&gt; 4      4     1   55</span></code></pre></div>
+<p>Notice that some of the results in <code>total</code> above are
+negative. This indicates that the <code>existing</code> samples over
+represent those strata and that some samples should be removed to avoid
+over representation. The number that should be added/removed is details
+in <code>$total</code>.</p>
 </div>
 <div class="section level3 unnumbered">
 <h3 class="unnumbered" id="optimal">Optimal Allocation<a class="anchor" aria-label="anchor" href="#optimal"></a>
 </h3>
-<p>Optimal allocation utilizes within strata metric variation to allocate samples. This means that in addition to providing and <code>sraster</code>, that a specific metric (<code>mraster</code>) must be provided to calculate variation to optimally allocate samples.</p>
+<p>Optimal allocation utilizes within strata metric variation to
+allocate samples. This means that in addition to providing and
+<code>sraster</code>, that a specific metric (<code>mraster</code>) must
+be provided to calculate variation to optimally allocate samples.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/calculate_allocation.html">calculate_allocation</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># stratified raster</span>
                      nSamp <span class="op">=</span> <span class="fl">200</span>, <span class="co"># desired sample number</span>
@@ -277,15 +326,19 @@
                      mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zmax</span>, <span class="co"># metric raster</span>
                      force <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># force nSamp number</span>
 <span class="co">#&gt;   strata total need</span>
-<span class="co">#&gt; 1      1    -4   48</span>
-<span class="co">#&gt; 2      2     2   51</span>
-<span class="co">#&gt; 3      3    11   51</span>
-<span class="co">#&gt; 4      4    -9   50</span></code></pre></div>
+<span class="co">#&gt; 1      1     3   50</span>
+<span class="co">#&gt; 2      2     6   49</span>
+<span class="co">#&gt; 3      3    -6   50</span>
+<span class="co">#&gt; 4      4    -3   51</span></code></pre></div>
 </div>
 <div class="section level3 unnumbered">
 <h3 class="unnumbered" id="equal">Equal allocation<a class="anchor" aria-label="anchor" href="#equal"></a>
 </h3>
-<p>There may be an instance where a user wants to have the same number of samples allocated to each strata. In this case using <code>allocation = equal</code> is ideal. In this instance, <code>nSamp</code> relates to the total number of samples per strata rather than the total number of samples overall.</p>
+<p>There may be an instance where a user wants to have the same number
+of samples allocated to each strata. In this case using
+<code>allocation = equal</code> is ideal. In this instance,
+<code>nSamp</code> relates to the total number of samples per strata
+rather than the total number of samples overall.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/calculate_allocation.html">calculate_allocation</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># stratified raster</span>
                      nSamp <span class="op">=</span> <span class="fl">20</span>, <span class="co"># desired sample number</span>
@@ -297,21 +350,42 @@
 <span class="co">#&gt; <span style="color: #BCBCBC;">2</span>      2    20</span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">3</span>      3    20</span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">4</span>      4    20</span></code></pre></div>
-<p>That yields a total of 80 samples (20 <code>nSamp</code> for each of the 4 strata in <code>sraster</code>.)</p>
+<p>That yields a total of 80 samples (20 <code>nSamp</code> for each of
+the 4 strata in <code>sraster</code>.)</p>
 </div>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="sampeval">Sample evaluation algorithms<a class="anchor" aria-label="anchor" href="#sampeval"></a>
 </h2>
-<p>The following algorithms were initially developed by Dr. Brendan Malone from the University of Sydney. In their work they graciously provided an in depth description of the functionality of these algorithms that were originally developed to improve soil sampling strategies. These functions have been modified and implemented so they can be used for structurally guided sampling approaches. Many thanks to Dr. Malone for being an excellent collaborator and proponent of open source algorithms.</p>
-<p>Please consult the original reference for these ideas and scripts as they are extremely valuable and helpful for understanding their sampling rationale.</p>
-<p><em>Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451</em></p>
+<p>The following algorithms were initially developed by Dr. Brendan
+Malone from the University of Sydney. In their work they graciously
+provided an in depth description of the functionality of these
+algorithms that were originally developed to improve soil sampling
+strategies. These functions have been modified and implemented so they
+can be used for structurally guided sampling approaches. Many thanks to
+Dr. Malone for being an excellent collaborator and proponent of open
+source algorithms.</p>
+<p>Please consult the original reference for these ideas and scripts as
+they are extremely valuable and helpful for understanding their sampling
+rationale.</p>
+<p><em>Malone BP, Minansy B, Brungard C. 2019. Some methods to improve
+the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI
+10.7717/peerj.6451</em></p>
 <div class="section level3 unnumbered">
 <h3 class="unnumbered" id="coobs">
 <code>calculate_coobs</code><a class="anchor" aria-label="anchor" href="#coobs"></a>
 </h3>
-<p>The <code><a href="../reference/calculate_coobs.html">calculate_coobs()</a></code> function perform the COunt of OBServations (coobs) algorithm using <code>existing</code> sample data and <code>mraster</code> covariates. This algorithm aids the user in understanding how an <code>existing</code> sample data set is distributed among the landscape with relation to <code>mraster</code> covariates. The output coobs raster could be used to constrain clhs sampling using the <code><a href="../reference/sample_clhs.html">sample_clhs()</a></code> to areas that are under reprented.</p>
-<p>The coobs raster determines how many observations are similar in terms of the covariate space at every pixel.This fucntion takes advantage of parallel processing routines.</p>
+<p>The <code><a href="../reference/calculate_coobs.html">calculate_coobs()</a></code> function perform the COunt of
+OBServations (coobs) algorithm using <code>existing</code> sample data
+and <code>mraster</code> covariates. This algorithm aids the user in
+understanding how an <code>existing</code> sample data set is
+distributed among the landscape with relation to <code>mraster</code>
+covariates. The output coobs raster could be used to constrain clhs
+sampling using the <code><a href="../reference/sample_clhs.html">sample_clhs()</a></code> to areas that are under
+reprented.</p>
+<p>The coobs raster determines how many observations are similar in
+terms of the covariate space at every pixel.This fucntion takes
+advantage of parallel processing routines.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/calculate_coobs.html">calculate_coobs</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, <span class="co"># input</span>
                 existing <span class="op">=</span> <span class="va">existing</span>, <span class="co"># existing samples</span>
@@ -322,20 +396,30 @@
 </div>
 </div>
 <div class="section level2 unnumbered">
-<h2 class="unnumbered" id="lhseval">Latin hypercube sampling evaluation algorithms<a class="anchor" aria-label="anchor" href="#lhseval"></a>
+<h2 class="unnumbered" id="lhseval">Latin hypercube sampling evaluation
+algorithms<a class="anchor" aria-label="anchor" href="#lhseval"></a>
 </h2>
-<p>The following 2 algorithms provide a means to maximize the effectiveness of <a href="#clhs">latin hypercube sampling</a> protocols.</p>
+<p>The following 2 algorithms provide a means to maximize the
+effectiveness of <a href="#clhs">latin hypercube sampling</a>
+protocols.</p>
 <div class="section level3 unnumbered">
 <h3 class="unnumbered" id="lhspop">
 <code>calculate_lhsPop</code><a class="anchor" aria-label="anchor" href="#lhspop"></a>
 </h3>
-<p>The <code><a href="../reference/calculate_lhsPop.html">calculate_lhsPop()</a></code> function calculates population level statistics about the <code>mraster</code> covariates being used including calculating principal components, quantile &amp; covariate distributions, and Kullback–Leibler divergence testing. The outputs from this function are mandatory for use of the <code><a href="../reference/calculate_lhsOpt.html">calculate_lhsOpt()</a></code> function described in the next section.</p>
+<p>The <code><a href="../reference/calculate_lhsPop.html">calculate_lhsPop()</a></code> function calculates population
+level statistics about the <code>mraster</code> covariates being used
+including calculating principal components, quantile &amp; covariate
+distributions, and Kullback–Leibler divergence testing. The outputs from
+this function are mandatory for use of the
+<code><a href="../reference/calculate_lhsOpt.html">calculate_lhsOpt()</a></code> function described in the next
+section.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- by default all statistical data are calculated ---#</span>
 <span class="fu"><a href="../reference/calculate_lhsPop.html">calculate_lhsPop</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">)</span> <span class="co"># input </span></code></pre></div>
 <p>The output details the following:</p>
 <ul>
-<li><p><code>$values</code> - Pixel values from <code>mraster</code></p></li>
+<li><p><code>$values</code> - Pixel values from
+<code>mraster</code></p></li>
 <li><p><code>$pcaLoad</code> - PCA loadings</p></li>
 <li><p><code>$matQ</code> - Quantile matrix</p></li>
 <li><p><code>$matCov</code> - Covariate matrix</p></li>
@@ -350,8 +434,17 @@
 <h3 class="unnumbered" id="lhsopt">
 <code>calculate_lhsOpt</code><a class="anchor" aria-label="anchor" href="#lhsopt"></a>
 </h3>
-<p>The <code><a href="../reference/calculate_lhsOpt.html">calculate_lhsOpt()</a></code> function performs a bootsrapped latin hypercube sampling approach where a population level analysis of <code>mraster</code> data is performed to determine the optimal Latin hypercube sample size.</p>
-<p>Using statistical data calculated using the <code><a href="../reference/calculate_lhsPop.html">calculate_lhsPop()</a></code> and varying sample sizes defined by <code>minSamp</code>, <code>maxSamp</code>, <code>step</code> and <code>rep</code>. Sampling protocols are conducted and statistical effectiveness of those sampling outcomes are evaluated to determine where sample size is minimized and statistical representation is maximized.</p>
+<p>The <code><a href="../reference/calculate_lhsOpt.html">calculate_lhsOpt()</a></code> function performs a bootsrapped
+latin hypercube sampling approach where a population level analysis of
+<code>mraster</code> data is performed to determine the optimal Latin
+hypercube sample size.</p>
+<p>Using statistical data calculated using the
+<code><a href="../reference/calculate_lhsPop.html">calculate_lhsPop()</a></code> and varying sample sizes defined by
+<code>minSamp</code>, <code>maxSamp</code>, <code>step</code> and
+<code>rep</code>. Sampling protocols are conducted and statistical
+effectiveness of those sampling outcomes are evaluated to determine
+where sample size is minimized and statistical representation is
+maximized.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- calculate lhsPop details ---#</span>
 <span class="va">poplhs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calculate_lhsPop.html">calculate_lhsPop</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mr</span><span class="op">)</span>
@@ -371,12 +464,17 @@
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by <a href="https://scholar.google.ca/citations?user=C_qdYDsAAAAJ&amp;hl=en" class="external-link">Tristan RH Goodbody</a>, <a href="https://forestry.ubc.ca/faculty-profile/nicholas-coops/" class="external-link">Nicholas C Coops</a>.</p>
+<p>Developed by
+<a href="https://scholar.google.ca/citations?user=C_qdYDsAAAAJ&amp;hl=en" class="external-link">Tristan
+RH Goodbody</a>,
+<a href="https://forestry.ubc.ca/faculty-profile/nicholas-coops/" class="external-link">Nicholas
+C Coops</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
     </footer>

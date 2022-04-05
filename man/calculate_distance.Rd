@@ -53,6 +53,7 @@ calculate_distance(
 }
 \seealso{
 Other calculate functions: 
+\code{\link{calculate_ahels}()},
 \code{\link{calculate_allocation}()},
 \code{\link{calculate_coobs}()},
 \code{\link{calculate_lhsPop}()},

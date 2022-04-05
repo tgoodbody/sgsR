@@ -6,7 +6,16 @@
 \alias{sgsR-package}
 \title{sgsR: Structurally Guided Sampling Approaches using ALS Data}
 \description{
+\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+
 This package provides functions to enable stratification and sampling for structurally guided sampling using ALS data.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/tgoodbody/sgsR}
+}
+
 }
 \author{
 \strong{Maintainer}: Tristan RH Goodbody \email{goodbody.t@gmail.com} (\href{https://orcid.org/0000-0002-6894-7925}{ORCID})

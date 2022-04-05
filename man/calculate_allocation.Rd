@@ -95,6 +95,7 @@ Gregoire, T.G., & Valentine, H.T. (2007). Sampling Strategies for Natural Resour
 }
 \seealso{
 Other calculate functions: 
+\code{\link{calculate_ahels}()},
 \code{\link{calculate_coobs}()},
 \code{\link{calculate_distance}()},
 \code{\link{calculate_lhsPop}()},
