@@ -145,7 +145,7 @@ sample_strat <- function(sraster,
   }
 
   #--- Set global vars ---#
-  x <- y <- NULL
+  x <- y <- cell <- NULL
 
   #--- Error management ---#
   if (!inherits(sraster, "SpatRaster")) {

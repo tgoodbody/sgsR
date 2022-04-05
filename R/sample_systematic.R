@@ -86,7 +86,7 @@ sample_systematic <- function(raster,
 
   #--- Set global vars ---#
 
-  ext <- geometry <- x <- NULL
+  ext <- geometry <- x <- pass <- NULL
 
   if (!inherits(raster, "SpatRaster")) {
     stop("'raster' must be type SpatRaster")

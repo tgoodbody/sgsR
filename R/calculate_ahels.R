@@ -4,19 +4,19 @@
 #' existing site data and raster metrics. New samples are allocated based on quantile ratios between
 #' the existing sample and covariate dataset.
 #'
-#' @family sample functions
+#' @family calculate functions
 #'
 #' @inheritParams strat_kmeans
 #' @inheritParams extract_strata
 #'
+#' @param nQuant Numeric. Number of quantiles to divide covariates and samples into. Quantiles that do not
+#' cover at least 1 percent of the area of interest will be excluded and be returned as \code{NA}.
 #' @param nSamp Numeric. Maximum number of new samples to allocate. If provided, the algorithm
 #' will default to allocating number of samples provided.
 #' @param threshold Numeric. A sample quantile ratio threshold for establishing whether
 #' additional samples should be added. \code{default = 0.9}. Values close to 1 can cause the algorithm to
 #' continually loop and should be used sparingly.
 #' @param plot Logial. Plots existing (circles) and new (crosses) samples on the first band of mraster.
-#' @param nQuant Numeric. Number of quantiles to divide covariates and samples into. Quantiles that do not
-#' cover at least 1% of the area of interest will be excluded and be returned as \code{NA}.
 #'
 #' @references
 #' Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451
@@ -31,13 +31,13 @@
 #' e <- system.file("extdata", "existing.shp", package = "sgsR")
 #' e <- sf::st_read(e)
 #'
-#' sample_ahels(
+#' calculate_ahels(
 #'   mraster = mr[[1:3]],
 #'   existing = e,
 #'   plot = TRUE
 #' )
 #'
-#' sample_ahels(
+#' calculate_ahels(
 #'   mraster = mr[[1:3]],
 #'   existing = e,
 #'   nQuant = 20,
@@ -51,15 +51,15 @@
 #'
 #' @export
 
-sample_ahels <- function(mraster,
-                         existing,
-                         nQuant = 10,
-                         nSamp = NULL,
-                         threshold = 0.9,
-                         plot = FALSE,
-                         details = FALSE,
-                         filename = NULL,
-                         overwrite = FALSE) {
+calculate_ahels <- function(mraster,
+                            existing,
+                            nQuant = 10,
+                            nSamp = NULL,
+                            threshold = 0.9,
+                            plot = FALSE,
+                            details = FALSE,
+                            filename = NULL,
+                            overwrite = FALSE) {
 
   #--- Set global vars ---#
 

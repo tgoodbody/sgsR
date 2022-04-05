@@ -85,6 +85,9 @@ strat_map <- function(sraster,
                       details = FALSE,
                       ...) {
 
+  #--- global variables ---#
+  strata <- strata2 <- NULL
+  
   #--- error handling ---#
 
   if (!inherits(sraster, "SpatRaster")) {

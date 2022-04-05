@@ -9,6 +9,7 @@
 #' @param mraster Spatraster. Covariate raster to stratify.
 #' @param nStrata Numeric. Number of strata for primary principal component.
 #' @param nStrata2 Numeric. Number of strata for secondary principal component.
+#' @param samp Numeric. Proportion of raster cells to plot between 0-1.
 #' @param ... Additional arguments to be passed to \code{\link[stats]{prcomp}}.
 #'
 #' @return Returns an output stratification \code{spatRaster} or a list when \code{details = TRUE}.

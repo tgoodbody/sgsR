@@ -65,6 +65,10 @@ calculate_sampsize <- function(mraster,
                                increment = 0.001,
                                plot = FALSE){
   
+  #--- set global vars ---#
+  
+  rse_var <- nSamp <- var <- rse_var_dif <- NULL
+  
   #--- error management ---#
   
   if (!inherits(mraster, "SpatRaster")) {

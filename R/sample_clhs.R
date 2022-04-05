@@ -14,7 +14,7 @@
 #' If default - \code{NULL} then a cost constraint is not used.
 #' @param ... Additional arguments for clhs sampling. See \code{\link[clhs]{clhs}}.
 #'
-#' @importFrom stats coef complete.cases median quantile sd
+#' @importFrom stats coef complete.cases median quantile sd runif var
 #' @importFrom utils setTxtProgressBar
 #'
 #' @return An sf object with \code{nSamp} stratified samples.
@@ -262,7 +262,7 @@ sample_clhs <- function(mraster,
 
     existingSamples <- existingSamples %>%
       dplyr::mutate(type = "existing") %>%
-      dplyr::select(all_of(namesvals))
+      dplyr::select(tidyselect::all_of(namesvals))
 
     #--- create conjoined existing dataset ---#
 
