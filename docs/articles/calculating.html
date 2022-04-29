@@ -108,7 +108,7 @@ access vector</p></li>
 sizes based on relative standard error thresholds</p></li>
 <li><p><code><a href="../reference/calculate_allocation.html">calculate_allocation()</a></code> - sample allocation algorithm
 - proportional / optimal / equal sampling</p></li>
-<li><p><code><a href="https://rdrr.io/pkg/sgsR/man/calculate_ahels.html" class="external-link">calculate_ahels()</a></code> - Adapted hypercube evaluation of
+<li><p><code>calculate_ahels()</code> - Adapted hypercube evaluation of
 a legacy sample (ahels) algorithm</p></li>
 <li><p><code><a href="../reference/calculate_coobs.html">calculate_coobs()</a></code> - Count of observations
 algorithm</p></li>
@@ -280,9 +280,9 @@ allocated to each strata.</li>
 <span class="fu"><a href="../reference/calculate_allocation.html">calculate_allocation</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, 
                      nSamp <span class="op">=</span> <span class="fl">200</span><span class="op">)</span>
 <span class="co">#&gt;   strata total</span>
-<span class="co">#&gt; 1      1    47</span>
-<span class="co">#&gt; 2      2    45</span>
-<span class="co">#&gt; 3      3    58</span>
+<span class="co">#&gt; 1      1    46</span>
+<span class="co">#&gt; 2      2    58</span>
+<span class="co">#&gt; 3      3    46</span>
 <span class="co">#&gt; 4      4    50</span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- calculate existing samples to include ---#</span>
@@ -293,10 +293,10 @@ allocated to each strata.</li>
                      nSamp <span class="op">=</span> <span class="fl">200</span>, 
                      existing <span class="op">=</span> <span class="va">e.sr</span><span class="op">)</span>
 <span class="co">#&gt;   strata total need</span>
-<span class="co">#&gt; 1      1     2   47</span>
-<span class="co">#&gt; 2      2     2   45</span>
-<span class="co">#&gt; 3      3     4   58</span>
-<span class="co">#&gt; 4      4    -8   50</span></code></pre></div>
+<span class="co">#&gt; 1      1    -2   46</span>
+<span class="co">#&gt; 2      2     4   58</span>
+<span class="co">#&gt; 3      3    -6   46</span>
+<span class="co">#&gt; 4      4     4   50</span></code></pre></div>
 <p>Notice that some of the results in <code>total</code> above are
 negative. This indicates that the <code>existing</code> samples over
 represent those strata and that some samples should be removed to avoid
@@ -318,10 +318,10 @@ be provided to calculate variation to optimally allocate samples.</p>
                      mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span>, <span class="co"># metric raster</span>
                      force <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># force nSamp number</span>
 <span class="co">#&gt;   strata total need</span>
-<span class="co">#&gt; 1      1    13   58</span>
-<span class="co">#&gt; 2      2     2   45</span>
-<span class="co">#&gt; 3      3    -6   48</span>
-<span class="co">#&gt; 4      4    -9   49</span></code></pre></div>
+<span class="co">#&gt; 1      1    -2   46</span>
+<span class="co">#&gt; 2      2    -6   48</span>
+<span class="co">#&gt; 3      3     5   57</span>
+<span class="co">#&gt; 4      4     3   49</span></code></pre></div>
 </div>
 <div class="section level3 unnumbered">
 <h3 class="unnumbered" id="equal">Equal allocation<a class="anchor" aria-label="anchor" href="#equal"></a>
