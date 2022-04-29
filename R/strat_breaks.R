@@ -91,6 +91,10 @@ strat_breaks <- function(mraster,
   
   if (!is.null(mraster2)) {
     
+    if (!inherits(mraster2, "SpatRaster")) {
+      stop("'mraster2' must be type SpatRaster")
+    }
+    
     if(!all.equal(terra::ext(mraster), terra::ext(mraster2))){
       stop("Extents of 'mraster' and 'mraster2' do not match.")
     }

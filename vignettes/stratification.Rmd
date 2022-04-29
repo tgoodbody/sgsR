@@ -49,7 +49,7 @@ A total of 6 `strat` functions currently exist in the package:
 
 *   `strat_kmeans()` - kmeans stratification
 
-*   `strat_pcomp()`- principal component stratification
+*   `strat_quantiles()`- quantile stratification
 
 *   `strat_breaks()` - user-defined break stratification
 
@@ -89,31 +89,23 @@ strat_kmeans(mraster = mraster, # input
 
 ```
 
-## `strat_pcomp` {.unnumbered}
+## `strat_quantiles` {.unnumbered}
 
-The `strat_pcomp()` algorithm calculates principal components on the input `mraster` then divides data into equal sized strata. Strata can be defined by using the primary (PC1) only (`nStrata`), or primary & secondary (PC2 - `nStata2`) principal components. If `nStata2` is defined, PC2 is used and the total number of strata will be $$nStrata * nStrata2$$.
-
-```{r,warning=F,message=F}
-#--- perform stratification using principal components ---#
-strat_pcomp(mraster = mraster, # input
-            nStrata = 5, # 5 strata with primary PC only
-            plot = TRUE) # plot
-```
+The `strat_quantiles()` algorithm divides data into equally sized strata (`nStrata`). Similar to `strat_breaks()`, the algorithm allows for stratification on a single `mraster`, or the user can supply a secondary mraster (`mraster2`) and specify the associated number of desired strata (`nStrata2`). The dual stratification output will always result in the product of $nStrata * nStrata2$.
 
 ```{r,warning=F,message=F}
-strat_pcomp(mraster = mraster, # input
-            nStrata = 4, # 4 strata with primary
-            nStrata2 = 4, # 4 strata with secondary PC - will produce 16 output strata
-            plot = TRUE) # produce output details
-```
 
-```{r,warning=F,message=F}
-strat_pcomp(mraster = mraster, # input
-            nStrata = 3, # 3 strata with primary PC
-            nStrata2 = 3, # 4 strata with secondary PC - will produce 9 output strata
-            filename = tempfile(fileext = ".tif")) # write output sraster to file
-```
+#--- perform quantiles stratification ---#
+strat_quantiles(mraster = mraster$zq90,
+                nStrata = 4,
+                plot = TRUE)
 
+#--- dual stratification - will produce 12 output strata ---#
+strat_quantiles(mraster = mraster$zq90, 
+                mraster2 = mraster$zsd,
+                nStrata = 3, 
+                nStrata2 = 4)
+```
 ## `strat_breaks` {.unnumbered}
 
 The `strat_breaks()` function stratifies data based on user-defined breaks in covariates. A single `metric` can be defined or an additional `metric2` can be supplied. `breaks` and `breaks2` correspond to the user-defined breaks for `metric` and `metric2` respectively.

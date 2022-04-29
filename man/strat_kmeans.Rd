@@ -86,8 +86,8 @@ kmeans <- strat_kmeans(
 Other stratify functions: 
 \code{\link{strat_breaks}()},
 \code{\link{strat_map}()},
-\code{\link{strat_pcomp}()},
-\code{\link{strat_poly}()}
+\code{\link{strat_poly}()},
+\code{\link{strat_quantiles}()}
 }
 \author{
 Tristan R.H. Goodbody
