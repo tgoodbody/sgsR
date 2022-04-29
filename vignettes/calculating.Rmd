@@ -145,7 +145,7 @@ calculate_allocation(sraster = sraster, # stratified raster
                      nSamp = 200, # desired sample number
                      existing = e.sr, #existing samples
                      allocation = "optim", # optimal allocation
-                     mraster = mraster$zmax, # metric raster
+                     mraster = mraster$zq90, # metric raster
                      force = TRUE) # force nSamp number
 
 ```

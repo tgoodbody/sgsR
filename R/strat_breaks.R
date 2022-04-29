@@ -32,14 +32,14 @@
 #' br.sd <- c(1, 2, 5)
 #'
 #' strat_breaks(
-#'   mraster = mr$zmax,
+#'   mraster = mr$zq90,
 #'   breaks = br.max,
 #'   plot = TRUE,
 #'   details = TRUE
 #' )
 #'
 #' strat_breaks(
-#'   mraster = mr$zmax,
+#'   mraster = mr$zq90,
 #'   mraster2 = mr$zsd,
 #'   breaks = br.max,
 #'   breaks2 = br.sd,

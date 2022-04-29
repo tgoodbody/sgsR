@@ -94,7 +94,6 @@ strat_kmeans(mraster = mraster, # input
 The `strat_quantiles()` algorithm divides data into equally sized strata (`nStrata`). Similar to `strat_breaks()`, the algorithm allows for stratification on a single `mraster`, or the user can supply a secondary mraster (`mraster2`) and specify the associated number of desired strata (`nStrata2`). The dual stratification output will always result in the product of $nStrata * nStrata2$.
 
 ```{r,warning=F,message=F}
-
 #--- perform quantiles stratification ---#
 strat_quantiles(mraster = mraster$zq90,
                 nStrata = 4,
@@ -120,7 +119,7 @@ breaks
 
 #--- perform stratification using user-defined breaks ---#
 
-values <- terra::values(mraster$zmax)
+values <- terra::values(mraster$zq90)
 
 #--- define breaks for metric ---#
 breaks2 <- quantile(values, na.rm=TRUE)
@@ -143,7 +142,7 @@ strat_breaks(mraster = mraster$zmean,
 ```{r,warning=F,message=F}
 #--- stratify on 1 metric only ---#
 
-strat_breaks(mraster = mraster$zmax,
+strat_breaks(mraster = mraster$zq90,
              breaks = breaks2,
              details = TRUE,
              plot = TRUE)

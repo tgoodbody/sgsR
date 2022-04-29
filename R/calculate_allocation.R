@@ -66,7 +66,7 @@
 #'   nSamp = 200,
 #'   existing = e.sr,
 #'   allocation = "optim",
-#'   mraster = mr$zmax,
+#'   mraster = mr$zq90,
 #'   force = TRUE
 #' )
 #' @author Tristan R.H. Goodbody

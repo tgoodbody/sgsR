@@ -145,7 +145,7 @@ sample_strat(
   sraster = sr,
   nSamp = 200,
   allocation = "optim",
-  mraster = mr$zmax,
+  mraster = mr$zq90,
   access = ac,
   buff_inner = 50,
   buff_outer = 200,
@@ -161,6 +161,7 @@ https://doi.org/10.1016/j.rse.2021.112510
 }
 \seealso{
 Other sample functions: 
+\code{\link{sample_ahels}()},
 \code{\link{sample_balanced}()},
 \code{\link{sample_clhs}()},
 \code{\link{sample_srs}()},

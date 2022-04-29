@@ -111,7 +111,6 @@ where <code>$details</code> is additional stratification information and
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other calculate functions: 
-<code><a href="calculate_ahels.html">calculate_ahels</a>()</code>,
 <code><a href="calculate_allocation.html">calculate_allocation</a>()</code>,
 <code><a href="calculate_coobs.html">calculate_coobs</a>()</code>,
 <code><a href="calculate_distance.html">calculate_distance</a>()</code>,
@@ -145,8 +144,8 @@ where <code>$details</code> is additional stratification information and
 <span class="r-out co"><span class="r-pr">#&gt;</span>               memory  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               ... and 2 more source(s)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> names       :        PC1,        PC2,        PC3,        PC4,        PC5 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> min values  :  -6.675657, -14.741405,  -1.735068,  -9.384677,  -1.272558 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> max values  :  13.828171,   4.197435,   4.022076,   1.821104,   2.243303 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> min values  : -4.9718830, -5.5371690, -3.6678708, -2.3303431, -0.6698738 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> max values  :   7.477925,   2.540762,   1.728753,   1.519315,   1.386004 </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">pcomp</span> <span class="op">&lt;-</span> <span class="fu">calculate_pcomp</span><span class="op">(</span></span>
 <span class="r-in">           mraster <span class="op">=</span> <span class="va">mr</span>,</span>
@@ -156,43 +155,39 @@ where <code>$details</code> is additional stratification information and
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- Display principal component details ---#</span></span>
 <span class="r-in"><span class="va">pcomp</span><span class="op">$</span><span class="va">pca</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Standard deviations (1, .., p=9):</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2.66328897 1.09805898 0.66339469 0.41858538 0.22109594 0.14478794</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [7] 0.09669328 0.07739106 0.02581106</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Standard deviations (1, .., p=7):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2.44489597 0.77330715 0.58694359 0.24601882 0.09755856 0.09617098</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7] 0.02617551</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Rotation (n x k) = (9 x 9):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rotation (n x k) = (7 x 7):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                PC1         PC2         PC3         PC4         PC5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zmax     0.3718561  0.05890652  0.13655303  0.18644188 -0.02967021</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zmean    0.2892076  0.11179079 -0.94037185  0.11669464 -0.01101177</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zsd      0.2902484 -0.57132611  0.07358411 -0.03485495 -0.12710815</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> pzabove2 0.2762415  0.57389014  0.11046261 -0.48982874 -0.53278380</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zq20     0.3222793  0.42913513  0.17765055  0.04688184  0.69772164</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zq50     0.3621931  0.06711670  0.16260903  0.50497308 -0.03554264</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zq70     0.3669446 -0.07622676  0.13483825  0.33474905 -0.33679147</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zq90     0.3576125 -0.24286784  0.04467110 -0.28486752  0.00494469</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zq95     0.3463317 -0.27351876 -0.03548477 -0.50997312  0.31217248</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   PC6          PC7         PC8          PC9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zmax     -0.022902433  0.058181544  0.12813760 -0.885232514</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zmean     0.061423536  0.005559276 -0.04493042  0.001085691</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zsd       0.373461072 -0.062831197 -0.65029797 -0.015746780</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> pzabove2  0.007219003  0.005909104 -0.23569527  0.052045306</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zq20      0.371793616 -0.128585416 -0.12943905  0.141020587</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zq50     -0.525190662  0.398814446 -0.24627692  0.293390931</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zq70      0.136444231 -0.587797301  0.42249155  0.270652072</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zq90      0.287643242  0.607152727  0.49439800  0.184814994</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zq95     -0.583751620 -0.320739852  0.05279230  0.005601089</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> zmean    0.4054171  0.11311676 -0.15821737  0.05228532 -0.24488701</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pzabove2 0.3403673  0.15301222  0.92238481  0.07785750  0.05997885</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> zsd      0.3438175 -0.69466285 -0.04508043 -0.09258238  0.61028250</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> zq20     0.3523317  0.61345601 -0.22005777 -0.48739208  0.41346282</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> zq50     0.3982735  0.14758611 -0.21579187  0.56156385  0.13175420</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> zq70     0.4039445 -0.05545307 -0.16438966  0.36438073 -0.28451820</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> zq90     0.3945200 -0.28293182 -0.01121444 -0.54493544 -0.54288754</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  PC6          PC7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> zmean    -0.01489929  0.857253431</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pzabove2  0.01677208  0.001756162</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> zsd       0.07596902  0.102045488</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> zq20      0.15378941 -0.137676849</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> zq50     -0.61264582 -0.254916462</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> zq70      0.70697577 -0.305272339</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> zq90     -0.30809836 -0.278516913</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- Display importance of components ---#</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pcomp</span><span class="op">$</span><span class="va">pca</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Importance of components:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                           PC1    PC2    PC3     PC4     PC5     PC6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Standard deviation     2.6633 1.0981 0.6634 0.41859 0.22110 0.14479</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Proportion of Variance 0.7881 0.1340 0.0489 0.01947 0.00543 0.00233</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Cumulative Proportion  0.7881 0.9221 0.9710 0.99046 0.99589 0.99822</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                            PC7     PC8     PC9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Standard deviation     0.09669 0.07739 0.02581</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Proportion of Variance 0.00104 0.00067 0.00007</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Cumulative Proportion  0.99926 0.99993 1.00000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                           PC1     PC2     PC3     PC4     PC5     PC6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Standard deviation     2.4449 0.77331 0.58694 0.24602 0.09756 0.09617</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Proportion of Variance 0.8539 0.08543 0.04921 0.00865 0.00136 0.00132</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Cumulative Proportion  0.8539 0.93936 0.98857 0.99722 0.99858 0.99990</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                            PC7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Standard deviation     0.02618</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Proportion of Variance 0.00010</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Cumulative Proportion  1.00000</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>
