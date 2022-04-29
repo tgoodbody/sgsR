@@ -79,6 +79,7 @@ sample_srs(
 }
 \seealso{
 Other sample functions: 
+\code{\link{sample_ahels}()},
 \code{\link{sample_balanced}()},
 \code{\link{sample_clhs}()},
 \code{\link{sample_strat}()},
