@@ -187,7 +187,7 @@ will always result in the product of <span class="math inline">\(nStrata
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- perform quantiles stratification ---#</span>
 <span class="fu"><a href="../reference/strat_quantiles.html">strat_quantiles</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span>,
-                nStrata <span class="op">=</span> <span class="fl">4</span>,
+                nStrata <span class="op">=</span> <span class="fl">6</span>,
                 plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p><img src="stratification_files/figure-html/unnamed-chunk-6-1.png" width="700"><img src="stratification_files/figure-html/unnamed-chunk-6-2.png" width="700"></p>
 <pre><code><span class="co">#&gt; class       : SpatRaster </span>
@@ -198,7 +198,7 @@ will always result in the product of <span class="math inline">\(nStrata
 <span class="co">#&gt; source      : memory </span>
 <span class="co">#&gt; name        : strata </span>
 <span class="co">#&gt; min value   :      1 </span>
-<span class="co">#&gt; max value   :      4</span>
+<span class="co">#&gt; max value   :      6</span>
 
 <span class="co">#--- dual stratification - will produce 12 output strata ---#</span>
 <span class="fu"><a href="../reference/strat_quantiles.html">strat_quantiles</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span>, 
@@ -239,31 +239,20 @@ respectively.</p>
 <span class="va">values</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/values.html" class="external-link">values</a></span><span class="op">(</span><span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span><span class="op">)</span>
 
 <span class="co">#--- define breaks for metric ---#</span>
-<span class="va">breaks2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">values</span>, na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">breaks2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">10</span>,<span class="fl">15</span>,<span class="fl">20</span>,<span class="fl">25</span><span class="op">)</span>
 
 <span class="va">breaks2</span>
-<span class="co">#&gt;    0%   25%   50%   75%  100% </span>
-<span class="co">#&gt;  0.00  9.27 14.72 18.09 32.54</span></code></pre></div>
+<span class="co">#&gt; [1]  5 10 15 20 25</span></code></pre></div>
 <p>Once the breaks have been created we can input them into the function
 using the <code>breaks</code> and <code>breaks2</code> parameters.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- stratify on 1 metric only ---#</span>
 
-<span class="fu"><a href="../reference/strat_breaks.html">strat_breaks</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zmean</span>,
+<span class="fu"><a href="../reference/strat_breaks.html">strat_breaks</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">pzabove2</span>,
              breaks <span class="op">=</span> <span class="va">breaks</span>,
-             details <span class="op">=</span> <span class="cn">TRUE</span>,
              plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p><img src="stratification_files/figure-html/unnamed-chunk-8-1.png" width="700"><img src="stratification_files/figure-html/unnamed-chunk-8-2.png" width="700"></p>
-<pre><code><span class="co">#&gt; $details</span>
-<span class="co">#&gt; $details$breaks</span>
-<span class="co">#&gt; [1]   0  20  40  60  80 100</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $details$breaks2</span>
-<span class="co">#&gt; NULL</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $raster</span>
-<span class="co">#&gt; class       : SpatRaster </span>
+<pre><code><span class="co">#&gt; class       : SpatRaster </span>
 <span class="co">#&gt; dimensions  : 277, 373, 1  (nrow, ncol, nlyr)</span>
 <span class="co">#&gt; resolution  : 20, 20  (x, y)</span>
 <span class="co">#&gt; extent      : 431100, 438560, 5337700, 5343240  (xmin, xmax, ymin, ymax)</span>
@@ -271,29 +260,15 @@ using the <code>breaks</code> and <code>breaks2</code> parameters.</p>
 <span class="co">#&gt; source      : memory </span>
 <span class="co">#&gt; name        : strata </span>
 <span class="co">#&gt; min value   :      1 </span>
-<span class="co">#&gt; max value   :      3 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $plot</span></code></pre>
-<p><img src="stratification_files/figure-html/unnamed-chunk-8-3.png" width="700"></p>
+<span class="co">#&gt; max value   :      6</span></code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- stratify on 1 metric only ---#</span>
 
 <span class="fu"><a href="../reference/strat_breaks.html">strat_breaks</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span>,
              breaks <span class="op">=</span> <span class="va">breaks2</span>,
-             details <span class="op">=</span> <span class="cn">TRUE</span>,
              plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p><img src="stratification_files/figure-html/unnamed-chunk-9-1.png" width="700"><img src="stratification_files/figure-html/unnamed-chunk-9-2.png" width="700"></p>
-<pre><code><span class="co">#&gt; $details</span>
-<span class="co">#&gt; $details$breaks</span>
-<span class="co">#&gt;    0%   25%   50%   75%  100% </span>
-<span class="co">#&gt;  0.00  9.27 14.72 18.09 32.54 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $details$breaks2</span>
-<span class="co">#&gt; NULL</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $raster</span>
-<span class="co">#&gt; class       : SpatRaster </span>
+<pre><code><span class="co">#&gt; class       : SpatRaster </span>
 <span class="co">#&gt; dimensions  : 277, 373, 1  (nrow, ncol, nlyr)</span>
 <span class="co">#&gt; resolution  : 20, 20  (x, y)</span>
 <span class="co">#&gt; extent      : 431100, 438560, 5337700, 5343240  (xmin, xmax, ymin, ymax)</span>
@@ -301,10 +276,7 @@ using the <code>breaks</code> and <code>breaks2</code> parameters.</p>
 <span class="co">#&gt; source      : memory </span>
 <span class="co">#&gt; name        : strata </span>
 <span class="co">#&gt; min value   :      1 </span>
-<span class="co">#&gt; max value   :      5 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $plot</span></code></pre>
-<p><img src="stratification_files/figure-html/unnamed-chunk-9-3.png" width="700"></p>
+<span class="co">#&gt; max value   :      6</span></code></pre>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="strat_poly">
@@ -463,18 +435,18 @@ concatenation (merging) of sraster strata and sraster2 strata. See
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $lookUp</span>
 <span class="co">#&gt;    strata strata2 stratamapped</span>
-<span class="co">#&gt; 1       3       3           33</span>
+<span class="co">#&gt; 1       3       2           32</span>
 <span class="co">#&gt; 2       3       1           31</span>
-<span class="co">#&gt; 3       3       4           34</span>
-<span class="co">#&gt; 4       1       4           14</span>
-<span class="co">#&gt; 5       1       2           12</span>
-<span class="co">#&gt; 6       3       2           32</span>
-<span class="co">#&gt; 7       1       3           13</span>
+<span class="co">#&gt; 3       1       4           14</span>
+<span class="co">#&gt; 4       1       3           13</span>
+<span class="co">#&gt; 5       3       4           34</span>
+<span class="co">#&gt; 6       3       3           33</span>
+<span class="co">#&gt; 7       1       2           12</span>
 <span class="co">#&gt; 8       1       1           11</span>
-<span class="co">#&gt; 9       2       3           23</span>
-<span class="co">#&gt; 10      2       4           24</span>
-<span class="co">#&gt; 11      2       2           22</span>
-<span class="co">#&gt; 12      2       1           21</span></code></pre>
+<span class="co">#&gt; 9       2       1           21</span>
+<span class="co">#&gt; 10      2       2           22</span>
+<span class="co">#&gt; 11      2       4           24</span>
+<span class="co">#&gt; 12      2       3           23</span></code></pre>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

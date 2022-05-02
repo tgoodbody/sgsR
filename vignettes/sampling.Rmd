@@ -54,6 +54,8 @@ A total of 5 `sample` functions currently exist in the package:
 
 *   `sample_balanced()` - see [BalancedSampling](http://www.antongrafstrom.se/balancedsampling/)
 
+*   `sample_ahels()` - Adapted hypercube evaluation of a legacy sample (ahels) algorithm
+
 ## Access {#access .unnumbered}
 
 A feature of the `sample_*` functions is the ability to define `access` corridors. Users can supply a road access network (must be `sf` line objects) and define buffers around `access` where samples should be excluded and included. 

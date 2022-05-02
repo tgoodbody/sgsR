@@ -108,8 +108,6 @@ access vector</p></li>
 sizes based on relative standard error thresholds</p></li>
 <li><p><code><a href="../reference/calculate_allocation.html">calculate_allocation()</a></code> - sample allocation algorithm
 - proportional / optimal / equal sampling</p></li>
-<li><p><code>calculate_ahels()</code> - Adapted hypercube evaluation of
-a legacy sample (ahels) algorithm</p></li>
 <li><p><code><a href="../reference/calculate_coobs.html">calculate_coobs()</a></code> - Count of observations
 algorithm</p></li>
 <li><p><code><a href="../reference/calculate_lhsPop.html">calculate_lhsPop()</a></code> - Population covariate statistics
@@ -163,26 +161,26 @@ output.</p>
 <p><img src="calculating_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <pre><code><span class="co">#&gt; $pca</span>
 <span class="co">#&gt; Standard deviations (1, .., p=7):</span>
-<span class="co">#&gt; [1] 2.44489597 0.77330715 0.58694359 0.24601882 0.09755856 0.09617098</span>
-<span class="co">#&gt; [7] 0.02617551</span>
+<span class="co">#&gt; [1] 2.39419952 0.86117918 0.65363319 0.27246138 0.11007946 0.10828637</span>
+<span class="co">#&gt; [7] 0.02939539</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Rotation (n x k) = (7 x 7):</span>
 <span class="co">#&gt;                PC1         PC2         PC3         PC4         PC5</span>
-<span class="co">#&gt; zmean    0.4054171  0.11311676 -0.15821737  0.05228532 -0.24488701</span>
-<span class="co">#&gt; pzabove2 0.3403673  0.15301222  0.92238481  0.07785750  0.05997885</span>
-<span class="co">#&gt; zsd      0.3438175 -0.69466285 -0.04508043 -0.09258238  0.61028250</span>
-<span class="co">#&gt; zq20     0.3523317  0.61345601 -0.22005777 -0.48739208  0.41346282</span>
-<span class="co">#&gt; zq50     0.3982735  0.14758611 -0.21579187  0.56156385  0.13175420</span>
-<span class="co">#&gt; zq70     0.4039445 -0.05545307 -0.16438966  0.36438073 -0.28451820</span>
-<span class="co">#&gt; zq90     0.3945200 -0.28293182 -0.01121444 -0.54493544 -0.54288754</span>
-<span class="co">#&gt;                  PC6          PC7</span>
-<span class="co">#&gt; zmean    -0.01489929  0.857253431</span>
-<span class="co">#&gt; pzabove2  0.01677208  0.001756162</span>
-<span class="co">#&gt; zsd       0.07596902  0.102045488</span>
-<span class="co">#&gt; zq20      0.15378941 -0.137676849</span>
-<span class="co">#&gt; zq50     -0.61264582 -0.254916462</span>
-<span class="co">#&gt; zq70      0.70697577 -0.305272339</span>
-<span class="co">#&gt; zq90     -0.30809836 -0.278516913</span>
+<span class="co">#&gt; zmean    0.4133334  0.09704163 -0.16917057  0.05440712 -0.22000532</span>
+<span class="co">#&gt; pzabove2 0.3217923  0.28576528  0.89947768  0.04709941  0.05904585</span>
+<span class="co">#&gt; zsd      0.3314081 -0.70019069  0.06653226 -0.06472512  0.60973701</span>
+<span class="co">#&gt; zq20     0.3511220  0.56046214 -0.30856343 -0.47873324  0.46460623</span>
+<span class="co">#&gt; zq50     0.4055034  0.12095230 -0.21088469  0.55460643 -0.05871399</span>
+<span class="co">#&gt; zq70     0.4116791 -0.07297959 -0.13368861  0.36832636 -0.08204398</span>
+<span class="co">#&gt; zq90     0.3982141 -0.29082785  0.01839257 -0.56408691 -0.59185684</span>
+<span class="co">#&gt;                   PC6          PC7</span>
+<span class="co">#&gt; zmean     0.052917370  0.858462025</span>
+<span class="co">#&gt; pzabove2 -0.004146026  0.002415685</span>
+<span class="co">#&gt; zsd      -0.098391685  0.099124286</span>
+<span class="co">#&gt; zq20      0.032759647 -0.145830192</span>
+<span class="co">#&gt; zq50     -0.629977381 -0.261835891</span>
+<span class="co">#&gt; zq70      0.755333726 -0.307241076</span>
+<span class="co">#&gt; zq90     -0.137941678 -0.262659351</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $raster</span>
 <span class="co">#&gt; class       : SpatRaster </span>
@@ -195,8 +193,8 @@ output.</p>
 <span class="co">#&gt;               memory  </span>
 <span class="co">#&gt;               ... and 2 more source(s)</span>
 <span class="co">#&gt; names       :        PC1,        PC2,        PC3,        PC4,        PC5 </span>
-<span class="co">#&gt; min values  : -4.9718830, -5.5371690, -3.6678708, -2.3303431, -0.6698738 </span>
-<span class="co">#&gt; max values  :   7.477925,   2.540762,   1.728753,   1.519315,   1.386004</span></code></pre>
+<span class="co">#&gt; min values  : -5.8417985, -6.3694763, -4.0382460, -2.4972669, -0.6925408 </span>
+<span class="co">#&gt; max values  :   7.806999,   2.565417,   1.633358,   1.598260,   1.530968</span></code></pre>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="calculate_sampsize">
@@ -214,13 +212,13 @@ matching sample size.</p>
 <span class="fu"><a href="../reference/calculate_sampsize.html">calculate_sampsize</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>,
                    rse <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span>
 <span class="co">#&gt;   nSamp  rse      var</span>
-<span class="co">#&gt; 1  2756 0.01    zmean</span>
-<span class="co">#&gt; 2  2065 0.01 pzabove2</span>
-<span class="co">#&gt; 3  2563 0.01      zsd</span>
-<span class="co">#&gt; 4  4478 0.01     zq20</span>
-<span class="co">#&gt; 5  3360 0.01     zq50</span>
-<span class="co">#&gt; 6  2850 0.01     zq70</span>
-<span class="co">#&gt; 7  2060 0.01     zq90</span></code></pre></div>
+<span class="co">#&gt; 1  2030 0.01    zmean</span>
+<span class="co">#&gt; 2  1341 0.01 pzabove2</span>
+<span class="co">#&gt; 3  1859 0.01      zsd</span>
+<span class="co">#&gt; 4  3647 0.01     zq20</span>
+<span class="co">#&gt; 5  2581 0.01     zq50</span>
+<span class="co">#&gt; 6  2110 0.01     zq70</span>
+<span class="co">#&gt; 7  1394 0.01     zq90</span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- change default threshold sequence values ---# </span>
 <span class="co">#--- if increment and rse are not divisible the closes value will be taken ---#</span>
@@ -242,13 +240,13 @@ matching sample size.</p>
 <span class="co">#&gt; <span style="color: #949494;"># Groups:   var [7]</span></span>
 <span class="co">#&gt;   nSamp   rse var     </span>
 <span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span>   314  0.03 zmean   </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span>   234  0.03 pzabove2</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span>   292  0.03 zsd     </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span>   518  0.03 zq20    </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">5</span>   385  0.03 zq50    </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">6</span>   325  0.03 zq70    </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">7</span>   233  0.03 zq90    </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span>   230  0.03 zmean   </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span>   151  0.03 pzabove2</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">3</span>   211  0.03 zsd     </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">4</span>   421  0.03 zq20    </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">5</span>   295  0.03 zq50    </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">6</span>   240  0.03 zq70    </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">7</span>   157  0.03 zq90    </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $plot</span></code></pre></div>
 <p><img src="calculating_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
@@ -280,10 +278,10 @@ allocated to each strata.</li>
 <span class="fu"><a href="../reference/calculate_allocation.html">calculate_allocation</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, 
                      nSamp <span class="op">=</span> <span class="fl">200</span><span class="op">)</span>
 <span class="co">#&gt;   strata total</span>
-<span class="co">#&gt; 1      1    46</span>
-<span class="co">#&gt; 2      2    58</span>
-<span class="co">#&gt; 3      3    46</span>
-<span class="co">#&gt; 4      4    50</span></code></pre></div>
+<span class="co">#&gt; 1      1    47</span>
+<span class="co">#&gt; 2      2    57</span>
+<span class="co">#&gt; 3      3    41</span>
+<span class="co">#&gt; 4      4    54</span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- calculate existing samples to include ---#</span>
 <span class="va">e.sr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract.html">extract_strata</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, 
@@ -293,10 +291,10 @@ allocated to each strata.</li>
                      nSamp <span class="op">=</span> <span class="fl">200</span>, 
                      existing <span class="op">=</span> <span class="va">e.sr</span><span class="op">)</span>
 <span class="co">#&gt;   strata total need</span>
-<span class="co">#&gt; 1      1    -2   46</span>
-<span class="co">#&gt; 2      2     4   58</span>
-<span class="co">#&gt; 3      3    -6   46</span>
-<span class="co">#&gt; 4      4     4   50</span></code></pre></div>
+<span class="co">#&gt; 1      1    -7   47</span>
+<span class="co">#&gt; 2      2     8   57</span>
+<span class="co">#&gt; 3      3     1   41</span>
+<span class="co">#&gt; 4      4    -3   54</span></code></pre></div>
 <p>Notice that some of the results in <code>total</code> above are
 negative. This indicates that the <code>existing</code> samples over
 represent those strata and that some samples should be removed to avoid
@@ -318,10 +316,10 @@ be provided to calculate variation to optimally allocate samples.</p>
                      mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span>, <span class="co"># metric raster</span>
                      force <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># force nSamp number</span>
 <span class="co">#&gt;   strata total need</span>
-<span class="co">#&gt; 1      1    -2   46</span>
-<span class="co">#&gt; 2      2    -6   48</span>
-<span class="co">#&gt; 3      3     5   57</span>
-<span class="co">#&gt; 4      4     3   49</span></code></pre></div>
+<span class="co">#&gt; 1      1     5   59</span>
+<span class="co">#&gt; 2      2    -1   48</span>
+<span class="co">#&gt; 3      3     3   43</span>
+<span class="co">#&gt; 4      4    -7   50</span></code></pre></div>
 </div>
 <div class="section level3 unnumbered">
 <h3 class="unnumbered" id="equal">Equal allocation<a class="anchor" aria-label="anchor" href="#equal"></a>

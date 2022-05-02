@@ -52,8 +52,6 @@ A total of 7 `calculate` functions currently exist in the package:
 
 *   `calculate_allocation()` - sample allocation algorithm - proportional / optimal / equal sampling
 
-*   `calculate_ahels()` - Adapted hypercube evaluation of a legacy sample (ahels) algorithm
-
 *   `calculate_coobs()` - Count of observations algorithm
 
 *   `calculate_lhsPop()` - Population covariate statistics for latin hypercube sampling

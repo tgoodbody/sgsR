@@ -96,7 +96,7 @@ The `strat_quantiles()` algorithm divides data into equally sized strata (`nStra
 ```{r,warning=F,message=F}
 #--- perform quantiles stratification ---#
 strat_quantiles(mraster = mraster$zq90,
-                nStrata = 4,
+                nStrata = 6,
                 plot = TRUE)
 
 #--- dual stratification - will produce 12 output strata ---#
@@ -122,7 +122,7 @@ breaks
 values <- terra::values(mraster$zq90)
 
 #--- define breaks for metric ---#
-breaks2 <- quantile(values, na.rm=TRUE)
+breaks2 <- c(5,10,15,20,25)
 
 breaks2
 
@@ -133,9 +133,8 @@ Once the breaks have been created we can input them into the function using the 
 ```{r,warning=F,message=F}
 #--- stratify on 1 metric only ---#
 
-strat_breaks(mraster = mraster$zmean,
+strat_breaks(mraster = mraster$pzabove2,
              breaks = breaks,
-             details = TRUE,
              plot = TRUE)
 ```
 
@@ -144,7 +143,6 @@ strat_breaks(mraster = mraster$zmean,
 
 strat_breaks(mraster = mraster$zq90,
              breaks = breaks2,
-             details = TRUE,
              plot = TRUE)
 ```   
 
