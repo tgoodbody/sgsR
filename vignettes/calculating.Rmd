@@ -72,7 +72,7 @@ calculate_distance(raster = sraster, # input
 
 ## `calculate_pcomp` {.unnumbered}
 
-The `calculate_pcomp()` function take a `mraster` as input and perform principal component analysis. The number of components defined by the `nComp` parameter specify the number of components that should be rasterized to output.
+The `calculate_pcomp()` function take a `mraster` as input and performs principal component analysis. The number of components defined by the `nComp` parameter specify the number of components that should be rasterized to output.
 
 ```{r,warning=F,message=F}
 calculate_pcomp(mraster = mraster, # input
@@ -95,7 +95,7 @@ calculate_sampsize(mraster = mraster,
 
 ```{r, warning = FALSE}
 #--- change default threshold sequence values ---# 
-#--- if increment and rse are not divisible the closes value will be taken ---#
+#--- if increment and rse are not divisible the closest value will be taken ---#
 p <- calculate_sampsize(mraster = mraster,
                    rse = 0.025,
                    start = 0.01,
