@@ -123,7 +123,7 @@ strat_quantiles <- function(mraster,
     
     df <- vals %>%
       as.data.frame() %>%
-      dplyr::filter(!is.na(.))
+      stats::na.omit()
     
     metric <- as.character(names(df))
     
@@ -162,7 +162,7 @@ strat_quantiles <- function(mraster,
       
       df <- vals %>%
         as.data.frame() %>%
-        dplyr::filter(!is.na(.))
+        stats::na.omit()
       
       nm <- as.character(names(df))
       
