@@ -213,7 +213,7 @@ sample_strat <- function(sraster,
     }
 
     if (any(!c("strata") %in% names(existing))) {
-      stop("'existing' must have an attribute named 'strata'")
+      stop("'existing' must have an attribute named 'strata'. Consider using extract_strata().")
     }
 
     if (inherits(sf::st_geometry(existing), "sfc_POINT")) {
@@ -577,13 +577,13 @@ sample_strat <- function(sraster,
 
       if (missing(access)) {
         terra::plot(sraster[[1]])
-        suppressWarnings(terra::plot(samples, add = T, col = "black", pch = ifelse(samples$type == "existing", 1, 3)))
+        suppressWarnings(terra::plot(samples, add = T, col = "black"))
 
         #--- if access is provided plot the masked access sraster ---#
       } else {
         terra::plot(sraster[[1]])
         suppressWarnings(terra::plot(access_buff$buff, add = T, border = c("gray30"), col = "gray10", alpha = 0.1))
-        suppressWarnings(terra::plot(samples, add = T, col = "black", pch = ifelse(samples$type == "existing", 1, 3)))
+        suppressWarnings(terra::plot(samples, add = T, col = "black"))
       }
 
       #--- if existing is provided plot the full raster ---#
