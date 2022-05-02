@@ -44,7 +44,7 @@ thanks to to:
 | [Joanne C. White](https://scholar.google.ca/citations?user=bqjk4skAAAAJ&hl=en)            | Canadian Forest Service                                                 |
 | [Piotr Tompalski](https://scholar.google.ca/citations?user=RtYdz0cAAAAJ&hl=en)            | Canadian Forest Service                                                 |
 | [Andrew T. Hudak](https://scholar.google.ca/citations?hl=en&user=bdn7YVoAAAAJ)            | United States Forest Service                                            |
-| [Ruben Valbuena](https://scholar.google.com/citations?user=Nx336TQAAAAJ&hl=en)            | Bangor University                                                       |
+| [Ruben Valbuena](https://scholar.google.com/citations?user=Nx336TQAAAAJ&hl=en)            | Swedish University of Agricultural Sciences                             |
 | [Antoine LeBoeuf](https://scholar.google.com/citations?user=wGsKOK8AAAAJ&hl=en)           | Ministère des Forêts, de la Faune et des Parcs                          |
 | [Ian Sinclair](http://www.infogo.gov.on.ca/infogo/home.html#empProfile/332620/en)         | Ministry of Northern Development, Mines, Natural Resources and Forestry |
 | [Grant McCartney](https://www.signalhire.com/profiles/grant-mccartney%27s-email/99719223) | Forsite Consulting                                                      |
