@@ -44,6 +44,8 @@ existing <- sample_srs(raster = mraster, # use sraster as input for sampling
 
 A total of 7 `calculate` functions currently exist in the package:
 
+*   `calculate_representation()` - compare representation of strata in existing sample
+
 *   `calculate_distance()` - per pixel distance to closest access vector
 
 *   `calculate_pcomp()`- principal components on input `mraster`
@@ -59,6 +61,32 @@ A total of 7 `calculate` functions currently exist in the package:
 *   `calculate_lhsOpt()` - Optimal latin hypercube sampling paramters including sample number
 
 `calculate_*` functions serve as helper functions. In this section we outline how these functions can be used.
+
+## `calculate_representation()` {#rep .unnumbered}
+
+The `calculate_representation()` function allows users to check how well represented their `existing` sample networks are within the context of a stratification. Users provide an `sraster` of their choosing and their `existing` samples are are provided with a tabular and graphical (if `plot = TRUE`) output comparing strata coverage frequency and sampling frequency.
+
+```{r,warning=F,message=F}
+#--- calculate representation ---#
+calculate_representation(sraster = sraster, 
+                         existing = existing, 
+                         plot = TRUE)
+```
+The tabular output outlines the frequency of coverage for each strata (`srasterFreq`) and the sampling frequency within each strata (`sampleFreq`). The difference between these (`diffFreq`) determine whether values are over-represented (positive numbers) or under-represented (negative numbers). This is also reflected in the number of samples that are needed to be added or removed (`need`) to reach what would be considered a sample that is representative of the strata provided in `sraster`. 
+
+Performing the algorithm on a sample set derived using `sample_strat()` demonstrates proportional sampling to strata coverage.
+
+```{r,warning=F,message=F}
+#--- stratified samples ---#
+strat <- sample_strat(sraster = sraster,
+                      nSamp = 200)
+
+calculate_representation(sraster = sraster,
+                         existing = strat,
+                         plot = TRUE)
+```
+
+It is common for there to be very small (negligible) differences between `srasterFreq` and `sampleFreq`. In these cases its important for the user to determine whetehr they think samples should really be added or removed.
 
 ## `calculate_distance` {#dist .unnumbered}
 
