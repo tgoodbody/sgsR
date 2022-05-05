@@ -9,9 +9,9 @@
 #' @return Returns a data.frame of:
 #' \itemize{
 #' \item{strata} - \code{sraster} strata ID.
-#' \item{srasterFreq} - Coverage frequency (%) of \code{sraster} strata.
-#' \item{sampleFreq} - Sampling frequency (%) within \code{sraster} strata.
-#' \item{diffFreq} - Difference between \code{srasterFreq} & \code{sampleFreq} (%). Positive values indicate over representation
+#' \item{srasterFreq} - Coverage frequency percent of \code{sraster} strata.
+#' \item{sampleFreq} - Sampling frequency percent within \code{sraster} strata.
+#' \item{diffFreq} - Difference between \code{srasterFreq} & \code{sampleFreq}. Positive values indicate over representation
 #' \item{nSamp} - Number of samples within each strata in \code{existing}.
 #' \item{need} - Total required samples to be representative of strata coverage. Rounded.
 #' }
@@ -61,6 +61,10 @@ calculate_representation <- function(sraster,
     stop("'sraster' must be type SpatRaster", call. = FALSE)
   }
   
+  if (!stringr::str_detect(names(sraster), "strata")) {
+    stop("A layer name containing 'strata' does not exist within 'sraster'.")
+  }
+  
   if (!inherits(existing, "data.frame") && !inherits(existing, "sf")) {
     stop("'existing' must be a data.frame or sf object", call. = FALSE)
   }
@@ -103,7 +107,7 @@ calculate_representation <- function(sraster,
     dplyr::mutate(need = ceiling(srasterFreq * sum(nSamp)) - nSamp) %>%
     dplyr::arrange(strata)
   
-
+  #--- present barchart if desired ---#
   if (isTRUE(plot)) {
     p <- rep %>%
           dplyr::select(strata, sraster = srasterFreq, samples = sampleFreq) %>%
