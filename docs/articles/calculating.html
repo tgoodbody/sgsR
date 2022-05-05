@@ -41,7 +41,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -100,6 +100,8 @@
 <p>A total of 7 <code>calculate</code> functions currently exist in the
 package:</p>
 <ul>
+<li><p><code><a href="../reference/calculate_representation.html">calculate_representation()</a></code> - compare representation
+of strata in existing sample</p></li>
 <li><p><code><a href="../reference/calculate_distance.html">calculate_distance()</a></code> - per pixel distance to closest
 access vector</p></li>
 <li><p><code><a href="../reference/calculate_pcomp.html">calculate_pcomp()</a></code>- principal components on input
@@ -118,6 +120,63 @@ sampling paramters including sample number</p></li>
 <p><code>calculate_*</code> functions serve as helper functions. In this
 section we outline how these functions can be used.</p>
 <div class="section level2 unnumbered">
+<h2 class="unnumbered" id="rep">
+<code>calculate_representation()</code><a class="anchor" aria-label="anchor" href="#rep"></a>
+</h2>
+<p>The <code><a href="../reference/calculate_representation.html">calculate_representation()</a></code> function allows users to
+check how well represented their <code>existing</code> sample networks
+are within the context of a stratification. Users provide an
+<code>sraster</code> of their choosing and their <code>existing</code>
+samples are are provided with a tabular and graphical (if
+<code>plot = TRUE</code>) output comparing strata coverage frequency and
+sampling frequency.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">#--- calculate representation ---#</span>
+<span class="fu"><a href="../reference/calculate_representation.html">calculate_representation</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, 
+                         existing <span class="op">=</span> <span class="va">existing</span>, 
+                         plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<p><img src="calculating_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+<pre><code><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 x 6</span></span>
+<span class="co">#&gt;   strata srasterFreq sampleFreq diffFreq nSamp  need</span>
+<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span>      1        0.27       0.24  -<span style="color: #BB0000;">0.030</span><span style="color: #BB0000; text-decoration: underline;">0</span>    49     5</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span>      2        0.29       0.32   0.030<span style="text-decoration: underline;">0</span>    64    -<span style="color: #BB0000;">6</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">3</span>      3        0.2        0.16  -<span style="color: #BB0000;">0.04</span>      33     7</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">4</span>      4        0.24       0.27   0.030<span style="text-decoration: underline;">0</span>    54    -<span style="color: #BB0000;">6</span></span></code></pre>
+<p>The tabular output outlines the frequency of coverage for each strata
+(<code>srasterFreq</code>) and the sampling frequency within each strata
+(<code>sampleFreq</code>). The difference between these
+(<code>diffFreq</code>) determine whether values are over-represented
+(positive numbers) or under-represented (negative numbers). This is also
+reflected in the number of samples that are needed to be added or
+removed (<code>need</code>) to reach what would be considered a sample
+that is representative of the strata provided in
+<code>sraster</code>.</p>
+<p>Performing the algorithm on a sample set derived using
+<code><a href="../reference/sample_strat.html">sample_strat()</a></code> demonstrates proportional sampling to strata
+coverage.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">#--- stratified samples ---#</span>
+<span class="va">strat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sample_strat.html">sample_strat</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>,
+                      nSamp <span class="op">=</span> <span class="fl">200</span><span class="op">)</span>
+
+<span class="fu"><a href="../reference/calculate_representation.html">calculate_representation</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>,
+                         existing <span class="op">=</span> <span class="va">strat</span>,
+                         plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<p><img src="calculating_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<pre><code><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 x 6</span></span>
+<span class="co">#&gt;   strata srasterFreq sampleFreq diffFreq nSamp  need</span>
+<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span>      1        0.27       0.27        0    55     0</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span>      2        0.29       0.29        0    58     1</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">3</span>      3        0.2        0.2         0    41     0</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">4</span>      4        0.24       0.24        0    49     0</span></code></pre>
+<p>It is common for there to be very small (negligible) differences
+between <code>srasterFreq</code> and <code>sampleFreq</code>. In these
+cases its important for the user to determine whetehr they think samples
+should really be added or removed.</p>
+</div>
+<div class="section level2 unnumbered">
 <h2 class="unnumbered" id="dist">
 <code>calculate_distance</code><a class="anchor" aria-label="anchor" href="#dist"></a>
 </h2>
@@ -128,11 +187,11 @@ for constraining sampling protocols such the <code><a href="../reference/sample_
 function where the output raster layer can be used as a
 <code>cost</code> constraint.The output raster is the input with the
 calculated distance layer (<code>dist2access</code>) appended.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/calculate_distance.html">calculate_distance</a></span><span class="op">(</span>raster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># input</span>
                    access <span class="op">=</span> <span class="va">access</span>, <span class="co"># define access road network</span>
                    plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># plot</span></code></pre></div>
-<p><img src="calculating_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+<p><img src="calculating_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <pre><code><span class="co">#&gt; class       : SpatRaster </span>
 <span class="co">#&gt; dimensions  : 277, 373, 2  (nrow, ncol, nlyr)</span>
 <span class="co">#&gt; resolution  : 20, 20  (x, y)</span>
@@ -149,38 +208,38 @@ calculated distance layer (<code>dist2access</code>) appended.</p>
 <code>calculate_pcomp</code><a class="anchor" aria-label="anchor" href="#calculate_pcomp"></a>
 </h2>
 <p>The <code><a href="../reference/calculate_pcomp.html">calculate_pcomp()</a></code> function take a
-<code>mraster</code> as input and perform principal component analysis.
+<code>mraster</code> as input and performs principal component analysis.
 The number of components defined by the <code>nComp</code> parameter
 specify the number of components that should be rasterized to
 output.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/calculate_pcomp.html">calculate_pcomp</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, <span class="co"># input</span>
                 nComp <span class="op">=</span> <span class="fl">5</span>, <span class="co"># number of components to output</span>
                 plot <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># plot</span>
                 details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># details about the principal component analysis appended</span></code></pre></div>
-<p><img src="calculating_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p><img src="calculating_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <pre><code><span class="co">#&gt; $pca</span>
 <span class="co">#&gt; Standard deviations (1, .., p=7):</span>
-<span class="co">#&gt; [1] 2.39419952 0.86117918 0.65363319 0.27246138 0.11007946 0.10828637</span>
-<span class="co">#&gt; [7] 0.02939539</span>
+<span class="co">#&gt; [1] 2.39419739 0.86118253 0.65363210 0.27245666 0.11010541 0.10829035</span>
+<span class="co">#&gt; [7] 0.02942688</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Rotation (n x k) = (7 x 7):</span>
 <span class="co">#&gt;                PC1         PC2         PC3         PC4         PC5</span>
-<span class="co">#&gt; zmean    0.4133334  0.09704163 -0.16917057  0.05440712 -0.22000532</span>
-<span class="co">#&gt; pzabove2 0.3217923  0.28576528  0.89947768  0.04709941  0.05904585</span>
-<span class="co">#&gt; zsd      0.3314081 -0.70019069  0.06653226 -0.06472512  0.60973701</span>
-<span class="co">#&gt; zq20     0.3511220  0.56046214 -0.30856343 -0.47873324  0.46460623</span>
-<span class="co">#&gt; zq50     0.4055034  0.12095230 -0.21088469  0.55460643 -0.05871399</span>
-<span class="co">#&gt; zq70     0.4116791 -0.07297959 -0.13368861  0.36832636 -0.08204398</span>
-<span class="co">#&gt; zq90     0.3982141 -0.29082785  0.01839257 -0.56408691 -0.59185684</span>
+<span class="co">#&gt; zmean    0.4133340  0.09703826 -0.16916047  0.05442900 -0.21939815</span>
+<span class="co">#&gt; pzabove2 0.3217898  0.28579795  0.89947473  0.04704228  0.05896495</span>
+<span class="co">#&gt; zsd      0.3314085 -0.70018256  0.06658857 -0.06471159  0.60912694</span>
+<span class="co">#&gt; zq20     0.3511227  0.56045175 -0.30858934 -0.47871051  0.46478505</span>
+<span class="co">#&gt; zq50     0.4055046  0.12094513 -0.21087080  0.55459689 -0.06283654</span>
+<span class="co">#&gt; zq70     0.4116799 -0.07298152 -0.13366415  0.36834483 -0.07728656</span>
+<span class="co">#&gt; zq90     0.3982126 -0.29083896  0.01832844 -0.56410773 -0.59279438</span>
 <span class="co">#&gt;                   PC6          PC7</span>
-<span class="co">#&gt; zmean     0.052917370  0.858462025</span>
-<span class="co">#&gt; pzabove2 -0.004146026  0.002415685</span>
-<span class="co">#&gt; zsd      -0.098391685  0.099124286</span>
-<span class="co">#&gt; zq20      0.032759647 -0.145830192</span>
-<span class="co">#&gt; zq50     -0.629977381 -0.261835891</span>
-<span class="co">#&gt; zq70      0.755333726 -0.307241076</span>
-<span class="co">#&gt; zq90     -0.137941678 -0.262659351</span>
+<span class="co">#&gt; zmean     0.054431518  0.858523411</span>
+<span class="co">#&gt; pzabove2 -0.004537764  0.002374888</span>
+<span class="co">#&gt; zsd      -0.102288428  0.098957671</span>
+<span class="co">#&gt; zq20      0.029772877 -0.145958963</span>
+<span class="co">#&gt; zq50     -0.629629712 -0.261748068</span>
+<span class="co">#&gt; zq70      0.755801174 -0.307312042</span>
+<span class="co">#&gt; zq90     -0.134157677 -0.262454817</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $raster</span>
 <span class="co">#&gt; class       : SpatRaster </span>
@@ -193,8 +252,8 @@ output.</p>
 <span class="co">#&gt;               memory  </span>
 <span class="co">#&gt;               ... and 2 more source(s)</span>
 <span class="co">#&gt; names       :        PC1,        PC2,        PC3,        PC4,        PC5 </span>
-<span class="co">#&gt; min values  : -5.8417985, -6.3694763, -4.0382460, -2.4972669, -0.6925408 </span>
-<span class="co">#&gt; max values  :   7.806999,   2.565417,   1.633358,   1.598260,   1.530968</span></code></pre>
+<span class="co">#&gt; min values  : -5.8417779, -6.3681104, -4.0383034, -2.4944332, -0.6915542 </span>
+<span class="co">#&gt; max values  :   7.804354,   2.563877,   1.633331,   1.594847,   1.529565</span></code></pre>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="calculate_sampsize">
@@ -207,7 +266,7 @@ layers is provided, sample sizes will be determined for all layers. If
 <code>plot = TRUE</code> and <code>rse</code> is defined, a sequence of
 rse values will be visualized with indicators and a value for the
 matching sample size.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- determine sample size based on relative standard error (rse) of 1% ---#</span>
 <span class="fu"><a href="../reference/calculate_sampsize.html">calculate_sampsize</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>,
                    rse <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span>
@@ -219,9 +278,9 @@ matching sample size.</p>
 <span class="co">#&gt; 5  2581 0.01     zq50</span>
 <span class="co">#&gt; 6  2110 0.01     zq70</span>
 <span class="co">#&gt; 7  1394 0.01     zq90</span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- change default threshold sequence values ---# </span>
-<span class="co">#--- if increment and rse are not divisible the closes value will be taken ---#</span>
+<span class="co">#--- if increment and rse are not divisible the closest value will be taken ---#</span>
 <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calculate_sampsize.html">calculate_sampsize</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>,
                    rse <span class="op">=</span> <span class="fl">0.025</span>,
                    start <span class="op">=</span> <span class="fl">0.01</span>,
@@ -233,9 +292,6 @@ matching sample size.</p>
 
 <span class="va">p</span>
 <span class="co">#&gt; $nSamp</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'cli':</span>
-<span class="co">#&gt;   method     from         </span>
-<span class="co">#&gt;   print.boxx spatstat.geom</span>
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 x 3</span></span>
 <span class="co">#&gt; <span style="color: #949494;"># Groups:   var [7]</span></span>
 <span class="co">#&gt;   nSamp   rse var     </span>
@@ -249,7 +305,7 @@ matching sample size.</p>
 <span class="co">#&gt; <span style="color: #BCBCBC;">7</span>   157  0.03 zq90    </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $plot</span></code></pre></div>
-<p><img src="calculating_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p><img src="calculating_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="calculate_allocation">
@@ -273,16 +329,16 @@ allocated to each strata.</li>
 <div class="section level3 unnumbered">
 <h3 class="unnumbered" id="proportional">Proportional allocation<a class="anchor" aria-label="anchor" href="#proportional"></a>
 </h3>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- perform grid sampling ---#</span>
 <span class="fu"><a href="../reference/calculate_allocation.html">calculate_allocation</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, 
                      nSamp <span class="op">=</span> <span class="fl">200</span><span class="op">)</span>
 <span class="co">#&gt;   strata total</span>
-<span class="co">#&gt; 1      1    47</span>
-<span class="co">#&gt; 2      2    57</span>
+<span class="co">#&gt; 1      1    55</span>
+<span class="co">#&gt; 2      2    58</span>
 <span class="co">#&gt; 3      3    41</span>
-<span class="co">#&gt; 4      4    54</span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<span class="co">#&gt; 4      4    49</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- calculate existing samples to include ---#</span>
 <span class="va">e.sr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract.html">extract_strata</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, 
                        existing <span class="op">=</span> <span class="va">existing</span><span class="op">)</span>
@@ -291,10 +347,10 @@ allocated to each strata.</li>
                      nSamp <span class="op">=</span> <span class="fl">200</span>, 
                      existing <span class="op">=</span> <span class="va">e.sr</span><span class="op">)</span>
 <span class="co">#&gt;   strata total need</span>
-<span class="co">#&gt; 1      1    -7   47</span>
-<span class="co">#&gt; 2      2     8   57</span>
-<span class="co">#&gt; 3      3     1   41</span>
-<span class="co">#&gt; 4      4    -3   54</span></code></pre></div>
+<span class="co">#&gt; 1      1     6   55</span>
+<span class="co">#&gt; 2      2    -6   58</span>
+<span class="co">#&gt; 3      3     8   41</span>
+<span class="co">#&gt; 4      4    -5   49</span></code></pre></div>
 <p>Notice that some of the results in <code>total</code> above are
 negative. This indicates that the <code>existing</code> samples over
 represent those strata and that some samples should be removed to avoid
@@ -308,7 +364,7 @@ in <code>$total</code>.</p>
 allocate samples. This means that in addition to providing and
 <code>sraster</code>, that a specific metric (<code>mraster</code>) must
 be provided to calculate variation to optimally allocate samples.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/calculate_allocation.html">calculate_allocation</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># stratified raster</span>
                      nSamp <span class="op">=</span> <span class="fl">200</span>, <span class="co"># desired sample number</span>
                      existing <span class="op">=</span> <span class="va">e.sr</span>, <span class="co">#existing samples</span>
@@ -316,10 +372,10 @@ be provided to calculate variation to optimally allocate samples.</p>
                      mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span>, <span class="co"># metric raster</span>
                      force <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># force nSamp number</span>
 <span class="co">#&gt;   strata total need</span>
-<span class="co">#&gt; 1      1     5   59</span>
-<span class="co">#&gt; 2      2    -1   48</span>
-<span class="co">#&gt; 3      3     3   43</span>
-<span class="co">#&gt; 4      4    -7   50</span></code></pre></div>
+<span class="co">#&gt; 1      1     2   51</span>
+<span class="co">#&gt; 2      2   -16   48</span>
+<span class="co">#&gt; 3      3     7   42</span>
+<span class="co">#&gt; 4      4     7   61</span></code></pre></div>
 </div>
 <div class="section level3 unnumbered">
 <h3 class="unnumbered" id="equal">Equal allocation<a class="anchor" aria-label="anchor" href="#equal"></a>
@@ -329,7 +385,7 @@ of samples allocated to each strata. In this case using
 <code>allocation = equal</code> is ideal. In this instance,
 <code>nSamp</code> relates to the total number of samples per strata
 rather than the total number of samples overall.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/calculate_allocation.html">calculate_allocation</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># stratified raster</span>
                      nSamp <span class="op">=</span> <span class="fl">20</span>, <span class="co"># desired sample number</span>
                      allocation <span class="op">=</span> <span class="st">"equal"</span><span class="op">)</span> <span class="co"># optimal allocation</span>
@@ -376,7 +432,7 @@ reprented.</p>
 <p>The coobs raster determines how many observations are similar in
 terms of the covariate space at every pixel.This fucntion takes
 advantage of parallel processing routines.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/calculate_coobs.html">calculate_coobs</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, <span class="co"># input</span>
                 existing <span class="op">=</span> <span class="va">existing</span>, <span class="co"># existing samples</span>
                 cores <span class="op">=</span> <span class="fl">4</span>, <span class="co"># parallel cores to use</span>
@@ -403,7 +459,7 @@ distributions, and Kullback–Leibler divergence testing. The outputs from
 this function are mandatory for use of the
 <code><a href="../reference/calculate_lhsOpt.html">calculate_lhsOpt()</a></code> function described in the next
 section.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- by default all statistical data are calculated ---#</span>
 <span class="fu"><a href="../reference/calculate_lhsPop.html">calculate_lhsPop</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">)</span> <span class="co"># input </span></code></pre></div>
 <p>The output details the following:</p>
@@ -414,7 +470,7 @@ section.</p>
 <li><p><code>$matQ</code> - Quantile matrix</p></li>
 <li><p><code>$matCov</code> - Covariate matrix</p></li>
 </ul>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- statistical analyses can be chosen by setting their parameter to `FALSE` ---#</span>
 <span class="fu"><a href="../reference/calculate_lhsPop.html">calculate_lhsPop</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, <span class="co"># input </span>
                  nQuant <span class="op">=</span> <span class="fl">10</span>, <span class="co"># desired number of quantiles</span>
@@ -435,12 +491,12 @@ hypercube sample size.</p>
 effectiveness of those sampling outcomes are evaluated to determine
 where sample size is minimized and statistical representation is
 maximized.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- calculate lhsPop details ---#</span>
 <span class="va">poplhs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calculate_lhsPop.html">calculate_lhsPop</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mr</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/calculate_lhsOpt.html">calculate_lhsOpt</a></span><span class="op">(</span>popLHS <span class="op">=</span> <span class="va">poplhs</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/calculate_lhsOpt.html">calculate_lhsOpt</a></span><span class="op">(</span>popLHS <span class="op">=</span> <span class="va">poplhs</span>, 
                  PCA <span class="op">=</span> <span class="cn">FALSE</span>, 
                  iter <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></code></pre></div>
@@ -458,7 +514,9 @@ maximized.</p>
 <a href="https://scholar.google.ca/citations?user=C_qdYDsAAAAJ&amp;hl=en" class="external-link">Tristan
 RH Goodbody</a>,
 <a href="https://forestry.ubc.ca/faculty-profile/nicholas-coops/" class="external-link">Nicholas
-C Coops</a>.</p>
+C Coops</a>,
+<a href="https://www.researchgate.net/profile/Martin-Queinnec" class="external-link">Martin
+Queinnec</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
