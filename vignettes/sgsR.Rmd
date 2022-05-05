@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 
 *   `sample_*` - The sample verb implies that functions are extracting samples from `srasters` produced from `strat_*` functions. A few algorithms (e.g. `sample_srs()`, `sample_balanced()`, `sample_systematic()`) are able to take `mrasters` as inputs as they are not dependent on stratified inputs for sampling.
 
-*   `calculate_*` - The calculate verb implies that functions are performing calculations to be used in consequent processing. The use of predefined sample analysis algorithms `calculate_ahels()`, `calculate_coobs()` are also included.
+*   `calculate_*` - The calculate verb implies that functions are performing calculations to be used in consequent processing. The use of predefined sample analysis algorithms `calculate_representation()`, `calculate_coobs()` are also included.
 
 ## Example data {.unnumbered}
 Worked examples of all functions are provided using data internal to the package. To load internal `mraster` and road `access` data we use the following code. Follow along on your own machine to see more outputs and get a better sense of how the package functions.
