@@ -21,7 +21,9 @@ Returns a data.frame of:
 \item{sampleFreq} - Sampling frequency percent within \code{sraster} strata.
 \item{diffFreq} - Difference between \code{srasterFreq} & \code{sampleFreq}. Positive values indicate over representation
 \item{nSamp} - Number of samples within each strata in \code{existing}.
-\item{need} - Total required samples to be representative of strata coverage. Rounded.
+\item{need} - \code{srasterFreq * sum(nSamp)}. Total theoretical number of required samples to be representative of strata coverage.
+This values is rounded. It is important for the user to consider \code{diffFreq}. A small difference - e.g. 1 percent -
+in sample vs. sraster frequency could correspond to the algorithm allocating or removing samples that could likely be ignored.
 }
 }
 \description{
@@ -40,17 +42,11 @@ r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 mraster <- terra::rast(r)
 
 #--- perform stratification ---#
-sraster <- strat_kmeans(mraster = mrasters$zq90,
+sraster <- strat_kmeans(mraster = mraster$zq90,
                         nStrata = 6,
                         plot = TRUE)
 
 ###--- create existing sample network ---###
-
-#--- load ALS metrics from sgsR internal data ---#
-r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
-
-#--- read ALS metrics using the terra package ---#
-mraster <- terra::rast(r)
 
 #--- simple random sampling ---#
 existing <- sample_srs(raster = mraster$zq90,
