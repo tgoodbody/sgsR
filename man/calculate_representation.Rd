@@ -17,9 +17,9 @@ calculate_representation(sraster, existing, plot = FALSE)
 Returns a data.frame of:
 \itemize{
 \item{strata} - \code{sraster} strata ID.
-\item{srasterFreq} - Coverage frequency of \code{sraster} strata.
-\item{sampleFreq} - Sampling frequency within \code{sraster} strata.
-\item{diffFreq} - Difference between \code{srasterFreq} & \code{sampleFreq}. Positive values indicate over representation
+\item{srasterFreq} - Coverage frequency (%) of \code{sraster} strata.
+\item{sampleFreq} - Sampling frequency (%) within \code{sraster} strata.
+\item{diffFreq} - Difference between \code{srasterFreq} & \code{sampleFreq} (%). Positive values indicate over representation
 \item{nSamp} - Number of samples within each strata in \code{existing}.
 \item{need} - Total required samples to be representative of strata coverage. Rounded.
 }
@@ -44,9 +44,7 @@ sraster <- strat_kmeans(mraster = mrasters$zq90,
                         nStrata = 6,
                         plot = TRUE)
 
-
 ###--- create existing sample network ---###
-set.seed(2022)
 
 #--- load ALS metrics from sgsR internal data ---#
 r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
@@ -56,7 +54,7 @@ mraster <- terra::rast(r)
 
 #--- simple random sampling ---#
 existing <- sample_srs(raster = mraster$zq90,
-                       nSamp = 45)
+                       nSamp = 100)
                        
 #--- calculate representation ---#
 
