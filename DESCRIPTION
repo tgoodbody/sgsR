@@ -4,10 +4,21 @@ Title: Structurally Guided Sampling Approaches using ALS Data
 Version: 1.0.1
 Date: 2022
 Authors@R: c(
-    person("Tristan RH", "Goodbody", , "goodbody.t@gmail.com", role = c("aut", "cre"),
+    person(given = "Tristan RH", 
+           family = "Goodbody",
+           email = "goodbody.t@gmail.com",
+           role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-6894-7925")),
-    person("Nicholas C", "Coops", , "nicholas.coops@ubc.ca", role = "aut",
-           comment = c(ORCID = "0000-0002-0151-9037"))
+    person(given = "Nicholas C", 
+           family = "Coops",
+           email = "nicholas.coops@ubc.ca", 
+           role = "aut",
+           comment = c(ORCID = "0000-0002-0151-9037")),
+    person(given = "Martin",
+           family = "Queinnec", 
+           role = "aut",
+           email = "queinnec@mail.ubc.ca", 
+           comment = c(ORCID = "0000-0002-2741-1032"))
    )
 Description: This package provides functions to enable stratification and
     sampling for structurally guided sampling using ALS data.
