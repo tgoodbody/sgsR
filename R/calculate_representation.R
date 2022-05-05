@@ -6,7 +6,7 @@
 #'
 #' @inheritParams sample_strat
 #' 
-#' @return Returns a data.frame of:
+#' @return Returns a tibble where:
 #' \itemize{
 #' \item{strata} - \code{sraster} strata ID.
 #' \item{srasterFreq} - Coverage frequency percent of \code{sraster} strata.
