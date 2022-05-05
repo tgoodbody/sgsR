@@ -13,7 +13,9 @@
 #' \item{sampleFreq} - Sampling frequency percent within \code{sraster} strata.
 #' \item{diffFreq} - Difference between \code{srasterFreq} & \code{sampleFreq}. Positive values indicate over representation
 #' \item{nSamp} - Number of samples within each strata in \code{existing}.
-#' \item{need} - Total required samples to be representative of strata coverage. Rounded.
+#' \item{need} - \code{srasterFreq * sum(nSamp)}. Total theoretical number of required samples to be representative of strata coverage.
+#' This values is rounded. It is important for the user to consider \code{diffFreq}. A small difference - e.g. 1 percent -
+#' in sample vs. sraster frequency could correspond to the algorithm allocating or removing samples that could likely be ignored.
 #' }
 #'
 #' @examples
