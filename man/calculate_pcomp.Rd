@@ -76,6 +76,7 @@ Other calculate functions:
 \code{\link{calculate_coobs}()},
 \code{\link{calculate_distance}()},
 \code{\link{calculate_lhsPop}()},
+\code{\link{calculate_representation}()},
 \code{\link{calculate_sampsize}()}
 }
 \author{

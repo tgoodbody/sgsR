@@ -1,0 +1,123 @@
+#' Compare representation of samples within sraster strata
+#'
+#' @details Calculate how well sraster strata are represented in existing samples
+#'
+#' @family calculate functions
+#'
+#' @inheritParams sample_strat
+#' 
+#' @return Returns a data.frame of:
+#' \itemize{
+#' \item{strata} - \code{sraster} strata ID.
+#' \item{srasterFreq} - Coverage frequency (%) of \code{sraster} strata.
+#' \item{sampleFreq} - Sampling frequency (%) within \code{sraster} strata.
+#' \item{diffFreq} - Difference between \code{srasterFreq} & \code{sampleFreq} (%). Positive values indicate over representation
+#' \item{nSamp} - Number of samples within each strata in \code{existing}.
+#' \item{need} - Total required samples to be representative of strata coverage. Rounded.
+#' }
+#'
+#' @examples
+#' ###--- generate example stratification ---###
+#' 
+#' #--- load ALS metrics from sgsR internal data ---#
+#' r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
+#' 
+#' #--- read ALS metrics using the terra package ---#
+#' mraster <- terra::rast(r)
+#' 
+#' #--- perform stratification ---#
+#' sraster <- strat_kmeans(mraster = mrasters$zq90,
+#'                         nStrata = 6,
+#'                         plot = TRUE)
+#' 
+#' ###--- create existing sample network ---###
+#' 
+#' #--- load ALS metrics from sgsR internal data ---#
+#' r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
+#' 
+#' #--- read ALS metrics using the terra package ---#
+#' mraster <- terra::rast(r)
+#' 
+#' #--- simple random sampling ---#
+#' existing <- sample_srs(raster = mraster$zq90,
+#'                        nSamp = 100)
+#'                        
+#' #--- calculate representation ---#
+#' 
+#' calculate_representation(sraster = sraster, 
+#'                          existing = existing, 
+#'                          plot = TRUE)
+#'                          
+#' @author Tristan R.H. Goodbody, Martin Queinnec
+#'
+#' @export
+
+calculate_representation <- function(sraster,
+                                     existing,
+                                     plot = FALSE) {
+  
+  #--- Error management ---#
+  if (!inherits(sraster, "SpatRaster")) {
+    stop("'sraster' must be type SpatRaster", call. = FALSE)
+  }
+  
+  if (!inherits(existing, "data.frame") && !inherits(existing, "sf")) {
+    stop("'existing' must be a data.frame or sf object", call. = FALSE)
+  }
+
+
+  ###--- evaluate sample ---###
+  #--- determine crs of input sraster ---#
+  
+  crs <- terra::crs(sraster, proj = TRUE)
+  
+  #--- extract covariates data from mraster ---#
+  
+  vals <- terra::as.data.frame(sraster, xy = TRUE, row.names = FALSE) %>%
+    dplyr::rename(
+      X = x,
+      Y = y
+    )
+  
+  #--- Remove NA / NaN / Inf values - calculate frequency of strata coverage ---#
+  
+  vals_mat <- vals %>%
+    stats::na.omit() %>%
+    dplyr::group_by(strata) %>%
+    dplyr::summarise(cnt = n()) %>%
+    dplyr::mutate(srasterFreq = round(cnt / sum(cnt), 2)) %>% 
+    dplyr::arrange(desc(srasterFreq))
+  
+  #--- existing ---#
+  existing_mat <- extract_strata(sraster = sraster, existing = existing, data.frame = TRUE) %>%
+    dplyr::group_by(strata) %>%
+    dplyr::summarise(nSamp = n()) %>%
+    dplyr::mutate(sampleFreq = round(nSamp / sum(nSamp), 2)) %>% 
+    dplyr::arrange(desc(sampleFreq))
+  
+  #--- compare ---#
+  rep <- dplyr::left_join(vals_mat,existing_mat, by = "strata") %>%
+    replace(is.na(.), 0) %>% # if no samples are within a strata replace NA with 0
+    dplyr::mutate(diffFreq = sampleFreq - srasterFreq) %>%
+    dplyr::select(strata,srasterFreq,sampleFreq,diffFreq, nSamp) %>%
+    dplyr::mutate(need = ceiling(srasterFreq * sum(nSamp)) - nSamp) %>%
+    dplyr::arrange(strata)
+  
+
+  if (isTRUE(plot)) {
+    p <- rep %>%
+          dplyr::select(strata, sraster = srasterFreq, samples = sampleFreq) %>%
+          tidyr::pivot_longer(c(2,3)) %>%
+          ggplot2::ggplot(aes(x = as.factor(strata), y = value, fill = name))+
+          ggplot2::geom_bar(position="dodge", stat="identity") +
+          scale_fill_manual(values=c("#141414", "#5c5c5c"))
+          ggplot2::labs(x = "Strata",
+               y = "Frequency",
+               title = "Sample representation by strata",
+               subtitle = "Strata coverage frequency vs. sampling frequency within strata")
+    print(p)
+  }
+
+return(rep)
+
+}

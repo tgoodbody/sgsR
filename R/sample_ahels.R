@@ -52,14 +52,14 @@
 #' @export
 
 sample_ahels <- function(mraster,
-                            existing,
-                            nQuant = 10,
-                            nSamp = NULL,
-                            threshold = 0.9,
-                            plot = FALSE,
-                            details = FALSE,
-                            filename = NULL,
-                            overwrite = FALSE) {
+                         existing,
+                         nQuant = 10,
+                         nSamp = NULL,
+                         threshold = 0.9,
+                         plot = FALSE,
+                         details = FALSE,
+                         filename = NULL,
+                         overwrite = FALSE) {
   
   #--- Set global vars ---#
   
@@ -170,7 +170,7 @@ sample_ahels <- function(mraster,
   
   #--- Ratio and ordering of data density and covariate density ---#
   
-  ratio <- matCovSampDens / matCovDens
+  ratioExisting <- ratio <- matCovSampDens / matCovDens
   
   #--- order the densities based on representation ---#
   
@@ -458,7 +458,10 @@ sample_ahels <- function(mraster,
     
   } else {
     
-    return(list(samples = samples, details = ratio))
+    return(list(samples = samples, details = list(existingRatio = ratioExisting, 
+                                                  sampledRatio = ratio, 
+                                                  diffRatio = ratio - ratioExisting))
+           )
     
   }
   

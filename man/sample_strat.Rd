@@ -7,12 +7,13 @@
 sample_strat(
   sraster,
   nSamp,
-  force = FALSE,
   allocation = "prop",
+  force = FALSE,
   mraster = NULL,
   mindist = NULL,
   existing = NULL,
   include = FALSE,
+  remove = FALSE,
   access = NULL,
   buff_inner = NULL,
   buff_outer = NULL,
@@ -29,13 +30,15 @@ sample_strat(
 
 \item{nSamp}{Numeric. Number of desired samples. \code{existing include} and \code{force} influence this value.}
 
-\item{force}{Logical. \code{Default = FALSE} - force \code{nSamp} to be exactly the user defined value
-in cases where nSamp and \code{sraster} strata count are not equally divisible. Has no effect when \code{existing}
-is provided.}
-
 \item{allocation}{Character. Allocation algorithm to be used. Either \code{prop} (default) for proportional allocation
 or \code{optim} for optimal allocation (equal sampling cost) or \code{equal} for equal number of samples (defined by \code{nSamp})
  for each strata.}
+
+\item{force}{Logical. \code{Default = FALSE} - force \code{nSamp} to be exactly the user defined value
+in cases where \code{nSamp} and \code{sraster} strata count are not equally divisible. Additional samples often need to be allocated or removed 
+based on rounding differences resulting from proportional differences between \code{nSamp} and strata coverages in \code{sraster}. 
+In these instances samples are either added to strata with the lowest number of samples or are removed from strata with the highest number of samples.
+Has no effect when \code{existing} is provided.}
 
 \item{mraster}{spatRaster. ALS metric raster. Required when \code{allocation = optim}.}
 
@@ -45,6 +48,9 @@ samples. Default = NULL.}
 \item{existing}{sf or data.frame.  Existing plot network.}
 
 \item{include}{Logical. If \code{TRUE} include existing plots in \code{nSamp} total.}
+
+\item{remove}{Logical. If \code{TRUE} randomly remove samples from over represented strata to meet allocated sample numbers.
+Used only when \code{existing} and \code{include} are both \code{TRUE}.}
 
 \item{access}{sf. Road access network - must be lines.}
 

@@ -10,6 +10,8 @@
 #' @param nSamp Numeric. Number of desired samples. \code{existing include} and \code{force} influence this value.
 #' @param existing sf or data.frame.  Existing plot network.
 #' @param include Logical. If \code{TRUE} include existing plots in \code{nSamp} total.
+#' @param remove Logical. If \code{TRUE} randomly remove samples from over represented strata to meet allocated sample numbers.
+#' Used only when \code{existing} and \code{include} are both \code{TRUE}.
 #' @param wrow Numeric. Number of row in the focal window (default is 3).
 #' @param wcol Numeric. Number of columns in the focal window (default is 3).
 #' @param details Logical. If \code{FALSE} (default) output is sf object of
@@ -110,12 +112,13 @@
 
 sample_strat <- function(sraster,
                          nSamp,
-                         force = FALSE,
                          allocation = "prop",
+                         force = FALSE,
                          mraster = NULL,
                          mindist = NULL,
                          existing = NULL,
                          include = FALSE,
+                         remove = FALSE,
                          access = NULL,
                          buff_inner = NULL,
                          buff_outer = NULL,
@@ -153,37 +156,45 @@ sample_strat <- function(sraster,
   }
 
   if (any(!c("strata") %in% names(sraster))) {
-    stop("'sraster must have a layer named 'strata'")
+    stop("'sraster must have a layer named 'strata'", call. = FALSE)
   }
 
   if (!is.null(mindist)) {
     if (!is.numeric(mindist)) {
-      stop("'mindist' must be type numeric")
+      stop("'mindist' must be type numeric", call. = FALSE)
     }
   }
 
   if (!is.numeric(nSamp)) {
-    stop("'nSamp' must be type numeric")
+    stop("'nSamp' must be type numeric", call. = FALSE)
   }
 
+  if (!is.logical(include)) {
+    stop("'include' must be type logical", call. = FALSE)
+  }
+  
+  if (!is.logical(remove)) {
+    stop("'remove' must be type logical", call. = FALSE)
+  }
+  
   if (!is.logical(force)) {
-    stop("'force' must be type logical")
+    stop("'force' must be type logical", call. = FALSE)
   }
 
   if (!is.numeric(wrow)) {
-    stop("'wrow' must be type numeric")
+    stop("'wrow' must be type numeric", call. = FALSE)
   }
 
   if (!is.numeric(wcol)) {
-    stop("'wcol' must be type numeric")
+    stop("'wcol' must be type numeric", call. = FALSE)
   }
 
   if (!is.logical(plot)) {
-    stop("'plot' must be type logical")
+    stop("'plot' must be type logical", call. = FALSE)
   }
 
   if (!is.logical(details)) {
-    stop("'details' must be type logical")
+    stop("'details' must be type logical", call. = FALSE)
   }
 
   #--- if the sraster has multiple bands subset the band named strata ---#
@@ -198,7 +209,11 @@ sample_strat <- function(sraster,
 
   if (is.null(existing)) {
     if (isTRUE(include)) {
-      stop("'existing' must be provided when 'include' == TRUE")
+      stop("'existing' must be provided when 'include' == TRUE", call. = FALSE)
+    }
+    
+    if (isTRUE(remove)) {
+      stop("'existing' must be provided when 'remove' == TRUE", call. = FALSE)
     }
 
     #--- if existing samples do not exist make an empty data.frame called addSamples ---#
@@ -209,11 +224,11 @@ sample_strat <- function(sraster,
     #--- existing must be either a data.frame or an sf object with columns names 'X' 'Y' 'strata' ---#
 
     if (!inherits(existing, "data.frame") && !inherits(existing, "sf")) {
-      stop("'existing' must be a data.frame or sf object")
+      stop("'existing' must be a data.frame or sf object", call. = FALSE)
     }
 
     if (any(!c("strata") %in% names(existing))) {
-      stop("'existing' must have an attribute named 'strata'. Consider using extract_strata().")
+      stop("'existing' must have an attribute named 'strata'. Consider using extract_strata().", call. = FALSE)
     }
 
     if (inherits(sf::st_geometry(existing), "sfc_POINT")) {
@@ -226,7 +241,7 @@ sample_strat <- function(sraster,
 
       existing <- as.data.frame(cbind(strata, exist_xy))
     } else {
-      stop("'existing' geometry type must be 'sfc_POINT'")
+      stop("'existing' geometry type must be 'sfc_POINT'", call. = FALSE)
     }
 
     #--- if existing samples do exist ensure proper naming convention ---#
@@ -247,7 +262,7 @@ sample_strat <- function(sraster,
 
         #--- if no x/y columns are present stop ---#
 
-        stop("'existing' must have columns named 'X' and 'Y'")
+        stop("'existing' must have columns named 'X' and 'Y'", call. = FALSE)
       }
     }
 
@@ -295,15 +310,15 @@ sample_strat <- function(sraster,
 
     #--- error handling in the presence of 'access' ---#
     if (!inherits(access, "sf")) {
-      stop("'access' must be an 'sf' object")
+      stop("'access' must be an 'sf' object", call. = FALSE)
     }
 
     if (!inherits(sf::st_geometry(access), "sfc_MULTILINESTRING") && !inherits(sf::st_geometry(access), "sfc_LINESTRING")) {
-      stop("'access' geometry type must be 'LINESTRING' or 'MULTILINESTRING'")
+      stop("'access' geometry type must be 'LINESTRING' or 'MULTILINESTRING'", call. = FALSE)
     }
 
     if (buff_inner > buff_outer) {
-      stop("'buff_inner' must be < 'buff_outer'")
+      stop("'buff_inner' must be < 'buff_outer'", call. = FALSE)
     }
 
     access_buff <- mask_access(raster = sraster, access = access, buff_inner = buff_inner, buff_outer = buff_outer)
@@ -366,7 +381,7 @@ sample_strat <- function(sraster,
 
           #--- if there are no samples to take within the specified 'buff_outer' distance extend buffer until values are found ---#
         } else {
-          stop("Insufficient candidate samples within the buffered access extent. Consider altering buffer widths.")
+          stop("Insufficient candidate samples within the buffered access extent. Consider altering buffer widths.", call. = FALSE)
         }
       }
 
@@ -529,13 +544,15 @@ sample_strat <- function(sraster,
 
       #--- if number of samples is < 0 based on `include` parameter ---#
     } else if (n < 0) {
+      
+      if(isTRUE(remove)){
 
       #--- need to remove samples from over represented strata ---#
 
       #--- sample total needed from existing ---#
       need <- as.numeric(toSample[i, 3])
 
-      message(glue::glue("'include = TRUE' - Stratum {s} overrepresented - {abs(n)} samples removed."))
+      message(glue::glue("'include = TRUE & remove = TRUE' - Stratum {s} overrepresented - {abs(n)} samples removed."))
 
       add_strata <- addSamples %>%
         dplyr::filter(strata == s) %>%
@@ -545,6 +562,23 @@ sample_strat <- function(sraster,
 
       add_strata$type <- "existing"
       add_strata$rule <- "existing"
+      
+      } else {
+        
+        message(glue::glue("'include = TRUE & remove = FALSE' - Stratum {s} overrepresented by {abs(n)} samples but have not been removed. Expect a higher total 'nSamp' in output"))
+        #--- keep over represented samples in dataset ---#
+        add_strata <- addSamples %>%
+          dplyr::filter(strata == s)
+        
+        if (nrow(add_strata) > 0) {
+          add_strata$type <- "existing"
+          
+          if (!"rule" %in% colnames(add_strata)) {
+            add_strata$rule <- "existing"
+          }
+        }
+        
+      }
     }
 
     # Create out object if first iteration of loop
