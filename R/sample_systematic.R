@@ -111,11 +111,9 @@ sample_systematic <- function(raster,
   if (!is.character(location)) {
     stop("'location' must be type character")
   } else {
-    
-    if(!any(c("centers", "corners", "random") %in% location)){
+    if (!any(c("centers", "corners", "random") %in% location)) {
       stop("'location' must be one of 'centers', 'corners', or 'random'")
     }
-
   }
 
   #--- determine crs of input raster ---#
@@ -144,81 +142,78 @@ sample_systematic <- function(raster,
   #--- convert raster extent into a polygon ---#
 
   sfObj <- sf::st_as_sf(terra::as.polygons(terra::ext(raster), crs = terra::crs(raster)))
-  
+
   #--- random sampling within tesselations ---#
-  
+
   if (location == "random") {
     location <- "centers"
-    
+
     #--- create tessellation ---#
-    
-    grid <- sf::st_as_sf(sf::st_make_grid(sfObj, cellsize, square = square, what = "polygons", crs = terra::crs(raster))) 
-    
+
+    grid <- sf::st_as_sf(sf::st_make_grid(sfObj, cellsize, square = square, what = "polygons", crs = terra::crs(raster)))
+
     #--- maximum number of samples that can be selected ---#
-    
+
     gridn <- nrow(grid)
-    
+
     #--- determine maximum distance sample can be moved in X / Y to remain within each tessellation ---#
-    
+
     radius <- cellsize / 2
-    
-    if(square == TRUE){
-      
-      vals <- runif(gridn,-radius, radius)
-    
+
+    if (square == TRUE) {
+      vals <- runif(gridn, -radius, radius)
     } else {
-      
-      tests <- gridn*100
-      
-      X <- runif(tests,-1, 1)
-      Y <- runif(tests,-.866, .866)
-      
-      xy <- data.frame(X=X,Y=Y)
-      
+      tests <- gridn * 100
+
+      X <- runif(tests, -1, 1)
+      Y <- runif(tests, -.866, .866)
+
+      xy <- data.frame(X = X, Y = Y)
+
       #--- test whether the sample will be within the bounds of the hexagon ---#
-      xy$pass <- abs(xy$X) < 1 - .5*(abs(xy$Y)/.866)
-      
+      xy$pass <- abs(xy$X) < 1 - .5 * (abs(xy$Y) / .866)
+
       #--- filter only values with TRUE in $pass ---#
-      vals <- xy %>% 
-               dplyr::filter(pass == TRUE) %>%
-               dplyr::slice_sample(., n = nrow(grid)) %>%
-               dplyr::mutate(X = X * radius,
-                             Y = Y * radius)
-           
-    } 
-     
+      vals <- xy %>%
+        dplyr::filter(pass == TRUE) %>%
+        dplyr::slice_sample(., n = nrow(grid)) %>%
+        dplyr::mutate(
+          X = X * radius,
+          Y = Y * radius
+        )
+    }
+
     #--- create grid and locate samples ---#
-    
+
     samples <- sf::st_as_sf(sf::st_make_grid(sfObj, cellsize, square = square, what = location, crs = terra::crs(raster), ...)) %>%
       dplyr::rename(geometry = x) %>%
       sf::st_coordinates(.) %>%
       as.data.frame() %>%
       #--- apply random movement by row ---#
-      dplyr::mutate(X = X + vals$X,
-                    Y = Y + vals$Y) %>%
-      sf::st_as_sf(.,coords = c("X", "Y")) %>%
+      dplyr::mutate(
+        X = X + vals$X,
+        Y = Y + vals$Y
+      ) %>%
+      sf::st_as_sf(., coords = c("X", "Y")) %>%
+      #--- need to extract a metric to determine if values are NA ---#
+      extract_metrics(mraster = raster[[1]], existing = .) %>%
+      #--- remove samples with NA ---#
+      dplyr::filter(!is.na(.)) %>%
+      dplyr::select(geometry)
+  } else {
+    samples <- sf::st_as_sf(sf::st_make_grid(sfObj, cellsize, square = square, what = location, crs = terra::crs(raster), ...)) %>%
+      dplyr::rename(geometry = x) %>%
       #--- need to extract a metric to determine if values are NA ---#
       extract_metrics(mraster = raster[[1]], existing = .) %>%
       #--- remove samples with NA ---#
       dplyr::filter(!is.na(.)) %>%
       dplyr::select(geometry)
 
-  } else {
+    #--- create tessellation ---#
 
-  samples <- sf::st_as_sf(sf::st_make_grid(sfObj, cellsize, square = square, what = location, crs = terra::crs(raster), ...)) %>%
-    dplyr::rename(geometry = x) %>%
-    #--- need to extract a metric to determine if values are NA ---#
-    extract_metrics(mraster = raster[[1]], existing = .) %>%
-    #--- remove samples with NA ---#
-    dplyr::filter(!is.na(.)) %>%
-    dplyr::select(geometry)
-
-  #--- create tessellation ---#
-
-  grid <- sf::st_as_sf(sf::st_make_grid(sfObj, cellsize, square = square, what = "polygons", crs = terra::crs(raster), ...))
-  
+    grid <- sf::st_as_sf(sf::st_make_grid(sfObj, cellsize, square = square, what = "polygons", crs = terra::crs(raster), ...))
   }
-  
+
   if (isTRUE(plot)) {
 
     #--- plot input raster and random samples ---#
@@ -255,7 +250,6 @@ sample_systematic <- function(raster,
 
     #--- output samples dataframe ---#
     return(output)
-    
   } else {
 
     #--- just output raster ---#

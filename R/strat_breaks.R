@@ -58,81 +58,78 @@ strat_breaks <- function(mraster,
                          filename = NULL,
                          overwrite = FALSE,
                          ...) {
-  
+
   #--- Set global vars ---#
   from <- strata <- strata2 <- val <- brk <- NULL
-  
+
   #--- Error management ---#
-  
+
   if (!inherits(mraster, "SpatRaster")) {
     stop("'mraster' must be type SpatRaster")
   }
-  
+
   if (!is.numeric(breaks)) {
     stop("'breaks' must be type numeric")
   }
-  
+
   if (!is.logical(plot)) {
     stop("'plot' must be type logical")
   }
-  
+
   if (!is.logical(details)) {
     stop("'details' must be type logical")
   }
-  
+
   #--- if there is only 1 band in mraster use it as default ---#
-  
+
   if (terra::nlyr(mraster) == 1) {
     rastermetric <- mraster
   } else {
-    
     stop("Multiple layers detected in 'mraster'. Please define a singular band to stratify.")
   }
-  
+
   if (!is.null(mraster2)) {
-    
     if (!inherits(mraster2, "SpatRaster")) {
       stop("'mraster2' must be type SpatRaster")
     }
-    
-    if(!all.equal(terra::ext(mraster), terra::ext(mraster2))){
+
+    if (!all.equal(terra::ext(mraster), terra::ext(mraster2))) {
       stop("Extents of 'mraster' and 'mraster2' do not match.")
     }
-    
-    if(!all.equal(terra::res(mraster), terra::res(mraster2))){
+
+    if (!all.equal(terra::res(mraster), terra::res(mraster2))) {
       stop("Spatial resolutions of 'mraster' and 'mraster2' do not match.")
     }
-    
+
     #--- subset mraster2 based on whether it is a character of number ---#
-    
+
     if (is.null(breaks2)) {
       stop("If using mraster2 to stratify, 'breaks2' must be defined")
     }
-    
+
     #--- if there is only 1 band in mraster2 use it as default ---#
-    
+
     if (terra::nlyr(mraster2) == 1) {
       rastermetric2 <- mraster2
     } else {
-      
       stop("Multiple layers detected in 'mraster2'. Please define a singular band to stratify.")
     }
   }
-  
+
   minmax <- terra::minmax(rastermetric)
-  
+
   if (any(breaks < minmax[1])) {
     message("'breaks' contains values < the minimum 'mraster' value.")
   }
-  
+
   if (any(breaks > minmax[2])) {
     message("'breaks' contains values > the maximum 'mraster' value.")
   }
-  
+
   #--- apply breaks to primary metric ---#
-  
+
   #--- reclassify values based on breaks ---#
-  
+
   breaks_m <- data.frame(from = c(-Inf, breaks, Inf)) %>%
     dplyr::mutate(
       to = dplyr::lead(from),
@@ -140,29 +137,29 @@ strat_breaks <- function(mraster,
     ) %>%
     stats::na.omit() %>%
     as.matrix()
-  
+
   rcl <- terra::classify(rastermetric, breaks_m, othersNA = TRUE)
   names(rcl) <- "strata"
-  
-  
+
+
   #--- if secondary metric is provided ---#
-  
+
   if (!is.null(mraster2)) {
-    
+
     #--- Determine if breaks are > / < min and max values of metrics ---#
-    
+
     minmax2 <- terra::minmax(rastermetric2)
-    
+
     if (any(breaks2 < minmax2[1])) {
       stop("'breaks2' contains values < the minimum 'mraster2' value.")
     }
-    
+
     if (any(breaks2 > minmax2[2])) {
       stop("'breaks2' contains values > the maximum 'mraster2' value.")
     }
-    
+
     #--- reclassify values based on breaks ---#
-    
+
     breaks2_m <- data.frame(from = c(-Inf, breaks2, Inf)) %>%
       dplyr::mutate(
         to = dplyr::lead(from),
@@ -170,82 +167,82 @@ strat_breaks <- function(mraster,
       ) %>%
       stats::na.omit() %>%
       as.matrix()
-    
+
     rcl2 <- terra::classify(rastermetric2, breaks2_m, othersNA = TRUE)
     names(rcl2) <- "strata2"
-    
+
     #--- stack rcl and rcl2
-    
+
     rstack <- c(rcl, rcl2)
-    
+
     breaks_c <- terra::as.data.frame(rstack, xy = TRUE)
-    
+
     breaks_c <- breaks_c %>%
       dplyr::group_by(strata, strata2) %>%
       #--- establish newly formed unique class ---#
       dplyr::mutate(class = dplyr::cur_group_id()) %>%
       dplyr::ungroup()
-    
+
     idx <- terra::cellFromXY(rcl, cbind(breaks_c$x, breaks_c$y))
-    
+
     #--- convert back to original extent ---#
     rcl[idx] <- breaks_c$class
   }
-  
+
   if (isTRUE(plot)) {
     data <- terra::as.data.frame(rastermetric)
     names(data) <- "val"
-    
+
     nm <- as.character(names(rastermetric))
-    
+
     data$var <- nm
-    
+
     #--- plot histogram of mraster metric with associated break lines ---#
-    
+
     p <- ggplot2::ggplot(data, ggplot2::aes(val)) +
       ggplot2::geom_histogram() +
       ggplot2::geom_vline(xintercept = breaks, linetype = "dashed") +
-      ggplot2::ggtitle(glue::glue("{nm} histogram with defined breaks"))+
-      ggplot2::xlab(glue::glue('{nm}'))
-    
+      ggplot2::ggtitle(glue::glue("{nm} histogram with defined breaks")) +
+      ggplot2::xlab(glue::glue("{nm}"))
+
     if (!is.null(mraster2)) {
       data2 <- terra::as.data.frame(rastermetric2)
       names(data2) <- "val"
-      
+
       nm2 <- as.character(names(rastermetric2))
-      
+
       data2$var <- nm2
-      
+
       data2 <- rbind(data, data2)
-      
+
       b1 <- data.frame(var = nm, brk = breaks)
       b2 <- data.frame(var = nm2, brk = breaks2)
-      
+
       bs <- rbind(b1, b2)
-      
+
       p <- ggplot2::ggplot(data2, ggplot2::aes(val)) +
         ggplot2::geom_histogram() +
         ggplot2::geom_vline(linetype = "dashed", data = bs, mapping = ggplot2::aes(xintercept = brk)) +
         ggplot2::facet_wrap(~var, scales = "free")
     }
-    
+
     suppressMessages(print(p))
-    
+
     #--- set colour palette ---#
-    
+
     terra::plot(rcl, main = "User break defined strata", type = "classes")
   }
-  
+
   #--- write file to disc ---#
-  
+
   if (!is.null(filename)) {
     terra::writeRaster(rcl, filename, overwrite = overwrite, ...)
   }
-  
+
   #--- Output based on 'details' to return raster alone or list with details ---#
-  
+
   if (isTRUE(details)) {
-    
+
     #--- output break points raster with associated breaks ---#
     breaks_rcl <- list(
       details = list(
@@ -255,12 +252,12 @@ strat_breaks <- function(mraster,
       raster = rcl,
       plot = if (exists("p")) p
     )
-    
+
     return(breaks_rcl)
   } else {
-    
+
     #--- just output raster ---#
-    
+
     return(rcl)
   }
 }

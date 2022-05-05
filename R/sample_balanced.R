@@ -46,7 +46,7 @@
 #'
 #' Jonathan Lisic and Anton Grafstrom (2018). SamplingBigData: Sampling Methods for
 #' Big Data. R package version 1.0.0. https://CRAN.R-project.org/package=SamplingBigData
-#' 
+#'
 #' Grafström, A. Lisic, J (2018). BalancedSampling: Balanced and Spatially Balanced Sampling.
 #'  R package version 1.5.4. http://www.antongrafstrom.se/balancedsampling
 #'
@@ -99,7 +99,7 @@ sample_balanced <- function(mraster,
     stop("Unknown algorithm specified. Please use one of 'lpm2_kdtree', 'lcube', 'lcubestratified'.")
   }
 
-  ###--- DETERMINE NULL / NA SYNTAX FOR CRS ---###
+  ### --- DETERMINE NULL / NA SYNTAX FOR CRS ---###
 
   if (is.na(terra::crs(mraster, proj = TRUE))) {
     stop("'mraster' does not have a coordinate system")
@@ -125,10 +125,12 @@ sample_balanced <- function(mraster,
 
     #--- buffer roads and mask ---#
 
-    access_buff <- mask_access(raster = mraster, 
-                               access = access, 
-                               buff_inner = buff_inner, 
-                               buff_outer = buff_outer)
+    access_buff <- mask_access(
+      raster = mraster,
+      access = access,
+      buff_inner = buff_inner,
+      buff_outer = buff_outer
+    )
 
     mraster <- access_buff$rast
   }

@@ -111,9 +111,9 @@ strat_kmeans <- function(mraster,
   #--- Determine index of each cell so to map values correctly without NA ---#
 
   idx <- which(complete.cases(vals))
-  
+
   valsOut <- vals
-  
+
   #--- conduct unsupervised k-means with center/scale parameters based on algorithm ---#
 
   message("K-means being performed on ", terra::nlyr(mraster), " layers with ", nStrata, " centers.")

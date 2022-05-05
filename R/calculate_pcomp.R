@@ -27,17 +27,16 @@
 #' )
 #'
 #' pcomp <- calculate_pcomp(
-#'            mraster = mr,
-#'            nComp = 3,
-#'            details = TRUE
-#'          )
+#'   mraster = mr,
+#'   nComp = 3,
+#'   details = TRUE
+#' )
 #'
 #' #--- Display principal component details ---#
 #' pcomp$pca
-#' 
+#'
 #' #--- Display importance of components ---#
 #' summary(pcomp$pca)
-#' 
 #' @author Tristan R.H. Goodbody
 #'
 #' @export
@@ -101,7 +100,7 @@ calculate_pcomp <- function(mraster,
   pcavals <- as.data.frame(PCA$x)
 
   #--- apply cell-level allocation of values---#
-  
+
   rs <- apply(X = pcavals, MARGIN = 2, FUN = terra::setValues, x = mraster[[1]])
 
   #--- stack pca rasters ---#

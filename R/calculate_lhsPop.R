@@ -3,8 +3,8 @@
 #' @description Population level analysis of metric raster data
 #' @family calculate functions
 #'
-#' @description Calculates population level statistics including principal components, quantile matrix, and Kullback-leibler 
-#' divergence neccesary for \code{\link{calculate_lhsOpt}}. 
+#' @description Calculates population level statistics including principal components, quantile matrix, and Kullback-leibler
+#' divergence neccesary for \code{\link{calculate_lhsOpt}}.
 #'
 #' @inheritParams strat_kmeans
 #'

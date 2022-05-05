@@ -101,11 +101,11 @@
 #'  The rule applied to allocate each sample is defined in the \code{rule} attribute of output samples.
 #'
 #' }
-#' @references 
-#' Queinnec, M., White, J. C., & Coops, N. C. (2021). 
-#' Comparing airborne and spaceborne photon-counting LiDAR canopy 
-#' structural estimates across different boreal forest types. 
-#' Remote Sensing of Environment, 262 (August 2020), 112510. 
+#' @references
+#' Queinnec, M., White, J. C., & Coops, N. C. (2021).
+#' Comparing airborne and spaceborne photon-counting LiDAR canopy
+#' structural estimates across different boreal forest types.
+#' Remote Sensing of Environment, 262 (August 2020), 112510.
 #' https://doi.org/10.1016/j.rse.2021.112510
 #'
 #' @export
@@ -172,11 +172,11 @@ sample_strat <- function(sraster,
   if (!is.logical(include)) {
     stop("'include' must be type logical", call. = FALSE)
   }
-  
+
   if (!is.logical(remove)) {
     stop("'remove' must be type logical", call. = FALSE)
   }
-  
+
   if (!is.logical(force)) {
     stop("'force' must be type logical", call. = FALSE)
   }
@@ -211,7 +211,7 @@ sample_strat <- function(sraster,
     if (isTRUE(include)) {
       stop("'existing' must be provided when 'include' == TRUE", call. = FALSE)
     }
-    
+
     if (isTRUE(remove)) {
       stop("'existing' must be provided when 'remove' == TRUE", call. = FALSE)
     }
@@ -267,9 +267,9 @@ sample_strat <- function(sraster,
     }
 
     #--- add cell value for future checking for duplicate samples ---#
-    
+
     existing$cell <- NA
-    
+
     addSamples <- existing
   }
 
@@ -385,9 +385,9 @@ sample_strat <- function(sraster,
         }
       }
 
-      ###--- sampling ---###
+      ### --- sampling ---###
 
-      ###--- RULE 1: select only cells surrounded by cells with same strata ---###
+      ### --- RULE 1: select only cells surrounded by cells with same strata ---###
 
       #--- Define focal window ---#
       w <- matrix(1 / (wrow * wcol), nr = wrow, nc = wcol)
@@ -413,126 +413,126 @@ sample_strat <- function(sraster,
       }
 
       #--- create indices for all, NA, and valid sampling candidates ---#
-      
+
       idx_all <- 1:terra::ncell(strata_m_clust)
       idx_na <- !complete.cases(terra::values(strata_m_clust))
       validCandidates <- idx_all[!idx_na]
-      
+
       #--- Rule 1 sampling ---#
       nCount <- 0 # Number of sampled cells
-      
+
       # While loop for RULE 1
       while (length(validCandidates) > 0 & nCount < n) {
         #-- identify potential sample from candidates ---#
         smp <- sample(1:length(validCandidates), size = 1)
-        
+
         smp_cell <- validCandidates[smp]
-        
+
         #--- Remove sampled cell from validCandidates so that it cannot be sampled again later ---#
         validCandidates <- validCandidates[-smp]
-        
+
         #--- extract coordinates and sample details ---#
-        
+
         add_temp <- data.frame(
           cell = smp_cell,
           X = terra::xFromCell(strata_m_clust, smp_cell),
           Y = terra::yFromCell(strata_m_clust, smp_cell),
           strata = strata_m_clust[smp_cell]
         )
-        
+
         #--- populate add_temp with values ---#
         add_temp$type <- "new"
         add_temp$rule <- "rule1"
         add_temp[, extraCols] <- NA
-        
+
         #--- If add_strata is empty, sampled cell accepted ---#
-        
+
         if (nrow(add_strata) == 0) {
           add_strata <- add_temp[, c("cell", "X", "Y", "strata", "type", "rule", extraCols)]
-          
+
           nCount <- nCount + 1
-          
+
           #--- If add_strata isn't empty, check distance with all other sampled cells in strata ---#
         }
-        
+
         if (!is.null(mindist)) {
           dist <- spatstat.geom::crossdist(add_temp$X, add_temp$Y, add_strata$X, add_strata$Y)
-          
+
           #--- If all less than 'mindist' - accept sampled cell otherwise reject ---#
           if (all(as.numeric(dist) > mindist)) {
             add_strata <- rbind(add_strata, add_temp[, c("cell", "X", "Y", "strata", "type", "rule", extraCols)])
-            
+
             nCount <- nCount + 1
           }
         } else {
-          
+
           #--- if mindist is not defined ---#
-          
-          if(add_temp$cell %in% add_strata$cell) next
-          
+
+          if (add_temp$cell %in% add_strata$cell) next
+
           add_strata <- rbind(add_strata, add_temp[, c("cell", "X", "Y", "strata", "type", "rule", extraCols)])
-          
+
           nCount <- nCount + 1
         }
       }
-      
-      ###--- RULE 2 sampling ---###
-      
+
+      ### --- RULE 2 sampling ---###
+
       if (nCount < n) {
         idx_all <- 1:terra::ncell(strata_m)
         idx_na <- !complete.cases(terra::values(strata_m))
         validCandidates <- idx_all[!idx_na]
-        
+
         while (length(validCandidates) > 0 & nCount < n) {
-          
+
           #-- identify potential sample from candidates ---#
           smp <- sample(1:length(validCandidates), size = 1)
-          
+
           smp_cell <- validCandidates[smp]
-          
+
           #--- Remove sampled cell from validCandidates so that it cannot be sampled again later ---#
-          
+
           validCandidates <- validCandidates[-smp]
-          
+
           #--- extract coordinates and sample details ---#
-          
+
           add_temp <- data.frame(
             cell = smp_cell,
             X = terra::xFromCell(strata_m, smp_cell),
             Y = terra::yFromCell(strata_m, smp_cell),
             strata = validCandidates[smp_cell]
           )
-          
+
           add_temp$rule <- "rule2"
           add_temp$type <- "new"
           add_temp[, extraCols] <- NA
           add_temp$strata <- s
-          
+
           if (nrow(add_strata) == 0) {
             add_strata <- add_temp[, c("cell", "X", "Y", "strata", "type", "rule", extraCols)]
-            
+
             nCount <- nCount + 1
-            
+
             #--- If add_strata isn't empty, check distance with all other sampled cells in strata ---#
           }
-          
+
           if (!is.null(mindist)) {
             dist <- spatstat.geom::crossdist(add_temp$X, add_temp$Y, add_strata$X, add_strata$Y)
-            
+
             #--- If all less than 'mindist' - accept sampled cell otherwise reject ---#
             if (all(as.numeric(dist) > mindist)) {
               add_strata <- rbind(add_strata, add_temp[, c("cell", "X", "Y", "strata", "type", "rule", extraCols)])
-              
+
               nCount <- nCount + 1
             }
           } else {
-            
+
             #--- if mindist is not defined ---#
-            
-            if(add_temp$cell %in% add_strata$cell) next
-            
+
+            if (add_temp$cell %in% add_strata$cell) next
+
             add_strata <- rbind(add_strata, add_temp[, c("cell", "X", "Y", "strata", "type", "rule", extraCols)])
-            
+
             nCount <- nCount + 1
           }
         }
@@ -544,40 +544,36 @@ sample_strat <- function(sraster,
 
       #--- if number of samples is < 0 based on `include` parameter ---#
     } else if (n < 0) {
-      
-      if(isTRUE(remove)){
+      if (isTRUE(remove)) {
 
-      #--- need to remove samples from over represented strata ---#
+        #--- need to remove samples from over represented strata ---#
 
-      #--- sample total needed from existing ---#
-      need <- as.numeric(toSample[i, 3])
+        #--- sample total needed from existing ---#
+        need <- as.numeric(toSample[i, 3])
 
-      message(glue::glue("'include = TRUE & remove = TRUE' - Stratum {s} overrepresented - {abs(n)} samples removed."))
+        message(glue::glue("'include = TRUE & remove = TRUE' - Stratum {s} overrepresented - {abs(n)} samples removed."))
 
-      add_strata <- addSamples %>%
-        dplyr::filter(strata == s) %>%
-        dplyr::sample_n(need)
+        add_strata <- addSamples %>%
+          dplyr::filter(strata == s) %>%
+          dplyr::sample_n(need)
 
-      #--- add type and rule attributes ---#
+        #--- add type and rule attributes ---#
 
-      add_strata$type <- "existing"
-      add_strata$rule <- "existing"
-      
+        add_strata$type <- "existing"
+        add_strata$rule <- "existing"
       } else {
-        
         message(glue::glue("'include = TRUE & remove = FALSE' - Stratum {s} overrepresented by {abs(n)} samples but have not been removed. Expect a higher total 'nSamp' in output"))
         #--- keep over represented samples in dataset ---#
         add_strata <- addSamples %>%
           dplyr::filter(strata == s)
-        
+
         if (nrow(add_strata) > 0) {
           add_strata$type <- "existing"
-          
+
           if (!"rule" %in% colnames(add_strata)) {
             add_strata$rule <- "existing"
           }
         }
-        
       }
     }
 

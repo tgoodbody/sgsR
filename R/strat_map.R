@@ -66,13 +66,12 @@
 #'   details = TRUE,
 #'   plot = TRUE
 #' )
-#' 
 #' @importFrom methods is
 #'
 #' @return A spatRaster object.
-#' 
+#'
 #' @author Tristan R.H. Goodbody
-#' 
+#'
 #' @export
 
 
@@ -87,7 +86,7 @@ strat_map <- function(sraster,
 
   #--- global variables ---#
   strata <- strata2 <- NULL
-  
+
   #--- error handling ---#
 
   if (!inherits(sraster, "SpatRaster")) {
@@ -131,17 +130,17 @@ strat_map <- function(sraster,
   if (!stringr::str_detect(names(sraster2), "strata")) {
     stop("A layer name containing 'strata' does not exist within 'sraster2'.")
   }
-  
+
   #--- check that extents and resolutions of sraster and sraster2 match ---#
-  
-  if(!all.equal(terra::ext(sraster),terra::ext(sraster2))){
+
+  if (!all.equal(terra::ext(sraster), terra::ext(sraster2))) {
     stop("Extents of 'sraster' and 'sraster2' do not match.")
   }
-  
-  if(!all.equal(terra::res(sraster),terra::res(sraster2))){
+
+  if (!all.equal(terra::res(sraster), terra::res(sraster2))) {
     stop("Spatial resolutions of 'sraster' and 'sraster2' do not match.")
   }
-  
+
   #--- map stratification rasters ---#
 
   joined <- c(sraster, sraster2)
