@@ -88,14 +88,14 @@ calculate_representation <- function(sraster,
   vals_mat <- vals %>%
     stats::na.omit() %>%
     dplyr::group_by(strata) %>%
-    dplyr::summarise(cnt = n()) %>%
+    dplyr::summarise(cnt = dplyr::n()) %>%
     dplyr::mutate(srasterFreq = round(cnt / sum(cnt), 2)) %>% 
     dplyr::arrange(desc(srasterFreq))
   
   #--- existing ---#
   existing_mat <- extract_strata(sraster = sraster, existing = existing, data.frame = TRUE) %>%
     dplyr::group_by(strata) %>%
-    dplyr::summarise(nSamp = n()) %>%
+    dplyr::summarise(nSamp = dplyr::n()) %>%
     dplyr::mutate(sampleFreq = round(nSamp / sum(nSamp), 2)) %>% 
     dplyr::arrange(desc(sampleFreq))
   
@@ -110,15 +110,18 @@ calculate_representation <- function(sraster,
   #--- present barchart if desired ---#
   if (isTRUE(plot)) {
     p <- rep %>%
-          dplyr::select(strata, sraster = srasterFreq, samples = sampleFreq) %>%
-          tidyr::pivot_longer(c(2,3)) %>%
-          ggplot2::ggplot(aes(x = as.factor(strata), y = value, fill = name))+
-          ggplot2::geom_bar(position="dodge", stat="identity") +
-          scale_fill_manual(values=c("#141414", "#5c5c5c"))
-          ggplot2::labs(x = "Strata",
-               y = "Frequency",
-               title = "Sample representation by strata",
-               subtitle = "Strata coverage frequency vs. sampling frequency within strata")
+      dplyr::select(strata, sraster = srasterFreq, samples = sampleFreq) %>%
+      tidyr::pivot_longer(c(2,3)) %>%
+      ggplot2::ggplot(ggplot2::aes(x = as.factor(strata), y = value, fill = name))+
+      ggplot2::geom_bar(position="dodge", stat="identity") +
+      scale_fill_manual(values=c("#141414", "#5c5c5c"))+
+      ggplot2::labs(x = "Strata",
+           y = "Frequency",
+           title = "Sample representation by strata",
+           subtitle = "Strata coverage frequency vs. sampling frequency within strata")+
+      theme(legend.position="bottom",
+            legend.title=ggplot2::element_blank())
+          
     print(p)
   }
 
