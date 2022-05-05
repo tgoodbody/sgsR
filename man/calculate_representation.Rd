@@ -14,7 +14,7 @@ calculate_representation(sraster, existing, plot = FALSE)
 \item{plot}{Logical. Plots existing (circles) and new (crosses) samples.}
 }
 \value{
-Returns a data.frame of:
+Returns a tibble where:
 \itemize{
 \item{strata} - \code{sraster} strata ID.
 \item{srasterFreq} - Coverage frequency percent of \code{sraster} strata.
@@ -33,7 +33,7 @@ Compare representation of samples within sraster strata
 Calculate how well sraster strata are represented in existing samples
 }
 \examples{
-###--- generate example stratification ---###
+### --- generate example stratification ---###
 
 #--- load ALS metrics from sgsR internal data ---#
 r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
@@ -42,22 +42,27 @@ r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 mraster <- terra::rast(r)
 
 #--- perform stratification ---#
-sraster <- strat_kmeans(mraster = mraster$zq90,
-                        nStrata = 6,
-                        plot = TRUE)
+sraster <- strat_kmeans(
+  mraster = mraster$zq90,
+  nStrata = 6,
+  plot = TRUE
+)
 
-###--- create existing sample network ---###
+### --- create existing sample network ---###
 
 #--- simple random sampling ---#
-existing <- sample_srs(raster = mraster$zq90,
-                       nSamp = 100)
-                       
+existing <- sample_srs(
+  raster = mraster$zq90,
+  nSamp = 100
+)
+
 #--- calculate representation ---#
 
-calculate_representation(sraster = sraster, 
-                         existing = existing, 
-                         plot = TRUE)
-                         
+calculate_representation(
+  sraster = sraster,
+  existing = existing,
+  plot = TRUE
+)
 }
 \seealso{
 Other calculate functions: 

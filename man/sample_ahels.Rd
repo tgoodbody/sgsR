@@ -19,7 +19,7 @@ sample_ahels(
 \arguments{
 \item{mraster}{spatRaster. ALS metrics raster.}
 
-\item{existing}{sf. Samples resulting from sample_* functions.}
+\item{existing}{sf.  Existing plot network.}
 
 \item{nQuant}{Numeric. Number of quantiles to divide covariates and samples into. Quantiles that do not
 cover at least 1 percent of the area of interest will be excluded and be returned as \code{NA}.}
@@ -52,7 +52,7 @@ existing site data and raster metrics. New samples are allocated based on quanti
 the existing sample and covariate dataset.
 }
 \note{
-Messages in the algorithm will state that samples have been added to under-represented quantiles. The number between 
+Messages in the algorithm will state that samples have been added to under-represented quantiles. The number between
 square brackets that follow represent the matrix column and row respectively that can be printed using \code{details = TRUE}.
 
 Special thanks to Dr. Brendan Malone for the original implementation of this algorithm.

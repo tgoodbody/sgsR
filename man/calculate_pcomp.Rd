@@ -58,17 +58,16 @@ calculate_pcomp(
 )
 
 pcomp <- calculate_pcomp(
-           mraster = mr,
-           nComp = 3,
-           details = TRUE
-         )
+  mraster = mr,
+  nComp = 3,
+  details = TRUE
+)
 
 #--- Display principal component details ---#
 pcomp$pca
 
 #--- Display importance of components ---#
 summary(pcomp$pca)
-
 }
 \seealso{
 Other calculate functions: 

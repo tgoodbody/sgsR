@@ -35,7 +35,7 @@ where \code{$details} is additional stratification information and
  \code{$raster} is the output stratification spatRaster.
  @param ... Additional arguments to be passed to \code{\link[stats]{kmeans}} function.}
 
-\item{samp}{Numeric. Determines proportion of cells to plot in scatterplot (default = \code{1}). 
+\item{samp}{Numeric. Determines proportion of cells to plot in scatterplot (default = \code{1}).
 Lower values reduce visualization time.}
 
 \item{filename}{Character. Path to write stratified raster to disc.}
@@ -63,16 +63,18 @@ Stratify metric raster using metric quantiles.
 r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 mr <- terra::rast(r)
 
-strat_quantiles(mraster = mr$zq90,
-                nStrata = 4,
-                plot = TRUE)
+strat_quantiles(
+  mraster = mr$zq90,
+  nStrata = 4,
+  plot = TRUE
+)
 
-strat_quantiles(mraster = mr$zq90, 
-                mraster2 = mr$zsd,
-                nStrata = 3, 
-                nStrata2 = 4)
-
-                
+strat_quantiles(
+  mraster = mr$zq90,
+  mraster2 = mr$zsd,
+  nStrata = 3,
+  nStrata2 = 4
+)
 }
 \seealso{
 Other stratify functions: 

@@ -30,7 +30,7 @@ sample_clhs(
 \item{cost}{Numeric/Character. Index or name of covariate within \code{mraster} to be used to constrain cLHS sampling.
 If default - \code{NULL} then a cost constraint is not used.}
 
-\item{existing}{sf. Samples resulting from sample_* functions.}
+\item{existing}{sf.  Existing plot network.}
 
 \item{access}{sf. Road access network - must be lines.}
 

@@ -10,6 +10,9 @@ reference:
 - title: "Calculating functions"
 - contents:
   - starts_with("calculate_")
+- title: "Extract functions"
+- contents:
+  - starts_with("extract_")
 
 authors:
   Tristan RH Goodbody:

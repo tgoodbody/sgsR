@@ -50,26 +50,30 @@ Where:
 r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 mr <- terra::rast(r)
 
-calculate_sampsize(mraster = mr,
-                   rse = 0.01,
-                   plot = TRUE)
-                   
-calculate_sampsize(mraster = mr,
-                   plot = TRUE)
-                   
-calculate_sampsize(mraster = mr,
-                   rse = 0.025,
-                   start = 0.01,
-                   end = 0.08,
-                   increment = 0.01,
-                   plot = TRUE)
-                   
+calculate_sampsize(
+  mraster = mr,
+  rse = 0.01,
+  plot = TRUE
+)
+
+calculate_sampsize(
+  mraster = mr,
+  plot = TRUE
+)
+
+calculate_sampsize(
+  mraster = mr,
+  rse = 0.025,
+  start = 0.01,
+  end = 0.08,
+  increment = 0.01,
+  plot = TRUE
+)
+
 #--- higher variance leads to need for more samples ---#
-
-
 }
 \references{
-Benedetti, R., Piersimoni, F., & Postiglione, P. (2015). 
+Benedetti, R., Piersimoni, F., & Postiglione, P. (2015).
 Sampling spatial units for agricultural surveys. pp 202-203. Berlin: Springer.
 }
 \seealso{

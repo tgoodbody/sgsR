@@ -96,7 +96,6 @@ strat_map(
   details = TRUE,
   plot = TRUE
 )
-
 }
 \seealso{
 Other stratify functions: 

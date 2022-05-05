@@ -27,7 +27,7 @@ List of matrices to be used as input for \code{\link{calculate_lhsOpt}}.
 \description{
 Population level analysis of metric raster data
 
-Calculates population level statistics including principal components, quantile matrix, and Kullback-leibler 
+Calculates population level statistics including principal components, quantile matrix, and Kullback-leibler
 divergence neccesary for \code{\link{calculate_lhsOpt}}.
 }
 \note{
