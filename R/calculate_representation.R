@@ -28,17 +28,11 @@
 #' mraster <- terra::rast(r)
 #' 
 #' #--- perform stratification ---#
-#' sraster <- strat_kmeans(mraster = mrasters$zq90,
+#' sraster <- strat_kmeans(mraster = mraster$zq90,
 #'                         nStrata = 6,
 #'                         plot = TRUE)
 #' 
 #' ###--- create existing sample network ---###
-#' 
-#' #--- load ALS metrics from sgsR internal data ---#
-#' r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
-#' 
-#' #--- read ALS metrics using the terra package ---#
-#' mraster <- terra::rast(r)
 #' 
 #' #--- simple random sampling ---#
 #' existing <- sample_srs(raster = mraster$zq90,
@@ -116,12 +110,12 @@ calculate_representation <- function(sraster,
       tidyr::pivot_longer(c(2,3)) %>%
       ggplot2::ggplot(ggplot2::aes(x = as.factor(strata), y = value, fill = name))+
       ggplot2::geom_bar(position="dodge", stat="identity") +
-      scale_fill_manual(values=c("#141414", "#5c5c5c"))+
+      ggplot2::scale_fill_manual(values=c("#141414", "#5c5c5c"))+
       ggplot2::labs(x = "Strata",
            y = "Frequency",
            title = "Sample representation by strata",
            subtitle = "Strata coverage frequency vs. sampling frequency within strata")+
-      theme(legend.position="bottom",
+      ggplot2::theme(legend.position="bottom",
             legend.title=ggplot2::element_blank())
           
     print(p)
