@@ -45,6 +45,10 @@
 #'   filename = tempfile(fileext = ".shp")
 #' )
 #' @note
+#' 
+#' Messages in the algorithm will state that samples have been added to under-represented quantiles. The number between 
+#' square brackets that follow represent the matrix column and row respectively that can be printed using \code{details = TRUE}.
+#' 
 #' Special thanks to Dr. Brendan Malone for the original implementation of this algorithm.
 #'
 #' @author Tristan R.H. Goodbody
@@ -110,7 +114,7 @@ sample_ahels <- function(mraster,
   #--- Remove NA / NaN / Inf values ---#
   
   vals <- vals %>%
-    dplyr::filter(complete.cases(.))
+    stats::na.omit()
   
   #--- Generate quantile matrix ---#
   
@@ -262,7 +266,7 @@ sample_ahels <- function(mraster,
       
       #--- update loop parameters ---#
       
-      message("Underrepresented Quantile ", nLoop, " - A total of ", sampNeed, " samples have been allocated.")
+      message("Under-represented Quantile ", paste0("[",repCol,",",repRow,"]"), " - A total of ", sampNeed, " samples have been allocated.")
       
       #--- update loop number ---#
       

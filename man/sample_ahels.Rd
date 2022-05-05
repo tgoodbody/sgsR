@@ -52,6 +52,9 @@ existing site data and raster metrics. New samples are allocated based on quanti
 the existing sample and covariate dataset.
 }
 \note{
+Messages in the algorithm will state that samples have been added to under-represented quantiles. The number between 
+square brackets that follow represent the matrix column and row respectively that can be printed using \code{details = TRUE}.
+
 Special thanks to Dr. Brendan Malone for the original implementation of this algorithm.
 }
 \examples{
