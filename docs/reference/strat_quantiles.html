@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -99,7 +99,7 @@ where <code>$details</code> is additional stratification information and
  <code>$raster</code> is the output stratification spatRaster.
  @param ... Additional arguments to be passed to <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></code> function.</p></dd>
 <dt>samp</dt>
-<dd><p>Numeric. Determines proportion of cells to plot in scatterplot (default = <code>1</code>). 
+<dd><p>Numeric. Determines proportion of cells to plot in scatterplot (default = <code>1</code>).
 Lower values reduce visualization time.</p></dd>
 <dt>filename</dt>
 <dd><p>Character. Path to write stratified raster to disc.</p></dd>
@@ -135,9 +135,11 @@ Histogram shows distribution and break points while scatter plot shows colour co
 <span class="r-in"><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"wall_metrics.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="fu">strat_quantiles</span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mr</span><span class="op">$</span><span class="va">zq90</span>,</span>
-<span class="r-in">                nStrata <span class="op">=</span> <span class="fl">4</span>,</span>
-<span class="r-in">                plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">strat_quantiles</span><span class="op">(</span></span>
+<span class="r-in">  mraster <span class="op">=</span> <span class="va">mr</span><span class="op">$</span><span class="va">zq90</span>,</span>
+<span class="r-in">  nStrata <span class="op">=</span> <span class="fl">4</span>,</span>
+<span class="r-in">  plot <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span class="r-in"><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span>
 <span class="r-plt img"><img src="strat_quantiles-1.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="strat_quantiles-2.png" alt="" width="700" height="433"></span>
@@ -151,10 +153,12 @@ Histogram shows distribution and break points while scatter plot shows colour co
 <span class="r-out co"><span class="r-pr">#&gt;</span> min value   :      1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> max value   :      4 </span>
 <span class="r-in"></span>
-<span class="r-in"><span class="fu">strat_quantiles</span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mr</span><span class="op">$</span><span class="va">zq90</span>, </span>
-<span class="r-in">                mraster2 <span class="op">=</span> <span class="va">mr</span><span class="op">$</span><span class="va">zsd</span>,</span>
-<span class="r-in">                nStrata <span class="op">=</span> <span class="fl">3</span>, </span>
-<span class="r-in">                nStrata2 <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">strat_quantiles</span><span class="op">(</span></span>
+<span class="r-in">  mraster <span class="op">=</span> <span class="va">mr</span><span class="op">$</span><span class="va">zq90</span>,</span>
+<span class="r-in">  mraster2 <span class="op">=</span> <span class="va">mr</span><span class="op">$</span><span class="va">zsd</span>,</span>
+<span class="r-in">  nStrata <span class="op">=</span> <span class="fl">3</span>,</span>
+<span class="r-in">  nStrata2 <span class="op">=</span> <span class="fl">4</span></span>
+<span class="r-in"><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> class       : SpatRaster </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dimensions  : 277, 373, 1  (nrow, ncol, nlyr)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> resolution  : 20, 20  (x, y)</span>
@@ -164,8 +168,6 @@ Histogram shows distribution and break points while scatter plot shows colour co
 <span class="r-out co"><span class="r-pr">#&gt;</span> name        : strata </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> min value   :      1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> max value   :     12 </span>
-<span class="r-in"></span>
-<span class="r-in">                </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -177,7 +179,9 @@ Histogram shows distribution and break points while scatter plot shows colour co
 <a href="https://scholar.google.ca/citations?user=C_qdYDsAAAAJ&amp;hl=en" class="external-link">Tristan
 RH Goodbody</a>,
 <a href="https://forestry.ubc.ca/faculty-profile/nicholas-coops/" class="external-link">Nicholas
-C Coops</a>.</p>
+C Coops</a>,
+<a href="https://www.researchgate.net/profile/Martin-Queinnec" class="external-link">Martin
+Queinnec</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

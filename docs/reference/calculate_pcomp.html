@@ -145,51 +145,50 @@ where <code>$details</code> is additional stratification information and
 <span class="r-out co"><span class="r-pr">#&gt;</span>               memory  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               ... and 2 more source(s)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> names       :        PC1,        PC2,        PC3,        PC4,        PC5 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> min values  : -5.8417985, -6.3694763, -4.0382460, -2.4972669, -0.6925408 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> max values  :   7.806999,   2.565417,   1.633358,   1.598260,   1.530968 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> min values  : -5.8417779, -6.3681104, -4.0383034, -2.4944332, -0.6915542 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> max values  :   7.804354,   2.563877,   1.633331,   1.594847,   1.529565 </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">pcomp</span> <span class="op">&lt;-</span> <span class="fu">calculate_pcomp</span><span class="op">(</span></span>
-<span class="r-in">           mraster <span class="op">=</span> <span class="va">mr</span>,</span>
-<span class="r-in">           nComp <span class="op">=</span> <span class="fl">3</span>,</span>
-<span class="r-in">           details <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span class="r-in">         <span class="op">)</span></span>
+<span class="r-in">  mraster <span class="op">=</span> <span class="va">mr</span>,</span>
+<span class="r-in">  nComp <span class="op">=</span> <span class="fl">3</span>,</span>
+<span class="r-in">  details <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span class="r-in"><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- Display principal component details ---#</span></span>
 <span class="r-in"><span class="va">pcomp</span><span class="op">$</span><span class="va">pca</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Standard deviations (1, .., p=7):</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2.39419952 0.86117918 0.65363319 0.27246138 0.11007946 0.10828637</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [7] 0.02939539</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2.39419739 0.86118253 0.65363210 0.27245666 0.11010541 0.10829035</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7] 0.02942688</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Rotation (n x k) = (7 x 7):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                PC1         PC2         PC3         PC4         PC5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zmean    0.4133334  0.09704163 -0.16917057  0.05440712 -0.22000532</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> pzabove2 0.3217923  0.28576528  0.89947768  0.04709941  0.05904585</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zsd      0.3314081 -0.70019069  0.06653226 -0.06472512  0.60973701</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zq20     0.3511220  0.56046214 -0.30856343 -0.47873324  0.46460623</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zq50     0.4055034  0.12095230 -0.21088469  0.55460643 -0.05871399</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zq70     0.4116791 -0.07297959 -0.13368861  0.36832636 -0.08204398</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zq90     0.3982141 -0.29082785  0.01839257 -0.56408691 -0.59185684</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> zmean    0.4133340  0.09703826 -0.16916047  0.05442900 -0.21939815</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pzabove2 0.3217898  0.28579795  0.89947473  0.04704228  0.05896495</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> zsd      0.3314085 -0.70018256  0.06658857 -0.06471159  0.60912694</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> zq20     0.3511227  0.56045175 -0.30858934 -0.47871051  0.46478505</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> zq50     0.4055046  0.12094513 -0.21087080  0.55459689 -0.06283654</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> zq70     0.4116799 -0.07298152 -0.13366415  0.36834483 -0.07728656</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> zq90     0.3982126 -0.29083896  0.01832844 -0.56410773 -0.59279438</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   PC6          PC7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zmean     0.052917370  0.858462025</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> pzabove2 -0.004146026  0.002415685</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zsd      -0.098391685  0.099124286</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zq20      0.032759647 -0.145830192</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zq50     -0.629977381 -0.261835891</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zq70      0.755333726 -0.307241076</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zq90     -0.137941678 -0.262659351</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> zmean     0.054431518  0.858523411</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pzabove2 -0.004537764  0.002374888</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> zsd      -0.102288428  0.098957671</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> zq20      0.029772877 -0.145958963</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> zq50     -0.629629712 -0.261748068</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> zq70      0.755801174 -0.307312042</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> zq90     -0.134157677 -0.262454817</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- Display importance of components ---#</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pcomp</span><span class="op">$</span><span class="va">pca</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Importance of components:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                           PC1    PC2     PC3     PC4     PC5     PC6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Standard deviation     2.3942 0.8612 0.65363 0.27246 0.11008 0.10829</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Proportion of Variance 0.8189 0.1060 0.06103 0.01061 0.00173 0.00168</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Cumulative Proportion  0.8189 0.9248 0.98587 0.99647 0.99820 0.99988</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                           PC1    PC2     PC3    PC4     PC5     PC6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Standard deviation     2.3942 0.8612 0.65363 0.2725 0.11011 0.10829</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Proportion of Variance 0.8189 0.1060 0.06103 0.0106 0.00173 0.00168</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Cumulative Proportion  0.8189 0.9248 0.98586 0.9965 0.99820 0.99988</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                            PC7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Standard deviation     0.02940</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Standard deviation     0.02943</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Proportion of Variance 0.00012</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Cumulative Proportion  1.00000</span>
-<span class="r-in"></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -201,7 +200,9 @@ where <code>$details</code> is additional stratification information and
 <a href="https://scholar.google.ca/citations?user=C_qdYDsAAAAJ&amp;hl=en" class="external-link">Tristan
 RH Goodbody</a>,
 <a href="https://forestry.ubc.ca/faculty-profile/nicholas-coops/" class="external-link">Nicholas
-C Coops</a>.</p>
+C Coops</a>,
+<a href="https://www.researchgate.net/profile/Martin-Queinnec" class="external-link">Martin
+Queinnec</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

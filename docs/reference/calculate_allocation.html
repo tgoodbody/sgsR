@@ -91,8 +91,8 @@ or <code>optim</code> for optimal allocation (equal sampling cost) or <code>equa
 <dd><p>sf or data.frame.  Existing plot network.</p></dd>
 <dt>force</dt>
 <dd><p>Logical. <code>Default = FALSE</code> - force <code>nSamp</code> to be exactly the user defined value
-in cases where <code>nSamp</code> and <code>sraster</code> strata count are not equally divisible. Additional samples often need to be allocated or removed 
-based on rounding differences resulting from proportional differences between <code>nSamp</code> and strata coverages in <code>sraster</code>. 
+in cases where <code>nSamp</code> and <code>sraster</code> strata count are not equally divisible. Additional samples often need to be allocated or removed
+based on rounding differences resulting from proportional differences between <code>nSamp</code> and strata coverages in <code>sraster</code>.
 In these instances samples are either added to strata with the lowest number of samples or are removed from strata with the highest number of samples.
 Has no effect when <code>existing</code> is provided.</p></dd>
 </dl></div>
@@ -150,18 +150,18 @@ to be removed at the users discretion.</p></li>
 <span class="r-in">  nSamp <span class="op">=</span> <span class="fl">200</span></span>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Implementing porportional allocation of samples</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> nSamp of 200 is not perfectly divisible based on strata distribution. nSamp of 199 will be returned. Use "force = TRUE" to brute force to 200.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> nSamp of 200 is not perfectly divisible based on strata distribution. nSamp of 205 will be returned. Use "force = TRUE" to brute force to 200.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    strata total</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1    13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1    14</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2       2    29</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       3    14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       3    15</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4       4    21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       5    25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       6    24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       5    26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       6    25</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7       7    24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8       8    16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8       8    17</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9       9    23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10     10    10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     10    11</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">calculate_allocation</span><span class="op">(</span></span>
 <span class="r-in">  sraster <span class="op">=</span> <span class="va">sr</span>,</span>
@@ -171,19 +171,19 @@ to be removed at the users discretion.</p></li>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Implementing porportional allocation of samples</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Forcing 200 total samples.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    strata total</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1    13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       2    29</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       3    14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1    14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       2    25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       3    15</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4       4    21</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5       5    25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       6    24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       6    25</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7       7    24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8       8    16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8       8    17</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9       9    23</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10     10    11</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- extract strata from existing samples ---#</span></span>
-<span class="r-in"><span class="va">e.sr</span> <span class="op">&lt;-</span> <span class="fu"><a href="extract.html">extract_strata</a></span><span class="op">(</span></span>
+<span class="r-in"><span class="va">e.sr</span> <span class="op">&lt;-</span> <span class="fu"><a href="extract_strata.html">extract_strata</a></span><span class="op">(</span></span>
 <span class="r-in">  sraster <span class="op">=</span> <span class="va">sr</span>,</span>
 <span class="r-in">  existing <span class="op">=</span> <span class="va">e</span></span>
 <span class="r-in"><span class="op">)</span></span>
@@ -194,18 +194,18 @@ to be removed at the users discretion.</p></li>
 <span class="r-in">  existing <span class="op">=</span> <span class="va">e.sr</span></span>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Implementing porportional allocation of samples</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> nSamp of 200 is not perfectly divisible based on strata distribution. nSamp of 199 will be returned. Use "force = TRUE" to brute force to 200.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> nSamp of 200 is not perfectly divisible based on strata distribution. nSamp of 205 will be returned. Use "force = TRUE" to brute force to 200.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    strata total need</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1    11   13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1    12   14</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2       2    15   29</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       3     2   14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       3     3   15</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4       4    10   21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       5    10   25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       6    10   24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       5    11   26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       6    11   25</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7       7    12   24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8       8     3   16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8       8     4   17</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9       9    18   23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10     10     8   10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     10     9   11</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- Load mraster for optimal allocation ---#</span></span>
 <span class="r-in"><span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"wall_metrics.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
@@ -222,15 +222,15 @@ to be removed at the users discretion.</p></li>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Implementing optimal allocation of samples based on variability of 'zq90'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Forcing 200 total samples.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    strata total need</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1    15   17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       2    17   31</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       3     3   14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       4     6   17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       5     4   19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1    14   17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       2    15   32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       3     3   15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       4     7   18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       5     5   20</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6       6     7   21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7       7    11   23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8       8    10   23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9       9    16   21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7       7    12   24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8       8    11   24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9       9    15   22</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10     10    11   13</span>
 </code></pre></div>
     </div>
@@ -243,7 +243,9 @@ to be removed at the users discretion.</p></li>
 <a href="https://scholar.google.ca/citations?user=C_qdYDsAAAAJ&amp;hl=en" class="external-link">Tristan
 RH Goodbody</a>,
 <a href="https://forestry.ubc.ca/faculty-profile/nicholas-coops/" class="external-link">Nicholas
-C Coops</a>.</p>
+C Coops</a>,
+<a href="https://www.researchgate.net/profile/Martin-Queinnec" class="external-link">Martin
+Queinnec</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

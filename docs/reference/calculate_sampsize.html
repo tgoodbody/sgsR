@@ -105,7 +105,7 @@ threshold to determine sample size.</p></dd>
 </ul></div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
-    <p>Benedetti, R., Piersimoni, F., &amp; Postiglione, P. (2015). 
+    <p>Benedetti, R., Piersimoni, F., &amp; Postiglione, P. (2015).
 Sampling spatial units for agricultural surveys. pp 202-203. Berlin: Springer.</p>
     </div>
     <div class="section level2">
@@ -130,9 +130,11 @@ Sampling spatial units for agricultural surveys. pp 202-203. Berlin: Springer.</
 <span class="r-in"><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"wall_metrics.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="fu">calculate_sampsize</span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mr</span>,</span>
-<span class="r-in">                   rse <span class="op">=</span> <span class="fl">0.01</span>,</span>
-<span class="r-in">                   plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">calculate_sampsize</span><span class="op">(</span></span>
+<span class="r-in">  mraster <span class="op">=</span> <span class="va">mr</span>,</span>
+<span class="r-in">  rse <span class="op">=</span> <span class="fl">0.01</span>,</span>
+<span class="r-in">  plot <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span class="r-in"><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $nSamp</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   nSamp  rse      var</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  2030 0.01    zmean</span>
@@ -146,9 +148,11 @@ Sampling spatial units for agricultural surveys. pp 202-203. Berlin: Springer.</
 <span class="r-out co"><span class="r-pr">#&gt;</span> $plot</span>
 <span class="r-plt img"><img src="calculate_sampsize-1.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in">                   </span>
-<span class="r-in"><span class="fu">calculate_sampsize</span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mr</span>,</span>
-<span class="r-in">                   plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="fu">calculate_sampsize</span><span class="op">(</span></span>
+<span class="r-in">  mraster <span class="op">=</span> <span class="va">mr</span>,</span>
+<span class="r-in">  plot <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span class="r-in"><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $nSamp</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     nSamp   rse      var</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    2030 0.010    zmean</span>
@@ -442,13 +446,15 @@ Sampling spatial units for agricultural surveys. pp 202-203. Berlin: Springer.</
 <span class="r-out co"><span class="r-pr">#&gt;</span> $plot</span>
 <span class="r-plt img"><img src="calculate_sampsize-2.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in">                   </span>
-<span class="r-in"><span class="fu">calculate_sampsize</span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mr</span>,</span>
-<span class="r-in">                   rse <span class="op">=</span> <span class="fl">0.025</span>,</span>
-<span class="r-in">                   start <span class="op">=</span> <span class="fl">0.01</span>,</span>
-<span class="r-in">                   end <span class="op">=</span> <span class="fl">0.08</span>,</span>
-<span class="r-in">                   increment <span class="op">=</span> <span class="fl">0.01</span>,</span>
-<span class="r-in">                   plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="fu">calculate_sampsize</span><span class="op">(</span></span>
+<span class="r-in">  mraster <span class="op">=</span> <span class="va">mr</span>,</span>
+<span class="r-in">  rse <span class="op">=</span> <span class="fl">0.025</span>,</span>
+<span class="r-in">  start <span class="op">=</span> <span class="fl">0.01</span>,</span>
+<span class="r-in">  end <span class="op">=</span> <span class="fl">0.08</span>,</span>
+<span class="r-in">  increment <span class="op">=</span> <span class="fl">0.01</span>,</span>
+<span class="r-in">  plot <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span class="r-in"><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 'rse' not perfectly divisible by 'incremenent. </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Selecting closest sample size (rse = 0.03) based on values.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $nSamp</span>
@@ -467,10 +473,8 @@ Sampling spatial units for agricultural surveys. pp 202-203. Berlin: Springer.</
 <span class="r-out co"><span class="r-pr">#&gt;</span> $plot</span>
 <span class="r-plt img"><img src="calculate_sampsize-3.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in">                   </span>
+<span class="r-in"></span>
 <span class="r-in"><span class="co">#--- higher variance leads to need for more samples ---#</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -482,7 +486,9 @@ Sampling spatial units for agricultural surveys. pp 202-203. Berlin: Springer.</
 <a href="https://scholar.google.ca/citations?user=C_qdYDsAAAAJ&amp;hl=en" class="external-link">Tristan
 RH Goodbody</a>,
 <a href="https://forestry.ubc.ca/faculty-profile/nicholas-coops/" class="external-link">Nicholas
-C Coops</a>.</p>
+C Coops</a>,
+<a href="https://www.researchgate.net/profile/Martin-Queinnec" class="external-link">Martin
+Queinnec</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
