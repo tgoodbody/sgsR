@@ -227,7 +227,7 @@ sample_ahels <- function(mraster,
       }
 
       #--- determine number of existing samples in selected quantile ---#
-      sampExist <- matCovSamp[repRow, repCol]
+      sampExist <- floor(matCovSamp[repRow, repCol])
 
       #--- determine max number of samples based on covariate density ---#
 
