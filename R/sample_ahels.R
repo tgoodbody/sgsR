@@ -182,10 +182,6 @@ sample_ahels <- function(mraster,
 
   ratOrderUnder <- order(ratio)
 
-  #--- high to low ---#
-
-  ratOrderOver <- rev(ratOrderUnder)
-
   #--- Outline quantiles that are underrepresented (< 1) in the sample ---#
 
   underRep <- which(ratio < 1, arr.ind = TRUE)
@@ -208,7 +204,7 @@ sample_ahels <- function(mraster,
       stop("'nSamp' must be type numeric", call. = FALSE)
     }
 
-    message(glue::glue("nSamp of {nSamp} has been provided. Samples will be added until this number is reached"))
+    message(glue::glue("nSamp of {nSamp} has been provided. Samples will be added until this number is reached or until sampling ratios are all >= 1"))
 
     while (newSamp != 0) {
 
@@ -220,10 +216,18 @@ sample_ahels <- function(mraster,
 
       repRow <- underRep[repRankUnder, 1]
       repCol <- underRep[repRankUnder, 2]
+      
+      #--- if all sampling ratios in matCovSampDens are >= 1 stop adding samples ---#
+      
+      if(length(repRankUnder) == 0){
+        
+        message(glue::glue("Sampling ratios are all >= 1. A total of {sTot} samples were added."))
+        
+        break
+      }
 
       #--- determine number of existing samples in selected quantile ---#
-
-      sampExist <- floor(nrow(samples) * matCovSampDens[repRow, repCol])
+      sampExist <- matCovSamp[repRow, repCol]
 
       #--- determine max number of samples based on covariate density ---#
 
@@ -232,11 +236,10 @@ sample_ahels <- function(mraster,
       #--- number of samples needed ---#
 
       sampNeed <- sampOptim - sampExist
-
+      
       #--- we have a limited number of samples so we need to be sure not to over allocate ---#
-
       if (newSamp <= sampNeed) sampNeed <- newSamp
-
+      
       #--- selecting covariates based on quantile chosen ---#
 
       covLower <- mats$matQ[repRow, repCol]
@@ -266,7 +269,7 @@ sample_ahels <- function(mraster,
 
       #--- update loop parameters ---#
 
-      message("Under-represented Quantile ", paste0("[", repCol, ",", repRow, "]"), " - A total of ", sampNeed, " samples have been allocated.")
+      message("Under-represented Quantile ", paste0("[",repRow, ",",repCol, "]"), " - A total of ", sampNeed, " samples have been allocated.")
 
       #--- update loop number ---#
 
@@ -307,10 +310,6 @@ sample_ahels <- function(mraster,
       #--- low to high ---#
 
       ratOrderUnder <- order(ratio)
-
-      #--- high to low ---#
-
-      ratOrderOver <- rev(ratOrderUnder)
 
       #--- Outline quantiles that are underrepresented (< 1) in the sample ---#
 
