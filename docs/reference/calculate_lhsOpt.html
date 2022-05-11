@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,16 +81,10 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>popLHS</dt>
-<dd><p>List. Output from <code><a href="calculate_lhsPop.html">calculate_lhsPop</a></code> function.</p></dd>
+<dd><p>List. Output from <code><a href="calculate_pop.html">calculate_pop</a></code> function.</p></dd>
 <dt>PCA</dt>
 <dd><p>Logical. Calculates principal component loadings of the population for PCA similarity factor testing.
-<code>default = TRUE</code>.</p></dd>
-<dt>quant</dt>
-<dd><p>Logical. Calculates quantile matrix of the population for quantile comparison testing.
-<code>default = TRUE</code>.</p></dd>
-<dt>KLdiv</dt>
-<dd><p>Logical. Calculates covariate matrix of the population for Kullback–Leibler divergence testing.
-<code>default = TRUE</code>. Relies on <code>quant = TRUE</code> to calculate.</p></dd>
+<code>default = FALSE</code>.</p></dd>
 <dt>minSamp</dt>
 <dd><p>Numeric. Minimum sample size to test. <code>default = 10</code>.</p></dd>
 <dt>maxSamp</dt>
@@ -128,7 +122,7 @@ iterations for the Metropolis-Hastings annealing process. Defaults to <code>1000
 <span class="r-in"><span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- calculate lhsPop details ---#</span></span>
-<span class="r-in"><span class="va">poplhs</span> <span class="op">&lt;-</span> <span class="fu"><a href="calculate_lhsPop.html">calculate_lhsPop</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mr</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">poplhs</span> <span class="op">&lt;-</span> <span class="fu"><a href="calculate_pop.html">calculate_pop</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mr</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">calculate_lhsOpt</span><span class="op">(</span>popLHS <span class="op">=</span> <span class="va">poplhs</span><span class="op">)</span></span>
 <span class="r-in"></span>
@@ -150,7 +144,9 @@ iterations for the Metropolis-Hastings annealing process. Defaults to <code>1000
 <a href="https://scholar.google.ca/citations?user=C_qdYDsAAAAJ&amp;hl=en" class="external-link">Tristan
 RH Goodbody</a>,
 <a href="https://forestry.ubc.ca/faculty-profile/nicholas-coops/" class="external-link">Nicholas
-C Coops</a>.</p>
+C Coops</a>,
+<a href="https://www.researchgate.net/profile/Martin-Queinnec" class="external-link">Martin
+Queinnec</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
