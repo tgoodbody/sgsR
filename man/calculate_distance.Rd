@@ -55,8 +55,8 @@ calculate_distance(
 Other calculate functions: 
 \code{\link{calculate_allocation}()},
 \code{\link{calculate_coobs}()},
-\code{\link{calculate_lhsPop}()},
 \code{\link{calculate_pcomp}()},
+\code{\link{calculate_pop}()},
 \code{\link{calculate_representation}()},
 \code{\link{calculate_sampsize}()}
 }

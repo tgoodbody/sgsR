@@ -196,7 +196,7 @@ The `include` parameter determines whether existing samples should be included i
 
 ## `sample_clhs` {#clhs .unnumbered}
 
-The `sample_clhs()` function implements conditioned latin hypercube (clhs) sampling functionality.  A number of other functions in the `sgsR` package help to provide guidance on clhs sampling including `calculate_lhsPop()` and `calculate_lhsOpt()`. Be sure to check out those functions for better understanding of how to optimize sample numbers.
+The `sample_clhs()` function implements conditioned latin hypercube (clhs) sampling functionality.  A number of other functions in the `sgsR` package help to provide guidance on clhs sampling including `calculate_pop()` and `calculate_lhsOpt()`. Be sure to check out those functions for better understanding of how to optimize sample numbers.
 
 Syntax for this function is similar to others shown above, though parameters like `iter`, which define the number of iterations within the Metropolis-Hastings process are important to consider. In these examples we use a low `iter` value because it takes less time to run. Default values for `iter` within the `clhs` package are 10,000.
 

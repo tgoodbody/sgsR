@@ -10,6 +10,7 @@ sample_ahels(
   nQuant = 10,
   nSamp = NULL,
   threshold = 0.9,
+  matrices = NULL,
   plot = FALSE,
   details = FALSE,
   filename = NULL,
@@ -30,6 +31,10 @@ will default to allocating number of samples provided.}
 \item{threshold}{Numeric. A sample quantile ratio threshold for establishing whether
 additional samples should be added. \code{default = 0.9}. Values close to 1 can cause the algorithm to
 continually loop and should be used sparingly.}
+
+\item{matrices}{List. Quantile and covariance matrices generated from \code{calculate_pop(mraster = mraster, nQuant = nQuant)}.
+Both \code{mraster} & \code{nQuant} inputs must be the same to supply the covariance matrix. Supplying the matrix allows users
+with very large rasters to pre-process the covariance matrix to avoid longer sampling processing times.}
 
 \item{plot}{Logial. Plots existing (circles) and new (crosses) samples on the first band of mraster.}
 
@@ -53,7 +58,10 @@ the existing sample and covariate dataset.
 }
 \note{
 Messages in the algorithm will state that samples have been added to under-represented quantiles. The number between
-square brackets that follow represent the matrix column and row respectively that can be printed using \code{details = TRUE}.
+square brackets that follow represent the matrix row and column respectively that can be printed using \code{details = TRUE}.
+
+In some cases, generally when a single metric is used as \code{mraster}, sampling ratios all be >= 1 before the 
+\code{nSamp} number of samples are allocated. The algorithm will stop in this case.
 
 Special thanks to Dr. Brendan Malone for the original implementation of this algorithm.
 }

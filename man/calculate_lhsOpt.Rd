@@ -17,16 +17,10 @@ calculate_lhsOpt(
 )
 }
 \arguments{
-\item{popLHS}{List. Output from \code{\link{calculate_lhsPop}} function.}
+\item{popLHS}{List. Output from \code{\link{calculate_pop}} function.}
 
 \item{PCA}{Logical. Calculates principal component loadings of the population for PCA similarity factor testing.
-\code{default = TRUE}.}
-
-\item{quant}{Logical. Calculates quantile matrix of the population for quantile comparison testing.
-\code{default = TRUE}.}
-
-\item{KLdiv}{Logical. Calculates covariate matrix of the population for Kullback–Leibler divergence testing.
-\code{default = TRUE}. Relies on \code{quant = TRUE} to calculate.}
+\code{default = FALSE}.}
 
 \item{minSamp}{Numeric. Minimum sample size to test. \code{default = 10}.}
 
@@ -55,7 +49,7 @@ r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 mr <- terra::rast(r)
 
 #--- calculate lhsPop details ---#
-poplhs <- calculate_lhsPop(mraster = mr)
+poplhs <- calculate_pop(mraster = mr)
 
 calculate_lhsOpt(popLHS = poplhs)
 

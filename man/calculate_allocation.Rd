@@ -100,8 +100,8 @@ Gregoire, T.G., & Valentine, H.T. (2007). Sampling Strategies for Natural Resour
 Other calculate functions: 
 \code{\link{calculate_coobs}()},
 \code{\link{calculate_distance}()},
-\code{\link{calculate_lhsPop}()},
 \code{\link{calculate_pcomp}()},
+\code{\link{calculate_pop}()},
 \code{\link{calculate_representation}()},
 \code{\link{calculate_sampsize}()}
 }

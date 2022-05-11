@@ -3,9 +3,9 @@
 #' @description Population level analysis of metric raster data to determine optimal Latin Hypercube sample size
 #' @family analyze functions
 #'
-#' @inheritParams calculate_lhsPop
+#' @inheritParams calculate_pop
 #'
-#' @param popLHS List. Output from \code{\link{calculate_lhsPop}} function.
+#' @param popLHS List. Output from \code{\link{calculate_pop}} function.
 #' @param minSamp Numeric. Minimum sample size to test. \code{default = 10}.
 #' @param maxSamp Numeric. Maximum sample size to test. \code{default = 100}.
 #' @param step Numeric. Sample step size for each iteration. \code{default = 10}.
@@ -25,7 +25,7 @@
 #' mr <- terra::rast(r)
 #'
 #' #--- calculate lhsPop details ---#
-#' poplhs <- calculate_lhsPop(mraster = mr)
+#' poplhs <- calculate_pop(mraster = mr)
 #'
 #' calculate_lhsOpt(popLHS = poplhs)
 #'
@@ -73,11 +73,11 @@ calculate_lhsOpt <- function(popLHS,
   #--- Error handling ---#
 
   if (!is.list(popLHS)) {
-    stop("'popLHS' must be a list - see output from sgsR::calculate_lhsPop()")
+    stop("'popLHS' must be a list - see output from sgsR::calculate_pop()")
   }
 
   if (any(!names(popLHS) %in% c("values", "pcaLoad", "matQ", "matCov"))) {
-    stop(glue::glue("'popLHS' must be the output from the 'sgsR::calculate_lhsPop()' function"))
+    stop(glue::glue("'popLHS' must be the output from the 'sgsR::calculate_pop()' function"))
   }
 
   if (!is.logical(PCA)) {

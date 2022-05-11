@@ -56,7 +56,7 @@ A total of 7 `calculate` functions currently exist in the package:
 
 *   `calculate_coobs()` - Count of observations algorithm
 
-*   `calculate_lhsPop()` - Population covariate statistics for latin hypercube sampling
+*   `calculate_pop()` - Population covariate statistics for latin hypercube sampling
 
 *   `calculate_lhsOpt()` - Optimal latin hypercube sampling paramters including sample number
 
@@ -213,13 +213,13 @@ calculate_coobs(mraster = mraster, # input
 
 The following 2 algorithms provide a means to maximize the effectiveness of [latin hypercube sampling](#clhs) protocols. 
 
-### `calculate_lhsPop` {#lhspop .unnumbered}
+### `calculate_pop` {#lhspop .unnumbered}
 
-The `calculate_lhsPop()` function calculates population level statistics about the `mraster` covariates being used including calculating principal components, quantile & covariate distributions, and Kullback–Leibler divergence testing. The outputs from this function are mandatory for use of the `calculate_lhsOpt()` function described in the next section.
+The `calculate_pop()` function calculates population level statistics about the `mraster` covariates being used including calculating principal components, quantile & covariate distributions, and Kullback–Leibler divergence testing. The outputs from this function are mandatory for use of the `calculate_lhsOpt()` function described in the next section. This algorithm can also be preemptively used to calculate `matQ` and `MatCov` that will be used in `sample_ahels()`.
 
 ```{r,warning=F,message=F, eval = FALSE}
 #--- by default all statistical data are calculated ---#
-calculate_lhsPop(mraster = mraster) # input 
+calculate_pop(mraster = mraster) # input 
 ```
 
 The output details the following:
@@ -234,20 +234,26 @@ The output details the following:
 
 ```{r,warning=F,message=F, eval = FALSE}
 #--- statistical analyses can be chosen by setting their parameter to `FALSE` ---#
-calculate_lhsPop(mraster = mraster, # input 
-                 nQuant = 10, # desired number of quantiles
-                 PCA = FALSE) # choose not to calculate PCA's
+mat <- calculate_pop(mraster = mraster, # input
+                     nQuant = 10) # desired number of quantiles
+
+#--- use matrix output within sample ahels algorithm ---#
+sample_ahels(mraster = mraster, 
+             existing = existing, 
+             nQuant = 10, 
+             nSamp = 50,
+             matCov = mat)
 ```
 
 ### `calculate_lhsOpt` {#lhsopt .unnumbered}
 
 The `calculate_lhsOpt()` function performs a bootsrapped latin hypercube sampling approach where a population level analysis of `mraster` data is performed to determine the optimal Latin hypercube sample size.
 
-Using statistical data calculated using the `calculate_lhsPop()` and varying sample sizes defined by `minSamp`, `maxSamp`, `step` and `rep`. Sampling protocols are conducted and statistical effectiveness of those sampling outcomes are evaluated to determine where sample size is minimized and statistical representation is maximized.
+Using statistical data calculated using the `calculate_pop()` and varying sample sizes defined by `minSamp`, `maxSamp`, `step` and `rep`. Sampling protocols are conducted and statistical effectiveness of those sampling outcomes are evaluated to determine where sample size is minimized and statistical representation is maximized.
 
 ```{r,warning=F,message=F, eval = FALSE}
 #--- calculate lhsPop details ---#
-poplhs <- calculate_lhsPop(mraster = mr)
+poplhs <- calculate_pop(mraster = mr)
 
 calculate_lhsOpt(popLHS = poplhs)
 ```

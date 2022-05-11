@@ -1,21 +1,22 @@
-#' Analyze covariates for lhs
+#' Population descriptors
 #'
-#' @description Population level analysis of metric raster data
+#' @description Population matrices and descriptions of metric raster data
+#' 
 #' @family calculate functions
 #'
-#' @description Calculates population level statistics including principal components, quantile matrix, and Kullback-leibler
-#' divergence neccesary for \code{\link{calculate_lhsOpt}}.
+#' @description Calculates population level statistics including principal components, quantile matrix, and covariance matrix
+#' needed necessary for \code{\link{calculate_lhsOpt}}. Outputs can also be used as an input for \code{\link{sample_ahels}}.
 #'
 #' @inheritParams strat_kmeans
 #'
 #' @param PCA Logical. Calculates principal component loadings of the population for PCA similarity factor testing.
+#' \code{default = FALSE}.
+#' @param matQ Logical. Calculates quantile matrix of the population for quantile comparison testing.
 #' \code{default = TRUE}.
-#' @param quant Logical. Calculates quantile matrix of the population for quantile comparison testing.
-#' \code{default = TRUE}.
-#' @param nQuant Numeric. Number of quantiles to divide the population into for \code{quant}.
+#' @param nQuant Numeric. Number of quantiles to divide the population into for \code{matQ}.
 #' \code{default = 10}.
-#' @param KLdiv Logical. Calculates covariate matrix of the population for Kullback–Leibler divergence testing.
-#' \code{default = TRUE}. Relies on \code{quant = TRUE} to calculate.
+#' @param matCov Logical. Calculates covariate matrix of the population. Needed for Kullback–Leibler divergence testing.
+#' \code{default = TRUE}. Relies on \code{matQ = TRUE} to calculate.
 #'
 #' @references
 #' Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451
@@ -28,9 +29,9 @@
 #' r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 #' mr <- terra::rast(r)
 #'
-#' calculate_lhsPop(mraster = mr)
+#' calculate_pop(mraster = mr)
 #'
-#' calculate_lhsPop(
+#' calculate_pop(
 #'   mraster = mr,
 #'   nQuant = 10,
 #'   PCA = FALSE
@@ -43,11 +44,11 @@
 #'
 #' @export
 
-calculate_lhsPop <- function(mraster,
-                             PCA = TRUE,
-                             quant = TRUE,
-                             nQuant = 10,
-                             KLdiv = TRUE) {
+calculate_pop <- function(mraster,
+                          PCA = FALSE,
+                          matQ = TRUE,
+                          nQuant = 10,
+                          matCov = TRUE) {
   if (!inherits(mraster, "SpatRaster")) {
     stop("'mraster' must be type SpatRaster")
   }
@@ -56,12 +57,12 @@ calculate_lhsPop <- function(mraster,
     stop("'PCA' must be type logical")
   }
 
-  if (!is.logical(quant)) {
+  if (!is.logical(matQ)) {
     stop("'quantiles' must be type logical")
   }
 
-  if (!is.logical(KLdiv)) {
-    stop("'KLdiv' must be type logical")
+  if (!is.logical(matCov)) {
+    stop("'matCov' must be type logical")
   }
 
   #--- determine number of bands in 'mraster' ---#
@@ -107,7 +108,7 @@ calculate_lhsPop <- function(mraster,
 
   #--- Quantiles of the population ---#
 
-  if (isTRUE(quant)) {
+  if (isTRUE(matQ)) {
     if (!is.numeric(nQuant)) {
       stop("'nQuantiles' must be type numeric")
     }
@@ -123,9 +124,9 @@ calculate_lhsPop <- function(mraster,
 
   #--- covariate hypercube for KL divergence test ---#
 
-  if (isTRUE(KLdiv)) {
+  if (isTRUE(matCov)) {
     if (is.null(matQ)) {
-      stop("KL divergence requires quantile matrix creation. Set 'quant == TRUE'.")
+      stop("Covariance matrix creation requires quantile matrix. Set 'matQ == TRUE'.")
     }
 
     #--- create covariate matrix of the quantiles ---#
