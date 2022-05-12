@@ -172,10 +172,13 @@ sample_systematic <- function(raster,
     m <- setValues(raster[[1]], NA)
     m[is.na(sr)] <- 1
     
-    p <- st_as_sf(as.polygons(m))
+    p <- st_as_sf(as.polygons(m)) %>%
+      dplyr::select(geometry) %>%
+      st_combine()
     
-    p_diff <- st_difference(grid,p) %>%
-      st_cast("MULTIPOLYGON")
+    p_diff <- suppressWarnings(st_difference(grid,p)) %>%
+      st_intersection(.,sfObj) %>%
+      dplyr::filter(st_is(., c("POLYGON","MULTIPOLYGON","GEOMETRYCOLLECTION")))
     
     samples <- st_sample(p_diff, size=c(1,1), type = "random") %>%
       st_sf(.) %>%
