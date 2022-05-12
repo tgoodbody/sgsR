@@ -9,6 +9,7 @@ sample_systematic(
   cellsize,
   square = TRUE,
   location = "centers",
+  forceSamp = FALSE,
   access = NULL,
   buff_inner = NULL,
   buff_outer = NULL,
@@ -31,6 +32,9 @@ if \code{FALSE} hexagons are returned.}
 returns samples at tessellation centers, \code{"corners"} - corners are returned, \code{"random"} - samples
 are randomly located within tessellations.}
 
+\item{forceSamp}{Logical. Only applies when \code{location = "random"}. If \code{TRUE}, random samples are
+forced to fall in areas where \code{raster} does not have \code{NA} values. This will considerably slow processing.}
+
 \item{access}{sf. Road access network - must be lines.}
 
 \item{buff_inner}{Numeric. Inner buffer boundary specifying distance
@@ -49,13 +53,20 @@ from access where plots can be sampled.}
 systematic samples. If \code{TRUE} returns a list of sf objects where \code{tessellation}
 is the tessellation grid for sampling, and \code{samples} are the systematic samples.}
 
-\item{...}{Additional arguments for \code{\link[sf]{st_make_grid}}.}
+\item{...}{Additional arguments for \code{\link[sf]{st_make_grid}}. Options include \code{offset} 
+to offset grid by providing lower left coordinates.}
 }
 \value{
 An sf object with sampled points over a tessellation.
 }
 \description{
 Systematic sampling within a square or hexagonal tessellation.
+}
+\note{
+Specifying \code{location = "random"} can result in tessellations with no samples.
+This results from \code{raster} have \code{NA} values at the random location chosen.
+Using \code{forceSamp = TRUE} removes areas of \code{NA} from sampling entirely, but
+considerably slows processing speeds.
 }
 \examples{
 #--- Load raster and access files ---#
