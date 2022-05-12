@@ -252,7 +252,7 @@ sample_systematic <- function(raster,
       #--- need to extract a metric to determine if values are NA ---#
       extract_metrics(mraster = raster[[1]], existing = .) %>%
       #--- remove samples with NA ---#
-      dplyr::filter(!is.na(.)) %>%
+      stats::na.omit() %>%
       dplyr::select(geometry)
     
   } else {
@@ -262,7 +262,7 @@ sample_systematic <- function(raster,
       #--- need to extract a metric to determine if values are NA ---#
       extract_metrics(mraster = raster[[1]], existing = .) %>%
       #--- remove samples with NA ---#
-      dplyr::filter(!is.na(.)) %>%
+      stats::na.omit() %>%
       dplyr::select(geometry)
 
   }
