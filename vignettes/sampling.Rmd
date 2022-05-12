@@ -336,13 +336,13 @@ This algorithm:
 To use the function, the user will first specify the number of quantiles (`nQuant`) followed by either the `nSamp` (total number of desired samples to be added) or `threshold` (proportional representation between sample and covariate quantiles - default is 0.9) parameters. Its recommended to use `threshold` values at or below 0.9 as higher values can currently cause the algorithm to add samples repeatedly.
 
 ```{r,eval = FALSE}
-sample_ahels(mraster = mraster[[1:3]], # input mraster - first 3 layers only
+sample_ahels(mraster = mraster, 
              existing = existing, # existing samples
              plot = TRUE) # plot
 ```
 
 ```{r,warning=F,message=F,echo=FALSE, results = FALSE}
-s <- sample_ahels(mraster = mraster[[1:3]], # input mraster - first 3 layers only
+s <- sample_ahels(mraster = mraster, 
              existing = existing, # existing samples
              plot = TRUE) # plot
 ```
@@ -355,7 +355,7 @@ Notice that no `threshold`, `nSamp`, or `nQuant` were defined. Thats because def
 The first matrix output shows the quantile ratios between sample and covariates. A value of 1.0 means that samples and covariates are equally represented. Values above 1.0 are over represented in the sample, less than 1 under represented in the sample.
 
 ```{r,eval = FALSE}
-sample_ahels(mraster = mraster[[1:3]], # input mraster - first 3 layers only
+sample_ahels(mraster = mraster, 
              existing = existing, # existing samples
              nQuant = 20, # define 20 quantiles
              nSamp = 300, # total samples desired
@@ -363,7 +363,7 @@ sample_ahels(mraster = mraster[[1:3]], # input mraster - first 3 layers only
 ```
 
 ```{r,warning=F,message=F,echo=FALSE, results = FALSE}
-s <- sample_ahels(mraster = mraster[[1:3]], # input mraster - first 3 layers only
+s <- sample_ahels(mraster = mraster, 
              existing = existing, # existing samples
              nQuant = 20, # define 20 quantiles
              nSamp = 300, # total samples desired

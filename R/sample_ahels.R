@@ -35,16 +35,16 @@
 #' e <- sf::st_read(e)
 #'
 #' sample_ahels(
-#'   mraster = mr[[1:3]],
+#'   mraster = mr,
 #'   existing = e,
 #'   plot = TRUE
 #' )
 #'
 #' #--- supply quantile and covariance matrices ---#
-#' mat <- calculate_pop(mraster = mr[[1:3]], nQuant = nQuant)
+#' mat <- calculate_pop(mraster = mr)
 #' 
 #' sample_ahels(
-#'   mraster = mr[[1:3]],
+#'   mraster = mr,
 #'   existing = e,
 #'   matrices = mat,
 #'   nSamp = 300,

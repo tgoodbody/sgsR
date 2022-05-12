@@ -104,7 +104,7 @@ The `calculate_pcomp()` function take a `mraster` as input and performs principa
 
 ```{r,warning=F,message=F}
 calculate_pcomp(mraster = mraster, # input
-                nComp = 5, # number of components to output
+                nComp = 3, # number of components to output
                 plot = TRUE, # plot
                 details = TRUE) # details about the principal component analysis appended
 

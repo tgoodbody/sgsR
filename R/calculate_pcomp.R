@@ -22,7 +22,7 @@
 #'
 #' calculate_pcomp(
 #'   mraster = mr,
-#'   nComp = 5,
+#'   nComp = 2,
 #'   plot = TRUE
 #' )
 #'

@@ -74,15 +74,18 @@ e <- system.file("extdata", "existing.shp", package = "sgsR")
 e <- sf::st_read(e)
 
 sample_ahels(
-  mraster = mr[[1:3]],
+  mraster = mr,
   existing = e,
   plot = TRUE
 )
 
+#--- supply quantile and covariance matrices ---#
+mat <- calculate_pop(mraster = mr)
+
 sample_ahels(
-  mraster = mr[[1:3]],
+  mraster = mr,
   existing = e,
-  nQuant = 20,
+  matrices = mat,
   nSamp = 300,
   filename = tempfile(fileext = ".shp")
 )
