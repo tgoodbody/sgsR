@@ -169,21 +169,32 @@ sample_systematic <- function(raster,
     
     #--- force "random" samples to not fall in areas of no data ---#
     
-    m <- setValues(raster[[1]], NA)
-    m[is.na(sr)] <- 1
+    #--- generate NA raster mask ---#
+    m <- terra::setValues(raster[[1]], NA)
+    m[is.na(raster[[1]])] <- 1
     
-    p <- st_as_sf(as.polygons(m)) %>%
+    #--- convert non-NA areas to polygon ---#
+    p <- sf::st_as_sf(terra::as.polygons(m)) %>%
       dplyr::select(geometry) %>%
-      st_combine()
+      sf::st_combine()
+
+    #--- if there is overlapping or slivers fix the issues ---#
+    if(isFALSE(sf::st_is_valid(p))){
+      
+      p <- p %>%
+        sf::st_make_valid()
+      
+    }
+
+    p_diff <- suppressWarnings(sf::st_difference(grid,p)) %>%
+      sf::st_intersection(.,sfObj) %>%
+      dplyr::filter(sf::st_is(., c("POLYGON","MULTIPOLYGON","GEOMETRYCOLLECTION")))
     
-    p_diff <- suppressWarnings(st_difference(grid,p)) %>%
-      st_intersection(.,sfObj) %>%
-      dplyr::filter(st_is(., c("POLYGON","MULTIPOLYGON","GEOMETRYCOLLECTION")))
-    
-    samples <- st_sample(p_diff, size=c(1,1), type = "random") %>%
-      st_sf(.) %>%
+    #--- sampling --#
+    samples <- sf::st_sample(p_diff, size=c(1,1), type = "random") %>%
+      sf::st_sf(.) %>%
       extract_metrics(mraster = raster[[1]], existing = .) %>%
-      na.omit()
+      stats::na.omit()
     
   } else {
     
