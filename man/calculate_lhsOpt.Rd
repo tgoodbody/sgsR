@@ -22,6 +22,10 @@ calculate_lhsOpt(
 \item{PCA}{Logical. Calculates principal component loadings of the population for PCA similarity factor testing.
 \code{default = FALSE}.}
 
+\item{quant}{Logical. Perform quantile comparison testing.}
+
+\item{KLdiv}{Logical. Perform Kullback–Leibler divergence testing.}
+
 \item{minSamp}{Numeric. Minimum sample size to test. \code{default = 10}.}
 
 \item{maxSamp}{Numeric. Maximum sample size to test. \code{default = 100}.}
