@@ -6,6 +6,8 @@
 #' @inheritParams calculate_pop
 #'
 #' @param popLHS List. Output from \code{\link{calculate_pop}} function.
+#' @param KLdiv Logical. Perform Kullback–Leibler divergence testing.
+#' @param quant Logical. Perform quantile comparison testing.
 #' @param minSamp Numeric. Minimum sample size to test. \code{default = 10}.
 #' @param maxSamp Numeric. Maximum sample size to test. \code{default = 100}.
 #' @param step Numeric. Sample step size for each iteration. \code{default = 10}.
@@ -85,7 +87,7 @@ calculate_lhsOpt <- function(popLHS,
   }
 
   if (!is.logical(quant)) {
-    stop("'quantiles' must be type logical")
+    stop("'quant' must be type logical")
   }
 
   if (!is.logical(KLdiv)) {
