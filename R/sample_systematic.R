@@ -29,7 +29,7 @@
 #'
 #' @return An sf object with sampled points over a tessellation.
 #'
-#' @notes Specifying \code{location = "random"} can result in tessellations with no samples.
+#' @note Specifying \code{location = "random"} can result in tessellations with no samples.
 #' This results from \code{raster} have \code{NA} values at the random location chosen.
 #' Using \code{forceSamp = TRUE} removes areas of \code{NA} from sampling entirely, but
 #' considerably slows processing speeds. 
