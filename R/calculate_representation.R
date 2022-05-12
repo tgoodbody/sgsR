@@ -56,6 +56,10 @@
 calculate_representation <- function(sraster,
                                      existing,
                                      plot = FALSE) {
+  
+  #--- set global vars ---#
+  
+  x <- y <- strata <- srasterFreq <- cnt <- desc <- nSamp <- sampleFreq <- diffFreq <- value <- name <- NULL
 
   #--- Error management ---#
   if (!inherits(sraster, "SpatRaster")) {
