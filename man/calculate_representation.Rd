@@ -11,7 +11,7 @@ calculate_representation(sraster, existing, plot = FALSE)
 
 \item{existing}{sf or data.frame.  Existing plot network.}
 
-\item{plot}{Logical. Plots existing (circles) and new (crosses) samples.}
+\item{plot}{Logical. Plot histogram output displaying the frequency of strata coverage and sampling coverage for \code{sraster} and \code{existing}.}
 }
 \value{
 Returns a tibble where:
