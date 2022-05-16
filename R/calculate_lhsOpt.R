@@ -56,19 +56,6 @@ calculate_lhsOpt <- function(popLHS,
                              rep = 10,
                              iter = 10000) {
 
-  #--- check for required packages ---#
-  if (!requireNamespace("clhs", quietly = TRUE)) {
-    stop("Package \"clhs\" needed for this function to work. Please install it.",
-      call. = FALSE
-    )
-  }
-
-  if (!requireNamespace("entropy", quietly = TRUE)) {
-    stop("Package \"entropy\" needed for this function to work. Please install it.",
-      call. = FALSE
-    )
-  }
-
   #--- Set global vars ---#
   x <- y <- NULL
 
@@ -138,6 +125,10 @@ calculate_lhsOpt <- function(popLHS,
       # --- PCA similarity factor testing ---#
 
       if (isTRUE(PCA)) {
+        
+        if (any(!c("pcaLoad") %in% names(popLHS))) {
+          stop("'popLHS' does not have PCA loadings. Use `calculate_pop(PCA = TRUE)`.", call. = FALSE)
+        }
 
         #--- perform PCA analysis for the samples to determine variance in each component ---#
 
@@ -220,6 +211,8 @@ calculate_lhsOpt <- function(popLHS,
         for (kl in 1:nb) {
 
           #--- calculate divergence ---#
+          
+          sampleCov[which(sampleCov == 0)] <- 0.0001
 
           kld <- entropy::KL.empirical(popLHS$matCov[, kl], sampleCov[, kl])
 
@@ -276,10 +269,10 @@ plot_LHCOptim <- function(dfFinal,
     y = 1 - (dfFinal[, 6] - min(dfFinal[, 6])) / (max(dfFinal[, 6]) - min(dfFinal[, 6]))
   )
 
-  # Parametise Exponential decay function
+  #--- Parametise Exponential decay function ---#
   plot(df$x, df$y, xlab = "sample number", ylab = "1 - KL Divergence") # Initial plot of the data
 
-  # Prepare a good inital state
+  #--- Prepare a good inital state ---#
   theta.0 <- max(df$y) * 1.1
   model.0 <- stats::lm(log(-y + theta.0) ~ x, data = df)
   alpha.0 <- -exp(stats::coef(model.0)[1])
@@ -287,11 +280,11 @@ plot_LHCOptim <- function(dfFinal,
 
   start <- list(alpha = alpha.0, beta = beta.0, theta = theta.0)
 
-  # Fit the model
+  #--- Fit the model ---#
   model <- stats::nls(y ~ alpha * exp(beta * x) + theta, data = df, start = start)
 
 
-  # add fitted curve
+  #--- add fitted curve ---#
 
   predicted <- stats::predict(model, list(x = df$x))
 
