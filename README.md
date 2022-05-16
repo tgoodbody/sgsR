@@ -48,7 +48,7 @@ thanks to to:
 | [Antoine LeBoeuf](https://scholar.google.com/citations?user=wGsKOK8AAAAJ&hl=en)                               | Ministère des Forêts, de la Faune et des Parcs                          |
 | [Ian Sinclair](http://www.infogo.gov.on.ca/infogo/home.html#empProfile/332620/en)                             | Ministry of Northern Development, Mines, Natural Resources and Forestry |
 | [Grant McCartney](https://www.signalhire.com/profiles/grant-mccartney%27s-email/99719223)                     | Forsite Consulting                                                      |
-| [Jean-Francois Prieur](https://www.researchgate.net/scientific-contributions/Jean-Francois-Prieur-2142960944) | Université du Québec à Montréal Alumni                                  |
+| [Jean-Francois Prieur](https://www.researchgate.net/scientific-contributions/Jean-Francois-Prieur-2142960944) | Université de Sherbrooke                                                |
 | [Murray Woods](https://www.researchgate.net/profile/Murray-Woods)                                             | Ontario Ministry of Natural Resources                                   |
 
 ## Funding
