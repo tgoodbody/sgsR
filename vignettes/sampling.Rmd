@@ -50,11 +50,11 @@ Currently, there are 6 functions associated with the `sample` verb in the `sgsR`
 
 *   `sample_strat()` - stratified sampling within a `sraster`
 
-*   `sample_clhs()` - Latin hypercube sampling algorithm
+*   `sample_clhs()` - latin hypercube sampling algorithm
 
 *   `sample_balanced()` - see [BalancedSampling](http://www.antongrafstrom.se/balancedsampling/)
 
-*   `sample_ahels()` - Adapted hypercube evaluation of a legacy sample (ahels) algorithm
+*   `sample_ahels()` - adapted hypercube evaluation of a legacy sample (ahels) algorithm
 
 ## Access {#access .unnumbered}
 
