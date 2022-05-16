@@ -1,13 +1,13 @@
-Type: Package
 Package: sgsR
-Title: Structurally Guided Sampling Approaches using ALS Data
+Type: Package
 Version: 1.0.1
-Date: 2022
+License: GPL (>= 3)
+Title: Structurally Guided Sampling in R
 Authors@R: c(
     person(given = "Tristan RH", 
            family = "Goodbody",
            email = "goodbody.t@gmail.com",
-           role = c("aut", "cre"),
+           role = c("aut", "cre","cph"),
            comment = c(ORCID = "0000-0002-6894-7925")),
     person(given = "Nicholas C", 
            family = "Coops",
@@ -16,14 +16,18 @@ Authors@R: c(
            comment = c(ORCID = "0000-0002-0151-9037")),
     person(given = "Martin",
            family = "Queinnec", 
-           role = "aut",
+           role = "ctb",
            email = "queinnec@mail.ubc.ca", 
            comment = c(ORCID = "0000-0002-2741-1032"))
    )
-Description: This package provides functions to enable stratification and
-    sampling for structurally guided sampling using ALS data.
-URL: https://github.com/tgoodbody/sgsR
-License: GPL (>= 3)
+Description: Functions to enable structurally guided sampling (SGS) approaches using airborne laser scanning (ALS; LIDAR) data.
+    Primary functions provide means to generate data-driven stratifications & samples. Intermediate functions for calculating 
+    and extracting important information about input covariates and samples are also included. Processing outcomes are intended
+    to help forest and environmental management practitioners better optimize field sample placement as well as assess and augment
+    existing sample networks in the context of structural conditions. ALS data is the primary intended use case, however any rasterized
+    remote sensing data can be used, enabling data-driven stratifications and sampling approaches.
+URL: https://github.com/tgoodbody/sgsR, https://tgoodbody.github.io/sgsR/
+BugReports: https://github.com/tgoodbody/sgsR/issues
 Depends: 
     R (>= 2.10)
 Imports:
@@ -47,6 +51,7 @@ Imports:
     BalancedSampling (>= 1.5.5),
     spatstat (>= 2.1.0),
     spatstat.geom (>= 2.1.0),
+    stringr (>= 1.4.0)
 Suggests: 
     knitr (>= 1.33.0),
     rmarkdown (>= 2.7.0),

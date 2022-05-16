@@ -390,7 +390,7 @@ sample_strat <- function(sraster,
       ### --- RULE 1: select only cells surrounded by cells with same strata ---###
 
       #--- Define focal window ---#
-      w <- matrix(1 / (wrow * wcol), nr = wrow, nc = wcol)
+      w <- matrix(1 / (wrow * wcol), wrow, wcol)
 
       suppressWarnings(strata_m_clust <-
         terra::focal(

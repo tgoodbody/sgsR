@@ -4,26 +4,32 @@
 \name{sgsR-package}
 \alias{sgsR}
 \alias{sgsR-package}
-\title{sgsR: Structurally Guided Sampling Approaches using ALS Data}
+\title{sgsR: Structurally Guided Sampling in R}
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
-This package provides functions to enable stratification and sampling for structurally guided sampling using ALS data.
+Functions to enable structurally guided sampling (SGS) approaches using airborne laser scanning (ALS; LIDAR) data. Primary functions provide means to generate data-driven stratifications & samples. Intermediate functions for calculating and extracting important information about input covariates and samples are also included. Processing outcomes are intended to help forest and environmental management practitioners better optimize field sample placement as well as assess and augment existing sample networks in the context of structural conditions. ALS data is the primary intended use case, however any rasterized remote sensing data can be used, enabling data-driven stratifications and sampling approaches.
 }
 \seealso{
 Useful links:
 \itemize{
   \item \url{https://github.com/tgoodbody/sgsR}
+  \item \url{https://tgoodbody.github.io/sgsR/}
+  \item Report bugs at \url{https://github.com/tgoodbody/sgsR/issues}
 }
 
 }
 \author{
-\strong{Maintainer}: Tristan RH Goodbody \email{goodbody.t@gmail.com} (\href{https://orcid.org/0000-0002-6894-7925}{ORCID})
+\strong{Maintainer}: Tristan RH Goodbody \email{goodbody.t@gmail.com} (\href{https://orcid.org/0000-0002-6894-7925}{ORCID}) [copyright holder]
 
 Authors:
 \itemize{
   \item Nicholas C Coops \email{nicholas.coops@ubc.ca} (\href{https://orcid.org/0000-0002-0151-9037}{ORCID})
-  \item Martin Queinnec \email{queinnec@mail.ubc.ca} (\href{https://orcid.org/0000-0002-2741-1032}{ORCID})
+}
+
+Other contributors:
+\itemize{
+  \item Martin Queinnec \email{queinnec@mail.ubc.ca} (\href{https://orcid.org/0000-0002-2741-1032}{ORCID}) [contributor]
 }
 
 }
