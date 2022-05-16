@@ -42,7 +42,7 @@ existing <- sample_srs(raster = mraster, # use sraster as input for sampling
 
 ```
 
-Currently, there are 5 functions associated with the `sample` verb in the `sgsR` package:
+Currently, there are 6 functions associated with the `sample` verb in the `sgsR` package:
 
 *   `sample_srs()` - simple random sampling
 
