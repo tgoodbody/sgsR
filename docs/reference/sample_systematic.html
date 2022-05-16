@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,6 +70,7 @@
   <span class="va">cellsize</span>,
   square <span class="op">=</span> <span class="cn">TRUE</span>,
   location <span class="op">=</span> <span class="st">"centers"</span>,
+  forceSamp <span class="op">=</span> <span class="cn">FALSE</span>,
   access <span class="op">=</span> <span class="cn">NULL</span>,
   buff_inner <span class="op">=</span> <span class="cn">NULL</span>,
   buff_outer <span class="op">=</span> <span class="cn">NULL</span>,
@@ -94,6 +95,9 @@ if <code>FALSE</code> hexagons are returned.</p></dd>
 <dd><p>Character. Sample location within tessellation. Default (<code>"centers"</code>)
 returns samples at tessellation centers, <code>"corners"</code> - corners are returned, <code>"random"</code> - samples
 are randomly located within tessellations.</p></dd>
+<dt>forceSamp</dt>
+<dd><p>Logical. Only applies when <code>location = "random"</code>. If <code>TRUE</code>, random samples are
+forced to fall in areas where <code>raster</code> does not have <code>NA</code> values. This will considerably slow processing.</p></dd>
 <dt>access</dt>
 <dd><p>sf. Road access network - must be lines.</p></dd>
 <dt>buff_inner</dt>
@@ -113,11 +117,19 @@ from access where plots can be sampled.</p></dd>
 systematic samples. If <code>TRUE</code> returns a list of sf objects where <code>tessellation</code>
 is the tessellation grid for sampling, and <code>samples</code> are the systematic samples.</p></dd>
 <dt>...</dt>
-<dd><p>Additional arguments for <code><a href="https://r-spatial.github.io/sf/reference/st_make_grid.html" class="external-link">st_make_grid</a></code>.</p></dd>
+<dd><p>Additional arguments for <code><a href="https://r-spatial.github.io/sf/reference/st_make_grid.html" class="external-link">st_make_grid</a></code>. Options include <code>offset</code> 
+to offset grid by providing lower left coordinates.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>An sf object with sampled points over a tessellation.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
+    <p>Specifying <code>location = "random"</code> can result in tessellations with no samples.
+This results from <code>raster</code> have <code>NA</code> values at the random location chosen.
+Using <code>forceSamp = TRUE</code> removes areas of <code>NA</code> from sampling entirely, but
+considerably slows processing speeds.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -167,24 +179,8 @@ is the tessellation grid for sampling, and <code>samples</code> are the systemat
 <span class="r-in">  cellsize <span class="op">=</span> <span class="fl">1000</span>,</span>
 <span class="r-in">  plot <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-plt img"><img src="sample_systematic-1.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 40 features and 0 fields</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431600 ymin: 5338200 xmax: 437600 ymax: 5343200</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (431600 5338200)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (432600 5338200)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (433600 5338200)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  POINT (434600 5338200)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (435600 5338200)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POINT (436600 5338200)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POINT (437600 5338200)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (432600 5339200)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (433600 5339200)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (434600 5339200)</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in stopifnot(!inherits(x, "sf"), !missing(sf_column_name), !missing(agr)):</span> Problem while computing `..1 = !is.na(.)`.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">x</span> Input `..1` must be a logical vector, not a logical[,2].</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">sample_systematic</span><span class="op">(</span></span>
 <span class="r-in">  raster <span class="op">=</span> <span class="va">sr</span>,</span>
@@ -193,24 +189,8 @@ is the tessellation grid for sampling, and <code>samples</code> are the systemat
 <span class="r-in">  location <span class="op">=</span> <span class="st">"corners"</span>,</span>
 <span class="r-in">  plot <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-plt img"><img src="sample_systematic-2.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 312 features and 0 fields</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431100 ymin: 5337989 xmax: 438100 ymax: 5343185</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (431100 5338855)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (431100 5338277)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (431100 5340587)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  POINT (431100 5340009)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (431100 5342319)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POINT (431100 5338277)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POINT (431600 5337989)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (431100 5338855)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (431100 5340009)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (431600 5339721)</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in stopifnot(!inherits(x, "sf"), !missing(sf_column_name), !missing(agr)):</span> Problem while computing `..1 = !is.na(.)`.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">x</span> Input `..1` must be a logical vector, not a logical[,2].</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">sample_systematic</span><span class="op">(</span></span>
 <span class="r-in">  raster <span class="op">=</span> <span class="va">sr</span>,</span>
@@ -220,23 +200,8 @@ is the tessellation grid for sampling, and <code>samples</code> are the systemat
 <span class="r-in">  buff_outer <span class="op">=</span> <span class="fl">200</span></span>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> An access layer has been provided. An internal buffer of 50 m and an external buffer of 200 m have been applied</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 15 features and 0 fields</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 432600 ymin: 5338200 xmax: 437600 ymax: 5343200</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (434600 5338200)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (436600 5338200)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (432600 5339200)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  POINT (434600 5339200)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (437600 5339200)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POINT (435600 5340200)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POINT (432600 5341200)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (433600 5341200)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (434600 5341200)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (432600 5342200)</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in stopifnot(!inherits(x, "sf"), !missing(sf_column_name), !missing(agr)):</span> Problem while computing `..1 = !is.na(.)`.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">x</span> Input `..1` must be a logical vector, not a logical[,2].</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">sample_systematic</span><span class="op">(</span></span>
 <span class="r-in">  raster <span class="op">=</span> <span class="va">sr</span>,</span>
@@ -244,23 +209,8 @@ is the tessellation grid for sampling, and <code>samples</code> are the systemat
 <span class="r-in">  square <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span class="r-in">  location <span class="op">=</span> <span class="st">"random"</span></span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 42 features and 0 fields</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431445.4 ymin: 5337843 xmax: 438495 ymax: 5343229</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                    geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (431445.4 5339583)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (431842.7 5340005)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (431473.8 5342375)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  POINT (431733.6 5337928)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (431742.6 5341008)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POINT (431989.8 5343229)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POINT (432328.5 5338429)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (432408.7 5341789)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (433333.8 5338130)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (432979.6 5339617)</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in stopifnot(!inherits(x, "sf"), !missing(sf_column_name), !missing(agr)):</span> Problem while computing `..1 = !is.na(.)`.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">x</span> Input `..1` must be a logical vector, not a logical[,2].</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -272,7 +222,9 @@ is the tessellation grid for sampling, and <code>samples</code> are the systemat
 <a href="https://scholar.google.ca/citations?user=C_qdYDsAAAAJ&amp;hl=en" class="external-link">Tristan
 RH Goodbody</a>,
 <a href="https://forestry.ubc.ca/faculty-profile/nicholas-coops/" class="external-link">Nicholas
-C Coops</a>.</p>
+C Coops</a>,
+<a href="https://www.researchgate.net/profile/Martin-Queinnec" class="external-link">Martin
+Queinnec</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

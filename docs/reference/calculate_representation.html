@@ -75,7 +75,7 @@
 <dt>existing</dt>
 <dd><p>sf or data.frame.  Existing plot network.</p></dd>
 <dt>plot</dt>
-<dd><p>Logical. Plots existing (circles) and new (crosses) samples.</p></dd>
+<dd><p>Logical. Plot histogram output displaying the frequency of strata coverage and sampling coverage for <code>sraster</code> and <code>existing</code>.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -124,7 +124,6 @@ in sample vs. sraster frequency could correspond to the algorithm allocating or 
 <span class="r-in">  plot <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> K-means being performed on 1 layers with 6 centers.</span>
-<span class="r-plt img"><img src="calculate_representation-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### --- create existing sample network ---###</span></span>
 <span class="r-in"></span>
@@ -133,6 +132,7 @@ in sample vs. sraster frequency could correspond to the algorithm allocating or 
 <span class="r-in">  raster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span>,</span>
 <span class="r-in">  nSamp <span class="op">=</span> <span class="fl">100</span></span>
 <span class="r-in"><span class="op">)</span></span>
+<span class="r-plt img"><img src="calculate_representation-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- calculate representation ---#</span></span>
 <span class="r-in"></span>
@@ -145,12 +145,12 @@ in sample vs. sraster frequency could correspond to the algorithm allocating or 
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 x 6</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   strata srasterFreq sampleFreq diffFreq nSamp  need</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>      1        0.2        0.17    -<span style="color: #BB0000;">0.03</span>    17     3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>      2        0.26       0.22    -<span style="color: #BB0000;">0.04</span>    22     4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>      3        0.06       0.09     0.03     9    -<span style="color: #BB0000;">3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>      4        0.16       0.11    -<span style="color: #BB0000;">0.05</span>    11     5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>      5        0.21       0.33     0.12    33   -<span style="color: #BB0000;">12</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>      6        0.11       0.08    -<span style="color: #BB0000;">0.03</span>     8     3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>      1        0.12       0.17   0.05      17    -<span style="color: #BB0000;">5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>      2        0.18       0.21   0.03      21    -<span style="color: #BB0000;">3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>      3        0.09       0.08  -<span style="color: #BB0000;">0.010</span><span style="color: #BB0000; text-decoration: underline;">0</span>     8     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>      4        0.24       0.22  -<span style="color: #BB0000;">0.020</span><span style="color: #BB0000; text-decoration: underline;">0</span>    22     2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>      5        0.27       0.24  -<span style="color: #BB0000;">0.030</span><span style="color: #BB0000; text-decoration: underline;">0</span>    24     3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>      6        0.09       0.08  -<span style="color: #BB0000;">0.010</span><span style="color: #BB0000; text-decoration: underline;">0</span>     8     1</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
