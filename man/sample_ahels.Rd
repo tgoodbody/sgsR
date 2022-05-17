@@ -66,6 +66,7 @@ In some cases, generally when a single metric is used as \code{mraster}, samplin
 Special thanks to Dr. Brendan Malone for the original implementation of this algorithm.
 }
 \examples{
+\dontrun{
 #--- Load raster and existing plots---#
 r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 mr <- terra::rast(r)
@@ -89,6 +90,7 @@ sample_ahels(
   nSamp = 300,
   filename = tempfile(fileext = ".shp")
 )
+}
 }
 \references{
 Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451
