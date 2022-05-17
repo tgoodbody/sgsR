@@ -4,6 +4,8 @@
 # sgsR - structurally guided sampling <img src="man/figures/logo.png" align="right" width="200" />
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/tgoodbody/sgsR/workflows/R-CMD-check/badge.svg)](https://github.com/tgoodbody/sgsR/actions)
 <!-- badges: end -->
 
 `sgsR` is designed to implement structurally guided sampling approaches
