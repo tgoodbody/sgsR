@@ -93,9 +93,6 @@ calculate_lhsOpt <- function(popLHS,
     stop("'step' must be type numeric")
   }
 
-
-  #--- set global variables ---#
-
   nb <- ncol(popLHS$values)
 
   #--- Establish sampling sequence ---#
@@ -210,9 +207,9 @@ calculate_lhsOpt <- function(popLHS,
 
         for (kl in 1:nb) {
 
-          #--- calculate divergence ---#
+          #--- calculate divergence - if values are 0 set to very small number ---#
           
-          sampleCov[which(sampleCov == 0)] <- 0.0001
+          sampleCov[which(sampleCov == 0)] <- 0.0000001
 
           kld <- entropy::KL.empirical(popLHS$matCov[, kl], sampleCov[, kl])
 
