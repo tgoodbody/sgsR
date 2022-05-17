@@ -27,6 +27,7 @@
 #' @return Returns sf point object with existing samples and supplemental samples added by the ahels algorithm.
 #'
 #' @examples
+#' \dontrun{
 #' #--- Load raster and existing plots---#
 #' r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 #' mr <- terra::rast(r)
@@ -50,6 +51,7 @@
 #'   nSamp = 300,
 #'   filename = tempfile(fileext = ".shp")
 #' )
+#' }
 #' @note
 #'
 #' Messages in the algorithm will state that samples have been added to under-represented quantiles. The number between
