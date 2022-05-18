@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,6 +37,9 @@
     <a class="dropdown-item" href="../articles/sampling.html">sampling</a>
     <a class="dropdown-item" href="../articles/stratification.html">stratification</a>
   </div>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
@@ -182,7 +185,7 @@ https://doi.org/10.1016/j.rse.2021.112510</p>
 <span class="r-in"><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"roads.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">ac</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `roads' from data source </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\goodb\AppData\Local\Temp\Rtmpi0uk0d\temp_libpath2d8040e033bd\sgsR\extdata\roads.shp' </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\goodb\AppData\Local\Temp\RtmpkbMXZm\temp_libpath19087029e22\sgsR\extdata\roads.shp' </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   using driver `ESRI Shapefile'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 167 features and 2 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: MULTILINESTRING</span>
@@ -193,7 +196,7 @@ https://doi.org/10.1016/j.rse.2021.112510</p>
 <span class="r-in"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"existing.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `existing' from data source </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\goodb\AppData\Local\Temp\Rtmpi0uk0d\temp_libpath2d8040e033bd\sgsR\extdata\existing.shp' </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\goodb\AppData\Local\Temp\RtmpkbMXZm\temp_libpath19087029e22\sgsR\extdata\existing.shp' </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   using driver `ESRI Shapefile'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 100 features and 1 field</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
@@ -223,20 +226,20 @@ https://doi.org/10.1016/j.rse.2021.112510</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 205 features and 3 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431130 ymin: 5337770 xmax: 438510 ymax: 5343170</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431130 ymin: 5337750 xmax: 438530 ymax: 5343210</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    strata type  rule               geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x       1  new rule1 POINT (433330 5338030)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x1      1  new rule1 POINT (438390 5340830)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x2      1  new rule1 POINT (433190 5338750)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x3      1  new rule1 POINT (435490 5340170)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x4      1  new rule1 POINT (437050 5340990)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x5      1  new rule1 POINT (438370 5340830)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x6      1  new rule1 POINT (431290 5342650)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x7      1  new rule1 POINT (432750 5338350)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x8      1  new rule1 POINT (433310 5338050)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x9      1  new rule1 POINT (437350 5340130)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x       1  new rule1 POINT (438490 5340850)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x1      1  new rule1 POINT (437050 5340990)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x2      1  new rule1 POINT (433450 5338950)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x3      1  new rule1 POINT (433330 5338030)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x4      1  new rule1 POINT (431290 5342650)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x5      1  new rule1 POINT (431290 5342670)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x6      1  new rule1 POINT (437350 5340150)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x7      1  new rule1 POINT (433290 5338070)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x8      1  new rule1 POINT (432770 5338430)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x9      1  new rule1 POINT (433190 5338750)</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- perform stratified sampling random sampling ---#</span></span>
 <span class="r-in"><span class="fu">sample_strat</span><span class="op">(</span></span>
@@ -261,20 +264,20 @@ https://doi.org/10.1016/j.rse.2021.112510</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 200 features and 3 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431150 ymin: 5337730 xmax: 438510 ymax: 5343210</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431150 ymin: 5337730 xmax: 438530 ymax: 5343190</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    strata type  rule               geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x       1  new rule1 POINT (432730 5338350)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x1      1  new rule1 POINT (437090 5340190)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x2      1  new rule1 POINT (435490 5340170)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x3      1  new rule1 POINT (432770 5338430)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x4      1  new rule1 POINT (432750 5338430)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x5      1  new rule1 POINT (431310 5342650)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x6      1  new rule1 POINT (438390 5340830)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x7      1  new rule1 POINT (437050 5340990)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x8      1  new rule1 POINT (433190 5338770)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x9      1  new rule1 POINT (433290 5338050)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x       1  new rule1 POINT (431310 5342650)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x1      1  new rule1 POINT (437130 5340170)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x2      1  new rule1 POINT (433290 5338070)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x3      1  new rule1 POINT (438090 5341850)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x4      1  new rule1 POINT (433510 5339190)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x5      1  new rule1 POINT (431310 5342670)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x6      1  new rule1 POINT (433470 5338930)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x7      1  new rule1 POINT (438370 5340830)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x8      1  new rule1 POINT (437350 5340130)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x9      1  new rule1 POINT (437350 5340110)</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- extract strata values to existing samples ---#</span></span>
 <span class="r-in"><span class="va">e.sr</span> <span class="op">&lt;-</span> <span class="fu"><a href="extract_strata.html">extract_strata</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sr</span>, existing <span class="op">=</span> <span class="va">e</span><span class="op">)</span></span>
@@ -320,14 +323,14 @@ https://doi.org/10.1016/j.rse.2021.112510</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    strata     type     rule               geometry</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 36      1 existing existing POINT (431930 5338510)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 41      1 existing existing POINT (433990 5341870)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x       1      new    rule1 POINT (431290 5342670)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x1      1      new    rule1 POINT (438370 5340830)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x2      1      new    rule1 POINT (438110 5341850)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x3      1      new    rule2 POINT (431690 5338490)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x4      1      new    rule2 POINT (435290 5338910)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x5      1      new    rule2 POINT (436870 5341650)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x6      1      new    rule2 POINT (431750 5342830)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x7      1      new    rule2 POINT (438150 5342210)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x       1      new    rule1 POINT (438090 5341850)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x1      1      new    rule1 POINT (438490 5340850)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x2      1      new    rule1 POINT (431310 5342670)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x3      1      new    rule2 POINT (432530 5340950)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x4      1      new    rule2 POINT (431730 5342830)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x5      1      new    rule2 POINT (432750 5339910)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x6      1      new    rule2 POINT (431810 5338030)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x7      1      new    rule2 POINT (435270 5339770)</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">sample_strat</span><span class="op">(</span></span>
 <span class="r-in">  sraster <span class="op">=</span> <span class="va">sr</span>,</span>
@@ -360,26 +363,26 @@ https://doi.org/10.1016/j.rse.2021.112510</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Buffered area contains 6063 available candidates. Sampling to reach 23 samples starting.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Processing strata : 10</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Buffered area contains 1666 available candidates. Sampling to reach 11 samples starting.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Writing layer `file900439c2d89' to data source </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\goodb\AppData\Local\Temp\RtmpQnaG3Y\file900439c2d89.shp' using driver `ESRI Shapefile'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Writing layer `file2430665d4b7d' to data source </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\goodb\AppData\Local\Temp\Rtmp8sw0A6\file2430665d4b7d.shp' using driver `ESRI Shapefile'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Writing 205 features with 3 fields and geometry type Point.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 205 features and 3 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431290 ymin: 5337750 xmax: 438490 ymax: 5343190</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431190 ymin: 5337710 xmax: 438510 ymax: 5343110</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    strata type  rule               geometry</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> x       1  new rule1 POINT (438370 5340830)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x1      1  new rule1 POINT (438090 5341850)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x2      1  new rule1 POINT (431290 5342670)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x3      1  new rule1 POINT (438110 5341850)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x4      1  new rule1 POINT (431310 5342670)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x5      1  new rule1 POINT (438490 5340850)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x1      1  new rule1 POINT (431290 5342670)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x2      1  new rule1 POINT (438090 5341850)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x3      1  new rule1 POINT (431310 5342670)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x4      1  new rule1 POINT (438490 5340850)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x5      1  new rule1 POINT (438110 5341850)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> x6      1  new rule1 POINT (438390 5340830)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x7      1  new rule2 POINT (432870 5338890)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x8      1  new rule2 POINT (431970 5338830)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x9      1  new rule2 POINT (435890 5339010)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x7      1  new rule2 POINT (432730 5339170)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x8      1  new rule2 POINT (434450 5340030)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x9      1  new rule2 POINT (432770 5339890)</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- Load mraster for optimal allocation ---#</span></span>
 <span class="r-in"><span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"wall_metrics.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
@@ -418,26 +421,26 @@ https://doi.org/10.1016/j.rse.2021.112510</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Buffered area contains 6063 available candidates. Sampling to reach 22 samples starting.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Processing strata : 10</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Buffered area contains 1666 available candidates. Sampling to reach 13 samples starting.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Writing layer `file9007ce47129' to data source </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\goodb\AppData\Local\Temp\RtmpQnaG3Y\file9007ce47129.shp' using driver `ESRI Shapefile'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Writing layer `file24305fbf80' to data source </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\goodb\AppData\Local\Temp\Rtmp8sw0A6\file24305fbf80.shp' using driver `ESRI Shapefile'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Writing 206 features with 3 fields and geometry type Point.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 206 features and 3 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431190 ymin: 5337830 xmax: 438510 ymax: 5343210</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431190 ymin: 5337750 xmax: 438510 ymax: 5343190</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    strata type  rule               geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x       1  new rule1 POINT (438110 5341850)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x1      1  new rule1 POINT (431290 5342670)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x2      1  new rule1 POINT (438370 5340830)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x       1  new rule1 POINT (438370 5340830)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x1      1  new rule1 POINT (438110 5341850)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x2      1  new rule1 POINT (438490 5340850)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> x3      1  new rule1 POINT (438090 5341850)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x4      1  new rule1 POINT (438490 5340850)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x5      1  new rule1 POINT (431310 5342670)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x6      1  new rule1 POINT (438390 5340830)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x7      1  new rule2 POINT (437410 5342130)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x8      1  new rule2 POINT (437070 5342050)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x9      1  new rule2 POINT (438070 5341870)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x4      1  new rule1 POINT (431290 5342670)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x5      1  new rule1 POINT (438390 5340830)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x6      1  new rule1 POINT (431310 5342670)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x7      1  new rule2 POINT (431510 5342810)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x8      1  new rule2 POINT (436750 5341350)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x9      1  new rule2 POINT (433670 5342150)</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -445,7 +448,7 @@ https://doi.org/10.1016/j.rse.2021.112510</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by <a href="https://scholar.google.ca/citations?user=C_qdYDsAAAAJ&amp;hl=en" class="external-link">Tristan RH Goodbody</a>, <a href="https://forestry.ubc.ca/faculty-profile/nicholas-coops/" class="external-link">Nicholas C Coops</a>.</p>
+  <p></p><p>Developed by <a href="https://scholar.google.ca/citations?user=C_qdYDsAAAAJ&amp;hl=en" class="external-link">Tristan RH Goodbody</a>, <a href="https://forestry.ubc.ca/faculty-profile/nicholas-coops/" class="external-link">Nicholas C Coops</a>, <a href="https://www.researchgate.net/profile/Martin-Queinnec" class="external-link">Martin Queinnec</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
