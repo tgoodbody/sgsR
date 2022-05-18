@@ -129,24 +129,6 @@ sample_strat <- function(sraster,
                          filename = NULL,
                          overwrite = FALSE) {
 
-  #--- check for required packages ---#
-
-  #--- both packages required only if 'mindist' is defined ---#
-  if (!is.null(mindist)) {
-    if (!requireNamespace("spatstat", quietly = TRUE)) {
-      stop("Package \"spatstat\" needed for this function to work. Please install it.",
-        call. = FALSE
-      )
-    }
-
-    #--- check for required packages ---#
-    if (!requireNamespace("spatstat.geom", quietly = TRUE)) {
-      stop("Package \"spatstat.geom\" needed for this function to work. Please install it.",
-        call. = FALSE
-      )
-    }
-  }
-
   #--- Set global vars ---#
   x <- y <- cell <- NULL
 
