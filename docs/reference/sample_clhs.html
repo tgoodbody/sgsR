@@ -158,7 +158,7 @@ on Digital Soil Mapping, Sydney, Australia.</p>
 <span class="r-in"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"existing.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `existing' from data source </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\tgood.stu\Documents\R\win-library\4.1\sgsR\extdata\existing.shp' </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\goodb\AppData\Local\Temp\Rtmpi0uk0d\temp_libpath2d8040e033bd\sgsR\extdata\existing.shp' </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   using driver `ESRI Shapefile'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 100 features and 1 field</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
@@ -169,7 +169,7 @@ on Digital Soil Mapping, Sydney, Australia.</p>
 <span class="r-in"><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"roads.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">ac</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `roads' from data source </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\tgood.stu\Documents\R\win-library\4.1\sgsR\extdata\roads.shp' </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\goodb\AppData\Local\Temp\Rtmpi0uk0d\temp_libpath2d8040e033bd\sgsR\extdata\roads.shp' </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   using driver `ESRI Shapefile'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 167 features and 2 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: MULTILINESTRING</span>
@@ -184,34 +184,23 @@ on Digital Soil Mapping, Sydney, Australia.</p>
 <span class="r-in">  iter <span class="op">=</span> <span class="fl">100</span></span>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-plt img"><img src="sample_clhs-1.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 200 features and 8 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 200 features and 4 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431130 ymin: 5337710 xmax: 438530 ymax: 5343190</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431110 ymin: 5337730 xmax: 438530 ymax: 5343210</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       zmean pzabove2  zsd     zq20  zq50  zq70  zq90 type</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40767  4.27     80.4 1.35 3.130000  4.27  4.95  6.66  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 83398  5.12     36.8 2.40 2.750000  4.84  6.37  9.30  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36775 11.59     93.5 4.52 7.570000 11.23 13.82 20.10  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33671  4.83     42.1 1.65 3.330000  4.93  5.80  7.40  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 90931 12.54     84.2 5.32 8.179999 12.03 15.05 22.20  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46436  7.23     89.3 2.53 5.180000  7.28  8.65 11.10  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 71859 10.07     88.0 3.69 7.050000 10.44 11.99 15.50  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 59088  2.78     20.5 1.19 1.780000  2.51  3.11  5.10  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1850   8.57     87.9 4.12 4.770000  8.27 10.50 16.40  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 64460  4.71     41.6 3.11 1.950000  3.76  5.74 10.90  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40767 POINT (431230 5340850)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 83398 POINT (435030 5338130)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36775 POINT (438530 5341110)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33671 POINT (438090 5341290)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 90931 POINT (433150 5337710)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46436 POINT (437990 5340530)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 71859 POINT (433950 5338910)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 59088 POINT (435950 5339770)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1850  POINT (438130 5343130)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 64460 POINT (437390 5339450)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        zq90 pzabove2  zsd type               geometry</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58865 15.10     83.7 3.66  new POINT (437370 5339790)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65901 22.30     23.8 5.51  new POINT (435150 5339350)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69945 22.00     93.7 5.05  new POINT (435290 5339070)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39339 17.50     88.7 4.81  new POINT (436490 5340950)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67400 23.40     93.1 7.81  new POINT (436090 5339250)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21244 18.40     67.0 3.49  new POINT (431930 5341990)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80927 15.80     82.1 4.52  new POINT (435410 5338270)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8778  16.10     86.2 4.34  new POINT (432690 5342710)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19318 20.90     85.2 5.99  new POINT (436830 5342110)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18888  4.64     39.2 1.05  new POINT (435530 5342130)</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">sample_clhs</span><span class="op">(</span></span>
 <span class="r-in">  mraster <span class="op">=</span> <span class="va">mr</span>,</span>
@@ -221,73 +210,62 @@ on Digital Soil Mapping, Sydney, Australia.</p>
 <span class="r-in">  details <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $clhs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 75933 89032 86157  9782 33701 51520 70990 26425  7076 76754 68968</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [12] 14282  6921 51788 46543 58721 55477  3950 70672 81264 10821 74677</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [23] 91191 37693 38338 12617 62091  7137 66078 75350 36242 31496 58114</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [34] 77629  2993 16670   986 39590 23001 51177 65078 37241 80112 87882</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [45] 90048 48187 36693 58738 52045 22476 73643 89384 63290 47723 54878</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [56] 60030 61244 68542 40979 23123 23085 82394 33860 68317 35849 87849</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [67] 63296  5251 55044 85155 21481  9202 12921 89254 27289 43635 35263</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [78] 30461 29896 23972 80970 37154 43236 55452 32679  1713 39748  1429</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [89]  8889 44958 11281  6135 21580 34507 24844 22549 50764 48231 13676</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [100] 28223 76018  4202 45338 20424 29245 49835 51265  6288 15456 11796</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [111] 58164 28455 75746 38018 54483 68087 18022 40791 56257 17503  2075</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [122]  4809 78975 85863 50282 65599 33035 32294 45876 45032 73188 34015</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [133] 80412  7262 31522 25465 28087 43990 79711 20200 51478 70609 71624</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [144] 71163 72460 83347 29625  4005 70335 13566  9918 60825 86089 53026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [155] 54200 41205 37861 30156 49182 84217 62526 73613 78117 16092 76967</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [166] 66753 84277 43621 25769 76779 36334 28054 53397 20774 12712 27616</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [177] 52442 67411 42655 65558 14155  3338 22147 59104 77973 82811 66116</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [188] 13857 76704 85535 74287 37157 18941 19893 68938 13226 73970 19833</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [199] 37180 38372 49591 59839 14390 48271 88026 89243 69661 13347 73512</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [210] 60922  7913 41181 73325 20768 61258 52914 61086 90277 29402 56663</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [221] 67567 44286  8860 69886 75616 82072 71464  6035 30851 67612 48103</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [232] 12483 27522 15041 78835 40038 60377 14397 68129 90792  3160  5575</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [243] 54750   868 76309 46266 89149 34185 76409 11446 20543 87584 48090</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [254] 30546  9085 17889 49658 21041 35488 51973 21027 43701 57449 33444</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [265] 43090  2090 70207 74011 89121 33066 72940 10913 23657 57056 88150</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [276] 57436 28815 51342 85384  7009 36040 58493 80128 83182 30806 81146</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [287] 77212 12147 54450 45999 40886  4467 65639 19180 45980 50857 43317</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [298] 57238 17046 34144 24300 10400 77186 65769  3341 26464 19725 37833</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [309] 46556 47391 71971 22633 25549 62860 66493 30662 20092 61735 16619</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [320] 40096  9541 42192  2025 82206 34604 39576 33349 23900 57782 20886</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [331] 82420 64802 50178 81999 16537 71974 69351 72182 58342 20685 73455</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [342] 64149 80821  8720 18415 41091 47933 11400 21201 53926 59847 14660</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [353] 22036 66838 69974 56208  9418 68316 80010 11979 64572 80421 64151</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [364]  1073 47150 29064 26574 50813 51008 61075 69827  2579 81825 85032</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [375] 61557 19650 65371 29438 57032 55838 84328 21352 90306 55671 38414</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [386] 39862 79361 64011 50154 39374   699 60901 89408  8160 90859 89879</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [397] 21822 22137  8902 45258</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]  9758  6485 52273 27354  5766  5175 29933 74405 11504 51498  6443</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [12] 20588 64572 41639 10169 69735 53329  2231 81552 89390 45133 77432</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [23]  2920  1620 66780  3961 80956 34141 43087 20115 68373 87122 41180</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [34] 52648 21373 87176 47157 71925 58128 56148 11976 64239 13842 77253</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [45] 85849  6138 86696 16107 60175   472 27719 84357 49024 49265 91059</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [56] 62076  2400 69191 89766  1091 45278 15099 35722 38465 65242 56292</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [67] 22616 72105 66642 32636 82353  5726 25199 23146 84391 14015 90295</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [78] 26543 28257 19632 73079 16316 83584 39351  6982 62925  3931 79590</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [89]  5680  8728 67833 79473 56545 36902 30478  9669 32335  7270  7978</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [100] 53756 53191 58870  5119 62678  5375 71357 56343  5669 27831 46417</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [111] 39352 72117 59207 44664 86105 37416 67440   926  9006 77089 36183</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [122] 44493 18365 79019 79750 68019 71088 84244 78229 34536 45363 50955</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [133] 90351 78781 51253  6659 17420 25865 55757 55845 49424 73040 73508</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [144] 13176 62319 76332 29359 65459 37425 89761 25742 69641 21746 64938</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [155]  2166 54145 90830 23520 88791 10752 10361 67831 56780 42091 83588</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [166] 74854 37221 89574 68270 48977 22192  7000 15213 28917 24338  1203</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [177]   147 51121  5334 88508 60282  8480 49209 32124  4607 58805 53739</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [188] 20991   874 12179 33125 88644 17442 14321 23012 49874  3345 46684</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [199] 12947 45818 75656 54495 84196 63554 91197 56537 77762 50275 68006</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [210] 86211 83056 20701 65379 59562 19324 60905  6766 57323  4942 65801</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [221] 67221 87803 62865 26164 63245 60643 16079 73359  9093 57075 16588</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [232]  1739 75894 45929 91247 59311 23788 70151 70323 33423   464 64320</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [243] 40128 85488 13190 66685 30908 63411 83560 71639 80399 84845 26753</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [254] 84671 87738 35970 34011  1390 82598  9028 24628 42723 14224 81703</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [265] 34836 29657 25280 12550 75215 80944 80284 37770  6882 85694 38346</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [276] 90471 31376 52069 54988 87897 78998 76651 27374 85450 29163 23948</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [287] 74236 25598 76874 79968 61984 57533 30039 64777 56091 71217 52461</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [298] 53177 43859 39571 13640  9484  2489 77814 13090 63880 42506  8157</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [309] 63989 61926 45634 75978 28731 37595  2757 54467 61730 49093 56739</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [320] 74925 35547 70367 26234 73620 22767 34445 32969 26266 52082 46649</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [331] 15534 63708 44119 58324 67395 59584 54527 55749 31652 75374 36469</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [342] 28621 43984 47507 53460 14612 74172 74880  8656 80359 82826 40433</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [353] 60839 36765  3648 18829 88202 14853 69587 39622 28131 88415 87748</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [364]  4152  1036 44250 45519 10143  3075 34982 57789 82336 87560 53507</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [375] 43248 27221 63495 61058 65662 68995 43118 28207 88115 16290 85916</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [386] 32869 29181 70861 71458 31883 48895 42761 87104 58903 76479 40658</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [397] 75970 27150 74422 54165</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $samples</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 400 features and 8 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 400 features and 4 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431110 ymin: 5337710 xmax: 438550 ymax: 5343210</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431130 ymin: 5337710 xmax: 438550 ymax: 5343230</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       zmean pzabove2  zsd  zq20  zq50  zq70  zq90 type</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 75833  4.50     15.6 2.59  1.86  4.09  5.83  9.27  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 88932  7.91     90.8 3.64  4.54  7.64  9.80 14.10  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 86057  5.19     97.2 1.33  4.22  5.10  5.73  7.48  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9682  15.21     97.8 2.30 13.59 15.22 16.28 18.60  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33601 12.50     80.4 6.18  7.20 12.22 14.63 23.40  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51420 16.08     92.8 6.01  8.78 18.70 20.09 22.20  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 70890  6.75     58.4 3.29  3.25  7.04  8.96 11.80  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26325  6.09     78.0 3.80  2.45  5.22  7.93 13.20  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6976   5.92     67.5 2.67  3.55  5.75  7.07 10.80  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 76654 16.71     90.1 5.72 12.43 19.05 20.22 21.90  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 75833 POINT (435390 5338590)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 88932 POINT (436250 5337830)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 86057 POINT (436590 5337990)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9682  POINT (437330 5342670)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33601 POINT (436630 5341290)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51420 POINT (435790 5340230)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 70890 POINT (433970 5338990)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26325 POINT (436730 5341710)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6976  POINT (432750 5342810)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 76654 POINT (434190 5338530)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        zq90 pzabove2  zsd type               geometry</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9658  12.10     91.8 3.00  new POINT (436210 5342670)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6385  16.60     80.3 4.07  new POINT (435590 5342850)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52173 22.90     87.4 5.22  new POINT (437330 5340190)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27254  6.62      7.6 1.70  new POINT (434810 5341650)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5666  17.20     88.2 3.70  new POINT (435730 5342890)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5075  21.20     81.5 5.83  new POINT (431250 5342910)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29833 10.70     76.7 2.62  new POINT (438230 5341510)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74305 10.40     53.5 2.77  new POINT (434950 5338710)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11404 16.40     91.5 3.14  new POINT (431950 5342550)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51398 21.40     91.2 6.54  new POINT (435350 5340230)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">sample_clhs</span><span class="op">(</span></span>
@@ -302,34 +280,23 @@ on Digital Soil Mapping, Sydney, Australia.</p>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> An access layer has been provided. An internal buffer of 100 m and an external buffer of 300 m have been applied</span>
 <span class="r-plt img"><img src="sample_clhs-2.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 200 features and 8 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 200 features and 4 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431130 ymin: 5337730 xmax: 438510 ymax: 5343150</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431230 ymin: 5337730 xmax: 438410 ymax: 5343210</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       zmean pzabove2  zsd      zq20      zq50      zq70  zq90 type</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13986  6.36     75.4 3.07  3.440000  6.120000  7.920000 11.70  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24484 17.86     90.6 5.75 14.170000 18.719999 22.150000 24.20  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36699  8.27     95.1 2.89  5.950000  8.309999  9.700000 13.10  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34144  4.44     74.7 2.02  2.560000  4.140000  5.370000  8.32  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14069 10.46     86.7 4.25  7.270000 10.750000 12.700000 17.20  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34700  6.11     81.7 2.93  3.680000  5.650000  6.890000 12.50  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20590  8.02     89.8 3.52  5.140000  7.880000  9.429999 15.10  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32686 13.97     98.5 5.17  8.929999 14.509999 17.389999 21.20  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22635  9.25     96.6 3.37  6.590000  8.970000 10.820000 15.00  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33391 16.63     93.8 5.79 14.980000 18.740000 19.900000 21.50  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13986 POINT (432130 5341410)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24484 POINT (436450 5340010)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36699 POINT (432070 5338070)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34144 POINT (437210 5338450)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14069 POINT (434990 5341410)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34700 POINT (436890 5338370)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20590 POINT (434870 5340530)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32686 POINT (435030 5338630)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22635 POINT (435630 5340290)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33391 POINT (431950 5338530)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       zq90 pzabove2  zsd type               geometry</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22861 20.3     97.3 3.36  new POINT (431230 5340250)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9923  17.8     88.3 4.20  new POINT (437010 5341950)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19903 13.9     94.6 3.18  new POINT (432490 5340610)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15528 10.2     72.9 3.24  new POINT (433750 5341230)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6184  15.0     83.4 3.90  new POINT (431410 5342390)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30723 21.8     10.7 6.98  new POINT (435010 5338970)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17527 30.2     92.4 7.65  new POINT (431310 5340930)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6771  13.2     15.9 4.20  new POINT (437750 5342350)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1594  14.0     61.7 4.57  new POINT (434510 5342930)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27347 20.4     95.2 5.84  new POINT (433030 5339490)</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- cost constrained examples ---#</span></span>
 <span class="r-in"><span class="co">#--- calculate distance to access layer for each pixel in mr ---#</span></span>
@@ -347,34 +314,23 @@ on Digital Soil Mapping, Sydney, Australia.</p>
 <span class="r-in">  plot <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-plt img"><img src="sample_clhs-3.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 250 features and 9 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 250 features and 5 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431110 ymin: 5337730 xmax: 438530 ymax: 5343230</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431190 ymin: 5337710 xmax: 438550 ymax: 5343210</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       zmean pzabove2  zsd zq20  zq50      zq70  zq90 dist2access type</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14317  5.38     49.5 2.34 3.10  5.40  6.740000  9.22  467.547127  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 71499  1.65      0.4 0.30 1.39  1.56  1.770000  2.23    2.809495  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15859  7.67     67.6 4.12 4.03  7.15  9.309999 15.30   61.424007  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 80060  9.51     81.9 5.89 2.80 11.11 14.530000 17.30  462.862135  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 89546  6.82     74.8 2.50 4.57  6.96  8.290000 10.70  162.668457  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10712  7.38     86.1 3.28 4.12  7.53  9.480000 12.50  335.001817  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 79706  1.98      5.4 0.62 1.46  1.79  2.210000  2.98    5.055236  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52779 13.45     61.6 6.67 4.47 16.88 18.150000 19.60   18.733164  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 80424 12.88     92.1 6.05 7.01 14.53 17.230000 20.70   81.895134  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 89830  9.33     85.7 3.57 6.45  9.55 11.170000 15.10  722.719196  new</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14317 POINT (438390 5342390)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 71499 POINT (437850 5338950)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15859 POINT (433170 5342290)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 80060 POINT (431350 5338310)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 89546 POINT (434310 5337790)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10712 POINT (438150 5342610)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 79706 POINT (438270 5338350)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52779 POINT (435450 5340150)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 80424 POINT (431930 5338290)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 89830 POINT (432650 5337770)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        zq90 pzabove2  zsd dist2access type               geometry</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25856 19.30     88.9 3.52   275.45034  new POINT (433750 5341730)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61357 11.90     58.2 3.15   323.32117  new POINT (435770 5339630)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40082  8.33     81.1 1.76    55.42389  new POINT (438190 5340910)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64421 11.40     90.4 2.90   441.76624  new POINT (436550 5339450)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 86212 14.10     86.5 3.95   395.93077  new POINT (432270 5337970)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 85412  4.22      5.7 1.05   127.62520  new POINT (438330 5338030)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15459 11.20     67.2 2.93   266.39431  new POINT (432470 5342310)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38088  8.23     84.4 1.67   136.24216  new POINT (438070 5341030)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5795  18.70     84.3 4.52   604.17060  new POINT (438410 5342890)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38722 17.80     82.3 4.35   716.90495  new POINT (437450 5340990)</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">sample_clhs</span><span class="op">(</span></span>
 <span class="r-in">  mraster <span class="op">=</span> <span class="va">mr.c</span>,</span>
@@ -385,34 +341,23 @@ on Digital Soil Mapping, Sydney, Australia.</p>
 <span class="r-in">  plot <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-plt img"><img src="sample_clhs-4.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 250 features and 9 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 250 features and 5 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431150 ymin: 5337770 xmax: 438510 ymax: 5343210</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431110 ymin: 5337710 xmax: 438530 ymax: 5343210</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           zmean pzabove2  zsd  zq20      zq50  zq70  zq90 dist2access</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 85627 12.700000     90.4 6.13  5.91 13.679999 17.23 20.90   15.830653</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41659 12.900000     91.0 3.44 10.95 13.650000 14.82 17.00  771.538601</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18690 10.570000     88.1 5.07  5.26 11.210000 14.06 18.20  495.216004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 73237 10.480000     90.0 3.53  8.22 10.860000 12.45 15.30  132.026190</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 565    4.530000     38.6 2.26  2.66  4.110000  5.22  8.79    6.064777</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53797 14.380000     92.3 4.45 10.66 15.259999 17.43 20.00   16.178613</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 88731 13.290000     91.7 5.13  9.12 14.420000 16.87 19.60   78.705477</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54127  8.559999     91.6 3.36  5.67  8.599999 10.46 13.90  250.980630</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 55258  8.050000     76.3 4.56  4.19  7.150000  9.59 17.80  753.964209</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 74529 15.599999     93.6 3.83 13.07 16.590000 17.96 20.00  147.757456</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       type               geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 85627  new POINT (435310 5338010)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41659  new POINT (437110 5340810)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18690  new POINT (431530 5342130)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 73237  new POINT (432470 5338790)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 565    new POINT (436030 5343210)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53797  new POINT (435290 5340090)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 88731  new POINT (431970 5337830)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54127  new POINT (434910 5340070)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 55258  new POINT (437030 5340010)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 74529  new POINT (434670 5338690)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        zq90 pzabove2  zsd dist2access type               geometry</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10613 12.10     36.7 3.60   160.38096  new POINT (435370 5342610)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34312 17.20     66.0 5.07   315.48663  new POINT (436990 5341250)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59353 16.30     75.0 3.99   247.75949  new POINT (435490 5339750)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73397  8.03     45.4 2.18   121.12550  new POINT (437730 5338790)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43130  9.51     62.4 2.72   416.18138  new POINT (432210 5340710)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76305 17.90     96.0 3.32   376.03038  new POINT (433030 5338550)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73913 22.20     97.8 5.11    56.76625  new POINT (438430 5338750)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45493 15.10     92.0 3.38   125.95340  new POINT (431510 5340570)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61130  7.39     72.6 1.72   137.08803  new POINT (438190 5339650)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38940 12.00     70.8 3.34    25.04479  new POINT (434510 5340970)</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -420,18 +365,11 @@ on Digital Soil Mapping, Sydney, Australia.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by
-<a href="https://scholar.google.ca/citations?user=C_qdYDsAAAAJ&amp;hl=en" class="external-link">Tristan
-RH Goodbody</a>,
-<a href="https://forestry.ubc.ca/faculty-profile/nicholas-coops/" class="external-link">Nicholas
-C Coops</a>,
-<a href="https://www.researchgate.net/profile/Martin-Queinnec" class="external-link">Martin
-Queinnec</a>.</p>
+  <p></p><p>Developed by <a href="https://scholar.google.ca/citations?user=C_qdYDsAAAAJ&amp;hl=en" class="external-link">Tristan RH Goodbody</a>, <a href="https://forestry.ubc.ca/faculty-profile/nicholas-coops/" class="external-link">Nicholas C Coops</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer></div>

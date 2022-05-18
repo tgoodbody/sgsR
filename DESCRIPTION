@@ -1,13 +1,13 @@
 Package: sgsR
 Type: Package
-Version: 1.0.1
+Version: 0.1.1
 License: GPL (>= 3)
 Title: Structurally Guided Sampling in R
 Authors@R: c(
     person(given = "Tristan RH", 
            family = "Goodbody",
            email = "goodbody.t@gmail.com",
-           role = c("aut", "cre","cph"),
+           role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0002-6894-7925")),
     person(given = "Nicholas C", 
            family = "Coops",
@@ -16,7 +16,7 @@ Authors@R: c(
            comment = c(ORCID = "0000-0002-0151-9037")),
     person(given = "Martin",
            family = "Queinnec", 
-           role = "ctb",
+           role = "aut",
            email = "queinnec@mail.ubc.ca", 
            comment = c(ORCID = "0000-0002-2741-1032"))
    )

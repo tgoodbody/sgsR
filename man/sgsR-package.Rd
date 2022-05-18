@@ -25,11 +25,7 @@ Useful links:
 Authors:
 \itemize{
   \item Nicholas C Coops \email{nicholas.coops@ubc.ca} (\href{https://orcid.org/0000-0002-0151-9037}{ORCID})
-}
-
-Other contributors:
-\itemize{
-  \item Martin Queinnec \email{queinnec@mail.ubc.ca} (\href{https://orcid.org/0000-0002-2741-1032}{ORCID}) [contributor]
+  \item Martin Queinnec \email{queinnec@mail.ubc.ca} (\href{https://orcid.org/0000-0002-2741-1032}{ORCID})
 }
 
 }
