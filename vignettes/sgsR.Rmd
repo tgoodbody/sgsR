@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 ## Algorithm structure {#str .unnumbered}
 
-`sgsR` is primarily scripted using the `terra` package to handle raster processing and `sf` package for vector manipulation. Currently, there are 3 primary function verbs that this package uses:
+`sgsR` is primarily scripted using the `tidyverse`, `terra` package to handle raster processing, and `sf` package for vector manipulation. Currently, there are 4 primary function verbs that this package uses:
 
 *   `strat_*` - Stratify verb directs the functions to apply stratification algorithms to the input metrics raster `mraster` and produce stratified raster `sraster` as the output.
 
@@ -26,12 +26,11 @@ knitr::opts_chunk$set(
 
 *   `calculate_*` - Calculate verb directs the functions to perform calculations; values derived from these calculations are used in subsequent processing. Predefined sample analysis algorithms (such as `calculate_representation()`, `calculate_coobs()`) are included. 
 
+*   `extract_*` - Derive raster data for each co-located sample. Includes `extract_metrics()` for deriving `mraster` data, and `extract_strata()` for deriving stratum from `srasters`. Both functions are used internally within `sgsR`.
 
 
 ## Example data {.unnumbered}
-We demonstrate and provide examples of all the functions using the internal data from the package [specify the package]. Use the following code to load the internal data for `mraster` and road `access`. Follow along on your own device to explore different outputs and better comprehend the package functions.
-
-
+We demonstrate and provide examples for functions using `sgsR` internal data. Use the following code to load data for `mraster` and road `access`. Follow along on your own device to explore different outputs and better comprehend the package functions.
 
 ### Metrics rasters - `mraster` {#mrast .unnumbered}
 ```{r,warning=F,message=F}
@@ -60,13 +59,13 @@ terra::plot(access, add = TRUE, col = "black")
 
 ```
 
-From the plot we see the first band (`zmax`) of the `mraster` with the `access` vector overlaid. 
+From the plot output we see the first band (`zq90`) of the `mraster` with the `access` vector overlaid. 
 
 ## Stratified rasters - `sraster` {#srast .unnumbered}
 
-In this tutorial, I am going to demonstrate how to produce basic `sraster` and `existing` sample data, which will be used in the subsequent examples below. 
+In this tutorial, I am going to demonstrate how to produce basic `sraster` and `existing` sample data, which will be used in subsequent examples. 
 
-To produce `sraster`, we will be using the `strat_kmeans()` function. This function uses the kmeans algorithm to stratify the input `mraster`.
+To produce `sraster`, we use `strat_kmeans()`. This function uses a _k_-means algorithm to stratify the input `mraster`.
 
 ```{r,warning=F,message=F}
 #--- apply kmeans algorithm to metrics raster ---#
@@ -76,21 +75,16 @@ sraster <- strat_kmeans(mraster = mraster, # use mraster as input for sampling
 
 ```
 
-After `sraster` is produced, we will be applying the `sample_srs()` function. This function uses an algorithm which will randomly sample points within our `sraster` to produce `existing` sample dataset.
+After `sraster` is produced, use `sample_srs()` to randomly sample points within our `sraster` to produce a sample network output.
 
 ```{r,warning=F,message=F}
-#--- set seed ---#
-set.seed(2021)
-
 #--- apply kmeans algorithm to metrics raster ---#
-existing <- sample_srs(raster = mraster, # use mraster as input for sampling
-                       nSamp = 200, # request 200 samples be taken
-                       mindist = 100, # define that samples must be 100 m apart
-                       plot = TRUE) # algorithm will plot output
+existing <- sample_strat(sraster = sraster, # use mraster as input for sampling
+                         nSamp = 200, # request 200 samples be taken
+                         mindist = 100, # define that samples must be 100 m apart
+                         plot = TRUE) # algorithm will plot output
 
 ```
-
-Following all the previous steps will generate `mraster`, `access`, `sraster` and `existing` datasets. You should expect to see these generated datasets used for all the examples found in this document.
 
 ## `%>%` {#pipe .unnumbered}
 
@@ -109,7 +103,6 @@ existing <- sample_srs(raster = sraster, # use mraster as input for sampling
 
 extract_metrics(mraster = mraster,
                 existing = existing)
-
 
 #--- piped ---#
 strat_kmeans(mraster = mraster, nStrata = 4) %>%
