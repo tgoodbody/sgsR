@@ -33,7 +33,7 @@ jobs:
       - name: Install GDAL on macOS
         if: runner.os == 'macOS'
         run: |
-          brew install geos
+          brew install geos rgdal
 
       - uses: r-lib/actions/setup-pandoc@v1
 
