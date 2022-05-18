@@ -42,7 +42,7 @@ existing <- sample_srs(raster = mraster, # use sraster as input for sampling
 
 ```
 
-A total of 5 `sample` functions currently exist in the package:
+Currently, there are 6 functions associated with the `sample` verb in the `sgsR` package:
 
 *   `sample_srs()` - simple random sampling
 
@@ -50,26 +50,26 @@ A total of 5 `sample` functions currently exist in the package:
 
 *   `sample_strat()` - stratified sampling within a `sraster`
 
-*   `sample_clhs()` - Latin hypercube sampling algorithm
+*   `sample_clhs()` - latin hypercube sampling algorithm
 
 *   `sample_balanced()` - see [BalancedSampling](http://www.antongrafstrom.se/balancedsampling/)
 
-*   `sample_ahels()` - Adapted hypercube evaluation of a legacy sample (ahels) algorithm
+*   `sample_ahels()` - adapted hypercube evaluation of a legacy sample (ahels) algorithm
 
 ## Access {#access .unnumbered}
 
-A feature of the `sample_*` functions is the ability to define `access` corridors. Users can supply a road access network (must be `sf` line objects) and define buffers around `access` where samples should be excluded and included. 
+One key feature of using the `sample_*` functions is its ability to define `access` corridors. Users can supply a road access network (must be `sf` line objects) and define buffers around `access` where samples should be excluded and included. 
 
-Important additional parameters when `access` is provided are:
+Relevant and applicable parameters when `access` is defined are:
 
-* `buff_inner` - An inner buffer that defines the distance from `access` where samples cannot be taken (i.e. if you don't want samples within 50 m of your `access` layer set `buff_inner = 50`). 
+* `buff_inner` - Inner buffer is a parameter that defines the distance from the `access` where samples cannot be taken (i.e. if you don't want samples within 50 m of your `access` layer set `buff_inner = 50`). 
 
-* `buff_outer` - Maximum distance samples can be located from `access` (i.e. if you don't want samples more than 200 meters from your `access` layer set `buff_inner = 200`)
+* `buff_outer` - Outer buffer is a parameter that defines the maximum distance that the samples can be located from `access` (i.e. if you don't want samples more than 200 meters from your `access` layer set `buff_inner = 200`).
 
 ## `sample_srs` {#srs .unnumbered}
-We provided a very simple example of using the `sample_srs()` function in `vignette("sgsR")`. We provide some additional examples below. 
+We have demonstrated a simple example of using the `sample_srs()` function in `vignette("sgsR")`. We will demonstrate additional examples below. 
 
-Notice that the input for `sample_srs()` is `raster`. This means that either `sraster` or an `mraster` are supported.
+The input required for `sample_srs()` is a `raster`. This means that `sraster` and `mraster` are supported for this function.
 
 ```{r,warning=F,message=F} 
 #--- perform simple random sampling ---#
@@ -100,7 +100,7 @@ sample_srs(raster = sraster, # input
 
 ## `sample_systematic` {#systematic .unnumbered}
 
-The `sample_systematic()` function applies systematic sampling across an area where the `cellsize` parameter defines resolution of the tessellation. Tesselation shape options are defined by the `square` parameter, which is a regular grid when `TRUE` (default) and hexagonal when `FALSE`. The location of samples can also be adjusted using the `locations` parameter, where `centers` takes the center, `corners` takes all corners, and `random` takes a random location within each tessellation.
+The `sample_systematic()` function applies systematic sampling across an area, the `cellsize` parameter defines resolution of the tessellation. The tesselation shape can be modified using the `square` parameter. Assigning `TRUE` (default) to the `square` parameter results in regular grids and assigning `False` to the `square` parameter results in hexagonal grids. The location of samples can also be adjusted using the `locations` parameter, where `centers` takes the center, `corners` takes all corners, and `random` takes a random location within each tessellation.
 
 ```{r,warning=F,message=F} 
 #--- perform grid sampling ---#
@@ -130,11 +130,11 @@ sample_systematic(raster = sraster, # input sraster
 ```
 ## `sample_strat` {#sstrat .unnumbered}
 
-The `sample_strat()` function contains a hierarchical sampling algorithm originally developed my Martin Queinnec.
+The `sample_strat()` function contains a hierarchical sampling algorithm, which was originally developed by Martin Queinnec.
 
 _Queinnec, M., White, J. C., & Coops, N. C. (2021). Comparing airborne and spaceborne photon-counting LiDAR canopy structural estimates across different boreal forest types. Remote Sensing of Environment, 262(August 2020), 112510._
 
-The algorithm uses a moving window (`wrow` and `wcol` parameters) to filter the input `sraster` for locations where stratum pixels are spatially grouped rather than dispersed individually across the landscape.
+This algorithm uses moving window (`wrow` and `wcol` parameters) to filter the input `sraster` to obtain locations where the stratum pixels are spatially grouped, rather than the dispersed individuals across the landscape.
 
 The sampling is performed in 2 stages:
 
@@ -151,9 +151,9 @@ sample_strat(sraster = sraster, # input sraster
              plot = TRUE) # plot
 ```
 
-In some cases, a user may wish to include an `existing` sample data set within the algorithm. In order to adjust the total number of samples needed per stratum to reflect those already present in `existing`, we can use the utility function `extract_strata()`.
+In some cases, users might want to include `existing` sample dataset within the algorithm. In order to adjust the total number of samples needed per stratum to reflect those already present in `existing`, we can use the utility function `extract_strata()`.
 
-This function takes an input `sraster` and the `existing` sample data set and extracts the stratum for each sample. These samples can then be input into the `sample_strat()` function which adjusts total required sample per class based on representation in `existing`.
+This function takes the input `sraster` and the `existing` sample dataset and extracts the stratum for each sample. These samples can inputted into the `sample_strat()` function which adjusts total samples required per class based on representation in `existing`.
 
 ```{r,warning=F,message=F} 
 #--- extract strata values to existing samples ---#              
@@ -176,9 +176,9 @@ sample_strat(sraster = sraster, # input sraster
              plot = TRUE) # plot
 ```
 
-The `mindist` parameter defined in the above example specifies the minimum euclidian distance that samples must be apat from one another.
+As seen on the code in the example above, the defined `mindist` parameter specifies the minimum euclidean distance that samples must be apart from one another.
 
-Notice that the sample outputs have `type` and `rule` attributes which outline whether samples are `existing` or `new` and whether `rule1` or `rule2` were used to select individual samples.
+Notice that the sample outputs have `type` and `rule` attributes which outline whether the samples are `existing` or `new` and whether `rule1` or `rule2` were used to select the individual samples.
 
 ```{r,warning=F,message=F} 
 sample_strat(sraster = sraster, # input
@@ -192,13 +192,13 @@ sample_strat(sraster = sraster, # input
              plot = TRUE) # plot
 ```
 
-The `include` parameter determines whether existing samples should be included in the total count of samples defined by `nSamp`. By defaults `include = FALSE`.
+`include` parameter determines whether the existing samples should be included in the total count of samples defined by `nSamp`. By default, the `include` parameter is set as `FALSE`.
 
 ## `sample_clhs` {#clhs .unnumbered}
 
-The `sample_clhs()` function implements conditioned latin hypercube (clhs) sampling functionality.  A number of other functions in the `sgsR` package help to provide guidance on clhs sampling including `calculate_pop()` and `calculate_lhsOpt()`. Be sure to check out those functions for better understanding of how to optimize sample numbers.
+`sample_clhs()` function implements conditioned latin hypercube (clhs) sampling functionality.  A number of other functions in the `sgsR` package help to provide guidance on clhs sampling including `calculate_pop()` and `calculate_lhsOpt()`. Check out these functions to better understand how the sample numbers can be optimized.
 
-Syntax for this function is similar to others shown above, though parameters like `iter`, which define the number of iterations within the Metropolis-Hastings process are important to consider. In these examples we use a low `iter` value because it takes less time to run. Default values for `iter` within the `clhs` package are 10,000.
+The Syntax for this function is similar to others shown above, although parameters like `iter`, which define the number of iterations within the Metropolis-Hastings process are important to consider. In these examples we use a low `iter` value because it takes less time to run. Default values for `iter` within the `clhs` package are 10,000.
 
 ```{r,eval = FALSE} 
 sample_clhs(mraster = mraster, # input
@@ -254,7 +254,7 @@ sample_clhs(mraster = mraster, # input
             plot = TRUE) # plot
 ```
 
-The `cost` parameter defines an `mraster` covariate to be used to constrain the clhs sampling. This could be any number of variables. An example could be the distance a pixel is from road access (see example below), terrain slope, the output from `calculate_coobs()`, or many others.
+`cost` parameter defines the `mraster` covariate, which is used to constrain the clhs sampling. This could be any number of variables. An example could be the distance a pixel is from road access (see example below), terrain slope, the output from `calculate_coobs()`, or many others.
 
 ```{r,warning=F,message=F} 
 #--- cost constrained examples ---#
@@ -303,7 +303,7 @@ sample_clhs(mraster = mr.c, # input
 
 ## `sample_balanced` {#balanced .unnumbered}
 
-The `sample_balanced()` algorithm performs the balanced sampling methodology from the [`stratifyR / SamplingBigData`](http://www.antongrafstrom.se/balancedsampling/) packages.
+The `sample_balanced()` algorithm performs a balanced sampling methodology from the [`stratifyR / SamplingBigData`](http://www.antongrafstrom.se/balancedsampling/) packages.
 
 ```{r,warning=F,message=F} 
 sample_balanced(mraster = mraster, # input
@@ -322,8 +322,7 @@ sample_balanced(mraster = mraster, # input
 
 ## `sample_ahels` {#ahels .unnumbered}
 
-The `sample_ahels()` function performs the adapted Hypercube Evaluation of a Legacy Sample (ahels) algorithm using
-`existing` sample data and an `mraster`. New samples are allocated based on quantile ratios between the `existing` sample and `mraster` covariate dataset.
+The `sample_ahels()` function performs the adapted Hypercube Evaluation of a Legacy Sample (ahels) algorithm using`existing` sample data and an `mraster`. New samples are allocated based on quantile ratios between the `existing` sample and `mraster` covariate dataset.
 
 This algorithm:
 
@@ -333,7 +332,7 @@ This algorithm:
 
 3. Prioritizes sampling within those quantile to improve representation.
 
-To use the function, the user will first specify the number of quantiles (`nQuant`) followed by either the `nSamp` (total number of desired samples to be added) or `threshold` (proportional representation between sample and covariate quantiles - default is 0.9) parameters. Its recommended to use `threshold` values at or below 0.9 as higher values can currently cause the algorithm to add samples repeatedly.
+To use this function, user must first specify the number of quantiles (`nQuant`) followed by either the `nSamp` (total number of desired samples to be added) or the `threshold` (proportional representation between the sample and the ecovariate quantiles - default is 0.9) parameters. We recommended you setting the `threshold` values at or below 0.9 as higher values might cause the algorithm to add samples repeatedly.
 
 ```{r,eval = FALSE}
 sample_ahels(mraster = mraster, 
@@ -350,9 +349,9 @@ s <- sample_ahels(mraster = mraster,
 s
 ```
 
-Notice that no `threshold`, `nSamp`, or `nQuant` were defined. Thats because defaults are `threshold = 0.9` and `nQuant = 10`.
+Notice that no `threshold`, `nSamp`, or `nQuant` were defined. That is because the default setting for `threshold = 0.9` and `nQuant = 10`.
 
-The first matrix output shows the quantile ratios between sample and covariates. A value of 1.0 means that samples and covariates are equally represented. Values above 1.0 are over represented in the sample, less than 1 under represented in the sample.
+The first matrix output shows the quantile ratios between the sample and the covariates. A value of 1.0 indicates that the samples and the covariates are equally represented. Values above 1.0 indicates over representation of the sample, while less than the value 1.0 indicates under representation of the sample.
 
 ```{r,eval = FALSE}
 sample_ahels(mraster = mraster, 
@@ -375,4 +374,4 @@ s <- sample_ahels(mraster = mraster,
 ```{r,echo=FALSE}
 s
 ```
-Note that the total number of samples is 500. This is the total of existing samples (200) and the number defined by `nSamp = 300`.
+Notice that the total number of samples is 500. This value is the sum of existing samples (200) and number of samples defined by `nSamp = 300`.

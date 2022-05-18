@@ -43,9 +43,10 @@ existing <- sample_srs(raster = sraster, # use sraster as input for sampling
 
 ```
 
-Fundamental to many structurally guided sampling approaches is the use of stratification methods that allow for more effective and representative sampling protocols. Below I define the stratification methods that are included thus far in `sgsR` and provide some worked examples for each.
+Fundamental to many structurally guided sampling approaches is the use of stratification methods that allow for more effective and representative sampling protocols. Below, I will identify the stratification methods that are included in `sgsR` and demonstrate some worked examples for each functions. 
 
-A total of 6 `strat` functions currently exist in the package:
+
+Currently, there are 5 functions associated with the `strat` verb in the `sgsR` package:
 
 *   `strat_kmeans()` - kmeans stratification
 
@@ -59,7 +60,7 @@ A total of 6 `strat` functions currently exist in the package:
 
 ## `strat_kmeans` {#kmeans .unnumbered}
 
-We provide a preliminary example of the `strat_kmeans()` algorithm to prepare our `sraster` input data but here are a few more.
+We will demonstrate a preliminary example of using the `strat_kmeans()` algorithm to prepare our `sraster` input data and provide additional examples below.
 
 ```{r,warning=F,message=F}
 #--- perform stratification using k-means ---#
@@ -68,7 +69,7 @@ strat_kmeans(mraster = mraster, # input
 
 ```
 
-Notice that nothing plotted... That's because `plot = FALSE` is the default for all functions in `sgsR`. See examples below where `plot = TRUE`.
+Notice that the code above did not plot anything. This is because `plot = FALSE` is set as the default for all functions in the `sgsR` package. Below, we will demonstrate examples where the `plot = TRUE` was set. 
 
 ```{r,warning=F,message=F}
 strat_kmeans(mraster = mraster, # input
@@ -91,7 +92,7 @@ strat_kmeans(mraster = mraster, # input
 
 ## `strat_quantiles` {.unnumbered}
 
-The `strat_quantiles()` algorithm divides data into equally sized strata (`nStrata`). Similar to `strat_breaks()`, the algorithm allows for stratification on a single `mraster`, or the user can supply a secondary mraster (`mraster2`) and specify the associated number of desired strata (`nStrata2`). The dual stratification output will always result in the product of $nStrata * nStrata2$.
+The `strat_quantiles()` algorithm divides data into equally sized strat (`nStrata`). Similar to the `strat_breaks()` function, the (quantile) algorithm have the capability to perform stratification on a single `mraster`; users can also input a secondary mraster (`mraster2`) and specify the number associated with the desired strata (`nStrata2`). Note that the dual stratification output will result in a product of $nStrata * nStrata2$ everytime.
 
 ```{r,warning=F,message=F}
 #--- perform quantiles stratification ---#
@@ -107,7 +108,8 @@ strat_quantiles(mraster = mraster$zq90,
 ```
 ## `strat_breaks` {.unnumbered}
 
-The `strat_breaks()` function stratifies data based on user-defined breaks in covariates. A single `metric` can be defined or an additional `metric2` can be supplied. `breaks` and `breaks2` correspond to the user-defined breaks for `metric` and `metric2` respectively.
+`strat_breaks()` function stratifies the data based on the breaks in covariates that the user defines. Either single `metric` can be defined or additional `metric2` can also be defined. `breaks` and `breaks2` coincide with  the user defined breaks for `metric` and `metric2` respectively. 
+
 
 ```{r,warning=F,message=F}
 #--- perform stratification using user-defined breaks ---#
@@ -128,7 +130,7 @@ breaks2
 
 ```
 
-Once the breaks have been created we can input them into the function using the `breaks` and `breaks2` parameters.
+Once the breaks are created, we can use them as input into the `strat_breaks` function using the `breaks` and `breaks2` parameters. 
 
 ```{r,warning=F,message=F}
 #--- stratify on 1 metric only ---#
@@ -148,9 +150,9 @@ strat_breaks(mraster = mraster$zq90,
 
 ## `strat_poly` {.unnumbered}
 
-The `strat_poly()` algorithm stratifies based on spatial polygon attributes and features. A user may wish to stratify based on categorical or empirical variables that are not given by ALS data (e.g. species from forest inventory polygons). This method allows the user to define the attribute of interest as well as how features within attributes should be grouped for stratification.
+The `strat_poly()` algorithm stratifies the input based on spatial polygon attributes and features. Users might want to stratify based on categorical or empirical variables that are not available through ALS data (e.g. species from forest inventory polygons). This function allows the user to define the attribute of interest as well as how the features within the attribute are to be grouped for stratification. 
 
-The user defines the input `poly` and associated `attribute`. A `raster` layer must be provided as a guide for spatial extent and resolution for the output stratification polygon. Based on a vector or list of `features`, stratification is applied, and the polygon is rasterized into appropriate strata.
+Users define the input `poly` and its associated `attribute`. A `raster` layer must be defined to guide the spatial extent and resolution for the output stratification polygon. Based on the vector or list of `features`, stratification is applied and the polygon is rasterized into its appropriate strata. 
 
 ```{r}
 #--- load in polygon coverage ---#
@@ -159,7 +161,7 @@ poly <- system.file("extdata", "inventory_polygons.shp", package = "sgsR")
 fri <- sf::st_read(poly)
 ```
 
-The `attribute` column must be defined, while the `features` within must be specified to define the number and composition of the output strata. In the case below the `attribute = "NUTRIENTS"` and features within `NUTRIENTS` (poor, rich, medium) will define the 3 desired output classes.
+`attribute` column must be defined and the `features` (within the `attribute`) must be specified to define the numbers and the composition of the output strata. In our demonstration below, `attribute = "NUTRIENTS"` and features within `NUTRIENTS` (poor, rich, medium) will define the 3 desired output classes.   
 
 ```{r}
 #--- stratify polygon coverage ---#
@@ -179,7 +181,8 @@ srasterpoly <- strat_poly(poly = fri, # input polygon
                           plot = TRUE) # plot output
 ```
 
-`features` can also be made to amalgamate classes. In the example below `rich` and `medium` features are combined while `low` is left alone. The 2 vectors are then added to a list, which outputs 2 classes (low & rich/medium).
+`features` can be converted into amalgamated classes. In our demonstration below, `rich` and `medium` features are combined together, while `low` is left unattended. The 2 vectors are specified into a list, which will result in the output of 2 classes (low & rich/medium).  
+
 
 ```{r}
 #--- or as multiple lists ---#
@@ -196,13 +199,13 @@ strat_poly(poly = fri,
            details = TRUE)
 ```
 
-You will notice that the `details` parameter is present above. This returns the output `outRaster`, the `$lookUp` table associated with the strata, and the polygon (`$poly`) created to drive the stratification based on attribute and features provided by the users. 
+You might have noticed that the `details` parameter was present in the demonstration code above. `details` parameter returns the output `outRaster`, the `$lookUp` table associated with the strata, and the polygon (`$poly`) is created to drive the stratification based on attributes and features specified by the users. 
 
 ## `strat_map` {.unnumbered}
 
-There may be an instance where multiple levels of stratification are desired. For instance a user may want to combine the output from `strat_poly()` above with 3 classes, with the 4 class kmeans stratification `kmeans`.
+There are situations where multiple levels of stratification is sought-after. For instance, the user might want to combine the output from `strat_poly()` (see the demonstration above) with 3 classes, with the 4 class kmeans stratification `kmeans`. 
 
-The total number of classes will always be the multiplicative of the number of strata. i.e. if `sraster` has 3 strata and `sraster2` has 4 strata the output of `strat_map()` will be 12 strata total.
+The total number of classes of the output is multiplicative of the number of the strata. For example, if `sraster` has 3 strata and `sraster2` has 4 strata, then the output of `strat_map()` will be 12 strata in total. 
 
 ```{r}
 #--- map srasters ---#
@@ -212,12 +215,12 @@ strat_map(sraster = srasterpoly, # strat_poly 3 class stratification
 
 ```
 
-The convention for the numeric value of output strata is the concatenation (merging) of sraster strata and sraster2 strata. See `$lookUp` for a clear depiction of this.
+The convention for the numeric value of the output strata is the concatenation (merging) of `sraster` strata and `sraster2` strata. Check `$lookUP` for a clear depiction of this step. 
 
 ```{r}
 strat_map(sraster = srasterpoly, # strat_poly 3 class stratification
           sraster2 = sraster, # strat_poly 3 class stratification
-          stack = TRUE, # stack input and oputput strata into multi layer ouput raster
+          stack = TRUE, # stack input and output strata into multi layer output raster
           details = TRUE, # provide additional details
           plot = TRUE) # plot output
 ```

@@ -18,16 +18,20 @@ knitr::opts_chunk$set(
 
 ## Algorithm structure {#str .unnumbered}
 
-`sgsR` has been scripted primarily using the `terra` package for raster processing and the `sf` package for vector manipulation. There are 3 primary function verbs that the package currently uses:
+`sgsR` is primarily scripted using the `terra` package to handle raster processing and `sf` package for vector manipulation. Currently, there are 3 primary function verbs that this package uses:
 
-*   `strat_*` - The stratify verb implies that functions are applying stratification algorithms to an input metrics raster `mraster` and output a stratified raster `sraster`.
+*   `strat_*` - Stratify verb directs the functions to apply stratification algorithms to the input metrics raster `mraster` and produce stratified raster `sraster` as the output.
 
-*   `sample_*` - The sample verb implies that functions are extracting samples from `srasters` produced from `strat_*` functions. A few algorithms (e.g. `sample_srs()`, `sample_balanced()`, `sample_systematic()`) are able to take `mrasters` as inputs as they are not dependent on stratified inputs for sampling.
+*   `sample_*` - Sample verb directs the functions to extract samples from `srasters`, which is produced from `strat_*` functions. Few algorithms (such as `sample_srs()`, `sample_balanced()`, `sample_systematic()`) are capable of using `mrasters` as the input because those algorithms do not depend on stratified inputs for sampling.  
 
-*   `calculate_*` - The calculate verb implies that functions are performing calculations to be used in consequent processing. The use of predefined sample analysis algorithms `calculate_representation()`, `calculate_coobs()` are also included.
+*   `calculate_*` - Calculate verb directs the functions to perform calculations; values derived from these calculations are used in subsequent processing. Predefined sample analysis algorithms (such as `calculate_representation()`, `calculate_coobs()`) are included. 
+
+
 
 ## Example data {.unnumbered}
-Worked examples of all functions are provided using data internal to the package. To load internal `mraster` and road `access` data we use the following code. Follow along on your own machine to see more outputs and get a better sense of how the package functions.
+We demonstrate and provide examples of all the functions using the internal data from the package [specify the package]. Use the following code to load the internal data for `mraster` and road `access`. Follow along on your own device to explore different outputs and better comprehend the package functions.
+
+
 
 ### Metrics rasters - `mraster` {#mrast .unnumbered}
 ```{r,warning=F,message=F}
@@ -60,9 +64,9 @@ From the plot we see the first band (`zmax`) of the `mraster` with the `access` 
 
 ## Stratified rasters - `sraster` {#srast .unnumbered}
 
-For the purposes of this tutorial I am also going to show how to produce a basic `sraster` and `existing` sample data that we will used in examples below. 
+In this tutorial, I am going to demonstrate how to produce basic `sraster` and `existing` sample data, which will be used in the subsequent examples below. 
 
-To make the `sraster` we will use the `strat_kmeans()` function where the input `mraster` will be stratified using a kmeans algorithm.
+To produce `sraster`, we will be using the `strat_kmeans()` function. This function uses the kmeans algorithm to stratify the input `mraster`.
 
 ```{r,warning=F,message=F}
 #--- apply kmeans algorithm to metrics raster ---#
@@ -72,7 +76,7 @@ sraster <- strat_kmeans(mraster = mraster, # use mraster as input for sampling
 
 ```
 
-After the `sraster` is produced we apply the `sample_srs()` algorithm which randomly samples points within our `sraster` to produce an `existing` sample dataset.
+After `sraster` is produced, we will be applying the `sample_srs()` function. This function uses an algorithm which will randomly sample points within our `sraster` to produce `existing` sample dataset.
 
 ```{r,warning=F,message=F}
 #--- set seed ---#
@@ -86,11 +90,11 @@ existing <- sample_srs(raster = mraster, # use mraster as input for sampling
 
 ```
 
-We now have `mraster`, `access`, `sraster` and `existing` data sets generated. Expect to see these data used in the all examples in this document.
+Following all the previous steps will generate `mraster`, `access`, `sraster` and `existing` datasets. You should expect to see these generated datasets used for all the examples found in this document.
 
 ## `%>%` {#pipe .unnumbered}
 
-The sgsR package leverages the `%>%` operator from the `magrittr` package. This allows us to "pipe" operations together to save in the amount of code needed to achieve an outcome. A simple example below.
+The sgsR package leverages the `%>%` operator from the `magrittr` package. This allows us to "pipe" operations together to save in the amount of code needed to achieve an outcome. A simple example is demonstrated below.
 
 ```{r pipe, eval= FALSE}
 #--- non piped ---#
