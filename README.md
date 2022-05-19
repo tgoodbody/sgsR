@@ -25,7 +25,7 @@ devtools::install_github("https://github.com/tgoodbody/sgsR")
 library(sgsR)
 ```
 
-## Basic example usage :chart_with_upwards_trend:
+## Example usage :chart_with_upwards_trend:
 
 ``` r
 #--- Load mraster files ---#
