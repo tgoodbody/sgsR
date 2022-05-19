@@ -38,10 +38,10 @@ library(sgsR)
 library(terra)
 library(sf)
 
-#--- Load mraster and access files ---#
+#--- Load mraster from internal data ---#
 r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 
-#--- load the mraster using the terra package ---#
+#--- load mraster using the terra package ---#
 mraster <- terra::rast(r)
 ```
 
@@ -78,7 +78,7 @@ sraster <- strat_kmeans(mraster = mraster, # use mraster as input for sampling
 After `sraster` is produced, use `sample_srs()` to randomly sample points within our `sraster` to produce a sample network output.
 
 ```{r,warning=F,message=F}
-#--- apply kmeans algorithm to metrics raster ---#
+#--- apply stratified sampling ---#
 existing <- sample_strat(sraster = sraster, # use mraster as input for sampling
                          nSamp = 200, # request 200 samples be taken
                          mindist = 100, # define that samples must be 100 m apart

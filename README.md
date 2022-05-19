@@ -5,6 +5,7 @@
 
 <!-- badges: start -->
 
+![license](https://img.shields.io/badge/Licence-GPL--3-blue.svg)
 [![R-CMD-check](https://github.com/tgoodbody/sgsR/workflows/R-CMD-check/badge.svg)](https://github.com/tgoodbody/sgsR/actions)
 <!-- badges: end -->
 
@@ -13,7 +14,7 @@ for enhanced forest inventories. The package was designed to function
 using rasterized airborne laser scanning (ALS; Lidar) metrics to allow
 for stratification of forested areas based on structure.
 
-## Installation
+## Installation :computer:
 
 You can install the released version of sgsR from
 [Github](https://github.com/tgoodbody/sgsR) with:
@@ -24,17 +25,44 @@ devtools::install_github("https://github.com/tgoodbody/sgsR")
 library(sgsR)
 ```
 
-## Implementation
+## Basic example usage :chart_with_upwards_trend:
 
--   Describe package fundamentals - `vignette("sgsR")`
+``` r
+#--- Load mraster files ---#
+r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 
--   Overview of sampling algorithms - `vignette("sampling")`
+#--- load the mraster using the terra package ---#
+mraster <- terra::rast(r)
 
--   Overview of stratification algorithms - `vignette("stratification")`
+#--- apply kmeans algorithm to mraster ---#
+sraster <- strat_kmeans(mraster = mraster, # use mraster as input for sampling
+                        nStrata = 4, # algorithm will produce 4 strata
+                        plot = TRUE) # algorithm will plot output
+                        
+#--- apply stratified sampling ---#
+existing <- sample_strat(sraster = sraster, # use mraster as input for sampling
+                         nSamp = 200, # request 200 samples be taken
+                         mindist = 100, # define that samples must be 100 m apart
+                         plot = TRUE) # algorithm will plot output
+```
 
--   Overview of calculate algorithms - `vignette("calculating")`
+## Vignettes :books:
 
-## Collaborators
+Check out [the online
+documentation](https://tgoodbody.github.io/sgsR/index.html) to see how
+`sgsR` functions and how you might use it for your work!
+
+Vignettes include:
+
+-   Package fundamentals - `vignette("sgsR")`
+
+-   Sampling algorithms - `vignette("sampling")`
+
+-   Stratification algorithms - `vignette("stratification")`
+
+-   Calculate algorithms - `vignette("calculating")`
+
+## Collaborators :woman: :man:
 
 We are thankful for continued collaboration with academic, private
 industry, and government institutions to help improve `sgsR`. Special
@@ -53,7 +81,7 @@ thanks to to:
 | [Jean-Francois Prieur](https://www.researchgate.net/scientific-contributions/Jean-Francois-Prieur-2142960944) | Université de Sherbrooke                                                |
 | [Murray Woods](https://www.researchgate.net/profile/Murray-Woods)                                             | Ontario Ministry of Natural Resources                                   |
 
-## Funding
+## Funding :raised_hands:
 
 Development of sgsR was made possible thanks to the financial support of
 the [Canadian Wood Fibre Centre’s Forest Innovation
