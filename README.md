@@ -25,7 +25,7 @@ devtools::install_github("https://github.com/tgoodbody/sgsR")
 library(sgsR)
 ```
 
-## Example usage :chart_with_upwards_trend:
+## Example usage :chart\_with\_upwards\_trend:
 
 ``` r
 #--- Load mraster files ---#
@@ -35,15 +35,15 @@ r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 mraster <- terra::rast(r)
 
 #--- apply kmeans algorithm to mraster ---#
-sraster <- strat_kmeans(mraster = mraster, # use mraster as input for sampling
-                        nStrata = 4, # algorithm will produce 4 strata
-                        plot = TRUE) # algorithm will plot output
+sraster <- strat_kmeans(mraster = mraster, # use mraster as input for stratification
+                        nStrata = 4, # produce 4 strata
+                        plot = TRUE) # plot output
                         
 #--- apply stratified sampling ---#
-existing <- sample_strat(sraster = sraster, # use mraster as input for sampling
-                         nSamp = 200, # request 200 samples be taken
-                         mindist = 100, # define that samples must be 100 m apart
-                         plot = TRUE) # algorithm will plot output
+existing <- sample_strat(sraster = sraster, # use sraster as input for sampling
+                         nSamp = 200, # request 200 samples
+                         mindist = 100, # samples must be 100 m apart
+                         plot = TRUE) # plot output
 ```
 
 ## Vignettes :books:
@@ -81,7 +81,7 @@ thanks to to:
 | [Jean-Francois Prieur](https://www.researchgate.net/scientific-contributions/Jean-Francois-Prieur-2142960944) | Université de Sherbrooke                                                |
 | [Murray Woods](https://www.researchgate.net/profile/Murray-Woods)                                             | Ontario Ministry of Natural Resources                                   |
 
-## Funding :raised_hands:
+## Funding :raised\_hands:
 
 Development of sgsR was made possible thanks to the financial support of
 the [Canadian Wood Fibre Centre’s Forest Innovation
