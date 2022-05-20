@@ -205,13 +205,9 @@ calculate_coobs <- function(mraster,
 
   if (isTRUE(plot)) {
 
-    #--- apply colour scheme ---#
-
-    cols <- RColorBrewer::brewer.pal(7, "Spectral")
-
     #--- plot ---#
 
-    terra::plot(rc, col = cols)
+    terra::plot(rc)
     terra::plot(existing, add = TRUE)
   }
 

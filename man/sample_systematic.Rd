@@ -97,14 +97,6 @@ sample_systematic(
 sample_systematic(
   raster = sr,
   cellsize = 1000,
-  access = ac,
-  buff_inner = 50,
-  buff_outer = 200
-)
-
-sample_systematic(
-  raster = sr,
-  cellsize = 1000,
   square = FALSE,
   location = "random"
 )

@@ -112,8 +112,8 @@ strat_poly <- function(poly,
 
   #--- subset inventory polygon ---#
 
-  if (any(!glue::glue("{attribute}") %in% names(poly))) {
-    stop(glue::glue("poly does not have a layer named {attribute}"))
+  if (!any(grepl(attribute, names(poly)))) {
+    stop(paste0("'poly' does not have a layer named ", attribute))
   }
 
   #--- check that features are not duplicated across proposed attribute classes ---#
@@ -127,13 +127,13 @@ strat_poly <- function(poly,
   unFeatObjs <- unFeat[duplicated(unFeat)]
 
   if (length(unFeatObjs) > 0) {
-    stop(glue::glue("{unFeatObjs*}", .transformer = collapse_transformer(sep = ", ", last = " and ")), ". Are duplicated in 'features'.")
+    stop(paste(c("Repeated within 'features':", unFeatObjs), collapse = " "))
   }
 
   #--- begin polygon manipulation ---#
 
   poly <- poly %>%
-    dplyr::select(glue::glue("{attribute}"))
+    dplyr::select(!!attribute)
 
   #--- generate number of groups ---#
 
@@ -152,7 +152,8 @@ strat_poly <- function(poly,
   #--- create new column with mutated values based on features and associated group ---#
 
   poly <- poly %>%
-    dplyr::mutate(strata = dplyr::case_when(!!!rlang::parse_exprs(glue::glue('{attribute} %in% "{lookUp$features}" ~ "{lookUp$strata}"')))) %>%
+    dplyr::rename(features = attribute) %>%
+    dplyr::left_join(lookUp, by = "features") %>%
     na.omit() %>%
     terra::vect()
 
@@ -191,22 +192,5 @@ strat_poly <- function(poly,
     #--- just output raster ---#
 
     return(outpolyrast)
-  }
-}
-
-#--- glue transformer internal to strat_poly() ---#
-
-collapse_transformer <- function(regex = "[*]$", ...) {
-  function(text, envir) {
-    collapse <- grepl(regex, text)
-    if (collapse) {
-      text <- sub(regex, "", text)
-    }
-    res <- glue::identity_transformer(text, envir)
-    if (collapse) {
-      glue::glue_collapse(res, ...)
-    } else {
-      res
-    }
   }
 }

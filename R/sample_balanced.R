@@ -220,7 +220,7 @@ sample_balanced <- function(mraster,
     }
 
     if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(glue::glue("{filename} already exists and overwrite = FALSE"))
+      stop(paste0("'",filename, "' already exists and overwrite = FALSE"))
     }
 
     sf::st_write(samples, filename, delete_layer = overwrite)

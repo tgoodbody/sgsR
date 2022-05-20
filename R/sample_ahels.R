@@ -192,7 +192,7 @@ sample_ahels <- function(mraster,
   #--- Rearrange columns ---#
 
   samples <- samples %>%
-    dplyr::select(X, Y, n, type, tidyselect::everything())
+    dplyr::select(X, Y, n, type, names(mraster))
 
   #--- Create data hypercube of existing samples to compare with mraster data ---#
 
@@ -239,7 +239,7 @@ sample_ahels <- function(mraster,
       stop("'nSamp' must be type numeric", call. = FALSE)
     }
 
-    message(glue::glue("nSamp of {nSamp} has been provided. Samples will be added until this number is reached or until sampling ratios are all >= 1"))
+    message(paste0("nSamp of ", nSamp, " has been provided. Samples will be added until this number is reached or until sampling ratios are all >= 1"))
 
     while (newSamp != 0) {
 
@@ -256,7 +256,7 @@ sample_ahels <- function(mraster,
       
       if(length(repRankUnder) == 0){
         
-        message(glue::glue("Sampling ratios are all >= 1. A total of {sTot} samples were added."))
+        message(paste0("Sampling ratios are all >= 1. A total of ", sTot, " samples were added."))
         
         break
       }
@@ -344,7 +344,7 @@ sample_ahels <- function(mraster,
       underRep <- cbind(underRep, which(ratio < 1))
     }
   } else {
-    message(glue::glue("Threshold of {threshold} has been provided. Samples will be added until sampling ratios are >= {threshold}."))
+    message(paste0("Threshold of ", threshold, " provided. Samples will be added until sampling ratios are >= ", threshold, "."))
 
     ### --- If 'nSamp' is not provided a threshold is used ---###
 
@@ -442,7 +442,7 @@ sample_ahels <- function(mraster,
     }
   }
 
-  message(glue::glue("A total of {sTot} new samples added"))
+  message(paste0("A total of ", sTot, " new samples added."))
 
   #--- convert coordinates to a spatial points object ---#
   samples <- samples %>%
@@ -464,7 +464,7 @@ sample_ahels <- function(mraster,
     }
 
     if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(glue::glue("{filename} already exists and overwrite = FALSE"))
+      stop(paste0("'",filename, "' already exists and overwrite = FALSE"))
     }
 
     sf::st_write(samples, filename, delete_layer = overwrite)

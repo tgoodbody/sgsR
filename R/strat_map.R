@@ -123,13 +123,17 @@ strat_map <- function(sraster,
     stop("'sraster2' must only contain 1 layer. Please subset the layer you would like to use for mapping.")
   }
 
-  if (!stringr::str_detect(names(sraster), "strata")) {
-    stop("A layer name containing 'strata' does not exist within 'sraster'.")
-  }
+  suppressWarnings(
+    if (!grepl("strata", names(sraster))) {
+      stop("A layer name containing 'strata' does not exist within 'sraster'.")
+    }
+  )
 
-  if (!stringr::str_detect(names(sraster2), "strata")) {
-    stop("A layer name containing 'strata' does not exist within 'sraster2'.")
-  }
+  suppressWarnings(
+    if (!grepl("strata", names(sraster2))) {
+      stop("A layer name containing 'strata' does not exist within 'sraster'.")
+    }
+  )
 
   #--- check that extents and resolutions of sraster and sraster2 match ---#
 
@@ -151,7 +155,7 @@ strat_map <- function(sraster,
   oclass <- featuresJoin %>%
     dplyr::group_by(strata, strata2) %>%
     #--- ensure NA's are transfered ---#
-    dplyr::mutate(stratamapped = ifelse(is.na(strata) | is.na(strata2), NA, glue::glue("{strata}{strata2}")))
+    dplyr::mutate(stratamapped = ifelse(is.na(strata) | is.na(strata2), NA, paste0(strata,strata2)))
 
   #--- create lookUp table ---#
 

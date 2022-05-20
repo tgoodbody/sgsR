@@ -58,39 +58,16 @@ e <- sf::st_read(e)
 #--- perform grid sampling ---#
 calculate_allocation(
   sraster = sr,
-  nSamp = 200
+  nSamp = 50
 )
 
 calculate_allocation(
   sraster = sr,
-  nSamp = 200,
+  nSamp = 50,
   force = TRUE
 )
 
-#--- extract strata from existing samples ---#
-e.sr <- extract_strata(
-  sraster = sr,
-  existing = e
-)
 
-calculate_allocation(
-  sraster = sr,
-  nSamp = 200,
-  existing = e.sr
-)
-
-#--- Load mraster for optimal allocation ---#
-mr <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
-mr <- terra::rast(mr)
-
-calculate_allocation(
-  sraster = sr,
-  nSamp = 200,
-  existing = e.sr,
-  allocation = "optim",
-  mraster = mr$zq90,
-  force = TRUE
-)
 }
 \references{
 Gregoire, T.G., & Valentine, H.T. (2007). Sampling Strategies for Natural Resources and the Environment (1st ed.).

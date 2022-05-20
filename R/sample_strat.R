@@ -29,63 +29,15 @@
 #' r <- system.file("extdata", "kmeans.tif", package = "sgsR")
 #' sr <- terra::rast(r)
 #'
-#' a <- system.file("extdata", "roads.shp", package = "sgsR")
-#' ac <- sf::st_read(a)
-#'
-#' e <- system.file("extdata", "existing.shp", package = "sgsR")
-#' e <- sf::st_read(e)
 #'
 #' #--- perform stratified sampling random sampling ---#
-#' sample_strat(
+#' sraster <- sample_strat(
 #'   sraster = sr,
-#'   nSamp = 200,
+#'   nSamp = 50,
 #'   plot = TRUE
 #' )
 #'
-#' #--- perform stratified sampling random sampling ---#
-#' sample_strat(
-#'   sraster = sr,
-#'   nSamp = 200,
-#'   plot = TRUE,
-#'   force = TRUE
-#' )
-#'
-#' #--- extract strata values to existing samples ---#
-#' e.sr <- extract_strata(sraster = sr, existing = e)
-#'
-#' sample_strat(
-#'   sraster = sr,
-#'   nSamp = 200,
-#'   access = ac,
-#'   existing = e.sr,
-#'   mindist = 200,
-#'   buff_inner = 50,
-#'   buff_outer = 200
-#' )
-#'
-#' sample_strat(
-#'   sraster = sr,
-#'   nSamp = 200,
-#'   access = ac,
-#'   buff_inner = 50,
-#'   buff_outer = 200,
-#'   filename = tempfile(fileext = ".shp")
-#' )
-#'
-#' #--- Load mraster for optimal allocation ---#
-#' mr <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
-#' mr <- terra::rast(mr)
-#'
-#' sample_strat(
-#'   sraster = sr,
-#'   nSamp = 200,
-#'   allocation = "optim",
-#'   mraster = mr$zq90,
-#'   access = ac,
-#'   buff_inner = 50,
-#'   buff_outer = 200,
-#'   filename = tempfile(fileext = ".shp")
-#' )
+#' 
 #' @author Tristan R.H. Goodbody & Martin Queinnec
 #'
 #' @note
@@ -316,7 +268,7 @@ sample_strat <- function(sraster,
     s <- as.numeric(toSample[i, 1])
     n <- as.numeric(toSample[i, 2])
 
-    message(glue::glue("Processing strata : {s}"))
+    message(paste0("Processing strata : ", s))
 
     #--- if the number of samples required is equal to zero (if `include == TRUE`) just keep existing samples only ---#
     if (n == 0) {
@@ -333,7 +285,7 @@ sample_strat <- function(sraster,
         }
       }
 
-      message(glue::glue("Strata : {s} required no sample additions. Keeping all existing samples."))
+      message(paste0("Strata : ", s, " required no sample additions. Keeping all existing samples."))
     } else if (n > 0) {
       #--- mask for individual strata ---#
 
@@ -355,7 +307,7 @@ sample_strat <- function(sraster,
 
         if (sampAvail > n) {
           message(
-            glue::glue("Buffered area contains {sampAvail} available candidates. Sampling to reach {n} samples starting.")
+            paste0("Buffered area contains ", sampAvail, " available candidates. Sampling to reach ", n, " starting.")
           )
 
           #--- rename to original strata sraster that will be used for sampling ---#
@@ -533,7 +485,7 @@ sample_strat <- function(sraster,
         #--- sample total needed from existing ---#
         need <- as.numeric(toSample[i, 3])
 
-        message(glue::glue("'include = TRUE & remove = TRUE' - Stratum {s} overrepresented - {abs(n)} samples removed."))
+        message(paste0("'include = TRUE & remove = TRUE' - Stratum ", s, " overrepresented - ",abs(n), " samples removed."))
 
         add_strata <- addSamples %>%
           dplyr::filter(strata == s) %>%
@@ -544,7 +496,7 @@ sample_strat <- function(sraster,
         add_strata$type <- "existing"
         add_strata$rule <- "existing"
       } else {
-        message(glue::glue("'include = TRUE & remove = FALSE' - Stratum {s} overrepresented by {abs(n)} samples but have not been removed. Expect a higher total 'nSamp' in output"))
+        message(paste0("'include = TRUE & remove = FALSE' - Stratum ", s, " overrepresented by ",abs(n), " samples but have not been removed. Expect a higher total 'nSamp' in output"))
         #--- keep over represented samples in dataset ---#
         add_strata <- addSamples %>%
           dplyr::filter(strata == s)
@@ -614,7 +566,7 @@ sample_strat <- function(sraster,
     }
 
     if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(glue::glue("{filename} already exists and overwrite = FALSE"))
+      stop(paste0("'",filename, "' already exists and overwrite = FALSE"))
     }
 
     sf::st_write(samples, filename, delete_layer = overwrite)

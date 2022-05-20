@@ -39,43 +39,19 @@
 #' #--- perform grid sampling ---#
 #' calculate_allocation(
 #'   sraster = sr,
-#'   nSamp = 200
+#'   nSamp = 50
 #' )
 #'
 #' calculate_allocation(
 #'   sraster = sr,
-#'   nSamp = 200,
+#'   nSamp = 50,
 #'   force = TRUE
 #' )
 #'
-#' #--- extract strata from existing samples ---#
-#' e.sr <- extract_strata(
-#'   sraster = sr,
-#'   existing = e
-#' )
 #'
-#' calculate_allocation(
-#'   sraster = sr,
-#'   nSamp = 200,
-#'   existing = e.sr
-#' )
-#'
-#' #--- Load mraster for optimal allocation ---#
-#' mr <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
-#' mr <- terra::rast(mr)
-#'
-#' calculate_allocation(
-#'   sraster = sr,
-#'   nSamp = 200,
-#'   existing = e.sr,
-#'   allocation = "optim",
-#'   mraster = mr$zq90,
-#'   force = TRUE
-#' )
 #' @author Tristan R.H. Goodbody
 #'
 #' @export
-
 
 calculate_allocation <- function(sraster,
                                  nSamp,
@@ -94,7 +70,7 @@ calculate_allocation <- function(sraster,
   }
 
   if (allocation != "prop" && allocation != "optim" && allocation != "equal") {
-    stop(glue::glue("Unknown allocation: {allocation} selected. Please use 'prop' (default), 'optim' or 'equal'"), call. = FALSE)
+    stop(paste0("Unknown allocation: ",allocation, " selected. Please use 'prop' (default), 'optim' or 'equal'"), call. = FALSE)
   }
 
   if (!is.logical(force)) {
@@ -103,7 +79,7 @@ calculate_allocation <- function(sraster,
 
   #--- set global vars ---#
 
-  strata <- count <- freq <- total <- eTotal <- denom <- NULL
+  v_sd <- strata <- count <- freq <- total <- eTotal <- denom <- NULL
 
   #--- determine crs of input sraster ---#
   crs <- terra::crs(sraster, proj = TRUE)
@@ -169,7 +145,7 @@ calculate_allocation <- function(sraster,
         stop("Multiple layers detected in 'mraster'. Please define a singular band for allocation.", call. = FALSE)
       }
 
-      message(glue::glue("Implementing optimal allocation of samples based on variability of '{nm}'"))
+      message(paste0("Implementing optimal allocation of samples based on variability of '", nm,"'"))
 
       #--- merge sraster and mraster together ---#
 
@@ -177,20 +153,20 @@ calculate_allocation <- function(sraster,
 
       vals <- terra::values(r) %>%
         as.data.frame() %>%
-        dplyr::select(strata, .data[[nm]]) %>%
-        dplyr::filter(complete.cases(.)) %>%
+        dplyr::select(strata, !!nm) %>%
+        stats::na.omit() %>%
         dplyr::group_by(strata)
 
       #--- determine number of samples within each strata -- optimal allocation method ---#
       toSample <- vals %>%
         dplyr::summarize(
-          sd = sd(.data[[nm]]),
+          v_sd = sd(eval(as.name(nm))),
           count = dplyr::n()
         ) %>%
-        dplyr::mutate(denom = sum(count * sd)) %>%
+        dplyr::mutate(denom = sum(count * v_sd)) %>%
         dplyr::rowwise() %>%
         #--- optimal allocation (equal sampling cost) equation. See Gregoire & Valentine (2007) Section 5.4.4 ---#
-        dplyr::mutate(total = ceiling(nSamp * ((count * sd) / denom))) %>%
+        dplyr::mutate(total = ceiling(nSamp * ((count * v_sd) / denom))) %>%
         dplyr::select(strata, total)
     }
 
@@ -273,7 +249,7 @@ calculate_allocation <- function(sraster,
       #--- adjust sample count to force the user defined number ---#
 
       if (force == TRUE) {
-        message(glue::glue("Forcing {nSamp} total samples."))
+        message(paste0("Forcing ", nSamp, " total samples."))
 
         #--- if samples need to be removed ---#
 
@@ -315,7 +291,7 @@ calculate_allocation <- function(sraster,
           }
         }
       } else {
-        message(glue::glue('nSamp of {nSamp} is not perfectly divisible based on strata distribution. nSamp of {tot} will be returned. Use "force = TRUE" to brute force to {nSamp}.'))
+        message(paste0("nSamp of ",nSamp," is not perfectly divisible based on strata distribution. nSamp of ", tot, " will be returned. Use 'force = TRUE' to brute force to ", nSamp,"."))
       }
     }
   } else {

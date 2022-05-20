@@ -8,4 +8,6 @@ utils::globalVariables(".")
 # roxygen namespace tags. Modify with care!
 ## usethis namespace: start
 ## usethis namespace: end
+
+#' @importFrom dplyr %>%
 NULL

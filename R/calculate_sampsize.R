@@ -131,7 +131,7 @@ calculate_sampsize <- function(mraster,
         ggplot2::geom_point(colour = "#333333") +
         ggplot2::geom_line() +
         ggplot2::facet_wrap(. ~ var, scales = "free") +
-        ggplot2::ggtitle(glue::glue("Samples sizes by rse")) +
+        ggplot2::ggtitle("Samples sizes by rse") +
         ggplot2::xlab("Required relative standard error") +
         ggplot2::ylab("Sample size") +
         ggplot2::theme_bw()
@@ -171,7 +171,7 @@ calculate_sampsize <- function(mraster,
         dplyr::filter(rse_var_dif == min(rse_var_dif)) %>%
         dplyr::select(-rse_var_dif)
 
-      message(glue::glue("'rse' not perfectly divisible by 'incremenent. \n Selecting closest sample size (rse = {unique(lines$rse_var)}) based on values."))
+      message(paste0("'rse' not perfectly divisible by 'incremenent. Selecting closest sample size (rse = ", unique(lines$rse_var), ") based on values."))
     } else {
       lines <- sampsize %>%
         dplyr::filter(rse_var == rse)
@@ -185,10 +185,10 @@ calculate_sampsize <- function(mraster,
         ggplot2::geom_line() +
         ggplot2::geom_segment(data = lines, ggplot2::aes(x = -Inf, xend = rse_var, y = nSamp, yend = nSamp), linetype = "dashed", colour = "red") +
         ggplot2::geom_segment(data = lines, ggplot2::aes(x = rse_var, xend = rse_var, y = -Inf, yend = nSamp), linetype = "dashed", colour = "red") +
-        ggplot2::geom_text(data = lines, mapping = ggplot2::aes(label = glue::glue("nSamp = {nSamp}"), x = Inf, y = Inf, vjust = 2, hjust = 1.2), colour = "red") +
+        ggplot2::geom_text(data = lines, mapping = ggplot2::aes(label = paste0("nSamp = ", nSamp), x = Inf, y = Inf, vjust = 2, hjust = 1.2), colour = "red") +
         ggplot2::xlim(min(sampsize$rse_var), max(sampsize$rse_var)) +
         ggplot2::facet_wrap(. ~ var, scales = "free") +
-        ggplot2::ggtitle(glue::glue("Samples size with rse = {unique(lines$rse_var)}")) +
+        ggplot2::ggtitle(paste0("Samples size with rse = ", unique(lines$rse_var))) +
         ggplot2::xlab("Required relative standard error") +
         ggplot2::ylab("Sample size") +
         ggplot2::theme_bw()

@@ -100,63 +100,15 @@ The sampling is performed in 2 stages:
 r <- system.file("extdata", "kmeans.tif", package = "sgsR")
 sr <- terra::rast(r)
 
-a <- system.file("extdata", "roads.shp", package = "sgsR")
-ac <- sf::st_read(a)
-
-e <- system.file("extdata", "existing.shp", package = "sgsR")
-e <- sf::st_read(e)
 
 #--- perform stratified sampling random sampling ---#
-sample_strat(
+sraster <- sample_strat(
   sraster = sr,
-  nSamp = 200,
+  nSamp = 50,
   plot = TRUE
 )
 
-#--- perform stratified sampling random sampling ---#
-sample_strat(
-  sraster = sr,
-  nSamp = 200,
-  plot = TRUE,
-  force = TRUE
-)
 
-#--- extract strata values to existing samples ---#
-e.sr <- extract_strata(sraster = sr, existing = e)
-
-sample_strat(
-  sraster = sr,
-  nSamp = 200,
-  access = ac,
-  existing = e.sr,
-  mindist = 200,
-  buff_inner = 50,
-  buff_outer = 200
-)
-
-sample_strat(
-  sraster = sr,
-  nSamp = 200,
-  access = ac,
-  buff_inner = 50,
-  buff_outer = 200,
-  filename = tempfile(fileext = ".shp")
-)
-
-#--- Load mraster for optimal allocation ---#
-mr <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
-mr <- terra::rast(mr)
-
-sample_strat(
-  sraster = sr,
-  nSamp = 200,
-  allocation = "optim",
-  mraster = mr$zq90,
-  access = ac,
-  buff_inner = 50,
-  buff_outer = 200,
-  filename = tempfile(fileext = ".shp")
-)
 }
 \references{
 Queinnec, M., White, J. C., & Coops, N. C. (2021).

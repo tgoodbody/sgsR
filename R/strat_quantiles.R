@@ -211,14 +211,14 @@ strat_quantiles <- function(mraster,
       breaks <- breaks[1:(nStrata - 1), ]
 
       df.p <- dfc %>%
-        dplyr::select(tidyselect::all_of(metric))
+        dplyr::select(!!metric)
 
       #--- plot histogram of metric with associated break lines ---#
 
       p <- ggplot2::ggplot(df.p, ggplot2::aes(!!metric)) +
         ggplot2::geom_histogram() +
         ggplot2::geom_vline(xintercept = breaks, linetype = "dashed") +
-        ggplot2::ggtitle(glue::glue("{metric} histogram with defined breaks"))
+        ggplot2::ggtitle(paste0(metric, " histogram with defined breaks"))
 
       print(p)
 

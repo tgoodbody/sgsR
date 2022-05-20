@@ -67,9 +67,11 @@ calculate_representation <- function(sraster,
     stop("'sraster' must be type SpatRaster", call. = FALSE)
   }
 
-  if (!stringr::str_detect(names(sraster), "strata")) {
-    stop("A layer name containing 'strata' does not exist within 'sraster'.")
-  }
+  suppressWarnings(
+    if (!grepl("strata", names(sraster))) {
+      stop("A layer name containing 'strata' does not exist within 'sraster'.")
+    }
+  )
 
   if (!inherits(existing, "data.frame") && !inherits(existing, "sf")) {
     stop("'existing' must be a data.frame or sf object", call. = FALSE)

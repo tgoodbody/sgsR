@@ -31,26 +31,8 @@
 #' sample_srs(
 #'   raster = sr,
 #'   nSamp = 200,
-#'   plot = TRUE
 #' )
 #'
-#' sample_srs(
-#'   raster = sr,
-#'   nSamp = 200,
-#'   access = ac,
-#'   mindist = 200,
-#'   buff_inner = 50,
-#'   buff_outer = 200
-#' )
-#'
-#' sample_srs(
-#'   raster = sr,
-#'   nSamp = 200,
-#'   access = ac,
-#'   buff_inner = 50,
-#'   buff_outer = 200,
-#'   filename = tempfile(fileext = ".shp")
-#' )
 #' @author Tristan R.H. Goodbody & Martin Queinnec
 #'
 #' @export
@@ -200,7 +182,7 @@ sample_srs <- function(raster,
     }
 
     if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(glue::glue("{filename} already exists and overwrite = FALSE"))
+      stop(paste0("'",filename, "' already exists and overwrite = FALSE"))
     }
 
     sf::st_write(samples, filename, delete_layer = overwrite)
