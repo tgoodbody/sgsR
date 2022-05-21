@@ -34,7 +34,6 @@ Depends:
 Imports:
     dplyr (>= 1.0.6),
     ggplot2 (>= 3.3.3),
-    magrittr (>= 2.0.1),
     sf (>= 0.9.0),
     terra (>= 1.1.0),
     tidyr (>= 1.1.3),

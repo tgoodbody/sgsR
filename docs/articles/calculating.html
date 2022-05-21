@@ -41,7 +41,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -126,10 +126,10 @@
 <pre><code><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 x 6</span></span>
 <span class="co">#&gt;   strata srasterFreq sampleFreq diffFreq nSamp  need</span>
 <span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span>      1        0.17       0.2    0.03      40    -<span style="color: #BB0000;">6</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span>      2        0.17       0.16  -<span style="color: #BB0000;">0.010</span><span style="color: #BB0000; text-decoration: underline;">0</span>    33     1</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span>      3        0.39       0.36  -<span style="color: #BB0000;">0.030</span><span style="color: #BB0000; text-decoration: underline;">0</span>    73     5</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span>      4        0.27       0.27   0         54     0</span></code></pre>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span>      1        0.21       0.18  -<span style="color: #BB0000;">0.03</span>      36     6</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span>      2        0.16       0.17   0.010<span style="text-decoration: underline;">0</span>    35    -<span style="color: #BB0000;">3</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">3</span>      3        0.26       0.22  -<span style="color: #BB0000;">0.04</span>      43     9</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">4</span>      4        0.38       0.43   0.05      86   -<span style="color: #BB0000;">10</span></span></code></pre>
 <p>The tabular output presents the frequency of coverage for each strata (<code>srasterFreq</code>) (what % of the landscape does the strata cover) and the sampling frequency within each strata (<code>sampleFreq</code>) (what % of total <code>existing</code> samples are in the strata). The difference (<code>diffFreq</code>) between coverage frequency and sampling frequency determines whether the values are over-represented (positive numbers) or under-represented (negative numbers). This value translates to a discrete <code>need</code> attribute that defines whether there is a need to add or remove samples to meet the number of samples necessary to be considered representative of the strata inputted in <code>sraster</code>.</p>
 <p>Performing the algorithm on a sample set derived using <code><a href="../reference/sample_strat.html">sample_strat()</a></code> exhibits proportional sampling to strata coverage.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -144,10 +144,10 @@
 <pre><code><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 x 6</span></span>
 <span class="co">#&gt;   strata srasterFreq sampleFreq diffFreq nSamp  need</span>
 <span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span>      1        0.17       0.17        0    35     0</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span>      2        0.17       0.17        0    34     1</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span>      3        0.39       0.39        0    78     1</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span>      4        0.27       0.27        0    55     0</span></code></pre>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span>      1        0.21       0.21        0    42     1</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span>      2        0.16       0.16        0    32     1</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">3</span>      3        0.26       0.26        0    52     1</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">4</span>      4        0.38       0.38        0    76     1</span></code></pre>
 <p>Presence of very small (negligible) differences between <code>srasterFreq</code> and <code>sampleFreq</code> is common. <strong>In these situations, it is important for the user to determine whether to add or remove the samples.</strong></p>
 </div>
 <div class="section level2 unnumbered">
@@ -262,10 +262,10 @@
 <span class="fu"><a href="../reference/calculate_allocation.html">calculate_allocation</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, 
                      nSamp <span class="op">=</span> <span class="fl">200</span><span class="op">)</span>
 <span class="co">#&gt;   strata total</span>
-<span class="co">#&gt; 1      1    35</span>
-<span class="co">#&gt; 2      2    34</span>
-<span class="co">#&gt; 3      3    78</span>
-<span class="co">#&gt; 4      4    55</span></code></pre></div>
+<span class="co">#&gt; 1      1    42</span>
+<span class="co">#&gt; 2      2    32</span>
+<span class="co">#&gt; 3      3    52</span>
+<span class="co">#&gt; 4      4    76</span></code></pre></div>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- calculate existing samples to include ---#</span>
 <span class="va">e.sr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_strata.html">extract_strata</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, 
@@ -275,10 +275,10 @@
                      nSamp <span class="op">=</span> <span class="fl">200</span>, 
                      existing <span class="op">=</span> <span class="va">e.sr</span><span class="op">)</span>
 <span class="co">#&gt;   strata total need</span>
-<span class="co">#&gt; 1      1    -5   35</span>
-<span class="co">#&gt; 2      2     1   34</span>
-<span class="co">#&gt; 3      3     5   78</span>
-<span class="co">#&gt; 4      4     1   55</span></code></pre></div>
+<span class="co">#&gt; 1      1     6   42</span>
+<span class="co">#&gt; 2      2    -3   32</span>
+<span class="co">#&gt; 3      3     9   52</span>
+<span class="co">#&gt; 4      4   -10   76</span></code></pre></div>
 <p>Notice that some of the values under <code>total</code> from the result above are negative. The negative value indicates that the <code>existing</code> samples over represent those strata and that some of the samples could removed to prevent over-representation. <code>$total</code> indicates the number of samples that could be added or removed.</p>
 </div>
 <div class="section level3 unnumbered">
@@ -293,10 +293,10 @@
                      mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span>, <span class="co"># metric raster</span>
                      force <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># force nSamp number</span>
 <span class="co">#&gt;   strata total need</span>
-<span class="co">#&gt; 1      1     4   44</span>
-<span class="co">#&gt; 2      2     6   41</span>
-<span class="co">#&gt; 3      3   -10   63</span>
-<span class="co">#&gt; 4      4     0   54</span></code></pre></div>
+<span class="co">#&gt; 1      1    16   54</span>
+<span class="co">#&gt; 2      2     3   38</span>
+<span class="co">#&gt; 3      3     6   49</span>
+<span class="co">#&gt; 4      4   -25   61</span></code></pre></div>
 </div>
 <div class="section level3 unnumbered">
 <h3 class="unnumbered" id="equal">Equal allocation<a class="anchor" aria-label="anchor" href="#equal"></a>

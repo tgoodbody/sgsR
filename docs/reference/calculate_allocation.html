@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -139,7 +139,7 @@ to be removed at the users discretion.</p></li>
 <span class="r-in"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"existing.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `existing' from data source </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\goodb\AppData\Local\Temp\RtmpkbMXZm\temp_libpath19087029e22\sgsR\extdata\existing.shp' </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\goodb\Documents\R\win-library\4.1\sgsR\extdata\existing.shp' </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   using driver `ESRI Shapefile'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 100 features and 1 field</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
@@ -150,91 +150,42 @@ to be removed at the users discretion.</p></li>
 <span class="r-in"><span class="co">#--- perform grid sampling ---#</span></span>
 <span class="r-in"><span class="fu">calculate_allocation</span><span class="op">(</span></span>
 <span class="r-in">  sraster <span class="op">=</span> <span class="va">sr</span>,</span>
-<span class="r-in">  nSamp <span class="op">=</span> <span class="fl">200</span></span>
+<span class="r-in">  nSamp <span class="op">=</span> <span class="fl">50</span></span>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Implementing porportional allocation of samples</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> nSamp of 200 is not perfectly divisible based on strata distribution. nSamp of 205 will be returned. Use "force = TRUE" to brute force to 200.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> nSamp of 50 is not perfectly divisible based on strata distribution. nSamp of 56 will be returned. Use "force = TRUE" to brute force to 50.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    strata total</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1    14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       2    29</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       3    15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       4    21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       5    26</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       6    25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7       7    24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8       8    17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9       9    23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10     10    11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1     4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       2     8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       3     4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       4     6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       5     7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       6     7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7       7     6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8       8     5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9       9     6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     10     3</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">calculate_allocation</span><span class="op">(</span></span>
 <span class="r-in">  sraster <span class="op">=</span> <span class="va">sr</span>,</span>
-<span class="r-in">  nSamp <span class="op">=</span> <span class="fl">200</span>,</span>
+<span class="r-in">  nSamp <span class="op">=</span> <span class="fl">50</span>,</span>
 <span class="r-in">  force <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Implementing porportional allocation of samples</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Forcing 200 total samples.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Forcing 50 total samples.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    strata total</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1    14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       2    25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       3    15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       4    21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       5    25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       6    25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7       7    24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8       8    17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9       9    23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10     10    11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1     4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       2     6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       3     4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       4     6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       5     6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       6     6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7       7     5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8       8     5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9       9     5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     10     3</span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co">#--- extract strata from existing samples ---#</span></span>
-<span class="r-in"><span class="va">e.sr</span> <span class="op">&lt;-</span> <span class="fu"><a href="extract_strata.html">extract_strata</a></span><span class="op">(</span></span>
-<span class="r-in">  sraster <span class="op">=</span> <span class="va">sr</span>,</span>
-<span class="r-in">  existing <span class="op">=</span> <span class="va">e</span></span>
-<span class="r-in"><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="fu">calculate_allocation</span><span class="op">(</span></span>
-<span class="r-in">  sraster <span class="op">=</span> <span class="va">sr</span>,</span>
-<span class="r-in">  nSamp <span class="op">=</span> <span class="fl">200</span>,</span>
-<span class="r-in">  existing <span class="op">=</span> <span class="va">e.sr</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Implementing porportional allocation of samples</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> nSamp of 200 is not perfectly divisible based on strata distribution. nSamp of 205 will be returned. Use "force = TRUE" to brute force to 200.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    strata total need</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1    12   14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       2    15   29</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       3     3   15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       4    10   21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       5    11   26</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       6    11   25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7       7    12   24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8       8     4   17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9       9    18   23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10     10     9   11</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#--- Load mraster for optimal allocation ---#</span></span>
-<span class="r-in"><span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"wall_metrics.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">mr</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">calculate_allocation</span><span class="op">(</span></span>
-<span class="r-in">  sraster <span class="op">=</span> <span class="va">sr</span>,</span>
-<span class="r-in">  nSamp <span class="op">=</span> <span class="fl">200</span>,</span>
-<span class="r-in">  existing <span class="op">=</span> <span class="va">e.sr</span>,</span>
-<span class="r-in">  allocation <span class="op">=</span> <span class="st">"optim"</span>,</span>
-<span class="r-in">  mraster <span class="op">=</span> <span class="va">mr</span><span class="op">$</span><span class="va">zq90</span>,</span>
-<span class="r-in">  force <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Implementing optimal allocation of samples based on variability of 'zq90'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Forcing 200 total samples.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    strata total need</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1    15   17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       2    15   32</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       3     3   15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       4     7   18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       5     5   20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       6     7   21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7       7    12   24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8       8    11   24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9       9    14   22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10     10    11   13</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
