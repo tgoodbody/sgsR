@@ -57,46 +57,44 @@ mat_cov <- function(vals,
   }
 
   matCov <- matrix(0, nrow = nQuant, ncol = nb)
+  vals <- as.matrix(vals)
+  vals <- unname(vals)
 
   #--- create progress text bar ---#
 
   iterations <- nrow(vals)
-  pb <- utils::txtProgressBar(min = 1, max = iterations, style = 3)
 
   #--- for each row in dataframe ---#
-
+  
   for (i in 1:nrow(vals)) {
-    setTxtProgressBar(pb, i)
-
-    count <- 1
-
+    
+    count <- 1 
+    
     #--- for each column in dataframe ---#
-
+    
     for (j in 1:nb) {
       indv <- vals[i, j]
 
       #--- for each quantile in covariates ---#
-
+      
       for (k in 1:nQuant) {
 
         #--- determine upper and lower limits ---#
-
+        
         limL <- matQ[k, count]
-
         limU <- matQ[k + 1, count]
 
         #--- determine whether the sample row fits within the quantile being analyzed ---#
-
-        if (indv >= limL & indv <= limU) {
+        
+        if (indv >= limL && indv <= limU) {
           matCov[k, count] <- matCov[k, count] + 1
+          break
         }
       }
 
       count <- count + 1
     }
   }
-
-  close(pb)
 
   return(matCov)
 }

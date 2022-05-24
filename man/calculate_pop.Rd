@@ -34,7 +34,6 @@ needed necessary for \code{\link{calculate_lhsOpt}}. Outputs can also be used as
 Special thanks to Dr. Brendan Malone for the original implementation of this algorithm.
 }
 \examples{
-\dontrun{
 #--- Load raster and access files ---#
 r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 mr <- terra::rast(r)
@@ -46,7 +45,6 @@ calculate_pop(
   nQuant = 10,
   PCA = FALSE
 )
-}
 }
 \references{
 Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451

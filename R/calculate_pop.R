@@ -24,7 +24,6 @@
 #' @return List of matrices to be used as input for \code{\link{calculate_lhsOpt}}.
 #'
 #' @examples
-#' \dontrun{
 #' #--- Load raster and access files ---#
 #' r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 #' mr <- terra::rast(r)
@@ -36,7 +35,6 @@
 #'   nQuant = 10,
 #'   PCA = FALSE
 #' )
-#' }
 #' @note
 #' Special thanks to Dr. Brendan Malone for the original implementation of this algorithm.
 #'
