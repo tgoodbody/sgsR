@@ -75,7 +75,7 @@ We are thankful for continued collaboration with academic, private industry, and
 library(knitr)
 names <- c("Martin Queinnec", "Joanne C. White", "Piotr Tompalski", "Andrew T. Hudak", "Ruben Valbuena", "Antoine LeBoeuf", "Ian Sinclair", "Grant McCartney", "Jean-Francois Prieur", "Murray Woods")
 
-aff <- c("University of British Columbia", "Canadian Forest Service", "Canadian Forest Service", "United States Forest Service", "Swedish University of Agricultural Sciences", "Ministère des Forêts, de la Faune et des Parcs", "Ministry of Northern Development, Mines, Natural Resources and Forestry", "Forsite Consultants Ltd.", "Université de Sherbrooke", "Ontario Ministry of Natural Resources")
+aff <- c("University of British Columbia", "Canadian Forest Service", "Canadian Forest Service", "United States Forest Service", "Swedish University of Agricultural Sciences", "Ministère des Forêts, de la Faune et des Parcs", "Ministry of Northern Development, Mines, Natural Resources and Forestry", "Forsite Consultants Ltd.", "Université de Sherbrooke", " (Retired)	Ministry of Northern Development, Mines, Natural Resources and Forestry")
 
 urls <- c("https://www.researchgate.net/profile/Martin-Queinnec",
           "https://scholar.google.ca/citations?user=bqjk4skAAAAJ&hl=en",
