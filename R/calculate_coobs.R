@@ -139,7 +139,8 @@ calculate_coobs <- function(mraster,
   progress <- function(n) utils::setTxtProgressBar(pb, n)
   opts <- list(progress = progress)
   M <- as.matrix(vals[, 3:ncol(vals)])
-  i <- sample(1:nrow(M), 10000)
+  sample <- nrow(M) > 10000
+  if (sample) i <- sample(1:nrow(M), 10000)
   
   `%dopar%` <- foreach::`%dopar%`
   
@@ -156,7 +157,10 @@ calculate_coobs <- function(mraster,
     #--- Determine min and max distance values for each ---#
     
     pixMin <- min(pixDist)
-    pixMax <- stats::quantile(pixDist[i], probs = threshold)
+    if (sample)
+      pixMax <- stats::quantile(pixDist[i], probs = threshold)
+    else
+      pixMax <- stats::quantile(pixDist, probs = threshold)
     
     #--- Determine distance for each sample location ---#
     
