@@ -44,6 +44,7 @@ Imports:
 Suggests: 
     knitr (>= 1.33.0),
     rmarkdown (>= 2.7.0),
+    Rfast,
     testthat (>= 3.0.0),
     doParallel (>= 1.0.16),
     doSNOW (>= 1.0.19),
