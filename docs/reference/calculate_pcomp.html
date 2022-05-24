@@ -134,10 +134,8 @@ where <code>$details</code> is additional stratification information and
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">calculate_pcomp</span><span class="op">(</span></span>
 <span class="r-in">  mraster <span class="op">=</span> <span class="va">mr</span>,</span>
-<span class="r-in">  nComp <span class="op">=</span> <span class="fl">2</span>,</span>
-<span class="r-in">  plot <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span class="r-in">  nComp <span class="op">=</span> <span class="fl">2</span></span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-plt img"><img src="calculate_pcomp-1.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> class       : SpatRaster </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dimensions  : 277, 373, 2  (nrow, ncol, nlyr)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> resolution  : 20, 20  (x, y)</span>
@@ -156,23 +154,10 @@ where <code>$details</code> is additional stratification information and
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- Display principal component details ---#</span></span>
-<span class="r-in"><span class="va">pcomp</span><span class="op">$</span><span class="va">pca</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Standard deviations (1, .., p=3):</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.5479878 0.7359109 0.2493371</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Rotation (n x k) = (3 x 3):</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                PC1        PC2        PC3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zq90     0.6286296 -0.1795433 -0.7566961</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> pzabove2 0.5104140  0.8293596  0.2272450</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> zsd      0.5867729 -0.5290812  0.6130014</span>
+<span class="r-in"><span class="co">#pcomp$pca</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- Display importance of components ---#</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pcomp</span><span class="op">$</span><span class="va">pca</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Importance of components:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                           PC1    PC2     PC3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Standard deviation     1.5480 0.7359 0.24934</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Proportion of Variance 0.7988 0.1805 0.02072</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Cumulative Proportion  0.7988 0.9793 1.00000</span>
+<span class="r-in"><span class="co">#summary(pcomp$pca)</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -180,11 +165,18 @@ where <code>$details</code> is additional stratification information and
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by <a href="https://scholar.google.ca/citations?user=C_qdYDsAAAAJ&amp;hl=en" class="external-link">Tristan RH Goodbody</a>, <a href="https://forestry.ubc.ca/faculty-profile/nicholas-coops/" class="external-link">Nicholas C Coops</a>, <a href="https://www.researchgate.net/profile/Martin-Queinnec" class="external-link">Martin Queinnec</a>.</p>
+  <p></p><p>Developed by
+<a href="https://scholar.google.ca/citations?user=C_qdYDsAAAAJ&amp;hl=en" class="external-link">Tristan
+RH Goodbody</a>,
+<a href="https://forestry.ubc.ca/faculty-profile/nicholas-coops/" class="external-link">Nicholas
+C Coops</a>,
+<a href="https://www.researchgate.net/profile/Martin-Queinnec" class="external-link">Martin
+Queinnec</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
     </footer></div>

@@ -31,7 +31,7 @@ devtools::install_github("https://github.com/tgoodbody/sgsR")
 library(sgsR)
 ```
 
-## Example usage :chart_with_upwards_trend: {.unnumbered}
+## Example usage :bar_chart: {.unnumbered}
 
 ``` r
 #--- Load mraster files ---#

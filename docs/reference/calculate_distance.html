@@ -115,13 +115,14 @@ within the <code><a href="sample_clhs.html">sample_clhs</a></code> function</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#--- Load raster and access files ---#</span></span>
-<span class="r-in"><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"kmeans.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">sr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"wall_metrics_small.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> [rast] filename is empty. Provide a valid filename</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"roads.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">ac</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `roads' from data source </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\goodb\Documents\R\win-library\4.1\sgsR\extdata\roads.shp' </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\tgood.stu\Documents\R\win-library\4.1\sgsR\extdata\roads.shp' </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   using driver `ESRI Shapefile'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 167 features and 2 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: MULTILINESTRING</span>
@@ -130,20 +131,10 @@ within the <code><a href="sample_clhs.html">sample_clhs</a></code> function</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: UTM_Zone_17_Northern_Hemisphere</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">calculate_distance</span><span class="op">(</span></span>
-<span class="r-in">  raster <span class="op">=</span> <span class="va">sr</span>,</span>
+<span class="r-in">  raster <span class="op">=</span> <span class="va">mr</span>,</span>
 <span class="r-in">  access <span class="op">=</span> <span class="va">ac</span>,</span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> calculating per pixel distance to provided access layer</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> class       : SpatRaster </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dimensions  : 277, 373, 2  (nrow, ncol, nlyr)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> resolution  : 20, 20  (x, y)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> extent      : 431100, 438560, 5337700, 5343240  (xmin, xmax, ymin, ymax)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> coord. ref. : UTM Zone 17, Northern Hemisphere </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sources     : kmeans.tif  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               memory  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> names       :      strata, dist2access </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> min values  : 1.000000000, 0.006621213 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> max values  :       10.00,     1061.66 </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in calculate_distance(raster = mr, access = ac, ):</span> object 'mr' not found</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>
@@ -152,11 +143,18 @@ within the <code><a href="sample_clhs.html">sample_clhs</a></code> function</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by <a href="https://scholar.google.ca/citations?user=C_qdYDsAAAAJ&amp;hl=en" class="external-link">Tristan RH Goodbody</a>, <a href="https://forestry.ubc.ca/faculty-profile/nicholas-coops/" class="external-link">Nicholas C Coops</a>, <a href="https://www.researchgate.net/profile/Martin-Queinnec" class="external-link">Martin Queinnec</a>.</p>
+  <p></p><p>Developed by
+<a href="https://scholar.google.ca/citations?user=C_qdYDsAAAAJ&amp;hl=en" class="external-link">Tristan
+RH Goodbody</a>,
+<a href="https://forestry.ubc.ca/faculty-profile/nicholas-coops/" class="external-link">Nicholas
+C Coops</a>,
+<a href="https://www.researchgate.net/profile/Martin-Queinnec" class="external-link">Martin
+Queinnec</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
     </footer></div>

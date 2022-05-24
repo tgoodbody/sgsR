@@ -25,7 +25,7 @@ devtools::install_github("https://github.com/tgoodbody/sgsR")
 library(sgsR)
 ```
 
-## Example usage :chart\_with\_upwards\_trend:
+## Example usage :bar_chart:
 
 ``` r
 #--- Load mraster files ---#
@@ -81,7 +81,7 @@ thanks to to:
 | [Jean-Francois Prieur](https://www.researchgate.net/scientific-contributions/Jean-Francois-Prieur-2142960944) | Université de Sherbrooke                                                |
 | [Murray Woods](https://www.researchgate.net/profile/Murray-Woods)                                             | Ontario Ministry of Natural Resources                                   |
 
-## Funding :raised\_hands:
+## Funding :raised_hands:
 
 Development of sgsR was made possible thanks to the financial support of
 the [Canadian Wood Fibre Centre’s Forest Innovation
