@@ -104,8 +104,7 @@ sr <- terra::rast(r)
 #--- perform stratified sampling random sampling ---#
 sraster <- sample_strat(
   sraster = sr,
-  nSamp = 50,
-  plot = TRUE
+  nSamp = 50
 )
 
 

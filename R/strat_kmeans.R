@@ -38,7 +38,6 @@
 #'   nStrata = 5,
 #'   iter = 1000,
 #'   algorithm = "MacQueen",
-#'   plot = TRUE,
 #'   details = TRUE
 #' )
 #'

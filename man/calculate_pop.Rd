@@ -40,11 +40,7 @@ mr <- terra::rast(r)
 
 calculate_pop(mraster = mr)
 
-calculate_pop(
-  mraster = mr,
-  nQuant = 10,
-  PCA = FALSE
-)
+
 }
 \references{
 Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451

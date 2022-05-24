@@ -61,7 +61,7 @@ Messages in the algorithm will state that samples have been added to under-repre
 square brackets that follow represent the matrix row and column respectively that can be printed using \code{details = TRUE}.
 
 In some cases, generally when a single metric is used as \code{mraster}, sampling ratios all be >= 1 before the 
-\code{nSamp} number of samples are allocated. The algorithm will stop in this case.
+\code{nSamp} number of samples are allocated. The algorithm will stop in this scenario.
 
 Special thanks to Dr. Brendan Malone for the original implementation of this algorithm.
 }

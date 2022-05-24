@@ -29,12 +29,8 @@
 #' mr <- terra::rast(r)
 #'
 #' calculate_pop(mraster = mr)
+#' 
 #'
-#' calculate_pop(
-#'   mraster = mr,
-#'   nQuant = 10,
-#'   PCA = FALSE
-#' )
 #' @note
 #' Special thanks to Dr. Brendan Malone for the original implementation of this algorithm.
 #'

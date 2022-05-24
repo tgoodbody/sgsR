@@ -44,8 +44,7 @@ mraster <- terra::rast(r)
 #--- perform stratification ---#
 sraster <- strat_kmeans(
   mraster = mraster$zq90,
-  nStrata = 6,
-  plot = TRUE
+  nStrata = 6
 )
 
 ### --- create existing sample network ---###
@@ -60,8 +59,7 @@ existing <- sample_srs(
 
 calculate_representation(
   sraster = sraster,
-  existing = existing,
-  plot = TRUE
+  existing = existing
 )
 }
 \seealso{

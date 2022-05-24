@@ -42,8 +42,7 @@
 #'   mraster = mr$zq90,
 #'   mraster2 = mr$zsd,
 #'   breaks = br.max,
-#'   breaks2 = br.sd,
-#'   plot = TRUE
+#'   breaks2 = br.sd
 #' )
 #' @author Tristan R.H. Goodbody
 #'

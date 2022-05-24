@@ -77,6 +77,12 @@ calculate_coobs <- function(mraster,
     )
   }
   
+  if (!requireNamespace("Rfast", quietly = TRUE)) {
+    stop("Package \"Rfast\" needed for this function to work. Please install it.",
+         call. = FALSE
+    )
+  }
+  
   #--- set global vars ---#
   
   i <- geometry <- NULL
@@ -112,7 +118,7 @@ calculate_coobs <- function(mraster,
   #--- Remove NA / NaN / Inf values ---#
   
   vals <- vals %>%
-    dplyr::filter(stats::complete.cases(.))
+    stats::na.omit()
   
   #--- Generate covariance matrix ---#
   
@@ -138,9 +144,10 @@ calculate_coobs <- function(mraster,
   pb <- utils::txtProgressBar(max = iterations, style = 3)
   progress <- function(n) utils::setTxtProgressBar(pb, n)
   opts <- list(progress = progress)
+  
   M <- as.matrix(vals[, 3:ncol(vals)])
   sample <- nrow(M) > 10000
-  if (sample) i <- sample(1:nrow(M), 10000)
+  if (sample) ix <- sample(1:nrow(M), 10000)
   
   `%dopar%` <- foreach::`%dopar%`
   
@@ -158,7 +165,7 @@ calculate_coobs <- function(mraster,
     
     pixMin <- min(pixDist)
     if (sample)
-      pixMax <- stats::quantile(pixDist[i], probs = threshold)
+      pixMax <- stats::quantile(pixDist[ix], probs = threshold)
     else
       pixMax <- stats::quantile(pixDist, probs = threshold)
     
@@ -166,7 +173,7 @@ calculate_coobs <- function(mraster,
     
     sampDist <- Rfast::mahala(x = as.matrix(samples[, 3:ncol(samples)]), mu = as.matrix(cell), s = covMat) # calculate distance of observations to all other pixels
     
-    #--- Normalize distance between data and samples)
+    #--- Normalize distance between data and samples ---#
     
     sampNDist <- (sampDist - pixMin) / (pixMax - pixMin)
     

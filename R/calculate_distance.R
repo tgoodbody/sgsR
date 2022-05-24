@@ -13,14 +13,14 @@
 #'
 #' @examples
 #' #--- Load raster and access files ---#
-#' r <- system.file("extdata", "kmeans.tif", package = "sgsR")
-#' sr <- terra::rast(r)
+#' r <- system.file("extdata", "wall_metrics_small.tif", package = "sgsR")
+#' mr <- terra::rast(r)
 #'
 #' a <- system.file("extdata", "roads.shp", package = "sgsR")
 #' ac <- sf::st_read(a)
 #'
 #' calculate_distance(
-#'   raster = sr,
+#'   raster = mr,
 #'   access = ac,
 #' )
 #'

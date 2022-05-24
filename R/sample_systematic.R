@@ -48,8 +48,7 @@
 #' #--- perform grid sampling ---#
 #' sample_systematic(
 #'   raster = sr,
-#'   cellsize = 1000,
-#'   plot = TRUE
+#'   cellsize = 1000
 #' )
 #'
 #' sample_systematic(

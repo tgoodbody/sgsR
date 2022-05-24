@@ -21,22 +21,49 @@ mat_quant <- function(vals,
   #--- create covariance matrix of the quantiles ---#
 
   matQ <- matrix(NA, nrow = (nQuant + 1), ncol = nb)
+  
+  #--- approximate quantile value using a sample to improve processing times ---#
+  vals <- as.matrix(vals)
+  sample <- nrow(vals) > 10000
+  if (sample) ix <- sample(1:nrow(vals), 10000)
 
   for (i in 1:nb) {
-
-    #--- calculate min, max, and range of vals for covariates ---#
-
-    maxVal <- max(vals[, i])
-    minVal <- min(vals[, i])
-    rangeVal <- maxVal - minVal
-
-    #--- determine the width of each quantile ---#
-
-    widthQuant <- rangeVal / nQuant
-
-    #--- populate quantile matrix ---#
-
-    matQ[, i] <- seq(from = minVal, to = maxVal, by = widthQuant)
+    
+    if(sample) {
+      
+      v <- vals[ix,i]
+      
+      #--- calculate min, max, and range of vals for covariates ---#
+      
+      maxVal <- max(v)
+      minVal <- min(v)
+      rangeVal <- maxVal - minVal
+      
+      #--- determine the width of each quantile ---#
+      
+      widthQuant <- rangeVal / nQuant
+      
+      #--- populate quantile matrix ---#
+      
+      matQ[, i] <- seq(from = minVal, to = maxVal, by = widthQuant)
+      
+      
+    } else {
+  
+      #--- calculate min, max, and range of vals for covariates ---#
+  
+      maxVal <- max(vals[, i])
+      minVal <- min(vals[, i])
+      rangeVal <- maxVal - minVal
+  
+      #--- determine the width of each quantile ---#
+  
+      widthQuant <- rangeVal / nQuant
+  
+      #--- populate quantile matrix ---#
+  
+      matQ[, i] <- seq(from = minVal, to = maxVal, by = widthQuant)
+    }
   }
 
   return(matQ)
@@ -114,6 +141,8 @@ mat_covNB <- function(vals,
   }
 
   matCov <- matrix(0, nrow = nQuant, ncol = nb)
+  vals <- as.matrix(vals)
+  vals <- unname(vals)
 
   #--- for each row in dataframe ---#
 

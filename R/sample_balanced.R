@@ -15,7 +15,6 @@
 #' @return An sf object with \code{nSamp} randomly sampled points.
 #'
 #' @examples
-#' \dontrun{
 #' #--- Load raster and existing plots---#
 #' r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 #' mr <- terra::rast(r)
@@ -25,19 +24,8 @@
 #'
 #' sample_balanced(
 #'   mraster = mr,
-#'   nSamp = 200,
-#'   plot = TRUE
+#'   nSamp = 200
 #' )
-#'
-#' sample_balanced(
-#'   mraster = mr,
-#'   nSamp = 100,
-#'   algorithm = "lcube",
-#'   access = ac,
-#'   buff_inner = 50,
-#'   buff_outer = 200
-#' )
-#' }
 #'
 #' @references
 #'

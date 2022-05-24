@@ -40,8 +40,7 @@
 #'   poly = fri,
 #'   attribute = attribute,
 #'   features = features,
-#'   raster = sraster,
-#'   plot = TRUE
+#'   raster = sraster
 #' )
 #'
 #' #--- or as multiple lists ---#
@@ -56,7 +55,6 @@
 #'   attribute = attribute,
 #'   features = features,
 #'   raster = sraster,
-#'   plot = TRUE,
 #'   details = TRUE
 #' )
 #' @author Tristan R.H. Goodbody

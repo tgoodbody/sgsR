@@ -22,13 +22,11 @@
 #'
 #' calculate_sampsize(
 #'   mraster = mr,
-#'   rse = 0.01,
-#'   plot = TRUE
+#'   rse = 0.01
 #' )
 #'
 #' calculate_sampsize(
-#'   mraster = mr,
-#'   plot = TRUE
+#'   mraster = mr
 #' )
 #'
 #' calculate_sampsize(
@@ -36,8 +34,7 @@
 #'   rse = 0.025,
 #'   start = 0.01,
 #'   end = 0.08,
-#'   increment = 0.01,
-#'   plot = TRUE
+#'   increment = 0.01
 #' )
 #'
 #' #--- higher variance leads to need for more samples ---#

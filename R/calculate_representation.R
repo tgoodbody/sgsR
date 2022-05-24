@@ -31,8 +31,7 @@
 #' #--- perform stratification ---#
 #' sraster <- strat_kmeans(
 #'   mraster = mraster$zq90,
-#'   nStrata = 6,
-#'   plot = TRUE
+#'   nStrata = 6
 #' )
 #'
 #' ### --- create existing sample network ---###
@@ -47,8 +46,7 @@
 #'
 #' calculate_representation(
 #'   sraster = sraster,
-#'   existing = existing,
-#'   plot = TRUE
+#'   existing = existing
 #' )
 #' @author Tristan R.H. Goodbody, Martin Queinnec
 #'

@@ -42,13 +42,6 @@
 #'   nSamp = 50
 #' )
 #'
-#' calculate_allocation(
-#'   sraster = sr,
-#'   nSamp = 50,
-#'   force = TRUE
-#' )
-#'
-#'
 #' @author Tristan R.H. Goodbody
 #'
 #' @export

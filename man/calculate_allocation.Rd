@@ -61,13 +61,6 @@ calculate_allocation(
   nSamp = 50
 )
 
-calculate_allocation(
-  sraster = sr,
-  nSamp = 50,
-  force = TRUE
-)
-
-
 }
 \references{
 Gregoire, T.G., & Valentine, H.T. (2007). Sampling Strategies for Natural Resources and the Environment (1st ed.).

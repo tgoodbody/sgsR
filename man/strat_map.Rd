@@ -78,23 +78,20 @@ srasterfri <- strat_poly(
   poly = fri,
   attribute = attribute,
   features = features,
-  raster = srasterkmeans,
-  plot = TRUE
+  raster = srasterkmeans
 )
 
 #--- map srasters ---#
 strat_map(
   sraster = srasterfri,
-  sraster2 = srasterkmeans,
-  plot = TRUE
+  sraster2 = srasterkmeans
 )
 
 strat_map(
   sraster = srasterfri,
   sraster2 = srasterkmeans,
   stack = TRUE,
-  details = TRUE,
-  plot = TRUE
+  details = TRUE
 )
 }
 \seealso{
