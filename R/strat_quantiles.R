@@ -15,7 +15,7 @@
 #'
 #' When a list is returned:
 #' \enumerate{
-#' \item \code{details} is a list output of the \code{\link[stats]{prcomp}} function
+#' \item \code{details} generates is the lookUp table for the stratification.
 #' \item \code{raster} is a stratified \code{spatRaster} based on quantiles
 #' \item \code{plot} is a \code{ggplot} histogram / scatter plot object (depends on whether metric2 was supplied).
 #' Histogram shows distribution and break points while scatter plot shows colour coded and strata boundaries.
@@ -48,7 +48,7 @@ strat_quantiles <- function(mraster,
                             nStrata2 = NULL,
                             plot = FALSE,
                             details = FALSE,
-                            samp = 1,
+                            samp = 0.2,
                             filename = NULL,
                             overwrite = FALSE,
                             ...) {
@@ -133,6 +133,12 @@ strat_quantiles <- function(mraster,
 
     dfc <- df %>%
       dplyr::mutate(class = dplyr::ntile(!!metric, nStrata))
+    
+    #--- generate lookup table for details output ---#
+    lookUp <- dfc %>%
+      dplyr::group_by(class) %>%
+      dplyr::summarize(min_mraster = min(!!metric),
+                    max_mraster = max(!!metric))
 
     #--- convert back to original mraster extent ---#
 
@@ -184,6 +190,14 @@ strat_quantiles <- function(mraster,
       dplyr::group_by(class1, class2) %>%
       #--- establish newly formed unique class ---#
       dplyr::mutate(class = dplyr::cur_group_id())
+    
+    #--- generate lookup table for details output ---#
+    lookUp <- dfc %>%
+      dplyr::group_by(class) %>%
+      dplyr::summarize(min_mraster = min(!!metric),
+                       max_mraster = max(!!metric),
+                       min_mraster2 = min(!!metric2),
+                       max_mraster2 = max(!!metric2))
 
     #--- convert back to original mraster extent ---#
 
@@ -261,11 +275,18 @@ strat_quantiles <- function(mraster,
 
     #--- output metrics details along with stratification raster ---#
 
+    if (isTRUE(plot)){
     out <- list(
-      details = dfc,
+      details = lookUp,
       raster = rout,
       plot = p
     )
+    } else {
+      out <- list(
+        details = lookUp,
+        raster = rout
+      )
+    }
 
     return(out)
   } else {
