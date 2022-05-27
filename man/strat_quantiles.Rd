@@ -11,7 +11,7 @@ strat_quantiles(
   nStrata2 = NULL,
   plot = FALSE,
   details = FALSE,
-  samp = 1,
+  samp = 0.2,
   filename = NULL,
   overwrite = FALSE,
   ...
@@ -49,7 +49,7 @@ Returns an output stratification \code{spatRaster} or a list when \code{details 
 
 When a list is returned:
 \enumerate{
-\item \code{details} is a list output of the \code{\link[stats]{prcomp}} function
+\item \code{details} generates is the lookUp table for the stratification.
 \item \code{raster} is a stratified \code{spatRaster} based on quantiles
 \item \code{plot} is a \code{ggplot} histogram / scatter plot object (depends on whether metric2 was supplied).
 Histogram shows distribution and break points while scatter plot shows colour coded and strata boundaries.

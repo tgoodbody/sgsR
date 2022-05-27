@@ -82,6 +82,9 @@ An sf object with \code{nSamp} stratified samples.
 Sampling based on a stratified raster.
 }
 \note{
+\code{existing} may contain samples that fall in \code{sraster} cells that are `NA`. If this occurs and \code{include = TRUE}, `NA` samples
+are separated during sampling and re-appended at the end of the sampling process.
+
 The sampling is performed in 2 stages:
 \enumerate{
 
