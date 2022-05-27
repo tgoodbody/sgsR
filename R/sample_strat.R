@@ -524,32 +524,42 @@ sample_strat <- function(sraster,
   }
   
   #--- check if samples fall in areas where stratum values are NA ---#
+  if(!is.null(existing)){
+    if(any(!complete.cases(existing$strata))){
+      
+      na_only <- existing %>%
+        dplyr::filter(!complete.cases(strata)) %>%
+        dplyr::select(-cell)
+      
+      samples_NA <- na_only %>%
+        dplyr::mutate(type = "existing",
+               rule = NA)
   
-  if(any(!complete.cases(existing$strata))){
-    
-    na_only <- existing %>%
-      dplyr::filter(!complete.cases(strata)) %>%
-      dplyr::select(-cell)
-    
-    samples_NA <- na_only %>%
-      dplyr::mutate(type = "existing",
-             rule = NA)
-
+      #--- convert coordinates to a spatial points object ---#
+      samples <- out %>%
+        dplyr::select(-cell) %>%
+        as.data.frame() %>%
+        rbind(.,samples_NA) %>%
+        sf::st_as_sf(., coords = c("X", "Y"))
+      
+    } else {
+  
     #--- convert coordinates to a spatial points object ---#
     samples <- out %>%
       dplyr::select(-cell) %>%
       as.data.frame() %>%
-      rbind(.,samples_NA) %>%
       sf::st_as_sf(., coords = c("X", "Y"))
     
+    }
+    
   } else {
-
-  #--- convert coordinates to a spatial points object ---#
-  samples <- out %>%
-    dplyr::select(-cell) %>%
-    as.data.frame() %>%
-    sf::st_as_sf(., coords = c("X", "Y"))
-  
+    
+    #--- convert coordinates to a spatial points object ---#
+    samples <- out %>%
+      dplyr::select(-cell) %>%
+      as.data.frame() %>%
+      sf::st_as_sf(., coords = c("X", "Y"))
+    
   }
 
   #--- assign sraster crs to spatial points object ---#
