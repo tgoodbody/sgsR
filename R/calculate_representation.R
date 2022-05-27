@@ -67,7 +67,7 @@ calculate_representation <- function(sraster,
 
   suppressWarnings(
     if (!grepl("strata", names(sraster))) {
-      stop("A layer name containing 'strata' does not exist within 'sraster'.")
+      stop("A layer name containing 'strata' does not exist within 'sraster'. Use extract_strata()")
     }
   )
 
@@ -100,6 +100,7 @@ calculate_representation <- function(sraster,
 
   #--- existing ---#
   existing_mat <- extract_strata(sraster = sraster, existing = existing, data.frame = TRUE) %>%
+    stats::na.omit() %>%
     dplyr::group_by(strata) %>%
     dplyr::summarise(nSamp = dplyr::n()) %>%
     dplyr::mutate(sampleFreq = round(nSamp / sum(nSamp), 2)) %>%

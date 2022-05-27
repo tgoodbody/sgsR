@@ -527,15 +527,13 @@ sample_strat <- function(sraster,
   
   if(any(!complete.cases(existing$strata))){
     
-    na_only <- existings %>%
-      dplyr::filter(!complete.cases(strata))
+    na_only <- existing %>%
+      dplyr::filter(!complete.cases(strata)) %>%
+      dplyr::select(-cell)
     
     samples_NA <- na_only %>%
-      st_drop_geometry(.) %>%
       dplyr::mutate(type = "existing",
-             rule = NA) %>% 
-      as.data.frame() %>%
-      cbind(.,st_coordinates(na_only))
+             rule = NA)
 
     #--- convert coordinates to a spatial points object ---#
     samples <- out %>%

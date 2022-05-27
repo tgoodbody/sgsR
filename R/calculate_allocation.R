@@ -218,8 +218,8 @@ calculate_allocation <- function(sraster,
     if(any(!complete.cases(existing$strata))){
       
       nNA <- existing %>%
-        filter(!complete.cases(strata)) %>%
-        pull(eTotal)
+        dplyr::filter(!complete.cases(strata)) %>%
+        dplyr::pull(eTotal)
       
       message(paste0(nNA," samples in `existing` are located where strata values are NA."))
 

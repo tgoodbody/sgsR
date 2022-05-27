@@ -178,6 +178,25 @@ sample_ahels <- function(mraster,
   #--- extract covariates at existing sample locations ---#
 
   samples <- extract_metrics(mraster, existing, data.frame = TRUE)
+  
+  #--- check if samples fall in areas where stratum values are NA ---#
+  
+  if(any(!complete.cases(samples))){
+    
+    samples_NA <- samples %>%
+      dplyr::filter(!complete.cases(.)) %>%
+      dplyr::mutate(type = "existing")
+    
+    nNA <-  samples_NA %>%
+      dplyr::tally() %>%
+      dplyr::pull()
+    
+    message(paste0(nNA," samples in `existing` are located where mraster values are NA. These samples will be ignored during the sampling process."))
+    
+    samples <- samples %>%
+      stats::na.omit()
+    
+  }
 
   #--- remove already existing samples from vals to not repeat sample ---#
 
@@ -187,16 +206,15 @@ sample_ahels <- function(mraster,
   #--- Assign attribute to differentiate between original samples and those added during HELS algorithm ---#
 
   samples$type <- "existing"
-  samples$n <- seq(1:nrow(samples))
 
   #--- Rearrange columns ---#
 
   samples <- samples %>%
-    dplyr::select(X, Y, n, type, names(mraster))
+    dplyr::select(X, Y, type, names(mraster))
 
   #--- Create data hypercube of existing samples to compare with mraster data ---#
 
-  matCovSamp <- mat_covNB(vals = samples[5:ncol(samples)], nQuant = nQuant, nb = nb, matQ = mats$matQ)
+  matCovSamp <- mat_covNB(vals = samples[4:ncol(samples)], nQuant = nQuant, nb = nb, matQ = mats$matQ)
 
   #--- Change 0's to very small number to avoid division issues ---#
 
@@ -292,7 +310,6 @@ sample_ahels <- function(mraster,
       valsSubSamp <- valsSub[addSamp, ]
 
       valsSubSamp$type <- "new"
-      valsSubSamp$n <- row.names(valsSubSamp)
 
       #--- remove samples from pool to ensure same cells are not sampled again ---#
 
@@ -316,7 +333,7 @@ sample_ahels <- function(mraster,
 
       #--- recompute ratio's in the presence of newly added samples ---#
 
-      matCovSamp <- mat_covNB(vals = samples[5:ncol(samples)], nQuant = nQuant, nb = nb, matQ = mats$matQ)
+      matCovSamp <- mat_covNB(vals = samples[4:ncol(samples)], nQuant = nQuant, nb = nb, matQ = mats$matQ)
 
       #--- Change 0's to very small number to avoid division issues ---#
 
@@ -389,8 +406,6 @@ sample_ahels <- function(mraster,
 
       valsSubSamp$type <- "new"
 
-      valsSubSamp$n <- row.names(valsSubSamp)
-
       #--- remove samples from pool to ensure same cells are not sampled again ---#
 
       vals <- vals[-addSamp, ]
@@ -409,7 +424,7 @@ sample_ahels <- function(mraster,
 
       #--- recompute ratio's in the presence of newly added samples ---#
 
-      matCovSamp <- mat_covNB(vals = samples[5:ncol(samples)], nQuant = nQuant, nb = nb, matQ = mats$matQ)
+      matCovSamp <- mat_covNB(vals = samples[4:ncol(samples)], nQuant = nQuant, nb = nb, matQ = mats$matQ)
 
       #--- Change 0's to very small number to avoid division issues ---#
 
@@ -444,11 +459,22 @@ sample_ahels <- function(mraster,
 
   message(paste0("A total of ", sTot, " new samples added."))
 
-  #--- convert coordinates to a spatial points object ---#
-  samples <- samples %>%
-    as.data.frame() %>%
-    dplyr::select(-n) %>%
-    sf::st_as_sf(., coords = c("X", "Y"))
+  #--- replace existing samples (if they exist) that had NA values for metrics ---#
+  
+  if(exists("samples_NA")){
+    
+    #--- convert coordinates to a spatial points object ---#
+    samples <- samples %>%
+      rbind(., samples_NA) %>%
+      sf::st_as_sf(., coords = c("X", "Y"))
+    
+  } else {
+    
+    #--- convert coordinates to a spatial points object ---#
+    samples <- samples %>%
+      sf::st_as_sf(., coords = c("X", "Y"))
+    
+  }
 
   #--- assign sraster crs to spatial points object ---#
   sf::st_crs(samples) <- crs

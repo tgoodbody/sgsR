@@ -102,9 +102,9 @@ extract_strata <- function(sraster,
   if(any(!complete.cases(existing_strata$strata))){
     
     nNA <- existing_strata %>%
-      filter(!complete.cases(strata)) %>%
-      tally() %>%
-      pull()
+      dplyr::filter(!complete.cases(strata)) %>%
+      dplyr::tally() %>%
+      dplyr::pull()
     
     message(paste0(nNA," samples are located where strata values are NA."))
   }
