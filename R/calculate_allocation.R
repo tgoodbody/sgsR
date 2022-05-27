@@ -212,6 +212,21 @@ calculate_allocation <- function(sraster,
       dplyr::group_by(strata) %>%
       dplyr::arrange() %>%
       dplyr::summarize(eTotal = dplyr::n())
+    
+    #--- check if samples fall in areas where stratum values are NA ---#
+    
+    if(any(!complete.cases(existing$strata))){
+      
+      nNA <- existing %>%
+        filter(!complete.cases(strata)) %>%
+        pull(eTotal)
+      
+      message(paste0(nNA," samples in `existing` are located where strata values are NA."))
+
+      existing <- existing %>%
+        stats::na.omit()
+      
+    }
 
     #--- if the strata for toSample and existing are not identical throw an error ---#
     if (!identical(unique(existing$strata), unique(toSample$strata))) {

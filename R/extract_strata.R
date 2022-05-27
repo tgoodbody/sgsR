@@ -98,6 +98,17 @@ extract_strata <- function(sraster,
   existing_strata <- existing_strata %>%
     dplyr::select(X, Y, strata)
   
+  #--- if existing samples are not linked with a stratum ---#
+  if(any(!complete.cases(existing_strata$strata))){
+    
+    nNA <- existing_strata %>%
+      filter(!complete.cases(strata)) %>%
+      tally() %>%
+      pull()
+    
+    message(paste0(nNA," samples are located where strata values are NA."))
+  }
+  
   #--- output either data.frame or sf object ---#
   
   if (isTRUE(data.frame)) {

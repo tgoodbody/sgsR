@@ -21,6 +21,9 @@
 #' @param plot Logical. Plots existing (circles) and new (crosses) samples.
 #'
 #' @importFrom methods is
+#' 
+#' @note \code{existing} may contain samples that fall in \code{sraster} cells that are `NA`. If this occurs and \code{include = TRUE}, `NA` samples
+#' are separated during sampling and re-appended at the end of the sampling process.
 #'
 #' @return An sf object with \code{nSamp} stratified samples.
 #'
@@ -226,6 +229,7 @@ sample_strat <- function(sraster,
       allocation = allocation,
       mraster = mraster
     )
+    
   } else {
     toSample <- calculate_allocation(
       sraster = sraster,
@@ -518,12 +522,37 @@ sample_strat <- function(sraster,
       out <- rbind(out, add_strata)
     }
   }
+  
+  #--- check if samples fall in areas where stratum values are NA ---#
+  
+  if(any(!complete.cases(existing$strata))){
+    
+    na_only <- existings %>%
+      dplyr::filter(!complete.cases(strata))
+    
+    samples_NA <- na_only %>%
+      st_drop_geometry(.) %>%
+      dplyr::mutate(type = "existing",
+             rule = NA) %>% 
+      as.data.frame() %>%
+      cbind(.,st_coordinates(na_only))
+
+    #--- convert coordinates to a spatial points object ---#
+    samples <- out %>%
+      dplyr::select(-cell) %>%
+      as.data.frame() %>%
+      rbind(.,samples_NA) %>%
+      sf::st_as_sf(., coords = c("X", "Y"))
+    
+  } else {
 
   #--- convert coordinates to a spatial points object ---#
   samples <- out %>%
     dplyr::select(-cell) %>%
     as.data.frame() %>%
     sf::st_as_sf(., coords = c("X", "Y"))
+  
+  }
 
   #--- assign sraster crs to spatial points object ---#
   sf::st_crs(samples) <- crs
