@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -133,18 +133,18 @@ to be removed at the users discretion.</p></li>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#--- Load strata raster and existing samples---#</span></span>
-<span class="r-in"><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"kmeans.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"sraster.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">sr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"existing.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `existing' from data source </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\goodb\AppData\Local\Temp\RtmpgH8uTJ\temp_libpath5b0477f48d2\sgsR\extdata\existing.shp' </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\goodb\Documents\R\win-library\4.1\sgsR\extdata\existing.shp' </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   using driver `ESRI Shapefile'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 100 features and 1 field</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 203 features and 3 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431110 ymin: 5337750 xmax: 438550 ymax: 5343230</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431210 ymin: 5337730 xmax: 438530 ymax: 5343070</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           unknown</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- perform grid sampling ---#</span></span>
@@ -153,18 +153,12 @@ to be removed at the users discretion.</p></li>
 <span class="r-in">  nSamp <span class="op">=</span> <span class="fl">50</span></span>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Implementing porportional allocation of samples</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> nSamp of 50 is not perfectly divisible based on strata distribution. nSamp of 56 will be returned. Use 'force = TRUE' to brute force to 50.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    strata total</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1     4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       2     8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       3     4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       4     6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       5     7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       6     7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7       7     6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8       8     5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9       9     6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10     10     3</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> nSamp of 50 is not perfectly divisible based on strata distribution. nSamp of 52 will be returned. Use 'force = TRUE' to brute force to 50.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   strata total</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      1    13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      2    13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      3    13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      4    13</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

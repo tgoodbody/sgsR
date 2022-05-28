@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -151,13 +151,13 @@ considerably slows processing speeds.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#--- Load raster and access files ---#</span></span>
-<span class="r-in"><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"kmeans.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"sraster.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">sr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"roads.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"access.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">ac</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `roads' from data source </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\goodb\AppData\Local\Temp\RtmpgH8uTJ\temp_libpath5b0477f48d2\sgsR\extdata\roads.shp' </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `access' from data source </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\goodb\Documents\R\win-library\4.1\sgsR\extdata\access.shp' </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   using driver `ESRI Shapefile'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 167 features and 2 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: MULTILINESTRING</span>
@@ -168,12 +168,12 @@ considerably slows processing speeds.</p>
 <span class="r-in"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"existing.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `existing' from data source </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\goodb\AppData\Local\Temp\RtmpgH8uTJ\temp_libpath5b0477f48d2\sgsR\extdata\existing.shp' </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\goodb\Documents\R\win-library\4.1\sgsR\extdata\existing.shp' </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   using driver `ESRI Shapefile'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 100 features and 1 field</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 203 features and 3 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431110 ymin: 5337750 xmax: 438550 ymax: 5343230</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431210 ymin: 5337730 xmax: 438530 ymax: 5343070</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           unknown</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- perform grid sampling ---#</span></span>
@@ -181,6 +181,7 @@ considerably slows processing speeds.</p>
 <span class="r-in">  raster <span class="op">=</span> <span class="va">sr</span>,</span>
 <span class="r-in">  cellsize <span class="op">=</span> <span class="fl">1000</span></span>
 <span class="r-in"><span class="op">)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 8 samples are located where metric values are NA.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 40 features and 0 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
@@ -206,6 +207,7 @@ considerably slows processing speeds.</p>
 <span class="r-in">  location <span class="op">=</span> <span class="st">"corners"</span>,</span>
 <span class="r-in">  plot <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span class="r-in"><span class="op">)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 31 samples are located where metric values are NA.</span>
 <span class="r-plt img"><img src="sample_systematic-1.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 312 features and 0 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
@@ -231,23 +233,24 @@ considerably slows processing speeds.</p>
 <span class="r-in">  square <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span class="r-in">  location <span class="op">=</span> <span class="st">"random"</span></span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 38 features and 0 fields</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 28 samples are located where metric values are NA.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 40 features and 0 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431382.6 ymin: 5337816 xmax: 437742.6 ymax: 5343225</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431394.7 ymin: 5337743 xmax: 438160.5 ymax: 5343192</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (431382.6 5341013)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    POINT (431757 5338154)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (431555.1 5340428)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  POINT (431967.4 5342253)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (431771.6 5341294)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POINT (432325.3 5342860)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POINT (432854.9 5338456)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (432578.4 5340114)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (432646.1 5341691)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10   POINT (433027 5337816)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (431394.7 5338695)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (431839.8 5340612)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    POINT (431476 5341998)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    POINT (431808 5341339)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (431941.3 5342652)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POINT (432537.2 5338515)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    POINT (432823 5339984)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (432789.8 5342035)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (433448.4 5339406)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (432912.5 5341479)</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

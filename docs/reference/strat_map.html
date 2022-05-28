@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -134,14 +134,14 @@ where the values from both inputs are combined.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#--- load input metrics raster ---#</span></span>
-<span class="r-in"><span class="va">raster</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"kmeans.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">raster</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"sraster.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">srasterkmeans</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">raster</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- read polygon coverage ---#</span></span>
 <span class="r-in"><span class="va">poly</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"inventory_polygons.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">fri</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">poly</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `inventory_polygons' from data source </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\goodb\AppData\Local\Temp\RtmpgH8uTJ\temp_libpath5b0477f48d2\sgsR\extdata\inventory_polygons.shp' </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\goodb\Documents\R\win-library\4.1\sgsR\extdata\inventory_polygons.shp' </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   using driver `ESRI Shapefile'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 632 features and 3 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: MULTIPOLYGON</span>
@@ -179,7 +179,7 @@ where the values from both inputs are combined.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> source      : memory </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> name        : strata </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> min value   :     11 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> max value   :    310 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> max value   :     34 </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">strat_map</span><span class="op">(</span></span>
 <span class="r-in">  sraster <span class="op">=</span> <span class="va">srasterfri</span>,</span>
@@ -195,44 +195,26 @@ where the values from both inputs are combined.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> extent      : 431100, 438560, 5337700, 5343240  (xmin, xmax, ymin, ymax)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> coord. ref. : UTM Zone 17, Northern Hemisphere </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sources     : memory  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               kmeans.tif  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               sraster.tif  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               memory  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> names       : strata, strata2, stratamapped </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> min values  :      1,       1,           11 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> max values  :      3,      10,          310 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> max values  :      3,       4,           34 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $lookUp</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    strata strata2 stratamapped</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1       3       2           32</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       3       8           38</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       3       7           37</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       3       5           35</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       1       4           14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       1       1           11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7       1       3           13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8       1       6           16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9       1      10          110</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10      3       4           34</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11      3       6           36</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12      3       1           31</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13      1       7           17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14      1       5           15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15      1       9           19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16      1       8           18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17      1       2           12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18      2       8           28</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19      2       7           27</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20      2      10          210</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21      2       4           24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22      2       5           25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23      2       2           22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24      3       3           33</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25      3      10          310</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26      3       9           39</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27      2       6           26</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28      2       3           23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29      2       1           21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30      2       9           29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       3       1           31</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       1       3           13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       1       4           14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       3       4           34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       3       3           33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7       1       2           12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8       1       1           11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9       2       2           22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10      2       3           23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11      2       4           24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12      2       1           21</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>

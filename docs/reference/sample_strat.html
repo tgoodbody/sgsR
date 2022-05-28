@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -181,7 +181,7 @@ https://doi.org/10.1016/j.rse.2021.112510</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#--- Load raster and access files ---#</span></span>
-<span class="r-in"><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"kmeans.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"sraster.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">sr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"></span>
@@ -191,17 +191,11 @@ https://doi.org/10.1016/j.rse.2021.112510</p>
 <span class="r-in">  nSamp <span class="op">=</span> <span class="fl">50</span></span>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Implementing porportional allocation of samples</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> nSamp of 50 is not perfectly divisible based on strata distribution. nSamp of 56 will be returned. Use 'force = TRUE' to brute force to 50.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> nSamp of 50 is not perfectly divisible based on strata distribution. nSamp of 52 will be returned. Use 'force = TRUE' to brute force to 50.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Processing strata : 1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Processing strata : 2</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Processing strata : 3</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Processing strata : 4</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Processing strata : 5</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Processing strata : 6</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Processing strata : 7</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Processing strata : 8</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Processing strata : 9</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Processing strata : 10</span>
 <span class="r-in"></span>
 <span class="r-in"></span>
 </code></pre></div>
