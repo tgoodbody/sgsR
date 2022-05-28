@@ -36,7 +36,7 @@ Calculate how sraster strata are represented in existing samples
 ### --- generate example stratification ---###
 
 #--- load ALS metrics from sgsR internal data ---#
-r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
+r <- system.file("extdata", "mraster.tif", package = "sgsR")
 
 #--- read ALS metrics using the terra package ---#
 mraster <- terra::rast(r)

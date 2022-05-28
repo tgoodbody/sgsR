@@ -29,7 +29,7 @@
 #'
 #' @examples
 #' #--- Load raster and access files ---#
-#' r <- system.file("extdata", "kmeans.tif", package = "sgsR")
+#' r <- system.file("extdata", "sraster.tif", package = "sgsR")
 #' sr <- terra::rast(r)
 #'
 #'

@@ -27,7 +27,7 @@
 #'
 #' @examples
 #' #--- load input metrics raster ---#
-#' raster <- system.file("extdata", "kmeans.tif", package = "sgsR")
+#' raster <- system.file("extdata", "sraster.tif", package = "sgsR")
 #' srasterkmeans <- terra::rast(raster)
 #'
 #' #--- read polygon coverage ---#

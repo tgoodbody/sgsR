@@ -21,7 +21,7 @@
 #' @examples
 #' \dontrun{
 #' #--- Load raster and existing plots---#
-#' r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
+#' r <- system.file("extdata", "mraster.tif", package = "sgsR")
 #' mr <- terra::rast(r)
 #'
 #' e <- system.file("extdata", "existing.shp", package = "sgsR")

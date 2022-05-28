@@ -16,10 +16,10 @@
 #'
 #' @examples
 #' #--- Load raster and existing plots---#
-#' r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
+#' r <- system.file("extdata", "mraster.tif", package = "sgsR")
 #' mr <- terra::rast(r)
 #'
-#' a <- system.file("extdata", "roads.shp", package = "sgsR")
+#' a <- system.file("extdata", "access.shp", package = "sgsR")
 #' ac <- sf::st_read(a)
 #'
 #' sample_balanced(

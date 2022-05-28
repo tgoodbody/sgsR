@@ -53,7 +53,7 @@ Stratify metrics raster using \code{\link[stats]{kmeans}} algorithm
 }
 \examples{
 #--- Load raster and access files ---#
-r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
+r <- system.file("extdata", "mraster.tif", package = "sgsR")
 mr <- terra::rast(r)
 
 #--- perform stratification using k-means ---#

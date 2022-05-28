@@ -46,10 +46,10 @@ Randomly sample within a stratification raster extent.
 }
 \examples{
 #--- Load raster and access files ---#
-r <- system.file("extdata", "kmeans.tif", package = "sgsR")
+r <- system.file("extdata", "sraster.tif", package = "sgsR")
 sr <- terra::rast(r)
 
-a <- system.file("extdata", "roads.shp", package = "sgsR")
+a <- system.file("extdata", "access.shp", package = "sgsR")
 ac <- sf::st_read(a)
 
 #--- perform simple random sampling ---#

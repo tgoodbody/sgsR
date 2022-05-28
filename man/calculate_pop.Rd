@@ -35,7 +35,7 @@ Special thanks to Dr. Brendan Malone for the original implementation of this alg
 }
 \examples{
 #--- Load raster and access files ---#
-r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
+r <- system.file("extdata", "mraster.tif", package = "sgsR")
 mr <- terra::rast(r)
 
 calculate_pop(mraster = mr)

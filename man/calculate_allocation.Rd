@@ -49,7 +49,7 @@ Determine how many samples to allocate within strata
 }
 \examples{
 #--- Load strata raster and existing samples---#
-r <- system.file("extdata", "kmeans.tif", package = "sgsR")
+r <- system.file("extdata", "sraster.tif", package = "sgsR")
 sr <- terra::rast(r)
 
 e <- system.file("extdata", "existing.shp", package = "sgsR")

@@ -31,7 +31,7 @@ Extract stratum values to existing samples
 }
 \examples{
 #--- Load sraster ---#
-r <- system.file("extdata", "kmeans.tif", package = "sgsR")
+r <- system.file("extdata", "sraster.tif", package = "sgsR")
 sr <- terra::rast(r)
 
 #--- load existing samples ---#
