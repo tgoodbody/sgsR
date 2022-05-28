@@ -9,9 +9,9 @@
 #' @inheritParams strat_kmeans
 #' @inheritParams extract_strata
 #'
-#' @param mraster spatRaster. ALS metrics raster. Requires at least 2 layers to calculate covariance matrix
-#' @param threshold Numeric. Proxy maximum pixel quantile to avoid outliers. \code{default = 0.95}
-#' @param cores Numeric. Number of cores to use for parallel processing. \code{default = 1}
+#' @param mraster spatRaster. ALS metrics raster. Requires at least 2 layers to calculate covariance matrix.
+#' @param threshold Numeric. Proxy maximum pixel quantile to avoid outliers. \code{default = 0.95}.
+#' @param cores Numeric. Number of cores to use for parallel processing. \code{default = 1}.
 #'
 #' @references
 #' Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451
@@ -132,6 +132,25 @@ calculate_coobs <- function(mraster,
   #--- extract covariates at existing sample locations ---#
   
   samples <- sgsR::extract_metrics(mraster, existing, data.frame = TRUE)
+  
+  #--- check if samples fall in areas where stratum values are NA ---#
+  
+  if(any(!complete.cases(samples))){
+    
+    samples_NA <- samples %>%
+      dplyr::filter(!complete.cases(.)) %>%
+      dplyr::mutate(type = "existing")
+    
+    nNA <-  samples_NA %>%
+      dplyr::tally() %>%
+      dplyr::pull()
+    
+    message(paste0(nNA," samples in `existing` are located where mraster values are NA. These samples will be ignored during the sampling process."))
+    
+    samples <- samples %>%
+      stats::na.omit()
+    
+  }
   
   #--- create parallel processing structure ---#
   

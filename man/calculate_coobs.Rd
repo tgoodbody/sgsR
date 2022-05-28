@@ -16,22 +16,20 @@ calculate_coobs(
 )
 }
 \arguments{
-\item{mraster}{spatRaster. ALS metrics raster. Requires at least 2 layers to calculate covariance matrix}
+\item{mraster}{spatRaster. ALS metrics raster. Requires at least 2 layers to calculate covariance matrix.}
 
-\item{existing}{sf.  Existing plot network.}
+\item{existing}{sf 'POINT'.  Existing plot network.}
 
-\item{cores}{Numeric. Number of cores to use for parallel processing. \code{default = 1}}
+\item{cores}{Numeric. Number of cores to use for parallel processing. \code{default = 1}.}
 
-\item{threshold}{Numeric. Proxy maximum pixel quantile to avoid outliers. \code{default = 0.95}}
+\item{threshold}{Numeric. Proxy maximum pixel quantile to avoid outliers. \code{default = 0.95}.}
 
 \item{plot}{Logical. Plots output strata raster and visualized
 strata with boundary dividers.}
 
 \item{details}{Logical. If \code{FALSE} (default) output is only
- stratification raster. If \code{TRUE} return a list
-where \code{$details} is additional stratification information and
- \code{$raster} is the output stratification spatRaster.
- @param ... Additional arguments to be passed to \code{\link[stats]{kmeans}} function.}
+stratification raster. If \code{TRUE} return a list where \code{$details} is additional 
+stratification information and \code{$raster} is the output stratification spatRaster.}
 
 \item{filename}{Character. Path to write stratified raster to disc.}
 
