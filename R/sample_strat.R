@@ -7,18 +7,18 @@
 #' @inheritParams sample_srs
 #' @inheritParams calculate_allocation
 #' @param sraster spatRaster. Stratification raster to be used for sampling.
-#' @param nSamp Numeric. Number of desired samples. \code{existing include} and \code{force} influence this value.
-#' @param existing sf or data.frame.  Existing plot network.
-#' @param include Logical. If \code{TRUE} include existing plots in \code{nSamp} total.
+#' @param nSamp Numeric. Number of desired samples. \code{existing}, \code{include} and \code{force} influence this value.
+#' @param existing sf 'POINT' or data.frame.  Existing plot network.
+#' @param include Logical. If \code{TRUE} include \code{existing} plots in \code{nSamp} total.
 #' @param remove Logical. If \code{TRUE} randomly remove samples from over represented strata to meet allocated sample numbers.
 #' Used only when \code{existing} and \code{include} are both \code{TRUE}.
-#' @param wrow Numeric. Number of row in the focal window (default is 3).
-#' @param wcol Numeric. Number of columns in the focal window (default is 3).
+#' @param wrow Numeric. Number of row in the focal window (\code{default = 3}).
+#' @param wcol Numeric. Number of columns in the focal window (\code{default = 3}).
 #' @param details Logical. If \code{FALSE} (default) output is sf object of
 #' stratified samples. If \code{TRUE} return a list
 #' where \code{$details} additional sampling information and \code{$raster}
 #' is an sf object of stratified samples.
-#' @param plot Logical. Plots existing (circles) and new (crosses) samples.
+#' @param plot Logical. Plots existing (if provided; circles) and new (crosses) samples.
 #'
 #' @importFrom methods is
 #' 

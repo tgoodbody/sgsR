@@ -28,7 +28,7 @@ sample_strat(
 \arguments{
 \item{sraster}{spatRaster. Stratification raster to be used for sampling.}
 
-\item{nSamp}{Numeric. Number of desired samples. \code{existing include} and \code{force} influence this value.}
+\item{nSamp}{Numeric. Number of desired samples. \code{existing}, \code{include} and \code{force} influence this value.}
 
 \item{allocation}{Character. Allocation algorithm to be used. Either \code{prop} (default) for proportional allocation
 or \code{optim} for optimal allocation (equal sampling cost) or \code{equal} for equal number of samples (defined by \code{nSamp})
@@ -43,16 +43,16 @@ Has no effect when \code{existing} is provided.}
 \item{mraster}{spatRaster. ALS metric raster. Required when \code{allocation = optim}.}
 
 \item{mindist}{Numeric. Minimum allowable distance between selected
-samples. Default = NULL.}
+samples. \code{Default = NULL}.}
 
-\item{existing}{sf or data.frame.  Existing plot network.}
+\item{existing}{sf 'POINT' or data.frame.  Existing plot network.}
 
-\item{include}{Logical. If \code{TRUE} include existing plots in \code{nSamp} total.}
+\item{include}{Logical. If \code{TRUE} include \code{existing} plots in \code{nSamp} total.}
 
 \item{remove}{Logical. If \code{TRUE} randomly remove samples from over represented strata to meet allocated sample numbers.
 Used only when \code{existing} and \code{include} are both \code{TRUE}.}
 
-\item{access}{sf. Road access network - must be lines.}
+\item{access}{sf 'LINESTRING' or 'MULTILINESTRING'. Access network.}
 
 \item{buff_inner}{Numeric. Inner buffer boundary specifying distance
 from access where plots cannot be sampled.}
@@ -60,11 +60,11 @@ from access where plots cannot be sampled.}
 \item{buff_outer}{Numeric. Outer buffer boundary specifying distance
 from access where plots can be sampled.}
 
-\item{wrow}{Numeric. Number of row in the focal window (default is 3).}
+\item{wrow}{Numeric. Number of row in the focal window (\code{default = 3}).}
 
-\item{wcol}{Numeric. Number of columns in the focal window (default is 3).}
+\item{wcol}{Numeric. Number of columns in the focal window (\code{default = 3}).}
 
-\item{plot}{Logical. Plots existing (circles) and new (crosses) samples.}
+\item{plot}{Logical. Plots existing (if provided; circles) and new (crosses) samples.}
 
 \item{details}{Logical. If \code{FALSE} (default) output is sf object of
 stratified samples. If \code{TRUE} return a list

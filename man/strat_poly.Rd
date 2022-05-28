@@ -19,9 +19,9 @@ strat_poly(
 \arguments{
 \item{poly}{sf. Input polygon coverage. e.g. - forest resources inventory coverage.}
 
-\item{attribute}{Character. Name of attribute within \code{poly} that will be stratified}
+\item{attribute}{Character. Name of attribute within \code{poly} that will be stratified.}
 
-\item{features}{vector/list. Vector or list of vectors of features within \code{attribute}
+\item{features}{Vector / list of vectors. Features within \code{attribute}
 to guide stratification.}
 
 \item{raster}{spatRaster. Raster template to enable polygon to raster conversion.}

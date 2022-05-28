@@ -8,7 +8,6 @@
 #' @inheritParams strat_kmeans
 #'
 #' @param nComp Numeric. Value indicating number of principal components to be rasterized.
-#' prior to analysis.
 #' @param ... Additional arguments to be passed to \code{\link[stats]{prcomp}}.
 #'
 #' @importFrom stats na.exclude na.omit prcomp

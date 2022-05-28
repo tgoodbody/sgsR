@@ -7,12 +7,12 @@
 #'
 #' @inheritParams strat_kmeans
 #' @inheritParams sample_srs
-#' @param algorithm Character. One of \code{lpm2_kdtree, lcube, lcubestratified}
+#' @param algorithm Character. One of \code{lpm2_kdtree, lcube, lcubestratified}.
 #' @param p Numeric. Vector with length equal to the number of cells in \code{mraster} representing
 #' the inclusion probability for each candidate sample. Default = \code{nSamp / N}, where \code{N}
 #' is the number of cells.
 #'
-#' @return An sf object with \code{nSamp} randomly sampled points.
+#' @return An sf object with \code{nSamp} samples.
 #'
 #' @examples
 #' #--- Load raster and existing plots---#

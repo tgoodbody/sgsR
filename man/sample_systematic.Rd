@@ -26,11 +26,11 @@ sample_systematic(
 \item{cellsize}{Numeric. Desired cellsize for tessellation.}
 
 \item{square}{Logical. Tessellation shape. Default is regular square grid,
-if \code{FALSE} hexagons are returned.}
+if \code{FALSE} hexagons are used.}
 
-\item{location}{Character. Sample location within tessellation. Default (\code{"centers"})
-returns samples at tessellation centers, \code{"corners"} - corners are returned, \code{"random"} - samples
-are randomly located within tessellations.}
+\item{location}{Character. Sample location within tessellation. \code{Default = "centers"})
+returns samples at tessellation centers, \code{"corners"} - corners of tessellation are returned,
+\code{"random"} - samples are randomly located within tessellations.}
 
 \item{forceSamp}{Logical. Only applies when \code{location = "random"}. If \code{TRUE}, random samples are
 forced to fall in areas where \code{raster} does not have \code{NA} values. This will considerably slow processing.}

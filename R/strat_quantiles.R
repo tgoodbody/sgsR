@@ -5,17 +5,16 @@
 #'
 #' @inheritParams strat_kmeans
 #' @inheritParams strat_breaks
-#' @param nStrata Numeric. Number of quantiles to stratify primary covariate.
-#' @param nStrata2 Numeric. Number of quantiles to stratify secondary covariate.
-#' @param samp Numeric. Determines proportion of cells to plot in scatterplot (default = \code{1}).
+#' @param nStrata Numeric. Number of quantiles to stratify \code{mraster}.
+#' @param nStrata2 Numeric. Number of quantiles to stratify \code{mraster2}.
+#' @param samp Numeric. Determines proportion of cells to plot in scatterplot (default = \code{0.2} / 20% of pixels).
 #' Lower values reduce visualization time.
-#'
 #'
 #' @return Returns an output stratification \code{spatRaster} or a list when \code{details = TRUE}.
 #'
 #' When a list is returned:
 #' \enumerate{
-#' \item \code{details} generates is the lookUp table for the stratification.
+#' \item \code{details} generates is a strata lookUp table for the stratification.
 #' \item \code{raster} is a stratified \code{spatRaster} based on quantiles
 #' \item \code{plot} is a \code{ggplot} histogram / scatter plot object (depends on whether metric2 was supplied).
 #' Histogram shows distribution and break points while scatter plot shows colour coded and strata boundaries.

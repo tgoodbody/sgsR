@@ -34,8 +34,8 @@ calculate_lhsOpt(
 
 \item{rep}{Numeric. Internal repetitions for each sample size. \code{default = 10}.}
 
-\item{iter}{Numeric. Internal to \code{\link[clhs]{clhs}} - A positive number, giving the number of
-iterations for the Metropolis-Hastings annealing process. Defaults to \code{10000}.}
+\item{iter}{Positive Numeric. The number of iterations for the Metropolis-Hastings
+annealing process. Defaults to \code{10000}. Internal to \code{\link[clhs]{clhs}}.}
 }
 \value{
 data.frame with summary statistics.

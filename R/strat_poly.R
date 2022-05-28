@@ -6,8 +6,8 @@
 #'
 #' @inheritParams strat_breaks
 #' @param poly sf. Input polygon coverage. e.g. - forest resources inventory coverage.
-#' @param attribute Character. Name of attribute within \code{poly} that will be stratified
-#' @param features vector/list. Vector or list of vectors of features within \code{attribute}
+#' @param attribute Character. Name of attribute within \code{poly} that will be stratified.
+#' @param features Vector / list of vectors. Features within \code{attribute}
 #' to guide stratification.
 #' @param raster spatRaster. Raster template to enable polygon to raster conversion.
 #' @param plot Logical. Plots output spatRaster.

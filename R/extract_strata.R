@@ -7,7 +7,7 @@
 #' @inheritParams sample_systematic
 #' 
 #' @param sraster spatRaster. Stratification raster.
-#' @param existing sf.  Existing plot network.
+#' @param existing sf 'POINT'.  Existing plot network.
 #' @param data.frame Logical. Output as data.frame if \code{TRUE}
 #' 
 #' @return An sf or data.frame object of samples with strata attribute

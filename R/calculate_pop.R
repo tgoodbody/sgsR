@@ -16,7 +16,7 @@
 #' @param nQuant Numeric. Number of quantiles to divide the population into for \code{matQ}.
 #' \code{default = 10}.
 #' @param matCov Logical. Calculates covariate matrix of the population. Needed for Kullback–Leibler divergence testing.
-#' \code{default = TRUE}. Relies on \code{matQ = TRUE} to calculate.
+#' \code{default = TRUE}. Requires \code{matQ = TRUE}.
 #'
 #' @references
 #' Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451

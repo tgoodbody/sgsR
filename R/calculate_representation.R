@@ -1,6 +1,6 @@
-#' Compare representation of samples within sraster strata
+#' Compare sample representation within sraster strata
 #'
-#' @details Calculate how well sraster strata are represented in existing samples
+#' @details Calculate how sraster strata are represented in existing samples
 #'
 #' @family calculate functions
 #'
@@ -10,13 +10,13 @@
 #' @return Returns a tibble where:
 #' \itemize{
 #' \item{strata} - \code{sraster} strata ID.
-#' \item{srasterFreq} - Coverage frequency percent of \code{sraster} strata.
-#' \item{sampleFreq} - Sampling frequency percent within \code{sraster} strata.
-#' \item{diffFreq} - Difference between \code{srasterFreq} & \code{sampleFreq}. Positive values indicate over representation
+#' \item{srasterFreq} - \code{sraster} coverage frequency.
+#' \item{sampleFreq} - Sampling frequency within \code{sraster} strata.
+#' \item{diffFreq} - Difference between \code{srasterFreq} & \code{sampleFreq}. Positive values indicate over representation.
 #' \item{nSamp} - Number of samples within each strata in \code{existing}.
 #' \item{need} - \code{srasterFreq * sum(nSamp)}. Total theoretical number of required samples to be representative of strata coverage.
-#' This values is rounded. It is important for the user to consider \code{diffFreq}. A small difference - e.g. 1 percent -
-#' in sample vs. sraster frequency could correspond to the algorithm allocating or removing samples that could likely be ignored.
+#' This values is rounded. It is important for the user to consider \code{diffFreq}. A small difference - e.g. 1 % -
+#' in \code{sampleFreq} vs. \code{srasterFreq} frequency could make the algorithm allocate or remove samples that could likely be ignored.
 #' }
 #'
 #' @examples

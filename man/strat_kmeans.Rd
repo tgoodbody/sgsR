@@ -30,22 +30,20 @@ strat_kmeans(
 
 \item{center}{Logical. Value indicating whether the variables should be shifted to be zero centered.}
 
-\item{scale}{Logical. Value indicating whether the variables should be scaled to have unit variance}
+\item{scale}{Logical. Value indicating whether the variables should be scaled to have unit variance.}
 
 \item{plot}{Logical. Plots output strata raster and visualized
 strata with boundary dividers.}
 
 \item{details}{Logical. If \code{FALSE} (default) output is only
- stratification raster. If \code{TRUE} return a list
-where \code{$details} is additional stratification information and
- \code{$raster} is the output stratification spatRaster.
- @param ... Additional arguments to be passed to \code{\link[stats]{kmeans}} function.}
+stratification raster. If \code{TRUE} return a list where \code{$details} is additional 
+stratification information and \code{$raster} is the output stratification spatRaster.}
 
 \item{filename}{Character. Path to write stratified raster to disc.}
 
 \item{overwrite}{Logical. Specify whether \code{filename} should be overwritten on disc.}
 
-\item{...}{Additional arguments for writing files. See \code{\link[terra]{writeRaster}}.}
+\item{...}{Additional arguments to be passed to \code{\link[stats]{kmeans}} function.}
 }
 \value{
 output stratification \code{spatRaster}, or a list when \code{details = TRUE}.

@@ -10,7 +10,7 @@ mask_access(raster, access, buff_inner, buff_outer)
 \arguments{
 \item{raster}{SpatRaster. Raster to be masked.}
 
-\item{access}{sf. Road access network - must be lines.}
+\item{access}{sf 'LINESTRING' or 'MULTILINESTRING'. Access network.}
 
 \item{buff_inner}{Numeric. Inner buffer boundary specifying distance
 from access where plots cannot be sampled.}

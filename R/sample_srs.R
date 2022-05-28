@@ -9,8 +9,8 @@
 #' @param raster spatRaster. Raster to be used for random sampling.
 #' @param nSamp Numeric. Number of desired samples.
 #' @param mindist Numeric. Minimum allowable distance between selected
-#'  samples. Default = NULL.
-#' @param access sf. Road access network - must be lines.
+#'  samples. \code{Default = NULL}.
+#' @param access sf 'LINESTRING' or 'MULTILINESTRING'. Access network.
 #' @param buff_inner Numeric. Inner buffer boundary specifying distance
 #'  from access where plots cannot be sampled.
 #' @param buff_outer Numeric. Outer buffer boundary specifying distance

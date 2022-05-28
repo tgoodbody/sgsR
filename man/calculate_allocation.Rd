@@ -24,7 +24,7 @@ or \code{optim} for optimal allocation (equal sampling cost) or \code{equal} for
 
 \item{mraster}{spatRaster. ALS metric raster. Required when \code{allocation = optim}.}
 
-\item{existing}{sf or data.frame.  Existing plot network.}
+\item{existing}{sf 'POINT' or data.frame.  Existing plot network.}
 
 \item{force}{Logical. \code{Default = FALSE} - force \code{nSamp} to be exactly the user defined value
 in cases where \code{nSamp} and \code{sraster} strata count are not equally divisible. Additional samples often need to be allocated or removed

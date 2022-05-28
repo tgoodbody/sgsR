@@ -7,8 +7,8 @@
 #' @inheritParams sample_systematic
 #' @param mraster Spatraster. Primary covariate raster to stratify.
 #' @param mraster2 Spatraster. Secondary covariate raster to stratify.
-#' @param breaks Numeric. Vector of breakpoints for \code{mraster}
-#' @param breaks2 Numeric. Vector of breakpoints for \code{mraster2} (if provided)
+#' @param breaks Numeric. Vector of breakpoints for \code{mraster}.
+#' @param breaks2 Numeric. Vector of breakpoints for \code{mraster2} (if provided).
 #' @param filename Character. Path to write stratified raster to disc.
 #' @param overwrite Logical. Specify whether \code{filename} should be overwritten on disc.
 #' @param ... Additional arguments for writing files. See \code{\link[terra]{writeRaster}}.

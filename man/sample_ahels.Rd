@@ -20,29 +20,25 @@ sample_ahels(
 \arguments{
 \item{mraster}{spatRaster. ALS metrics raster.}
 
-\item{existing}{sf.  Existing plot network.}
+\item{existing}{sf 'POINT'.  Existing plot network.}
 
 \item{nQuant}{Numeric. Number of quantiles to divide covariates and samples into. Quantiles that do not
 cover at least 1 percent of the area of interest will be excluded and be returned as \code{NA}.}
 
-\item{nSamp}{Numeric. Maximum number of new samples to allocate. If provided, the algorithm
-will default to allocating number of samples provided.}
+\item{nSamp}{Numeric. Maximum number of new samples to allocate.}
 
-\item{threshold}{Numeric. A sample quantile ratio threshold for establishing whether
-additional samples should be added. \code{default = 0.9}. Values close to 1 can cause the algorithm to
-continually loop and should be used sparingly.}
+\item{threshold}{Numeric. Sample quantile ratio threshold. After the threshold \code{default = 0.9} is reached,
+no additional samples will be added. Values close to 1 can cause the algorithm to continually loop.}
 
 \item{matrices}{List. Quantile and covariance matrices generated from \code{calculate_pop(mraster = mraster, nQuant = nQuant)}.
 Both \code{mraster} & \code{nQuant} inputs must be the same to supply the covariance matrix. Supplying the matrix allows users
-with very large rasters to pre-process the covariance matrix to avoid longer sampling processing times.}
+with very large \code{mrasters} to pre-process the covariance matrix to avoid longer sampling processing times.}
 
-\item{plot}{Logial. Plots existing (circles) and new (crosses) samples on the first band of mraster.}
+\item{plot}{Logial. Plots existing (circles) and new (crosses) samples on the first band of \code{mraster}.}
 
 \item{details}{Logical. If \code{FALSE} (default) output is only
- stratification raster. If \code{TRUE} return a list
-where \code{$details} is additional stratification information and
- \code{$raster} is the output stratification spatRaster.
- @param ... Additional arguments to be passed to \code{\link[stats]{kmeans}} function.}
+stratification raster. If \code{TRUE} return a list where \code{$details} is additional 
+stratification information and \code{$raster} is the output stratification spatRaster.}
 
 \item{filename}{Character. Path to write stratified raster to disc.}
 

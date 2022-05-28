@@ -15,7 +15,7 @@ calculate_distance(
 \arguments{
 \item{raster}{spatRaster. Raster to be used to calculate pixel level distance to access layer.}
 
-\item{access}{sf. Road access network - must be lines.}
+\item{access}{sf 'LINESTRING' or 'MULTILINESTRING'. Access network.}
 
 \item{plot}{Logical. Plots output strata raster with samples.}
 

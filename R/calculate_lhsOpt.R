@@ -12,8 +12,8 @@
 #' @param maxSamp Numeric. Maximum sample size to test. \code{default = 100}.
 #' @param step Numeric. Sample step size for each iteration. \code{default = 10}.
 #' @param rep Numeric. Internal repetitions for each sample size. \code{default = 10}.
-#' @param iter Numeric. Internal to \code{\link[clhs]{clhs}} - A positive number, giving the number of
-#' iterations for the Metropolis-Hastings annealing process. Defaults to \code{10000}.
+#' @param iter Positive Numeric. The number of iterations for the Metropolis-Hastings
+#' annealing process. Defaults to \code{10000}. Internal to \code{\link[clhs]{clhs}}.
 #'
 #' @references
 #' Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451

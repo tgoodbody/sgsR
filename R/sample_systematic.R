@@ -7,10 +7,10 @@
 #' @param raster spatRaster. Raster used to define extent of fishnet grid.
 #' @param cellsize Numeric. Desired cellsize for tessellation.
 #' @param square Logical. Tessellation shape. Default is regular square grid,
-#' if \code{FALSE} hexagons are returned.
-#' @param location Character. Sample location within tessellation. Default (\code{"centers"})
-#' returns samples at tessellation centers, \code{"corners"} - corners are returned, \code{"random"} - samples
-#' are randomly located within tessellations.
+#' if \code{FALSE} hexagons are used.
+#' @param location Character. Sample location within tessellation. \code{Default = "centers"})
+#' returns samples at tessellation centers, \code{"corners"} - corners of tessellation are returned,
+#' \code{"random"} - samples are randomly located within tessellations.
 #' @param forceSamp Logical. Only applies when \code{location = "random"}. If \code{TRUE}, random samples are
 #' forced to fall in areas where \code{raster} does not have \code{NA} values. This will considerably slow processing.
 #' @param access sf. Road access network - must be lines.

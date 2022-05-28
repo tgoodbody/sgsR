@@ -22,13 +22,13 @@ sample_balanced(
 
 \item{nSamp}{Numeric. Number of desired samples.}
 
-\item{algorithm}{Character. One of \code{lpm2_kdtree, lcube, lcubestratified}}
+\item{algorithm}{Character. One of \code{lpm2_kdtree, lcube, lcubestratified}.}
 
 \item{p}{Numeric. Vector with length equal to the number of cells in \code{mraster} representing
 the inclusion probability for each candidate sample. Default = \code{nSamp / N}, where \code{N}
 is the number of cells.}
 
-\item{access}{sf. Road access network - must be lines.}
+\item{access}{sf 'LINESTRING' or 'MULTILINESTRING'. Access network.}
 
 \item{buff_inner}{Numeric. Inner buffer boundary specifying distance
 from access where plots cannot be sampled.}
@@ -44,7 +44,7 @@ strata with boundary dividers.}
 \item{overwrite}{Logical. Specify whether \code{filename} should be overwritten on disc.}
 }
 \value{
-An sf object with \code{nSamp} randomly sampled points.
+An sf object with \code{nSamp} samples.
 }
 \description{
 Balanced raster sampling using \code{\link[BalancedSampling]{lcube}} and

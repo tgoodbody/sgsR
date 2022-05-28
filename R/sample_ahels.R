@@ -11,15 +11,13 @@
 #'
 #' @param nQuant Numeric. Number of quantiles to divide covariates and samples into. Quantiles that do not
 #' cover at least 1 percent of the area of interest will be excluded and be returned as \code{NA}.
-#' @param nSamp Numeric. Maximum number of new samples to allocate. If provided, the algorithm
-#' will default to allocating number of samples provided.
-#' @param threshold Numeric. A sample quantile ratio threshold for establishing whether
-#' additional samples should be added. \code{default = 0.9}. Values close to 1 can cause the algorithm to
-#' continually loop and should be used sparingly.
+#' @param nSamp Numeric. Maximum number of new samples to allocate.
+#' @param threshold Numeric. Sample quantile ratio threshold. After the threshold \code{default = 0.9} is reached,
+#' no additional samples will be added. Values close to 1 can cause the algorithm to continually loop.
 #' @param matrices List. Quantile and covariance matrices generated from \code{calculate_pop(mraster = mraster, nQuant = nQuant)}.
 #' Both \code{mraster} & \code{nQuant} inputs must be the same to supply the covariance matrix. Supplying the matrix allows users
-#' with very large rasters to pre-process the covariance matrix to avoid longer sampling processing times.
-#' @param plot Logial. Plots existing (circles) and new (crosses) samples on the first band of mraster.
+#' with very large \code{mrasters} to pre-process the covariance matrix to avoid longer sampling processing times.
+#' @param plot Logial. Plots existing (circles) and new (crosses) samples on the first band of \code{mraster}.
 #'
 #' @references
 #' Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451

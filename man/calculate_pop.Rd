@@ -19,7 +19,7 @@ calculate_pop(mraster, PCA = FALSE, matQ = TRUE, nQuant = 10, matCov = TRUE)
 \code{default = 10}.}
 
 \item{matCov}{Logical. Calculates covariate matrix of the population. Needed for Kullback–Leibler divergence testing.
-\code{default = TRUE}. Relies on \code{matQ = TRUE} to calculate.}
+\code{default = TRUE}. Requires \code{matQ = TRUE}.}
 }
 \value{
 List of matrices to be used as input for \code{\link{calculate_lhsOpt}}.

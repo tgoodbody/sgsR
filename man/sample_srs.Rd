@@ -22,9 +22,9 @@ sample_srs(
 \item{nSamp}{Numeric. Number of desired samples.}
 
 \item{mindist}{Numeric. Minimum allowable distance between selected
-samples. Default = NULL.}
+samples. \code{Default = NULL}.}
 
-\item{access}{sf. Road access network - must be lines.}
+\item{access}{sf 'LINESTRING' or 'MULTILINESTRING'. Access network.}
 
 \item{buff_inner}{Numeric. Inner buffer boundary specifying distance
 from access where plots cannot be sampled.}

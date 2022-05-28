@@ -11,14 +11,13 @@
 #' @param algorithm Character. \code{Lloyd} (default) or
 #' \code{MacQueen} algorithms.
 #' @param center Logical. Value indicating whether the variables should be shifted to be zero centered.
-#' @param scale Logical. Value indicating whether the variables should be scaled to have unit variance
+#' @param scale Logical. Value indicating whether the variables should be scaled to have unit variance.
 #' @param plot Logical. Plots output strata raster and visualized
 #'  strata with boundary dividers.
 #' @param details Logical. If \code{FALSE} (default) output is only
-#'  stratification raster. If \code{TRUE} return a list
-#' where \code{$details} is additional stratification information and
-#'  \code{$raster} is the output stratification spatRaster.
-#'  @param ... Additional arguments to be passed to \code{\link[stats]{kmeans}} function.
+#' stratification raster. If \code{TRUE} return a list where \code{$details} is additional 
+#' stratification information and \code{$raster} is the output stratification spatRaster.
+#' @param ... Additional arguments to be passed to \code{\link[stats]{kmeans}} function.
 #'
 #' @return output stratification \code{spatRaster}, or a list when \code{details = TRUE}.
 #'
