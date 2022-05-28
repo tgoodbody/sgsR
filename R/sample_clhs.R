@@ -11,7 +11,7 @@
 #'
 #' @param iter Numeric. Value giving the number of iterations within the Metropolis-Hastings process.
 #' @param cost Numeric/Character. Index or name of covariate within \code{mraster} to be used to constrain cLHS sampling.
-#' If default - \code{NULL} then a cost constraint is not used.
+#' If default (\code{NULL}), a cost constraint is not used.
 #' @param ... Additional arguments for clhs sampling. See \code{\link[clhs]{clhs}}.
 #'
 #' @importFrom stats coef complete.cases median quantile sd runif var
@@ -214,6 +214,24 @@ sample_clhs <- function(mraster,
     } else {
       existingSamples <- extract_metrics(mraster = mraster, existing = existing, data.frame = TRUE)
     }
+    
+    #--- determine if existing samples fall in areas where metric values are NA ---#
+    if(any(!complete.cases(existingSamples))){
+      
+      samples_NA <- existingSamples %>%
+        dplyr::filter(!complete.cases(.)) %>%
+        dplyr::mutate(type = "existing")
+      
+      nNA <-  samples_NA %>%
+        dplyr::tally() %>%
+        dplyr::pull()
+      
+      message(paste0(nNA," samples in `existing` are located where mraster values are NA. These samples will be ignored during the sampling process."))
+      
+      existingSamples <- existingSamples %>%
+        stats::na.omit()
+      
+    }
 
     #--- create dataset with labels for plotting ---#
 
@@ -251,7 +269,7 @@ sample_clhs <- function(mraster,
 
     #--- same as above but this time including existing samples ---#
 
-    clhsOut <- clhs::clhs(x = vals_tp, size = nSamp, iter = iter, cost = cost, include = 1:nrow(existingSamples), ...)
+    clhsOut <- clhs::clhs(x = vals_tp, size = nSamp, iter = iter, cost = cost, must.include = 1:nrow(existingSamples), ...)
 
     if (inherits(clhsOut, "list")) {
 
@@ -264,13 +282,24 @@ sample_clhs <- function(mraster,
       samples <- vals[clhsOut, ]
     }
   }
+  
+  #--- add samples with NA metrics back to dataset if they existed ---#
+  if(exists("samples_NA")){
+    
+    #--- convert coordinates to a spatial points object ---#
+    samples <- samples %>%
+      rbind(., samples_NA) %>%
+      sf::st_as_sf(., coords = c("X", "Y"))
+    
+  } else {
+    
+    #--- convert coordinates to a spatial points object ---#
+    samples <- samples %>%
+      sf::st_as_sf(., coords = c("X", "Y"))
+    
+  }
 
-  #--- convert coordinates to a spatial points object ---#
-  samples <- samples %>%
-    as.data.frame() %>%
-    sf::st_as_sf(., coords = c("X", "Y"))
-
-  #--- assign sraster crs to spatial points object ---#
+    #--- assign sraster crs to spatial points object ---#
   sf::st_crs(samples) <- crs
 
   if (isTRUE(plot)) {

@@ -28,11 +28,11 @@ sample_clhs(
 \item{iter}{Numeric. Value giving the number of iterations within the Metropolis-Hastings process.}
 
 \item{cost}{Numeric/Character. Index or name of covariate within \code{mraster} to be used to constrain cLHS sampling.
-If default - \code{NULL} then a cost constraint is not used.}
+If default (\code{NULL}), a cost constraint is not used.}
 
-\item{existing}{sf.  Existing plot network.}
+\item{existing}{sf 'POINT'.  Existing plot network.}
 
-\item{access}{sf. Road access network - must be lines.}
+\item{access}{sf 'LINESTRING' or 'MULTILINESTRING'. Access network.}
 
 \item{buff_inner}{Numeric. Inner buffer boundary specifying distance
 from access where plots cannot be sampled.}
@@ -43,10 +43,8 @@ from access where plots can be sampled.}
 \item{plot}{Logical. Plots output strata raster with samples.}
 
 \item{details}{Logical. If \code{FALSE} (default) output is only
- stratification raster. If \code{TRUE} return a list
-where \code{$details} is additional stratification information and
- \code{$raster} is the output stratification spatRaster.
- @param ... Additional arguments to be passed to \code{\link[stats]{kmeans}} function.}
+stratification raster. If \code{TRUE} return a list where \code{$details} is additional 
+stratification information and \code{$raster} is the output stratification spatRaster.}
 
 \item{filename}{Character. Path to write output samples.}
 
