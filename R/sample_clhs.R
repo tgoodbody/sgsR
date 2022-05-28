@@ -295,6 +295,7 @@ sample_clhs <- function(mraster,
     
     #--- convert coordinates to a spatial points object ---#
     samples <- samples %>%
+      as.data.frame() %>%
       sf::st_as_sf(., coords = c("X", "Y"))
     
   }
