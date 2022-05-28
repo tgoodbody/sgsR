@@ -15,7 +15,7 @@ extract_metrics(
 \arguments{
 \item{mraster}{spatRaster. Metrics Raster.}
 
-\item{existing}{sf.  Existing plot network.}
+\item{existing}{sf 'POINT'.  Existing plot network.}
 
 \item{data.frame}{Logical. Output as data.frame if \code{TRUE}}
 

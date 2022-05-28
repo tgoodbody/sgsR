@@ -48,7 +48,11 @@ extract_strata <- function(sraster,
     stop("'sraster' must have a layer named 'strata'", call. = FALSE)
   }
   
-  if (!inherits(existing, "sf") && inherits(sf::st_geometry(existing), "sfc_POINT")) {
+  if (!inherits(existing, "sf")) {
+    stop("'existing' must be an 'sf' object", call. = FALSE)
+  }
+  
+  if (!inherits(sf::st_geometry(existing), "sfc_POINT")) {
     stop("'existing' must be an 'sf' object of type 'sfc_POINT' geometry", call. = FALSE)
   }
   

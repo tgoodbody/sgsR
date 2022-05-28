@@ -5,9 +5,9 @@
 #' @family extract functions
 #' 
 #' @inheritParams sample_systematic
+#' @inheritParams extract_strata
 #' 
 #' @param mraster spatRaster. Metrics Raster.
-#' @param existing sf.  Existing plot network.
 #' @param data.frame Logical. Output as data.frame if \code{TRUE}
 #' 
 #' @return An sf or data.frame object of samples with metrics attributes
@@ -48,10 +48,43 @@ extract_metrics <- function(mraster,
     stop("'existing' must be an 'sf' object", call. = FALSE)
   }
   
-  #--- Extract coordinates from existing ---#
+  if (!inherits(sf::st_geometry(existing), "sfc_POINT")) {
+    stop("'existing' must be an 'sf' object of type 'sfc_POINT' geometry", call. = FALSE)
+  }
   
-  xy <- sf::st_coordinates(existing)
+  if (!is(existing, "data.frame")) {
+    stop("existing must be a data.frame", call. = FALSE)
+  }
   
+  #--- if the existing plots are an sf object extract coordinates ---#
+  
+  if (is(existing, "sf")) {
+    
+    #--- Extract xy coordinates to enable extraction of strata values ---#
+    
+    xy <- sf::st_coordinates(existing)
+  } else {
+    if (any(!c("X", "Y") %in% colnames(existing))) {
+      
+      #--- if coordinate column names are lowercase change them to uppercase to match requirements ---#
+      
+      if (any(c("x", "y") %in% colnames(existing))) {
+        existing <- existing %>%
+          dplyr::rename(
+            X = x,
+            Y = y
+          )
+        
+        message("Column coordinate names are lowercase - converting to uppercase")
+      } else {
+        
+        #--- if no x/y columns are present stop ---#
+        
+        stop("'existing' must have columns named 'X' and 'Y'")
+      }
+    }
+  }
+
   vals <- terra::extract(mraster, xy)
   
   #--- extract other attributes from sampling and remove geometry attribute ---#

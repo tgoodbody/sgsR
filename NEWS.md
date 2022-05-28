@@ -5,8 +5,8 @@ allow existing samples to fall in areas of `NA` and not cause algorithms to fail
 
 * `sample_clhs` updated to fix issue where existing samples would not be appended to output.
 
-* `extract_metrics` & `extract_strata` will now generate a message if existing samples are co-located
-with strata or metric values that are `NA`.
+* `extract_metrics` & `extract_strata` produce more robust error messages & will now generate a message if 
+existing samples are co-located with strata or metric values that are `NA`.
 
 * `strat_quantiles` now provides a stratum look-up table when `details = TRUE` to allow user to see exact metric break
 points.
