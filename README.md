@@ -34,10 +34,9 @@ r <- system.file("extdata", "wall_metrics.tif", package = "sgsR")
 #--- load the mraster using the terra package ---#
 mraster <- terra::rast(r)
 
-#--- apply kmeans algorithm to mraster ---#
-sraster <- strat_kmeans(mraster = mraster, # use mraster as input for stratification
-                        nStrata = 4, # produce 4 strata
-                        plot = TRUE) # plot output
+#--- apply quantiles algorithm to mraster ---#
+sraster <- strat_quantiles(mraster = mraster$zq90, # use mraster as input for stratification
+                           nStrata = 4) # produce 4 strata
                         
 #--- apply stratified sampling ---#
 existing <- sample_strat(sraster = sraster, # use sraster as input for sampling

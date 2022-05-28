@@ -95,7 +95,7 @@
     <dl><dt>sraster</dt>
 <dd><p>spatRaster. Stratification raster to be used for sampling.</p></dd>
 <dt>nSamp</dt>
-<dd><p>Numeric. Number of desired samples. <code>existing include</code> and <code>force</code> influence this value.</p></dd>
+<dd><p>Numeric. Number of desired samples. <code>existing</code>, <code>include</code> and <code>force</code> influence this value.</p></dd>
 <dt>allocation</dt>
 <dd><p>Character. Allocation algorithm to be used. Either <code>prop</code> (default) for proportional allocation
 or <code>optim</code> for optimal allocation (equal sampling cost) or <code>equal</code> for equal number of samples (defined by <code>nSamp</code>)
@@ -110,16 +110,16 @@ Has no effect when <code>existing</code> is provided.</p></dd>
 <dd><p>spatRaster. ALS metric raster. Required when <code>allocation = optim</code>.</p></dd>
 <dt>mindist</dt>
 <dd><p>Numeric. Minimum allowable distance between selected
-samples. Default = NULL.</p></dd>
+samples. <code>Default = NULL</code>.</p></dd>
 <dt>existing</dt>
-<dd><p>sf or data.frame.  Existing plot network.</p></dd>
+<dd><p>sf 'POINT' or data.frame.  Existing plot network.</p></dd>
 <dt>include</dt>
-<dd><p>Logical. If <code>TRUE</code> include existing plots in <code>nSamp</code> total.</p></dd>
+<dd><p>Logical. If <code>TRUE</code> include <code>existing</code> plots in <code>nSamp</code> total.</p></dd>
 <dt>remove</dt>
 <dd><p>Logical. If <code>TRUE</code> randomly remove samples from over represented strata to meet allocated sample numbers.
 Used only when <code>existing</code> and <code>include</code> are both <code>TRUE</code>.</p></dd>
 <dt>access</dt>
-<dd><p>sf. Road access network - must be lines.</p></dd>
+<dd><p>sf 'LINESTRING' or 'MULTILINESTRING'. Access network.</p></dd>
 <dt>buff_inner</dt>
 <dd><p>Numeric. Inner buffer boundary specifying distance
 from access where plots cannot be sampled.</p></dd>
@@ -127,11 +127,11 @@ from access where plots cannot be sampled.</p></dd>
 <dd><p>Numeric. Outer buffer boundary specifying distance
 from access where plots can be sampled.</p></dd>
 <dt>wrow</dt>
-<dd><p>Numeric. Number of row in the focal window (default is 3).</p></dd>
+<dd><p>Numeric. Number of row in the focal window (<code>default = 3</code>).</p></dd>
 <dt>wcol</dt>
-<dd><p>Numeric. Number of columns in the focal window (default is 3).</p></dd>
+<dd><p>Numeric. Number of columns in the focal window (<code>default = 3</code>).</p></dd>
 <dt>plot</dt>
-<dd><p>Logical. Plots existing (circles) and new (crosses) samples.</p></dd>
+<dd><p>Logical. Plots existing (if provided; circles) and new (crosses) samples.</p></dd>
 <dt>details</dt>
 <dd><p>Logical. If <code>FALSE</code> (default) output is sf object of
 stratified samples. If <code>TRUE</code> return a list
@@ -148,7 +148,9 @@ is an sf object of stratified samples.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
-    <p>The sampling is performed in 2 stages:</p><ol><li><p><code>Rule 1</code> - Sample within grouped stratum pixels defined within the
+    <p><code>existing</code> may contain samples that fall in <code>sraster</code> cells that are `NA`. If this occurs and <code>include = TRUE</code>, `NA` samples
+are separated during sampling and re-appended at the end of the sampling process.</p>
+<p>The sampling is performed in 2 stages:</p><ol><li><p><code>Rule 1</code> - Sample within grouped stratum pixels defined within the
 <code>wrow, wcol</code> parameters</p></li>
 <li><p><code>Rule 2</code> - If no samples exist to satisfy Rule 1
  individual stratum pixels are sampled.</p>
@@ -209,18 +211,11 @@ https://doi.org/10.1016/j.rse.2021.112510</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by
-<a href="https://scholar.google.ca/citations?user=C_qdYDsAAAAJ&amp;hl=en" class="external-link">Tristan
-RH Goodbody</a>,
-<a href="https://forestry.ubc.ca/faculty-profile/nicholas-coops/" class="external-link">Nicholas
-C Coops</a>,
-<a href="https://www.researchgate.net/profile/Martin-Queinnec" class="external-link">Martin
-Queinnec</a>.</p>
+  <p></p><p>Developed by <a href="https://scholar.google.ca/citations?user=C_qdYDsAAAAJ&amp;hl=en" class="external-link">Tristan RH Goodbody</a>, <a href="https://forestry.ubc.ca/faculty-profile/nicholas-coops/" class="external-link">Nicholas C Coops</a>, <a href="https://www.researchgate.net/profile/Martin-Queinnec" class="external-link">Martin Queinnec</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer></div>

@@ -85,7 +85,7 @@ within the <code><a href="sample_clhs.html">sample_clhs</a></code> function</p>
     <dl><dt>raster</dt>
 <dd><p>spatRaster. Raster to be used to calculate pixel level distance to access layer.</p></dd>
 <dt>access</dt>
-<dd><p>sf. Road access network - must be lines.</p></dd>
+<dd><p>sf 'LINESTRING' or 'MULTILINESTRING'. Access network.</p></dd>
 <dt>plot</dt>
 <dd><p>Logical. Plots output strata raster with samples.</p></dd>
 <dt>filename</dt>
@@ -117,12 +117,11 @@ within the <code><a href="sample_clhs.html">sample_clhs</a></code> function</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#--- Load raster and access files ---#</span></span>
 <span class="r-in"><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"wall_metrics_small.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> [rast] filename is empty. Provide a valid filename</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"roads.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">ac</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `roads' from data source </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\tgood.stu\Documents\R\win-library\4.1\sgsR\extdata\roads.shp' </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\goodb\AppData\Local\Temp\RtmpgH8uTJ\temp_libpath5b0477f48d2\sgsR\extdata\roads.shp' </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   using driver `ESRI Shapefile'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 167 features and 2 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: MULTILINESTRING</span>
@@ -134,7 +133,17 @@ within the <code><a href="sample_clhs.html">sample_clhs</a></code> function</p>
 <span class="r-in">  raster <span class="op">=</span> <span class="va">mr</span>,</span>
 <span class="r-in">  access <span class="op">=</span> <span class="va">ac</span>,</span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in calculate_distance(raster = mr, access = ac, ):</span> object 'mr' not found</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> calculating per pixel distance to provided access layer</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> class       : SpatRaster </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dimensions  : 110, 141, 4  (nrow, ncol, nlyr)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> resolution  : 20, 20  (x, y)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> extent      : 432440, 435260, 5340000, 5342200  (xmin, xmax, ymin, ymax)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> coord. ref. : UTM_Zone_17_Northern_Hemisphere </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sources     : wall_metrics_small.tif  (3 layers) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               memory  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> names       :       zq90,   pzabove2,        zsd, dist2access </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> min values  : 0.00000000, 0.00000000, 0.00000000,  0.01218756 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> max values  :    32.5000,    99.9000,    12.5900,    593.2165 </span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>
@@ -143,18 +152,11 @@ within the <code><a href="sample_clhs.html">sample_clhs</a></code> function</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by
-<a href="https://scholar.google.ca/citations?user=C_qdYDsAAAAJ&amp;hl=en" class="external-link">Tristan
-RH Goodbody</a>,
-<a href="https://forestry.ubc.ca/faculty-profile/nicholas-coops/" class="external-link">Nicholas
-C Coops</a>,
-<a href="https://www.researchgate.net/profile/Martin-Queinnec" class="external-link">Martin
-Queinnec</a>.</p>
+  <p></p><p>Developed by <a href="https://scholar.google.ca/citations?user=C_qdYDsAAAAJ&amp;hl=en" class="external-link">Tristan RH Goodbody</a>, <a href="https://forestry.ubc.ca/faculty-profile/nicholas-coops/" class="external-link">Nicholas C Coops</a>, <a href="https://www.researchgate.net/profile/Martin-Queinnec" class="external-link">Martin Queinnec</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer></div>

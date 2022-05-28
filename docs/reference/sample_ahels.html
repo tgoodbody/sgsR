@@ -93,29 +93,25 @@ the existing sample and covariate dataset.</p>
     <dl><dt>mraster</dt>
 <dd><p>spatRaster. ALS metrics raster.</p></dd>
 <dt>existing</dt>
-<dd><p>sf.  Existing plot network.</p></dd>
+<dd><p>sf 'POINT'.  Existing plot network.</p></dd>
 <dt>nQuant</dt>
 <dd><p>Numeric. Number of quantiles to divide covariates and samples into. Quantiles that do not
 cover at least 1 percent of the area of interest will be excluded and be returned as <code>NA</code>.</p></dd>
 <dt>nSamp</dt>
-<dd><p>Numeric. Maximum number of new samples to allocate. If provided, the algorithm
-will default to allocating number of samples provided.</p></dd>
+<dd><p>Numeric. Maximum number of new samples to allocate.</p></dd>
 <dt>threshold</dt>
-<dd><p>Numeric. A sample quantile ratio threshold for establishing whether
-additional samples should be added. <code>default = 0.9</code>. Values close to 1 can cause the algorithm to
-continually loop and should be used sparingly.</p></dd>
+<dd><p>Numeric. Sample quantile ratio threshold. After the threshold <code>default = 0.9</code> is reached,
+no additional samples will be added. Values close to 1 can cause the algorithm to continually loop.</p></dd>
 <dt>matrices</dt>
 <dd><p>List. Quantile and covariance matrices generated from <code>calculate_pop(mraster = mraster, nQuant = nQuant)</code>.
 Both <code>mraster</code> &amp; <code>nQuant</code> inputs must be the same to supply the covariance matrix. Supplying the matrix allows users
-with very large rasters to pre-process the covariance matrix to avoid longer sampling processing times.</p></dd>
+with very large <code>mrasters</code> to pre-process the covariance matrix to avoid longer sampling processing times.</p></dd>
 <dt>plot</dt>
-<dd><p>Logial. Plots existing (circles) and new (crosses) samples on the first band of mraster.</p></dd>
+<dd><p>Logial. Plots existing (circles) and new (crosses) samples on the first band of <code>mraster</code>.</p></dd>
 <dt>details</dt>
 <dd><p>Logical. If <code>FALSE</code> (default) output is only
- stratification raster. If <code>TRUE</code> return a list
-where <code>$details</code> is additional stratification information and
- <code>$raster</code> is the output stratification spatRaster.
- @param ... Additional arguments to be passed to <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></code> function.</p></dd>
+stratification raster. If <code>TRUE</code> return a list where <code>$details</code> is additional 
+stratification information and <code>$raster</code> is the output stratification spatRaster.</p></dd>
 <dt>filename</dt>
 <dd><p>Character. Path to write stratified raster to disc.</p></dd>
 <dt>overwrite</dt>
@@ -185,18 +181,11 @@ square brackets that follow represent the matrix row and column respectively tha
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by
-<a href="https://scholar.google.ca/citations?user=C_qdYDsAAAAJ&amp;hl=en" class="external-link">Tristan
-RH Goodbody</a>,
-<a href="https://forestry.ubc.ca/faculty-profile/nicholas-coops/" class="external-link">Nicholas
-C Coops</a>,
-<a href="https://www.researchgate.net/profile/Martin-Queinnec" class="external-link">Martin
-Queinnec</a>.</p>
+  <p></p><p>Developed by <a href="https://scholar.google.ca/citations?user=C_qdYDsAAAAJ&amp;hl=en" class="external-link">Tristan RH Goodbody</a>, <a href="https://forestry.ubc.ca/faculty-profile/nicholas-coops/" class="external-link">Nicholas C Coops</a>, <a href="https://www.researchgate.net/profile/Martin-Queinnec" class="external-link">Martin Queinnec</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer></div>

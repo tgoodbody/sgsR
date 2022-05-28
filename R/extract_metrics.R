@@ -63,6 +63,17 @@ extract_metrics <- function(mraster,
   #--- bind values and coordinates ---#
   samples <- cbind(xy, samp_mets, vals)
   
+  #--- if existing samples are co-located with NA values ---#
+  if(any(!complete.cases(samples))){
+    
+    nNA <- samples %>%
+      dplyr::filter(!complete.cases(.)) %>%
+      dplyr::tally() %>%
+      dplyr::pull()
+    
+    message(paste0(nNA," samples are located where metric values are NA."))
+  }
+  
   if (isTRUE(data.frame)) {
     
     #--- return data.frame ---#
