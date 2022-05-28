@@ -41,7 +41,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -124,21 +124,22 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span>
 
 <span class="co">#--- Load mraster from internal data ---#</span>
-<span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"wall_metrics.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span>
+<span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mraster.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span>
 
 <span class="co">#--- load mraster using the terra package ---#</span>
 <span class="va">mraster</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level3 unnumbered">
-<h3 class="unnumbered" id="vect">Road <code>access</code> data<a class="anchor" aria-label="anchor" href="#vect"></a>
+<h3 class="unnumbered" id="vect">
+<code>access</code> data<a class="anchor" aria-label="anchor" href="#vect"></a>
 </h3>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"roads.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"access.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span>
 
 <span class="co">#--- load the access vector using the sf package ---#</span>
 <span class="va">access</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span>
-<span class="co">#&gt; Reading layer `roads' from data source </span>
-<span class="co">#&gt;   `C:\Users\goodb\AppData\Local\Temp\RtmpgH8uTJ\temp_libpath5b0477f48d2\sgsR\extdata\roads.shp' </span>
+<span class="co">#&gt; Reading layer `access' from data source </span>
+<span class="co">#&gt;   `C:\Users\goodb\Documents\R\win-library\4.1\sgsR\extdata\access.shp' </span>
 <span class="co">#&gt;   using driver `ESRI Shapefile'</span>
 <span class="co">#&gt; Simple feature collection with 167 features and 2 fields</span>
 <span class="co">#&gt; Geometry type: MULTILINESTRING</span>
@@ -146,7 +147,7 @@
 <span class="co">#&gt; Bounding box:  xmin: 431100 ymin: 5337700 xmax: 438560 ymax: 5343240</span>
 <span class="co">#&gt; Projected CRS: UTM_Zone_17_Northern_Hemisphere</span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mraster</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span><span class="op">)</span>
 <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">access</span>, add <span class="op">=</span> <span class="cn">TRUE</span>, col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span></code></pre></div>
 <p><img src="sgsR_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <p>From the plot output we see the first band (<code>zq90</code>) of the <code>mraster</code> with the <code>access</code> vector overlaid.</p>
@@ -156,14 +157,14 @@
 <h2 class="unnumbered" id="srast">Stratified rasters - <code>sraster</code><a class="anchor" aria-label="anchor" href="#srast"></a>
 </h2>
 <p>In this tutorial, I am going to demonstrate how to produce basic <code>sraster</code> and <code>existing</code> sample data, which will be used in subsequent examples.</p>
-<p>To produce <code>sraster</code>, we use <code><a href="../reference/strat_kmeans.html">strat_kmeans()</a></code>. This function uses a <em>k</em>-means algorithm to stratify the input <code>mraster</code>.</p>
+<p>To produce <code>sraster</code>, we use <code><a href="../reference/strat_quantiles.html">strat_quantiles()</a></code>. This function used the input <code>mraster$zq90</code> distribution and divides it into 4 equally sized quantiles.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- apply kmeans algorithm to metrics raster ---#</span>
-<span class="va">sraster</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat_kmeans.html">strat_kmeans</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, <span class="co"># use mraster as input for sampling</span>
-                        nStrata <span class="op">=</span> <span class="fl">4</span>, <span class="co"># algorithm will produce 4 strata</span>
-                        plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># algorithm will plot output</span></code></pre></div>
-<p><img src="sgsR_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
-<p>After <code>sraster</code> is produced, use <code><a href="../reference/sample_srs.html">sample_srs()</a></code> to randomly sample points within our <code>sraster</code> to produce a sample network output.</p>
+<span class="va">sraster</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat_quantiles.html">strat_quantiles</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span>, <span class="co"># use mraster as input for sampling</span>
+                           nStrata <span class="op">=</span> <span class="fl">4</span>, <span class="co"># algorithm will produce 4 strata</span>
+                           plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># algorithm will plot output</span></code></pre></div>
+<p><img src="sgsR_files/figure-html/unnamed-chunk-5-1.png" width="700"><img src="sgsR_files/figure-html/unnamed-chunk-5-2.png" width="700"></p>
+<p>After <code>sraster</code> is produced, use <code><a href="../reference/sample_strat.html">sample_strat()</a></code> to perform stratified sampling within our <code>sraster</code> to generate a representative sample output based on strata.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- apply stratified sampling ---#</span>
 <span class="va">existing</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sample_strat.html">sample_strat</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># use mraster as input for sampling</span>
@@ -179,21 +180,19 @@
 <p>The sgsR package leverages the <code>%&gt;%</code> operator from the <code>magrittr</code> package. This allows us to “pipe” operations together to save in the amount of code needed to achieve an outcome. A simple example is demonstrated below.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#--- non piped ---#</span>
-<span class="va">sraster</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat_kmeans.html">strat_kmeans</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, <span class="co"># use mraster as input for sampling</span>
-                        nStrata <span class="op">=</span> <span class="fl">4</span>, <span class="co"># algorithm will produce 4 strata</span>
-                        plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># algorithm will plot output</span>
-
-<span class="va">existing</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sample_srs.html">sample_srs</a></span><span class="op">(</span>raster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># use mraster as input for sampling</span>
-                       nSamp <span class="op">=</span> <span class="fl">200</span>, <span class="co"># request 200 samples be taken</span>
-                       mindist <span class="op">=</span> <span class="fl">100</span>, <span class="co"># define that samples must be 100 m apart</span>
-                       plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># algorithm will plot output</span>
-
+<span class="va">sraster</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat_quantiles.html">strat_quantiles</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span>, <span class="co"># use mraster as input for sampling</span>
+                           nStrata <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="co"># algorithm will produce 4 strata</span>
+                           
+<span class="va">existing</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sample_strat.html">sample_strat</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># use mraster as input for sampling</span>
+                         nSamp <span class="op">=</span> <span class="fl">200</span>, <span class="co"># request 200 samples be taken</span>
+                         mindist <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="co"># define that samples must be 100 m apart</span>
+                       
 <span class="fu"><a href="../reference/extract_metrics.html">extract_metrics</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>,
                 existing <span class="op">=</span> <span class="va">existing</span><span class="op">)</span>
 
 <span class="co">#--- piped ---#</span>
-<span class="fu"><a href="../reference/strat_kmeans.html">strat_kmeans</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, nStrata <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/sample_srs.html">sample_srs</a></span><span class="op">(</span><span class="va">.</span>, nSamp <span class="op">=</span> <span class="fl">200</span>, mindist <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+<span class="fu"><a href="../reference/strat_quantiles.html">strat_quantiles</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span>, nStrata <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/sample_strat.html">sample_strat</a></span><span class="op">(</span><span class="va">.</span>, nSamp <span class="op">=</span> <span class="fl">200</span>, mindist <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/extract_metrics.html">extract_metrics</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, existing <span class="op">=</span> <span class="va">.</span><span class="op">)</span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

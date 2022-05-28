@@ -1,12 +1,14 @@
 # sgsR 0.1.3
 
+* Updates names for internal package data in `inst/exdata` and corresponding examples and vignettes.
+
 * Added contingencies for `sample_ahels`, `sample_strat`, `calculate_allocation`, `calculate_coobs` to
 allow existing samples to fall in areas of `NA` and not cause algorithms to fail or bug.
 
-* `sample_clhs` updated to fix issue where existing samples would not be appended to output.
-
 * `extract_metrics` & `extract_strata` produce more robust error messages & will now generate a message if 
 existing samples are co-located with strata or metric values that are `NA`.
+
+* `sample_clhs` updated to fix issue where existing samples would not be appended to output.
 
 * `strat_quantiles` now provides a stratum look-up table when `details = TRUE` to allow user to see exact metric break
 points.
