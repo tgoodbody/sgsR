@@ -4,8 +4,10 @@
 #'
 #' @family calculate functions
 #'
+#' @inheritParams extract_strata
 #' @inheritParams sample_strat
-#' @param plot Logical. Plot histogram output displaying the frequency of strata coverage and sampling coverage for \code{sraster} and \code{existing}.
+#' @param plot Logical. Plot frequency of strata coverage and sampling coverage 
+#' for \code{sraster} and \code{existing}.
 #'
 #' @return Returns a tibble where:
 #' \itemize{

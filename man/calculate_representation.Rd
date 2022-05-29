@@ -7,11 +7,12 @@
 calculate_representation(sraster, existing, plot = FALSE)
 }
 \arguments{
-\item{sraster}{spatRaster. Stratification raster to be used for sampling.}
+\item{sraster}{spatRaster. Stratification raster.}
 
-\item{existing}{sf 'POINT' or data.frame.  Existing plot network.}
+\item{existing}{sf 'POINT'.  Existing plot network.}
 
-\item{plot}{Logical. Plot histogram output displaying the frequency of strata coverage and sampling coverage for \code{sraster} and \code{existing}.}
+\item{plot}{Logical. Plot frequency of strata coverage and sampling coverage 
+for \code{sraster} and \code{existing}.}
 }
 \value{
 Returns a tibble where:

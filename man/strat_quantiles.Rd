@@ -33,7 +33,7 @@ strata with boundary dividers.}
 stratification raster. If \code{TRUE} return a list where \code{$details} is additional 
 stratification information and \code{$raster} is the output stratification spatRaster.}
 
-\item{samp}{Numeric. Determines proportion of cells to plot in scatterplot (default = \code{0.2} / 20% of pixels).
+\item{samp}{Numeric. Determines proportion of cells to plot in scatterplot (default = \code{0.2}).
 Lower values reduce visualization time.}
 
 \item{filename}{Character. Path to write stratified raster to disc.}

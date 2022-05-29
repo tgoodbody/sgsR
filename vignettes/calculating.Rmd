@@ -67,9 +67,17 @@ Currently, there are 8 functions associated with the `calculate` verb in the `sg
 `calculate_representation()` function allows the users to verify how well the stratification is represented in their `existing` sample networks. Users input an `sraster` and their `existing` samples to the `calculate_representation()` function, which will result in tabular and graphical (if `plot = TRUE`) outputs that compare strata coverage frequency and sampling frequency. 
 
 ```{r,warning=F,message=F}
+#--- quantile sraster ---#
+quantiles <- strat_quantiles(mraster = mraster$zq90,
+                             nStrata = 8)
+
+#--- random samples ---#
+srs <- sample_srs(raster = sraster,
+                  nSamp = 50)
+
 #--- calculate representation ---#
-calculate_representation(sraster = sraster, 
-                         existing = existing, 
+calculate_representation(sraster = quantiles, 
+                         existing = srs, 
                          plot = TRUE)
 ```
 
@@ -78,12 +86,8 @@ The tabular output presents the frequency of coverage for each strata (`srasterF
 Performing the algorithm on a sample set derived using `sample_strat()` exhibits proportional sampling to strata coverage.
 
 ```{r,warning=F,message=F}
-#--- stratified samples ---#
-strat <- sample_strat(sraster = sraster,
-                      nSamp = 200)
-
 calculate_representation(sraster = sraster,
-                         existing = strat,
+                         existing = existing,
                          plot = TRUE)
 ```
 
