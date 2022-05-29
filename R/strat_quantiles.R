@@ -7,7 +7,7 @@
 #' @inheritParams strat_breaks
 #' @param nStrata Numeric. Number of quantiles to stratify \code{mraster}.
 #' @param nStrata2 Numeric. Number of quantiles to stratify \code{mraster2}.
-#' @param samp Numeric. Determines proportion of cells to plot in scatterplot (default = \code{0.2} / 20% of pixels).
+#' @param samp Numeric. Determines proportion of cells to plot in scatterplot (default = \code{0.2}).
 #' Lower values reduce visualization time.
 #'
 #' @return Returns an output stratification \code{spatRaster} or a list when \code{details = TRUE}.
