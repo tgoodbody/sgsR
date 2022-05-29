@@ -87,7 +87,7 @@ calculate_pcomp <- function(mraster,
 
   PCA <- stats::prcomp(
     formula = ~.,
-    data = as.data.frame(vals),
+    data = data.frame(vals),
     center = center,
     scale. = scale,
     na.action = na.exclude,
