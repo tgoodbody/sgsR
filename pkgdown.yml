@@ -1,0 +1,10 @@
+pandoc: 2.14.2
+pkgdown: 2.0.3
+pkgdown_sha: ~
+articles:
+  calculating: calculating.html
+  sampling: sampling.html
+  sgsR: sgsR.html
+  stratification: stratification.html
+last_built: 2022-06-01T21:01Z
+
