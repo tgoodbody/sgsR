@@ -1,6 +1,6 @@
 citHeader("To cite sgsR in publications use:")
   
-year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date, perl = TRUE)
+year <- format(Sys.Date(), "%Y")
 vers <- paste("R package version", meta$Version)
 authors <- meta$`Authors@R`
 authors <- utils:::.read_authors_at_R_field(authors)
