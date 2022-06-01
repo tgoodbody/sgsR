@@ -120,13 +120,14 @@ in <code>sampleFreq</code> vs. <code>srasterFreq</code> frequency could make the
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- read ALS metrics using the terra package ---#</span></span>
 <span class="r-in"><span class="va">mraster</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> [rast] filename is empty. Provide a valid filename</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- perform stratification ---#</span></span>
 <span class="r-in"><span class="va">sraster</span> <span class="op">&lt;-</span> <span class="fu"><a href="strat_kmeans.html">strat_kmeans</a></span><span class="op">(</span></span>
 <span class="r-in">  mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span>,</span>
 <span class="r-in">  nStrata <span class="op">=</span> <span class="fl">6</span></span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> K-means being performed on 1 layers with 6 centers.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in strat_kmeans(mraster = mraster$zq90, nStrata = 6):</span> object 'mraster' not found</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### --- create existing sample network ---###</span></span>
 <span class="r-in"></span>
@@ -135,6 +136,7 @@ in <code>sampleFreq</code> vs. <code>srasterFreq</code> frequency could make the
 <span class="r-in">  raster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span>,</span>
 <span class="r-in">  nSamp <span class="op">=</span> <span class="fl">100</span></span>
 <span class="r-in"><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in sample_srs(raster = mraster$zq90, nSamp = 100):</span> object 'mraster' not found</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- calculate representation ---#</span></span>
 <span class="r-in"></span>
@@ -142,15 +144,7 @@ in <code>sampleFreq</code> vs. <code>srasterFreq</code> frequency could make the
 <span class="r-in">  sraster <span class="op">=</span> <span class="va">sraster</span>,</span>
 <span class="r-in">  existing <span class="op">=</span> <span class="va">existing</span></span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 x 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   strata srasterFreq sampleFreq diffFreq nSamp  need</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>      1        0.16       0.18   0.020<span style="text-decoration: underline;">0</span>    18    -<span style="color: #BB0000;">2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>      2        0.21       0.2   -<span style="color: #BB0000;">0.010</span><span style="color: #BB0000; text-decoration: underline;">0</span>    20     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>      3        0.26       0.3    0.040<span style="text-decoration: underline;">0</span>    30    -<span style="color: #BB0000;">4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>      4        0.2        0.18  -<span style="color: #BB0000;">0.020</span><span style="color: #BB0000; text-decoration: underline;">0</span>    18     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>      5        0.06       0.04  -<span style="color: #BB0000;">0.02</span>       4     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>      6        0.11       0.1   -<span style="color: #BB0000;">0.010</span><span style="color: #BB0000; text-decoration: underline;">0</span>    10     1</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in calculate_representation(sraster = sraster, existing = existing):</span> object 'sraster' not found</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

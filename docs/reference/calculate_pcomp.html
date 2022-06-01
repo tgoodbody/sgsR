@@ -128,27 +128,20 @@ stratification information and <code>$raster</code> is the output stratification
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#--- Load raster ---#</span></span>
 <span class="r-in"><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mraster.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> [rast] filename is empty. Provide a valid filename</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">calculate_pcomp</span><span class="op">(</span></span>
 <span class="r-in">  mraster <span class="op">=</span> <span class="va">mr</span>,</span>
 <span class="r-in">  nComp <span class="op">=</span> <span class="fl">2</span></span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> class       : SpatRaster </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dimensions  : 277, 373, 2  (nrow, ncol, nlyr)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> resolution  : 20, 20  (x, y)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> extent      : 431100, 438560, 5337700, 5343240  (xmin, xmax, ymin, ymax)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> coord. ref. : UTM Zone 17, Northern Hemisphere </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sources     : memory  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               memory  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> names       :       PC1,       PC2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> min values  : -4.402269, -5.357801 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> max values  :  5.282663,  2.155242 </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in calculate_pcomp(mraster = mr, nComp = 2):</span> object 'mr' not found</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">pcomp</span> <span class="op">&lt;-</span> <span class="fu">calculate_pcomp</span><span class="op">(</span></span>
 <span class="r-in">  mraster <span class="op">=</span> <span class="va">mr</span>,</span>
 <span class="r-in">  nComp <span class="op">=</span> <span class="fl">3</span>,</span>
 <span class="r-in">  details <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span class="r-in"><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in calculate_pcomp(mraster = mr, nComp = 3, details = TRUE):</span> object 'mr' not found</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- Display principal component details ---#</span></span>
 <span class="r-in"><span class="co">#pcomp$pca</span></span>

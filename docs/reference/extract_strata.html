@@ -109,38 +109,23 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#--- Load sraster ---#</span></span>
 <span class="r-in"><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"sraster.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">sr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> [rast] filename is empty. Provide a valid filename</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- load existing samples ---#</span></span>
 <span class="r-in"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"existing.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `existing' from data source </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\goodb\Documents\R\win-library\4.1\sgsR\extdata\existing.shp' </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\tgood\AppData\Local\R\win-library\4.2\sgsR\extdata\existing.shp' </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   using driver `ESRI Shapefile'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 203 features and 3 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 100 features and 1 field</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431210 ymin: 5337730 xmax: 438530 ymax: 5343070</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431110 ymin: 5337750 xmax: 438550 ymax: 5343230</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           unknown</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">extract_strata</span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sr</span>,</span>
 <span class="r-in">               existing <span class="op">=</span> <span class="va">e</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 203 features and 1 field</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431210 ymin: 5337730 xmax: 438530 ymax: 5343070</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: UTM Zone 17, Northern Hemisphere</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    strata               geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1 POINT (433970 5341370)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       1 POINT (435350 5342690)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       1 POINT (435930 5342350)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       1 POINT (436750 5338130)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       1 POINT (435490 5342830)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       1 POINT (434390 5339430)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7       1 POINT (434290 5341010)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8       1 POINT (437770 5338030)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9       1 POINT (433590 5341230)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10      1 POINT (433650 5340910)</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in extract_strata(sraster = sr, existing = e):</span> object 'sr' not found</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

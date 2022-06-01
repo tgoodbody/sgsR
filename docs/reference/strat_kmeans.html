@@ -134,13 +134,14 @@ stratification information and <code>$raster</code> is the output stratification
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#--- Load raster and access files ---#</span></span>
 <span class="r-in"><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mraster.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> [rast] filename is empty. Provide a valid filename</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- perform stratification using k-means ---#</span></span>
 <span class="r-in"><span class="va">kmeans</span> <span class="op">&lt;-</span> <span class="fu">strat_kmeans</span><span class="op">(</span></span>
 <span class="r-in">  mraster <span class="op">=</span> <span class="va">mr</span>,</span>
 <span class="r-in">  nStrata <span class="op">=</span> <span class="fl">5</span></span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> K-means being performed on 3 layers with 5 centers.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in strat_kmeans(mraster = mr, nStrata = 5):</span> object 'mr' not found</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">kmeans</span> <span class="op">&lt;-</span> <span class="fu">strat_kmeans</span><span class="op">(</span></span>
 <span class="r-in">  mraster <span class="op">=</span> <span class="va">mr</span>,</span>
@@ -149,7 +150,7 @@ stratification information and <code>$raster</code> is the output stratification
 <span class="r-in">  algorithm <span class="op">=</span> <span class="st">"MacQueen"</span>,</span>
 <span class="r-in">  details <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> K-means being performed on 3 layers with 5 centers.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in strat_kmeans(mraster = mr, nStrata = 5, iter = 1000, algorithm = "MacQueen",     details = TRUE):</span> object 'mr' not found</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">kmeans</span> <span class="op">&lt;-</span> <span class="fu">strat_kmeans</span><span class="op">(</span></span>
 <span class="r-in">  mraster <span class="op">=</span> <span class="va">mr</span>,</span>
@@ -159,8 +160,7 @@ stratification information and <code>$raster</code> is the output stratification
 <span class="r-in">  filename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".tif"</span><span class="op">)</span>,</span>
 <span class="r-in">  overwrite <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> K-means being performed on 3 layers with 5 centers.</span>
-<span class="r-plt img"><img src="strat_kmeans-1.png" alt="" width="700" height="433"></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in strat_kmeans(mraster = mr, nStrata = 5, iter = 1000, plot = TRUE,     filename = tempfile(fileext = ".tif"), overwrite = TRUE):</span> object 'mr' not found</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

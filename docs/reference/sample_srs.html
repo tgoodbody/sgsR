@@ -128,40 +128,18 @@ from access where plots can be sampled.</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#--- Load raster and access files ---#</span></span>
 <span class="r-in"><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"sraster.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">sr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> [rast] filename is empty. Provide a valid filename</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"access.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">ac</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `access' from data source </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\goodb\Documents\R\win-library\4.1\sgsR\extdata\access.shp' </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   using driver `ESRI Shapefile'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 167 features and 2 fields</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: MULTILINESTRING</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431100 ymin: 5337700 xmax: 438560 ymax: 5343240</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: UTM_Zone_17_Northern_Hemisphere</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> `dsn` must point to a source, not an empty string.</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- perform simple random sampling ---#</span></span>
 <span class="r-in"><span class="fu">sample_srs</span><span class="op">(</span></span>
 <span class="r-in">  raster <span class="op">=</span> <span class="va">sr</span>,</span>
 <span class="r-in">  nSamp <span class="op">=</span> <span class="fl">200</span>,</span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 200 features and 0 fields</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431150 ymin: 5337710 xmax: 438530 ymax: 5343210</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (435550 5341390)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (435550 5341390)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (436770 5338270)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  POINT (436630 5342150)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (438370 5339830)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POINT (432510 5338890)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POINT (431410 5341050)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (433990 5338830)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (438390 5342570)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (438230 5338830)</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in sample_srs(raster = sr, nSamp = 200, ):</span> object 'sr' not found</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

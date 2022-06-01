@@ -130,6 +130,7 @@ When a list is returned:</p><ol><li><p><code>details</code> is a list output of 
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#--- Load raster ---#</span></span>
 <span class="r-in"><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mraster.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> [rast] filename is empty. Provide a valid filename</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- create vector breaks ---#</span></span>
 <span class="r-in"><span class="va">br.max</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">11</span>, <span class="fl">18</span><span class="op">)</span></span>
@@ -141,31 +142,7 @@ When a list is returned:</p><ol><li><p><code>details</code> is a list output of 
 <span class="r-in">  plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span class="r-in">  details <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-plt img"><img src="strat_breaks-1.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="strat_breaks-2.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $details</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $details$breaks</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  3  5 11 18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $details$breaks2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $raster</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> class       : SpatRaster </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dimensions  : 277, 373, 1  (nrow, ncol, nlyr)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> resolution  : 20, 20  (x, y)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> extent      : 431100, 438560, 5337700, 5343240  (xmin, xmax, ymin, ymax)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> coord. ref. : UTM Zone 17, Northern Hemisphere </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> source      : memory </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> name        : strata </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> min value   :      1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> max value   :      5 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $plot</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span>
-<span class="r-plt img"><img src="strat_breaks-3.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in strat_breaks(mraster = mr$zq90, breaks = br.max, plot = TRUE,     details = TRUE):</span> object 'mr' not found</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">strat_breaks</span><span class="op">(</span></span>
 <span class="r-in">  mraster <span class="op">=</span> <span class="va">mr</span><span class="op">$</span><span class="va">zq90</span>,</span>
@@ -173,15 +150,7 @@ When a list is returned:</p><ol><li><p><code>details</code> is a list output of 
 <span class="r-in">  breaks <span class="op">=</span> <span class="va">br.max</span>,</span>
 <span class="r-in">  breaks2 <span class="op">=</span> <span class="va">br.sd</span></span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> class       : SpatRaster </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dimensions  : 277, 373, 1  (nrow, ncol, nlyr)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> resolution  : 20, 20  (x, y)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> extent      : 431100, 438560, 5337700, 5343240  (xmin, xmax, ymin, ymax)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> coord. ref. : UTM Zone 17, Northern Hemisphere </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> source      : memory </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> name        : strata </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> min value   :      1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> max value   :     17 </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in strat_breaks(mraster = mr$zq90, mraster2 = mr$zsd, breaks = br.max,     breaks2 = br.sd):</span> object 'mr' not found</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

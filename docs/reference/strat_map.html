@@ -136,12 +136,13 @@ where the values from both inputs are combined.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#--- load input metrics raster ---#</span></span>
 <span class="r-in"><span class="va">raster</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"sraster.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">srasterkmeans</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">raster</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> [rast] filename is empty. Provide a valid filename</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- read polygon coverage ---#</span></span>
 <span class="r-in"><span class="va">poly</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"inventory_polygons.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">fri</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">poly</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `inventory_polygons' from data source </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\goodb\Documents\R\win-library\4.1\sgsR\extdata\inventory_polygons.shp' </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   `C:\Users\tgood\AppData\Local\R\win-library\4.2\sgsR\extdata\inventory_polygons.shp' </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   using driver `ESRI Shapefile'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 632 features and 3 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: MULTIPOLYGON</span>
@@ -165,21 +166,14 @@ where the values from both inputs are combined.</p>
 <span class="r-in">  features <span class="op">=</span> <span class="va">features</span>,</span>
 <span class="r-in">  raster <span class="op">=</span> <span class="va">srasterkmeans</span></span>
 <span class="r-in"><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in strat_poly(poly = fri, attribute = attribute, features = features,     raster = srasterkmeans):</span> object 'srasterkmeans' not found</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- map srasters ---#</span></span>
 <span class="r-in"><span class="fu">strat_map</span><span class="op">(</span></span>
 <span class="r-in">  sraster <span class="op">=</span> <span class="va">srasterfri</span>,</span>
 <span class="r-in">  sraster2 <span class="op">=</span> <span class="va">srasterkmeans</span></span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> class       : SpatRaster </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dimensions  : 277, 373, 1  (nrow, ncol, nlyr)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> resolution  : 20, 20  (x, y)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> extent      : 431100, 438560, 5337700, 5343240  (xmin, xmax, ymin, ymax)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> coord. ref. : UTM Zone 17, Northern Hemisphere </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> source      : memory </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> name        : strata </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> min value   :     11 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> max value   :     34 </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in strat_map(sraster = srasterfri, sraster2 = srasterkmeans):</span> object 'srasterfri' not found</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">strat_map</span><span class="op">(</span></span>
 <span class="r-in">  sraster <span class="op">=</span> <span class="va">srasterfri</span>,</span>
@@ -187,35 +181,7 @@ where the values from both inputs are combined.</p>
 <span class="r-in">  stack <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span class="r-in">  details <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Stacking sraster, sraster2, and their combination (stratamapped).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $outRaster</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> class       : SpatRaster </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dimensions  : 277, 373, 3  (nrow, ncol, nlyr)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> resolution  : 20, 20  (x, y)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> extent      : 431100, 438560, 5337700, 5343240  (xmin, xmax, ymin, ymax)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> coord. ref. : UTM Zone 17, Northern Hemisphere </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sources     : memory  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               sraster.tif  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               memory  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> names       : strata, strata2, stratamapped </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> min values  :      1,       1,           11 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> max values  :      3,       4,           34 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $lookUp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    strata strata2 stratamapped</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       3       2           32</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       3       1           31</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       1       3           13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       1       4           14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       3       4           34</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       3       3           33</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7       1       2           12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8       1       1           11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9       2       2           22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10      2       3           23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11      2       4           24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12      2       1           21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in strat_map(sraster = srasterfri, sraster2 = srasterkmeans, stack = TRUE,     details = TRUE):</span> object 'srasterfri' not found</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
