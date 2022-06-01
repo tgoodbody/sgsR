@@ -32,25 +32,25 @@ Depends:
     R (>= 3.5.0),
     methods
 Imports:
-    dplyr (>= 1.0.6),
-    ggplot2 (>= 3.3.3),
-    sf (>= 0.9.0),
-    terra (>= 1.1.0),
-    tidyr (>= 1.1.3),
-    clhs (>= 0.8.1),
-    SamplingBigData (>= 1.0.0),
-    BalancedSampling (>= 1.5.5),
-    spatstat.geom (>= 2.1.0)
+    dplyr,
+    ggplot2,
+    sf,
+    terra,
+    tidyr,
+    clhs,
+    SamplingBigData,
+    BalancedSampling,
+    spatstat.geom
 Suggests: 
-    knitr (>= 1.33.0),
-    rmarkdown (>= 2.7.0),
+    knitr,
+    rmarkdown,
     Rfast,
-    testthat (>= 3.0.0),
-    doParallel (>= 1.0.16),
-    doSNOW (>= 1.0.19),
-    snow (>= 0.4.3),
-    foreach (>= 1.5.1),
-    entropy (>= 1.3.0),
+    testthat,
+    doParallel,
+    doSNOW,
+    snow,
+    foreach,
+    entropy,
     roxygen2
 VignetteBuilder: 
     knitr
