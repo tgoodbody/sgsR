@@ -4,6 +4,14 @@
 
 * Added `allocation = "manual"` to `calculate_allocation`. The parameter `weights` was added (mandatory for `allocation = "manual"`), where users can provide a numeric vector of relative weightings to strata. `sum(weights)` must equal 1.
 
+* Added `weights` parameter to `sample_strat()` to allow for `"manual"` allocation.
+
+* Added internal utility functions `allocation_prop / allocation_optim / allocation_manual / allocation_equal` and integrated them into `calculate_allocation()` to make code more succinct and purposeful.
+
+* Allow `buff_inner` to be `NULL` when providing `access` to isolate samples. This allows users to define only a maximum distance (should they wish to) that samples can be from `access` but not specify a minimum distance.
+
+* Altered error handling for raster masking to be within `mask_access()` instead of individual sampling functions.
+
 # sgsR 0.1.3
 
 * Updates names for internal package data in `inst/exdata` and corresponding examples and vignettes.

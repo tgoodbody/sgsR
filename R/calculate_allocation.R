@@ -79,6 +79,15 @@ calculate_allocation <- function(sraster,
   if (!inherits(sraster, "SpatRaster")) {
     stop("'sraster' must be type SpatRaster", call. = FALSE)
   }
+  
+  if (any(!c("strata") %in% names(sraster))) {
+    stop("'sraster must have a layer named 'strata'", call. = FALSE)
+  }
+  
+  #--- if the sraster has multiple bands subset the band named strata ---#
+  if (terra::nlyr(sraster) > 1) {
+    stop("Multiple layers detected in sraster. Provide only a single band.", call. = FALSE)
+  }
 
   if (!is.numeric(nSamp)) {
     stop("'nSamp' must be type numeric", call. = FALSE)
@@ -94,16 +103,10 @@ calculate_allocation <- function(sraster,
 
   #--- set global vars ---#
 
-  v_sd <- strata <- count <- freq <- total <- eTotal <- denom <- NULL
+  strata <- total <- eTotal <- NULL
 
   #--- determine crs of input sraster ---#
   crs <- terra::crs(sraster, proj = TRUE)
-  
-  vals <- terra::values(sraster) %>%
-    as.data.frame() %>%
-    stats::na.omit()
-  
-  names(vals) <- "strata"
   
   #--- determine which allocation algorithm to use ---#
 
@@ -114,27 +117,16 @@ calculate_allocation <- function(sraster,
     if (allocation == "prop") {
       
       #--- error handling when allocation algorithm is 'prop' ---#
-      
-      message("Implementing porportional allocation of samples")
 
       if (!is.null(mraster)) {
-        message("'allocation = prop' - ignoring 'mraster'")
+        message("'mraster' was specified but 'allocation = prop' - did you mean to use 'allocation = optim'?")
       }
       
       if (!is.null(weights)) {
         message("'weights' was specified but 'allocation = prop' - did you mean to use 'allocation = manual'?")
       }
 
-      #--- determine number of samples within each strata ---#
-      toSample <- vals %>%
-        dplyr::group_by(strata) %>%
-        dplyr::summarize(count = dplyr::n()) %>%
-        dplyr::mutate(freq = count / sum(count),
-                      total = freq * nSamp) %>%
-        dplyr::mutate(total = replace(total, total < 1, 1)) %>%
-        dplyr::mutate(total = round(total, digits = 0)) %>%
-        dplyr::select(strata, total) %>%
-        as.data.frame()
+      toSample <- allocation_prop(sraster = sraster, nSamp = nSamp)
     }
 
     #--- optimal allocation ---#
@@ -143,49 +135,12 @@ calculate_allocation <- function(sraster,
 
       #--- error handling when allocation algorithm is 'optim' ---#
 
-      if (is.null(mraster)) {
-        stop("'mraster' must be supplied if 'allocation = optim'.", call. = FALSE)
-      }
-
-      if (!inherits(mraster, "SpatRaster")) {
-        stop("'mraster' must be type SpatRaster", call. = FALSE)
-      }
-      
       if (!is.null(weights)) {
         message("'weights' was specified but 'allocation = optim' - did you mean to use 'allocation = manual'?")
       }
 
-      #--- if there is only 1 band in mraster use it as default ---#
-
-      if (terra::nlyr(mraster) == 1) {
-        rastermetric <- mraster
-        nm <- names(rastermetric)
-      } else {
-        stop("Multiple layers detected in 'mraster'. Please define a singular band for allocation.", call. = FALSE)
-      }
-
-      message(paste0("Implementing optimal allocation of samples based on variability of '", nm,"'"))
-
-      #--- merge sraster and mraster together ---#
-
-      r <- c(sraster, rastermetric)
-
-      vals <- terra::values(r) %>%
-        as.data.frame() %>%
-        dplyr::select(strata, !!nm) %>%
-        stats::na.omit() %>%
-        dplyr::group_by(strata)
-
-      #--- determine number of samples within each strata -- optimal allocation method ---#
-      toSample <- vals %>%
-        dplyr::summarize(
-          v_sd = sd(eval(as.name(nm))),
-          count = dplyr::n()) %>%
-        dplyr::mutate(denom = sum(count * v_sd)) %>%
-        dplyr::rowwise() %>%
-        #--- optimal allocation (equal sampling cost) equation. See Gregoire & Valentine (2007) Section 5.4.4 ---#
-        dplyr::mutate(total = round(nSamp * ((count * v_sd) / denom)), digits = 0) %>%
-        dplyr::select(strata, total)
+      toSample <- allocation_optim(sraster = sraster, mraster = mraster, nSamp = nSamp)
+      
     }
     
     #--- manual allocation ---#
@@ -193,37 +148,17 @@ calculate_allocation <- function(sraster,
       
       #--- error handling when allocation algorithm is 'manual' ---#
       
-      if(is.null(weights)){
-        stop("'weights' must be defined if 'allocation = manual'.", call. = FALSE)
+      if (!is.null(mraster)) {
+        message("'allocation = manual' - ignoring 'mraster'")
       }
       
-      if(!is.numeric(weights)){
-        stop("'weights' must be a numeric vector.", call. = FALSE)
-      }
-      
-      if(sum(weights) != 1){
-        stop("'weights' must add up to 1.", call. = FALSE)
-      }
-      
-      if(length(weights) != length(unique(vals$strata))){
-        stop("'weights' must be the same length as the number of strata in 'sraster'.", call. = FALSE)
-      }
-      
-      #--- determine number of samples within each strata ---#
-      toSample <- vals %>%
-        dplyr::group_by(strata) %>%
-        dplyr::summarize(count = dplyr::n()) %>%
-        dplyr::mutate(weights = weights,
-                      total = nSamp * weights) %>%
-        dplyr::mutate(total = replace(total, total < 1, 1)) %>%
-        dplyr::mutate(total = round(total, digits = 0)) %>%
-        dplyr::select(strata, total) %>%
-        as.data.frame()
+      toSample <- allocation_manual(sraster = sraster, nSamp = nSamp, weights = weights)
     }
 
     #--- calculate total samples allocated ---#
 
     tot <- sum(toSample$total)
+    
   } else {
     
     #--- equal allocation ---#
@@ -231,12 +166,12 @@ calculate_allocation <- function(sraster,
     if (!is.null(weights)) {
       message("'weights' was specified but 'allocation = equal' - did you mean to use 'allocation = manual'?")
     }
+    
+    if (!is.null(mraster)) {
+      message("'mraster' was specified but 'allocation = equal' - did you mean to use 'allocation = optim'?")
+    }
 
-    #--- assign nSamp to each strata ---#
-
-    toSample <- vals %>%
-      dplyr::group_by(strata) %>%
-      dplyr::summarize(total = nSamp)
+    toSample <- allocation_equal(sraster = sraster, nSamp = nSamp)
 
     tot <- unique(toSample$total)
   }

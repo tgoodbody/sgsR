@@ -8,6 +8,7 @@ sample_strat(
   sraster,
   nSamp,
   allocation = "prop",
+  weights = NULL,
   force = FALSE,
   mraster = NULL,
   mindist = NULL,
@@ -33,6 +34,9 @@ sample_strat(
 \item{allocation}{Character. Allocation algorithm to be used. Either \code{prop} (default) for proportional allocation,
 \code{optim} for optimal allocation (equal sampling cost), \code{equal} for equal number of samples (defined by \code{nSamp})
 for each strata, or \code{"manual"} for user defined strata weights defined using \code{weights}.}
+
+\item{weights}{Numeric. Only applicable when \code{allocation = "manual"}. Vector of weights where \code{sum(weights) == 1}. Vector length
+must be equal to the number of unique strata where the first numeric value corresponds to stratum 1, second stratum 2 etc.}
 
 \item{force}{Logical. \code{Default = FALSE} - force \code{nSamp} to be exactly the user defined value
 in cases where \code{nSamp} and \code{sraster} strata count are not equally divisible. Additional samples often need to be allocated or removed

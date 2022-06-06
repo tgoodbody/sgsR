@@ -67,6 +67,7 @@
 sample_strat <- function(sraster,
                          nSamp,
                          allocation = "prop",
+                         weights = NULL,
                          force = FALSE,
                          mraster = NULL,
                          mindist = NULL,
@@ -89,10 +90,6 @@ sample_strat <- function(sraster,
   #--- Error management ---#
   if (!inherits(sraster, "SpatRaster")) {
     stop("'sraster' must be type SpatRaster", call. = FALSE)
-  }
-
-  if (any(!c("strata") %in% names(sraster))) {
-    stop("'sraster must have a layer named 'strata'", call. = FALSE)
   }
 
   if (!is.null(mindist)) {
@@ -131,11 +128,6 @@ sample_strat <- function(sraster,
 
   if (!is.logical(details)) {
     stop("'details' must be type logical", call. = FALSE)
-  }
-
-  #--- if the sraster has multiple bands subset the band named strata ---#
-  if (terra::nlyr(sraster) > 1) {
-    sraster <- terra::subset(sraster, "strata")
   }
 
   #--- determine crs of input sraster ---#
@@ -224,6 +216,7 @@ sample_strat <- function(sraster,
     toSample <- calculate_allocation(
       sraster = sraster,
       nSamp = nSamp,
+      weights = weights,
       existing = existing,
       force = force,
       allocation = allocation,
@@ -231,9 +224,11 @@ sample_strat <- function(sraster,
     )
     
   } else {
+    
     toSample <- calculate_allocation(
       sraster = sraster,
       nSamp = nSamp,
+      weights = weights,
       force = force,
       allocation = allocation,
       mraster = mraster
@@ -244,19 +239,6 @@ sample_strat <- function(sraster,
   #--- determine access buffers ---#
 
   if (!missing(access)) {
-
-    #--- error handling in the presence of 'access' ---#
-    if (!inherits(access, "sf")) {
-      stop("'access' must be an 'sf' object", call. = FALSE)
-    }
-
-    if (!inherits(sf::st_geometry(access), "sfc_MULTILINESTRING") && !inherits(sf::st_geometry(access), "sfc_LINESTRING")) {
-      stop("'access' geometry type must be 'LINESTRING' or 'MULTILINESTRING'", call. = FALSE)
-    }
-
-    if (buff_inner > buff_outer) {
-      stop("'buff_inner' must be < 'buff_outer'", call. = FALSE)
-    }
 
     access_buff <- mask_access(raster = sraster, access = access, buff_inner = buff_inner, buff_outer = buff_outer)
 
