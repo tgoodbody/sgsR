@@ -30,9 +30,9 @@ sample_strat(
 
 \item{nSamp}{Numeric. Number of desired samples. \code{existing}, \code{include} and \code{force} influence this value.}
 
-\item{allocation}{Character. Allocation algorithm to be used. Either \code{prop} (default) for proportional allocation
-or \code{optim} for optimal allocation (equal sampling cost) or \code{equal} for equal number of samples (defined by \code{nSamp})
- for each strata.}
+\item{allocation}{Character. Allocation algorithm to be used. Either \code{prop} (default) for proportional allocation,
+\code{optim} for optimal allocation (equal sampling cost), \code{equal} for equal number of samples (defined by \code{nSamp})
+for each strata, or \code{"manual"} for user defined strata weights defined using \code{weights}.}
 
 \item{force}{Logical. \code{Default = FALSE} - force \code{nSamp} to be exactly the user defined value
 in cases where \code{nSamp} and \code{sraster} strata count are not equally divisible. Additional samples often need to be allocated or removed
