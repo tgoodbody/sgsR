@@ -72,6 +72,7 @@
   <span class="va">sraster</span>,
   <span class="va">nSamp</span>,
   allocation <span class="op">=</span> <span class="st">"prop"</span>,
+  weights <span class="op">=</span> <span class="cn">NULL</span>,
   force <span class="op">=</span> <span class="cn">FALSE</span>,
   mraster <span class="op">=</span> <span class="cn">NULL</span>,
   mindist <span class="op">=</span> <span class="cn">NULL</span>,
@@ -100,6 +101,9 @@
 <dd><p>Character. Allocation algorithm to be used. Either <code>prop</code> (default) for proportional allocation,
 <code>optim</code> for optimal allocation (equal sampling cost), <code>equal</code> for equal number of samples (defined by <code>nSamp</code>)
 for each strata, or <code>"manual"</code> for user defined strata weights defined using <code>weights</code>.</p></dd>
+<dt>weights</dt>
+<dd><p>Numeric. Only applicable when <code>allocation = "manual"</code>. Vector of weights where <code>sum(weights) == 1</code>. Vector length
+must be equal to the number of unique strata where the first numeric value corresponds to stratum 1, second stratum 2 etc.</p></dd>
 <dt>force</dt>
 <dd><p>Logical. <code>Default = FALSE</code> - force <code>nSamp</code> to be exactly the user defined value
 in cases where <code>nSamp</code> and <code>sraster</code> strata count are not equally divisible. Additional samples often need to be allocated or removed
