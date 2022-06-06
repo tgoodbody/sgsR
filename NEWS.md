@@ -1,3 +1,9 @@
+# sgsR 0.1.4
+
+* Fixed issue in `calculate_allocation` where too many samples would be allocated (compared to the user-defined `nSamp`) due to using `ceiling()` instead of `round()` during proportional and optimal allocation.
+
+* Added `allocation = "manual"` to `calculate_allocation`. The parameter `weights` was added (mandatory for `allocation = "manual"`), where users can provide a numeric vector of relative weightings to strata. `sum(weights)` must equal 1.
+
 # sgsR 0.1.3
 
 * Updates names for internal package data in `inst/exdata` and corresponding examples and vignettes.

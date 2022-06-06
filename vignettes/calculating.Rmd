@@ -143,11 +143,12 @@ p
 
 ## `calculate_allocation` {.unnumbered}
 
-`calculate_allocation()` function determines how to allocate samples based on the desired number of samples (`nSamp`) and the input `sraster`. This function is used internally in a number of functions, including [`sample_strat`](#strat). Currently, there are three methods for allocations included: proportional (`prop`; default), optimal (`optim`), and equal (`equal`) allocation.
+`calculate_allocation()` function determines how to allocate samples based on the desired number of samples (`nSamp`) and the input `sraster`. This function is used internally in a number of functions, including [`sample_strat`](#strat). Currently, there are three methods for allocations included: proportional (`prop`; default), optimal (`optim`), equal (`equal`), and manual (`manual`) allocation.
 
 * Proportional - Samples are allocated based on the coverage area of the strata. This is the default allocation method.
 * Optimal - Samples are allocated based on the variation within the strata.
 * Equal - Same number of samples ( defined by `nSamp`) are allocated to each strata.
+* Manual - Numeric vector `weights` is provided allowing users to manually assign weights to strata.
 
 ### Proportional allocation {#proportional .unnumbered}
 
@@ -193,6 +194,18 @@ calculate_allocation(sraster = sraster, # stratified raster
 ```
 
 The code in the demonstration above yields a total of 80 samples (20 `nSamp` for each of the 4 strata in `sraster`).
+
+### Manual allocation {#manual .unnumbered}
+The user may wish to manually assign weights to strata. In this case, `allocation = manual` can be used and `weights` must be provided as a numeric vector (e.g. `weights = c(0.2, 0.2, 0.2, 0.4)` where `sum(weights) == 1`). In this case, `nSamp` will be allocated based on `weights`. 
+
+```{r}
+calculate_allocation(sraster = sraster, # stratified raster
+                     nSamp = 20, # desired sample number
+                     allocation = "manual", # optimal allocation
+                     weights = c(0.2, 0.2, 0.2, 0.4)) # weights adding to 1
+```
+
+The code in the demonstration above yields a total of 20 samples with plots being allocated based on the `weights` provided in ascending strata order.
 
 ## Sample evaluation algorithms {#sampeval .unnumbered}
 

@@ -1,14 +1,16 @@
-#' Determine required samples in strata
+#' Sample allocation type and count
 #'
-#' @details Determine how many samples to allocate within strata
+#' @description Determine how many samples to allocate within strata.
 #'
 #' @family calculate functions
 #'
 #' @inheritParams sample_srs
 #' @inheritParams sample_strat
-#' @param allocation Character. Allocation algorithm to be used. Either \code{prop} (default) for proportional allocation
-#' or \code{optim} for optimal allocation (equal sampling cost) or \code{equal} for equal number of samples (defined by \code{nSamp})
-#'  for each strata.
+#' @param allocation Character. Allocation algorithm to be used. Either \code{prop} (default) for proportional allocation,
+#'  \code{optim} for optimal allocation (equal sampling cost), \code{equal} for equal number of samples (defined by \code{nSamp})
+#'  for each strata, or \code{"manual"} for user defined strata weights defined using \code{weights}.
+#' @param weights Numeric. Only applicable when \code{allocation = "manual"}. Vector of weights where \code{sum(weights) == 1}. Vector length
+#' must be equal to the number of unique strata where the first numeric value corresponds to stratum 1, second stratum 2 etc. 
 #' @param mraster spatRaster. ALS metric raster. Required when \code{allocation = optim}.
 #' @param force Logical. \code{Default = FALSE} - force \code{nSamp} to be exactly the user defined value
 #' in cases where \code{nSamp} and \code{sraster} strata count are not equally divisible. Additional samples often need to be allocated or removed
@@ -36,10 +38,29 @@
 #' e <- system.file("extdata", "existing.shp", package = "sgsR")
 #' e <- sf::st_read(e)
 #'
-#' #--- perform grid sampling ---#
+#' #--- proportional allocation ---#
 #' calculate_allocation(
 #'   sraster = sr,
 #'   nSamp = 50
+#' )
+#' 
+#' #--- equal allocation ---#
+#' calculate_allocation(
+#'   sraster = sr,
+#'   allocation = "equal",
+#'   nSamp = 10
+#' )
+#' 
+#' #--- manual allocation ---#
+#' #--- define user-defined weights ---#
+#' 
+#' weights <- c(0.2, 0.2, 0.5, 0.1)
+#' 
+#' calculate_allocation(
+#'   sraster = sr,
+#'   allocation = "manual",
+#'   weights = weights,
+#'   nSamp = 200
 #' )
 #'
 #' @author Tristan R.H. Goodbody
@@ -49,6 +70,7 @@
 calculate_allocation <- function(sraster,
                                  nSamp,
                                  allocation = "prop",
+                                 weights = NULL,
                                  mraster = NULL,
                                  existing = NULL,
                                  force = FALSE) {
@@ -62,8 +84,8 @@ calculate_allocation <- function(sraster,
     stop("'nSamp' must be type numeric", call. = FALSE)
   }
 
-  if (allocation != "prop" && allocation != "optim" && allocation != "equal") {
-    stop(paste0("Unknown allocation: ",allocation, " selected. Please use 'prop' (default), 'optim' or 'equal'"), call. = FALSE)
+  if (!any(allocation == c("prop", "optim", "equal", "manual"))){
+    stop(paste0("Unknown allocation type: '", allocation,"' provided. Please use 'prop' (default), 'optim', 'equal', or 'manual'."), call. = FALSE)
   }
 
   if (!is.logical(force)) {
@@ -76,41 +98,41 @@ calculate_allocation <- function(sraster,
 
   #--- determine crs of input sraster ---#
   crs <- terra::crs(sraster, proj = TRUE)
-
+  
+  vals <- terra::values(sraster) %>%
+    as.data.frame() %>%
+    stats::na.omit()
+  
+  names(vals) <- "strata"
+  
   #--- determine which allocation algorithm to use ---#
 
-  #--- proportional allocation ---#
-
   if (allocation != "equal") {
+    
+    #--- proportional allocation ---#
+    
     if (allocation == "prop") {
+      
+      #--- error handling when allocation algorithm is 'prop' ---#
+      
       message("Implementing porportional allocation of samples")
 
       if (!is.null(mraster)) {
         message("'allocation = prop' - ignoring 'mraster'")
       }
-
-      vals <- terra::values(sraster) %>%
-        as.data.frame()
-
-      names(vals) <- "strata"
+      
+      if (!is.null(weights)) {
+        message("'weights' was specified but 'allocation = prop' - did you mean to use 'allocation = manual'?")
+      }
 
       #--- determine number of samples within each strata ---#
       toSample <- vals %>%
-        stats::na.omit() %>%
         dplyr::group_by(strata) %>%
         dplyr::summarize(count = dplyr::n()) %>%
-        dplyr::mutate(
-          freq = count / sum(count),
-          total = freq * nSamp
-        ) %>%
-        #--- if a value equates to <1 it will have 0 samples --- change 0 to 1 ---#
-
-        #########################################
-        #### What other method could be used ####
-        #########################################
-
+        dplyr::mutate(freq = count / sum(count),
+                      total = freq * nSamp) %>%
         dplyr::mutate(total = replace(total, total < 1, 1)) %>%
-        dplyr::mutate(total = ceiling(total)) %>%
+        dplyr::mutate(total = round(total, digits = 0)) %>%
         dplyr::select(strata, total) %>%
         as.data.frame()
     }
@@ -127,6 +149,10 @@ calculate_allocation <- function(sraster,
 
       if (!inherits(mraster, "SpatRaster")) {
         stop("'mraster' must be type SpatRaster", call. = FALSE)
+      }
+      
+      if (!is.null(weights)) {
+        message("'weights' was specified but 'allocation = optim' - did you mean to use 'allocation = manual'?")
       }
 
       #--- if there is only 1 band in mraster use it as default ---#
@@ -154,33 +180,63 @@ calculate_allocation <- function(sraster,
       toSample <- vals %>%
         dplyr::summarize(
           v_sd = sd(eval(as.name(nm))),
-          count = dplyr::n()
-        ) %>%
+          count = dplyr::n()) %>%
         dplyr::mutate(denom = sum(count * v_sd)) %>%
         dplyr::rowwise() %>%
         #--- optimal allocation (equal sampling cost) equation. See Gregoire & Valentine (2007) Section 5.4.4 ---#
-        dplyr::mutate(total = ceiling(nSamp * ((count * v_sd) / denom))) %>%
+        dplyr::mutate(total = round(nSamp * ((count * v_sd) / denom)), digits = 0) %>%
         dplyr::select(strata, total)
+    }
+    
+    #--- manual allocation ---#
+    if (allocation == "manual"){
+      
+      #--- error handling when allocation algorithm is 'manual' ---#
+      
+      if(is.null(weights)){
+        stop("'weights' must be defined if 'allocation = manual'.", call. = FALSE)
+      }
+      
+      if(!is.numeric(weights)){
+        stop("'weights' must be a numeric vector.", call. = FALSE)
+      }
+      
+      if(sum(weights) != 1){
+        stop("'weights' must add up to 1.", call. = FALSE)
+      }
+      
+      if(length(weights) != length(unique(vals$strata))){
+        stop("'weights' must be the same length as the number of strata in 'sraster'.", call. = FALSE)
+      }
+      
+      #--- determine number of samples within each strata ---#
+      toSample <- vals %>%
+        dplyr::group_by(strata) %>%
+        dplyr::summarize(count = dplyr::n()) %>%
+        dplyr::mutate(weights = weights,
+                      total = nSamp * weights) %>%
+        dplyr::mutate(total = replace(total, total < 1, 1)) %>%
+        dplyr::mutate(total = round(total, digits = 0)) %>%
+        dplyr::select(strata, total) %>%
+        as.data.frame()
     }
 
     #--- calculate total samples allocated ---#
 
     tot <- sum(toSample$total)
   } else {
-
-    #--- error handling when allocation algorithm is 'equal' ---#
-
-    vals <- terra::values(sraster) %>%
-      as.data.frame() %>%
-      stats::na.omit()
+    
+    #--- equal allocation ---#
+    
+    if (!is.null(weights)) {
+      message("'weights' was specified but 'allocation = equal' - did you mean to use 'allocation = manual'?")
+    }
 
     #--- assign nSamp to each strata ---#
 
     toSample <- vals %>%
       dplyr::group_by(strata) %>%
-      dplyr::summarize(
-        total = nSamp
-      )
+      dplyr::summarize(total = nSamp)
 
     tot <- unique(toSample$total)
   }
@@ -229,7 +285,7 @@ calculate_allocation <- function(sraster,
     }
 
     #--- if the strata for toSample and existing are not identical throw an error ---#
-    if (!identical(unique(existing$strata), unique(toSample$strata))) {
+    if (!all.equal(unique(existing$strata), unique(toSample$strata))) {
       stop("Strata for 'sraster' and 'existing' are not identical. Consider using extract_strata().", call. = FALSE)
     }
 
@@ -293,7 +349,10 @@ calculate_allocation <- function(sraster,
               dplyr::pull()
 
             toSample <- toSample %>%
-              dplyr::mutate(total = replace(total, strata == stratAdd, total[strata == stratAdd] + 1))
+              dplyr::mutate(total = replace(total, 
+                                            strata == stratAdd, 
+                                            total[strata == stratAdd] + 1)
+                            )
 
             diffAbs <- diffAbs - 1
           }

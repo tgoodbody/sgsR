@@ -2,12 +2,13 @@
 % Please edit documentation in R/calculate_allocation.R
 \name{calculate_allocation}
 \alias{calculate_allocation}
-\title{Determine required samples in strata}
+\title{Sample allocation type and count}
 \usage{
 calculate_allocation(
   sraster,
   nSamp,
   allocation = "prop",
+  weights = NULL,
   mraster = NULL,
   existing = NULL,
   force = FALSE
@@ -18,9 +19,12 @@ calculate_allocation(
 
 \item{nSamp}{Numeric. Number of desired samples.}
 
-\item{allocation}{Character. Allocation algorithm to be used. Either \code{prop} (default) for proportional allocation
-or \code{optim} for optimal allocation (equal sampling cost) or \code{equal} for equal number of samples (defined by \code{nSamp})
- for each strata.}
+\item{allocation}{Character. Allocation algorithm to be used. Either \code{prop} (default) for proportional allocation,
+\code{optim} for optimal allocation (equal sampling cost), \code{equal} for equal number of samples (defined by \code{nSamp})
+for each strata, or \code{"manual"} for user defined strata weights defined using \code{weights}.}
+
+\item{weights}{Numeric. Only applicable when \code{allocation = "manual"}. Vector of weights where \code{sum(weights) == 1}. Vector length
+must be equal to the number of unique strata where the first numeric value corresponds to stratum 1, second stratum 2 etc.}
 
 \item{mraster}{spatRaster. ALS metric raster. Required when \code{allocation = optim}.}
 
@@ -42,10 +46,7 @@ to be removed at the users discretion.
 }
 }
 \description{
-Determine required samples in strata
-}
-\details{
-Determine how many samples to allocate within strata
+Determine how many samples to allocate within strata.
 }
 \examples{
 #--- Load strata raster and existing samples---#
@@ -55,10 +56,29 @@ sr <- terra::rast(r)
 e <- system.file("extdata", "existing.shp", package = "sgsR")
 e <- sf::st_read(e)
 
-#--- perform grid sampling ---#
+#--- proportional allocation ---#
 calculate_allocation(
   sraster = sr,
   nSamp = 50
+)
+
+#--- equal allocation ---#
+calculate_allocation(
+  sraster = sr,
+  allocation = "equal",
+  nSamp = 10
+)
+
+#--- manual allocation ---#
+#--- define user-defined weights ---#
+
+weights <- c(0.2, 0.2, 0.5, 0.1)
+
+calculate_allocation(
+  sraster = sr,
+  allocation = "manual",
+  weights = weights,
+  nSamp = 200
 )
 
 }
