@@ -115,15 +115,6 @@ sample_clhs <- function(mraster,
 
   if (!is.null(access)) {
 
-    #--- error handling in the presence of 'access' ---#
-    if (!inherits(access, "sf")) {
-      stop("'access' must be an 'sf' object")
-    }
-
-    if (!inherits(sf::st_geometry(access), "sfc_MULTILINESTRING") && !inherits(sf::st_geometry(access), "sfc_LINESTRING")) {
-      stop("'access' geometry type must be 'LINESTRING' or 'MULTILINESTRING'")
-    }
-
     #--- buffer roads and mask ---#
 
     access_buff <- mask_access(
@@ -310,10 +301,10 @@ sample_clhs <- function(mraster,
 
       terra::plot(mraster[[1]])
       suppressWarnings(terra::plot(access_buff$buff, add = T, border = c("gray30"), col = "gray10", alpha = 0.1))
-      suppressWarnings(terra::plot(samples, add = T, col = "black", pch = ifelse(samples$type == "existing", 1, 3)))
+      suppressWarnings(terra::plot(samples, add = T, col = "black", pch = ifelse(samples$type == "existing", 3, 1)))
     } else {
       terra::plot(mraster[[1]])
-      suppressWarnings(terra::plot(samples, add = T, col = "black", pch = ifelse(samples$type == "existing", 1, 3)))
+      suppressWarnings(terra::plot(samples, add = T, col = "black", pch = ifelse(samples$type == "existing", 3, 1)))
     }
   }
 

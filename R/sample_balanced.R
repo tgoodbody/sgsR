@@ -95,15 +95,6 @@ sample_balanced <- function(mraster,
 
   if (!is.null(access)) {
 
-    #--- error handling in the presence of 'access' ---#
-    if (!inherits(access, "sf")) {
-      stop("'access' must be an 'sf' object")
-    }
-
-    if (!inherits(sf::st_geometry(access), "sfc_MULTILINESTRING") && !inherits(sf::st_geometry(access), "sfc_LINESTRING")) {
-      stop("'access' geometry type must be 'LINESTRING' or 'MULTILINESTRING'")
-    }
-
     #--- buffer roads and mask ---#
 
     access_buff <- mask_access(

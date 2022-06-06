@@ -5,7 +5,7 @@
 \alias{mask_access}
 \title{Masking}
 \usage{
-mask_access(raster, access, buff_inner, buff_outer)
+mask_access(raster, access, buff_inner = NULL, buff_outer)
 }
 \arguments{
 \item{raster}{SpatRaster. Raster to be masked.}
