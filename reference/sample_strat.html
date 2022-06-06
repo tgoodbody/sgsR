@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,9 +97,9 @@
 <dt>nSamp</dt>
 <dd><p>Numeric. Number of desired samples. <code>existing</code>, <code>include</code> and <code>force</code> influence this value.</p></dd>
 <dt>allocation</dt>
-<dd><p>Character. Allocation algorithm to be used. Either <code>prop</code> (default) for proportional allocation
-or <code>optim</code> for optimal allocation (equal sampling cost) or <code>equal</code> for equal number of samples (defined by <code>nSamp</code>)
- for each strata.</p></dd>
+<dd><p>Character. Allocation algorithm to be used. Either <code>prop</code> (default) for proportional allocation,
+<code>optim</code> for optimal allocation (equal sampling cost), <code>equal</code> for equal number of samples (defined by <code>nSamp</code>)
+for each strata, or <code>"manual"</code> for user defined strata weights defined using <code>weights</code>.</p></dd>
 <dt>force</dt>
 <dd><p>Logical. <code>Default = FALSE</code> - force <code>nSamp</code> to be exactly the user defined value
 in cases where <code>nSamp</code> and <code>sraster</code> strata count are not equally divisible. Additional samples often need to be allocated or removed
@@ -191,7 +191,7 @@ https://doi.org/10.1016/j.rse.2021.112510</p>
 <span class="r-in">  nSamp <span class="op">=</span> <span class="fl">50</span></span>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Implementing porportional allocation of samples</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> nSamp of 50 is not perfectly divisible based on strata distribution. nSamp of 52 will be returned. Use 'force = TRUE' to brute force to 50.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> nSamp of 50 is not perfectly divisible based on strata distribution. nSamp of 51 will be returned. Use 'force = TRUE' to brute force to 50.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Processing strata : 1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Processing strata : 2</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Processing strata : 3</span>
