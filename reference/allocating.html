@@ -68,13 +68,15 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">allocation_prop</span><span class="op">(</span><span class="va">sraster</span>, <span class="va">nSamp</span><span class="op">)</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">allocate_prop</span><span class="op">(</span><span class="va">sraster</span>, <span class="va">nSamp</span><span class="op">)</span>
 
-<span class="fu">allocation_optim</span><span class="op">(</span><span class="va">sraster</span>, <span class="va">mraster</span>, <span class="va">nSamp</span><span class="op">)</span>
+<span class="fu">allocate_optim</span><span class="op">(</span><span class="va">sraster</span>, <span class="va">mraster</span>, <span class="va">nSamp</span><span class="op">)</span>
 
-<span class="fu">allocation_manual</span><span class="op">(</span><span class="va">sraster</span>, <span class="va">nSamp</span>, <span class="va">weights</span><span class="op">)</span>
+<span class="fu">allocate_manual</span><span class="op">(</span><span class="va">sraster</span>, <span class="va">nSamp</span>, <span class="va">weights</span><span class="op">)</span>
 
-<span class="fu">allocation_equal</span><span class="op">(</span><span class="va">sraster</span>, <span class="va">nSamp</span><span class="op">)</span></code></pre></div>
+<span class="fu">allocate_equal</span><span class="op">(</span><span class="va">sraster</span>, <span class="va">nSamp</span><span class="op">)</span>
+
+<span class="fu">allocate_existing</span><span class="op">(</span><span class="va">toSample</span>, <span class="va">existing</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -88,6 +90,8 @@
 <dt>weights</dt>
 <dd><p>Numeric. Only applicable when <code>allocation = "manual"</code>. Vector of weights where <code>sum(weights) == 1</code>. Vector length
 must be equal to the number of unique strata where the first numeric value corresponds to stratum 1, second stratum 2 etc.</p></dd>
+<dt>existing</dt>
+<dd><p>sf 'POINT' or data.frame.  Existing plot network.</p></dd>
 </dl></div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
