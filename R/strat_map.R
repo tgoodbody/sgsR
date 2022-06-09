@@ -143,6 +143,28 @@ strat_map <- function(sraster,
   }
 
   #--- map stratification rasters ---#
+  
+  if(!is.null(terra::cats(sraster)[[1]])){
+    message("'sraster' has factor values. Converting to allow mapping.")
+    
+    srastcats <- terra::cats(sraster) %>%
+      as.data.frame() %>%
+      dplyr::rename(strata = value)
+    
+    sraster <- sraster %>%
+      terra::catalyze(.)
+  }
+  
+  if(!is.null(terra::cats(sraster2)[[1]])){
+    message("'sraster2' has factor values. Converting to allow mapping.")
+    
+    srastcats2 <- terra::cats(sraster2) %>%
+      as.data.frame() %>%
+      dplyr::rename(strata2 = value)
+    
+    sraster2 <- sraster2 %>%
+      terra::catalyze(.)
+  }
 
   joined <- c(sraster, sraster2)
   names(joined) <- c("strata", "strata2")
@@ -157,14 +179,46 @@ strat_map <- function(sraster,
   #--- create lookUp table ---#
 
   lookUp <- dplyr::distinct(oclass) %>%
-    na.omit() %>%
+    stats::na.omit() %>%
     as.data.frame()
+  
+  #--- if stratum variables were categorical add the categories to the lookUp table ---#
+  
+  if(exists("srastcats")){
+    
+    lookUp <- dplyr::left_join(lookUp, srastcats, by="strata") %>%
+      dplyr::rename(sraster_cat = names(sraster))
+    
+  }
+  
+  if(exists("srastcats2")){
+    
+    lookUp <- dplyr::left_join(lookUp, srastcats2, by="strata2") %>%
+      dplyr::rename(sraster2_cat = names(sraster2))
+    
+    if(exists("srastcats")){
+      
+      lookUp <- lookUp %>%
+        dplyr::mutate(stratamapped_cat = paste0(sraster_cat,"_",sraster2_cat)) %>%
+        dplyr::select(-sraster2_cat, -sraster_cat)
+      
+    } else {
+      
+      lookUp <- lookUp %>%
+        dplyr::mutate(stratamapped_cat = paste0(strata,"_",sraster2_cat)) %>%
+        dplyr::select(-sraster2_cat)
+        
+      
+    }
+    
+  }
 
   #--- set newly stratified values ---#
 
   rout <- terra::setValues(sraster, as.integer(oclass$stratamapped))
   names(rout) <- "strata"
-
+  
+  terra::as.factor(rout)
 
   if (isTRUE(stack)) {
     message("Stacking sraster, sraster2, and their combination (stratamapped).")

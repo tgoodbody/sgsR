@@ -1,8 +1,8 @@
 # sgsR 0.1.4
 
-* Fixed issue in `calculate_allocation` where too many samples would be allocated (compared to the user-defined `nSamp`) due to using `ceiling()` instead of `round()` during proportional and optimal allocation.
+* Fixed issue in `calculate_allocation()` where too many samples would be allocated (compared to the user-defined `nSamp`) due to using `ceiling()` instead of `round()` during proportional and optimal allocation.
 
-* Added `allocation = "manual"` to `calculate_allocation`. The parameter `weights` was added (mandatory for `allocation = "manual"`), where users can provide a numeric vector of relative weightings to strata. `sum(weights)` must equal 1.
+* Added `allocation = "manual"` to `calculate_allocation()`. The parameter `weights` was added (mandatory for `allocation = "manual"`), where users can provide a numeric vector of relative weightings to strata. `sum(weights)` must equal 1.
 
 * Added `weights` parameter to `sample_strat()` to allow for `"manual"` allocation.
 
@@ -11,6 +11,8 @@
 * Allow `buff_inner` to be `NULL` when providing `access` to isolate samples. This allows users to define only a maximum distance (should they wish to) that samples can be from `access` but not specify a minimum distance.
 
 * Altered error handling for raster masking to be within `mask_access()` instead of individual sampling functions.
+
+* `strat_map()` can now map categorical srasters (gave an error before). Now also returns the categories associated with the categorical rasters in the lookup table with `details = TRUE`.
 
 # sgsR 0.1.3
 
