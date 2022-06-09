@@ -45,7 +45,7 @@ Suggests:
     knitr,
     rmarkdown,
     Rfast,
-    testthat,
+    testthat (>= 3.0.0),
     doParallel,
     doSNOW,
     snow,

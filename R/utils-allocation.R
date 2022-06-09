@@ -13,14 +13,14 @@ NULL
 #' @family allocation
 #' @keywords internal
 
-allocation_prop <- function(sraster,
-                            nSamp){
+allocate_prop <- function(sraster,
+                          nSamp){
   
   #--- define global vars ---#
   
   strata <- count <- freq <- total <- NULL
   
-  message("Implementing porportional allocation of samples")
+  message("Implementing proportional allocation of samples.")
   
   #--- generate vals data.frame ---#
   
@@ -38,7 +38,7 @@ allocation_prop <- function(sraster,
     dplyr::mutate(total = round(total, digits = 0)) %>%
     dplyr::select(strata, total) %>%
     as.data.frame()
-  
+
   toSample
 
 }
@@ -48,7 +48,7 @@ allocation_prop <- function(sraster,
 #' @family allocation
 #' @keywords internal
 
-allocation_optim <- function(sraster,
+allocate_optim <- function(sraster,
                              mraster,
                              nSamp){
   
@@ -75,7 +75,7 @@ allocation_optim <- function(sraster,
     stop("Multiple layers detected in 'mraster'. Please define a singular band for allocation.", call. = FALSE)
   }
   
-  message(paste0("Implementing optimal allocation of samples based on variability of '", nm,"'"))
+  message(paste0("Implementing optimal allocation of samples based on variability of '", nm,"'."))
   
   #--- merge sraster and mraster together ---#
   
@@ -97,7 +97,7 @@ allocation_optim <- function(sraster,
     #--- optimal allocation (equal sampling cost) equation. See Gregoire & Valentine (2007) Section 5.4.4 ---#
     dplyr::mutate(total = round(nSamp * ((count * v_sd) / denom)), digits = 0) %>%
     dplyr::select(strata, total)
-  
+
   toSample
   
 }
@@ -107,7 +107,7 @@ allocation_optim <- function(sraster,
 #' @family allocation
 #' @keywords internal
 
-allocation_manual <- function(sraster,
+allocate_manual <- function(sraster,
                               nSamp,
                               weights){
   
@@ -129,7 +129,7 @@ allocation_manual <- function(sraster,
     stop("'weights' must add up to 1.", call. = FALSE)
   }
   
-  message("Implementing allocation of samples based on user-defined weights")
+  message("Implementing allocation of samples based on user-defined weights.")
 
   #--- generate vals data.frame ---#
   
@@ -151,7 +151,7 @@ allocation_manual <- function(sraster,
     dplyr::mutate(total = round(total, digits = 0)) %>%
     dplyr::select(strata, total) %>%
     as.data.frame()
-  
+
   toSample
   
 }
@@ -161,8 +161,10 @@ allocation_manual <- function(sraster,
 #' @family allocation
 #' @keywords internal
 
-allocation_equal <- function(sraster,
+allocate_equal <- function(sraster,
                              nSamp){
+  
+  message("Implementing equal allocation of samples.")
   
   #--- define global vars ---#
   
@@ -179,7 +181,67 @@ allocation_equal <- function(sraster,
   toSample <- vals %>%
     dplyr::group_by(strata) %>%
     dplyr::summarize(total = nSamp)
-  
+
   toSample
   
 }
+
+#' @export
+#' @rdname allocating
+#' @family allocation
+#' @keywords internal
+
+allocate_existing <- function(toSample,
+                                existing){
+  
+  #--- if existing is provided include already sampled plots to achieve the total number ---#
+  
+  if (!inherits(existing, "data.frame") && !inherits(existing, "sf")) {
+    stop("'existing' must be a data.frame or sf object", call. = FALSE)
+  }
+  
+  if (any(!c("strata") %in% names(existing))) {
+    stop("'existing' must have an attribute named 'strata'. Consider using extract_strata().", call. = FALSE)
+  }
+  
+  #--- convert existing to data frame of strata values ---#
+  
+  existing <- data.frame(strata = existing$strata)
+  
+  #--- determine number of samples for each strata ---#
+  
+  existing <- existing %>%
+    dplyr::group_by(strata) %>%
+    dplyr::tally(name = "eTotal")
+  
+  #--- check if samples fall in areas where stratum values are NA ---#
+  
+  if(any(!complete.cases(existing$strata))){
+    
+    nNA <- existing %>%
+      dplyr::filter(!complete.cases(strata)) %>%
+      dplyr::pull(eTotal)
+    
+    message(paste0(nNA," samples in `existing` are located where strata values are NA. Expect ",nNA," additional samples in output."))
+
+    existing <- existing %>%
+      stats::na.omit()
+  }
+
+  #--- if the unique(existing$strata) %in% unique(toSample$strata) for toSample and existing are not identical throw an error ---#
+  if (!any(unique(existing$strata) %in% unique(toSample$strata))) {
+      stop("'existing' does not contain matching strata to those in `sraster`. Check strata in both data sets & consider using extract_strata().", call. = FALSE)
+  }
+  
+  #--- join the 2 df together and subtract the number of existing plots by strata from toSample ---#
+  toSample <- toSample %>%
+    dplyr::left_join(existing, by = "strata") %>%
+    replace(is.na(.), 0) %>%
+    dplyr::mutate(total = total - eTotal,
+                  need = eTotal + total) %>%
+    dplyr::select(-eTotal)
+
+  toSample
+  
+}
+

@@ -6,7 +6,7 @@
 
 * Added `weights` parameter to `sample_strat()` to allow for `"manual"` allocation.
 
-* Added internal utility functions `allocation_prop / allocation_optim / allocation_manual / allocation_equal` and integrated them into `calculate_allocation()` to make code more succinct and purposeful.
+* Added internal utility functions `allocate_prop / allocate_optim / allocate_manual / allocate_equal / allocate_existing` and integrated them into `calculate_allocation()` to make code more succinct and purposeful.
 
 * Allow `buff_inner` to be `NULL` when providing `access` to isolate samples. This allows users to define only a maximum distance (should they wish to) that samples can be from `access` but not specify a minimum distance.
 
