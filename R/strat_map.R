@@ -184,7 +184,7 @@ strat_map <- function(sraster,
   
   if(exists("srastcats")){
     
-    lookUp <- dplyr::left_join(lookUp, srastcats, by=c("strata","value")) %>%
+    lookUp <- dplyr::left_join(lookUp, srastcats, by=c("strata" = "value")) %>%
       dplyr::rename(sraster_cat = names(srastcats)[2])
     
   }
