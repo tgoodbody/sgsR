@@ -280,7 +280,7 @@ strat_map <- function(sraster,
 
     #--- output metrics details along with stratification raster ---#
 
-    output <- list(outRaster = rout, lookUp = lookUp)
+    output <- list(raster = rout, lookUp = lookUp)
 
     #--- output samples dataframe ---#
 
