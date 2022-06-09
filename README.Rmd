@@ -21,9 +21,11 @@ knitr::opts_chunk$set(
 
 `sgsR` is designed to implement structurally guided sampling approaches for enhanced forest inventories. The package was designed to function using rasterized airborne laser scanning (ALS; Lidar) metrics to allow for stratification of forested areas based on structure.
 
+`sgsR` is being actively developed, so you may encounter bugs. If that happens, [please report your issue here](https://github.com/tgoodbody/sgsR/issues) by providing a reproducible example.
+
 ## Installation :computer: {.unnumbered}
 
-You can install the released version of sgsR from [Github](https://github.com/tgoodbody/sgsR) with:
+You can install the released version of `sgsR` from [Github](https://github.com/tgoodbody/sgsR) with:
 
 ``` r
 install.packages("devtools")
