@@ -134,14 +134,14 @@
 <pre><code><span class="co">#&gt; <span style="color: #949494;"># A tibble: 8 × 6</span></span>
 <span class="co">#&gt;   strata srasterFreq sampleFreq diffFreq nSamp  need</span>
 <span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span>      1        0.13       0.12  -<span style="color: #BB0000;">0.010</span><span style="color: #BB0000; text-decoration: underline;">0</span>     6     1</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span>      2        0.13       0.24   0.11      12    -<span style="color: #BB0000;">5</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span>      3        0.13       0.08  -<span style="color: #BB0000;">0.05</span>       4     3</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span>      4        0.12       0.06  -<span style="color: #BB0000;">0.06</span>       3     3</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">5</span>      5        0.12       0.14   0.020<span style="text-decoration: underline;">0</span>     7    -<span style="color: #BB0000;">1</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">6</span>      6        0.12       0.16   0.04       8    -<span style="color: #BB0000;">2</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">7</span>      7        0.12       0.14   0.020<span style="text-decoration: underline;">0</span>     7    -<span style="color: #BB0000;">1</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">8</span>      8        0.12       0.06  -<span style="color: #BB0000;">0.06</span>       3     3</span></code></pre>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span>      1        0.13       0.14   0.010<span style="text-decoration: underline;">0</span>     7     0</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span>      2        0.13       0.14   0.010<span style="text-decoration: underline;">0</span>     7     0</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">3</span>      3        0.13       0.16   0.03       8    -<span style="color: #BB0000;">1</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">4</span>      4        0.12       0.08  -<span style="color: #BB0000;">0.04</span>       4     2</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">5</span>      5        0.12       0.16   0.04       8    -<span style="color: #BB0000;">2</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">6</span>      6        0.12       0.1   -<span style="color: #BB0000;">0.020</span><span style="color: #BB0000; text-decoration: underline;">0</span>     5     1</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">7</span>      7        0.12       0.1   -<span style="color: #BB0000;">0.020</span><span style="color: #BB0000; text-decoration: underline;">0</span>     5     1</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">8</span>      8        0.12       0.12   0          6     0</span></code></pre>
 <p>The tabular output presents the frequency of coverage for each strata (<code>srasterFreq</code>) (what % of the landscape does the strata cover) and the sampling frequency within each strata (<code>sampleFreq</code>) (what % of total <code>existing</code> samples are in the strata). The difference (<code>diffFreq</code>) between coverage frequency and sampling frequency determines whether the values are over-represented (positive numbers) or under-represented (negative numbers). This value translates to a discrete <code>need</code> attribute that defines whether there is a need to add or remove samples to meet the number of samples necessary to be considered representative of the strata inputted in <code>sraster</code>.</p>
 <p>Performing the algorithm on a sample set derived using <code><a href="../reference/sample_strat.html">sample_strat()</a></code> exhibits proportional sampling to strata coverage.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -305,9 +305,9 @@
 <span class="co">#&gt;   strata total  need</span>
 <span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">1</span>      1    27    77</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span>      2   -<span style="color: #BB0000;">15</span>    36</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span>      2   -<span style="color: #BB0000;">14</span>    36</span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">3</span>      3   -<span style="color: #BB0000;">25</span>    25</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span>      4    13    63</span></code></pre></div>
+<span class="co">#&gt; <span style="color: #BCBCBC;">4</span>      4    12    63</span></code></pre></div>
 </div>
 <div class="section level3 unnumbered">
 <h3 class="unnumbered" id="equal">Equal allocation<a class="anchor" aria-label="anchor" href="#equal"></a>
