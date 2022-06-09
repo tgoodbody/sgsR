@@ -197,6 +197,13 @@ strat_map <- function(sraster,
       
     }
     
+    if(!exists("srastercats2")){
+
+        lookUp <- lookUp %>%
+          dplyr::mutate(stratamapped_cat = paste0(sraster_cat,"_",strata2)) %>%
+          dplyr::select(-sraster_cat)
+        
+    }
   }
   
   if(exists("srastcats2")){
@@ -223,12 +230,6 @@ strat_map <- function(sraster,
         dplyr::select(-sraster2_cat)
       
     }
-    
-  } else {
-    
-    lookUp <- lookUp %>%
-      dplyr::mutate(stratamapped_cat = paste0(sraster_cat,"_",strata2)) %>%
-      dplyr::select(-sraster_cat)
     
   }
 
