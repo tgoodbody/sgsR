@@ -148,7 +148,8 @@ strat_map <- function(sraster,
     message("'sraster' has factor values. Converting to allow mapping.")
     
     srastcats <- terra::cats(sraster) %>%
-      as.data.frame()
+      as.data.frame() %>%
+      dplyr::rename(cat = 2)
     
     sraster <- sraster %>%
       terra::catalyze(.)
@@ -158,7 +159,8 @@ strat_map <- function(sraster,
     message("'sraster2' has factor values. Converting to allow mapping.")
     
     srastcats2 <- terra::cats(sraster2) %>%
-      as.data.frame()
+      as.data.frame() %>%
+      dplyr::rename(cat = 2)
     
     sraster2 <- sraster2 %>%
       terra::catalyze(.)
@@ -187,12 +189,26 @@ strat_map <- function(sraster,
     lookUp <- dplyr::left_join(lookUp, srastcats, by=c("strata" = "value")) %>%
       dplyr::rename(sraster_cat = names(srastcats)[2])
     
+    #--- sometimes values are factors 
+    
+    if(any(is.na(lookUp$sraster_cat))){
+      
+      lookUp$sraster_cat <- lookUp$strata
+      
+    }
+    
   }
   
   if(exists("srastcats2")){
     
     lookUp <- dplyr::left_join(lookUp, srastcats2, by=c("strata2" = "value")) %>%
       dplyr::rename(sraster2_cat = names(srastcats2)[2])
+    
+    if(any(is.na(lookUp$sraster2_cat))){
+      
+      lookUp$sraster2_cat <- lookUp$strata2
+      
+    }
     
     if(exists("srastcats")){
       
@@ -207,6 +223,12 @@ strat_map <- function(sraster,
         dplyr::select(-sraster2_cat)
       
     }
+    
+  } else {
+    
+    lookUp <- lookUp %>%
+      dplyr::mutate(stratamapped_cat = paste0(sraster_cat,"_",strata2)) %>%
+      dplyr::select(-sraster_cat)
     
   }
 
