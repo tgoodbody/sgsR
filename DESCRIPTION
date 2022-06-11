@@ -35,7 +35,7 @@ Imports:
     dplyr,
     ggplot2,
     sf,
-    terra (>= 1.5-41),
+    terra,
     tidyr,
     clhs,
     SamplingBigData,
