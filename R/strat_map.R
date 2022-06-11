@@ -185,52 +185,52 @@ strat_map <- function(sraster,
   #--- if stratum variables were categorical add the categories to the lookUp table ---#
   
   if(exists("srastcats")){
-    
+
     lookUp <- dplyr::left_join(lookUp, srastcats, by=c("strata" = "value")) %>%
       dplyr::rename(sraster_cat = names(srastcats)[2])
-    
-    #--- sometimes values are factors 
-    
+
+    #--- sometimes values are factors
+
     if(any(is.na(lookUp$sraster_cat))){
-      
+
       lookUp$sraster_cat <- lookUp$strata
-      
+
     }
-    
+
     if(!exists("srastercats2")){
 
         lookUp <- lookUp %>%
           dplyr::mutate(stratamapped_cat = paste0(sraster_cat,"_",strata2)) %>%
           dplyr::select(-sraster_cat)
-        
+
     }
   }
-  
+
   if(exists("srastcats2")){
-    
+
     lookUp <- dplyr::left_join(lookUp, srastcats2, by=c("strata2" = "value")) %>%
       dplyr::rename(sraster2_cat = names(srastcats2)[2])
-    
+
     if(any(is.na(lookUp$sraster2_cat))){
-      
+
       lookUp$sraster2_cat <- lookUp$strata2
-      
+
     }
-    
+
     if(exists("srastcats")){
-      
+
       lookUp <- lookUp %>%
         dplyr::mutate(stratamapped_cat = paste0(sraster_cat,"_",sraster2_cat)) %>%
         dplyr::select(-sraster2_cat, -sraster_cat)
-      
+
     } else {
-      
+
       lookUp <- lookUp %>%
         dplyr::mutate(stratamapped_cat = paste0(strata,"_",sraster2_cat)) %>%
         dplyr::select(-sraster2_cat)
-      
+
     }
-    
+
   }
 
   #--- set newly stratified values ---#
