@@ -194,10 +194,12 @@ allocate_equal <- function(sraster,
 allocate_existing <- function(toSample,
                                 existing){
   
+  strata <- total <- eTotal <- NULL
+  
   #--- if existing is provided include already sampled plots to achieve the total number ---#
   
   if (!inherits(existing, "data.frame") && !inherits(existing, "sf")) {
-    stop("'existing' must be a data.frame or sf object", call. = FALSE)
+    stop("'existing' must be a data.frame or sf object.", call. = FALSE)
   }
   
   if (any(!c("strata") %in% names(existing))) {
@@ -245,3 +247,61 @@ allocate_existing <- function(toSample,
   
 }
 
+#' @export
+#' @rdname allocating
+#' @family allocation
+#' @keywords internal
+
+allocate_force <- function(toSample,
+                           nSamp,
+                           diff){
+  
+  total <- strata <- NULL
+  
+  #--- Force the removal of samples to meet 'nSamp' ---#
+
+  if (diff > 0) {
+    diffAbs <- abs(diff)
+    
+    while (diffAbs > 0) {
+      stratAdd <- toSample %>%
+        {
+          if (nrow(dplyr::filter(toSample, total == max(total))) > 0) as.data.frame(dplyr::filter(toSample, total == max(total))) 
+          else as.data.frame(dplyr::filter(toSample, total < max(total)))
+        } %>%
+        dplyr::sample_n(1) %>%
+        dplyr::select(strata) %>%
+        dplyr::pull()
+      
+      toSample <- toSample %>%
+        dplyr::mutate(total = replace(total, strata == stratAdd, total[strata == stratAdd] - 1))
+      
+      diffAbs <- diffAbs - 1
+    }
+    
+    #--- Force the addition of samples to meet 'nSamp' ---#
+  } else if (diff < 0) {
+    diffAbs <- abs(diff)
+    
+    while (diffAbs > 0) {
+      stratAdd <- toSample %>%
+        {
+          if (nrow(dplyr::filter(toSample, total == min(total))) > 0) as.data.frame(dplyr::filter(toSample, total == min(total))) 
+          else as.data.frame(dplyr::filter(toSample, total > min(total)))
+        } %>%
+        dplyr::sample_n(1) %>%
+        dplyr::select(strata) %>%
+        dplyr::pull()
+      
+      toSample <- toSample %>%
+        dplyr::mutate(total = replace(total, 
+                                      strata == stratAdd, 
+                                      total[strata == stratAdd] + 1)
+        )
+      
+      diffAbs <- diffAbs - 1
+    }
+  }
+  
+  toSample
+}

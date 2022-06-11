@@ -77,11 +77,11 @@ calculate_allocation <- function(sraster,
   
   #--- Error management ---#
   if (!inherits(sraster, "SpatRaster")) {
-    stop("'sraster' must be type SpatRaster", call. = FALSE)
+    stop("'sraster' must be type SpatRaster.", call. = FALSE)
   }
   
   if (any(!c("strata") %in% names(sraster))) {
-    stop("'sraster must have a layer named 'strata'", call. = FALSE)
+    stop("'sraster must have a layer named 'strata'.", call. = FALSE)
   }
   
   #--- if the sraster has multiple bands subset the band named strata ---#
@@ -98,7 +98,7 @@ calculate_allocation <- function(sraster,
   }
   
   if (!is.logical(force)) {
-    stop("'force' must be type logical", call. = FALSE)
+    stop("'force' must be type logical.", call. = FALSE)
   }
   
   #--- set global vars ---#
@@ -159,7 +159,7 @@ calculate_allocation <- function(sraster,
     
     tot <- sum(toSample$total)
     
-    if(isFALSE(force)){
+    if(isFALSE(force) && tot != nSamp){
     
       message(paste0("nSamp of ",nSamp," is not perfectly divisible based on strata distribution. nSamp of ", tot, " will be returned. Use 'force = TRUE' to brute force to ", nSamp,"."))
     }
@@ -200,60 +200,24 @@ calculate_allocation <- function(sraster,
   }
   
   if (allocation != "equal") {
+    
     if (diff != 0) {
       
       #--- adjust sample count to force the user defined number ---#
       
-      if (force == TRUE) {
+      if (isTRUE(force)) {
         message(paste0("Forcing ", nSamp, " total samples."))
         
         #--- if samples need to be removed ---#
-        
-        if (diff > 0) {
-          diffAbs <- abs(diff)
-          
-          while (diffAbs > 0) {
-            stratAdd <- toSample %>%
-              {
-                if (nrow(dplyr::filter(toSample, total == max(total))) > 0) as.data.frame(dplyr::filter(toSample, total == max(total))) else as.data.frame(dplyr::filter(toSample, total < max(total)))
-              } %>%
-              dplyr::sample_n(1) %>%
-              dplyr::select(strata) %>%
-              dplyr::pull()
-            
-            toSample <- toSample %>%
-              dplyr::mutate(total = replace(total, strata == stratAdd, total[strata == stratAdd] - 1))
-            
-            diffAbs <- diffAbs - 1
-          }
-          
-          #--- if samples need to be added ---#
-        } else if (diff < 0) {
-          diffAbs <- abs(diff)
-          
-          while (diffAbs > 0) {
-            stratAdd <- toSample %>%
-              {
-                if (nrow(dplyr::filter(toSample, total == min(total))) > 0) as.data.frame(dplyr::filter(toSample, total == min(total))) else as.data.frame(dplyr::filter(toSample, total > min(total)))
-              } %>%
-              dplyr::sample_n(1) %>%
-              dplyr::select(strata) %>%
-              dplyr::pull()
-            
-            toSample <- toSample %>%
-              dplyr::mutate(total = replace(total, 
-                                            strata == stratAdd, 
-                                            total[strata == stratAdd] + 1)
-              )
-            
-            diffAbs <- diffAbs - 1
-          }
-        }
-      } 
+
+        toSample <- allocate_force(toSample = toSample, nSamp = nSamp, diff = diff)
+    
+      }
     }
+    
   } else {
     if (force == TRUE) {
-      message("`force = TRUE` has no effect when `allocation = equal'. Ignorning.")
+      message("`force = TRUE` has no effect when `allocation = equal'. Ignoring.")
     }
   }
   

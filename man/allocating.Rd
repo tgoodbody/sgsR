@@ -7,6 +7,7 @@
 \alias{allocate_manual}
 \alias{allocate_equal}
 \alias{allocate_existing}
+\alias{allocate_force}
 \title{Allocating}
 \usage{
 allocate_prop(sraster, nSamp)
@@ -18,6 +19,8 @@ allocate_manual(sraster, nSamp, weights)
 allocate_equal(sraster, nSamp)
 
 allocate_existing(toSample, existing)
+
+allocate_force(toSample, nSamp, diff)
 }
 \arguments{
 \item{sraster}{spatRaster. Stratification raster to be used for sampling.}

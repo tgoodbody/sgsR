@@ -82,7 +82,7 @@ strat_map <- function(sraster,
                       ...) {
 
   #--- global variables ---#
-  strata <- strata2 <- NULL
+  strata <- strata2 <- sraster_cat <- sraster2_cat <- NULL
 
   #--- error handling ---#
 

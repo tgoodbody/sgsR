@@ -34,7 +34,7 @@ no additional samples will be added. Values close to 1 can cause the algorithm t
 Both \code{mraster} & \code{nQuant} inputs must be the same to supply the covariance matrix. Supplying the matrix allows users
 with very large \code{mrasters} to pre-process the covariance matrix to avoid longer sampling processing times.}
 
-\item{plot}{Logial. Plots existing (circles) and new (crosses) samples on the first band of \code{mraster}.}
+\item{plot}{Logical. Plots samples of type `existing` (if provided; croses) and `new` (circles) along with \code{mraster}.}
 
 \item{details}{Logical. If \code{FALSE} (default) output is only
 stratification raster. If \code{TRUE} return a list where \code{$details} is additional 

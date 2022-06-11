@@ -1,3 +1,15 @@
+# sgsR 0.1.5
+
+* `sample_strat` made `rule1()` and `rule2()` functions to make code more concise. Fixed issue with `mindist` not setting distances between strata.
+
+* Altered how `existing` and `new` samples are plotted in `sample_strat()` and `sample_ahels()`
+
+* Added internal utility functions `allocate_prop / allocate_optim / allocate_manual / allocate_equal / allocate_existing / allocate_force` and integrated them into `calculate_allocation()` to make code more succinct and purposeful.
+
+* `strat_map()` can now map categorical srasters (gave an error before). Now also returns the categories associated with the categorical rasters in the lookup table with `details = TRUE`.
+
+* Altered error handling for raster masking to be within `mask_access()` instead of individual sampling functions.
+
 # sgsR 0.1.4
 
 * Fixed issue in `calculate_allocation()` where too many samples would be allocated (compared to the user-defined `nSamp`) due to using `ceiling()` instead of `round()` during proportional and optimal allocation.
@@ -6,13 +18,7 @@
 
 * Added `weights` parameter to `sample_strat()` to allow for `"manual"` allocation.
 
-* Added internal utility functions `allocate_prop / allocate_optim / allocate_manual / allocate_equal / allocate_existing` and integrated them into `calculate_allocation()` to make code more succinct and purposeful.
-
 * Allow `buff_inner` to be `NULL` when providing `access` to isolate samples. This allows users to define only a maximum distance (should they wish to) that samples can be from `access` but not specify a minimum distance.
-
-* Altered error handling for raster masking to be within `mask_access()` instead of individual sampling functions.
-
-* `strat_map()` can now map categorical srasters (gave an error before). Now also returns the categories associated with the categorical rasters in the lookup table with `details = TRUE`.
 
 # sgsR 0.1.3
 

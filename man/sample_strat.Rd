@@ -68,7 +68,7 @@ from access where plots can be sampled.}
 
 \item{wcol}{Numeric. Number of columns in the focal window (\code{default = 3}).}
 
-\item{plot}{Logical. Plots existing (if provided; circles) and new (crosses) samples.}
+\item{plot}{Logical. Plots samples of type `existing` (if provided; croses) and `new` (circles) along with \code{sraster}.}
 
 \item{details}{Logical. If \code{FALSE} (default) output is sf object of
 stratified samples. If \code{TRUE} return a list
@@ -86,9 +86,6 @@ An sf object with \code{nSamp} stratified samples.
 Sampling based on a stratified raster.
 }
 \note{
-\code{existing} may contain samples that fall in \code{sraster} cells that are `NA`. If this occurs and \code{include = TRUE}, `NA` samples
-are separated during sampling and re-appended at the end of the sampling process.
-
 The sampling is performed in 2 stages:
 \enumerate{
 
@@ -101,6 +98,12 @@ The sampling is performed in 2 stages:
  The rule applied to allocate each sample is defined in the \code{rule} attribute of output samples.
 
 }
+
+\code{existing} may contain samples that fall in \code{sraster} cells that are `NA`. If this occurs and \code{include = TRUE}, `NA` samples
+are separated during sampling and re-appended at the end of the sampling process.
+
+If the \code{sraster} provided contains factor values, the algorithm will automatically convert these into the numeric factor levels and 
+perform sampling using those values. The categories (factor values) will be extracted and appended to the algorithm output as the `category` attribute.
 }
 \examples{
 #--- Load raster and access files ---#
