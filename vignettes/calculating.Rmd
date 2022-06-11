@@ -114,7 +114,6 @@ calculate_pcomp(mraster = mraster, # input
                 nComp = 3, # number of components to output
                 plot = TRUE, # plot
                 details = TRUE) # details about the principal component analysis appended
-
 ```
 
 ## `calculate_sampsize` {.unnumbered}
@@ -199,10 +198,13 @@ The code in the demonstration above yields a total of 80 samples (20 `nSamp` for
 The user may wish to manually assign weights to strata. In this case, `allocation = manual` can be used and `weights` must be provided as a numeric vector (e.g. `weights = c(0.2, 0.2, 0.2, 0.4)` where `sum(weights) == 1`). In this case, `nSamp` will be allocated based on `weights`. 
 
 ```{r}
+weights <- c(0.2, 0.2, 0.2, 0.4)
+
 calculate_allocation(sraster = sraster, # stratified raster
                      nSamp = 20, # desired sample number
-                     allocation = "manual", # optimal allocation
-                     weights = c(0.2, 0.2, 0.2, 0.4)) # weights adding to 1
+                     allocation = "manual", # manual allocation
+                     weights = weights) # weights adding to 1
+
 ```
 
 The code in the demonstration above yields a total of 20 samples with plots being allocated based on the `weights` provided in ascending strata order.
