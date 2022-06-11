@@ -137,7 +137,7 @@ strat_breaks <- function(mraster,
     stats::na.omit() %>%
     as.matrix()
 
-  rcl <- terra::classify(rastermetric, breaks_m, othersNA = TRUE)
+  rcl <- terra::classify(rastermetric, breaks_m, others = NA)
   names(rcl) <- "strata"
 
 
@@ -167,7 +167,7 @@ strat_breaks <- function(mraster,
       stats::na.omit() %>%
       as.matrix()
 
-    rcl2 <- terra::classify(rastermetric2, breaks2_m, othersNA = TRUE)
+    rcl2 <- terra::classify(rastermetric2, breaks2_m, others = NA)
     names(rcl2) <- "strata2"
 
     #--- stack rcl and rcl2

@@ -55,6 +55,8 @@ calculate_distance <- function(raster,
   #--- load access ---#
 
   access <- terra::vect(access)
+  
+  if(terra::crs(access) != terra::crs(raster)) terra::crs(access) <- terra::crs(raster)
 
   #--- use first layer from raster and access to determine distance from each pixel ---#
 

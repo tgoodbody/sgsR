@@ -10,6 +10,8 @@
 
 * Altered error handling for raster masking to be within `mask_access()` instead of individual sampling functions.
 
+* Changes to `terra::distance()` & `terra::classify()` required slight modifications to `calculate_distance()` and `strat_breaks()`
+
 # sgsR 0.1.4
 
 * Fixed issue in `calculate_allocation()` where too many samples would be allocated (compared to the user-defined `nSamp`) due to using `ceiling()` instead of `round()` during proportional and optimal allocation.
