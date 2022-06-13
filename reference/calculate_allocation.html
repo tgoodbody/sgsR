@@ -83,29 +83,44 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>sraster</dt>
 <dd><p>spatRaster. Stratification raster to be used for sampling.</p></dd>
+
+
 <dt>nSamp</dt>
 <dd><p>Numeric. Number of desired samples.</p></dd>
+
+
 <dt>allocation</dt>
 <dd><p>Character. Allocation algorithm to be used. Either <code>prop</code> (default) for proportional allocation,
 <code>optim</code> for optimal allocation (equal sampling cost), <code>equal</code> for equal number of samples (defined by <code>nSamp</code>)
 for each strata, or <code>"manual"</code> for user defined strata weights defined using <code>weights</code>.</p></dd>
+
+
 <dt>weights</dt>
 <dd><p>Numeric. Only applicable when <code>allocation = "manual"</code>. Vector of weights where <code>sum(weights) == 1</code>. Vector length
 must be equal to the number of unique strata where the first numeric value corresponds to stratum 1, second stratum 2 etc.</p></dd>
+
+
 <dt>mraster</dt>
 <dd><p>spatRaster. ALS metric raster. Required when <code>allocation = optim</code>.</p></dd>
+
+
 <dt>existing</dt>
 <dd><p>sf 'POINT' or data.frame.  Existing plot network.</p></dd>
+
+
 <dt>force</dt>
 <dd><p>Logical. <code>Default = FALSE</code> - force <code>nSamp</code> to be exactly the user defined value
 in cases where <code>nSamp</code> and <code>sraster</code> strata count are not equally divisible. Additional samples often need to be allocated or removed
 based on rounding differences resulting from proportional differences between <code>nSamp</code> and strata coverages in <code>sraster</code>.
 In these instances samples are either added to strata with the lowest number of samples or are removed from strata with the highest number of samples.
 Has no effect when <code>existing</code> is provided.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Returns a data.frame of:</p><ul><li><p>strata - Strata ID.</p></li>
+    
+
+<p>Returns a data.frame of:</p><ul><li><p>strata - Strata ID.</p></li>
 <li><p>total - Total samples to be allocated based on under representation (positive) or over representation (negative)
 to be removed at the users discretion.</p></li>
 <li><p>need - Total required samples per strata. Rounded.</p></li>
@@ -204,7 +219,7 @@ to be removed at the users discretion.</p></li>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

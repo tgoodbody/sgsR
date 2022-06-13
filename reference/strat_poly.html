@@ -85,31 +85,50 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>poly</dt>
 <dd><p>sf. Input polygon coverage. e.g. - forest resources inventory coverage.</p></dd>
+
+
 <dt>attribute</dt>
 <dd><p>Character. Name of attribute within <code>poly</code> that will be stratified.</p></dd>
+
+
 <dt>features</dt>
 <dd><p>Vector / list of vectors. Features within <code>attribute</code>
 to guide stratification.</p></dd>
+
+
 <dt>raster</dt>
 <dd><p>spatRaster. Raster template to enable polygon to raster conversion.</p></dd>
+
+
 <dt>filename</dt>
 <dd><p>Character. Path to write stratified raster to disc.</p></dd>
+
+
 <dt>overwrite</dt>
 <dd><p>Logical. Specify whether <code>filename</code> should be overwritten on disc.</p></dd>
+
+
 <dt>plot</dt>
 <dd><p>Logical. Plots output spatRaster.</p></dd>
+
+
 <dt>details</dt>
 <dd><p>Logical. If <code>FALSE</code> (default) output is spatRaster object of
 stratified polygon attributes. If <code>TRUE</code> return a list
 where <code>$outRaster</code> is the stratified attributes, <code>$lookUp</code> is the lookup table
 for the stratification, and <code>poly</code> is the defined polygon <code>attribute</code> with corresponding
 <code>features / strata</code></p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional arguments for writing files. See <code><a href="https://rdrr.io/pkg/terra/man/writeRaster.html" class="external-link">writeRaster</a></code>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A spatRaster object.</p>
+    
+
+<p>A spatRaster object.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -184,7 +203,7 @@ for the stratification, and <code>poly</code> is the defined polygon <code>attri
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

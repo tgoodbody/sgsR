@@ -86,33 +86,56 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>mraster</dt>
 <dd><p>spatRaster. ALS metrics raster.</p></dd>
+
+
 <dt>mraster2</dt>
 <dd><p>Spatraster. Secondary covariate raster to stratify.</p></dd>
+
+
 <dt>nStrata</dt>
 <dd><p>Numeric. Number of quantiles to stratify <code>mraster</code>.</p></dd>
+
+
 <dt>nStrata2</dt>
 <dd><p>Numeric. Number of quantiles to stratify <code>mraster2</code>.</p></dd>
+
+
 <dt>plot</dt>
 <dd><p>Logical. Plots output strata raster and visualized
 strata with boundary dividers.</p></dd>
+
+
 <dt>details</dt>
 <dd><p>Logical. If <code>FALSE</code> (default) output is only
 stratification raster. If <code>TRUE</code> return a list where <code>$details</code> is additional 
 stratification information and <code>$raster</code> is the output stratification spatRaster.</p></dd>
+
+
 <dt>samp</dt>
 <dd><p>Numeric. Determines proportion of cells to plot in scatterplot (default = <code>0.2</code>).
 Lower values reduce visualization time.</p></dd>
+
+
 <dt>filename</dt>
 <dd><p>Character. Path to write stratified raster to disc.</p></dd>
+
+
 <dt>overwrite</dt>
 <dd><p>Logical. Specify whether <code>filename</code> should be overwritten on disc.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional arguments to be passed to <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></code> function.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Returns an output stratification <code>spatRaster</code> or a list when <code>details = TRUE</code>.
-When a list is returned:</p><ol><li><p><code>details</code> generates is a strata lookUp table for the stratification.</p></li>
+    
+
+<p>Returns an output stratification <code>spatRaster</code> or a list when <code>details = TRUE</code>.</p>
+
+
+<p>When a list is returned:</p><ol><li><p><code>details</code> generates is a strata lookUp table for the stratification.</p></li>
 <li><p><code>raster</code> is a stratified <code>spatRaster</code> based on quantiles</p></li>
 <li><p><code>plot</code> is a <code>ggplot</code> histogram / scatter plot object (depends on whether metric2 was supplied).
 Histogram shows distribution and break points while scatter plot shows colour coded and strata boundaries.</p></li>
@@ -180,7 +203,7 @@ Histogram shows distribution and break points while scatter plot shows colour co
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>
