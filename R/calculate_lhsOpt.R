@@ -267,7 +267,7 @@ plot_LHCOptim <- function(dfFinal,
   )
 
   #--- Parametise Exponential decay function ---#
-  plot(df$x, df$y, xlab = "sample number", ylab = "1 - KL Divergence") # Initial plot of the data
+  graphics::plot(df$x, df$y, xlab = "sample number", ylab = "1 - KL Divergence") # Initial plot of the data
 
   #--- Prepare a good inital state ---#
   theta.0 <- max(df$y) * 1.1
@@ -285,7 +285,7 @@ plot_LHCOptim <- function(dfFinal,
 
   predicted <- stats::predict(model, list(x = df$x))
 
-  plot(df$x, df$y, xlab = "# of samples", ylab = "norm mean KL divergence")
+  graphics::plot(df$x, df$y, xlab = "# of samples", ylab = "norm mean KL divergence")
   graphics::lines(df$x, predicted, col = "skyblue", lwd = 3)
 
   x1 <- c(-1, maxSamp)
