@@ -236,7 +236,7 @@ ahels_nSamp <- function(nSamp,
                         vals){
   
   if (!is.numeric(nSamp)) {
-    stop("'nSamp' must be type numeric", call. = FALSE)
+    stop("'nSamp' must be type numeric.", call. = FALSE)
   }
   
   if(tolerance > 0){

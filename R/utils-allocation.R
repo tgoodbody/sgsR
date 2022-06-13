@@ -49,8 +49,8 @@ allocate_prop <- function(sraster,
 #' @keywords internal
 
 allocate_optim <- function(sraster,
-                             mraster,
-                             nSamp){
+                           mraster,
+                           nSamp){
   
   #--- define global vars ---#
   
@@ -108,8 +108,8 @@ allocate_optim <- function(sraster,
 #' @keywords internal
 
 allocate_manual <- function(sraster,
-                              nSamp,
-                              weights){
+                            nSamp,
+                            weights){
   
   #--- define global vars ---#
   
@@ -192,9 +192,9 @@ allocate_equal <- function(sraster,
 #' @keywords internal
 
 allocate_existing <- function(toSample,
-                                existing){
+                              existing){
   
-  strata <- total <- eTotal <- NULL
+  strata <- total <- n <- NULL
   
   #--- if existing is provided include already sampled plots to achieve the total number ---#
   
@@ -213,8 +213,7 @@ allocate_existing <- function(toSample,
   #--- determine number of samples for each strata ---#
   
   existing <- existing %>%
-    dplyr::group_by(strata) %>%
-    dplyr::tally(name = "eTotal")
+    dplyr::count(strata)
   
   #--- check if samples fall in areas where stratum values are NA ---#
   
@@ -222,7 +221,7 @@ allocate_existing <- function(toSample,
     
     nNA <- existing %>%
       dplyr::filter(!complete.cases(strata)) %>%
-      dplyr::pull(eTotal)
+      dplyr::pull(n)
     
     message(paste0(nNA," samples in `existing` are located where strata values are NA. Expect ",nNA," additional samples in output."))
 
@@ -234,14 +233,14 @@ allocate_existing <- function(toSample,
   if (!any(unique(existing$strata) %in% unique(toSample$strata))) {
       stop("'existing' does not contain matching strata to those in `sraster`. Check strata in both data sets & consider using extract_strata().", call. = FALSE)
   }
-  
+
   #--- join the 2 df together and subtract the number of existing plots by strata from toSample ---#
   toSample <- toSample %>%
     dplyr::left_join(existing, by = "strata") %>%
     replace(is.na(.), 0) %>%
-    dplyr::mutate(total = total - eTotal,
-                  need = eTotal + total) %>%
-    dplyr::select(-eTotal)
+    dplyr::mutate(total = total - n,
+                  need = n + total) %>%
+    dplyr::select(-n)
 
   toSample
   

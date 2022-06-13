@@ -93,45 +93,45 @@ sample_strat <- function(sraster,
   
   #--- Error management ---#
   if (!inherits(sraster, "SpatRaster")) {
-    stop("'sraster' must be type SpatRaster", call. = FALSE)
+    stop("'sraster' must be type SpatRaster.", call. = FALSE)
   }
   
   if (!is.null(mindist)) {
     if (!is.numeric(mindist)) {
-      stop("'mindist' must be type numeric", call. = FALSE)
+      stop("'mindist' must be type numeric.", call. = FALSE)
     }
   }
   
   if (!is.numeric(nSamp)) {
-    stop("'nSamp' must be type numeric", call. = FALSE)
+    stop("'nSamp' must be type numeric.", call. = FALSE)
   }
   
   if (!is.logical(include)) {
-    stop("'include' must be type logical", call. = FALSE)
+    stop("'include' must be type logical.", call. = FALSE)
   }
   
   if (!is.logical(remove)) {
-    stop("'remove' must be type logical", call. = FALSE)
+    stop("'remove' must be type logical.", call. = FALSE)
   }
   
   if (!is.logical(force)) {
-    stop("'force' must be type logical", call. = FALSE)
+    stop("'force' must be type logical.", call. = FALSE)
   }
   
   if (!is.numeric(wrow)) {
-    stop("'wrow' must be type numeric", call. = FALSE)
+    stop("'wrow' must be type numeric.", call. = FALSE)
   }
   
   if (!is.numeric(wcol)) {
-    stop("'wcol' must be type numeric", call. = FALSE)
+    stop("'wcol' must be type numeric.", call. = FALSE)
   }
   
   if (!is.logical(plot)) {
-    stop("'plot' must be type logical", call. = FALSE)
+    stop("'plot' must be type logical.", call. = FALSE)
   }
   
   if (!is.logical(details)) {
-    stop("'details' must be type logical", call. = FALSE)
+    stop("'details' must be type logical.", call. = FALSE)
   }
   
   #--- check if `sraster` contains factor values and if so generate its category list to amend later ---#
@@ -149,11 +149,11 @@ sample_strat <- function(sraster,
   
   if (is.null(existing)) {
     if (isTRUE(include)) {
-      stop("'existing' must be provided when 'include' == TRUE", call. = FALSE)
+      message("'existing' must be provided when 'include = TRUE'. Ignoring.", call. = FALSE)
     }
     
     if (isTRUE(remove)) {
-      stop("'existing' must be provided when 'remove' == TRUE", call. = FALSE)
+      message("'existing' must be provided when 'remove = TRUE'. Ignoring.", call. = FALSE)
     }
     
     #--- if existing samples do not exist make an empty data.frame called addSamples ---#
@@ -164,24 +164,26 @@ sample_strat <- function(sraster,
     #--- existing must be either a data.frame or an sf object with columns names 'X' 'Y' 'strata' ---#
     
     if (!inherits(existing, "data.frame") && !inherits(existing, "sf")) {
-      stop("'existing' must be a data.frame or sf object", call. = FALSE)
+      stop("'existing' must be a data.frame or sf object.", call. = FALSE)
     }
     
     if (any(!c("strata") %in% names(existing))) {
       stop("'existing' must have an attribute named 'strata'. Consider using extract_strata().", call. = FALSE)
     }
     
-    if (inherits(sf::st_geometry(existing), "sfc_POINT")) {
-      
-      #--- if existing is an sf object extract the coordinates and the strata vector ---#
-      
-      exist_xy <- sf::st_coordinates(existing)
-      
-      strata <- existing$strata
-      
-      existing <- as.data.frame(cbind(strata, exist_xy))
-    } else {
-      stop("'existing' geometry type must be 'sfc_POINT'", call. = FALSE)
+    if(inherits(existing, "sf")){
+      if (inherits(sf::st_geometry(existing), "sfc_POINT")) {
+        
+        #--- if existing is an sf object extract the coordinates and the strata vector ---#
+        
+        exist_xy <- sf::st_coordinates(existing)
+        
+        strata <- existing$strata
+        
+        existing <- as.data.frame(cbind(strata, exist_xy))
+      } else {
+        stop("'existing' geometry type must be 'sfc_POINT'.", call. = FALSE)
+      }
     }
     
     #--- if existing samples do exist ensure proper naming convention ---#
@@ -197,12 +199,12 @@ sample_strat <- function(sraster,
             Y = y
           )
         
-        message("'existing' column coordinate names are lowercase - converting to uppercase")
+        message("'existing' column coordinate names are lowercase - converting to uppercase.")
       } else {
         
         #--- if no x/y columns are present stop ---#
         
-        stop("'existing' must have columns named 'X' and 'Y'", call. = FALSE)
+        stop("'existing' must have columns named 'X' and 'Y'.", call. = FALSE)
       }
     }
     
@@ -216,14 +218,14 @@ sample_strat <- function(sraster,
   extraCols <- colnames(existing)[!colnames(existing) %in% c("cell", "X", "Y", "strata")]
   
   # Transform strata to numeric if factor
-  if (is(addSamples$strata, "factor")) {
-    addSamples$strata <- as.numeric(as.character(addSamples$strata))
-  }
+  # if (is(addSamples$strata, "factor")) {
+  #   addSamples$strata <- as.numeric(as.character(addSamples$strata))
+  # }
   
   #--- determine number of samples for each strata ---#
   
   if (isTRUE(include)) {
-    message("'existing' samples being included in 'nSamp' total")
+    message("'existing' samples being included in 'nSamp' total.")
     
     toSample <- calculate_allocation(
       sraster = sraster,
@@ -346,22 +348,22 @@ sample_strat <- function(sraster,
       #--- Rule 1 sampling ---#
       
       r1 <- strat_rule1(n = n,
-                  i = i,
-                  s = s, 
-                  strat_mask = strat_mask,
-                  add_strata = add_strata,
-                  extraCols = extraCols,
-                  mindist = mindist)
+                        i = i,
+                        s = s, 
+                        strat_mask = strat_mask,
+                        add_strata = add_strata,
+                        extraCols = extraCols,
+                        mindist = mindist)
       
       #--- Rule 2 sampling ---#
       
       add_strata <- strat_rule2(n = n, 
-                          s = s,
-                          add_strata = r1$add_strata, 
-                          nCount = r1$nCount, 
-                          strata_m = strata_m,
-                          extraCols = extraCols,
-                          mindist = mindist)
+                                s = s,
+                                add_strata = r1$add_strata, 
+                                nCount = r1$nCount, 
+                                strata_m = strata_m,
+                                extraCols = extraCols,
+                                mindist = mindist)
       
       #--- if number of samples is < 0 based on `include` parameter ---#
     } else if (n < 0) {
@@ -383,7 +385,7 @@ sample_strat <- function(sraster,
         add_strata$type <- "existing"
         add_strata$rule <- "existing"
       } else {
-        message(paste0("'include = TRUE & remove = FALSE' - Stratum ", s, " overrepresented by ",abs(n), " samples but have not been removed. Expect a higher total 'nSamp' in output"))
+        message(paste0("'include = TRUE & remove = FALSE' - Stratum ", s, " overrepresented by ",abs(n), " samples but have not been removed. Expect a higher total 'nSamp' in output."))
         #--- keep over represented samples in dataset ---#
         add_strata <- addSamples %>%
           dplyr::filter(strata == s)
@@ -493,7 +495,7 @@ sample_strat <- function(sraster,
     }
     
     if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(paste0("'",filename, "' already exists and overwrite = FALSE"))
+      stop(paste0("'",filename, "' already exists and `overwrite = FALSE`."))
     }
     
     sf::st_write(samples, filename, delete_layer = overwrite)
