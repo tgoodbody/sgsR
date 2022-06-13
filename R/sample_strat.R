@@ -345,7 +345,7 @@ sample_strat <- function(sraster,
       
       #--- Rule 1 sampling ---#
       
-      r1 <- rule1(n = n,
+      r1 <- strat_rule1(n = n,
                   i = i,
                   s = s, 
                   strat_mask = strat_mask,
@@ -355,7 +355,7 @@ sample_strat <- function(sraster,
       
       #--- Rule 2 sampling ---#
       
-      add_strata <- rule2(n = n, 
+      add_strata <- strat_rule2(n = n, 
                           s = s,
                           add_strata = r1$add_strata, 
                           nCount = r1$nCount, 
