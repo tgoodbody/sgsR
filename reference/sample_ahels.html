@@ -80,6 +80,7 @@ the existing sample and covariate dataset.</p>
   nQuant <span class="op">=</span> <span class="fl">10</span>,
   nSamp <span class="op">=</span> <span class="cn">NULL</span>,
   threshold <span class="op">=</span> <span class="fl">0.9</span>,
+  tolerance <span class="op">=</span> <span class="fl">0</span>,
   matrices <span class="op">=</span> <span class="cn">NULL</span>,
   plot <span class="op">=</span> <span class="cn">FALSE</span>,
   details <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -102,6 +103,11 @@ cover at least 1 percent of the area of interest will be excluded and be returne
 <dt>threshold</dt>
 <dd><p>Numeric. Sample quantile ratio threshold. After the threshold <code>default = 0.9</code> is reached,
 no additional samples will be added. Values close to 1 can cause the algorithm to continually loop.</p></dd>
+<dt>tolerance</dt>
+<dd><p>Numeric. Allowable tolerance around the perfect quantile density of 1. If <code>nSamp</code> is used samples will be
+added until the <code>1 - tolerance</code> density is reached. If <code>threshold</code> is used, samples will be added until the 
+<code>threshold - tolerance</code> value is reached. This parameter allows the user to define a buffer around desired quantile densities
+to permit the algorithm to not add additional samples if quantile density is very close to 1, or user-defined <code>threshold</code>.</p></dd>
 <dt>matrices</dt>
 <dd><p>List. Quantile and covariance matrices generated from <code>calculate_pop(mraster = mraster, nQuant = nQuant)</code>.
 Both <code>mraster</code> &amp; <code>nQuant</code> inputs must be the same to supply the covariance matrix. Supplying the matrix allows users
