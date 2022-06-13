@@ -20,15 +20,15 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: r-lib/actions/checkout@v2
 
-      - uses: ./setup-pandoc
+      - uses: r-lib/actions/setup-pandoc
 
-      - uses: ./setup-r
+      - uses: r-lib/actions/setup-r
         with:
           use-public-rspm: true
 
-      - uses: ./setup-r-dependencies
+      - uses: r-lib/actions/setup-r-dependencies
         with:
           extra-packages: any::pkgdown, local::.
           needs: website
