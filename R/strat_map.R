@@ -237,8 +237,6 @@ strat_map <- function(sraster,
 
   rout <- terra::setValues(sraster, as.integer(oclass$stratamapped))
   names(rout) <- "strata"
-  
-  terra::as.factor(rout)
 
   if (isTRUE(stack)) {
     message("Stacking sraster, sraster2, and their combination (stratamapped).")
