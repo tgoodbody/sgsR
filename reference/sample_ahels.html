@@ -20,7 +20,7 @@ the existing sample and covariate dataset."><meta property="og:image" content="/
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -107,7 +107,7 @@ no additional samples will be added. Values close to 1 can cause the algorithm t
 Both <code>mraster</code> &amp; <code>nQuant</code> inputs must be the same to supply the covariance matrix. Supplying the matrix allows users
 with very large <code>mrasters</code> to pre-process the covariance matrix to avoid longer sampling processing times.</p></dd>
 <dt>plot</dt>
-<dd><p>Logial. Plots existing (circles) and new (crosses) samples on the first band of <code>mraster</code>.</p></dd>
+<dd><p>Logical. Plots samples of type `existing` (if provided; croses) and `new` (circles) along with <code>mraster</code>.</p></dd>
 <dt>details</dt>
 <dd><p>Logical. If <code>FALSE</code> (default) output is only
 stratification raster. If <code>TRUE</code> return a list where <code>$details</code> is additional 

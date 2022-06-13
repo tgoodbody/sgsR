@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -135,7 +135,7 @@ from access where plots can be sampled.</p></dd>
 <dt>wcol</dt>
 <dd><p>Numeric. Number of columns in the focal window (<code>default = 3</code>).</p></dd>
 <dt>plot</dt>
-<dd><p>Logical. Plots existing (if provided; circles) and new (crosses) samples.</p></dd>
+<dd><p>Logical. Plots samples of type `existing` (if provided; croses) and `new` (circles) along with <code>sraster</code>.</p></dd>
 <dt>details</dt>
 <dd><p>Logical. If <code>FALSE</code> (default) output is sf object of
 stratified samples. If <code>TRUE</code> return a list
@@ -152,14 +152,16 @@ is an sf object of stratified samples.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
-    <p><code>existing</code> may contain samples that fall in <code>sraster</code> cells that are `NA`. If this occurs and <code>include = TRUE</code>, `NA` samples
-are separated during sampling and re-appended at the end of the sampling process.</p>
-<p>The sampling is performed in 2 stages:</p><ol><li><p><code>Rule 1</code> - Sample within grouped stratum pixels defined within the
+    <p>The sampling is performed in 2 stages:</p><ol><li><p><code>Rule 1</code> - Sample within grouped stratum pixels defined within the
 <code>wrow, wcol</code> parameters</p></li>
 <li><p><code>Rule 2</code> - If no samples exist to satisfy Rule 1
  individual stratum pixels are sampled.</p>
 <p>The rule applied to allocate each sample is defined in the <code>rule</code> attribute of output samples.</p></li>
-</ol></div>
+</ol><p><code>existing</code> may contain samples that fall in <code>sraster</code> cells that are `NA`. If this occurs and <code>include = TRUE</code>, `NA` samples
+are separated during sampling and re-appended at the end of the sampling process.</p>
+<p>If the <code>sraster</code> provided contains factor values, the algorithm will automatically convert these into the numeric factor levels and 
+perform sampling using those values. The categories (factor values) will be extracted and appended to the algorithm output as the `category` attribute.</p>
+    </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Queinnec, M., White, J. C., &amp; Coops, N. C. (2021).
