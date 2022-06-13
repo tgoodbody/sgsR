@@ -10,6 +10,7 @@ sample_ahels(
   nQuant = 10,
   nSamp = NULL,
   threshold = 0.9,
+  tolerance = 0,
   matrices = NULL,
   plot = FALSE,
   details = FALSE,
@@ -29,6 +30,11 @@ cover at least 1 percent of the area of interest will be excluded and be returne
 
 \item{threshold}{Numeric. Sample quantile ratio threshold. After the threshold \code{default = 0.9} is reached,
 no additional samples will be added. Values close to 1 can cause the algorithm to continually loop.}
+
+\item{tolerance}{Numeric. Allowable tolerance around the perfect quantile density of 1. If \code{nSamp} is used samples will be
+added until the \code{1 - tolerance} density is reached. If \code{threshold} is used, samples will be added until the 
+\code{threshold - tolerance} value is reached. This parameter allows the user to define a buffer around desired quantile densities
+to permit the algorithm to not add additional samples if quantile density is very close to 1, or user-defined \code{threshold}.}
 
 \item{matrices}{List. Quantile and covariance matrices generated from \code{calculate_pop(mraster = mraster, nQuant = nQuant)}.
 Both \code{mraster} & \code{nQuant} inputs must be the same to supply the covariance matrix. Supplying the matrix allows users

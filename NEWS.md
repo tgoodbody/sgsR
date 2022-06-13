@@ -1,6 +1,10 @@
 # sgsR 0.1.5
 
-* `sample_strat` made `rule1()` and `rule2()` functions to make code more concise. Fixed issue with `mindist` not setting distances between strata.
+* `sample_strat` made `strat_rule1()` and `strat_rule2()` functions to make code more concise. Fixed issue with `mindist` not setting distances between strata.
+
+* `sample_ahels` made `ahels_nSamp()` and `ahels_threshold()` functions to make code more concise.
+
+* Added `tolerance` parameter to `sample_strat()` to allow users to define a tolerance around the desired sampling ratio. This will allow the user to say "I ideally want the ratio to be `XX` but I'm OK if the ratio is `XX - threshold` if it means I dont need to add more samples".
 
 * Altered how `existing` and `new` samples are plotted in `sample_strat()` and `sample_ahels()`
 

@@ -14,6 +14,10 @@
 #' @param nSamp Numeric. Maximum number of new samples to allocate.
 #' @param threshold Numeric. Sample quantile ratio threshold. After the threshold \code{default = 0.9} is reached,
 #' no additional samples will be added. Values close to 1 can cause the algorithm to continually loop.
+#' @param tolerance Numeric. Allowable tolerance around the perfect quantile density of 1. If \code{nSamp} is used samples will be
+#' added until the \code{1 - tolerance} density is reached. If \code{threshold} is used, samples will be added until the 
+#' \code{threshold - tolerance} value is reached. This parameter allows the user to define a buffer around desired quantile densities
+#' to permit the algorithm to not add additional samples if quantile density is very close to 1, or user-defined \code{threshold}.
 #' @param matrices List. Quantile and covariance matrices generated from \code{calculate_pop(mraster = mraster, nQuant = nQuant)}.
 #' Both \code{mraster} & \code{nQuant} inputs must be the same to supply the covariance matrix. Supplying the matrix allows users
 #' with very large \code{mrasters} to pre-process the covariance matrix to avoid longer sampling processing times.
@@ -69,6 +73,7 @@ sample_ahels <- function(mraster,
                          nQuant = 10,
                          nSamp = NULL,
                          threshold = 0.9,
+                         tolerance = 0,
                          matrices = NULL,
                          plot = FALSE,
                          details = FALSE,
@@ -96,13 +101,30 @@ sample_ahels <- function(mraster,
   if (!is.numeric(threshold)) {
     stop("'threshold' must be type numeric", call. = FALSE)
   }
-
+  
   if (threshold < 0 | threshold > 1) {
     stop("'threshold' must be > 0 and < 1", call. = FALSE)
   }
-
+  
   if (!is.logical(details)) {
     stop("'details' must be type logical", call. = FALSE)
+  }
+  
+  #--- tolerance ---#
+  if (!is.numeric(tolerance)) {
+    stop("'tolerance' must be type numeric", call. = FALSE)
+  }
+  
+  if (tolerance >= threshold) {
+    stop("'tolerance' cannot be >= `threshold`", call. = FALSE)
+  }
+  
+  if (tolerance < 0 | tolerance > 1) {
+    stop("'tolerance' must be > 0 and < 1", call. = FALSE)
+  }
+  
+  if (tolerance > 0.25) {
+    message("'tolerance' > 0.25. Are you sure this is what you want?", call. = FALSE)
   }
 
   #--- determine number of bands in mraster ---#
@@ -236,240 +258,58 @@ sample_ahels <- function(mraster,
 
   #--- Outline quantiles that are underrepresented (< 1) in the sample ---#
 
-  underRep <- which(ratio < 1, arr.ind = TRUE)
-  underRep <- cbind(underRep, which(ratio < 1))
+  underRep <- which(ratio < (1 - tolerance), arr.ind = TRUE)
+  underRep <- cbind(underRep, which(ratio < (1 - tolerance)))
 
-  #--- begin sampling from highest discrepancy to lowest ---#
-
-  newSamp <- nSamp
-  sTot <- 0
-
-  #--- begin while loop to sample ---#
-
+  #--- perform sampling ---#
 
   if (!is.null(nSamp)) {
 
-    #--- ensure nSamp is numeric ---#
-
-    if (!is.numeric(nSamp)) {
-      stop("'nSamp' must be type numeric", call. = FALSE)
-    }
-
-    message(paste0("nSamp of ", nSamp, " has been provided. Samples will be added until this number is reached or until sampling ratios are all >= 1"))
-
-    while (newSamp != 0) {
-
-      #--- determine the greatest discrepancy between sample and covariate data ---#
-
-      repRankUnder <- which(underRep[, 3] == ratOrderUnder[1])
-
-      #--- determine row and column of most under represented quantile ---#
-
-      repRow <- underRep[repRankUnder, 1]
-      repCol <- underRep[repRankUnder, 2]
-      
-      #--- if all sampling ratios in matCovSampDens are >= 1 stop adding samples ---#
-      
-      if(length(repRankUnder) == 0){
-        
-        message(paste0("Sampling ratios are all >= 1. A total of ", sTot, " samples were added."))
-        
-        break
-      }
-
-      #--- determine number of existing samples in selected quantile ---#
-      sampExist <- floor(matCovSamp[repRow, repCol])
-
-      #--- determine max number of samples based on covariate density ---#
-
-      sampOptim <- ceiling(nrow(samples) * matCovDens[repRow, repCol])
-
-      #--- number of samples needed ---#
-
-      sampNeed <- sampOptim - sampExist
-      
-      #--- we have a limited number of samples so we need to be sure not to over allocate ---#
-      if (newSamp <= sampNeed) sampNeed <- newSamp
-      
-      #--- selecting covariates based on quantile chosen ---#
-
-      covLower <- mats$matQ[repRow, repCol]
-
-      covUpper <- mats$matQ[repRow + 1, repCol]
-
-      #--- subset covariate dataset for potential new samples ---#
-
-      valsSub <- vals[vals[, (2 + repCol)] >= covLower & vals[, (2 + repCol)] <= covUpper, ]
-
-      #--- randomly sample within valsSub and extract randomly sampled cells ---#
-
-      addSamp <- sample(nrow(valsSub), sampNeed)
-
-      valsSubSamp <- valsSub[addSamp, ]
-
-      valsSubSamp$type <- "new"
-
-      #--- remove samples from pool to ensure same cells are not sampled again ---#
-
-      vals <- vals[-addSamp, ]
-
-      #--- add new samples to existing sample dataframe ---#
-
-      samples <- rbind(samples, valsSubSamp)
-
-      #--- update loop parameters ---#
-
-      message("Under-represented Quantile ", paste0("[",repRow, ",",repCol, "]"), " - A total of ", sampNeed, " samples have been allocated.")
-
-      #--- update total allocated samples ---#
-
-      sTot <- sTot + sampNeed
-
-      #--- update available sample number ---#
-
-      newSamp <- newSamp - sampNeed
-
-      #--- recompute ratio's in the presence of newly added samples ---#
-
-      matCovSamp <- mat_covNB(vals = samples[4:ncol(samples)], nQuant = nQuant, nb = nb, matQ = mats$matQ)
-
-      #--- Change 0's to very small number to avoid division issues ---#
-
-      matCovSamp[which(matCovSamp == 0)] <- 0.0000001
-
-      #--- Create density matrix from covariates and length of mraster ---#
-
-      matCovSampDens <- matCovSamp / nrow(samples)
-
-      ### --- Selection of new samples based on density ---###
-
-      #--- Ratio and ordering of data density and covariate density ---#
-
-      ratio <- matCovSampDens / matCovDens
-
-      #--- order the densities based on representation ---#
-
-      #--- low to high ---#
-
-      ratOrderUnder <- order(ratio)
-
-      #--- Outline quantiles that are underrepresented (< 1) in the sample ---#
-
-      underRep <- which(ratio < 1, arr.ind = TRUE)
-      underRep <- cbind(underRep, which(ratio < 1))
-    }
+    out <- ahels_nSamp(nSamp = nSamp,
+                       nQuant = nQuant,
+                       tolerance = tolerance,
+                       nb = nb,
+                       underRep = underRep,
+                       ratio = ratio,
+                       ratOrderUnder = ratOrderUnder,
+                       matCovDens = matCovDens,
+                       matCovSampDens = matCovSampDens,
+                       samples = samples,
+                       mats = mats,
+                       vals = vals)
+    
   } else {
-    message(paste0("Threshold of ", threshold, " provided. Samples will be added until sampling ratios are >= ", threshold, "."))
+    
+    out <- ahels_threshold(threshold = threshold,
+                           tolerance = tolerance,
+                           ratio = ratio,
+                           nQuant = nQuant,
+                           nb = nb,
+                           underRep = underRep,
+                           ratOrderUnder = ratOrderUnder,
+                           matCovDens = matCovDens,
+                           matCovSampDens = matCovSampDens,
+                           samples = samples,
+                           mats = mats,
+                           vals = vals)
 
-    ### --- If 'nSamp' is not provided a threshold is used ---###
-
-    while (isTRUE(any(ratio < threshold))) {
-
-      #--- determine the greatest discrepancy between sample and covariate data ---#
-
-      repRankUnder <- which(underRep[, 3] == ratOrderUnder[1])
-
-      #--- determine row and column of most under represented quantile ---#
-
-      repRow <- underRep[repRankUnder, 1]
-      repCol <- underRep[repRankUnder, 2]
-
-      #--- determine number of existing samples in selected quantile ---#
-
-      sampExist <- floor(nrow(samples) * matCovSampDens[repRow, repCol])
-
-      #--- determine max number of samples based on covariate density ---#
-
-      sampOptim <- ceiling(nrow(samples) * matCovDens[repRow, repCol])
-
-      #--- number of samples needed ---#
-
-      sampNeed <- sampOptim - sampExist
-
-      #--- selecting covariates based on quantile chosen ---#
-
-      covLower <- mats$matQ[repRow, repCol]
-
-      covUpper <- mats$matQ[repRow + 1, repCol]
-
-      #--- subset covariate dataset for potential new samples ---#
-
-      valsSub <- vals[vals[, (2 + repCol)] >= covLower & vals[, (2 + repCol)] <= covUpper, ]
-
-      #--- randomly sample within valsSub and extract randomly sampled cells ---#
-
-      addSamp <- sample(nrow(valsSub), sampNeed)
-
-      valsSubSamp <- valsSub[addSamp, ]
-
-      valsSubSamp$type <- "new"
-
-      #--- remove samples from pool to ensure same cells are not sampled again ---#
-
-      vals <- vals[-addSamp, ]
-
-      #--- add new samples to existing sample dataframe ---#
-
-      samples <- rbind(samples, valsSubSamp)
-
-      #--- update loop parameters ---#
-
-      message("Under-represented Quantile ", paste0("[",repRow, ",",repCol, "]"), " - A total of ", sampNeed, " samples have been allocated.")
-
-      #--- update total allocated samples ---#
-
-      sTot <- sTot + sampNeed
-
-      #--- recompute ratio's in the presence of newly added samples ---#
-
-      matCovSamp <- mat_covNB(vals = samples[4:ncol(samples)], nQuant = nQuant, nb = nb, matQ = mats$matQ)
-
-      #--- Change 0's to very small number to avoid division issues ---#
-
-      matCovSamp[which(matCovSamp == 0)] <- 0.0000001
-
-      #--- Create density matrix from covariates and length of mraster ---#
-
-      matCovSampDens <- matCovSamp / nrow(samples)
-
-      ### --- Selection of new samples based on density ---###
-
-      #--- Ratio and ordering of data density and covariate density ---#
-
-      ratio <- matCovSampDens / matCovDens
-
-      #--- order the densities based on representation ---#
-
-      #--- low to high ---#
-
-      ratOrderUnder <- order(ratio)
-
-      #--- high to low ---#
-
-      ratOrderOver <- rev(ratOrderUnder)
-
-      #--- Outline quantiles that are underrepresented (< 1) in the sample ---#
-
-      underRep <- which(ratio < 1, arr.ind = TRUE)
-      underRep <- cbind(underRep, which(ratio < 1))
-    }
   }
 
-  message(paste0("A total of ", sTot, " new samples added."))
+  message(paste0("A total of ", out$sTot, " new samples added."))
 
   #--- replace existing samples (if they exist) that had NA values for metrics ---#
   
   if(exists("samples_NA")){
     
     #--- convert coordinates to a spatial points object ---#
-    samples <- samples %>%
+    samples <- out$samples %>%
       rbind(., samples_NA) %>%
       sf::st_as_sf(., coords = c("X", "Y"))
     
   } else {
     
     #--- convert coordinates to a spatial points object ---#
-    samples <- samples %>%
+    samples <- out$samples %>%
       sf::st_as_sf(., coords = c("X", "Y"))
     
   }
@@ -497,12 +337,12 @@ sample_ahels <- function(mraster,
   #--- output samples & / or samples and details (ratio matrix) ---#
 
   if (isFALSE(details)) {
-    return(samples)
+    return(out$samples)
   } else {
     return(list(samples = samples, details = list(
       existingRatio = ratioExisting,
-      sampledRatio = ratio,
-      diffRatio = ratio - ratioExisting
+      sampledRatio = out$ratio,
+      diffRatio = out$ratio - ratioExisting
     )))
   }
 }
