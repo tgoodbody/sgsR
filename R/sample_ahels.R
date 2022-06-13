@@ -14,7 +14,7 @@
 #' @param nSamp Numeric. Maximum number of new samples to allocate.
 #' @param threshold Numeric. Sample quantile ratio threshold. After the threshold \code{default = 0.9} is reached,
 #' no additional samples will be added. Values close to 1 can cause the algorithm to continually loop.
-#' @param tolerance Numeric. Allowable tolerance around the perfect quantile density of 1. If \code{nSamp} is used samples will be
+#' @param tolerance Numeric. Allowable tolerance (<= 0.1 (10%)) around the perfect quantile density of 1. If \code{nSamp} is used samples will be
 #' added until the \code{1 - tolerance} density is reached. If \code{threshold} is used, samples will be added until the 
 #' \code{threshold - tolerance} value is reached. This parameter allows the user to define a buffer around desired quantile densities
 #' to permit the algorithm to not add additional samples if quantile density is very close to 1, or user-defined \code{threshold}.
@@ -119,12 +119,8 @@ sample_ahels <- function(mraster,
     stop("'tolerance' cannot be >= `threshold`", call. = FALSE)
   }
   
-  if (tolerance < 0 | tolerance > 1) {
-    stop("'tolerance' must be > 0 and < 1", call. = FALSE)
-  }
-  
-  if (tolerance > 0.25) {
-    message("'tolerance' > 0.25. Are you sure this is what you want?", call. = FALSE)
+  if (tolerance < 0 | tolerance > 0.1) {
+    stop("'tolerance' must be > 0 and <= 0.1", call. = FALSE)
   }
 
   #--- determine number of bands in mraster ---#
