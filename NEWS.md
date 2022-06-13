@@ -1,12 +1,8 @@
 # sgsR 0.1.5
 
-* `sample_strat` made `strat_rule1()` and `strat_rule2()` functions to make code more concise. Fixed issue with `mindist` not setting distances between strata.
-
 * `sample_ahels` made `ahels_nSamp()` and `ahels_threshold()` functions to make code more concise.
 
-* Added `tolerance` parameter to `sample_strat()` to allow users to define a tolerance around the desired sampling ratio. This will allow the user to say "I ideally want the ratio to be `XX` but I'm OK if the ratio is `XX - threshold` if it means I dont need to add more samples".
-
-* Altered how `existing` and `new` samples are plotted in `sample_strat()` and `sample_ahels()`
+* Altered how `existing` (crosses) and `new` (circles) samples are plotted in `sample_strat()` and `sample_ahels()`.
 
 * Added internal utility functions `allocate_prop / allocate_optim / allocate_manual / allocate_equal / allocate_existing / allocate_force` and integrated them into `calculate_allocation()` to make code more succinct and purposeful.
 
@@ -15,6 +11,13 @@
 * Altered error handling for raster masking to be within `mask_access()` instead of individual sampling functions.
 
 * Changes to `terra::distance()` & `terra::classify()` required slight modifications to `calculate_distance()` and `strat_breaks()`
+
+* `sample_strat`
+  - `strat_rule1()` and `strat_rule2()` functions to make code more concise. Fixed issue with `mindist` not setting distances between strata.
+
+* `sample_ahels()`
+  - Added `tolerance` parameter to `sample_ahels()` to allow users to define a tolerance around the desired sampling ratio (max `tolerance =  0.1`). This will allow the user to say "I ideally want the ratio to be `XX` but I'm OK if the ratio is `XX - threshold` if it means I don't need to add more samples".
+  - Fix issue where an error occurred when `existing` was a data frame. 
 
 # sgsR 0.1.4
 
