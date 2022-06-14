@@ -69,7 +69,7 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">calculate_lhsOpt</span><span class="op">(</span>
-  <span class="va">popLHS</span>,
+  <span class="va">mats</span>,
   PCA <span class="op">=</span> <span class="cn">TRUE</span>,
   quant <span class="op">=</span> <span class="cn">TRUE</span>,
   KLdiv <span class="op">=</span> <span class="cn">TRUE</span>,
@@ -83,7 +83,7 @@
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>popLHS</dt>
+    <dl><dt>mats</dt>
 <dd><p>List. Output from <code><a href="calculate_pop.html">calculate_pop</a></code> function.</p></dd>
 
 
@@ -148,12 +148,12 @@ annealing process. Defaults to <code>10000</code>. Internal to <code><a href="ht
 <span class="r-in"><span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- calculate lhsPop details ---#</span></span>
-<span class="r-in"><span class="va">poplhs</span> <span class="op">&lt;-</span> <span class="fu"><a href="calculate_pop.html">calculate_pop</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mr</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">mats</span> <span class="op">&lt;-</span> <span class="fu"><a href="calculate_pop.html">calculate_pop</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mr</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="fu">calculate_lhsOpt</span><span class="op">(</span>popLHS <span class="op">=</span> <span class="va">poplhs</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">calculate_lhsOpt</span><span class="op">(</span>mats <span class="op">=</span> <span class="va">mats</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">calculate_lhsOpt</span><span class="op">(</span></span>
-<span class="r-in">  popLHS <span class="op">=</span> <span class="va">poplhs</span>,</span>
+<span class="r-in">  mats <span class="op">=</span> <span class="va">mats</span>,</span>
 <span class="r-in">  PCA <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span class="r-in">  iter <span class="op">=</span> <span class="fl">200</span></span>
 <span class="r-in"><span class="op">)</span></span>

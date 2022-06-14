@@ -152,7 +152,7 @@ where the values from both inputs are combined.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#--- load input metrics raster ---#</span></span>
 <span class="r-in"><span class="va">raster</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"sraster.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">srasterkmeans</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">raster</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">sraster</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">raster</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- read polygon coverage ---#</span></span>
 <span class="r-in"><span class="va">poly</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"inventory_polygons.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
@@ -180,13 +180,13 @@ where the values from both inputs are combined.</p>
 <span class="r-in">  poly <span class="op">=</span> <span class="va">fri</span>,</span>
 <span class="r-in">  attribute <span class="op">=</span> <span class="va">attribute</span>,</span>
 <span class="r-in">  features <span class="op">=</span> <span class="va">features</span>,</span>
-<span class="r-in">  raster <span class="op">=</span> <span class="va">srasterkmeans</span></span>
+<span class="r-in">  raster <span class="op">=</span> <span class="va">sraster</span></span>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#--- map srasters ---#</span></span>
 <span class="r-in"><span class="fu">strat_map</span><span class="op">(</span></span>
 <span class="r-in">  sraster <span class="op">=</span> <span class="va">srasterfri</span>,</span>
-<span class="r-in">  sraster2 <span class="op">=</span> <span class="va">srasterkmeans</span></span>
+<span class="r-in">  sraster2 <span class="op">=</span> <span class="va">sraster</span></span>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> class       : SpatRaster </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dimensions  : 277, 373, 1  (nrow, ncol, nlyr)</span>
@@ -200,7 +200,7 @@ where the values from both inputs are combined.</p>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">strat_map</span><span class="op">(</span></span>
 <span class="r-in">  sraster <span class="op">=</span> <span class="va">srasterfri</span>,</span>
-<span class="r-in">  sraster2 <span class="op">=</span> <span class="va">srasterkmeans</span>,</span>
+<span class="r-in">  sraster2 <span class="op">=</span> <span class="va">sraster</span>,</span>
 <span class="r-in">  stack <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span class="r-in">  details <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span class="r-in"><span class="op">)</span></span>
