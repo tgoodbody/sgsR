@@ -180,7 +180,7 @@ strat_poly <- function(poly,
 
     #--- output metrics details along with stratification raster ---#
 
-    output <- list(outRaster = outpolyrast, lookUp = lookUp, poly = poly)
+    output <- list(raster = outpolyrast, lookUp = lookUp, poly = poly)
 
     #--- output samples dataframe ---#
 

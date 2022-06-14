@@ -149,7 +149,7 @@ calculate_allocation <- function(sraster,
       #--- error handling when allocation algorithm is 'manual' ---#
       
       if (!is.null(mraster)) {
-        message("'allocation = manual' - ignoring 'mraster'")
+        message("'mraster' was specified but 'allocation = manual' - did you mean to use 'allocation = optim'?")
       }
       
       toSample <- allocate_manual(sraster = sraster, nSamp = nSamp, weights = weights)

@@ -58,7 +58,7 @@ If \code{strata = 2} and \code{strata2 = 14} then \code{stratamapped = 214}.
 \examples{
 #--- load input metrics raster ---#
 raster <- system.file("extdata", "sraster.tif", package = "sgsR")
-srasterkmeans <- terra::rast(raster)
+sraster <- terra::rast(raster)
 
 #--- read polygon coverage ---#
 poly <- system.file("extdata", "inventory_polygons.shp", package = "sgsR")
@@ -78,18 +78,18 @@ srasterfri <- strat_poly(
   poly = fri,
   attribute = attribute,
   features = features,
-  raster = srasterkmeans
+  raster = sraster
 )
 
 #--- map srasters ---#
 strat_map(
   sraster = srasterfri,
-  sraster2 = srasterkmeans
+  sraster2 = sraster
 )
 
 strat_map(
   sraster = srasterfri,
-  sraster2 = srasterkmeans,
+  sraster2 = sraster,
   stack = TRUE,
   details = TRUE
 )

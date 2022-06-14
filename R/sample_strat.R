@@ -126,6 +126,14 @@ sample_strat <- function(sraster,
     stop("'wcol' must be type numeric.", call. = FALSE)
   }
   
+  if((wrow %% 2) == 0) {
+    stop("'wrow' must be an odd number.", call. = FALSE)
+  }
+  
+  if((wcol %% 2) == 0) {
+    stop("'wcol' must be an odd number.", call. = FALSE)
+  }
+  
   if (!is.logical(plot)) {
     stop("'plot' must be type logical.", call. = FALSE)
   }

@@ -147,18 +147,30 @@ sample_clhs <- function(mraster,
   #--- incorporate cost constraint ---#
 
   if (!is.null(cost)) {
+    
+    if(!is.character(cost) & !is.numeric(cost)){
+      stop("'cost' must be either type numeric or character.", call. = FALSE)
+    }
+    
     if (is.numeric(cost)) {
       if ((cost + 2) > (ncol(vals)) | cost < 0) {
-        stop("'cost' index doest not exist within 'mraster'")
+        stop("'cost' index doest not exist within 'mraster'.", call. = FALSE)
       }
 
       #--- need to add 2 because X and Y are added to vals ---#
 
       cost <- cost + 2
-    } else if (is.character(cost)) {
-      cost <- which(names(vals) == cost)
     } else {
-      stop("'cost' must be either a numeric index or name of covariate within 'mraster'")
+
+      if(length(which(names(vals) == cost)) == 0){
+        
+        stop(paste0("No layer named '",cost,"' exists in 'mraster'."), call. = FALSE)
+        
+      } else {
+        
+        cost <- which(names(vals) == cost)
+        
+      }
     }
   }
 
@@ -174,13 +186,13 @@ sample_clhs <- function(mraster,
 
   if (!is.null(existing)) {
     if (!inherits(existing, "data.frame") && !inherits(existing, "sf")) {
-      stop("'existing' must be a data.frame or sf object")
+      stop("'existing' must be a data.frame or sf object.", call. = FALSE)
     }
 
     #--- check that nSamp is > than existing ---#
 
     if (nrow(existing) > nSamp) {
-      stop("nSamp must be > than number of existing samples")
+      stop("nSamp must be > than number of existing samples.", call. = FALSE)
     }
 
     #--- combine existing samples with vals dataframe ---#
@@ -194,10 +206,10 @@ sample_clhs <- function(mraster,
               X = x,
               Y = y
             )
-          message("Column coordinates names for 'existing' are lowercase - converting to uppercase")
+          message("Column coordinates names for 'existing' are lowercase - converting to uppercase.")
         } else {
           #--- if no x/y columns are present stop ---#
-          stop("'existing' must have columns named 'X' and 'Y'")
+          stop("'existing' must have columns named 'X' and 'Y'.")
         }
       }
 
@@ -310,11 +322,11 @@ sample_clhs <- function(mraster,
 
   if (!is.null(filename)) {
     if (!is.logical(overwrite)) {
-      stop("'overwrite' must be either TRUE or FALSE")
+      stop("'overwrite' must be either TRUE or FALSE", call. = FALSE)
     }
 
     if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(paste0("'",filename, "' already exists and overwrite = FALSE"))
+      stop(paste0("'",filename, "' already exists and overwrite = FALSE"), call. = FALSE)
     }
 
     sf::st_write(samples, filename, delete_layer = overwrite)

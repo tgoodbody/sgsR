@@ -221,7 +221,7 @@ sample_systematic <- function(raster,
     
     #--- create grid and locate samples ---#
     
-    samples <- sf::st_as_sf(sf::st_make_grid(sfObj, cellsize, square = square, what = location, crs = terra::crs(raster), ...)) %>%
+    samples <- suppressMessages(sf::st_as_sf(sf::st_make_grid(sfObj, cellsize, square = square, what = location, crs = terra::crs(raster), ...)) %>%
       dplyr::rename(geometry = x) %>%
       sf::st_coordinates(.) %>%
       as.data.frame() %>%
@@ -235,17 +235,17 @@ sample_systematic <- function(raster,
       extract_metrics(mraster = raster[[1]], existing = .) %>%
       #--- remove samples with NA ---#
       stats::na.omit() %>%
-      dplyr::select(geometry)
+      dplyr::select(geometry))
     
   } else {
     
-    samples <- sf::st_as_sf(sf::st_make_grid(sfObj, cellsize, square = square, what = location, crs = terra::crs(raster), ...)) %>%
+    samples <- suppressMessages(sf::st_as_sf(sf::st_make_grid(sfObj, cellsize, square = square, what = location, crs = terra::crs(raster), ...)) %>%
       dplyr::rename(geometry = x) %>%
       #--- need to extract a metric to determine if values are NA ---#
       extract_metrics(mraster = raster[[1]], existing = .) %>%
       #--- remove samples with NA ---#
       stats::na.omit() %>%
-      dplyr::select(geometry)
+      dplyr::select(geometry))
 
   }
   }

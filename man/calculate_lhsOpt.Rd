@@ -5,7 +5,7 @@
 \title{Analyze optimal Latin hypercube sample number}
 \usage{
 calculate_lhsOpt(
-  popLHS,
+  mats,
   PCA = TRUE,
   quant = TRUE,
   KLdiv = TRUE,
@@ -17,7 +17,7 @@ calculate_lhsOpt(
 )
 }
 \arguments{
-\item{popLHS}{List. Output from \code{\link{calculate_pop}} function.}
+\item{mats}{List. Output from \code{\link{calculate_pop}} function.}
 
 \item{PCA}{Logical. Calculates principal component loadings of the population for PCA similarity factor testing.
 \code{default = FALSE}.}
@@ -53,12 +53,12 @@ r <- system.file("extdata", "mraster.tif", package = "sgsR")
 mr <- terra::rast(r)
 
 #--- calculate lhsPop details ---#
-poplhs <- calculate_pop(mraster = mr)
+mats <- calculate_pop(mraster = mr)
 
-calculate_lhsOpt(popLHS = poplhs)
+calculate_lhsOpt(mats = mats)
 
 calculate_lhsOpt(
-  popLHS = poplhs,
+  mats = mats,
   PCA = FALSE,
   iter = 200
 )

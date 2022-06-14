@@ -28,7 +28,7 @@
 #' @examples
 #' #--- load input metrics raster ---#
 #' raster <- system.file("extdata", "sraster.tif", package = "sgsR")
-#' srasterkmeans <- terra::rast(raster)
+#' sraster <- terra::rast(raster)
 #'
 #' #--- read polygon coverage ---#
 #' poly <- system.file("extdata", "inventory_polygons.shp", package = "sgsR")
@@ -48,18 +48,18 @@
 #'   poly = fri,
 #'   attribute = attribute,
 #'   features = features,
-#'   raster = srasterkmeans
+#'   raster = sraster
 #' )
 #'
 #' #--- map srasters ---#
 #' strat_map(
 #'   sraster = srasterfri,
-#'   sraster2 = srasterkmeans
+#'   sraster2 = sraster
 #' )
 #'
 #' strat_map(
 #'   sraster = srasterfri,
-#'   sraster2 = srasterkmeans,
+#'   sraster2 = sraster,
 #'   stack = TRUE,
 #'   details = TRUE
 #' )
@@ -82,7 +82,7 @@ strat_map <- function(sraster,
                       ...) {
 
   #--- global variables ---#
-  strata <- strata2 <- sraster_cat <- sraster2_cat <- NULL
+  strata <- strata2 <- sraster_cat <- sraster2_cat <- value <- NULL
 
   #--- error handling ---#
 
@@ -149,7 +149,8 @@ strat_map <- function(sraster,
     
     srastcats <- terra::cats(sraster) %>%
       as.data.frame() %>%
-      dplyr::rename(cat = 2)
+      dplyr::rename(cat = 2) %>%
+      dplyr::mutate(value = value + 1)
     
     sraster <- sraster %>%
       terra::catalyze(.)
@@ -160,7 +161,8 @@ strat_map <- function(sraster,
     
     srastcats2 <- terra::cats(sraster2) %>%
       as.data.frame() %>%
-      dplyr::rename(cat = 2)
+      dplyr::rename(cat = 2) %>%
+      dplyr::mutate(value = value + 1)
     
     sraster2 <- sraster2 %>%
       terra::catalyze(.)

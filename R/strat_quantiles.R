@@ -252,7 +252,7 @@ strat_quantiles <- function(mraster,
   if (isTRUE(details)) {
     if (!is.null(mraster2)) {
       if (samp > 1 | samp < 0) {
-        stop("'samp' must be between 0 and 1")
+        stop("'samp' must be > 0 <= 1.")
       }
 
       #--- create classplot summary ---#

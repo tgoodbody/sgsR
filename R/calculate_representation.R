@@ -7,7 +7,7 @@
 #' @inheritParams extract_strata
 #' @inheritParams sample_strat
 #' @param plot Logical. Plot frequency of strata coverage and sampling coverage 
-#' for \code{sraster} and \code{existing}.
+#' for \code{sraster} and \code{existing}. Will return a list if \code{TRUE}.
 #'
 #' @return Returns a tibble where:
 #' \itemize{
@@ -69,7 +69,7 @@ calculate_representation <- function(sraster,
 
   suppressWarnings(
     if (!grepl("strata", names(sraster))) {
-      stop("A layer name containing 'strata' does not exist within 'sraster'. Use extract_strata()")
+      stop("A layer name containing 'strata' does not exist within 'sraster'. Use extract_strata()", call. = FALSE)
     }
   )
 
@@ -136,7 +136,10 @@ calculate_representation <- function(sraster,
       )
 
     print(p)
+    
+    return(list(representation = rep, plot = p))
+  } else {
+    
+    return(rep)
   }
-
-  return(rep)
 }
