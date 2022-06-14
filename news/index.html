@@ -63,9 +63,7 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.5" id="sgsr-015">sgsR 0.1.5<a class="anchor" aria-label="anchor" href="#sgsr-015"></a></h2>
-<ul><li><p><code>sample_ahels</code> made <code><a href="../reference/rules.html">ahels_nSamp()</a></code> and <code><a href="../reference/rules.html">ahels_threshold()</a></code> functions to make code more concise.</p></li>
-<li><p>Altered how <code>existing</code> (crosses) and <code>new</code> (circles) samples are plotted in <code><a href="../reference/sample_strat.html">sample_strat()</a></code> and <code><a href="../reference/sample_ahels.html">sample_ahels()</a></code>.</p></li>
-<li><p>Added internal utility functions <code>allocate_prop / allocate_optim / allocate_manual / allocate_equal / allocate_existing / allocate_force</code> and integrated them into <code><a href="../reference/calculate_allocation.html">calculate_allocation()</a></code> to make code more succinct and purposeful.</p></li>
+<ul><li><p>Added preliminary internal tests for algorithms using the <code>testthat</code> package.</p></li>
 <li><p><code><a href="../reference/strat_map.html">strat_map()</a></code> can now map categorical srasters (gave an error before). Now also returns the categories associated with the categorical rasters in the lookup table with <code>details = TRUE</code>.</p></li>
 <li><p>Altered error handling for raster masking to be within <code><a href="../reference/masking.html">mask_access()</a></code> instead of individual sampling functions.</p></li>
 <li><p>Changes to <code><a href="https://rdrr.io/pkg/terra/man/distance.html" class="external-link">terra::distance()</a></code> &amp; <code><a href="https://rdrr.io/pkg/terra/man/classify.html" class="external-link">terra::classify()</a></code> required slight modifications to <code><a href="../reference/calculate_distance.html">calculate_distance()</a></code> and <code><a href="../reference/strat_breaks.html">strat_breaks()</a></code></p></li>
@@ -78,6 +76,9 @@
 <ul><li>Added <code>tolerance</code> parameter to <code><a href="../reference/sample_ahels.html">sample_ahels()</a></code> to allow users to define a tolerance around the desired sampling ratio (max <code>tolerance =  0.1</code>). This will allow the user to say “I ideally want the ratio to be <code>XX</code> but I’m OK if the ratio is <code>XX - threshold</code> if it means I don’t need to add more samples”.</li>
 <li>Fix issue where an error occurred when <code>existing</code> was a data frame.</li>
 </ul></li>
+<li><p><code>sample_ahels</code> made <code><a href="../reference/rules.html">ahels_nSamp()</a></code> and <code><a href="../reference/rules.html">ahels_threshold()</a></code> functions to make code more concise.</p></li>
+<li><p>Altered how <code>existing</code> (crosses) and <code>new</code> (circles) samples are plotted in <code><a href="../reference/sample_strat.html">sample_strat()</a></code> and <code><a href="../reference/sample_ahels.html">sample_ahels()</a></code>.</p></li>
+<li><p>Added internal utility functions <code>allocate_prop / allocate_optim / allocate_manual / allocate_equal / allocate_existing / allocate_force</code> and integrated them into <code><a href="../reference/calculate_allocation.html">calculate_allocation()</a></code> to make code more succinct and purposeful.</p></li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.4" id="sgsr-014">sgsR 0.1.4<a class="anchor" aria-label="anchor" href="#sgsr-014"></a></h2>
