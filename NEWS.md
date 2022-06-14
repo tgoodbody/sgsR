@@ -1,10 +1,6 @@
 # sgsR 0.1.5
 
-* `sample_ahels` made `ahels_nSamp()` and `ahels_threshold()` functions to make code more concise.
-
-* Altered how `existing` (crosses) and `new` (circles) samples are plotted in `sample_strat()` and `sample_ahels()`.
-
-* Added internal utility functions `allocate_prop / allocate_optim / allocate_manual / allocate_equal / allocate_existing / allocate_force` and integrated them into `calculate_allocation()` to make code more succinct and purposeful.
+* Added preliminary internal tests for algorithms using the `testthat` package.
 
 * `strat_map()` can now map categorical srasters (gave an error before). Now also returns the categories associated with the categorical rasters in the lookup table with `details = TRUE`.
 
@@ -18,6 +14,12 @@
 * `sample_ahels()`
   - Added `tolerance` parameter to `sample_ahels()` to allow users to define a tolerance around the desired sampling ratio (max `tolerance =  0.1`). This will allow the user to say "I ideally want the ratio to be `XX` but I'm OK if the ratio is `XX - threshold` if it means I don't need to add more samples".
   - Fix issue where an error occurred when `existing` was a data frame. 
+  
+* `sample_ahels` made `ahels_nSamp()` and `ahels_threshold()` functions to make code more concise.
+
+* Altered how `existing` (crosses) and `new` (circles) samples are plotted in `sample_strat()` and `sample_ahels()`.
+
+* Added internal utility functions `allocate_prop / allocate_optim / allocate_manual / allocate_equal / allocate_existing / allocate_force` and integrated them into `calculate_allocation()` to make code more succinct and purposeful.
 
 # sgsR 0.1.4
 
