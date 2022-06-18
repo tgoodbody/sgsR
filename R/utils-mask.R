@@ -21,11 +21,11 @@ mask_access <- function(raster,
   
   #--- error handling in the presence of 'access' ---#
   if (!inherits(access, "sf")) {
-    stop("'access' must be an 'sf' object")
+    stop("'access' must be an 'sf' object.", call. = FALSE)
   }
   
   if (!inherits(sf::st_geometry(access), "sfc_MULTILINESTRING") && !inherits(sf::st_geometry(access), "sfc_LINESTRING")) {
-    stop("'access' geometry type must be 'LINESTRING' or 'MULTILINESTRING'")
+    stop("'access' geometry type must be 'LINESTRING' or 'MULTILINESTRING'.", call. = FALSE)
   }
   
   #--- only specifying an external buffer ---#
@@ -78,7 +78,7 @@ mask_access <- function(raster,
     #--- error handling in the presence of 'access' ---#
     
     if (buff_inner > buff_outer) {
-      stop("'buff_inner' must be < 'buff_outer'", call. = FALSE)
+      stop("'buff_inner' must be < 'buff_outer'.", call. = FALSE)
     }
     
     if (any(vapply(buffers, is.null, TRUE))) {
@@ -86,7 +86,7 @@ mask_access <- function(raster,
     }
     
     if (!any(vapply(buffers, is.numeric, FALSE))) {
-      stop("All 'buff_*' paramaters must be type numeric", call. = FALSE)
+      stop("All 'buff_*' paramaters must be type numeric.", call. = FALSE)
     }
     
     message(

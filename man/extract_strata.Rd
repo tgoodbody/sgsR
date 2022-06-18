@@ -24,10 +24,13 @@ extract_strata(
 \item{overwrite}{Logical. Choice to overwrite existing \code{filename} if it exists.}
 }
 \value{
-An sf or data.frame object of samples with strata attribute
+An sf or data.frame object of samples with strata attribute.
 }
 \description{
 Extract stratum values to existing samples
+}
+\note{
+If \code{data.frame = TRUE} output will be written using \code{\link[utils]{write.table}}
 }
 \examples{
 #--- Load sraster ---#

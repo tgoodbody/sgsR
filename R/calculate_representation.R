@@ -64,17 +64,17 @@ calculate_representation <- function(sraster,
 
   #--- Error management ---#
   if (!inherits(sraster, "SpatRaster")) {
-    stop("'sraster' must be type SpatRaster", call. = FALSE)
+    stop("'sraster' must be type SpatRaster.", call. = FALSE)
   }
 
   suppressWarnings(
     if (!grepl("strata", names(sraster))) {
-      stop("A layer name containing 'strata' does not exist within 'sraster'. Use extract_strata()", call. = FALSE)
+      stop("A layer name containing 'strata' does not exist within 'sraster'. Use extract_strata().", call. = FALSE)
     }
   )
 
   if (!inherits(existing, "data.frame") && !inherits(existing, "sf")) {
-    stop("'existing' must be a data.frame or sf object", call. = FALSE)
+    stop("'existing' must be a data.frame or sf object.", call. = FALSE)
   }
 
 
@@ -101,6 +101,15 @@ calculate_representation <- function(sraster,
     dplyr::arrange(desc(srasterFreq))
 
   #--- existing ---#
+  
+  #--- avoid double strata column if existing is coming from a stratified sample function ---#
+  if("strata" %in% names(existing)){
+    
+    existing <- existing %>%
+      dplyr::select(-strata)
+    
+  }
+  
   existing_mat <- extract_strata(sraster = sraster, existing = existing, data.frame = TRUE) %>%
     stats::na.omit() %>%
     dplyr::group_by(strata) %>%

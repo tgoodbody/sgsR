@@ -223,7 +223,7 @@ allocate_existing <- function(toSample,
       dplyr::filter(!complete.cases(strata)) %>%
       dplyr::pull(n)
     
-    message(paste0(nNA," samples in `existing` are located where strata values are NA. Expect ",nNA," additional samples in output."))
+    message(paste0(nNA," samples in 'existing' are located where strata values are NA. Expect ",nNA," additional samples in output."))
 
     existing <- existing %>%
       stats::na.omit()
@@ -231,7 +231,7 @@ allocate_existing <- function(toSample,
 
   #--- if the unique(existing$strata) %in% unique(toSample$strata) for toSample and existing are not identical throw an error ---#
   if (!any(unique(existing$strata) %in% unique(toSample$strata))) {
-      stop("'existing' does not contain matching strata to those in `sraster`. Check strata in both data sets & consider using extract_strata().", call. = FALSE)
+      stop("'existing' does not contain matching strata to those in 'sraster'. Check strata in both data sets & consider using extract_strata().", call. = FALSE)
   }
 
   #--- join the 2 df together and subtract the number of existing plots by strata from toSample ---#

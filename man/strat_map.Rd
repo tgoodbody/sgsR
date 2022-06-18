@@ -34,7 +34,7 @@ strata with boundary dividers.}
 If \code{TRUE} return a list where \code{$outRaster} is the mapped stratified raster, and
 \code{$lookUp} is the lookup table for the stratification.}
 
-\item{...}{Additional arguments for writing files. See \code{\link[terra]{writeRaster}}.}
+\item{...}{Additional arguments to be passed to \code{\link[stats]{kmeans}} function.}
 }
 \value{
 A spatRaster object.

@@ -8,6 +8,7 @@
 #'
 #' @inheritParams strat_kmeans
 #' @inheritParams extract_strata
+#' @inheritParams strat_breaks
 #'
 #' @param mraster spatRaster. ALS metrics raster. Requires at least 2 layers to calculate covariance matrix.
 #' @param threshold Numeric. Proxy maximum pixel quantile to avoid outliers. \code{default = 0.95}.
@@ -31,7 +32,6 @@
 #'   mraster = mr,
 #'   existing = e,
 #'   cores = 4,
-#'   details = TRUE,
 #'   filename = tempfile(fileext = ".tif")
 #' )
 #' }
@@ -42,13 +42,11 @@
 #'
 #' @export
 
-
 calculate_coobs <- function(mraster,
                             existing,
                             cores = 1,
                             threshold = 0.95,
                             plot = FALSE,
-                            details = FALSE,
                             filename = NULL,
                             overwrite = FALSE) {
   
@@ -101,10 +99,6 @@ calculate_coobs <- function(mraster,
     stop("'threshold' must be type numeric")
   }
   
-  if (!is.logical(details)) {
-    stop("'details' must be type logical")
-  }
-  
   nb <- terra::nlyr(mraster)
   
   if (nb < 2) {
@@ -145,7 +139,7 @@ calculate_coobs <- function(mraster,
       dplyr::tally() %>%
       dplyr::pull()
     
-    message(paste0(nNA," samples in `existing` are located where mraster values are NA. These samples will be ignored during the sampling process."))
+    message(paste0(nNA," samples in 'existing' are located where mraster values are NA. These samples will be ignored during the sampling process."))
     
     samples <- samples %>%
       stats::na.omit()
@@ -245,7 +239,8 @@ calculate_coobs <- function(mraster,
   }
   
   if (!is.null(filename)) {
-    terra::writeRaster(rout, filename, overwrite = overwrite)
+    terra::writeRaster(x = rout, filename = filename, overwrite = overwrite)
+    message("Output raster written to disc.")
   }
   
   return(rout)

@@ -6,6 +6,7 @@
 #'
 #' @family sample functions
 #'
+#' @inheritParams sample_systematic
 #' @inheritParams strat_kmeans
 #' @inheritParams extract_strata
 #'
@@ -107,7 +108,7 @@ sample_ahels <- function(mraster,
   }
   
   if (!is.logical(details)) {
-    stop("'details' must be type logica.l", call. = FALSE)
+    stop("'details' must be type logical.", call. = FALSE)
   }
   
   #--- tolerance ---#
@@ -157,15 +158,15 @@ sample_ahels <- function(mraster,
     #--- if quantile matrix is provided ---#
 
     if (any(!c("matQ", "matCov") %in% names(matrices))) {
-      stop("'matrices' must be the output from `calculate_pop()`.", call. = FALSE)
+      stop("'matrices' must be the output from 'calculate_pop()'.", call. = FALSE)
     }
     
-    if(nrow(matrices$matCov) > nQuant){
-      stop("Number of quantiles in provided 'matrices' does not match nQuant.", call. = FALSE)
+    if(nrow(matrices$matCov) != nQuant){
+      stop("Number of quantiles in provided 'matrices' does not match 'nQuant'.", call. = FALSE)
     }
     
-    if(any(!names(matrices$values) %in% names(mraster))){
-      message("'mraster' used to generate 'matrices' must be identical.", call. = FALSE)
+    if(!all(names(matrices$values) == names(mraster))) {
+      stop("'mraster' used to generate 'matrices' must be identical.", call. = FALSE)
     }
     
     mats <- matrices
@@ -198,7 +199,7 @@ sample_ahels <- function(mraster,
             Y = y
           )
         
-        message("'existing' column coordinate names are lowercase - converting to uppercase")
+        message("'existing' column coordinate names are lowercase - converting to uppercase.")
       } else {
         
         #--- if no x/y columns are present stop ---#
@@ -230,13 +231,7 @@ sample_ahels <- function(mraster,
     samples_NA <- samples %>%
       dplyr::filter(!complete.cases(.)) %>%
       dplyr::mutate(type = "existing")
-    
-    nNA <-  samples_NA %>%
-      dplyr::tally() %>%
-      dplyr::pull()
-    
-    message(paste0(nNA," samples in `existing` are located where mraster values are NA. These samples will be ignored during the sampling process."))
-    
+
     samples <- samples %>%
       stats::na.omit()
     
@@ -327,7 +322,7 @@ sample_ahels <- function(mraster,
     
     #--- convert coordinates to a spatial points object ---#
     samples <- out$samples %>%
-      rbind(., samples_NA) %>%
+      dplyr::bind_rows(., samples_NA) %>%
       sf::st_as_sf(., coords = c("X", "Y"))
     
   } else {
@@ -347,15 +342,21 @@ sample_ahels <- function(mraster,
   }
 
   if (!is.null(filename)) {
-    if (!is.logical(overwrite)) {
-      stop("'overwrite' must be either TRUE or FALSE")
+    
+    if (!is.character(filename)) {
+      stop("'filename' must be a file path character string.", call. = FALSE)
     }
-
+    
+    if (!is.logical(overwrite)) {
+      stop("'overwrite' must be type logical.", call. = FALSE)
+    }
+    
     if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(paste0("'",filename, "' already exists and overwrite = FALSE."))
+      stop(paste0("'",filename, "' already exists and overwrite = FALSE."), call. = FALSE)
     }
 
     sf::st_write(samples, filename, delete_layer = overwrite)
+    message("Output samples written to disc.")
   }
 
   #--- output samples & / or samples and details (ratio matrix) ---#

@@ -6,6 +6,7 @@
 #'
 #' @inheritParams sample_srs
 #' @inheritParams strat_kmeans
+#' @inheritParams strat_breaks
 #'
 #' @param nComp Numeric. Value indicating number of principal components to be rasterized.
 #' @param ... Additional arguments to be passed to \code{\link[stats]{prcomp}}.
@@ -56,27 +57,27 @@ calculate_pcomp <- function(mraster,
   #--- error handling ---#
 
   if (!inherits(mraster, "SpatRaster")) {
-    stop("'raster' must be type SpatRaster", call. = FALSE)
+    stop("'mraster' must be type SpatRaster.", call. = FALSE)
   }
 
   if (!is.numeric(nComp)) {
-    stop("'ncomp' must be type numeric")
+    stop("'nComp' must be type numeric.", call. = FALSE)
   }
 
   if (!is.logical(center)) {
-    stop("'center' must be type logical")
+    stop("'center' must be type logical.", call. = FALSE)
   }
 
   if (!is.logical(scale)) {
-    stop("'scale' must be type logical")
+    stop("'scale' must be type logical.", call. = FALSE)
   }
 
   if (!is.logical(plot)) {
-    stop("'plot' must be type logical")
+    stop("'plot' must be type logical.", call. = FALSE)
   }
 
   if (nComp > terra::nlyr(mraster)) {
-    stop("nComp must be <= the number of layers in 'mraster'")
+    stop("nComp must be <= the number of layers in 'mraster'.", call. = FALSE)
   }
 
   #--- Extract values from mraster ---#
@@ -112,7 +113,8 @@ calculate_pcomp <- function(mraster,
   #--- write file to disc ---#
 
   if (!is.null(filename)) {
-    terra::writeRaster(rout, filename, overwrite = overwrite)
+    terra::writeRaster(x = pcaRout, filename = filename, overwrite = overwrite)
+    message("Output raster written to disc.")
   }
 
   if (isTRUE(plot)) {

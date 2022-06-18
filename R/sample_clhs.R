@@ -84,27 +84,27 @@ sample_clhs <- function(mraster,
   #--- Error management ---#
 
   if (!inherits(mraster, "SpatRaster")) {
-    stop("'mraster' must be type SpatRaster")
+    stop("'mraster' must be type SpatRaster.", call. = FALSE)
   }
 
   if (!is.numeric(nSamp)) {
-    stop("'nSamp' must be type numeric")
+    stop("'nSamp' must be type numeric.", call. = FALSE)
   }
 
   if (!is.numeric(iter)) {
-    stop("'iter' must be type numeric")
+    stop("'iter' must be type numeric.", call. = FALSE)
   }
 
   if (is.na(terra::crs(mraster, proj = TRUE))) {
-    stop("'mraster' does not have a coordinate system")
+    stop("'mraster' does not have a coordinate system.", call. = FALSE)
   }
 
   if (!is.logical(plot)) {
-    stop("'plot' must be type logical")
+    stop("'plot' must be type logical.", call. = FALSE)
   }
 
   if (!is.logical(details)) {
-    stop("'details' must be type logical")
+    stop("'details' must be type logical.", call. = FALSE)
   }
 
 
@@ -160,6 +160,7 @@ sample_clhs <- function(mraster,
       #--- need to add 2 because X and Y are added to vals ---#
 
       cost <- cost + 2
+      
     } else {
 
       if(length(which(names(vals) == cost)) == 0){
@@ -172,6 +173,8 @@ sample_clhs <- function(mraster,
         
       }
     }
+    
+    message(paste0("Using `", names(vals)[cost], "` as sampling constraint."))
   }
 
   #--- Remove NA / NaN / Inf values ---#
@@ -209,14 +212,13 @@ sample_clhs <- function(mraster,
           message("Column coordinates names for 'existing' are lowercase - converting to uppercase.")
         } else {
           #--- if no x/y columns are present stop ---#
-          stop("'existing' must have columns named 'X' and 'Y'.")
+          stop("'existing' must have columns named 'X' and 'Y'.", call. = FALSE)
         }
       }
 
-      existingSamples <- existing
-    } else {
-      existingSamples <- extract_metrics(mraster = mraster, existing = existing, data.frame = TRUE)
     }
+    
+    existingSamples <- extract_metrics(mraster = mraster, existing = existing, data.frame = TRUE)
     
     #--- determine if existing samples fall in areas where metric values are NA ---#
     if(any(!complete.cases(existingSamples))){
@@ -224,13 +226,7 @@ sample_clhs <- function(mraster,
       samples_NA <- existingSamples %>%
         dplyr::filter(!complete.cases(.)) %>%
         dplyr::mutate(type = "existing")
-      
-      nNA <-  samples_NA %>%
-        dplyr::tally() %>%
-        dplyr::pull()
-      
-      message(paste0(nNA," samples in `existing` are located where mraster values are NA. These samples will be ignored during the sampling process."))
-      
+
       existingSamples <- existingSamples %>%
         stats::na.omit()
       
@@ -291,7 +287,7 @@ sample_clhs <- function(mraster,
     
     #--- convert coordinates to a spatial points object ---#
     samples <- samples %>%
-      rbind(., samples_NA) %>%
+      dplyr::bind_rows(., samples_NA) %>%
       sf::st_as_sf(., coords = c("X", "Y"))
     
   } else {
@@ -303,7 +299,8 @@ sample_clhs <- function(mraster,
     
   }
 
-    #--- assign sraster crs to spatial points object ---#
+  #--- assign sraster crs to spatial points object ---#
+  
   sf::st_crs(samples) <- crs
 
   if (isTRUE(plot)) {
@@ -321,15 +318,21 @@ sample_clhs <- function(mraster,
   }
 
   if (!is.null(filename)) {
-    if (!is.logical(overwrite)) {
-      stop("'overwrite' must be either TRUE or FALSE", call. = FALSE)
+    
+    if (!is.character(filename)) {
+      stop("'filename' must be a file path character string.", call. = FALSE)
     }
-
+    
+    if (!is.logical(overwrite)) {
+      stop("'overwrite' must be type logical.", call. = FALSE)
+    }
+    
     if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(paste0("'",filename, "' already exists and overwrite = FALSE"), call. = FALSE)
+      stop(paste0("'",filename, "' already exists and overwrite = FALSE."), call. = FALSE)
     }
 
     sf::st_write(samples, filename, delete_layer = overwrite)
+    message("Output samples written to disc.")
   }
 
   if (isTRUE(details)) {

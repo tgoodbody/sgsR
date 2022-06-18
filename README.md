@@ -7,6 +7,8 @@
 
 ![license](https://img.shields.io/badge/Licence-GPL--3-blue.svg)
 [![R-CMD-check](https://github.com/tgoodbody/sgsR/workflows/R-CMD-check/badge.svg)](https://github.com/tgoodbody/sgsR/actions)
+[![Codecov test
+coverage](https://codecov.io/gh/tgoodbody/sgsR/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tgoodbody/sgsR?branch=main)
 <!-- badges: end -->
 
 `sgsR` is designed to implement structurally guided sampling approaches

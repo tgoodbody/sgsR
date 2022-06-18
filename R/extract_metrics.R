@@ -10,7 +10,11 @@
 #' @param mraster spatRaster. Metrics Raster.
 #' @param data.frame Logical. Output as data.frame if \code{TRUE}
 #' 
-#' @return An sf or data.frame object of samples with metrics attributes
+#' @return An sf or data.frame object of samples with metrics attributes.
+#' 
+#' @note 
+#' 
+#' If \code{data.frame = TRUE} output will be written using \code{\link[utils]{write.table}}
 #' 
 #' @examples 
 #' #--- Load mraster ---#
@@ -36,87 +40,129 @@ extract_metrics <- function(mraster,
   
   #--- Set global vars ---#
   
-  x <- y <- X <- Y <- strata <- geometry <- NULL
+  x <- y <- X <- Y <- strata <- ID <- geometry <- NULL
   
   #--- Error management ---#
   
   if (!inherits(mraster, "SpatRaster")) {
-    stop("'mraster' must be type SpatRaster", call. = FALSE)
+    stop("'mraster' must be type SpatRaster.", call. = FALSE)
   }
   
-  if (!inherits(existing, "sf")) {
-    stop("'existing' must be an 'sf' object", call. = FALSE)
+  if (!inherits(existing, "data.frame") && !inherits(existing, "sf")) {
+    stop("'existing' must be a data.frame or sf object.", call. = FALSE)
   }
-  
-  if (!inherits(sf::st_geometry(existing), "sfc_POINT")) {
-    stop("'existing' must be an 'sf' object of type 'sfc_POINT' geometry", call. = FALSE)
-  }
-  
-  if (!is(existing, "data.frame")) {
-    stop("existing must be a data.frame", call. = FALSE)
-  }
-  
+
   #--- if the existing plots are an sf object extract coordinates ---#
   
   if (is(existing, "sf")) {
     
+    if (!inherits(sf::st_geometry(existing), "sfc_POINT")) {
+      stop("'existing' must be an 'sf' object of type 'sfc_POINT' geometry.", call. = FALSE)
+    }
+    
     #--- Extract xy coordinates to enable extraction of strata values ---#
     
     xy <- sf::st_coordinates(existing)
+    
+    existing <- existing %>%
+      sf::st_drop_geometry(.) %>%
+      dplyr::select(-X,-Y)
+    
   } else {
     if (any(!c("X", "Y") %in% colnames(existing))) {
       
       #--- if coordinate column names are lowercase change them to uppercase to match requirements ---#
       
       if (any(c("x", "y") %in% colnames(existing))) {
-        existing <- existing %>%
+        xy <- existing %>%
           dplyr::rename(
             X = x,
             Y = y
           )
         
-        message("Column coordinate names are lowercase - converting to uppercase")
+        existing <- existing %>%
+          dplyr::select(-x,-y)
+        
+        message("Column coordinate names are lowercase - converting to uppercase.")
       } else {
         
         #--- if no x/y columns are present stop ---#
         
-        stop("'existing' must have columns named 'X' and 'Y'")
+        stop("'existing' must have columns named 'X' and 'Y'.")
       }
+    } else {
+    
+      xy <- existing %>%
+        dplyr::select(X,Y)
+      
+      
+      existing <- existing %>%
+        dplyr::select(-X,-Y)
     }
   }
 
   vals <- terra::extract(mraster, xy)
   
-  #--- extract other attributes from sampling and remove geometry attribute ---#
+  #--- when dataframe is input "ID" is appended to vals -- remove it ---#
   
-  samp_mets <- as.data.frame(existing)
+  if("ID" %in% names(vals)){
+    
+    vals <- vals %>% dplyr::select(-ID)
+    
+  }
   
-  samp_mets <- dplyr::select(samp_mets, -geometry)
+  #--- check that extractions has produced some values -- if not tell the user ---#
   
-  #--- bind values and coordinates ---#
-  samples <- cbind(xy, samp_mets, vals)
+  if(all(!complete.cases(vals))){
+    stop("'existing' only extracts NA values. Ensure that 'existing' overlaps with 'mraster'.", call. = FALSE)
+  }
   
   #--- if existing samples are co-located with NA values ---#
-  if(any(!complete.cases(samples))){
+  if(any(!complete.cases(vals))){
     
-    nNA <- samples %>%
+    nNA <- vals %>%
       dplyr::filter(!complete.cases(.)) %>%
       dplyr::tally() %>%
       dplyr::pull()
     
     message(paste0(nNA," samples are located where metric values are NA."))
   }
+
   
   if (isTRUE(data.frame)) {
     
+    samples <- cbind(xy, vals, existing)
+    
+    if("geometry" %in% names(samples)){
+      
+      samples <-  samples %>%
+        dplyr::select(-geometry)
+      
+    }
+    
+    if (!is.null(filename)) {
+      if (!is.logical(overwrite)) {
+        stop("'overwrite' must be either TRUE or FALSE")
+      }
+      
+      #--- append and overwrite are opposites .. need to invert them for csv writing ---#
+      
+      if (file.exists(filename) & isFALSE(overwrite)) {
+        stop(paste0("'",filename, "' already exists and overwrite = FALSE"))
+      }
+      
+      utils::write.table(x = samples, file = filename, append = !overwrite)
+      message("Output samples written to disc.")
+    }
+    
     #--- return data.frame ---#
     return(samples)
+    
   } else {
     
     #--- convert coordinates to a sf object ---#
-    
-    samples <- samples %>%
-      as.data.frame() %>%
+
+    samples <- cbind(xy, vals, existing) %>%
       sf::st_as_sf(., coords = c("X", "Y"))
     
     #--- assign mraster crs to spatial points object ---#
@@ -133,6 +179,7 @@ extract_metrics <- function(mraster,
       }
       
       sf::st_write(samples, filename, delete_layer = overwrite)
+      message("Output samples written to disc.")
     }
     
     #--- return sf object ---#

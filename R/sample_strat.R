@@ -157,11 +157,11 @@ sample_strat <- function(sraster,
   
   if (is.null(existing)) {
     if (isTRUE(include)) {
-      message("'existing' must be provided when 'include = TRUE'. Ignoring.", call. = FALSE)
+      stop("'existing' must be provided when 'include = TRUE'.", call. = FALSE)
     }
     
     if (isTRUE(remove)) {
-      message("'existing' must be provided when 'remove = TRUE'. Ignoring.", call. = FALSE)
+      stop("'existing' must be provided when 'remove = TRUE'.", call. = FALSE)
     }
     
     #--- if existing samples do not exist make an empty data.frame called addSamples ---#
@@ -280,7 +280,7 @@ sample_strat <- function(sraster,
     
     message(paste0("Processing strata : ", s))
     
-    #--- if the number of samples required is equal to zero (if `include == TRUE`) just keep existing samples only ---#
+    #--- if the number of samples required is equal to zero (if `include = TRUE`) just keep existing samples only ---#
     if (n == 0) {
       
       #--- Initiate number of sampled cells ---#
@@ -507,6 +507,7 @@ sample_strat <- function(sraster,
     }
     
     sf::st_write(samples, filename, delete_layer = overwrite)
+    message("Output samples written to disc.")
   }
   
   if (isTRUE(details)) {

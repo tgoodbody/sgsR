@@ -50,29 +50,25 @@ sample_srs <- function(raster,
   #--- Error management ---#
 
   if (!inherits(raster, "SpatRaster")) {
-    stop("'raster' must be type SpatRaster")
+    stop("'raster' must be type SpatRaster.", call. = FALSE)
   }
 
   if (!is.numeric(nSamp)) {
-    stop("'nSamp' must be type numeric")
+    stop("'nSamp' must be type numeric.", call. = FALSE)
   }
 
   if (!is.null(mindist)) {
     if (!is.numeric(mindist)) {
-      stop("'mindist' must be type numeric")
+      stop("'mindist' must be type numeric.", call. = FALSE)
     }
   }
 
   if (!is.logical(plot)) {
-    stop("'plot' must be type logical")
+    stop("'plot' must be type logical.", call. = FALSE)
   }
 
-  ######################################
-  ## DETERMINE NULL / NA SYNTAX FOR CRS##
-  ######################################
-
   if (is.na(terra::crs(raster))) {
-    stop("'raster' does not have a coordinate system")
+    stop("'raster' does not have a coordinate system.", call. = FALSE)
   }
 
   rasterP <- raster <- raster[[1]]
@@ -168,15 +164,21 @@ sample_srs <- function(raster,
   }
 
   if (!is.null(filename)) {
-    if (!is.logical(overwrite)) {
-      stop("'overwrite' must be either TRUE or FALSE")
+    
+    if (!is.character(filename)) {
+      stop("'filename' must be a file path character string.", call. = FALSE)
     }
-
+    
+    if (!is.logical(overwrite)) {
+      stop("'overwrite' must be type logical.", call. = FALSE)
+    }
+    
     if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(paste0("'",filename, "' already exists and overwrite = FALSE"))
+      stop(paste0("'",filename, "' already exists and overwrite = FALSE."), call. = FALSE)
     }
 
     sf::st_write(samples, filename, delete_layer = overwrite)
+    message("Output samples written to disc.")
   }
 
   #--- output samples sf ---#

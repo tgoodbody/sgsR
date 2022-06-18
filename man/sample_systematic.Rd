@@ -9,7 +9,7 @@ sample_systematic(
   cellsize,
   square = TRUE,
   location = "centers",
-  forceSamp = FALSE,
+  force = FALSE,
   access = NULL,
   buff_inner = NULL,
   buff_outer = NULL,
@@ -32,7 +32,7 @@ if \code{FALSE} hexagons are used.}
 returns samples at tessellation centers, \code{"corners"} - corners of tessellation are returned,
 \code{"random"} - samples are randomly located within tessellations.}
 
-\item{forceSamp}{Logical. Only applies when \code{location = "random"}. If \code{TRUE}, random samples are
+\item{force}{Logical. Only applies when \code{location = "random"}. If \code{TRUE}, random samples are
 forced to fall in areas where \code{raster} does not have \code{NA} values. This will considerably slow processing.}
 
 \item{access}{sf. Road access network - must be lines.}
@@ -65,7 +65,7 @@ Systematic sampling within a square or hexagonal tessellation.
 \note{
 Specifying \code{location = "random"} can result in tessellations with no samples.
 This results from \code{raster} have \code{NA} values at the random location chosen.
-Using \code{forceSamp = TRUE} removes areas of \code{NA} from sampling entirely, but
+Using \code{force = TRUE} removes areas of \code{NA} from sampling entirely, but
 considerably slows processing speeds.
 }
 \examples{

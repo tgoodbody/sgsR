@@ -32,6 +32,22 @@ o1df <- terra::values(o1$raster, dataframe=TRUE)
 
 o1dfna <- o1df[complete.cases(o1df),]
 
+test_that("Single breaks classes", {
+  expect_error(strat_map(sraster = "A", sraster2 = srasterfri), "'sraster' must be type SpatRaster.")
+  expect_error(strat_map(sraster = sraster, sraster2 = "srasterfri"), "'sraster2' must be type SpatRaster.")
+  expect_error(strat_map(sraster = sraster, sraster2 = srasterfri, stack = "TRUE"), "'stack' must be type logical.")
+  expect_error(strat_map(sraster = sraster, sraster2 = srasterfri, overwrite = "TRUE"), "'overwrite' must be type logical.")
+  expect_error(strat_map(sraster = sraster, sraster2 = srasterfri, filename = TRUE), "'filename' must be type character.")
+  expect_error(strat_map(sraster = sraster, sraster2 = srasterfri, plot = "TRUE"), "'plot' must be type logical.")
+  expect_error(strat_map(sraster = sraster, sraster2 = srasterfri, details = "TRUE"), "'details' must be type logical.")
+  expect_error(strat_map(sraster = mraster, sraster2 = srasterfri), "'sraster' must only contain 1 layer. Please subset the layer you would like to use for mapping.")
+  expect_error(strat_map(sraster = srasterfri, sraster2 = mraster), "'sraster2' must only contain 1 layer. Please subset the layer you would like to use for mapping.")
+  
+  expect_error(strat_map(sraster = mraster$zq90, sraster2 = srasterfri), "A layer name containing 'strata' does not exist within 'sraster'.")
+  expect_error(strat_map(sraster = srasterfri, sraster2 = mraster$zq90), "A layer name containing 'strata' does not exist within 'sraster2'.")
+
+})
+
 test_that("Total outputs", {
   expect_equal(1, length(names(o)))
   expect_equal(c("strata","strata2","stratamapped"), names(o1$raster))
@@ -41,6 +57,10 @@ test_that("Total outputs", {
   expect_equal(length(o1dfna), 3L)
   expect_equal(nrow(o1dfna), 87431L)
   expect_equal("14", o1$lookUp$stratamapped[4])
+  
+  
+  expect_message(strat_map(sraster = sraster, sraster2 = srasterfri, filename = file.path(tempdir(), "temp.tif"), overwrite = TRUE),"Output raster written to disc.")
+  expect_message(strat_map(sraster = sraster, sraster2 = srasterfri, stack = TRUE, filename = file.path(tempdir(), "temp.tif"), overwrite = TRUE),"Output stack written to disc.")
 })
 
 test_that("Out classes", {
@@ -50,15 +70,10 @@ test_that("Out classes", {
 })
 
 #--- categorical raster ---#
-o2 <- strat_map(
-  sraster = srasterfri,
-  sraster2 = x,
-  details = TRUE
-)
-
 test_that("Categorical", {
-  expect_message(strat_map(sraster = srasterfri, sraster2 = x),"'sraster2' has factor values. Converting to allow mapping.")
-  expect_message(strat_map(sraster = x, sraster2 = srasterfri),"'sraster' has factor values. Converting to allow mapping.")
-  expect_equal("D_3",strat_map(sraster = x, sraster2 = srasterfri, details = TRUE)$lookUp$stratamapped_cat[1])
-  expect_equal("3_D",o2$lookUp$stratamapped_cat[1])
+  expect_message(strat_map(sraster = sraster, sraster2 = x),"'sraster2' has factor values. Converting to allow mapping.")
+  expect_message(strat_map(sraster = x, sraster2 = sraster),"'sraster' has factor values. Converting to allow mapping.")
+  expect_equal(strat_map(sraster = x, sraster2 = x, details = TRUE)$lookUp$stratamapped_cat[1],"D_D")
+  expect_equal("D_2",strat_map(sraster = x, sraster2 = sraster, details = TRUE)$lookUp$stratamapped_cat[1])
+  expect_equal("3_D",strat_map(sraster = srasterfri, sraster2 = x, details = TRUE)$lookUp$stratamapped_cat[1])
 })

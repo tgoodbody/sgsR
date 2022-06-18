@@ -87,59 +87,59 @@ strat_map <- function(sraster,
   #--- error handling ---#
 
   if (!inherits(sraster, "SpatRaster")) {
-    stop("'sraster' must be type SpatRaster")
+    stop("'sraster' must be type SpatRaster.", call. = FALSE)
   }
 
   if (!inherits(sraster2, "SpatRaster")) {
-    stop("'sraster' must be type SpatRaster")
+    stop("'sraster2' must be type SpatRaster.", call. = FALSE)
   }
 
   if (!is.logical(stack)) {
-    stop("'stack' must be type logical")
+    stop("'stack' must be type logical.", call. = FALSE)
   }
 
   if (!is.logical(overwrite)) {
-    stop("'overwrite' must be either TRUE or FALSE")
+    stop("'overwrite' must be type logical.", call. = FALSE)
   }
 
   if (!is.logical(plot)) {
-    stop("'plot' must be type logical")
+    stop("'plot' must be type logical.", call. = FALSE)
   }
 
   if (!is.logical(details)) {
-    stop("'details' must be type logical")
+    stop("'details' must be type logical.", call. = FALSE)
   }
 
   #--- error handling for raster inputs ---#
 
   if (terra::nlyr(sraster) > 1) {
-    stop("'sraster' must only contain 1 layer. Please subset the layer you would like to use for mapping.")
+    stop("'sraster' must only contain 1 layer. Please subset the layer you would like to use for mapping.", call. = FALSE)
   }
 
   if (terra::nlyr(sraster2) > 1) {
-    stop("'sraster2' must only contain 1 layer. Please subset the layer you would like to use for mapping.")
+    stop("'sraster2' must only contain 1 layer. Please subset the layer you would like to use for mapping.", call. = FALSE)
   }
 
   suppressWarnings(
     if (!grepl("strata", names(sraster))) {
-      stop("A layer name containing 'strata' does not exist within 'sraster'.")
+      stop("A layer name containing 'strata' does not exist within 'sraster'.", call. = FALSE)
     }
   )
 
   suppressWarnings(
     if (!grepl("strata", names(sraster2))) {
-      stop("A layer name containing 'strata' does not exist within 'sraster'.")
+      stop("A layer name containing 'strata' does not exist within 'sraster2'.", call. = FALSE)
     }
   )
 
   #--- check that extents and resolutions of sraster and sraster2 match ---#
 
-  if (!all.equal(terra::ext(sraster), terra::ext(sraster2))) {
-    stop("Extents of 'sraster' and 'sraster2' do not match.")
+  if (isFALSE(terra::compareGeom(sraster, sraster2, stopOnError = FALSE))) {
+    stop("Extents of 'sraster' and 'sraster2' do not match.", call. = FALSE)
   }
-
-  if (!all.equal(terra::res(sraster), terra::res(sraster2))) {
-    stop("Spatial resolutions of 'sraster' and 'sraster2' do not match.")
+  
+  if (isFALSE(terra::compareGeom(sraster, sraster2, stopOnError = FALSE, ext = FALSE, res = TRUE))) {
+    stop("Spatial resolutions of 'sraster' and 'sraster2' do not match.", call. = FALSE)
   }
 
   #--- map stratification rasters ---#
@@ -199,7 +199,7 @@ strat_map <- function(sraster,
 
     }
 
-    if(!exists("srastercats2")){
+    if(!exists("srastcats2")){
 
         lookUp <- lookUp %>%
           dplyr::mutate(stratamapped_cat = paste0(sraster_cat,"_",strata2)) %>%
@@ -265,13 +265,19 @@ strat_map <- function(sraster,
   #--- write file to disc ---#
 
   if (!is.null(filename)) {
+    
+    if (!is.character(filename)) {
+      stop("'filename' must be type character.", call. = FALSE)
+    }
 
     #--- write file to disc depending on whether 'stack' was specified ---#
 
     if (isTRUE(stack)) {
-      terra::writeRaster(routstack, filename, overwrite = overwrite, ...)
+      terra::writeRaster(x = routstack, filename = filename, overwrite = overwrite)
+      message("Output stack written to disc.")
     } else {
-      terra::writeRaster(rout, filename, overwrite = overwrite, ...)
+      terra::writeRaster(x = rout, filename = filename, overwrite = overwrite)
+      message("Output raster written to disc.")
     }
   }
 

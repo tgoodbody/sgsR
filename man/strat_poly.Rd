@@ -38,7 +38,7 @@ where \code{$outRaster} is the stratified attributes, \code{$lookUp} is the look
 for the stratification, and \code{poly} is the defined polygon \code{attribute} with corresponding
 \code{features / strata}}
 
-\item{...}{Additional arguments for writing files. See \code{\link[terra]{writeRaster}}.}
+\item{...}{Additional arguments to be passed to \code{\link[stats]{kmeans}} function.}
 }
 \value{
 A spatRaster object.

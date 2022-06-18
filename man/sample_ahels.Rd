@@ -42,13 +42,13 @@ with very large \code{mrasters} to pre-process the covariance matrix to avoid lo
 
 \item{plot}{Logical. Plots samples of type `existing` (if provided; croses) and `new` (circles) along with \code{mraster}.}
 
-\item{details}{Logical. If \code{FALSE} (default) output is only
-stratification raster. If \code{TRUE} return a list where \code{$details} is additional 
-stratification information and \code{$raster} is the output stratification spatRaster.}
+\item{details}{Logical. If \code{FALSE} (default) output is sf object of
+systematic samples. If \code{TRUE} returns a list of sf objects where \code{tessellation}
+is the tessellation grid for sampling, and \code{samples} are the systematic samples.}
 
-\item{filename}{Character. Path to write stratified raster to disc.}
+\item{filename}{Character. Path to write output samples.}
 
-\item{overwrite}{Logical. Specify whether \code{filename} should be overwritten on disc.}
+\item{overwrite}{Logical. Choice to overwrite existing \code{filename} if it exists.}
 }
 \value{
 Returns sf point object with existing samples and supplemental samples added by the ahels algorithm.

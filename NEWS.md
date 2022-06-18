@@ -1,6 +1,22 @@
+# sgsR 0.1.6
+
+* Added comprehensive tests using `testthat` for most functions and `covr` reporting.
+
+  - Resulting from tests: miscellaneous adjustments to many functions including small non-critical bug fixed, error and message improvements
+  
+* Changed `forceSamp` to `force` in `sample_systematic()`.
+
+* Removed `details` from `sample_coob()`.
+
+* Improved ability to use `data.frames()` of samples as inputs for numerous algorithms.
+
+* Improve consistency in error messages and `call. = FALSE` across the package.
+
+* Added `existingna.shp` for example data where point are in `NA` locations.
+
 # sgsR 0.1.5
 
-* Added preliminary internal tests for algorithms using the `testthat` package.
+
 
 * `strat_map()` can now map categorical srasters (gave an error before). Now also returns the categories associated with the categorical rasters in the lookup table with `details = TRUE`.
 

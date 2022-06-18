@@ -1,19 +1,3 @@
-mr <- system.file("extdata", "mraster.tif", package = "sgsR")
-sr <- system.file("extdata", "sraster.tif", package = "sgsR")
-a <- system.file("extdata", "access.shp", package = "sgsR")
-e <- system.file("extdata", "existing.shp", package = "sgsR")
-
-
-mraster <- terra::rast(mr)
-sraster <- terra::rast(sr)
-access <- sf::st_read(a, quiet = TRUE)
-existing <- sf::st_read(e, quiet = TRUE)
-
-weights <- c(0.25,0.25,0.25,0.25)
-
-existing.df <- data.frame(strata = existing$strata)
-existing.df.n <- data.frame(name = existing$strata)
-
 test_that("input classes", {
   expect_error(calculate_allocation(sraster = "error", nSamp = 100), "'sraster' must be type SpatRaster.")
   expect_error(calculate_allocation(sraster = sraster, nSamp = 100, existing = "error"), "'existing' must be a data.frame or sf object.")

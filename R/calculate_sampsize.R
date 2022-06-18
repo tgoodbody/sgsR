@@ -73,23 +73,23 @@ calculate_sampsize <- function(mraster,
   #--- error management ---#
 
   if (!inherits(mraster, "SpatRaster")) {
-    stop("'mraster' must be type SpatRaster", call. = FALSE)
+    stop("'mraster' must be type SpatRaster.", call. = FALSE)
   }
 
   if (!is.numeric(start)) {
-    stop("'start' must be type numeric", call. = FALSE)
+    stop("'start' must be type numeric.", call. = FALSE)
   }
 
   if (!is.numeric(end)) {
-    stop("'end' must be type numeric", call. = FALSE)
+    stop("'end' must be type numeric.", call. = FALSE)
   }
 
   if (!is.numeric(increment)) {
-    stop("'increment' must be type increment", call. = FALSE)
+    stop("'increment' must be type numeric.", call. = FALSE)
   }
 
   if (!is.logical(plot)) {
-    stop("'plot' must be type logical", call. = FALSE)
+    stop("'plot' must be type logical.", call. = FALSE)
   }
 
   #--- convert raster to data.frame ---#
@@ -144,11 +144,11 @@ calculate_sampsize <- function(mraster,
     #--- checks for rse ---#
 
     if (!is.numeric(rse)) {
-      stop("'rse' must be type numeric", call. = FALSE)
+      stop("'rse' must be type numeric.", call. = FALSE)
     }
 
     if (rse < 0) {
-      stop("'rse' must be > 0", call. = FALSE)
+      stop("'rse' must be > 0.", call. = FALSE)
     }
 
     if (rse > 0.15) {
@@ -156,7 +156,7 @@ calculate_sampsize <- function(mraster,
     }
 
     if (rse < start | rse > end) {
-      stop("'rse' must be >= `start` and <= `end`", call. = FALSE)
+      stop("'rse' must be >= 'start' and <= 'end'.", call. = FALSE)
     }
 
     #--- determine if increment and rse are divisble ---#

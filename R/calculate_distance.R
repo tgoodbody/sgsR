@@ -6,6 +6,7 @@
 #' @family calculate functions
 #'
 #' @inheritParams sample_srs
+#' @inheritParams strat_breaks
 #'
 #' @param raster spatRaster. Raster to be used to calculate pixel level distance to access layer.
 #'
@@ -37,19 +38,19 @@ calculate_distance <- function(raster,
   #--- error handling ---#
 
   if (!inherits(raster, "SpatRaster")) {
-    stop("'raster' must be type SpatRaster")
+    stop("'raster' must be type SpatRaster.", call. = FALSE)
   }
 
   if (is.na(terra::crs(raster))) {
-    stop("'raster' does not have a coordinate system")
+    stop("'raster' does not have a coordinate system.", call. = FALSE)
   }
 
   if (!inherits(access, "sf")) {
-    stop("'access' must be an 'sf' object")
+    stop("'access' must be an 'sf' object.", call. = FALSE)
   }
 
   if (!inherits(sf::st_geometry(access), "sfc_MULTILINESTRING") && !inherits(sf::st_geometry(access), "sfc_LINESTRING")) {
-    stop("'access' geometry type must be 'LINESTRING' or 'MULTILINESTRING'")
+    stop("'access' geometry type must be 'LINESTRING' or 'MULTILINESTRING'.", call. = FALSE)
   }
 
   #--- load access ---#
@@ -74,7 +75,8 @@ calculate_distance <- function(raster,
   }
 
   if (!is.null(filename)) {
-    terra::writeRaster(raster, filename, overwrite = overwrite)
+    terra::writeRaster(x = raster, filename = filename, overwrite = overwrite)
+    message("Output raster written to disc.")
   }
 
   return(raster)

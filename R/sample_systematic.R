@@ -11,7 +11,7 @@
 #' @param location Character. Sample location within tessellation. \code{Default = "centers"})
 #' returns samples at tessellation centers, \code{"corners"} - corners of tessellation are returned,
 #' \code{"random"} - samples are randomly located within tessellations.
-#' @param forceSamp Logical. Only applies when \code{location = "random"}. If \code{TRUE}, random samples are
+#' @param force Logical. Only applies when \code{location = "random"}. If \code{TRUE}, random samples are
 #' forced to fall in areas where \code{raster} does not have \code{NA} values. This will considerably slow processing.
 #' @param access sf. Road access network - must be lines.
 #' @param buff_inner Numeric. Inner buffer boundary specifying distance
@@ -31,7 +31,7 @@
 #'
 #' @note Specifying \code{location = "random"} can result in tessellations with no samples.
 #' This results from \code{raster} have \code{NA} values at the random location chosen.
-#' Using \code{forceSamp = TRUE} removes areas of \code{NA} from sampling entirely, but
+#' Using \code{force = TRUE} removes areas of \code{NA} from sampling entirely, but
 #' considerably slows processing speeds. 
 #'
 #' @examples
@@ -74,7 +74,7 @@ sample_systematic <- function(raster,
                               cellsize,
                               square = TRUE,
                               location = "centers",
-                              forceSamp = FALSE,
+                              force = FALSE,
                               access = NULL,
                               buff_inner = NULL,
                               buff_outer = NULL,
@@ -89,30 +89,30 @@ sample_systematic <- function(raster,
   ext <- geometry <- x <- pass <- NULL
   
   if (!inherits(raster, "SpatRaster")) {
-    stop("'raster' must be type SpatRaster")
+    stop("'raster' must be type SpatRaster.", call. = FALSE)
   }
   
   if (!is.numeric(cellsize)) {
-    stop("'cellsize' must be type numeric")
+    stop("'cellsize' must be type numeric.", call. = FALSE)
   }
   
   if (cellsize < 0) {
-    stop("'cellsize' must be > 0")
+    stop("'cellsize' must be > 0.", call. = FALSE)
   }
   
   if (!is.logical(plot)) {
-    stop("'plot' must be type logical")
+    stop("'plot' must be type logical.", call. = FALSE)
   }
   
   if (!is.logical(square)) {
-    stop("'square' must be type logical")
+    stop("'square' must be type logical.", call. = FALSE)
   }
   
   if (!is.character(location)) {
-    stop("'location' must be type character")
+    stop("'location' must be type character.", call. = FALSE)
   } else {
     if (!any(c("centers", "corners", "random") %in% location)) {
-      stop("'location' must be one of 'centers', 'corners', or 'random'")
+      stop("'location' must be one of 'centers', 'corners', or 'random'.", call. = FALSE)
     }
   }
   
@@ -143,11 +143,13 @@ sample_systematic <- function(raster,
                                         crs = terra::crs(raster), 
                                         ...))
   
-  if(isTRUE(forceSamp)){
+  if(isTRUE(force)){
     
     if(location != "random"){
-      stop("'location' must be 'random' when 'forceSamp == TRUE'", call. = FALSE)
+      stop("'location' must be 'random' when 'force = TRUE'", call. = FALSE)
     }
+    
+    message("Forcing samples to fall in non NA locations.")
     
     #--- force "random" samples to not fall in areas of no data ---#
     
@@ -267,15 +269,20 @@ sample_systematic <- function(raster,
   }
   
   if (!is.null(filename)) {
+    if (!is.character(filename)) {
+      stop("'filename' must be a file path character string.", call. = FALSE)
+    }
+    
     if (!is.logical(overwrite)) {
-      stop("'overwrite' must be either TRUE or FALSE")
+      stop("'overwrite' must be type logical.", call. = FALSE)
     }
     
     if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(paste0("'",filename, "' already exists and overwrite = FALSE"))
+      stop(paste0("'",filename, "' already exists and overwrite = FALSE."), call. = FALSE)
     }
     
     sf::st_write(samples, filename, delete_layer = overwrite)
+    message("Output samples written to disc.")
   }
   
   if (isTRUE(details)) {

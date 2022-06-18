@@ -24,10 +24,13 @@ extract_metrics(
 \item{overwrite}{Logical. Choice to overwrite existing \code{filename} if it exists.}
 }
 \value{
-An sf or data.frame object of samples with metrics attributes
+An sf or data.frame object of samples with metrics attributes.
 }
 \description{
 Extract metric values to existing samples
+}
+\note{
+If \code{data.frame = TRUE} output will be written using \code{\link[utils]{write.table}}
 }
 \examples{
 #--- Load mraster ---#
