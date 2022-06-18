@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.6</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,7 +103,11 @@
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>An sf or data.frame object of samples with metrics attributes</p>
+<p>An sf or data.frame object of samples with metrics attributes.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
+    <p>If <code>data.frame = TRUE</code> output will be written using <code><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.table</a></code></p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -141,17 +145,17 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431110 ymin: 5337710 xmax: 438530 ymax: 5343230</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    strata  zq90 pzabove2  zsd               geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1  3.75     23.4 0.74 POINT (433650 5340870)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       1  6.39      2.6 1.47 POINT (434430 5339050)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       1  7.37     60.4 1.73 POINT (433830 5341130)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       1  4.16     22.7 0.95 POINT (434070 5341110)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       1  5.38     62.2 1.07 POINT (432950 5343230)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       1 10.70     55.4 2.31 POINT (432990 5342450)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7       1 10.70     65.7 2.60 POINT (432050 5342890)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8       1 10.60     52.5 2.84 POINT (438250 5339310)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9       1 10.70     63.7 2.85 POINT (434970 5342590)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10      1  2.63     15.0 0.41 POINT (437770 5339150)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     zq90 pzabove2  zsd FID               geometry</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   3.75     23.4 0.74   0 POINT (433650 5340870)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   6.39      2.6 1.47   1 POINT (434430 5339050)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   7.37     60.4 1.73   2 POINT (433830 5341130)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   4.16     22.7 0.95   3 POINT (434070 5341110)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   5.38     62.2 1.07   4 POINT (432950 5343230)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  10.70     55.4 2.31   5 POINT (432990 5342450)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  10.70     65.7 2.60   6 POINT (432050 5342890)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  10.60     52.5 2.84   7 POINT (438250 5339310)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  10.70     63.7 2.85   8 POINT (434970 5342590)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10  2.63     15.0 0.41   9 POINT (437770 5339150)</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

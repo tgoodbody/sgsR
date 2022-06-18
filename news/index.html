@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.6</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,9 +62,19 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.1.6" id="sgsr-016">sgsR 0.1.6<a class="anchor" aria-label="anchor" href="#sgsr-016"></a></h2>
+<ul><li>
+<p>Added comprehensive tests using <code>testthat</code> for most functions and <code>covr</code> reporting.</p>
+<ul><li>Resulting from tests: miscellaneous adjustments to many functions including small non-critical bug fixed, error and message improvements</li></ul></li>
+<li><p>Changed <code>forceSamp</code> to <code>force</code> in <code><a href="../reference/sample_systematic.html">sample_systematic()</a></code>.</p></li>
+<li><p>Removed <code>details</code> from <code>sample_coob()</code>.</p></li>
+<li><p>Improved ability to use <code>data.frames()</code> of samples as inputs for numerous algorithms.</p></li>
+<li><p>Improve consistency in error messages and <code>call. = FALSE</code> across the package.</p></li>
+<li><p>Added <code>existingna.shp</code> for example data where point are in <code>NA</code> locations.</p></li>
+</ul></div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.5" id="sgsr-015">sgsR 0.1.5<a class="anchor" aria-label="anchor" href="#sgsr-015"></a></h2>
-<ul><li><p>Added preliminary internal tests for algorithms using the <code>testthat</code> package.</p></li>
-<li><p><code><a href="../reference/strat_map.html">strat_map()</a></code> can now map categorical srasters (gave an error before). Now also returns the categories associated with the categorical rasters in the lookup table with <code>details = TRUE</code>.</p></li>
+<ul><li><p><code><a href="../reference/strat_map.html">strat_map()</a></code> can now map categorical srasters (gave an error before). Now also returns the categories associated with the categorical rasters in the lookup table with <code>details = TRUE</code>.</p></li>
 <li><p>Altered error handling for raster masking to be within <code><a href="../reference/masking.html">mask_access()</a></code> instead of individual sampling functions.</p></li>
 <li><p>Changes to <code><a href="https://rdrr.io/pkg/terra/man/distance.html" class="external-link">terra::distance()</a></code> &amp; <code><a href="https://rdrr.io/pkg/terra/man/classify.html" class="external-link">terra::classify()</a></code> required slight modifications to <code><a href="../reference/calculate_distance.html">calculate_distance()</a></code> and <code><a href="../reference/strat_breaks.html">strat_breaks()</a></code></p></li>
 <li>

@@ -20,7 +20,7 @@ the existing sample and covariate dataset."><meta property="og:image" content="/
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.6</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -131,17 +131,17 @@ with very large <code>mrasters</code> to pre-process the covariance matrix to av
 
 
 <dt>details</dt>
-<dd><p>Logical. If <code>FALSE</code> (default) output is only
-stratification raster. If <code>TRUE</code> return a list where <code>$details</code> is additional 
-stratification information and <code>$raster</code> is the output stratification spatRaster.</p></dd>
+<dd><p>Logical. If <code>FALSE</code> (default) output is sf object of
+systematic samples. If <code>TRUE</code> returns a list of sf objects where <code>tessellation</code>
+is the tessellation grid for sampling, and <code>samples</code> are the systematic samples.</p></dd>
 
 
 <dt>filename</dt>
-<dd><p>Character. Path to write stratified raster to disc.</p></dd>
+<dd><p>Character. Path to write output samples.</p></dd>
 
 
 <dt>overwrite</dt>
-<dd><p>Logical. Specify whether <code>filename</code> should be overwritten on disc.</p></dd>
+<dd><p>Logical. Choice to overwrite existing <code>filename</code> if it exists.</p></dd>
 
 </dl></div>
     <div class="section level2">
