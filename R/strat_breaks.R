@@ -54,8 +54,8 @@ strat_breaks <- function(mraster,
                          plot = FALSE,
                          details = FALSE,
                          filename = NULL,
-                         overwrite = FALSE,
-                         ...) {
+                         overwrite = FALSE
+                         ) {
 
   #--- Set global vars ---#
   from <- strata <- strata2 <- val <- brk <- NULL

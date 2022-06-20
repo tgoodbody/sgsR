@@ -11,8 +11,7 @@ strat_map(
   filename = NULL,
   overwrite = FALSE,
   plot = FALSE,
-  details = FALSE,
-  ...
+  details = FALSE
 )
 }
 \arguments{
@@ -33,8 +32,6 @@ strata with boundary dividers.}
 \item{details}{Logical. If \code{FALSE} (default) output is a mapped stratified spatRaster object.
 If \code{TRUE} return a list where \code{$outRaster} is the mapped stratified raster, and
 \code{$lookUp} is the lookup table for the stratification.}
-
-\item{...}{Additional arguments to be passed to \code{\link[stats]{kmeans}} function.}
 }
 \value{
 A spatRaster object.

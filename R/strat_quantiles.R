@@ -49,8 +49,7 @@ strat_quantiles <- function(mraster,
                             details = FALSE,
                             samp = 0.2,
                             filename = NULL,
-                            overwrite = FALSE,
-                            ...) {
+                            overwrite = FALSE) {
 
   #--- Set global vars ---#
 

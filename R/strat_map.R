@@ -78,8 +78,8 @@ strat_map <- function(sraster,
                       filename = NULL,
                       overwrite = FALSE,
                       plot = FALSE,
-                      details = FALSE,
-                      ...) {
+                      details = FALSE
+                      ) {
 
   #--- global variables ---#
   strata <- strata2 <- sraster_cat <- sraster2_cat <- value <- NULL

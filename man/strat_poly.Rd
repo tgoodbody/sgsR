@@ -12,8 +12,7 @@ strat_poly(
   filename = NULL,
   overwrite = FALSE,
   plot = FALSE,
-  details = FALSE,
-  ...
+  details = FALSE
 )
 }
 \arguments{
@@ -37,8 +36,6 @@ stratified polygon attributes. If \code{TRUE} return a list
 where \code{$outRaster} is the stratified attributes, \code{$lookUp} is the lookup table
 for the stratification, and \code{poly} is the defined polygon \code{attribute} with corresponding
 \code{features / strata}}
-
-\item{...}{Additional arguments to be passed to \code{\link[stats]{kmeans}} function.}
 }
 \value{
 A spatRaster object.

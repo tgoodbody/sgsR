@@ -71,8 +71,8 @@ strat_poly <- function(poly,
                        filename = NULL,
                        overwrite = FALSE,
                        plot = FALSE,
-                       details = FALSE,
-                       ...) {
+                       details = FALSE
+                       ) {
 
   #--- error handling ---#
 
