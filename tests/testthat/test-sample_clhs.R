@@ -24,7 +24,7 @@ test_that("Total outputs", {
   expect_equal(length(o$clhs), 50L)
   expect_s3_class(o$samples,"sf")
   
-  expect_message(sample_clhs(mraster = mraster, existing = e, nSamp = 50, cost = 1), "Using `zq90` as sampling constraint.")
+  expect_message(sample_clhs(mraster = mraster, existing = e, nSamp = 50, cost = 1, plot = TRUE), "Using `zq90` as sampling constraint.")
   expect_message(sample_clhs(mraster = mraster, existing = e, nSamp = 50, cost = "pzabove2"), "Using `pzabove2` as sampling constraint.")
   
 })
@@ -32,7 +32,7 @@ test_that("Total outputs", {
 test_that("Messages", {
   expect_message(sample_clhs(mraster = mraster, nSamp = 320, existing = existing.df.n.xy.lc), "Column coordinates names for 'existing' are lowercase - converting to uppercase.")
   expect_message(sample_clhs(mraster = mraster, nSamp = 320, existing = existingna), "16 samples are located where metric values are NA.")
-  expect_message(sample_clhs(mraster = mraster, nSamp = 20, access = access, buff_inner = 50, buff_outer = 200), "An access layer has been provided. An internal buffer of 50 m and an external buffer of 200 m have been applied.")
+  expect_message(sample_clhs(mraster = mraster, nSamp = 20, access = access, buff_inner = 50, buff_outer = 200, plot = TRUE), "An access layer has been provided. An internal buffer of 50 m and an external buffer of 200 m have been applied.")
   expect_message(sample_clhs(mraster = mraster, nSamp = 20, access = access, buff_outer = 200), "An access layer has been provided. An external buffer of 200 m have been applied.")
   expect_message(sample_clhs(mraster = mraster, nSamp = 20, filename = file.path(tempdir(), "temp.shp") , overwrite = TRUE), "Output samples written to disc.")
 })  

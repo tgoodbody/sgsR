@@ -1,14 +1,18 @@
 set.seed(2022)
 o <- sample_balanced(mraster = mraster, nSamp = 50)
 
+xrna <- rast(nrow = 1, ncol = 1, crs = NA)
+values(xrna) <- 1
+
 test_that("inputs", {
   expect_error(sample_balanced(mraster = "A", nSamp = 4), "'mraster' must be type SpatRaster.")
   expect_error(sample_balanced(mraster = mraster, nSamp = "4"), "'nSamp' must be type numeric.")
   expect_error(sample_balanced(mraster = mraster, nSamp = 4, plot = "TRUE"), "'plot' must be type logical.")
+  expect_error(sample_balanced(mraster = mraster, nSamp = 4, algorithm = 3), "'algorithm' must be type character.")
   expect_error(sample_balanced(mraster = mraster, nSamp = 4, algorithm = "TRUE"), "Unknown algorithm specified. Please use one of 'lpm2_kdtree', 'lcube', 'lcubestratified'.")
   expect_error(sample_balanced(mraster = mraster, nSamp = 4, p = "p"), "'p' must be type numeric.")
   expect_error(sample_balanced(mraster = mraster, nSamp = 4, p = c(1,2,3)), "'p' have a length of 91195.")
-  
+
   expect_error(sample_balanced(mraster = mraster, nSamp = 4, filename = 56), "'filename' must be a file path character string.")
   expect_error(sample_balanced(mraster = mraster, nSamp = 4, filename = file.path(tempdir(), "temp.shp"), overwrite = "A"), "'overwrite' must be type logical.")
   

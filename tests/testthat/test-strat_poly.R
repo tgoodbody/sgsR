@@ -41,6 +41,8 @@ o1dfna <- o1df[complete.cases(o1df),]
 
 test_that("Input classes", {
   expect_error(strat_poly(poly = "fri", attribute = attribute, features = features, raster = sraster), "'poly' must be an 'sf' object.")
+  expect_error(strat_poly(poly = access, attribute = attribute, features = features, raster = sraster), "'poly' geometry type must be 'POLYGON' or 'MULTIPOLYGON'.")
+  expect_error(strat_poly(poly = fri, attribute = attribute, features = features, raster = sraster, details = 2), "'details' must be type logical.")
   expect_error(strat_poly(poly = fri, attribute = TRUE, features = features, raster = sraster), "'attribute' must be type character.")
   expect_error(strat_poly(poly = fri, attribute = 2, features = features, raster = sraster), "'attribute' must be type character.")
   expect_error(strat_poly(poly = fri, attribute = attribute, features = 2, raster = sraster), "'attribute' does not have specified 'features'.")
@@ -68,4 +70,12 @@ test_that("Out classes", {
   expect_equal(sort(unique(odfna)),o$lookUp$strata)
   expect_equal(3,o$lookUp$strata[3])
   expect_equal(c(1,2,2),o1$lookUp$strata)
+  
+  features2 <- c(NA,"poor", "medium")
+  features3 <- c("poor", "poor", "medium")
+  
+  expect_message(strat_poly(poly = fri, attribute = attribute, features = features2, raster = sraster),"'features' contains NA. Is this on purpose?")
+  expect_error(strat_poly(poly = fri, attribute = attribute, features = features3, raster = sraster),"Repeated within 'features': poor")
+  expect_error(strat_poly(poly = fri %>% dplyr::select(-NUTRIENTS), attribute = attribute, features = features2, raster = sraster),"'poly' does not have a layer named NUTRIENTS.")
+  
 })

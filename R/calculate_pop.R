@@ -44,19 +44,19 @@ calculate_pop <- function(mraster,
                           nQuant = 10,
                           matCov = TRUE) {
   if (!inherits(mraster, "SpatRaster")) {
-    stop("'mraster' must be type SpatRaster")
+    stop("'mraster' must be type SpatRaster.", call. = FALSE)
   }
 
   if (!is.logical(PCA)) {
-    stop("'PCA' must be type logical")
+    stop("'PCA' must be type logical.", call. = FALSE)
   }
 
   if (!is.logical(matQ)) {
-    stop("'quantiles' must be type logical")
+    stop("'matQ' must be type logical.", call. = FALSE)
   }
 
   if (!is.logical(matCov)) {
-    stop("'matCov' must be type logical")
+    stop("'matCov' must be type logical.", call. = FALSE)
   }
 
   #--- determine number of bands in 'mraster' ---#
@@ -104,7 +104,7 @@ calculate_pop <- function(mraster,
 
   if (isTRUE(matQ)) {
     if (!is.numeric(nQuant)) {
-      stop("'nQuantiles' must be type numeric")
+      stop("'nQuant' must be type numeric.", call. = FALSE)
     }
 
     matQ <- mat_quant(
@@ -120,7 +120,7 @@ calculate_pop <- function(mraster,
 
   if (isTRUE(matCov)) {
     if (is.null(matQ)) {
-      stop("Covariance matrix creation requires quantile matrix. Set 'matQ == TRUE'.")
+      stop("Covariance matrix creation requires quantile matrix. Set 'matQ = TRUE'.", call. = FALSE)
     }
 
     #--- create covariate matrix of the quantiles ---#

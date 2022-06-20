@@ -10,7 +10,12 @@ test_that("Single breaks classes", {
   
   expect_error(extract_strata(sraster = sraster, existing = existing, filename = 2),"'filename' must be type character.")
   expect_error(extract_strata(sraster = sraster, existing = existing, data.frame = TRUE, filename = file.path(tempdir(), "temp.csv"), overwrite = "FALSE"),"'overwrite' must be type logical.")
+  
+  expect_error(extract_strata(sraster = sraster, existing = existing, data.frame = FALSE, filename = 2, overwrite = FALSE),"'filename' must be type character.")
+  expect_error(extract_strata(sraster = sraster, existing = existing, data.frame = TRUE, filename = file.path(tempdir(), "temp.csv"), overwrite = "FALSE"),"'overwrite' must be type logical.")
+  
 
+  expect_error(extract_strata(sraster = sraster, existing = access),"'existing' must be an 'sf' object of type 'sfc_POINT' geometry.")
 })
 
 test_that("Total outputs", {

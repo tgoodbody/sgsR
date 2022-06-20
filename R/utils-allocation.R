@@ -63,7 +63,7 @@ allocate_optim <- function(sraster,
   }
   
   if (!inherits(mraster, "SpatRaster")) {
-    stop("'mraster' must be type SpatRaster", call. = FALSE)
+    stop("'mraster' must be type SpatRaster.", call. = FALSE)
   }
   
   #--- if there is only 1 band in mraster use it as default ---#

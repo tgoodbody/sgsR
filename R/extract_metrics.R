@@ -142,13 +142,13 @@ extract_metrics <- function(mraster,
     
     if (!is.null(filename)) {
       if (!is.logical(overwrite)) {
-        stop("'overwrite' must be either TRUE or FALSE")
+        stop("'overwrite' must be type logical.", call. = FALSE)
       }
       
       #--- append and overwrite are opposites .. need to invert them for csv writing ---#
       
       if (file.exists(filename) & isFALSE(overwrite)) {
-        stop(paste0("'",filename, "' already exists and overwrite = FALSE"))
+        stop(paste0("'",filename, "' already exists and overwrite = FALSE"), call. = FALSE)
       }
       
       utils::write.table(x = samples, file = filename, append = !overwrite)
@@ -171,11 +171,11 @@ extract_metrics <- function(mraster,
     
     if (!is.null(filename)) {
       if (!is.logical(overwrite)) {
-        stop("'overwrite' must be either TRUE or FALSE")
+        stop("'overwrite' must be type logical.", call. = FALSE)
       }
       
       if (file.exists(filename) & isFALSE(overwrite)) {
-        stop(paste0("'",filename, "' already exists and overwrite = FALSE"))
+        stop(paste0("'",filename, "' already exists and overwrite = FALSE"), call. = FALSE)
       }
       
       sf::st_write(samples, filename, delete_layer = overwrite)

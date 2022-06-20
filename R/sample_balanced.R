@@ -80,12 +80,6 @@ sample_balanced <- function(mraster,
     stop("Unknown algorithm specified. Please use one of 'lpm2_kdtree', 'lcube', 'lcubestratified'.", call. = FALSE)
   }
 
-  ### --- DETERMINE NULL / NA SYNTAX FOR CRS ---###
-
-  if (is.na(terra::crs(mraster, proj = TRUE))) {
-    stop("'mraster' does not have a coordinate system.", call. = FALSE)
-  }
-
   #--- determine crs of input mraster ---#
   crs <- terra::crs(mraster, proj = TRUE)
 

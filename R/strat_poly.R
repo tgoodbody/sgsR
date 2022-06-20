@@ -107,7 +107,7 @@ strat_poly <- function(poly,
   #--- subset inventory polygon ---#
 
   if (!any(grepl(attribute, names(poly)))) {
-    stop(paste0("'poly' does not have a layer named ", attribute), call. = FALSE)
+    stop(paste0("'poly' does not have a layer named ", attribute,"."), call. = FALSE)
   }
 
   #--- check that features are not duplicated across proposed attribute classes ---#

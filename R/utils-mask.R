@@ -38,7 +38,7 @@ mask_access <- function(raster,
     }
     
     if (!is.numeric(buff_outer)) {
-      stop("'buff_outer' must be type numeric", call. = FALSE)
+      stop("'buff_outer' must be type numeric.", call. = FALSE)
     }
     
     message(

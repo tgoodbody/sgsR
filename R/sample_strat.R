@@ -96,14 +96,14 @@ sample_strat <- function(sraster,
     stop("'sraster' must be type SpatRaster.", call. = FALSE)
   }
   
+  if (!is.numeric(nSamp)) {
+    stop("'nSamp' must be type numeric.", call. = FALSE)
+  }
+  
   if (!is.null(mindist)) {
     if (!is.numeric(mindist)) {
       stop("'mindist' must be type numeric.", call. = FALSE)
     }
-  }
-  
-  if (!is.numeric(nSamp)) {
-    stop("'nSamp' must be type numeric.", call. = FALSE)
   }
   
   if (!is.logical(include)) {
@@ -144,9 +144,11 @@ sample_strat <- function(sraster,
   
   #--- check if `sraster` contains factor values and if so generate its category list to amend later ---#
   
-  if(is.factor(sraster)){
+  if(!is.null(terra::cats(sraster)[[1]])){
+    message("'sraster' has factor values. Converting to allow mapping.")
     
-    sraster_cats <- cats(sraster) %>% as.data.frame()
+    sraster_cats <- cats(sraster) %>% 
+      as.data.frame()
     
   }
   
@@ -175,10 +177,6 @@ sample_strat <- function(sraster,
       stop("'existing' must be a data.frame or sf object.", call. = FALSE)
     }
     
-    if (any(!c("strata") %in% names(existing))) {
-      stop("'existing' must have an attribute named 'strata'. Consider using extract_strata().", call. = FALSE)
-    }
-    
     if(inherits(existing, "sf")){
       if (inherits(sf::st_geometry(existing), "sfc_POINT")) {
         
@@ -192,6 +190,10 @@ sample_strat <- function(sraster,
       } else {
         stop("'existing' geometry type must be 'sfc_POINT'.", call. = FALSE)
       }
+    }
+    
+    if (any(!c("strata") %in% names(existing))) {
+      stop("'existing' must have an attribute named 'strata'. Consider using extract_strata().", call. = FALSE)
     }
     
     #--- if existing samples do exist ensure proper naming convention ---#
@@ -499,11 +501,11 @@ sample_strat <- function(sraster,
   
   if (!is.null(filename)) {
     if (!is.logical(overwrite)) {
-      stop("'overwrite' must be either TRUE or FALSE")
+      stop("'overwrite' must be type logical.", call. = FALSE)
     }
     
     if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(paste0("'",filename, "' already exists and `overwrite = FALSE`."))
+      stop(paste0("'",filename, "' already exists and `overwrite = FALSE`."), call. = FALSE)
     }
     
     sf::st_write(samples, filename, delete_layer = overwrite)
