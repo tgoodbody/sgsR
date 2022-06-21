@@ -14,7 +14,10 @@ coverage](https://codecov.io/gh/tgoodbody/sgsR/branch/main/graph/badge.svg)](htt
 `sgsR` is designed to implement structurally guided sampling approaches
 for enhanced forest inventories. The package was designed to function
 using rasterized airborne laser scanning (ALS; Lidar) metrics to allow
-for stratification of forested areas based on structure.
+for stratification of forested areas based on structure. If you are not
+working with ALS data, any remote sensing datasets in a raster format 
+(e.g. optical satellite imagery, climate data, drone-based products) 
+can be used as inputs to help guide your environmental sampling needs.
 
 `sgsR` is being actively developed, so you may encounter bugs. If that
 happens, [please report your issue
