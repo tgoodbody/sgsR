@@ -59,6 +59,9 @@ to permit the algorithm to not add additional samples if quantile density is ver
 \item{threshold}{Numeric. Sample quantile ratio threshold. After the threshold \code{default = 0.9} is reached,
 no additional samples will be added. Values close to 1 can cause the algorithm to continually loop.}
 }
+\value{
+Allocated samples to be returned by \code{sample_strat()} & \code{sample_ahels()}.
+}
 \description{
 Sampling rules
 

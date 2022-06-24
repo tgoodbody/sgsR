@@ -5,6 +5,7 @@
 #' @inheritParams calculate_allocation
 #' @family allocating
 #' @name allocating
+#' @return Data frame of allocated samples by stratum. Used internally within \code{sample_strat()}.
 NULL
 
 

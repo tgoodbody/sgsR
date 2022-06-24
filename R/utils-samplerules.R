@@ -4,6 +4,7 @@
 #' @inheritParams sample_ahels
 #' @family rules
 #' @name rules
+#' @return Allocated samples to be returned by \code{sample_strat()} & \code{sample_ahels()}.
 NULL
 
 #' Stratified rule 1

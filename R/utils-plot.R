@@ -6,6 +6,7 @@
 #' @param samp Numeric. Determines proportion of cells to plot
 #' @family plot
 #' @name plot
+#' @return Scatter plot of available raster cells coloured and delineated by stratum.
 NULL
 
 #' Class Plot

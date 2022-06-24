@@ -177,7 +177,6 @@ sample_strat(sraster = sraster, # input
              existing = e.sr, # existing samples with strata values
              include = TRUE, # include existing plots in nSamp total
              buff_outer = 200, # outer buffer - no samples further than this distance from road
-             filename = tempfile(fileext = ".shp"), # write output samples to file
              plot = TRUE) # plot
 ```
 
@@ -185,7 +184,7 @@ The `include` parameter determines whether `existing` samples should be included
 
 ## `sample_clhs` {#clhs .unnumbered}
 
-`sample_clhs()` function implements conditioned Latin hypercube (clhs) sampling methodology from the [`clhs`](https://cran.r-project.org/web/packages/clhs/clhs.pdf) package.  A number of other functions in the `sgsR` package help to provide guidance on clhs sampling including `calculate_pop()` and `calculate_lhsOpt()`. Check out these functions to better understand how sample numbers could be optimized.
+`sample_clhs()` function implements conditioned Latin hypercube (clhs) sampling methodology from the [`clhs`](https://CRAN.R-project.org/package=clhs/) package.  A number of other functions in the `sgsR` package help to provide guidance on clhs sampling including `calculate_pop()` and `calculate_lhsOpt()`. Check out these functions to better understand how sample numbers could be optimized.
 
 The syntax for this function is similar to others shown above, although parameters like `iter`, which define the number of iterations within the Metropolis-Hastings process are important to consider. In these examples we use a low `iter` value because it takes less time to run. Default values for `iter` within the `clhs` package are 10,000.
 
@@ -312,8 +311,7 @@ The first matrix output shows the quantile ratios between the sample and the cov
 sample_ahels(mraster = mraster, 
              existing = existing, # existing samples
              nQuant = 20, # define 20 quantiles
-             nSamp = 300, # total samples desired
-             filename = tempfile(fileext = ".shp")) # write samples to disc
+             nSamp = 300) # total samples desired
 ```
 
 ```{r,warning=F,message=F,echo=FALSE, results = FALSE}
@@ -321,8 +319,7 @@ s <- sample_ahels(mraster = mraster,
              existing = existing, # existing samples
              nQuant = 20, # define 20 quantiles
              nSamp = 300, # total samples desired
-             plot = TRUE,
-             filename = tempfile(fileext = ".shp")) # write samples to disc
+             plot = TRUE) # plot
 
 ```
 

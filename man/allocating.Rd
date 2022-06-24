@@ -34,6 +34,9 @@ must be equal to the number of unique strata where the first numeric value corre
 
 \item{existing}{sf 'POINT' or data.frame.  Existing plot network.}
 }
+\value{
+Data frame of allocated samples by stratum. Used internally within \code{sample_strat()}.
+}
 \description{
 Allocation algorithms
 }

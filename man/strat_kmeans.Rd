@@ -70,14 +70,6 @@ kmeans <- strat_kmeans(
   details = TRUE
 )
 
-kmeans <- strat_kmeans(
-  mraster = mr,
-  nStrata = 5,
-  iter = 1000,
-  plot = TRUE,
-  filename = tempfile(fileext = ".tif"),
-  overwrite = TRUE
-)
 }
 \seealso{
 Other stratify functions: 

@@ -14,11 +14,12 @@ coverage](https://codecov.io/gh/tgoodbody/sgsR/branch/main/graph/badge.svg)](htt
 `sgsR` is designed to implement structurally guided sampling approaches
 for enhanced forest inventories. The package was designed to function
 using rasterized airborne laser scanning (ALS; Lidar) metrics to allow
-for stratification of forested areas based on structure. 
+for stratification of forested areas based on structure.
 
-If you are not working with ALS data, any remote sensing datasets in a raster format 
-(e.g. optical satellite imagery, climate data, drone-based products) 
-can be used as inputs to help guide your environmental sampling needs.
+If you *aren’t* working with ALS data, any remote sensing data sets in a
+raster format (e.g. optical satellite imagery, climate data, drone-based
+products) can be used as inputs to help guide your environmental
+sampling needs.
 
 `sgsR` is being actively developed, so you may encounter bugs. If that
 happens, [please report your issue
@@ -27,7 +28,14 @@ reproducible example.
 
 ## Installation :computer:
 
-You can install the released version of `sgsR` from
+Install the stable version of `sgsR` from CRAN with:
+
+``` r
+install.packages("sgsR")
+library(sgsR)
+```
+
+Install the most recent development version of `sgsR` from
 [Github](https://github.com/tgoodbody/sgsR) with:
 
 ``` r
@@ -78,21 +86,21 @@ We are thankful for continued collaboration with academic, private
 industry, and government institutions to help improve `sgsR`. Special
 thanks to to:
 
-| Collaborator                                                                                                  | Affiliation                                                                       |
-|:--------------------------------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------|
-| [Martin Queinnec](https://www.researchgate.net/profile/Martin-Queinnec)                                       | University of British Columbia                                                    |
-| [Joanne C. White](https://scholar.google.ca/citations?user=bqjk4skAAAAJ&hl=en)                                | Canadian Forest Service                                                           |
-| [Piotr Tompalski](https://scholar.google.ca/citations?user=RtYdz0cAAAAJ&hl=en)                                | Canadian Forest Service                                                           |
-| [Andrew T. Hudak](https://scholar.google.ca/citations?hl=en&user=bdn7YVoAAAAJ)                                | United States Forest Service                                                      |
-| [Ruben Valbuena](https://scholar.google.com/citations?user=Nx336TQAAAAJ&hl=en)                                | Swedish University of Agricultural Sciences                                       |
-| [Antoine LeBoeuf](https://scholar.google.com/citations?user=wGsKOK8AAAAJ&hl=en)                               | Ministère des Forêts, de la Faune et des Parcs                                    |
-| [Ian Sinclair](http://www.infogo.gov.on.ca/infogo/home.html#empProfile/332620/en)                             | Ministry of Northern Development, Mines, Natural Resources and Forestry           |
-| [Grant McCartney](https://www.signalhire.com/profiles/grant-mccartney%27s-email/99719223)                     | Forsite Consultants Ltd.                                                          |
-| [Jean-Francois Prieur](https://www.researchgate.net/scientific-contributions/Jean-Francois-Prieur-2142960944) | Université de Sherbrooke                                                          |
-| [Murray Woods](https://www.researchgate.net/profile/Murray-Woods)                                             | (Retired) Ministry of Northern Development, Mines, Natural Resources and Forestry |
+| Collaborator                                                                                                   | Affiliation                                                                       |
+|:---------------------------------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------|
+| [Martin Queinnec](https://www.researchgate.net/profile/Martin-Queinnec/)                                       | University of British Columbia                                                    |
+| [Joanne C. White](https://scholar.google.ca/citations?user=bqjk4skAAAAJ&hl=en/)                                | Canadian Forest Service                                                           |
+| [Piotr Tompalski](https://scholar.google.ca/citations?user=RtYdz0cAAAAJ&hl=en/)                                | Canadian Forest Service                                                           |
+| [Andrew T. Hudak](https://www.fs.usda.gov/rmrs/people/ahudak/)                                                 | United States Forest Service                                                      |
+| [Ruben Valbuena](https://scholar.google.com/citations?user=Nx336TQAAAAJ&hl=en/)                                | Swedish University of Agricultural Sciences                                       |
+| [Antoine LeBoeuf](https://scholar.google.com/citations?user=wGsKOK8AAAAJ&hl=en/)                               | Ministère des Forêts, de la Faune et des Parcs                                    |
+| [Ian Sinclair](https://ca.linkedin.com/in/ian-sinclair-984929a4/)                                              | Ministry of Northern Development, Mines, Natural Resources and Forestry           |
+| [Grant McCartney](https://www.signalhire.com/profiles/grant-mccartney%27s-email/99719223/)                     | Forsite Consultants Ltd.                                                          |
+| [Jean-Francois Prieur](https://www.researchgate.net/scientific-contributions/Jean-Francois-Prieur-2142960944/) | Université de Sherbrooke                                                          |
+| [Murray Woods](https://www.researchgate.net/profile/Murray-Woods/)                                             | (Retired) Ministry of Northern Development, Mines, Natural Resources and Forestry |
 
 ## Funding :raised_hands:
 
 Development of sgsR was made possible thanks to the financial support of
 the [Canadian Wood Fibre Centre’s Forest Innovation
-Program](https://www.nrcan.gc.ca/science-and-data/funding-partnerships/funding-opportunities/forest-sector-funding-programs/forest-innovation-program/13137).
+Program](https://www.nrcan.gc.ca/science-and-data/funding-partnerships/funding-opportunities/forest-sector-funding-programs/forest-innovation-program/13137/).

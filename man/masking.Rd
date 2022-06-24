@@ -18,6 +18,9 @@ from access where plots cannot be sampled.}
 \item{buff_outer}{Numeric. Outer buffer boundary specifying distance
 from access where plots can be sampled.}
 }
+\value{
+Raster masked by provided \code{access} layer and buffers.
+}
 \description{
 Create covariate and sample matrices
 }

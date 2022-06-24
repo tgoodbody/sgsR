@@ -31,8 +31,7 @@
 #' calculate_coobs(
 #'   mraster = mr,
 #'   existing = e,
-#'   cores = 4,
-#'   filename = tempfile(fileext = ".tif")
+#'   cores = 4
 #' )
 #' }
 #' @note

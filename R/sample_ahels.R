@@ -51,8 +51,7 @@
 #'   mraster = mr,
 #'   existing = e,
 #'   matrices = mat,
-#'   nSamp = 300,
-#'   filename = tempfile(fileext = ".shp")
+#'   nSamp = 300
 #' )
 #' }
 #' @note

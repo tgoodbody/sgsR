@@ -22,11 +22,20 @@ knitr::opts_chunk$set(
 
 `sgsR` is designed to implement structurally guided sampling approaches for enhanced forest inventories. The package was designed to function using rasterized airborne laser scanning (ALS; Lidar) metrics to allow for stratification of forested areas based on structure.
 
+If you _aren’t_ working with ALS data, any remote sensing data sets in a raster format (e.g. optical satellite imagery, climate data, drone-based products) can be used as inputs to help guide your environmental sampling needs.
+
 `sgsR` is being actively developed, so you may encounter bugs. If that happens, [please report your issue here](https://github.com/tgoodbody/sgsR/issues) by providing a reproducible example.
 
 ## Installation :computer: {.unnumbered}
 
-You can install the released version of `sgsR` from [Github](https://github.com/tgoodbody/sgsR) with:
+Install the stable version of `sgsR` from CRAN with:
+
+``` r
+install.packages("sgsR")
+library(sgsR)
+```
+
+Install the most recent development version of `sgsR` from [Github](https://github.com/tgoodbody/sgsR) with:
 
 ``` r
 install.packages("devtools")
@@ -79,16 +88,16 @@ names <- c("Martin Queinnec", "Joanne C. White", "Piotr Tompalski", "Andrew T. H
 
 aff <- c("University of British Columbia", "Canadian Forest Service", "Canadian Forest Service", "United States Forest Service", "Swedish University of Agricultural Sciences", "Ministère des Forêts, de la Faune et des Parcs", "Ministry of Northern Development, Mines, Natural Resources and Forestry", "Forsite Consultants Ltd.", "Université de Sherbrooke", " (Retired)	Ministry of Northern Development, Mines, Natural Resources and Forestry")
 
-urls <- c("https://www.researchgate.net/profile/Martin-Queinnec",
-          "https://scholar.google.ca/citations?user=bqjk4skAAAAJ&hl=en",
-          "https://scholar.google.ca/citations?user=RtYdz0cAAAAJ&hl=en",
-          "https://scholar.google.ca/citations?hl=en&user=bdn7YVoAAAAJ",
-          "https://scholar.google.com/citations?user=Nx336TQAAAAJ&hl=en",
-          "https://scholar.google.com/citations?user=wGsKOK8AAAAJ&hl=en",
-          "http://www.infogo.gov.on.ca/infogo/home.html#empProfile/332620/en",
-          "https://www.signalhire.com/profiles/grant-mccartney%27s-email/99719223",
-          "https://www.researchgate.net/scientific-contributions/Jean-Francois-Prieur-2142960944",
-          "https://www.researchgate.net/profile/Murray-Woods")
+urls <- c("https://www.researchgate.net/profile/Martin-Queinnec/",
+          "https://scholar.google.ca/citations?user=bqjk4skAAAAJ&hl=en/",
+          "https://scholar.google.ca/citations?user=RtYdz0cAAAAJ&hl=en/",
+          "https://www.fs.usda.gov/rmrs/people/ahudak/",
+          "https://scholar.google.com/citations?user=Nx336TQAAAAJ&hl=en/",
+          "https://scholar.google.com/citations?user=wGsKOK8AAAAJ&hl=en/",
+          "https://ca.linkedin.com/in/ian-sinclair-984929a4/",
+          "https://www.signalhire.com/profiles/grant-mccartney%27s-email/99719223/",
+          "https://www.researchgate.net/scientific-contributions/Jean-Francois-Prieur-2142960944/",
+          "https://www.researchgate.net/profile/Murray-Woods/")
 
 df <- data.frame(Collaborator = names, Affiliation = aff)
 
@@ -101,5 +110,5 @@ kable(df)
 
 
 ## Funding :raised_hands: {.unnumbered}
-Development of sgsR was made possible thanks to the financial support of the [Canadian Wood Fibre Centre's Forest Innovation Program](https://www.nrcan.gc.ca/science-and-data/funding-partnerships/funding-opportunities/forest-sector-funding-programs/forest-innovation-program/13137).
+Development of sgsR was made possible thanks to the financial support of the [Canadian Wood Fibre Centre's Forest Innovation Program](https://www.nrcan.gc.ca/science-and-data/funding-partnerships/funding-opportunities/forest-sector-funding-programs/forest-innovation-program/13137/).
 

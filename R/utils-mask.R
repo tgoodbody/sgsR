@@ -6,6 +6,7 @@
 #' @param raster SpatRaster. Raster to be masked.
 #' @family masking
 #' @name masking
+#' @return Raster masked by provided \code{access} layer and buffers.
 NULL
 
 

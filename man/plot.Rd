@@ -18,6 +18,9 @@ classPlot(dfc, coordsgrps, mraster, mraster2, samp)
 
 \item{samp}{Numeric. Determines proportion of cells to plot}
 }
+\value{
+Scatter plot of available raster cells coloured and delineated by stratum.
+}
 \description{
 Plot
 

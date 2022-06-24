@@ -1,3 +1,7 @@
+# sgsR 1.0.0
+
+* First CRAN release.
+
 # sgsR 0.1.6
 
 * Added comprehensive tests using `testthat` for most functions and `covr` reporting.

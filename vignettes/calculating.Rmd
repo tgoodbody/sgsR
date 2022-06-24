@@ -228,8 +228,7 @@ calculate_coobs(mraster = mraster, # input
                 existing = existing, # existing samples
                 cores = 4, # parallel cores to use
                 details = TRUE, # provide details from algorithm output
-                plot = TRUE, # plot
-                filename = tempfile(fileext = ".tif")) # write output raster to tif
+                plot = TRUE) # plot
 ```
 
 ## Latin hypercube sampling evaluation algorithms {#lhseval .unnumbered}
