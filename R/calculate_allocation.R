@@ -21,9 +21,9 @@
 #' @return Returns a data.frame of:
 #' \itemize{
 #' \item{strata} - Strata ID.
-#' \item{total} - Total samples to be allocated based on under representation (positive) or over representation (negative)
-#' to be removed at the users discretion.
-#' \item{need} - Total required samples per strata. Rounded.
+#' \item{total} - Number of samples to be allocated. Values correspond to under representation (samples needed; positive value) or over representation 
+#' (too many samples; negative value) based on the \code{nSamp} provided.
+#' \item{need} - Required samples per strata based on allocation method. Rounded.
 #' }
 #'
 #' @references
