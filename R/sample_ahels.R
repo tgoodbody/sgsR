@@ -82,7 +82,7 @@ sample_ahels <- function(mraster,
 
   #--- Set global vars ---#
 
-  x <- y <- X <- Y <- n <- type <- geometry <- NULL
+  x <- y <- X <- Y <- n <- type <- geometry <- extraCols <- NULL
 
   #--- Error handling ---#
 
@@ -214,14 +214,34 @@ sample_ahels <- function(mraster,
     sf::st_crs(existing) <- crs
   }
 
-  #--- select geometry attribute ---#
-
-  existing <- existing %>%
-    dplyr::select(geometry)
-
   #--- extract covariates at existing sample locations ---#
 
   samples <- extract_metrics(mraster, existing, data.frame = TRUE)
+  
+  #--- remove already existing samples from vals to not repeat sample ---#
+  
+  vals <- vals %>%
+    dplyr::anti_join(samples, by = c("X", "Y"))
+  
+  #--- Rearrange columns ---#
+  
+  #--- do other attributes exist in `existing` - if yes, save them for later ---#
+  
+  if(length(names(samples))-2 != length(names(mraster))){
+    
+    extraCols <- samples %>%
+      dplyr::select(!names(mraster))
+    
+  }
+  
+  #--- Assign attribute to differentiate between original samples and those added during HELS algorithm ---#
+  
+  samples$type <- "existing"
+  
+  #--- subset columns for sampling ---#
+  
+  samples <- samples %>%
+    dplyr::select(X, Y, type, names(mraster))
   
   #--- check if samples fall in areas where stratum values are NA ---#
   
@@ -235,20 +255,6 @@ sample_ahels <- function(mraster,
       stats::na.omit()
     
   }
-
-  #--- remove already existing samples from vals to not repeat sample ---#
-
-  vals <- vals %>%
-    dplyr::anti_join(samples, by = c("X", "Y"))
-
-  #--- Assign attribute to differentiate between original samples and those added during HELS algorithm ---#
-
-  samples$type <- "existing"
-
-  #--- Rearrange columns ---#
-
-  samples <- samples %>%
-    dplyr::select(X, Y, type, names(mraster))
 
   #--- Create data hypercube of existing samples to compare with mraster data ---#
 
@@ -319,16 +325,37 @@ sample_ahels <- function(mraster,
   
   if(exists("samples_NA")){
     
-    #--- convert coordinates to a spatial points object ---#
-    samples <- out$samples %>%
-      dplyr::bind_rows(., samples_NA) %>%
-      sf::st_as_sf(., coords = c("X", "Y"))
+    if(exists("extraCols")){
+      
+      samples <- out$samples %>%
+        dplyr::bind_rows(., samples_NA) %>%
+        dplyr::left_join(., extraCols,  by = c("X","Y")) %>%
+        sf::st_as_sf(., coords = c("X", "Y"))
+      
+    } else {
+    
+      #--- convert coordinates to a spatial points object ---#
+      samples <- out$samples %>%
+        dplyr::bind_rows(., samples_NA) %>%
+        sf::st_as_sf(., coords = c("X", "Y"))
+    
+    }
     
   } else {
     
-    #--- convert coordinates to a spatial points object ---#
-    samples <- out$samples %>%
-      sf::st_as_sf(., coords = c("X", "Y"))
+    if(exists("extraCols")){
+      
+      samples <- out$samples %>%
+        dplyr::left_join(., extraCols,  by = c("X","Y")) %>%
+        sf::st_as_sf(., coords = c("X", "Y"))
+      
+    } else {
+      
+      #--- convert coordinates to a spatial points object ---#
+      samples <- out$samples %>%
+        sf::st_as_sf(., coords = c("X", "Y"))
+      
+    }
     
   }
 

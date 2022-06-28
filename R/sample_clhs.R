@@ -79,7 +79,7 @@ sample_clhs <- function(mraster,
 
   #--- Set global vars ---#
 
-  x <- y <- type <- NULL
+  x <- y <- X <- Y <- type <- NULL
 
   #--- Error management ---#
 
@@ -220,23 +220,35 @@ sample_clhs <- function(mraster,
     
     existingSamples <- extract_metrics(mraster = mraster, existing = existing, data.frame = TRUE)
     
-    #--- determine if existing samples fall in areas where metric values are NA ---#
+    #--- do other attributes exist in `existing` - if yes, save them for later ---#
+    
+    if(length(names(existingSamples))-2 != length(names(mraster))){
+      
+      extraCols <- existingSamples %>%
+        dplyr::select(!names(mraster))
+      
+    }
+
+    #--- Assign attribute to differentiate between original samples and those added during HELS algorithm ---#
+    
+    existingSamples$type <- "existing"
+    
+    #--- subset columns for sampling ---#
+    
+    existingSamples <- existingSamples %>%
+      dplyr::select(X, Y, type, names(mraster))
+    
+    #--- check if samples fall in areas where stratum values are NA ---#
+    
     if(any(!complete.cases(existingSamples))){
       
       samples_NA <- existingSamples %>%
-        dplyr::filter(!complete.cases(.)) %>%
-        dplyr::mutate(type = "existing")
-
+        dplyr::filter(!complete.cases(.))
+      
       existingSamples <- existingSamples %>%
         stats::na.omit()
       
     }
-
-    #--- create dataset with labels for plotting ---#
-
-    existingSamples <- existingSamples %>%
-      dplyr::mutate(type = "existing") %>%
-      dplyr::select(names(vals))
 
     #--- create conjoined existing dataset ---#
 
@@ -282,22 +294,45 @@ sample_clhs <- function(mraster,
     }
   }
   
-  #--- add samples with NA metrics back to dataset if they existed ---#
+  #--- replace existing samples (if they exist) that had NA values for metrics ---#
+  
   if(exists("samples_NA")){
     
-    #--- convert coordinates to a spatial points object ---#
-    samples <- samples %>%
-      dplyr::bind_rows(., samples_NA) %>%
-      sf::st_as_sf(., coords = c("X", "Y"))
+    if(exists("extraCols")){
+      
+      samples <- samples %>%
+        dplyr::bind_rows(., samples_NA) %>%
+        dplyr::left_join(., extraCols,  by = c("X","Y")) %>%
+        sf::st_as_sf(., coords = c("X", "Y"))
+      
+    } else {
+      
+      #--- convert coordinates to a spatial points object ---#
+      samples <- samples %>%
+        dplyr::bind_rows(., samples_NA) %>%
+        sf::st_as_sf(., coords = c("X", "Y"))
+      
+    }
     
   } else {
     
-    #--- convert coordinates to a spatial points object ---#
-    samples <- samples %>%
-      as.data.frame() %>%
-      sf::st_as_sf(., coords = c("X", "Y"))
+    if(exists("extraCols")){
+      
+      samples <- samples %>%
+        dplyr::left_join(., extraCols,  by = c("X","Y")) %>%
+        sf::st_as_sf(., coords = c("X", "Y"))
+      
+    } else {
+      
+      #--- convert coordinates to a spatial points object ---#
+      samples <- samples %>%
+        as.data.frame() %>%
+        sf::st_as_sf(., coords = c("X", "Y"))
+      
+    }
     
   }
+
 
   #--- assign sraster crs to spatial points object ---#
   
