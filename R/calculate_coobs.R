@@ -133,13 +133,7 @@ calculate_coobs <- function(mraster,
     samples_NA <- samples %>%
       dplyr::filter(!complete.cases(.)) %>%
       dplyr::mutate(type = "existing")
-    
-    nNA <-  samples_NA %>%
-      dplyr::tally() %>%
-      dplyr::pull()
-    
-    message(paste0(nNA," samples in 'existing' are located where mraster values are NA. These samples will be ignored during the sampling process."))
-    
+
     samples <- samples %>%
       stats::na.omit()
     
