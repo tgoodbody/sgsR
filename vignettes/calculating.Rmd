@@ -52,7 +52,7 @@ Currently, there are 8 functions associated with the `calculate` verb in the `sg
 
 *   `calculate_sampsize()` - determines appropriate estimated sample sizes based on relative standard error
 
-*   `calculate_allocation()` - sample allocation algorithm - proportional / optimal / equal sampling
+*   `calculate_allocation()` - sample allocation algorithm - proportional / optimal / equal / manual sampling
 
 *   `calculate_coobs()` - determine how `existing` samples are distributed among `mraster` covariates
 
