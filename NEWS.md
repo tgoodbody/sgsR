@@ -1,3 +1,9 @@
+* `enhanced` -  `calculate_allocation()` improved documentation for output dataframe to make attributes more clear.
+
+* `fixed` - `calculate_representation()` will now not plot bar chart twice.
+
+* `fixed` - `existing` samples with other attributes will now not break sampling using `sample_ahels() / sample_clhs()` if values are `NA`. Variables are also added back to the sample output
+
 # sgsR 1.0.0
 
 * First CRAN release.
@@ -6,7 +12,7 @@
 
 * Added comprehensive tests using `testthat` for most functions and `covr` reporting.
 
-  - Resulting from tests: miscellaneous adjustments to many functions including small non-critical bug fixed, error and message improvements
+  - Resulting from tests: miscellaneous adjustments to many functions including small non-critical bug fixed, error and message improvements.
   
 * Changed `forceSamp` to `force` in `sample_systematic()`.
 
