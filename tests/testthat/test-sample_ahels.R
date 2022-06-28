@@ -2,6 +2,7 @@ set.seed(2022)
 o <- sample_ahels(mraster = mraster, existing = existing, matrices = mat, nSamp = 5, details = TRUE)
 o1 <- sample_ahels(mraster = mraster, existing = existing, nQuant = 5, threshold = 0.8, details = TRUE)
 o2 <- sample_ahels(mraster = mraster, existing = existing, matrices = mat, threshold = 0.8, tolerance = 0.025)
+o3 <- sample_ahels(mraster = mraster, existing = existingna, nSamp = 300, matrices = mat)
 
 
 test_that("Input classes", {
@@ -26,7 +27,7 @@ test_that("Input classes", {
 
 test_that("Total outputs", {
   expect_equal(nrow(o$samples), 205L)
-  expect_equal(ncol(o$samples), 5L)
+  expect_equal(ncol(o$samples), 6L)
   expect_equal(nrow(o$details$existingRatio), 10L)
   expect_equal(nrow(o1$details$existingRatio), 5L)
   expect_equal(nrow(o$samples[o$samples$type == "existing",]), 200L)

@@ -20,7 +20,7 @@ test_that("Input classes", {
 
 test_that("Total outputs", {
   expect_equal(nrow(o$samples), 50L)
-  expect_equal(ncol(o$samples), 5L)
+  expect_equal(ncol(o$samples), 6L)
   expect_equal(length(o$clhs), 50L)
   expect_s3_class(o$samples,"sf")
   

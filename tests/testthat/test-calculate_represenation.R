@@ -13,6 +13,5 @@ test_that("Total outputs", {
   expect_equal(nrow(o), 4L)
   expect_equal(sum(o$srasterFreq), 1L)
   expect_equal(sum(o$nSamp), 200L)
-  expect_s3_class(o1$plot,"gg")
   expect_equal(nrow(calculate_representation(sraster = sraster, existing = ex)),4L)
 })
