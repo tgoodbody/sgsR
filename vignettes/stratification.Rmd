@@ -122,7 +122,6 @@ Once the breaks are created, we can use them as input into the `strat_breaks` fu
 
 ```{r,warning=F,message=F}
 #--- stratify on 1 metric only ---#
-
 strat_breaks(mraster = mraster$pzabove2,
              breaks = breaks,
              plot = TRUE)
@@ -130,7 +129,6 @@ strat_breaks(mraster = mraster$pzabove2,
 
 ```{r,warning=F,message=F}
 #--- stratify on 1 metric only ---#
-
 strat_breaks(mraster = mraster$zq90,
              breaks = breaks2,
              plot = TRUE)

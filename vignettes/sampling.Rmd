@@ -150,7 +150,6 @@ This function uses the `sraster` and `existing` samples and extracts the stratum
 e.sr <- extract_strata(sraster = sraster, # input sraster
                        existing = existing) # existing samples to add strata value to
 
-e.sr
 ```
 
 Notice that `e.sr` now has an attribute named strata. If that parameter is not there, `sample_strat()` will give an error.
@@ -168,7 +167,7 @@ sample_strat(sraster = sraster, # input sraster
 
 As seen on the code in the example above, the defined `mindist` parameter specifies the minimum euclidean distance that samples must be apart from one another.
 
-Notice that the sample outputs have `type` and `rule` attributes which outline whether the samples are `existing` or `new` and whether `rule1` or `rule2` were used to select the individual samples.
+Notice that the sample outputs have `type` and `rule` attributes which outline whether the samples are `existing` or `new` and whether `rule1` or `rule2` were used to select the individual samples. If `type` is _existing_ (a user provided `existing` sample), `rule` will be _existing_ as well as seen above.
 
 ```{r,warning=F,message=F} 
 sample_strat(sraster = sraster, # input
