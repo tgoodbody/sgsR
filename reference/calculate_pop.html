@@ -74,7 +74,7 @@ needed necessary for <code><a href="calculate_lhsOpt.html">calculate_lhsOpt</a><
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">calculate_pop</span><span class="op">(</span><span class="va">mraster</span>, PCA <span class="op">=</span> <span class="cn">FALSE</span>, matQ <span class="op">=</span> <span class="cn">TRUE</span>, nQuant <span class="op">=</span> <span class="fl">10</span>, matCov <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">calculate_pop</span><span class="op">(</span><span class="va">mraster</span>, PCA <span class="op">=</span> <span class="cn">FALSE</span>, matQ <span class="op">=</span> <span class="cn">TRUE</span>, nQuant <span class="op">=</span> <span class="fl">10</span>, matCov <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -134,11 +134,11 @@ needed necessary for <code><a href="calculate_lhsOpt.html">calculate_lhsOpt</a><
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#--- Load raster and access files ---#</span></span>
-<span class="r-in"><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mraster.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">calculate_pop</span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mr</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#--- Load raster and access files ---#</span></span></span>
+<span class="r-in"><span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mraster.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">calculate_pop</span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mr</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Creating covariance matrix.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $values</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        zq90  pzabove2         zsd</span>
@@ -33480,31 +33480,31 @@ needed necessary for <code><a href="calculate_lhsOpt.html">calculate_lhsOpt</a><
 <span class="r-out co"><span class="r-pr">#&gt;</span> $matQ</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        [,1]  [,2]   [,3]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1,]  0.00  0.00  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,]  3.08  9.99  1.101</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,]  6.16 19.98  2.202</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,]  9.24 29.97  3.303</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,] 12.32 39.96  4.404</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,] 15.40 49.95  5.505</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,] 18.48 59.94  6.606</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,] 21.56 69.93  7.707</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] 24.64 79.92  8.808</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [10,] 27.72 89.91  9.909</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11,] 30.80 99.90 11.010</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,]  3.09  9.97  1.074</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,]  6.18 19.94  2.148</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,]  9.27 29.91  3.222</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,] 12.36 39.88  4.296</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,] 15.45 49.85  5.370</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,] 18.54 59.82  6.444</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,] 21.63 69.79  7.518</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] 24.72 79.76  8.592</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10,] 27.81 89.73  9.666</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [11,] 30.90 99.70 10.740</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $matCov</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        [,1]  [,2]  [,3]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,]  2482  4392  6048</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,]  6245  3489  9807</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,]  8237  2925 22786</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,] 12135  2871 26648</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,] 17518  3483 16085</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,] 22668  4403  6717</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,] 15684  6862  2131</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,]  4563 11620   722</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,]  1328 22498   206</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [10,]   329 28649    40</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,]  2506  4392  5860</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,]  6253  3489  9329</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,]  8255  2925 21399</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,] 12085  2844 26433</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,] 17518  3470 17035</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,] 23398  4380  7437</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,] 15238  6762  2525</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,]  4364 11472   853</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,]  1279 22122   250</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10,]   294 29329    63</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -33516,7 +33516,7 @@ needed necessary for <code><a href="calculate_lhsOpt.html">calculate_lhsOpt</a><
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

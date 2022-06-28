@@ -68,17 +68,17 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">strat_quantiles</span><span class="op">(</span>
-  <span class="va">mraster</span>,
-  mraster2 <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">nStrata</span>,
-  nStrata2 <span class="op">=</span> <span class="cn">NULL</span>,
-  plot <span class="op">=</span> <span class="cn">FALSE</span>,
-  details <span class="op">=</span> <span class="cn">FALSE</span>,
-  samp <span class="op">=</span> <span class="fl">0.2</span>,
-  filename <span class="op">=</span> <span class="cn">NULL</span>,
-  overwrite <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">strat_quantiles</span><span class="op">(</span></span>
+<span>  <span class="va">mraster</span>,</span>
+<span>  mraster2 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">nStrata</span>,</span>
+<span>  nStrata2 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  plot <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  details <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  samp <span class="op">=</span> <span class="fl">0.2</span>,</span>
+<span>  filename <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  overwrite <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -150,15 +150,15 @@ Histogram shows distribution and break points while scatter plot shows colour co
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#--- Load raster and existing plots---#</span></span>
-<span class="r-in"><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mraster.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">strat_quantiles</span><span class="op">(</span></span>
-<span class="r-in">  mraster <span class="op">=</span> <span class="va">mr</span><span class="op">$</span><span class="va">zq90</span>,</span>
-<span class="r-in">  nStrata <span class="op">=</span> <span class="fl">4</span>,</span>
-<span class="r-in">  plot <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#--- Load raster and existing plots---#</span></span></span>
+<span class="r-in"><span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mraster.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">strat_quantiles</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  mraster <span class="op">=</span> <span class="va">mr</span><span class="op">$</span><span class="va">zq90</span>,</span></span>
+<span class="r-in"><span>  nStrata <span class="op">=</span> <span class="fl">4</span>,</span></span>
+<span class="r-in"><span>  plot <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="strat_quantiles-1.png" alt="" width="700" height="433"></span>
 <span class="r-plt img"><img src="strat_quantiles-2.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> class       : SpatRaster </span>
@@ -170,13 +170,13 @@ Histogram shows distribution and break points while scatter plot shows colour co
 <span class="r-out co"><span class="r-pr">#&gt;</span> name        : strata </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> min value   :      1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> max value   :      4 </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">strat_quantiles</span><span class="op">(</span></span>
-<span class="r-in">  mraster <span class="op">=</span> <span class="va">mr</span><span class="op">$</span><span class="va">zq90</span>,</span>
-<span class="r-in">  mraster2 <span class="op">=</span> <span class="va">mr</span><span class="op">$</span><span class="va">zsd</span>,</span>
-<span class="r-in">  nStrata <span class="op">=</span> <span class="fl">3</span>,</span>
-<span class="r-in">  nStrata2 <span class="op">=</span> <span class="fl">4</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">strat_quantiles</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  mraster <span class="op">=</span> <span class="va">mr</span><span class="op">$</span><span class="va">zq90</span>,</span></span>
+<span class="r-in"><span>  mraster2 <span class="op">=</span> <span class="va">mr</span><span class="op">$</span><span class="va">zsd</span>,</span></span>
+<span class="r-in"><span>  nStrata <span class="op">=</span> <span class="fl">3</span>,</span></span>
+<span class="r-in"><span>  nStrata2 <span class="op">=</span> <span class="fl">4</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> class       : SpatRaster </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dimensions  : 277, 373, 1  (nrow, ncol, nlyr)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> resolution  : 20, 20  (x, y)</span>
@@ -197,7 +197,7 @@ Histogram shows distribution and break points while scatter plot shows colour co
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

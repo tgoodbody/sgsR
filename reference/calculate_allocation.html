@@ -68,15 +68,15 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">calculate_allocation</span><span class="op">(</span>
-  <span class="va">sraster</span>,
-  <span class="va">nSamp</span>,
-  allocation <span class="op">=</span> <span class="st">"prop"</span>,
-  weights <span class="op">=</span> <span class="cn">NULL</span>,
-  mraster <span class="op">=</span> <span class="cn">NULL</span>,
-  existing <span class="op">=</span> <span class="cn">NULL</span>,
-  force <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">calculate_allocation</span><span class="op">(</span></span>
+<span>  <span class="va">sraster</span>,</span>
+<span>  <span class="va">nSamp</span>,</span>
+<span>  allocation <span class="op">=</span> <span class="st">"prop"</span>,</span>
+<span>  weights <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  mraster <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  existing <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  force <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -121,9 +121,9 @@ Has no effect when <code>existing</code> is provided.</p></dd>
     
 
 <p>Returns a data.frame of:</p><ul><li><p>strata - Strata ID.</p></li>
-<li><p>total - Total samples to be allocated based on under representation (positive) or over representation (negative)
-to be removed at the users discretion.</p></li>
-<li><p>need - Total required samples per strata. Rounded.</p></li>
+<li><p>total - Number of samples to be allocated. Values correspond to under representation (samples needed; positive value) or over representation 
+(too many samples; negative value) based on the <code>nSamp</code> provided.</p></li>
+<li><p>need - Required samples per strata based on allocation method. Rounded.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -147,12 +147,12 @@ to be removed at the users discretion.</p></li>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#--- Load strata raster and existing samples---#</span></span>
-<span class="r-in"><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"sraster.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">sr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"existing.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#--- Load strata raster and existing samples---#</span></span></span>
+<span class="r-in"><span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"sraster.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"existing.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `existing' from data source </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   `/home/runner/work/_temp/Library/sgsR/extdata/existing.shp' </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   using driver `ESRI Shapefile'</span>
@@ -161,12 +161,12 @@ to be removed at the users discretion.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431110 ymin: 5337710 xmax: 438530 ymax: 5343230</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: UTM_Zone_17_Northern_Hemisphere</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#--- proportional allocation ---#</span></span>
-<span class="r-in"><span class="fu">calculate_allocation</span><span class="op">(</span></span>
-<span class="r-in">  sraster <span class="op">=</span> <span class="va">sr</span>,</span>
-<span class="r-in">  nSamp <span class="op">=</span> <span class="fl">50</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#--- proportional allocation ---#</span></span></span>
+<span class="r-in"><span><span class="fu">calculate_allocation</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  sraster <span class="op">=</span> <span class="va">sr</span>,</span></span>
+<span class="r-in"><span>  nSamp <span class="op">=</span> <span class="fl">50</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Implementing proportional allocation of samples.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> nSamp of 50 is not perfectly divisible based on strata distribution. nSamp of 51 will be returned. Use 'force = TRUE' to brute force to 50.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   strata total</span>
@@ -174,13 +174,13 @@ to be removed at the users discretion.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2      2    13</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3      3    13</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4      4    12</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#--- equal allocation ---#</span></span>
-<span class="r-in"><span class="fu">calculate_allocation</span><span class="op">(</span></span>
-<span class="r-in">  sraster <span class="op">=</span> <span class="va">sr</span>,</span>
-<span class="r-in">  allocation <span class="op">=</span> <span class="st">"equal"</span>,</span>
-<span class="r-in">  nSamp <span class="op">=</span> <span class="fl">10</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#--- equal allocation ---#</span></span></span>
+<span class="r-in"><span><span class="fu">calculate_allocation</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  sraster <span class="op">=</span> <span class="va">sr</span>,</span></span>
+<span class="r-in"><span>  allocation <span class="op">=</span> <span class="st">"equal"</span>,</span></span>
+<span class="r-in"><span>  nSamp <span class="op">=</span> <span class="fl">10</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Implementing equal allocation of samples.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   strata total</span>
@@ -189,25 +189,25 @@ to be removed at the users discretion.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>      2    10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>      3    10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>      4    10</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#--- manual allocation ---#</span></span>
-<span class="r-in"><span class="co">#--- define user-defined weights ---#</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">weights</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.1</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">calculate_allocation</span><span class="op">(</span></span>
-<span class="r-in">  sraster <span class="op">=</span> <span class="va">sr</span>,</span>
-<span class="r-in">  allocation <span class="op">=</span> <span class="st">"manual"</span>,</span>
-<span class="r-in">  weights <span class="op">=</span> <span class="va">weights</span>,</span>
-<span class="r-in">  nSamp <span class="op">=</span> <span class="fl">200</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#--- manual allocation ---#</span></span></span>
+<span class="r-in"><span><span class="co">#--- define user-defined weights ---#</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">weights</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.1</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">calculate_allocation</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  sraster <span class="op">=</span> <span class="va">sr</span>,</span></span>
+<span class="r-in"><span>  allocation <span class="op">=</span> <span class="st">"manual"</span>,</span></span>
+<span class="r-in"><span>  weights <span class="op">=</span> <span class="va">weights</span>,</span></span>
+<span class="r-in"><span>  nSamp <span class="op">=</span> <span class="fl">200</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Implementing allocation of samples based on user-defined weights.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   strata total</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      1    40</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2      2    40</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3      3   100</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4      4    20</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -219,7 +219,7 @@ to be removed at the users discretion.</p></li>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

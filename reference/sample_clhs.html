@@ -68,21 +68,21 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">sample_clhs</span><span class="op">(</span>
-  <span class="va">mraster</span>,
-  <span class="va">nSamp</span>,
-  iter <span class="op">=</span> <span class="fl">10000</span>,
-  cost <span class="op">=</span> <span class="cn">NULL</span>,
-  existing <span class="op">=</span> <span class="cn">NULL</span>,
-  access <span class="op">=</span> <span class="cn">NULL</span>,
-  buff_inner <span class="op">=</span> <span class="cn">NULL</span>,
-  buff_outer <span class="op">=</span> <span class="cn">NULL</span>,
-  plot <span class="op">=</span> <span class="cn">FALSE</span>,
-  details <span class="op">=</span> <span class="cn">FALSE</span>,
-  filename <span class="op">=</span> <span class="cn">NULL</span>,
-  overwrite <span class="op">=</span> <span class="cn">FALSE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">sample_clhs</span><span class="op">(</span></span>
+<span>  <span class="va">mraster</span>,</span>
+<span>  <span class="va">nSamp</span>,</span>
+<span>  iter <span class="op">=</span> <span class="fl">10000</span>,</span>
+<span>  cost <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  existing <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  access <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  buff_inner <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  buff_outer <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  plot <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  details <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  filename <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  overwrite <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -179,12 +179,12 @@ on Digital Soil Mapping, Sydney, Australia.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#--- Load raster and existing plots---#</span></span>
-<span class="r-in"><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mraster.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"existing.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#--- Load raster and existing plots---#</span></span></span>
+<span class="r-in"><span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mraster.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"existing.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `existing' from data source </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   `/home/runner/work/_temp/Library/sgsR/extdata/existing.shp' </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   using driver `ESRI Shapefile'</span>
@@ -193,9 +193,9 @@ on Digital Soil Mapping, Sydney, Australia.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431110 ymin: 5337710 xmax: 438530 ymax: 5343230</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: UTM_Zone_17_Northern_Hemisphere</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"access.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">ac</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"access.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ac</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `access' from data source </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   `/home/runner/work/_temp/Library/sgsR/extdata/access.shp' </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   using driver `ESRI Shapefile'</span>
@@ -204,59 +204,59 @@ on Digital Soil Mapping, Sydney, Australia.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431100 ymin: 5337700 xmax: 438560 ymax: 5343240</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: UTM_Zone_17_Northern_Hemisphere</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">sample_clhs</span><span class="op">(</span></span>
-<span class="r-in">  mraster <span class="op">=</span> <span class="va">mr</span>,</span>
-<span class="r-in">  nSamp <span class="op">=</span> <span class="fl">200</span>,</span>
-<span class="r-in">  plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">  iter <span class="op">=</span> <span class="fl">100</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">sample_clhs</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  mraster <span class="op">=</span> <span class="va">mr</span>,</span></span>
+<span class="r-in"><span>  nSamp <span class="op">=</span> <span class="fl">200</span>,</span></span>
+<span class="r-in"><span>  plot <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  iter <span class="op">=</span> <span class="fl">100</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="sample_clhs-1.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 200 features and 4 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431170 ymin: 5337790 xmax: 438530 ymax: 5343230</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431170 ymin: 5337730 xmax: 438470 ymax: 5343210</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        zq90 pzabove2  zsd type               geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 89587 11.30     91.2 2.25  new POINT (435150 5337790)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 77691  9.02     76.0 2.29  new POINT (436430 5338470)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49613 17.40     94.1 3.60  new POINT (433710 5340330)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12661 15.60     87.7 4.25  new POINT (431750 5342470)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 76562 20.00     78.3 6.81  new POINT (431990 5338530)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 83408 14.70     95.2 2.20  new POINT (435230 5338130)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 60973 12.90     89.6 3.33  new POINT (434890 5339650)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 73075 18.40     75.7 5.22  new POINT (434290 5338810)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 86943 13.20     97.1 2.83  new POINT (432310 5337930)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 83107  8.76     92.3 1.67  new POINT (436590 5338150)</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">sample_clhs</span><span class="op">(</span></span>
-<span class="r-in">  mraster <span class="op">=</span> <span class="va">mr</span>,</span>
-<span class="r-in">  nSamp <span class="op">=</span> <span class="fl">400</span>,</span>
-<span class="r-in">  existing <span class="op">=</span> <span class="va">e</span>,</span>
-<span class="r-in">  iter <span class="op">=</span> <span class="fl">250</span>,</span>
-<span class="r-in">  details <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67019  4.58     12.2 1.02  new POINT (434350 5339270)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72794 28.00     91.9 8.54  new POINT (433330 5338830)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2604  16.60     73.4 4.56  new POINT (434650 5343070)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45403 19.60     83.8 4.51  new POINT (436750 5340590)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 89829 16.20     75.5 4.31  new POINT (432630 5337770)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51045 13.50     97.1 2.85  new POINT (435050 5340250)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23549 19.20     92.5 3.45  new POINT (435330 5341870)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 90789 13.90     98.7 2.29  new POINT (437770 5337730)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75027 15.40     88.2 3.77  new POINT (434990 5338650)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28304  2.56      6.2 0.42  new POINT (434930 5341590)</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">sample_clhs</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  mraster <span class="op">=</span> <span class="va">mr</span>,</span></span>
+<span class="r-in"><span>  nSamp <span class="op">=</span> <span class="fl">400</span>,</span></span>
+<span class="r-in"><span>  existing <span class="op">=</span> <span class="va">e</span>,</span></span>
+<span class="r-in"><span>  iter <span class="op">=</span> <span class="fl">250</span>,</span></span>
+<span class="r-in"><span>  details <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $clhs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 78177 17777 65310 24104 23091 72410 22899 37582 48893 28362  9582</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [12] 73284  8810 58131 87170  8880   458 49933 68299 69470 43123 62821</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [23] 50516 44230 21405 38983 32262 67353 23274 22985 41461 57868 38029</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [34] 89834 37248 61589 10373 71503 80590 43703 58970 31839 34607 25508</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [45] 31087 68311 52567 53477  5034 70755 15629 12091 83466 61832 43657</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [56] 67770 85161 50912 85493 45711 39999  3312 86455 77697 55919 11207</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [67] 77716 34206  6102 20610 40847 78088 10522 43773 75562 70048 13797</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [78] 47351 31089  2994 70015 22432 42391 88689 18755 13086 36131 57225</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [89] 30597 84865  9241 19083 74972 37147 56826 48108 51494 32613 31910</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [100]  7993 23921 18130 58680 54088 18123 24520 10277 90756 50787 17338</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [111] 50755   949 39876 85438 64202   120 79460 16668 38909 63186 76511</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [122] 22846 60560  5252 72689 62959 75318 73793 27552 54738 82540 80206</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [133] 78769 87521 29500 90482 25083 22103 61382 84190 42303 32223 87932</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [144] 23012 32956  8156 26234 23723 77099  3659 69450 84629 72092 64049</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [155] 13177 14344 84949 58974 20351 40298 14183 25975 55633  5600 71657</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [166] 78220 12182 53286 67099  5860 66491 57620 33091 77468 83822  1112</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [177] 58492 15468 84121 31956 46793 12852 85217 70198 48941 41020 82744</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [188] 45186 80183  7047 71629 82851 17784 26876 27169 65706 26687 21129</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [199] 31079 18117     1     2     3     4     5     6     7     8     9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 58810 41446   740 71781 41623 60819  8870 52017 88223 73080 52412</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [12] 31238 46850 70843 87633 68235 90430 20387 25852 62097  8687 48095</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [23] 62460 16090 87393 46203 62881  1633 70448 73122 75056 79312 20847</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [34] 69718 88182 14686 42194  6822 53295 40015 28667  9212  9085 58208</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [45] 88632 28700 61728 63782 58359 35109  6809 59826 47406 11527  7415</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [56] 23659 70149 82816 77841 40132 81381   533 68361 21561 85970 90243</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [67] 62372  6463 13230 14222 58376 85509 35152 38862 82131 31679 58284</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [78] 68446  1561 90032 53827 29246 44552 33869 50597 67608 84664 80027</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [89] 66767 80707  7184  3280 73475 49457 66089 66955 86201 46498 34567</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [100] 24004 50415  2614 40727 49672 36072 89341 28969 42615 63961 83229</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [111]  2885 65632 78069 59722 16199 25315 86030 65149 67192 37893 45989</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [122] 55530   273 45245 80915 49726 44925 27781 51682 10304 14497  9622</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [133] 57530 13500 40572 11947 86792 47639 56670  5461 36646 89834 40933</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [144] 21386 39908 14525 43142 89435 76286  9546  5888 82238 57764  3822</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [155] 78368 55556  7728 23900 76010 86493  3469 72863 68005 51679 11085</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [166]  3452 87813  2030 60049  8175 16648 34415 54562 55171 77035 12611</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [177] 45547 72019 50968 46083 10271 85661 72853  9876 37589  3375 72756</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [188] 34876 26358 78340 65258 10589 31795 88314 40089 15655 64437 15447</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [199] 83778 45741     1     2     3     4     5     6     7     8     9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [210]    10    11    12    13    14    15    16    17    18    19    20</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [221]    21    22    23    24    25    26    27    28    29    30    31</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [232]    32    33    34    35    36    37    38    39    40    41    42</span>
@@ -277,25 +277,25 @@ on Digital Soil Mapping, Sydney, Australia.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [397]   197   198   199   200</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $samples</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 400 features and 4 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 400 features and 5 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431110 ymin: 5337710 xmax: 438550 ymax: 5343230</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       zq90 pzabove2  zsd type               geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 77977 18.0     93.1 4.86  new POINT (435030 5338450)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17577 13.8     63.7 4.00  new POINT (431230 5342190)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 65110 11.0     88.0 2.95  new POINT (437630 5339410)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23904 16.2     89.2 3.65  new POINT (435430 5341850)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22891 12.9     84.6 3.60  new POINT (436430 5341910)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 72210  3.6      5.2 0.67  new POINT (437930 5338890)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22699 18.5     87.5 4.72  new POINT (432390 5341910)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37382 19.6     94.2 3.74  new POINT (437250 5341070)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48693 18.8     89.8 5.02  new POINT (436190 5340390)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28162 14.2     85.8 3.02  new POINT (432090 5341590)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    type  zq90 pzabove2  zsd FID               geometry</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   new 12.90     72.7 3.62  NA POINT (438070 5339810)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   new 20.00     95.6 4.55  NA POINT (434330 5340830)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   new 16.90     92.2 3.91  NA POINT (435530 5343210)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   new 29.60     94.2 7.27  NA POINT (432950 5338930)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   new  6.81     96.2 1.07  NA POINT (431390 5340810)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   new 23.30     88.4 5.95  NA POINT (434670 5339670)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   new 15.10     79.9 3.91  NA POINT (437950 5342730)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   new 24.70     99.1 7.63  NA POINT (437090 5340210)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   new 13.70     87.6 3.56  NA POINT (432190 5337870)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10  new 17.40     87.6 4.02  NA POINT (435290 5338830)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -307,7 +307,7 @@ on Digital Soil Mapping, Sydney, Australia.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>
