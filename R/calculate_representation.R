@@ -146,9 +146,6 @@ calculate_representation <- function(sraster,
 
     print(p)
     
-    return(list(representation = rep, plot = p))
-  } else {
-    
-    return(rep)
   }
+    return(rep)
 }
