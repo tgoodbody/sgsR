@@ -1,6 +1,6 @@
 * `enhanced` -  `calculate_allocation()` improved documentation for output dataframe to make attributes more clear.
 
-* `fixed` - `calculate_representation()` will now not plot bar chart twice.
+* `fixed` - `calculate_representation()` will now not plot bar chart twice & `NA` values in existing will not be removed.
 
 * `fixed` - `existing` samples with other attributes will now not break sampling using `sample_ahels() / sample_clhs()` if values are `NA`. Variables are also added back to the sample output
 
