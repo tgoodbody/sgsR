@@ -111,6 +111,7 @@ calculate_representation <- function(sraster,
   }
   
   existing_mat <- extract_strata(sraster = sraster, existing = existing, data.frame = TRUE) %>%
+    dplyr::select(strata) %>%
     stats::na.omit() %>%
     dplyr::group_by(strata) %>%
     dplyr::summarise(nSamp = dplyr::n()) %>%
