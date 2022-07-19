@@ -147,8 +147,10 @@ sample_strat <- function(sraster,
   if(!is.null(terra::cats(sraster)[[1]])){
     message("'sraster' has factor values. Converting to allow mapping.")
     
+    #--- change suggested by R Hijmans ---#
     sraster_cats <- cats(sraster) %>% 
       as.data.frame()
+    colnames(sraster_cats)[1] <- "value"
     
   }
   
@@ -332,8 +334,6 @@ sample_strat <- function(sraster,
       }
       
       ### --- sampling ---###
-      
-      ### --- RULE 1: select only cells surrounded by cells with same strata ---###
       
       suppressWarnings(strat_mask <-
                          terra::focal(
