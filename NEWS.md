@@ -1,4 +1,10 @@
-* `enhanced` -  `calculate_allocation()` improved documentation for output dataframe to make attributes more clear.
+# sgsR 1.1.0
+
+* `enhanced` - `sample_strat()` - added parameter `method` that allows users to choose between `"Queinnec"` (default method implemented in previous sgsR versions) and `"random"` (stratified random sampling). The random method ignores much of the functionality of the algorithm to allow users to use standard stratified random sampling approaches without the use of a focal window to locate contiguous stratum cells.
+
+* `fixed` - `sample_strat()` factor handling improvement - GitHub issue #18
+
+* `enhanced` -  `calculate_allocation()` improved documentation for output data frame to make attributes more clear.
 
 * `fixed` - `calculate_representation()` will now not plot bar chart twice & `NA` values in existing will not be removed.
 
@@ -25,8 +31,6 @@
 * Added `existingna.shp` for example data where point are in `NA` locations.
 
 # sgsR 0.1.5
-
-
 
 * `strat_map()` can now map categorical srasters (gave an error before). Now also returns the categories associated with the categorical rasters in the lookup table with `details = TRUE`.
 

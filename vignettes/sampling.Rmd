@@ -120,7 +120,13 @@ sample_systematic(raster = sraster, # input sraster
 
 ## `sample_strat` {#sstrat .unnumbered}
 
-The `sample_strat()` function contains a hierarchical sampling algorithm, which was originally developed by Martin Queinnec.
+The `sample_strat()` contains two `method`s to perform sampling:
+
+* `"Queinnec"` - Hierarchical sampling using a focal window to isolate contiguous groups of stratum pixels, which was originally developed by Martin Queinnec.
+
+* `"random"` - Traditional stratified random sampling. This `method` ignores much of the functionality of the algorithm to allow users the capability to use standard stratified random sampling approaches without the use of a focal window to locate contiguous stratum cells.
+
+### `method = "Queinnec"` {#queinnec .unnumbered}
 
 _Queinnec, M., White, J. C., & Coops, N. C. (2021). Comparing airborne and spaceborne photon-counting LiDAR canopy structural estimates across different boreal forest types. Remote Sensing of Environment, 262(August 2020), 112510._
 
@@ -180,6 +186,18 @@ sample_strat(sraster = sraster, # input
 ```
 
 The `include` parameter determines whether `existing` samples should be included in the total count of samples defined by `nSamp`. By default, the `include` parameter is set as `FALSE`.
+
+### `method = "random` {#stratrandom .unnumbered}
+
+Stratified random sampling with equal probability for all cells (using default algorithm values for `mindist` and no use of `access` functionality). In essence this method perform the `sample_srs` algorithm for each stratum separately to meet the specified sample allocation.
+
+```{r,warning=F,message=F} 
+#--- perform stratified sampling random sampling ---#
+sample_strat(sraster = sraster, # input sraster
+             method = "random", #stratified random sampling
+             nSamp = 200, # desired sample number
+             plot = TRUE) # plot
+```
 
 ## `sample_clhs` {#clhs .unnumbered}
 

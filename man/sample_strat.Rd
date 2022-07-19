@@ -8,6 +8,7 @@ sample_strat(
   sraster,
   nSamp,
   allocation = "prop",
+  method = "Queinnec",
   weights = NULL,
   force = FALSE,
   mraster = NULL,
@@ -34,6 +35,10 @@ sample_strat(
 \item{allocation}{Character. Allocation algorithm to be used. Either \code{prop} (default) for proportional allocation,
 \code{optim} for optimal allocation (equal sampling cost), \code{equal} for equal number of samples (defined by \code{nSamp})
 for each strata, or \code{"manual"} for user defined strata weights defined using \code{weights}.}
+
+\item{method}{Character. Sampling design approach \code{"Queinnec"} (default) or \code{"random"}. \code{"Queinnec"} method is
+described in notes below. \code{"random"} performs traditional stratified random sampling where probability to sample each
+cell within each stratum is equal assuming default parameters for \code{mindist}. \code{existing, include, remove} are ignored when \code{method = "random"}.}
 
 \item{weights}{Numeric. Only applicable when \code{allocation = "manual"}. Vector of weights where \code{sum(weights) == 1}. Vector length
 must be equal to the number of unique strata where the first numeric value corresponds to stratum 1, second stratum 2 etc.}
@@ -86,7 +91,7 @@ An sf object with \code{nSamp} stratified samples.
 Sampling based on a stratified raster.
 }
 \note{
-The sampling is performed in 2 stages:
+The sampling is performed in 2 stages when \code{method = "Queinnec"}:
 \enumerate{
 
 \item \code{Rule 1} - Sample within grouped stratum pixels defined within the

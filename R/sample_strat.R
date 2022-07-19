@@ -6,6 +6,9 @@
 #'
 #' @inheritParams sample_srs
 #' @inheritParams calculate_allocation
+#' @param method Character. Sampling design approach \code{"Queinnec"} (default) or \code{"random"}. \code{"Queinnec"} method is
+#' described in notes below. \code{"random"} performs traditional stratified random sampling where probability to sample each
+#' cell within each stratum is equal assuming default parameters for \code{mindist}. \code{existing, include, remove} are ignored when \code{method = "random"}.
 #' @param sraster spatRaster. Stratification raster to be used for sampling.
 #' @param nSamp Numeric. Number of desired samples. \code{existing}, \code{include} and \code{force} influence this value.
 #' @param existing sf 'POINT' or data.frame.  Existing plot network.
@@ -40,7 +43,7 @@
 #' @author Tristan R.H. Goodbody & Martin Queinnec
 #'
 #' @note
-#' The sampling is performed in 2 stages:
+#' The sampling is performed in 2 stages when \code{method = "Queinnec"}:
 #' \enumerate{
 #'
 #' \item \code{Rule 1} - Sample within grouped stratum pixels defined within the
@@ -71,6 +74,7 @@
 sample_strat <- function(sraster,
                          nSamp,
                          allocation = "prop",
+                         method = "Queinnec",
                          weights = NULL,
                          force = FALSE,
                          mraster = NULL,
@@ -98,6 +102,14 @@ sample_strat <- function(sraster,
   
   if (!is.numeric(nSamp)) {
     stop("'nSamp' must be type numeric.", call. = FALSE)
+  }
+  
+  if (!is.character(method)) {
+    stop("'method' must be type character.", call. = FALSE)
+  }
+  
+  if(!method %in% c("random","Queinnec")){
+    stop("'method' must be one of 'random' or 'Queinnec'.", call. = FALSE)
   }
   
   if (!is.null(mindist)) {
@@ -157,82 +169,91 @@ sample_strat <- function(sraster,
   #--- determine crs of input sraster ---#
   crs <- terra::crs(sraster, proj = TRUE)
   
-  #--- if existing samples are provided ensure they are in the proper format ---#
-  
-  if (is.null(existing)) {
-    if (isTRUE(include)) {
-      stop("'existing' must be provided when 'include = TRUE'.", call. = FALSE)
+  if(method == "Queinnec"){
+    
+    message("Using 'Queinnec' sampling method.")
+    
+    #--- if existing samples are provided ensure they are in the proper format ---#
+    
+    if (is.null(existing)) {
+      if (isTRUE(include)) {
+        stop("'existing' must be provided when 'include = TRUE'.", call. = FALSE)
+      }
+      
+      if (isTRUE(remove)) {
+        stop("'existing' must be provided when 'remove = TRUE'.", call. = FALSE)
+      }
+      
+      #--- if existing samples do not exist make an empty data.frame called addSamples ---#
+      addSamples <- data.frame(cell = NA, strata = NA, X = NA, Y = NA)
+      extraCols <- character(0)
+    } else {
+      
+      #--- existing must be either a data.frame or an sf object with columns names 'X' 'Y' 'strata' ---#
+      
+      if (!inherits(existing, "data.frame") && !inherits(existing, "sf")) {
+        stop("'existing' must be a data.frame or sf object.", call. = FALSE)
+      }
+      
+      if(inherits(existing, "sf")){
+        if (inherits(sf::st_geometry(existing), "sfc_POINT")) {
+          
+          #--- if existing is an sf object extract the coordinates and the strata vector ---#
+          
+          exist_xy <- sf::st_coordinates(existing)
+          
+          strata <- existing$strata
+          
+          existing <- as.data.frame(cbind(strata, exist_xy))
+        } else {
+          stop("'existing' geometry type must be 'sfc_POINT'.", call. = FALSE)
+        }
+      }
+      
+      if (any(!c("strata") %in% names(existing))) {
+        stop("'existing' must have an attribute named 'strata'. Consider using extract_strata().", call. = FALSE)
+      }
+      
+      #--- if existing samples do exist ensure proper naming convention ---#
+      
+      if (any(!c("X", "Y") %in% colnames(existing))) {
+        
+        #--- if coordinate column names are lowercase change them to uppercase to match requirements ---#
+        
+        if (any(c("x", "y") %in% colnames(existing))) {
+          existing <- existing %>%
+            dplyr::rename(
+              X = x,
+              Y = y
+            )
+          
+          message("'existing' column coordinate names are lowercase - converting to uppercase.")
+        } else {
+          
+          #--- if no x/y columns are present stop ---#
+          
+          stop("'existing' must have columns named 'X' and 'Y'.", call. = FALSE)
+        }
+      }
+      
+      #--- add cell value for future checking for duplicate samples ---#
+      
+      existing$cell <- NA
+      
+      addSamples <- existing
     }
     
-    if (isTRUE(remove)) {
-      stop("'existing' must be provided when 'remove = TRUE'.", call. = FALSE)
-    }
     
-    #--- if existing samples do not exist make an empty data.frame called addSamples ---#
-    addSamples <- data.frame(cell = NA, strata = NA, X = NA, Y = NA)
-    extraCols <- character(0)
+    extraCols <- colnames(existing)[!colnames(existing) %in% c("cell", "X", "Y", "strata")]
   } else {
     
-    #--- existing must be either a data.frame or an sf object with columns names 'X' 'Y' 'strata' ---#
+    message("Using 'random' sampling method. Ignoring 'existing', 'include', 'remove' if provided.")
     
-    if (!inherits(existing, "data.frame") && !inherits(existing, "sf")) {
-      stop("'existing' must be a data.frame or sf object.", call. = FALSE)
-    }
+    existing <- NULL
+    include <- NULL
+    remove <- NULL
     
-    if(inherits(existing, "sf")){
-      if (inherits(sf::st_geometry(existing), "sfc_POINT")) {
-        
-        #--- if existing is an sf object extract the coordinates and the strata vector ---#
-        
-        exist_xy <- sf::st_coordinates(existing)
-        
-        strata <- existing$strata
-        
-        existing <- as.data.frame(cbind(strata, exist_xy))
-      } else {
-        stop("'existing' geometry type must be 'sfc_POINT'.", call. = FALSE)
-      }
-    }
-    
-    if (any(!c("strata") %in% names(existing))) {
-      stop("'existing' must have an attribute named 'strata'. Consider using extract_strata().", call. = FALSE)
-    }
-    
-    #--- if existing samples do exist ensure proper naming convention ---#
-    
-    if (any(!c("X", "Y") %in% colnames(existing))) {
-      
-      #--- if coordinate column names are lowercase change them to uppercase to match requirements ---#
-      
-      if (any(c("x", "y") %in% colnames(existing))) {
-        existing <- existing %>%
-          dplyr::rename(
-            X = x,
-            Y = y
-          )
-        
-        message("'existing' column coordinate names are lowercase - converting to uppercase.")
-      } else {
-        
-        #--- if no x/y columns are present stop ---#
-        
-        stop("'existing' must have columns named 'X' and 'Y'.", call. = FALSE)
-      }
-    }
-    
-    #--- add cell value for future checking for duplicate samples ---#
-    
-    existing$cell <- NA
-    
-    addSamples <- existing
   }
-  
-  extraCols <- colnames(existing)[!colnames(existing) %in% c("cell", "X", "Y", "strata")]
-  
-  # Transform strata to numeric if factor
-  # if (is(addSamples$strata, "factor")) {
-  #   addSamples$strata <- as.numeric(as.character(addSamples$strata))
-  # }
   
   #--- determine number of samples for each strata ---#
   
@@ -261,7 +282,6 @@ sample_strat <- function(sraster,
     )
   }
   
-  
   #--- determine access buffers ---#
   
   if (!missing(access)) {
@@ -284,119 +304,55 @@ sample_strat <- function(sraster,
     
     message(paste0("Processing strata : ", s))
     
-    #--- if the number of samples required is equal to zero (if `include = TRUE`) just keep existing samples only ---#
-    if (n == 0) {
+    #--- use stratified RANDOM sampling or "Queinnec" method ---#
+    
+    if(method == "random"){
       
-      #--- Initiate number of sampled cells ---#
-      add_strata <- addSamples %>%
-        dplyr::filter(strata == s)
-      
-      if (nrow(add_strata) > 0) {
-        add_strata$type <- "existing"
+      if (n == 0) {
         
-        if (!"rule" %in% colnames(add_strata)) {
-          add_strata$rule <- "existing"
-        }
-      }
-      
-      message(paste0("Strata : ", s, " required no sample additions. Keeping all existing samples."))
-    } else if (n > 0) {
-      #--- mask for individual strata ---#
-      
-      strata_m <- terra::mask(sraster,
-                              mask = sraster,
-                              maskvalues = s,
-                              inverse = TRUE
-      )
-      names(strata_m) <- "strata"
-      
-      #--- if access line polygon is specified create inner and outer buffers
-      
-      if (!missing(access)) {
-        strata_m_buff <- terra::mask(strata_m,
-                                     mask = access_buff$buff
+        message("No samples needed.")
+        
+      } else if (n > 0) {
+        
+        strata_m <- terra::mask(sraster,
+                                mask = sraster,
+                                maskvalues = s,
+                                inverse = TRUE
         )
+        names(strata_m) <- "strata"
         
-        sampAvail <- sum(!is.na(terra::values(strata_m_buff)))
+        #--- if access line polygon is specified create inner and outer buffers
         
-        if (sampAvail > n) {
-          message(
-            paste0("Buffered area contains ", sampAvail, " available candidates. Sampling to reach ", n, " starting.")
-          )
-          
-          #--- rename to original strata sraster that will be used for sampling ---#
-          strata_m <- strata_m_buff
-          
-          #--- if there are no samples to take within the specified 'buff_outer' distance extend buffer until values are found ---#
-        } else {
-          stop("Insufficient candidate samples within the buffered access extent. Consider altering buffer widths.", call. = FALSE)
-        }
-      }
-      
-      ### --- sampling ---###
-      
-      suppressWarnings(strat_mask <-
-                         terra::focal(
-                           strata_m,
-                           w = w,
-                           na.rm = FALSE
-                         ))
-      names(strat_mask) <- "strata"
-      
-      #--- Initiate number of sampled cells ---#
-      add_strata <- addSamples %>%
-        dplyr::filter(strata == s)
-        
-        if (nrow(add_strata) > 0) {
-          add_strata$type <- "existing"
-          
-          if (!"rule" %in% colnames(add_strata)) {
-            add_strata$rule <- "existing"
+          if (!missing(access)) {
+            strata_m_buff <- terra::mask(strata_m,
+                                         mask = access_buff$buff
+            )
+            
+            sampAvail <- sum(!is.na(terra::values(strata_m_buff)))
+            
+            if (sampAvail > n) {
+              message(
+                paste0("Buffered area contains ", sampAvail, " available candidates. Sampling to reach ", n, " starting.")
+              )
+              
+              #--- rename to original strata sraster that will be used for sampling ---#
+              strata_m <- strata_m_buff
+              
+              #--- if there are no samples to take within the specified 'buff_outer' distance extend buffer until values are found ---#
+            } else {
+              stop("Insufficient candidate samples within the buffered access extent. Consider altering buffer widths.", call. = FALSE)
+            }
           }
-        }
-      
-      #--- Rule 1 sampling ---#
-      
-      r1 <- strat_rule1(n = n,
-                        i = i,
-                        s = s, 
-                        strat_mask = strat_mask,
-                        add_strata = add_strata,
-                        extraCols = extraCols,
-                        mindist = mindist)
-      
-      #--- Rule 2 sampling ---#
-      
-      add_strata <- strat_rule2(n = n, 
-                                s = s,
-                                add_strata = r1$add_strata, 
-                                nCount = r1$nCount, 
-                                strata_m = strata_m,
-                                extraCols = extraCols,
-                                mindist = mindist)
-      
-      #--- if number of samples is < 0 based on `include` parameter ---#
-    } else if (n < 0) {
-      if (isTRUE(remove)) {
+        add_strata <- sample_srs(raster = strata_m, nSamp = n, mindist = mindist)
+      }
+    }
+    
+    if(method == "Queinnec"){
+    
+      #--- if the number of samples required is equal to zero (if `include = TRUE`) just keep existing samples only ---#
+      if (n == 0) {
         
-        #--- need to remove samples from over represented strata ---#
-        
-        #--- sample total needed from existing ---#
-        need <- as.numeric(toSample[i, 3])
-        
-        message(paste0("'include = TRUE & remove = TRUE' - Stratum ", s, " overrepresented - ",abs(n), " samples removed."))
-        
-        add_strata <- addSamples %>%
-          dplyr::filter(strata == s) %>%
-          dplyr::sample_n(need)
-        
-        #--- add type and rule attributes ---#
-        
-        add_strata$type <- "existing"
-        add_strata$rule <- "existing"
-      } else {
-        message(paste0("'include = TRUE & remove = FALSE' - Stratum ", s, " overrepresented by ",abs(n), " samples but have not been removed. Expect a higher total 'nSamp' in output."))
-        #--- keep over represented samples in dataset ---#
+        #--- Initiate number of sampled cells ---#
         add_strata <- addSamples %>%
           dplyr::filter(strata == s)
         
@@ -405,6 +361,116 @@ sample_strat <- function(sraster,
           
           if (!"rule" %in% colnames(add_strata)) {
             add_strata$rule <- "existing"
+          }
+        }
+        
+        message(paste0("Strata : ", s, " required no sample additions. Keeping all existing samples."))
+      } else if (n > 0) {
+        #--- mask for individual strata ---#
+        
+        strata_m <- terra::mask(sraster,
+                                mask = sraster,
+                                maskvalues = s,
+                                inverse = TRUE
+        )
+        names(strata_m) <- "strata"
+        
+        #--- if access line polygon is specified create inner and outer buffers
+        
+        if (!missing(access)) {
+          strata_m_buff <- terra::mask(strata_m,
+                                       mask = access_buff$buff
+          )
+          
+          sampAvail <- sum(!is.na(terra::values(strata_m_buff)))
+          
+          if (sampAvail > n) {
+            message(
+              paste0("Buffered area contains ", sampAvail, " available candidates. Sampling to reach ", n, " starting.")
+            )
+            
+            #--- rename to original strata sraster that will be used for sampling ---#
+            strata_m <- strata_m_buff
+            
+            #--- if there are no samples to take within the specified 'buff_outer' distance extend buffer until values are found ---#
+          } else {
+            stop("Insufficient candidate samples within the buffered access extent. Consider altering buffer widths.", call. = FALSE)
+          }
+        }
+        
+        ### --- sampling ---###
+        
+        suppressWarnings(strat_mask <-
+                           terra::focal(
+                             strata_m,
+                             w = w,
+                             na.rm = FALSE
+                           ))
+        names(strat_mask) <- "strata"
+        
+        #--- Initiate number of sampled cells ---#
+        add_strata <- addSamples %>%
+          dplyr::filter(strata == s)
+          
+          if (nrow(add_strata) > 0) {
+            add_strata$type <- "existing"
+            
+            if (!"rule" %in% colnames(add_strata)) {
+              add_strata$rule <- "existing"
+            }
+          }
+  
+          #--- Rule 1 sampling ---#
+          
+          r1 <- strat_rule1(n = n,
+                            i = i,
+                            s = s, 
+                            strat_mask = strat_mask,
+                            add_strata = add_strata,
+                            extraCols = extraCols,
+                            mindist = mindist)
+          
+          #--- Rule 2 sampling ---#
+          
+          add_strata <- strat_rule2(n = n, 
+                                    s = s,
+                                    add_strata = r1$add_strata, 
+                                    nCount = r1$nCount, 
+                                    strata_m = strata_m,
+                                    extraCols = extraCols,
+                                    mindist = mindist)
+        
+        #--- if number of samples is < 0 based on `include` parameter ---#
+      } else if (n < 0) {
+        if (isTRUE(remove)) {
+          
+          #--- need to remove samples from over represented strata ---#
+          
+          #--- sample total needed from existing ---#
+          need <- as.numeric(toSample[i, 3])
+          
+          message(paste0("'include = TRUE & remove = TRUE' - Stratum ", s, " overrepresented - ",abs(n), " samples removed."))
+          
+          add_strata <- addSamples %>%
+            dplyr::filter(strata == s) %>%
+            dplyr::sample_n(need)
+          
+          #--- add type and rule attributes ---#
+          
+          add_strata$type <- "existing"
+          add_strata$rule <- "existing"
+        } else {
+          message(paste0("'include = TRUE & remove = FALSE' - Stratum ", s, " overrepresented by ",abs(n), " samples but have not been removed. Expect a higher total 'nSamp' in output."))
+          #--- keep over represented samples in dataset ---#
+          add_strata <- addSamples %>%
+            dplyr::filter(strata == s)
+          
+          if (nrow(add_strata) > 0) {
+            add_strata$type <- "existing"
+            
+            if (!"rule" %in% colnames(add_strata)) {
+              add_strata$rule <- "existing"
+            }
           }
         }
       }
@@ -450,26 +516,29 @@ sample_strat <- function(sraster,
     
   } else {
     
-    #--- convert coordinates to a spatial points object ---#
-    samples <- out %>%
-      dplyr::select(-cell) %>%
-      as.data.frame() %>%
-      sf::st_as_sf(., coords = c("X", "Y"))
+    if(method == "random"){
+      
+      samples <- extract_strata(sraster = sraster, existing = out)
+      
+    } else {
+    
+      #--- convert coordinates to a spatial points object ---#
+      samples <- out %>%
+        dplyr::select(-cell) %>%
+        as.data.frame() %>%
+        sf::st_as_sf(., coords = c("X", "Y"))
+    }
     
   }
   
   #--- assign sraster crs to spatial points object ---#
-  sf::st_crs(samples) <- crs
+  # sf::st_crs(samples) <- crs
   
   #--- plot the raster and samples if desired ---#
   
   if (isTRUE(plot)) {
     
-    #--- if existing is not provided plot the masked raster ---#
-    
-    if (missing(existing)) {
-      
-      #--- if access is also missing plot the full sraster extent ---#
+    if(method == "random"){
       
       if (missing(access)) {
         terra::plot(sraster[[1]])
@@ -482,13 +551,34 @@ sample_strat <- function(sraster,
         suppressWarnings(terra::plot(samples, add = T, col = "black"))
       }
       
-      #--- if existing is provided plot the full raster ---#
+      
     } else {
       
-      #--- plot input sraster and random samples ---#
+      #--- if existing is not provided plot the masked raster ---#
       
-      terra::plot(sraster[[1]])
-      suppressWarnings(terra::plot(samples, add = T, col = "black", pch = ifelse(samples$type == "existing", 3, 1)))
+      if (missing(existing)) {
+        
+        #--- if access is also missing plot the full sraster extent ---#
+        
+        if (missing(access)) {
+          terra::plot(sraster[[1]])
+          suppressWarnings(terra::plot(samples, add = T, col = "black"))
+          
+          #--- if access is provided plot the masked access sraster ---#
+        } else {
+          terra::plot(sraster[[1]])
+          suppressWarnings(terra::plot(access_buff$buff, add = T, border = c("gray30"), col = "gray10", alpha = 0.1))
+          suppressWarnings(terra::plot(samples, add = T, col = "black"))
+        }
+        
+        #--- if existing is provided plot the full raster ---#
+      } else {
+        
+        #--- plot input sraster and random samples ---#
+        
+        terra::plot(sraster[[1]])
+        suppressWarnings(terra::plot(samples, add = T, col = "black", pch = ifelse(samples$type == "existing", 3, 1)))
+      }
     }
   }
   

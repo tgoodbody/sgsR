@@ -14,6 +14,8 @@ test_that("errors", {
   
   expect_error(sample_strat(sraster = "sraster", nSamp = 20), "'sraster' must be type SpatRaster.")
   expect_error(sample_strat(sraster = sraster, nSamp = "20"), "'nSamp' must be type numeric.")
+  expect_error(sample_strat(sraster = sraster, nSamp = 20, method = 1), "'method' must be type character.")
+  expect_error(sample_strat(sraster = sraster, nSamp = 20, method = "c"), "'method' must be one of 'random' or 'Queinnec'.")
   expect_error(sample_strat(sraster = sraster, nSamp = 20, mindist = "200"), "'mindist' must be type numeric.")
   expect_error(sample_strat(sraster = sraster, nSamp = 200, existing = existing, include = "TRUE", remove = TRUE), "'include' must be type logical.")
   expect_error(sample_strat(sraster = sraster, nSamp = 200, existing = existing, include = TRUE, remove = "TRUE"), "'remove' must be type logical.")
@@ -54,6 +56,8 @@ test_that("Total outputs", {
 
 test_that("messages", {
   
+  expect_message(sample_strat(sraster = sraster, nSamp = 20), "Using 'Queinnec' sampling method.")
+  expect_message(sample_strat(sraster = sraster, nSamp = 20, method = "random"), "Using 'random' sampling method. Ignoring 'existing', 'include', 'remove' if provided.")
   expect_message(sample_strat(sraster = sraster, nSamp = 20, mindist = 200, access = access, buff_inner = 50, buff_outer = 200), "An access layer has been provided. An internal buffer of 50 m and an external buffer of 200 m have been applied.")
   expect_message(sample_strat(sraster = sraster, nSamp = 20, mindist = 200, access = access, buff_outer = 200), "An access layer has been provided. An external buffer of 200 m have been applied.")
   expect_message(sample_strat(sraster = sraster, nSamp = 20, existing = existing, include = TRUE, remove = TRUE), "'include = TRUE & remove = TRUE' - Stratum 1 overrepresented - 45 samples removed.")
@@ -77,6 +81,8 @@ test_that("Test equal", {
   
   expect_type(o2,"list")
   expect_s3_class(o1$samples,"sf")
+  
+  expect_equal(nrow(sample_strat(sraster = sraster, allocation = "equal", nSamp = 5, method = "random")), 20L)
 })
 
 test_that("Test manual", {
@@ -87,6 +93,8 @@ test_that("Test manual", {
   
   expect_type(o2,"list")
   expect_s3_class(o2$samples,"sf")
+  
+  expect_equal(nrow(sample_strat(sraster = sraster, allocation = "manual", weights = c(0.2,0.2,0.2,0.4), nSamp = 10, method = "random")), 10L)
 })
 
 test_that("Test optim", {
@@ -99,6 +107,8 @@ test_that("Test optim", {
   
   expect_type(o3,"list")
   expect_s3_class(o3$samples,"sf")
+  
+  expect_equal(nrow(sample_strat(sraster = sraster, allocation = "optim", mraster = mraster$zq90, nSamp = 20, method = "random")), 20L)
 })
 
 test_that("existing", {
@@ -112,10 +122,11 @@ test_that("existing", {
   
 })
 
-
 test_that("force", {
   
   expect_equal(sum(allocate_force(toSample = toSample, nSamp = 100, diff = 1)$total),99L)
   expect_equal(sum(allocate_force(toSample = toSample, nSamp = 100, diff = -1)$total),101L)
   
 })
+
+
