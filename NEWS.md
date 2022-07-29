@@ -2,6 +2,8 @@
 
 * `new sampling method` - Added `sample_nc()` based on the algorithm described in [Melville & Stone (2016)](https://doi.org/10.1080/00049158.2016.1218265)
 
+* `fixed` - `sample_systematic()` now has inherent randomness for lower left corner of the tessellation.
+
     * This algorithm uses kmeans clustering where the number of clusters is equal to the desired number of samples. Cluster centers are located, which then prompts the nearest neighbour raster pixel for each cluster to be located (assuming default `k` parameter). These nearest neighbours are the output samples. Visualization of the centers and samples can be dispayed if `details = TRUE` is used and `$kplot` is plotted.
 
 # sgsR 1.1.0

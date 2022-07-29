@@ -132,8 +132,30 @@ sample_systematic <- function(raster,
   
   #--- convert raster extent into a polygon ---#
   
-  sfObj <- sf::st_as_sf(terra::as.polygons(terra::ext(raster), crs = terra::crs(raster)))
+  r <- raster
   
+  res <- terra::res(x = r)[1]
+  
+  #--- add randomness to grid lower left coordinate locations ---#
+  
+  xminc <- as.numeric(terra::ext(r)[1]) + (res * sample(-100:0, 1))
+  yminc <- as.numeric(terra::ext(r)[3]) + (res * sample(-100:0, 1))
+  
+  xx <- c(xminc,as.numeric(terra::ext(r)[2]))
+  yy <- c(yminc,as.numeric(terra::ext(r)[4]))
+  
+  cc <- data.frame(X = xx, Y = yy)
+  
+  pol = sf::st_polygon(
+    list(
+      cbind(
+        cc$X[c(1,2,2,1,1)], 
+        cc$Y[c(1,1,2,2,1)])
+    )
+  )
+
+  sfObj <- sf::st_sfc(pol, crs = terra::crs(r))
+
   #--- create tessellation ---#
   
   grid <- sf::st_as_sf(sf::st_make_grid(x = sfObj, 
@@ -142,6 +164,7 @@ sample_systematic <- function(raster,
                                         what = "polygons", 
                                         crs = terra::crs(raster), 
                                         ...))
+
   
   if(isTRUE(force)){
     
