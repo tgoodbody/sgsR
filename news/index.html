@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,6 +61,11 @@
       <small>Source: <a href="https://github.com/tgoodbody/sgsR/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.2.0" id="sgsr-120">sgsR 1.2.0<a class="anchor" aria-label="anchor" href="#sgsr-120"></a></h2>
+<ul><li>
+<p><code>new sampling method</code> - Added <code><a href="../reference/sample_nc.html">sample_nc()</a></code> based on the algorithm described in <a href="https://doi.org/10.1080/00049158.2016.1218265" class="external-link">Melville &amp; Stone (2016)</a></p>
+<ul><li>This algorithm uses kmeans clustering where the number of clusters is equal to the desired number of samples. Cluster centers are located, which then prompts the nearest neighbour raster pixel for each cluster to be located (assuming default <code>k</code> parameter). These nearest neighbours are the output samples. Visualization of the centers and samples can be dispayed if <code>details = TRUE</code> is used and <code>$kplot</code> is plotted.</li></ul></li></ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.1.0" id="sgsr-110">sgsR 1.1.0<a class="anchor" aria-label="anchor" href="#sgsr-110"></a></h2>
 <ul><li><p><code>enhanced</code> - <code><a href="../reference/sample_strat.html">sample_strat()</a></code> - added parameter <code>method</code> that allows users to choose between <code>"Queinnec"</code> (default method implemented in previous sgsR versions) and <code>"random"</code> (stratified random sampling). The random method ignores much of the functionality of the algorithm to allow users to use standard stratified random sampling approaches without the use of a focal window to locate contiguous stratum cells.</p></li>
