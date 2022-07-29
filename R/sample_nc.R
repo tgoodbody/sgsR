@@ -237,7 +237,7 @@ sample_nc <- function(mraster,
         ggplot2::geom_point() + 
         ggplot2::geom_point(data = cs %>% dplyr::filter(type == "centers"), ggplot2::aes(x = !!metric, y = !!metric2), colour = "#F8766D", size = 2.4) +
         ggplot2::geom_point(data = cs %>% dplyr::filter(type == "samples"), ggplot2::aes(x = !!metric, y = !!metric2), colour = "#619CFF") +
-        ggtitle("Nearest centroid (NC) sampling", subtitle = "Red points represent kmeans centroids, blue point represent NN samples.")
+        ggplot2::ggtitle("Nearest centroid (NC) sampling", subtitle = "Red points represent kmeans centroids, blue point represent NN samples.")
 
     }
     
