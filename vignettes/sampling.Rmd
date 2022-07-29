@@ -42,13 +42,15 @@ existing <- sample_strat(sraster = sraster, # use mraster as input for sampling
 
 ```
 
-Currently, there are 6 functions associated with the `sample` verb in the `sgsR` package:
+Currently, there are 7 functions associated with the `sample` verb in the `sgsR` package:
 
 *   `sample_srs()` - simple random sampling
 
 *   `sample_systematic()`- systematic sampling in a grid or hexagon tessellation 
 
 *   `sample_strat()` - stratified sampling within a `sraster`
+
+*   `sample_nc()` - Nearest centroid sampling. See [Melville & Stone (2016)](https://doi.org/10.1080/00049158.2016.1218265)
 
 *   `sample_clhs()` - Latin hypercube sampling
 
@@ -197,6 +199,42 @@ sample_strat(sraster = sraster, # input sraster
              method = "random", #stratified random sampling
              nSamp = 200, # desired sample number
              plot = TRUE) # plot
+```
+
+## `sample_nc` {#nc .unnumbered}
+
+`sample_nc()` function implements the Nearest Centroid sampling algorithm described in [Melville & Stone (2016)](https://doi.org/10.1080/00049158.2016.1218265). The algorithm uses kmeans clustering where the number of clusters (centroids) is equal to the desired number of samples (`nSamp`). Cluster centers are located, which then prompts the nearest neighbour `mraster` pixel for each cluster to be located (assuming default `k` parameter). These nearest neighbours are the output samples. Basic usage is as follows:
+
+```{r}
+#--- perform simple random sampling ---#
+sample_nc(mraster = mraster, # input
+          nSamp = 25, # desired sample number
+          plot = TRUE)
+```
+Altering the `k` parameter leads to a multiplicative increase in output samples where total output samples = $`nSamp` * `k`$.
+
+```{r}
+#--- perform simple random sampling ---#
+samples <- sample_nc(mraster = mraster, # input
+                    k = 2, # number of nearest neighbours to take for each kmeans center
+                    nSamp = 25, # desired sample number
+                    plot = TRUE)
+
+#--- total samples = nSamp * k (25 * 2) = 50 ---#
+nrow(samples)
+```
+
+Visualizing what the kmeans centers and samples nearest neighbours looks like is possible when using `details = TRUE`. The `$kplot` output provides a quick visualization of where the centers are based on a scatter plot of the first 2 layers in `mraster`. Notice that the centers are well distributed in covariate space and chosen samples are the closest pixels to each center (nearest neighbours).
+
+```{r}
+#--- perform simple random sampling with details ---#
+details <- sample_nc(mraster = mraster, # input
+                     nSamp = 25, # desired sample number
+                     details = TRUE)
+
+#--- plot ggplot output ---#
+
+details$kplot
 ```
 
 ## `sample_clhs` {#clhs .unnumbered}
