@@ -1,3 +1,9 @@
+# sgsR 1.2.0
+
+* `new sampling method` - Added `sample_nc()` based on the algorithm described in [Melville & Stone (2016)](https://doi.org/10.1080/00049158.2016.1218265)
+
+    * This algorithm uses kmeans clustering where the number of clusters is equal to the desired number of samples. Cluster centers are located, which then prompts the nearest neighbour raster pixel for each cluster to be located (assuming default `k` parameter). These nearest neighbours are the output samples. Visualization of the centers and samples can be dispayed if `details = TRUE` is used and `$kplot` is plotted.
+
 # sgsR 1.1.0
 
 * `enhanced` - `sample_strat()` - added parameter `method` that allows users to choose between `"Queinnec"` (default method implemented in previous sgsR versions) and `"random"` (stratified random sampling). The random method ignores much of the functionality of the algorithm to allow users to use standard stratified random sampling approaches without the use of a focal window to locate contiguous stratum cells.

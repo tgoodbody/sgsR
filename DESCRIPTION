@@ -1,6 +1,6 @@
 Package: sgsR
 Type: Package
-Version: 1.0.0
+Version: 1.2.0
 License: GPL (>= 3)
 Title: Structurally Guided Sampling
 Authors@R: c(
@@ -52,7 +52,8 @@ Suggests:
     foreach,
     entropy,
     roxygen2,
-    covr
+    covr,
+    RANN
 VignetteBuilder: 
     knitr
 Config/testthat/edition: 3
