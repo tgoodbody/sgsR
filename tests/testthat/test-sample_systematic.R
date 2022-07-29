@@ -11,24 +11,29 @@ test_that("Input classes", {
 })
 
 test_that("Total outputs", {
+  set.seed(2022)
   o <- sample_systematic(raster = mraster, cellsize = 1000,square = FALSE, plot = TRUE)
   o1 <- sample_systematic(raster = mraster, cellsize = 1000)
   
-  expect_equal(nrow(o), 47L)
+  expect_equal(nrow(o), 39L)
   expect_equal(ncol(o), 1L)
   
-  expect_equal(nrow(o1), 40L)
+  expect_equal(nrow(o1), 34L)
   expect_equal(ncol(o1), 1L)
   
-  expect_equal(nrow(sample_systematic(raster = mraster, cellsize = 2000, details = TRUE)$samples), 11L)
+  expect_equal(nrow(sample_systematic(raster = mraster, cellsize = 2000, details = TRUE)$samples), 12L)
   expect_s3_class(o,"sf")
   expect_s3_class(sample_systematic(raster = mraster, cellsize = 2000, details = TRUE)$tessellation,"sf")
 })
 
 
 test_that("corners", {
-  expect_equal(nrow(sample_systematic(raster = mraster, cellsize = 1000, location = "corners")), 45L)
-  expect_equal(nrow(sample_systematic(raster = mraster, cellsize = 1000, square = FALSE, location = "corners")), 312L)
+  set.seed(2022)
+  o1 <- sample_systematic(raster = mraster, cellsize = 1000, location = "corners")
+  o2 <- sample_systematic(raster = mraster, cellsize = 1000, square = FALSE, location = "corners")
+  
+  expect_equal(nrow(o1), 40L)
+  expect_equal(nrow(o2), 282L)
 })
 
 test_that("random", {
@@ -36,8 +41,8 @@ test_that("random", {
   or <- sample_systematic(raster = mraster, cellsize = 1000, location = "random")
   or1 <- sample_systematic(raster = mraster, cellsize = 1000, square = FALSE, location = "random")
   
-  expect_equal(nrow(or), 37L)
-  expect_equal(nrow(or1), 43L)
+  expect_equal(nrow(or), 32L)
+  expect_equal(nrow(or1), 41L)
 })
 
 
@@ -48,6 +53,8 @@ test_that("messages", {
 })
 
 test_that("messages", {
-  expect_message(sample_systematic(raster = sraster, cellsize = 200000, square = FALSE, location = "random", force = TRUE),"Forcing samples to fall in non NA locations.")
-  expect_message(sample_systematic(raster = sraster, cellsize = 200000, location = "random", force = TRUE),"Forcing samples to fall in non NA locations.")
+  set.seed(2022)
+
+  expect_message(sample_systematic(raster = sraster, cellsize = 20000, square = FALSE, location = "random", force = TRUE),"Forcing samples to fall in non NA locations.")
+  expect_message(sample_systematic(raster = sraster, cellsize = 5000, location = "random", force = TRUE),"Forcing samples to fall in non NA locations.")
 })
