@@ -22,8 +22,8 @@ test_that("Total outputs", {
   expect_equal(mean(o$nSamp$rse), 0.03)
   expect_s3_class(calculate_sampsize(mraster = mraster, plot = TRUE)$plot,"gg")
   
-  expect_equal(sum(o1$nSamp$nSamp), 188L)
-  expect_equal(nrow(o1$nSamp), 3L)
+  expect_equal(sum(o1$nSamp), 188L)
+  expect_equal(nrow(o1), 3L)
   
   expect_message(calculate_sampsize(mraster = mraster, rse = 0.01),regexp = NA)
   
