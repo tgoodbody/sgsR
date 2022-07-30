@@ -20,7 +20,7 @@ test_that("errors", {
 test_that("Total outputs", {
   expect_message(strat_kmeans(mraster = mraster, nStrata = 4, iter = 100, plot = TRUE),"K-means being performed on 3 layers with 4 centers.")
   expect_equal(length(o$details$cluster), 91195L)
-  expect_equal(length(o$details$centers), 4L)
+  expect_equal(length(o$details$centers), 12L)
   expect_equal(ncol(o$raster), 373L)
   expect_equal(length(odfna), 91195L)
   expect_equal(length(unique(odfna)), 4L)
