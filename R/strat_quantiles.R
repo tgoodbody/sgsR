@@ -236,8 +236,6 @@ strat_quantiles <- function(mraster,
         ggplot2::geom_vline(xintercept = breaks, linetype = "dashed") +
         ggplot2::ggtitle(paste0(metric, " histogram with defined breaks"))
 
-      suppressMessages(print(p))
-
       terra::plot(rout, main = "Classes")
     } else {
       terra::plot(rout, main = "Classes")

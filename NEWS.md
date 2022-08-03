@@ -1,5 +1,7 @@
 # sgsR 1.2.0
 
+* `fixed` - `strat_quantiles()` no longer plots histogram / scatter plot when using `plot = TRUE`. Now correctly adds this to details list when `details = TRUE`.
+
 * `new sampling method` - Added `sample_nc()` based on the algorithm described in [Melville & Stone (2016)](https://doi.org/10.1080/00049158.2016.1218265)
 
     * This algorithm uses kmeans clustering where the number of clusters is equal to the desired number of samples. Cluster centers are located, which then prompts the nearest neighbour raster pixel for each cluster to be located (assuming default `k` parameter). These nearest neighbours are the output samples. Visualization of the centers and samples can be dispayed if `details = TRUE` is used and `$kplot` is plotted.
