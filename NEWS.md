@@ -1,5 +1,7 @@
 # sgsR 1.2.0
 
+* `fixed` - `sample_ahels()` - bug where extra attributes in `existing` would cause the algorithm to crash when re-merging after sampling.
+
 * `fixed` - `strat_quantiles()` no longer plots histogram / scatter plot when using `plot = TRUE`. Now correctly adds this to details list when `details = TRUE`.
 
 * `new sampling method` - Added `sample_nc()` based on the algorithm described in [Melville & Stone (2016)](https://doi.org/10.1080/00049158.2016.1218265)

@@ -325,7 +325,7 @@ sample_ahels <- function(mraster,
   
   if(exists("samples_NA")){
     
-    if(exists("extraCols")){
+    if(!is.null(extraCols)){
       
       samples <- out$samples %>%
         dplyr::bind_rows(., samples_NA) %>%
@@ -343,7 +343,7 @@ sample_ahels <- function(mraster,
     
   } else {
     
-    if(exists("extraCols")){
+    if(!is.null(extraCols)){
       
       samples <- out$samples %>%
         dplyr::left_join(., extraCols,  by = c("X","Y")) %>%
