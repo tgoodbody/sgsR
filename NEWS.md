@@ -1,5 +1,7 @@
 # sgsR 1.2.0
 
+* `fixed` - `strat_kmeans()` bug related to `terra` where the re-assignment of values to the output raster was causing issues. R Hijmans kindly suggested the edit made.
+
 * `fixed` - `sample_ahels()` - bug where extra attributes in `existing` would cause the algorithm to crash when re-merging after sampling.
 
 * `fixed` - `strat_quantiles()` no longer plots histogram / scatter plot when using `plot = TRUE`. Now correctly adds this to details list when `details = TRUE`.

@@ -96,7 +96,7 @@ strat_kmeans <- function(mraster,
 
   #--- Extract values from mraster ---#
 
-  valsOut <- vals <- terra::values(mraster)
+  vals <- terra::values(mraster)
 
   #--- Determine index of each cell so to map values correctly without NA ---#
 
@@ -109,9 +109,17 @@ strat_kmeans <- function(mraster,
   km_clust <- stats::kmeans(scale(vals[idx,], center = center, scale = scale), centers = nStrata, iter.max = iter, algorithm = algorithm)
 
   #--- convert k-means values back to original mraster extent ---#
-  vals[idx,] <- km_clust$cluster
-
-  kmv <- suppressWarnings(terra::setValues(mraster[[1]], vals[,1]))
+  
+  #--- R Hijmans suggested edit ---#
+  #--- create a single vector of NAs of length ncell ---#
+  valsOut <- rep(NA, nrow(vals))
+  
+  #--- set the cluster values ---#
+  valsOut[idx] <- km_clust$cluster
+  
+  #--- re-assign kmeans values to raster ---#
+  kmv <- terra::setValues(mraster[[1]], valsOut)
+  
   names(kmv) <- "strata"
 
   #--- plot if requested ---#
