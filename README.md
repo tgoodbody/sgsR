@@ -9,7 +9,7 @@
 [![R-CMD-check](https://github.com/tgoodbody/sgsR/workflows/R-CMD-check/badge.svg)](https://github.com/tgoodbody/sgsR/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/tgoodbody/sgsR/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tgoodbody/sgsR?branch=main)
-[![](https://cranlogs.r-pkg.org/badges/sgsR)](https://cran.rstudio.com/web/packages/sgsR/index.html)
+[![](https://cranlogs.r-pkg.org/badges/sgsR)](https://CRAN.R-project.org/package=sgsR)
 <!-- badges: end -->
 
 `sgsR` is designed to implement structurally guided sampling approaches
