@@ -37,8 +37,8 @@ install.packages("sgsR")
 library(sgsR)
 ```
 
-Install the most recent development version of `sgsR` from
-[Github](https://github.com/tgoodbody/sgsR) with:
+Install the most recent development version of [`sgsR` from
+Github](https://github.com/tgoodbody/sgsR) with:
 
 ``` r
 install.packages("devtools")
@@ -103,6 +103,5 @@ thanks to to:
 
 ## Funding :raised_hands:
 
-Development of sgsR was made possible thanks to the financial support of
-the [Canadian Wood Fibre Centre’s Forest Innovation
-Program](https://www.nrcan.gc.ca/science-and-data/funding-partnerships/funding-opportunities/forest-sector-funding-programs/forest-innovation-program/13137/).
+Development of `sgsR` was made possible thanks to the financial support
+of the Canadian Wood Fibre Centre’s Forest Innovation Program.
