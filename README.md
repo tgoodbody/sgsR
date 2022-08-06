@@ -29,7 +29,8 @@ reproducible example.
 
 ## Installation :computer:
 
-Install the stable version of `sgsR` from CRAN with:
+Install the stable version of [`sgsR`from
+CRAN](https://cran.r-project.org/package=sgsR) with:
 
 ``` r
 install.packages("sgsR")
@@ -81,12 +82,6 @@ Vignettes include:
 
 -   Calculate algorithms - `vignette("calculating")`
 
-## Funding :raised_hands:
-
-Development of sgsR was made possible thanks to the financial support of
-the [Canadian Wood Fibre Centre’s Forest Innovation
-Program](https://www.nrcan.gc.ca/science-and-data/funding-partnerships/funding-opportunities/forest-sector-funding-programs/forest-innovation-program/13137/).
-
 ## Collaborators :woman: :man:
 
 We are thankful for continued collaboration with academic, private
@@ -106,4 +101,8 @@ thanks to to:
 | [Jean-Francois Prieur](https://www.researchgate.net/scientific-contributions/Jean-Francois-Prieur-2142960944/) | Université de Sherbrooke                                                          |
 | [Murray Woods](https://www.researchgate.net/profile/Murray-Woods/)                                             | (Retired) Ministry of Northern Development, Mines, Natural Resources and Forestry |
 
-Thanks to [Micah Hill](https://micahhill.squarespace.com/) for logo design advice.
+## Funding :raised_hands:
+
+Development of sgsR was made possible thanks to the financial support of
+the [Canadian Wood Fibre Centre’s Forest Innovation
+Program](https://www.nrcan.gc.ca/science-and-data/funding-partnerships/funding-opportunities/forest-sector-funding-programs/forest-innovation-program/13137/).
