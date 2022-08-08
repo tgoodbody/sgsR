@@ -41,7 +41,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -155,7 +155,7 @@
 <span><span class="fu"><a href="../reference/strat_quantiles.html">strat_quantiles</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span>,</span>
 <span>                nStrata <span class="op">=</span> <span class="fl">6</span>,</span>
 <span>                plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="stratification_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<p><img src="stratification_files/figure-html/unnamed-chunk-5-1.png" width="700"><img src="stratification_files/figure-html/unnamed-chunk-5-2.png" width="700"></p>
 <pre><code><span><span class="co">#&gt; class       : SpatRaster </span></span>
 <span><span class="co">#&gt; dimensions  : 277, 373, 1  (nrow, ncol, nlyr)</span></span>
 <span><span class="co">#&gt; resolution  : 20, 20  (x, y)</span></span>
@@ -207,6 +207,7 @@
 <p>Once the breaks are created, we can use them as input into the <code>strat_breaks</code> function using the <code>breaks</code> and <code>breaks2</code> parameters.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#--- stratify on 1 metric only ---#</span></span>
+<span></span>
 <span><span class="fu"><a href="../reference/strat_breaks.html">strat_breaks</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">pzabove2</span>,</span>
 <span>             breaks <span class="op">=</span> <span class="va">breaks</span>,</span>
 <span>             plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
@@ -222,6 +223,7 @@
 <span><span class="co">#&gt; max value   :      6</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#--- stratify on 1 metric only ---#</span></span>
+<span></span>
 <span><span class="fu"><a href="../reference/strat_breaks.html">strat_breaks</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span>,</span>
 <span>             breaks <span class="op">=</span> <span class="va">breaks2</span>,</span>
 <span>             plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
