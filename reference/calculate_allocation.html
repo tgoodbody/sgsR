@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -121,9 +121,9 @@ Has no effect when <code>existing</code> is provided.</p></dd>
     
 
 <p>Returns a data.frame of:</p><ul><li><p>strata - Strata ID.</p></li>
-<li><p>total - Total samples to be allocated based on under representation (positive) or over representation (negative)
-to be removed at the users discretion.</p></li>
-<li><p>need - Total required samples per strata. Rounded.</p></li>
+<li><p>total - Number of samples to be allocated. Values correspond to under representation (samples needed; positive value) or over representation 
+(too many samples; negative value) based on the <code>nSamp</code> provided.</p></li>
+<li><p>need - Required samples per strata based on allocation method. Rounded.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>

@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -167,6 +167,7 @@ considerably slows processing speeds.</p>
 <code><a href="sample_ahels.html">sample_ahels</a>()</code>,
 <code><a href="sample_balanced.html">sample_balanced</a>()</code>,
 <code><a href="sample_clhs.html">sample_clhs</a>()</code>,
+<code><a href="sample_nc.html">sample_nc</a>()</code>,
 <code><a href="sample_srs.html">sample_srs</a>()</code>,
 <code><a href="sample_strat.html">sample_strat</a>()</code></p></div>
     </div>
@@ -208,23 +209,23 @@ considerably slows processing speeds.</p>
 <span class="r-in"><span>  raster <span class="op">=</span> <span class="va">sr</span>,</span></span>
 <span class="r-in"><span>  cellsize <span class="op">=</span> <span class="fl">1000</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 40 features and 0 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 33 features and 0 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431600 ymin: 5338200 xmax: 437600 ymax: 5343200</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431920 ymin: 5338320 xmax: 437920 ymax: 5342320</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                  geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (431600 5338200)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (432600 5338200)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (433600 5338200)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  POINT (434600 5338200)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (435600 5338200)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POINT (436600 5338200)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POINT (437600 5338200)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (432600 5339200)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (433600 5339200)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (434600 5339200)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (431920 5338320)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (432920 5338320)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (433920 5338320)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  POINT (434920 5338320)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (435920 5338320)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POINT (436920 5338320)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POINT (437920 5338320)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (432920 5339320)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (433920 5339320)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (434920 5339320)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">sample_systematic</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  raster <span class="op">=</span> <span class="va">sr</span>,</span></span>
@@ -234,23 +235,23 @@ considerably slows processing speeds.</p>
 <span class="r-in"><span>  plot <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="sample_systematic-1.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 312 features and 0 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 298 features and 0 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431100 ymin: 5337989 xmax: 438100 ymax: 5343185</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431220 ymin: 5337937 xmax: 438220 ymax: 5343134</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                  geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (431100 5338855)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (431100 5338277)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (431100 5340587)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  POINT (431100 5340009)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (431100 5342319)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POINT (431100 5338277)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POINT (431600 5337989)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (431100 5338855)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (431100 5340009)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (431600 5339721)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (431220 5338515)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (431220 5337937)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (431220 5340247)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  POINT (431220 5339669)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (431220 5343134)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POINT (431220 5337937)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POINT (431220 5338515)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (431220 5339669)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (431220 5338515)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (431220 5340247)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">sample_systematic</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  raster <span class="op">=</span> <span class="va">sr</span>,</span></span>
@@ -258,23 +259,23 @@ considerably slows processing speeds.</p>
 <span class="r-in"><span>  square <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
 <span class="r-in"><span>  location <span class="op">=</span> <span class="st">"random"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 43 features and 0 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 34 features and 0 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431191.1 ymin: 5337761 xmax: 438273.8 ymax: 5343218</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431171.4 ymin: 5338149 xmax: 438139.5 ymax: 5342978</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (431191.1 5337889)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (431495.9 5341339)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (431627.2 5338195)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  POINT (431707.1 5340065)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (431968.2 5342087)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POINT (432238.7 5341060)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POINT (432084.5 5343092)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (432850.1 5338312)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (432619.1 5340587)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (432851.8 5341995)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (431171.4 5340936)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (431701.2 5342928)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (431569.7 5338234)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  POINT (432098.5 5340386)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (431887.9 5341641)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    POINT (432876 5339312)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POINT (432395.7 5341408)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (432188.5 5342810)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (432518.8 5338416)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (432991.5 5340267)</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,6 +72,7 @@
 <span>  <span class="va">sraster</span>,</span>
 <span>  <span class="va">nSamp</span>,</span>
 <span>  allocation <span class="op">=</span> <span class="st">"prop"</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"Queinnec"</span>,</span>
 <span>  weights <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  force <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  mraster <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -105,6 +106,12 @@
 <dd><p>Character. Allocation algorithm to be used. Either <code>prop</code> (default) for proportional allocation,
 <code>optim</code> for optimal allocation (equal sampling cost), <code>equal</code> for equal number of samples (defined by <code>nSamp</code>)
 for each strata, or <code>"manual"</code> for user defined strata weights defined using <code>weights</code>.</p></dd>
+
+
+<dt>method</dt>
+<dd><p>Character. Sampling design approach <code>"Queinnec"</code> (default) or <code>"random"</code>. <code>"Queinnec"</code> method is
+described in notes below. <code>"random"</code> performs traditional stratified random sampling where probability to sample each
+cell within each stratum is equal assuming default parameters for <code>mindist</code>. <code>existing, include, remove</code> are ignored when <code>method = "random"</code>.</p></dd>
 
 
 <dt>weights</dt>
@@ -191,7 +198,7 @@ is an sf object of stratified samples.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
-    <p>The sampling is performed in 2 stages:</p><ol><li><p><code>Rule 1</code> - Sample within grouped stratum pixels defined within the
+    <p>The sampling is performed in 2 stages when <code>method = "Queinnec"</code>:</p><ol><li><p><code>Rule 1</code> - Sample within grouped stratum pixels defined within the
 <code>wrow, wcol</code> parameters</p></li>
 <li><p><code>Rule 2</code> - If no samples exist to satisfy Rule 1
  individual stratum pixels are sampled.</p>
@@ -215,6 +222,7 @@ https://doi.org/10.1016/j.rse.2021.112510</p>
 <code><a href="sample_ahels.html">sample_ahels</a>()</code>,
 <code><a href="sample_balanced.html">sample_balanced</a>()</code>,
 <code><a href="sample_clhs.html">sample_clhs</a>()</code>,
+<code><a href="sample_nc.html">sample_nc</a>()</code>,
 <code><a href="sample_srs.html">sample_srs</a>()</code>,
 <code><a href="sample_systematic.html">sample_systematic</a>()</code></p></div>
     </div>
@@ -235,6 +243,7 @@ https://doi.org/10.1016/j.rse.2021.112510</p>
 <span class="r-in"><span>  sraster <span class="op">=</span> <span class="va">sr</span>,</span></span>
 <span class="r-in"><span>  nSamp <span class="op">=</span> <span class="fl">50</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using 'Queinnec' sampling method.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Implementing proportional allocation of samples.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> nSamp of 50 is not perfectly divisible based on strata distribution. nSamp of 51 will be returned. Use 'force = TRUE' to brute force to 50.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Processing strata : 1</span>

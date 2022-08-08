@@ -41,7 +41,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -100,11 +100,12 @@
 
     
     
-<p>Currently, there are 6 functions associated with the <code>sample</code> verb in the <code>sgsR</code> package:</p>
+<p>Currently, there are 7 functions associated with the <code>sample</code> verb in the <code>sgsR</code> package:</p>
 <ul>
 <li><p><code><a href="../reference/sample_srs.html">sample_srs()</a></code> - simple random sampling</p></li>
 <li><p><code><a href="../reference/sample_systematic.html">sample_systematic()</a></code>- systematic sampling in a grid or hexagon tessellation</p></li>
 <li><p><code><a href="../reference/sample_strat.html">sample_strat()</a></code> - stratified sampling within a <code>sraster</code></p></li>
+<li><p><code><a href="../reference/sample_nc.html">sample_nc()</a></code> - Nearest centroid sampling. See <a href="https://doi.org/10.1080/00049158.2016.1218265" class="external-link">Melville &amp; Stone (2016)</a></p></li>
 <li><p><code><a href="../reference/sample_clhs.html">sample_clhs()</a></code> - Latin hypercube sampling</p></li>
 <li><p><code><a href="../reference/sample_balanced.html">sample_balanced()</a></code> - see <a href="http://www.antongrafstrom.se/balancedsampling/" class="external-link">BalancedSampling</a></p></li>
 <li><p><code><a href="../reference/sample_ahels.html">sample_ahels()</a></code> - adapted hypercube evaluation of a legacy sample (ahels)</p></li>
@@ -134,20 +135,20 @@
 <pre><code><span><span class="co">#&gt; Simple feature collection with 200 features and 0 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 431130 ymin: 5337710 xmax: 438550 ymax: 5343210</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 431110 ymin: 5337710 xmax: 438510 ymax: 5343190</span></span>
 <span><span class="co">#&gt; CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;                  geometry</span></span>
-<span><span class="co">#&gt; 1  POINT (438490 5341830)</span></span>
-<span><span class="co">#&gt; 2  POINT (438490 5341830)</span></span>
-<span><span class="co">#&gt; 3  POINT (436590 5340770)</span></span>
-<span><span class="co">#&gt; 4  POINT (431390 5342490)</span></span>
-<span><span class="co">#&gt; 5  POINT (435690 5341310)</span></span>
-<span><span class="co">#&gt; 6  POINT (437850 5339270)</span></span>
-<span><span class="co">#&gt; 7  POINT (434610 5341190)</span></span>
-<span><span class="co">#&gt; 8  POINT (435550 5338050)</span></span>
-<span><span class="co">#&gt; 9  POINT (432730 5341550)</span></span>
-<span><span class="co">#&gt; 10 POINT (434830 5340090)</span></span></code></pre>
+<span><span class="co">#&gt; 1  POINT (433630 5341170)</span></span>
+<span><span class="co">#&gt; 2  POINT (433630 5341170)</span></span>
+<span><span class="co">#&gt; 3  POINT (435790 5342410)</span></span>
+<span><span class="co">#&gt; 4  POINT (433890 5341450)</span></span>
+<span><span class="co">#&gt; 5  POINT (434470 5340850)</span></span>
+<span><span class="co">#&gt; 6  POINT (435610 5341890)</span></span>
+<span><span class="co">#&gt; 7  POINT (432330 5341550)</span></span>
+<span><span class="co">#&gt; 8  POINT (434250 5342610)</span></span>
+<span><span class="co">#&gt; 9  POINT (432610 5343190)</span></span>
+<span><span class="co">#&gt; 10 POINT (432350 5338490)</span></span></code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/sample_srs.html">sample_srs</a></span><span class="op">(</span>raster <span class="op">=</span> <span class="va">mraster</span>, <span class="co"># input mraster</span></span>
 <span>           nSamp <span class="op">=</span> <span class="fl">200</span>, <span class="co"># number of desired samples</span></span>
@@ -160,20 +161,20 @@
 <pre><code><span><span class="co">#&gt; Simple feature collection with 200 features and 0 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 431210 ymin: 5337730 xmax: 438550 ymax: 5343230</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 431150 ymin: 5337710 xmax: 438530 ymax: 5343230</span></span>
 <span><span class="co">#&gt; CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;                  geometry</span></span>
-<span><span class="co">#&gt; 1  POINT (432830 5339950)</span></span>
-<span><span class="co">#&gt; 2  POINT (433150 5341450)</span></span>
-<span><span class="co">#&gt; 3  POINT (433070 5339110)</span></span>
-<span><span class="co">#&gt; 4  POINT (436890 5338470)</span></span>
-<span><span class="co">#&gt; 5  POINT (434430 5339890)</span></span>
-<span><span class="co">#&gt; 6  POINT (437950 5339970)</span></span>
-<span><span class="co">#&gt; 7  POINT (438190 5338030)</span></span>
-<span><span class="co">#&gt; 8  POINT (432850 5338850)</span></span>
-<span><span class="co">#&gt; 9  POINT (433710 5341010)</span></span>
-<span><span class="co">#&gt; 10 POINT (435550 5342850)</span></span></code></pre>
+<span><span class="co">#&gt; 1  POINT (433570 5341270)</span></span>
+<span><span class="co">#&gt; 2  POINT (432830 5341730)</span></span>
+<span><span class="co">#&gt; 3  POINT (434430 5338770)</span></span>
+<span><span class="co">#&gt; 4  POINT (434050 5338630)</span></span>
+<span><span class="co">#&gt; 5  POINT (434970 5339930)</span></span>
+<span><span class="co">#&gt; 6  POINT (434530 5339430)</span></span>
+<span><span class="co">#&gt; 7  POINT (436110 5342390)</span></span>
+<span><span class="co">#&gt; 8  POINT (435070 5337970)</span></span>
+<span><span class="co">#&gt; 9  POINT (433010 5339650)</span></span>
+<span><span class="co">#&gt; 10 POINT (435330 5342270)</span></span></code></pre>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="systematic">
@@ -186,23 +187,23 @@
 <span>                  cellsize <span class="op">=</span> <span class="fl">1000</span>, <span class="co"># grid distance</span></span>
 <span>                  plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># plot</span></span></code></pre></div>
 <p><img src="sampling_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
-<pre><code><span><span class="co">#&gt; Simple feature collection with 40 features and 0 fields</span></span>
+<pre><code><span><span class="co">#&gt; Simple feature collection with 32 features and 0 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 431600 ymin: 5338200 xmax: 437600 ymax: 5343200</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 431900 ymin: 5338400 xmax: 437900 ymax: 5342400</span></span>
 <span><span class="co">#&gt; CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;                  geometry</span></span>
-<span><span class="co">#&gt; 1  POINT (431600 5338200)</span></span>
-<span><span class="co">#&gt; 2  POINT (432600 5338200)</span></span>
-<span><span class="co">#&gt; 3  POINT (433600 5338200)</span></span>
-<span><span class="co">#&gt; 4  POINT (434600 5338200)</span></span>
-<span><span class="co">#&gt; 5  POINT (435600 5338200)</span></span>
-<span><span class="co">#&gt; 6  POINT (436600 5338200)</span></span>
-<span><span class="co">#&gt; 7  POINT (437600 5338200)</span></span>
-<span><span class="co">#&gt; 8  POINT (432600 5339200)</span></span>
-<span><span class="co">#&gt; 9  POINT (433600 5339200)</span></span>
-<span><span class="co">#&gt; 10 POINT (434600 5339200)</span></span></code></pre>
+<span><span class="co">#&gt; 1  POINT (431900 5338400)</span></span>
+<span><span class="co">#&gt; 2  POINT (432900 5338400)</span></span>
+<span><span class="co">#&gt; 3  POINT (433900 5338400)</span></span>
+<span><span class="co">#&gt; 4  POINT (434900 5338400)</span></span>
+<span><span class="co">#&gt; 5  POINT (435900 5338400)</span></span>
+<span><span class="co">#&gt; 6  POINT (436900 5338400)</span></span>
+<span><span class="co">#&gt; 7  POINT (437900 5338400)</span></span>
+<span><span class="co">#&gt; 8  POINT (432900 5339400)</span></span>
+<span><span class="co">#&gt; 9  POINT (433900 5339400)</span></span>
+<span><span class="co">#&gt; 10 POINT (434900 5339400)</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#--- perform grid sampling ---#</span></span>
 <span><span class="fu"><a href="../reference/sample_systematic.html">sample_systematic</a></span><span class="op">(</span>raster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># input sraster</span></span>
@@ -211,23 +212,23 @@
 <span>                  location <span class="op">=</span> <span class="st">"random"</span>, <span class="co"># random sample within tessellation</span></span>
 <span>                  plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># plot</span></span></code></pre></div>
 <p><img src="sampling_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
-<pre><code><span><span class="co">#&gt; Simple feature collection with 166 features and 0 fields</span></span>
+<pre><code><span><span class="co">#&gt; Simple feature collection with 164 features and 0 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 431177.1 ymin: 5337738 xmax: 438559.3 ymax: 5343234</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 431123.1 ymin: 5337705 xmax: 438468.2 ymax: 5343149</span></span>
 <span><span class="co">#&gt; CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;                    geometry</span></span>
-<span><span class="co">#&gt; 1  POINT (431257.1 5337738)</span></span>
-<span><span class="co">#&gt; 2  POINT (431254.5 5338403)</span></span>
-<span><span class="co">#&gt; 3  POINT (431177.1 5342804)</span></span>
-<span><span class="co">#&gt; 4  POINT (431271.2 5338205)</span></span>
-<span><span class="co">#&gt; 5    POINT (431457 5340031)</span></span>
-<span><span class="co">#&gt; 6  POINT (431446.2 5340742)</span></span>
-<span><span class="co">#&gt; 7  POINT (431429.7 5341711)</span></span>
-<span><span class="co">#&gt; 8  POINT (431192.3 5342523)</span></span>
-<span><span class="co">#&gt; 9  POINT (431425.2 5337812)</span></span>
-<span><span class="co">#&gt; 10 POINT (431660.1 5340319)</span></span></code></pre>
+<span><span class="co">#&gt; 1  POINT (431242.9 5339872)</span></span>
+<span><span class="co">#&gt; 2  POINT (431123.1 5341606)</span></span>
+<span><span class="co">#&gt; 3  POINT (431200.1 5337728)</span></span>
+<span><span class="co">#&gt; 4  POINT (431144.1 5338523)</span></span>
+<span><span class="co">#&gt; 5    POINT (431155 5340477)</span></span>
+<span><span class="co">#&gt; 6  POINT (431326.4 5341354)</span></span>
+<span><span class="co">#&gt; 7  POINT (431398.6 5343071)</span></span>
+<span><span class="co">#&gt; 8  POINT (431650.5 5338067)</span></span>
+<span><span class="co">#&gt; 9  POINT (431419.7 5339931)</span></span>
+<span><span class="co">#&gt; 10 POINT (431569.9 5340644)</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/sample_systematic.html">sample_systematic</a></span><span class="op">(</span>raster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># input sraster</span></span>
 <span>            cellsize <span class="op">=</span> <span class="fl">500</span>, <span class="co"># grid distance</span></span>
@@ -237,29 +238,37 @@
 <span>            location <span class="op">=</span> <span class="st">"corners"</span>, <span class="co"># take corners instead of centers</span></span>
 <span>            plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="sampling_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
-<pre><code><span><span class="co">#&gt; Simple feature collection with 645 features and 0 fields</span></span>
+<pre><code><span><span class="co">#&gt; Simple feature collection with 597 features and 0 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 431100 ymin: 5337844 xmax: 438350 ymax: 5343185</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 431100 ymin: 5337903 xmax: 438350 ymax: 5343100</span></span>
 <span><span class="co">#&gt; CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;                  geometry</span></span>
-<span><span class="co">#&gt; 1  POINT (431100 5340875)</span></span>
-<span><span class="co">#&gt; 2  POINT (431100 5340587)</span></span>
-<span><span class="co">#&gt; 3  POINT (431100 5342607)</span></span>
-<span><span class="co">#&gt; 4  POINT (431100 5340587)</span></span>
-<span><span class="co">#&gt; 5  POINT (431350 5340442)</span></span>
-<span><span class="co">#&gt; 6  POINT (431100 5340875)</span></span>
-<span><span class="co">#&gt; 7  POINT (431100 5340875)</span></span>
-<span><span class="co">#&gt; 8  POINT (431100 5342607)</span></span>
-<span><span class="co">#&gt; 9  POINT (431350 5342752)</span></span>
-<span><span class="co">#&gt; 10 POINT (431100 5342607)</span></span></code></pre>
+<span><span class="co">#&gt; 1  POINT (431100 5340501)</span></span>
+<span><span class="co">#&gt; 2  POINT (431100 5340501)</span></span>
+<span><span class="co">#&gt; 3  POINT (431350 5340934)</span></span>
+<span><span class="co">#&gt; 4  POINT (431350 5340646)</span></span>
+<span><span class="co">#&gt; 5  POINT (431100 5340501)</span></span>
+<span><span class="co">#&gt; 6  POINT (431350 5342667)</span></span>
+<span><span class="co">#&gt; 7  POINT (431600 5338481)</span></span>
+<span><span class="co">#&gt; 8  POINT (431100 5340501)</span></span>
+<span><span class="co">#&gt; 9  POINT (431350 5340646)</span></span>
+<span><span class="co">#&gt; 10 POINT (431600 5340501)</span></span></code></pre>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="sstrat">
 <code>sample_strat</code><a class="anchor" aria-label="anchor" href="#sstrat"></a>
 </h2>
-<p>The <code><a href="../reference/sample_strat.html">sample_strat()</a></code> function contains a hierarchical sampling algorithm, which was originally developed by Martin Queinnec.</p>
+<p>The <code><a href="../reference/sample_strat.html">sample_strat()</a></code> contains two <code>method</code>s to perform sampling:</p>
+<ul>
+<li><p><code>"Queinnec"</code> - Hierarchical sampling using a focal window to isolate contiguous groups of stratum pixels, which was originally developed by Martin Queinnec.</p></li>
+<li><p><code>"random"</code> - Traditional stratified random sampling. This <code>method</code> ignores much of the functionality of the algorithm to allow users the capability to use standard stratified random sampling approaches without the use of a focal window to locate contiguous stratum cells.</p></li>
+</ul>
+<div class="section level3 unnumbered">
+<h3 class="unnumbered" id="queinnec">
+<code>method = "Queinnec"</code><a class="anchor" aria-label="anchor" href="#queinnec"></a>
+</h3>
 <p><em>Queinnec, M., White, J. C., &amp; Coops, N. C. (2021). Comparing airborne and spaceborne photon-counting LiDAR canopy structural estimates across different boreal forest types. Remote Sensing of Environment, 262(August 2020), 112510.</em></p>
 <p>This algorithm uses moving window (<code>wrow</code> and <code>wcol</code> parameters) to filter the input <code>sraster</code> to prioritize sample locations where stratum pixels are spatially grouped, rather than dispersed individuals across the landscape.</p>
 <p>Sampling is performed using 2 rules:</p>
@@ -277,45 +286,26 @@
 <pre><code><span><span class="co">#&gt; Simple feature collection with 200 features and 3 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 431110 ymin: 5337750 xmax: 438550 ymax: 5343230</span></span>
-<span><span class="co">#&gt; CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 431190 ymin: 5337730 xmax: 438530 ymax: 5343110</span></span>
+<span><span class="co">#&gt; CRS:           NA</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;    strata type  rule               geometry</span></span>
-<span><span class="co">#&gt; x       1  new rule1 POINT (434910 5342170)</span></span>
-<span><span class="co">#&gt; x1      1  new rule2 POINT (435550 5342790)</span></span>
-<span><span class="co">#&gt; x2      1  new rule2 POINT (434410 5342490)</span></span>
-<span><span class="co">#&gt; x3      1  new rule2 POINT (436050 5342490)</span></span>
-<span><span class="co">#&gt; x4      1  new rule2 POINT (433070 5338490)</span></span>
-<span><span class="co">#&gt; x5      1  new rule2 POINT (432970 5341790)</span></span>
-<span><span class="co">#&gt; x6      1  new rule2 POINT (434670 5342770)</span></span>
-<span><span class="co">#&gt; x7      1  new rule2 POINT (434430 5342350)</span></span>
-<span><span class="co">#&gt; x8      1  new rule2 POINT (434870 5342090)</span></span>
-<span><span class="co">#&gt; x9      1  new rule2 POINT (436610 5339470)</span></span></code></pre>
+<span><span class="co">#&gt; x       1  new rule1 POINT (434390 5341090)</span></span>
+<span><span class="co">#&gt; x1      1  new rule2 POINT (437130 5337990)</span></span>
+<span><span class="co">#&gt; x2      1  new rule2 POINT (434770 5341850)</span></span>
+<span><span class="co">#&gt; x3      1  new rule2 POINT (434790 5341510)</span></span>
+<span><span class="co">#&gt; x4      1  new rule2 POINT (437870 5338770)</span></span>
+<span><span class="co">#&gt; x5      1  new rule2 POINT (431570 5340830)</span></span>
+<span><span class="co">#&gt; x6      1  new rule2 POINT (436730 5338150)</span></span>
+<span><span class="co">#&gt; x7      1  new rule2 POINT (437990 5338910)</span></span>
+<span><span class="co">#&gt; x8      1  new rule2 POINT (438110 5338810)</span></span>
+<span><span class="co">#&gt; x9      1  new rule2 POINT (436250 5342950)</span></span></code></pre>
 <p>In some cases, users might want to include <code>existing</code> samples within the algorithm. In order to adjust the total number of samples needed per stratum to reflect those already present in <code>existing</code>, we can use the intermediate function <code><a href="../reference/extract_strata.html">extract_strata()</a></code>.</p>
 <p>This function uses the <code>sraster</code> and <code>existing</code> samples and extracts the stratum for each. These samples can be included within <code><a href="../reference/sample_strat.html">sample_strat()</a></code>, which adjusts total samples required per class based on representation in <code>existing</code>.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#--- extract strata values to existing samples ---#              </span></span>
 <span><span class="va">e.sr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_strata.html">extract_strata</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># input sraster</span></span>
-<span>                       existing <span class="op">=</span> <span class="va">existing</span><span class="op">)</span> <span class="co"># existing samples to add strata value to</span></span>
-<span></span>
-<span><span class="va">e.sr</span></span>
-<span><span class="co">#&gt; Simple feature collection with 200 features and 4 fields</span></span>
-<span><span class="co">#&gt; Geometry type: POINT</span></span>
-<span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 431130 ymin: 5337750 xmax: 438550 ymax: 5343170</span></span>
-<span><span class="co">#&gt; Projected CRS: UTM Zone 17, Northern Hemisphere</span></span>
-<span><span class="co">#&gt; First 10 features:</span></span>
-<span><span class="co">#&gt;    strata strata.1 type  rule               geometry</span></span>
-<span><span class="co">#&gt; 1       1        1  new rule1 POINT (434410 5341410)</span></span>
-<span><span class="co">#&gt; 2       1        1  new rule2 POINT (436310 5338250)</span></span>
-<span><span class="co">#&gt; 3       1        1  new rule2 POINT (435230 5342790)</span></span>
-<span><span class="co">#&gt; 4       1        1  new rule2 POINT (434570 5342810)</span></span>
-<span><span class="co">#&gt; 5       1        1  new rule2 POINT (434430 5339070)</span></span>
-<span><span class="co">#&gt; 6       1        1  new rule2 POINT (436490 5338370)</span></span>
-<span><span class="co">#&gt; 7       1        1  new rule2 POINT (434030 5341110)</span></span>
-<span><span class="co">#&gt; 8       1        1  new rule2 POINT (434090 5341430)</span></span>
-<span><span class="co">#&gt; 9       1        1  new rule2 POINT (432330 5339530)</span></span>
-<span><span class="co">#&gt; 10      1        1  new rule2 POINT (437850 5338690)</span></span></code></pre></div>
+<span>                       existing <span class="op">=</span> <span class="va">existing</span><span class="op">)</span> <span class="co"># existing samples to add strata value to</span></span></code></pre></div>
 <p>Notice that <code>e.sr</code> now has an attribute named strata. If that parameter is not there, <code><a href="../reference/sample_strat.html">sample_strat()</a></code> will give an error.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/sample_strat.html">sample_strat</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># input sraster</span></span>
@@ -331,21 +321,21 @@
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
 <span><span class="co">#&gt; Bounding box:  xmin: 431110 ymin: 5337710 xmax: 438550 ymax: 5343230</span></span>
-<span><span class="co">#&gt; CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></span>
+<span><span class="co">#&gt; CRS:           NA</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;    strata     type     rule               geometry</span></span>
-<span><span class="co">#&gt; 1       1 existing existing POINT (434410 5341410)</span></span>
-<span><span class="co">#&gt; 2       1 existing existing POINT (436310 5338250)</span></span>
-<span><span class="co">#&gt; 3       1 existing existing POINT (435230 5342790)</span></span>
-<span><span class="co">#&gt; 4       1 existing existing POINT (434570 5342810)</span></span>
-<span><span class="co">#&gt; 5       1 existing existing POINT (434430 5339070)</span></span>
-<span><span class="co">#&gt; 6       1 existing existing POINT (436490 5338370)</span></span>
-<span><span class="co">#&gt; 7       1 existing existing POINT (434030 5341110)</span></span>
-<span><span class="co">#&gt; 8       1 existing existing POINT (434090 5341430)</span></span>
-<span><span class="co">#&gt; 9       1 existing existing POINT (432330 5339530)</span></span>
-<span><span class="co">#&gt; 10      1 existing existing POINT (437850 5338690)</span></span></code></pre>
+<span><span class="co">#&gt; 1       1 existing existing POINT (435490 5342130)</span></span>
+<span><span class="co">#&gt; 2       1 existing existing POINT (433730 5340590)</span></span>
+<span><span class="co">#&gt; 3       1 existing existing POINT (433890 5343010)</span></span>
+<span><span class="co">#&gt; 4       1 existing existing POINT (434390 5341350)</span></span>
+<span><span class="co">#&gt; 5       1 existing existing POINT (433190 5343210)</span></span>
+<span><span class="co">#&gt; 6       1 existing existing POINT (433070 5341890)</span></span>
+<span><span class="co">#&gt; 7       1 existing existing POINT (434890 5342250)</span></span>
+<span><span class="co">#&gt; 8       1 existing existing POINT (434330 5341990)</span></span>
+<span><span class="co">#&gt; 9       1 existing existing POINT (434730 5337750)</span></span>
+<span><span class="co">#&gt; 10      1 existing existing POINT (435070 5337910)</span></span></code></pre>
 <p>As seen on the code in the example above, the defined <code>mindist</code> parameter specifies the minimum euclidean distance that samples must be apart from one another.</p>
-<p>Notice that the sample outputs have <code>type</code> and <code>rule</code> attributes which outline whether the samples are <code>existing</code> or <code>new</code> and whether <code>rule1</code> or <code>rule2</code> were used to select the individual samples.</p>
+<p>Notice that the sample outputs have <code>type</code> and <code>rule</code> attributes which outline whether the samples are <code>existing</code> or <code>new</code> and whether <code>rule1</code> or <code>rule2</code> were used to select the individual samples. If <code>type</code> is <em>existing</em> (a user provided <code>existing</code> sample), <code>rule</code> will be <em>existing</em> as well as seen above.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/sample_strat.html">sample_strat</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># input</span></span>
 <span>             nSamp <span class="op">=</span> <span class="fl">200</span>, <span class="co"># desired sample number</span></span>
@@ -358,21 +348,108 @@
 <pre><code><span><span class="co">#&gt; Simple feature collection with 200 features and 3 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 431130 ymin: 5337750 xmax: 438550 ymax: 5343170</span></span>
-<span><span class="co">#&gt; CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 431110 ymin: 5337730 xmax: 438530 ymax: 5343230</span></span>
+<span><span class="co">#&gt; CRS:           NA</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;    strata     type     rule               geometry</span></span>
-<span><span class="co">#&gt; 1       1 existing existing POINT (434410 5341410)</span></span>
-<span><span class="co">#&gt; 2       1 existing existing POINT (436310 5338250)</span></span>
-<span><span class="co">#&gt; 3       1 existing existing POINT (435230 5342790)</span></span>
-<span><span class="co">#&gt; 4       1 existing existing POINT (434570 5342810)</span></span>
-<span><span class="co">#&gt; 5       1 existing existing POINT (434430 5339070)</span></span>
-<span><span class="co">#&gt; 6       1 existing existing POINT (436490 5338370)</span></span>
-<span><span class="co">#&gt; 7       1 existing existing POINT (434030 5341110)</span></span>
-<span><span class="co">#&gt; 8       1 existing existing POINT (434090 5341430)</span></span>
-<span><span class="co">#&gt; 9       1 existing existing POINT (432330 5339530)</span></span>
-<span><span class="co">#&gt; 10      1 existing existing POINT (437850 5338690)</span></span></code></pre>
+<span><span class="co">#&gt; 1       1 existing existing POINT (435490 5342130)</span></span>
+<span><span class="co">#&gt; 2       1 existing existing POINT (433730 5340590)</span></span>
+<span><span class="co">#&gt; 3       1 existing existing POINT (433890 5343010)</span></span>
+<span><span class="co">#&gt; 4       1 existing existing POINT (434390 5341350)</span></span>
+<span><span class="co">#&gt; 5       1 existing existing POINT (433190 5343210)</span></span>
+<span><span class="co">#&gt; 6       1 existing existing POINT (433070 5341890)</span></span>
+<span><span class="co">#&gt; 7       1 existing existing POINT (434890 5342250)</span></span>
+<span><span class="co">#&gt; 8       1 existing existing POINT (434330 5341990)</span></span>
+<span><span class="co">#&gt; 9       1 existing existing POINT (434730 5337750)</span></span>
+<span><span class="co">#&gt; 10      1 existing existing POINT (435070 5337910)</span></span></code></pre>
 <p>The <code>include</code> parameter determines whether <code>existing</code> samples should be included in the total count of samples defined by <code>nSamp</code>. By default, the <code>include</code> parameter is set as <code>FALSE</code>.</p>
+</div>
+<div class="section level3 unnumbered">
+<h3 class="unnumbered" id="stratrandom">
+<code>method = "random</code><a class="anchor" aria-label="anchor" href="#stratrandom"></a>
+</h3>
+<p>Stratified random sampling with equal probability for all cells (using default algorithm values for <code>mindist</code> and no use of <code>access</code> functionality). In essence this method perform the <code>sample_srs</code> algorithm for each stratum separately to meet the specified sample allocation.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#--- perform stratified sampling random sampling ---#</span></span>
+<span><span class="fu"><a href="../reference/sample_strat.html">sample_strat</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># input sraster</span></span>
+<span>             method <span class="op">=</span> <span class="st">"random"</span>, <span class="co">#stratified random sampling</span></span>
+<span>             nSamp <span class="op">=</span> <span class="fl">200</span>, <span class="co"># desired sample number</span></span>
+<span>             plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># plot</span></span></code></pre></div>
+<p><img src="sampling_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
+<pre><code><span><span class="co">#&gt; Simple feature collection with 200 features and 1 field</span></span>
+<span><span class="co">#&gt; Geometry type: POINT</span></span>
+<span><span class="co">#&gt; Dimension:     XY</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 431110 ymin: 5337770 xmax: 438550 ymax: 5343230</span></span>
+<span><span class="co">#&gt; Projected CRS: UTM Zone 17, Northern Hemisphere</span></span>
+<span><span class="co">#&gt; First 10 features:</span></span>
+<span><span class="co">#&gt;    strata               geometry</span></span>
+<span><span class="co">#&gt; 1       1 POINT (436490 5338490)</span></span>
+<span><span class="co">#&gt; 2       1 POINT (436490 5338490)</span></span>
+<span><span class="co">#&gt; 3       1 POINT (434410 5341850)</span></span>
+<span><span class="co">#&gt; 4       1 POINT (435590 5338530)</span></span>
+<span><span class="co">#&gt; 5       1 POINT (435510 5342510)</span></span>
+<span><span class="co">#&gt; 6       1 POINT (431710 5342590)</span></span>
+<span><span class="co">#&gt; 7       1 POINT (438090 5339750)</span></span>
+<span><span class="co">#&gt; 8       1 POINT (435370 5342230)</span></span>
+<span><span class="co">#&gt; 9       1 POINT (437510 5339070)</span></span>
+<span><span class="co">#&gt; 10      1 POINT (436970 5338050)</span></span></code></pre>
+</div>
+</div>
+<div class="section level2 unnumbered">
+<h2 class="unnumbered" id="nc">
+<code>sample_nc</code><a class="anchor" aria-label="anchor" href="#nc"></a>
+</h2>
+<p><code><a href="../reference/sample_nc.html">sample_nc()</a></code> function implements the Nearest Centroid sampling algorithm described in <a href="https://doi.org/10.1080/00049158.2016.1218265" class="external-link">Melville &amp; Stone (2016)</a>. The algorithm uses kmeans clustering where the number of clusters (centroids) is equal to the desired number of samples (<code>nSamp</code>). Cluster centers are located, which then prompts the nearest neighbour <code>mraster</code> pixel for each cluster to be located (assuming default <code>k</code> parameter). These nearest neighbours are the output samples. Basic usage is as follows:</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#--- perform simple random sampling ---#</span></span>
+<span><span class="fu"><a href="../reference/sample_nc.html">sample_nc</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, <span class="co"># input</span></span>
+<span>          nSamp <span class="op">=</span> <span class="fl">25</span>, <span class="co"># desired sample number</span></span>
+<span>          plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; K-means being performed on 3 layers with 25 centers.</span></span></code></pre></div>
+<p><img src="sampling_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
+<pre><code><span><span class="co">#&gt; Simple feature collection with 25 features and 4 fields</span></span>
+<span><span class="co">#&gt; Geometry type: POINT</span></span>
+<span><span class="co">#&gt; Dimension:     XY</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 431170 ymin: 5338170 xmax: 438510 ymax: 5343210</span></span>
+<span><span class="co">#&gt; CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></span>
+<span><span class="co">#&gt; First 10 features:</span></span>
+<span><span class="co">#&gt;        zq90 pzabove2  zsd kcenter               geometry</span></span>
+<span><span class="co">#&gt; 744   23.50     90.5 6.75       1 POINT (438510 5343210)</span></span>
+<span><span class="co">#&gt; 1294  20.20     76.4 6.10       2 POINT (434590 5343170)</span></span>
+<span><span class="co">#&gt; 36188 13.00     73.5 3.33       3 POINT (431230 5341290)</span></span>
+<span><span class="co">#&gt; 32048 26.50     87.4 8.24       4 POINT (437950 5341530)</span></span>
+<span><span class="co">#&gt; 10960  6.77     14.5 1.73       5 POINT (433950 5342650)</span></span>
+<span><span class="co">#&gt; 94656  6.27     61.8 1.45       6 POINT (436830 5338170)</span></span>
+<span><span class="co">#&gt; 60884 21.20     91.4 5.53       7 POINT (432790 5339970)</span></span>
+<span><span class="co">#&gt; 16935 15.50     94.8 2.71       8 POINT (434090 5342330)</span></span>
+<span><span class="co">#&gt; 15918 17.20     59.2 5.02       9 POINT (436130 5342390)</span></span>
+<span><span class="co">#&gt; 89846  8.71     41.9 2.37      10 POINT (437610 5338430)</span></span></code></pre>
+<p>Altering the <code>k</code> parameter leads to a multiplicative increase in output samples where total output samples = <span class="math inline">\(`nSamp` * `k`\)</span>.</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#--- perform simple random sampling ---#</span></span>
+<span><span class="va">samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sample_nc.html">sample_nc</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, <span class="co"># input</span></span>
+<span>                    k <span class="op">=</span> <span class="fl">2</span>, <span class="co"># number of nearest neighbours to take for each kmeans center</span></span>
+<span>                    nSamp <span class="op">=</span> <span class="fl">25</span>, <span class="co"># desired sample number</span></span>
+<span>                    plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; K-means being performed on 3 layers with 25 centers.</span></span></code></pre></div>
+<p><img src="sampling_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co">#--- total samples = nSamp * k (25 * 2) = 50 ---#</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">samples</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 50</span></span></code></pre></div>
+<p>Visualizing what the kmeans centers and samples nearest neighbours looks like is possible when using <code>details = TRUE</code>. The <code>$kplot</code> output provides a quick visualization of where the centers are based on a scatter plot of the first 2 layers in <code>mraster</code>. Notice that the centers are well distributed in covariate space and chosen samples are the closest pixels to each center (nearest neighbours).</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#--- perform simple random sampling with details ---#</span></span>
+<span><span class="va">details</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sample_nc.html">sample_nc</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, <span class="co"># input</span></span>
+<span>                     nSamp <span class="op">=</span> <span class="fl">25</span>, <span class="co"># desired sample number</span></span>
+<span>                     details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; K-means being performed on 3 layers with 25 centers.</span></span>
+<span></span>
+<span><span class="co">#--- plot ggplot output ---#</span></span>
+<span></span>
+<span><span class="va">details</span><span class="op">$</span><span class="va">kplot</span></span></code></pre></div>
+<p><img src="sampling_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="clhs">
@@ -380,13 +457,13 @@
 </h2>
 <p><code><a href="../reference/sample_clhs.html">sample_clhs()</a></code> function implements conditioned Latin hypercube (clhs) sampling methodology from the <a href="https://CRAN.R-project.org/package=clhs/" class="external-link"><code>clhs</code></a> package. A number of other functions in the <code>sgsR</code> package help to provide guidance on clhs sampling including <code><a href="../reference/calculate_pop.html">calculate_pop()</a></code> and <code><a href="../reference/calculate_lhsOpt.html">calculate_lhsOpt()</a></code>. Check out these functions to better understand how sample numbers could be optimized.</p>
 <p>The syntax for this function is similar to others shown above, although parameters like <code>iter</code>, which define the number of iterations within the Metropolis-Hastings process are important to consider. In these examples we use a low <code>iter</code> value because it takes less time to run. Default values for <code>iter</code> within the <code>clhs</code> package are 10,000.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/sample_clhs.html">sample_clhs</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, <span class="co"># input</span></span>
 <span>            nSamp <span class="op">=</span> <span class="fl">200</span>, <span class="co"># desired sample number</span></span>
 <span>            plot <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># plot </span></span>
 <span>            iter <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="co"># number of iterations</span></span></code></pre></div>
-<p><img src="sampling_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<p><img src="sampling_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/sample_clhs.html">sample_clhs</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, <span class="co"># input</span></span>
 <span>            nSamp <span class="op">=</span> <span class="fl">300</span>, <span class="co"># desired sample number</span></span>
 <span>            iter <span class="op">=</span> <span class="fl">100</span>, <span class="co"># number of iterations</span></span>
@@ -395,51 +472,51 @@
 <span>            buff_inner <span class="op">=</span> <span class="fl">100</span>, <span class="co"># inner buffer - no samples within this distance from road</span></span>
 <span>            buff_outer <span class="op">=</span> <span class="fl">300</span>, <span class="co"># outer buffer - no samples further than this distance from road</span></span>
 <span>            plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># plot</span></span></code></pre></div>
-<p><img src="sampling_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
+<p><img src="sampling_files/figure-html/unnamed-chunk-19-1.png" width="700"></p>
 <p>The <code>cost</code> parameter defines the <code>mraster</code> covariate, which is used to constrain the clhs sampling. This could be any number of variables. An example could be the distance a pixel is from road <code>access</code> (e.g. from <code><a href="../reference/calculate_distance.html">calculate_distance()</a></code> see example below), terrain slope, the output from <code><a href="../reference/calculate_coobs.html">calculate_coobs()</a></code>, or many others.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#--- cost constrained examples ---#</span></span>
 <span><span class="co">#--- calculate distance to access layer for each pixel in mr ---#</span></span>
 <span><span class="va">mr.c</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calculate_distance.html">calculate_distance</a></span><span class="op">(</span>raster <span class="op">=</span> <span class="va">mraster</span>, <span class="co"># input</span></span>
 <span>                           access <span class="op">=</span> <span class="va">access</span>,</span>
 <span>                           plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># define access road network</span></span></code></pre></div>
-<p><img src="sampling_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<p><img src="sampling_files/figure-html/unnamed-chunk-20-1.png" width="700"></p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/sample_clhs.html">sample_clhs</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mr.c</span>, <span class="co"># input</span></span>
 <span>            nSamp <span class="op">=</span> <span class="fl">250</span>, <span class="co"># desired sample number</span></span>
 <span>            iter <span class="op">=</span> <span class="fl">100</span>, <span class="co"># number of iterations</span></span>
 <span>            cost <span class="op">=</span> <span class="st">"dist2access"</span>, <span class="co"># cost parameter - name defined in calculate_distance()</span></span>
 <span>            plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># plot</span></span></code></pre></div>
-<p><img src="sampling_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
+<p><img src="sampling_files/figure-html/unnamed-chunk-22-1.png" width="700"></p>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="balanced">
 <code>sample_balanced</code><a class="anchor" aria-label="anchor" href="#balanced"></a>
 </h2>
 <p>The <code><a href="../reference/sample_balanced.html">sample_balanced()</a></code> algorithm performs a balanced sampling methodology from the <a href="http://www.antongrafstrom.se/balancedsampling/" class="external-link"><code>stratifyR / SamplingBigData</code></a> packages.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/sample_balanced.html">sample_balanced</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, <span class="co"># input</span></span>
 <span>                nSamp <span class="op">=</span> <span class="fl">200</span>, <span class="co"># desired sample number</span></span>
 <span>                plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># plot</span></span></code></pre></div>
-<p><img src="sampling_files/figure-html/unnamed-chunk-19-1.png" width="700"></p>
+<p><img src="sampling_files/figure-html/unnamed-chunk-23-1.png" width="700"></p>
 <pre><code><span><span class="co">#&gt; Simple feature collection with 200 features and 0 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 431110 ymin: 5337710 xmax: 438550 ymax: 5343190</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 431190 ymin: 5337730 xmax: 438530 ymax: 5343210</span></span>
 <span><span class="co">#&gt; CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;                  geometry</span></span>
-<span><span class="co">#&gt; 1  POINT (432150 5343190)</span></span>
-<span><span class="co">#&gt; 2  POINT (435390 5343090)</span></span>
-<span><span class="co">#&gt; 3  POINT (434190 5343070)</span></span>
-<span><span class="co">#&gt; 4  POINT (436090 5343070)</span></span>
-<span><span class="co">#&gt; 5  POINT (433150 5343050)</span></span>
-<span><span class="co">#&gt; 6  POINT (438030 5343050)</span></span>
-<span><span class="co">#&gt; 7  POINT (438330 5343050)</span></span>
-<span><span class="co">#&gt; 8  POINT (432370 5343010)</span></span>
-<span><span class="co">#&gt; 9  POINT (438150 5342970)</span></span>
-<span><span class="co">#&gt; 10 POINT (432550 5342950)</span></span></code></pre>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<span><span class="co">#&gt; 1  POINT (433870 5343210)</span></span>
+<span><span class="co">#&gt; 2  POINT (433930 5343210)</span></span>
+<span><span class="co">#&gt; 3  POINT (431490 5343190)</span></span>
+<span><span class="co">#&gt; 4  POINT (434330 5343170)</span></span>
+<span><span class="co">#&gt; 5  POINT (436370 5343090)</span></span>
+<span><span class="co">#&gt; 6  POINT (431950 5343050)</span></span>
+<span><span class="co">#&gt; 7  POINT (437890 5342990)</span></span>
+<span><span class="co">#&gt; 8  POINT (437590 5342950)</span></span>
+<span><span class="co">#&gt; 9  POINT (431810 5342910)</span></span>
+<span><span class="co">#&gt; 10 POINT (432810 5342890)</span></span></code></pre>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/sample_balanced.html">sample_balanced</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, <span class="co"># input</span></span>
 <span>                nSamp <span class="op">=</span> <span class="fl">100</span>, <span class="co"># desired sample number</span></span>
 <span>                algorithm <span class="op">=</span> <span class="st">"lcube"</span>, <span class="co"># algorithm type</span></span>
@@ -449,20 +526,20 @@
 <span><span class="co">#&gt; Simple feature collection with 100 features and 0 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 431110 ymin: 5337710 xmax: 438510 ymax: 5343190</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 431590 ymin: 5337750 xmax: 438550 ymax: 5343210</span></span>
 <span><span class="co">#&gt; CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;                  geometry</span></span>
-<span><span class="co">#&gt; 1  POINT (436370 5339770)</span></span>
-<span><span class="co">#&gt; 2  POINT (435650 5342010)</span></span>
-<span><span class="co">#&gt; 3  POINT (438170 5340270)</span></span>
-<span><span class="co">#&gt; 4  POINT (436410 5340190)</span></span>
-<span><span class="co">#&gt; 5  POINT (436330 5340130)</span></span>
-<span><span class="co">#&gt; 6  POINT (436710 5338050)</span></span>
-<span><span class="co">#&gt; 7  POINT (432890 5339890)</span></span>
-<span><span class="co">#&gt; 8  POINT (436210 5339290)</span></span>
-<span><span class="co">#&gt; 9  POINT (434130 5338470)</span></span>
-<span><span class="co">#&gt; 10 POINT (431510 5340630)</span></span></code></pre></div>
+<span><span class="co">#&gt; 1  POINT (435170 5339710)</span></span>
+<span><span class="co">#&gt; 2  POINT (437910 5339410)</span></span>
+<span><span class="co">#&gt; 3  POINT (434990 5338690)</span></span>
+<span><span class="co">#&gt; 4  POINT (436310 5341470)</span></span>
+<span><span class="co">#&gt; 5  POINT (431970 5337750)</span></span>
+<span><span class="co">#&gt; 6  POINT (434410 5342370)</span></span>
+<span><span class="co">#&gt; 7  POINT (431930 5337850)</span></span>
+<span><span class="co">#&gt; 8  POINT (435210 5343110)</span></span>
+<span><span class="co">#&gt; 9  POINT (437970 5341450)</span></span>
+<span><span class="co">#&gt; 10 POINT (435930 5342950)</span></span></code></pre></div>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="ahels">
@@ -478,53 +555,75 @@
 <li><p>Prioritizes sampling within those quantile to improve representation.</p></li>
 </ol>
 <p>To use this function, user must first specify the number of quantiles (<code>nQuant</code>) followed by either the <code>nSamp</code> (total number of desired samples to be added) or the <code>threshold</code> (sampling ratio vs. covariate coverage ratio for quantiles - default is 0.9) parameters. We recommended you setting the <code>threshold</code> values at or below 0.9.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/sample_ahels.html">sample_ahels</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, </span>
 <span>             existing <span class="op">=</span> <span class="va">existing</span>, <span class="co"># existing samples</span></span>
 <span>             plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># plot</span></span></code></pre></div>
-<p><img src="sampling_files/figure-html/unnamed-chunk-22-1.png" width="700"></p>
-<pre><code><span><span class="co">#&gt; Simple feature collection with 273 features and 4 fields</span></span>
+<p><img src="sampling_files/figure-html/unnamed-chunk-26-1.png" width="700"></p>
+<pre><code><span><span class="co">#&gt; Simple feature collection with 248 features and 7 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 431130 ymin: 5337730 xmax: 438550 ymax: 5343230</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 431110 ymin: 5337730 xmax: 438530 ymax: 5343230</span></span>
 <span><span class="co">#&gt; CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
-<span><span class="co">#&gt;        type  zq90 pzabove2  zsd               geometry</span></span>
-<span><span class="co">#&gt; 1  existing  3.65     52.1 0.69 POINT (434410 5341410)</span></span>
-<span><span class="co">#&gt; 2  existing  8.44     66.2 2.19 POINT (436310 5338250)</span></span>
-<span><span class="co">#&gt; 3  existing  5.68     52.6 1.27 POINT (435230 5342790)</span></span>
-<span><span class="co">#&gt; 4  existing 10.80     61.0 2.94 POINT (434570 5342810)</span></span>
-<span><span class="co">#&gt; 5  existing  2.35      1.1 0.32 POINT (434430 5339070)</span></span>
-<span><span class="co">#&gt; 6  existing  9.71     91.5 2.36 POINT (436490 5338370)</span></span>
-<span><span class="co">#&gt; 7  existing  4.37     16.8 0.96 POINT (434030 5341110)</span></span>
-<span><span class="co">#&gt; 8  existing  5.80     26.5 1.47 POINT (434090 5341430)</span></span>
-<span><span class="co">#&gt; 9  existing 10.70     71.8 2.80 POINT (432330 5339530)</span></span>
-<span><span class="co">#&gt; 10 existing  9.16     71.9 2.52 POINT (437850 5338690)</span></span></code></pre>
+<span><span class="co">#&gt;      type.x  zq90 pzabove2  zsd strata type.y  rule</span></span>
+<span><span class="co">#&gt; 1  existing  3.79     31.5 0.75      1    new rule1</span></span>
+<span><span class="co">#&gt; 2  existing  8.44     30.0 2.22      1    new rule2</span></span>
+<span><span class="co">#&gt; 3  existing  7.79     82.4 1.65      1    new rule2</span></span>
+<span><span class="co">#&gt; 4  existing 10.70     69.4 2.79      1    new rule2</span></span>
+<span><span class="co">#&gt; 5  existing  7.30     85.7 1.65      1    new rule2</span></span>
+<span><span class="co">#&gt; 6  existing  7.34     24.4 1.95      1    new rule2</span></span>
+<span><span class="co">#&gt; 7  existing  5.85     54.2 1.29      1    new rule2</span></span>
+<span><span class="co">#&gt; 8  existing  4.61     17.6 1.61      1    new rule2</span></span>
+<span><span class="co">#&gt; 9  existing 10.60     74.4 2.37      1    new rule2</span></span>
+<span><span class="co">#&gt; 10 existing 10.70     86.0 2.33      1    new rule2</span></span>
+<span><span class="co">#&gt;                  geometry</span></span>
+<span><span class="co">#&gt; 1  POINT (435490 5342130)</span></span>
+<span><span class="co">#&gt; 2  POINT (433730 5340590)</span></span>
+<span><span class="co">#&gt; 3  POINT (433890 5343010)</span></span>
+<span><span class="co">#&gt; 4  POINT (434390 5341350)</span></span>
+<span><span class="co">#&gt; 5  POINT (433190 5343210)</span></span>
+<span><span class="co">#&gt; 6  POINT (433070 5341890)</span></span>
+<span><span class="co">#&gt; 7  POINT (434890 5342250)</span></span>
+<span><span class="co">#&gt; 8  POINT (434330 5341990)</span></span>
+<span><span class="co">#&gt; 9  POINT (434730 5337750)</span></span>
+<span><span class="co">#&gt; 10 POINT (435070 5337910)</span></span></code></pre>
 <p>Notice that no <code>threshold</code>, <code>nSamp</code>, or <code>nQuant</code> were defined. That is because the default setting for <code>threshold = 0.9</code> and <code>nQuant = 10</code>.</p>
 <p>The first matrix output shows the quantile ratios between the sample and the covariates. A value of 1.0 indicates that samples are represented relative to the quantile coverage. Values &gt; 1.0 indicate over representation of samples, while &lt; 1.0 indicate under representation of samples.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/sample_ahels.html">sample_ahels</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, </span>
 <span>             existing <span class="op">=</span> <span class="va">existing</span>, <span class="co"># existing samples</span></span>
 <span>             nQuant <span class="op">=</span> <span class="fl">20</span>, <span class="co"># define 20 quantiles</span></span>
 <span>             nSamp <span class="op">=</span> <span class="fl">300</span><span class="op">)</span> <span class="co"># total samples desired</span></span></code></pre></div>
-<p><img src="sampling_files/figure-html/unnamed-chunk-25-1.png" width="700"></p>
-<pre><code><span><span class="co">#&gt; Simple feature collection with 500 features and 4 fields</span></span>
+<p><img src="sampling_files/figure-html/unnamed-chunk-29-1.png" width="700"></p>
+<pre><code><span><span class="co">#&gt; Simple feature collection with 500 features and 7 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 431110 ymin: 5337750 xmax: 438550 ymax: 5343230</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 431110 ymin: 5337730 xmax: 438530 ymax: 5343230</span></span>
 <span><span class="co">#&gt; CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
-<span><span class="co">#&gt;        type  zq90 pzabove2  zsd               geometry</span></span>
-<span><span class="co">#&gt; 1  existing  3.65     52.1 0.69 POINT (434410 5341410)</span></span>
-<span><span class="co">#&gt; 2  existing  8.44     66.2 2.19 POINT (436310 5338250)</span></span>
-<span><span class="co">#&gt; 3  existing  5.68     52.6 1.27 POINT (435230 5342790)</span></span>
-<span><span class="co">#&gt; 4  existing 10.80     61.0 2.94 POINT (434570 5342810)</span></span>
-<span><span class="co">#&gt; 5  existing  2.35      1.1 0.32 POINT (434430 5339070)</span></span>
-<span><span class="co">#&gt; 6  existing  9.71     91.5 2.36 POINT (436490 5338370)</span></span>
-<span><span class="co">#&gt; 7  existing  4.37     16.8 0.96 POINT (434030 5341110)</span></span>
-<span><span class="co">#&gt; 8  existing  5.80     26.5 1.47 POINT (434090 5341430)</span></span>
-<span><span class="co">#&gt; 9  existing 10.70     71.8 2.80 POINT (432330 5339530)</span></span>
-<span><span class="co">#&gt; 10 existing  9.16     71.9 2.52 POINT (437850 5338690)</span></span></code></pre>
+<span><span class="co">#&gt;      type.x  zq90 pzabove2  zsd strata type.y  rule</span></span>
+<span><span class="co">#&gt; 1  existing  3.79     31.5 0.75      1    new rule1</span></span>
+<span><span class="co">#&gt; 2  existing  8.44     30.0 2.22      1    new rule2</span></span>
+<span><span class="co">#&gt; 3  existing  7.79     82.4 1.65      1    new rule2</span></span>
+<span><span class="co">#&gt; 4  existing 10.70     69.4 2.79      1    new rule2</span></span>
+<span><span class="co">#&gt; 5  existing  7.30     85.7 1.65      1    new rule2</span></span>
+<span><span class="co">#&gt; 6  existing  7.34     24.4 1.95      1    new rule2</span></span>
+<span><span class="co">#&gt; 7  existing  5.85     54.2 1.29      1    new rule2</span></span>
+<span><span class="co">#&gt; 8  existing  4.61     17.6 1.61      1    new rule2</span></span>
+<span><span class="co">#&gt; 9  existing 10.60     74.4 2.37      1    new rule2</span></span>
+<span><span class="co">#&gt; 10 existing 10.70     86.0 2.33      1    new rule2</span></span>
+<span><span class="co">#&gt;                  geometry</span></span>
+<span><span class="co">#&gt; 1  POINT (435490 5342130)</span></span>
+<span><span class="co">#&gt; 2  POINT (433730 5340590)</span></span>
+<span><span class="co">#&gt; 3  POINT (433890 5343010)</span></span>
+<span><span class="co">#&gt; 4  POINT (434390 5341350)</span></span>
+<span><span class="co">#&gt; 5  POINT (433190 5343210)</span></span>
+<span><span class="co">#&gt; 6  POINT (433070 5341890)</span></span>
+<span><span class="co">#&gt; 7  POINT (434890 5342250)</span></span>
+<span><span class="co">#&gt; 8  POINT (434330 5341990)</span></span>
+<span><span class="co">#&gt; 9  POINT (434730 5337750)</span></span>
+<span><span class="co">#&gt; 10 POINT (435070 5337910)</span></span></code></pre>
 <p>Notice that the total number of samples is 500. This value is the sum of existing samples (200) and number of samples defined by <code>nSamp = 300</code>.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
