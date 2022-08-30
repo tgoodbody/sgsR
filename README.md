@@ -66,21 +66,15 @@ existing <- sample_strat(sraster = sraster, # use sraster as input for sampling
                          plot = TRUE) # plot output
 ```
 
-## Vignettes :books:
+## Resources & Vignettes :books:
 
-Check out [the online
+Check out [the package
 documentation](https://tgoodbody.github.io/sgsR/index.html) to see how
-`sgsR` functions and how you might use it for your work!
+you can use `sgsR` functions for your work.
 
-Vignettes include:
-
--   Package fundamentals - `vignette("sgsR")`
-
--   Sampling algorithms - `vignette("sampling")`
-
--   Stratification algorithms - `vignette("stratification")`
-
--   Calculate algorithms - `vignette("calculating")`
+`sgsR` was presented at the ForestSAT 2022 Conference in Berlin. [Slides
+for the presentation can be found
+here.](https://tgoodbody.github.io/sgsR-ForestSAT2022/)
 
 ## Collaborators :woman: :man:
 
