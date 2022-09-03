@@ -13,6 +13,7 @@
 #' @param k Numeric. The number of nearest neighbours to take for each k-means center.
 #' When \code{k = 1} (default), the output number of samples will match \code{nSamp}. 
 #' Increases to \code{k} results in a multiplicative result total number of samples \code{nSamp * k}.
+#' @param plot Logical. Plot \code{mraster} with allocated samples.
 #'
 #' @return An sf object with \code{nSamp} randomly sampled points.
 #' 
