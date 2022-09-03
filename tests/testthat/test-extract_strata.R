@@ -7,6 +7,7 @@ test_that("Single breaks classes", {
   expect_error(extract_strata(sraster = "A", existing = existing), "'sraster' must be type SpatRaster.")
   expect_error(extract_strata(sraster = mraster, existing = existing), "'sraster' must have a layer named 'strata'.")
   expect_error(extract_strata(sraster = sraster, existing = "existing"), "'existing' must be a data.frame or sf object.")
+  expect_error(extract_strata(sraster = sraster, existing = existing, quiet = 1), "'quiet' must be type logical.")
   
   expect_error(extract_strata(sraster = sraster, existing = existing, filename = 2),"'filename' must be type character.")
   expect_error(extract_strata(sraster = sraster, existing = existing, data.frame = TRUE, filename = file.path(tempdir(), "temp.csv"), overwrite = "FALSE"),"'overwrite' must be type logical.")

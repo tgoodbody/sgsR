@@ -9,6 +9,8 @@
 #' @param sraster spatRaster. Stratification raster.
 #' @param existing sf 'POINT'.  Existing plot network.
 #' @param data.frame Logical. Output as data.frame if \code{TRUE}
+#' @param quiet Logical. If \code{TRUE} the user will not get messages
+#' about samples with \code{NA} values.
 #' 
 #' @return An sf or data.frame object of samples with strata attribute.
 #' 
@@ -34,6 +36,7 @@
 
 extract_strata <- function(sraster,
                            existing,
+                           quiet = FALSE,
                            data.frame = FALSE,
                            filename = NULL,
                            overwrite = FALSE) {
@@ -54,6 +57,10 @@ extract_strata <- function(sraster,
   
   if (!inherits(existing, "data.frame") && !inherits(existing, "sf")) {
     stop("'existing' must be a data.frame or sf object.", call. = FALSE)
+  }
+  
+  if (!is.logical(quiet)) {
+    stop("'quiet' must be type logical.", call. = FALSE)
   }
 
   #--- if the existing plots are an sf object extract coordinates ---#
@@ -130,7 +137,9 @@ extract_strata <- function(sraster,
       dplyr::tally() %>%
       dplyr::pull()
     
-    message(paste0(nNA," samples are located where strata values are NA."))
+    if(isFALSE(quiet)){
+      message(paste0(nNA," samples are located where strata values are NA."))
+    }
   }
 
   #--- output either data.frame or sf object ---#

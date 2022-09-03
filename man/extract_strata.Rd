@@ -7,6 +7,7 @@
 extract_strata(
   sraster,
   existing,
+  quiet = FALSE,
   data.frame = FALSE,
   filename = NULL,
   overwrite = FALSE
@@ -16,6 +17,9 @@ extract_strata(
 \item{sraster}{spatRaster. Stratification raster.}
 
 \item{existing}{sf 'POINT'.  Existing plot network.}
+
+\item{quiet}{Logical. If \code{TRUE} the user will not get messages
+about samples with \code{NA} values.}
 
 \item{data.frame}{Logical. Output as data.frame if \code{TRUE}}
 

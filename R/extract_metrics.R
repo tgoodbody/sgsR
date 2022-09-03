@@ -34,6 +34,7 @@
 
 extract_metrics <- function(mraster,
                             existing,
+                            quiet = FALSE,
                             data.frame = FALSE,
                             filename = NULL,
                             overwrite = FALSE) {
@@ -50,6 +51,10 @@ extract_metrics <- function(mraster,
   
   if (!inherits(existing, "data.frame") && !inherits(existing, "sf")) {
     stop("'existing' must be a data.frame or sf object.", call. = FALSE)
+  }
+  
+  if (!is.logical(quiet)) {
+    stop("'quiet' must be type logical.", call. = FALSE)
   }
 
   #--- if the existing plots are an sf object extract coordinates ---#
@@ -125,7 +130,9 @@ extract_metrics <- function(mraster,
       dplyr::tally() %>%
       dplyr::pull()
     
-    message(paste0(nNA," samples are located where metric values are NA."))
+    if(isFALSE(quiet)){
+      message(paste0(nNA," samples are located where metric values are NA."))
+    }
   }
 
   
