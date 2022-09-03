@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,6 +61,11 @@
       <small>Source: <a href="https://github.com/tgoodbody/sgsR/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.2.1" id="sgsr-121">sgsR 1.2.1<a class="anchor" aria-label="anchor" href="#sgsr-121"></a></h2>
+<p><code>fixed</code> - <code><a href="../reference/sample_systematic.html">sample_systematic()</a></code> bug where <code>cellsize</code> values that caused no samples to intersect with the raster would cause <code><a href="../reference/extract_metrics.html">extract_metrics()</a></code> to provide an error about existing not having any samples. Added a check for intersection and corresponding error message.</p>
+<p><code>enhancement</code> - Added <code>quiet</code> to <code><a href="../reference/extract_metrics.html">extract_metrics()</a></code> &amp; <code><a href="../reference/extract_strata.html">extract_strata()</a></code> to allow internal use without messages.</p>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.2.0" id="sgsr-120">sgsR 1.2.0<a class="anchor" aria-label="anchor" href="#sgsr-120"></a></h2><p class="text-muted">CRAN release: 2022-08-07</p>
 <ul><li><p><code>fixed</code> - <code><a href="../reference/strat_kmeans.html">strat_kmeans()</a></code> bug related to <code>terra</code> where the re-assignment of values to the output raster was causing issues. R Hijmans kindly suggested the edit made.</p></li>
