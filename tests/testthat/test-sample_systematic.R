@@ -43,6 +43,8 @@ test_that("random", {
   
   expect_equal(nrow(or), 32L)
   expect_equal(nrow(or1), 41L)
+  
+  expect_error(sample_systematic(raster = sraster, cellsize = 5000000, location = "random"),"No samples intersect with 'raster'. Ensure 'cellsize' makes sense.")
 })
 
 
@@ -57,4 +59,5 @@ test_that("messages", {
 
   expect_message(sample_systematic(raster = sraster, cellsize = 20000, square = FALSE, location = "random", force = TRUE),"Forcing samples to fall in non NA locations.")
   expect_message(sample_systematic(raster = sraster, cellsize = 5000, location = "random", force = TRUE),"Forcing samples to fall in non NA locations.")
+  expect_error(sample_systematic(raster = sraster, cellsize = 5000000, location = "centers"),"No samples intersect with 'raster'. Ensure 'cellsize' makes sense.")
 })

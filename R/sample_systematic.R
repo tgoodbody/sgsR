@@ -132,6 +132,8 @@ sample_systematic <- function(raster,
   
   #--- convert raster extent into a polygon ---#
   
+  rasterext <- sf::st_as_sf(terra::as.polygons(terra::ext(raster), crs = terra::crs(raster)))
+
   r <- raster
   
   res <- terra::res(x = r)[1]
@@ -199,8 +201,15 @@ sample_systematic <- function(raster,
     
     #--- sampling --#
     samples <- sf::st_sample(p_diff, size=c(1,1), type = "random") %>%
-      sf::st_sf(.) %>%
-      extract_metrics(mraster = raster[[1]], existing = .) %>%
+      sf::st_sf(.)
+    
+    #--- check to make sure that samples intersect raster extent (cellsize check) ---#
+    if(isFALSE(lengths(suppressMessages(sf::st_intersects(samples, rasterext))) > 0)){
+      stop("No samples intersect with 'raster'. Ensure 'cellsize' makes sense.", call. = FALSE)
+    }
+    
+    samples <- samples %>% 
+      extract_metrics(mraster = raster[[1]], existing = ., quiet = TRUE) %>%
       stats::na.omit()
     
   } else {
@@ -255,22 +264,37 @@ sample_systematic <- function(raster,
         X = X + vals$X,
         Y = Y + vals$Y
       ) %>%
-      sf::st_as_sf(., coords = c("X", "Y")) %>%
+      sf::st_as_sf(., coords = c("X", "Y"),
+                   crs = terra::crs(raster)))
+      
+    #--- check to make sure that samples intersect raster extent (cellsize check) ---#
+    if(isFALSE(lengths(suppressMessages(sf::st_intersects(samples, rasterext))) > 0)){
+      stop("No samples intersect with 'raster'. Ensure 'cellsize' makes sense.", call. = FALSE)
+    }
+      
       #--- need to extract a metric to determine if values are NA ---#
-      extract_metrics(mraster = raster[[1]], existing = .) %>%
+      samples <- samples %>% 
+        extract_metrics(mraster = raster[[1]], existing = ., quiet = TRUE) %>%
       #--- remove samples with NA ---#
-      stats::na.omit() %>%
-      dplyr::select(geometry))
+        stats::na.omit() %>%
+        dplyr::select(geometry)
     
   } else {
     
     samples <- suppressMessages(sf::st_as_sf(sf::st_make_grid(sfObj, cellsize, square = square, what = location, crs = terra::crs(raster), ...)) %>%
-      dplyr::rename(geometry = x) %>%
+      dplyr::rename(geometry = x))
+    
+    #--- check to make sure that samples intersect raster extent (cellsize check) ---#
+    if(isFALSE(lengths(suppressMessages(sf::st_intersects(samples, rasterext))) > 0)){
+      stop("No samples intersect with 'raster'. Ensure 'cellsize' makes sense.", call. = FALSE)
+    }
+      
+    samples <- samples %>%
       #--- need to extract a metric to determine if values are NA ---#
-      extract_metrics(mraster = raster[[1]], existing = .) %>%
+      extract_metrics(mraster = raster[[1]], existing = ., quiet = TRUE) %>%
       #--- remove samples with NA ---#
       stats::na.omit() %>%
-      dplyr::select(geometry))
+      dplyr::select(geometry)
 
   }
   }
