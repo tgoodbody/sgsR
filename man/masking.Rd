@@ -3,9 +3,12 @@
 \name{masking}
 \alias{masking}
 \alias{mask_access}
+\alias{mask_existing}
 \title{Masking}
 \usage{
 mask_access(raster, access, buff_inner = NULL, buff_outer)
+
+mask_existing(access, existing, buff_inner = NULL, buff_outer)
 }
 \arguments{
 \item{raster}{SpatRaster. Raster to be masked.}
@@ -17,12 +20,14 @@ from access where plots cannot be sampled.}
 
 \item{buff_outer}{Numeric. Outer buffer boundary specifying distance
 from access where plots can be sampled.}
+
+\item{existing}{sf 'POINT'.  Existing plot network.}
 }
 \value{
-Raster masked by provided \code{access} layer and buffers.
+Raster/existing samples masked by provided \code{access} layer and buffers.
 }
 \description{
-Create covariate and sample matrices
+Mask covariates and existing samples by access
 }
 \concept{masking}
 \keyword{internal}

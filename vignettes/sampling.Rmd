@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
 ```{r,warning=F,message=F,echo=FALSE}
 library(sgsR)
 library(terra)
+library(dplyr)
 
 #--- Load mraster and access files ---#
 r <- system.file("extdata", "mraster.tif", package = "sgsR")
@@ -42,7 +43,7 @@ existing <- sample_strat(sraster = sraster, # use mraster as input for sampling
 
 ```
 
-Currently, there are 7 functions associated with the `sample` verb in the `sgsR` package:
+Currently, there are 8 functions associated with the `sample` verb in the `sgsR` package:
 
 *   `sample_srs()` - simple random sampling
 
@@ -57,6 +58,8 @@ Currently, there are 7 functions associated with the `sample` verb in the `sgsR`
 *   `sample_balanced()` - see [BalancedSampling](http://www.antongrafstrom.se/balancedsampling/)
 
 *   `sample_ahels()` - adapted hypercube evaluation of a legacy sample (ahels)
+
+*   `sample_existing()` - Sub-sample within an existing sample using [clhs](https://CRAN.R-project.org/package=clhs)
 
 ## Access {#access .unnumbered}
 
@@ -383,3 +386,92 @@ s
 ```
 
 Notice that the total number of samples is 500. This value is the sum of existing samples (200) and number of samples defined by `nSamp = 300`.
+
+## `sample_existing` {#samp-existing .unnumbered}
+
+Acknowledging that `existing` sample networks exist is important. There is significant investment into these samples, and in order to keep inventories up-to-date, we often need to collect new data at these locations. The `sample_existing` algorithm provides a method for sub-sampling an `existing` sample network should the financial / logistical resources not be available to collect data at all sample units. The algorithm leverages latin hypercube sampling using the [clhs](https://CRAN.R-project.org/package=clhs) package to effectively sample within an `existing` network.
+
+The algorithm has two fundamental approaches:
+
+1. Sample exclusively using the sample network and the attributes it contains
+
+2. Should `raster` information be available and co-located with the sample, use these data as population values to improve sub-sampling of `existing`.
+
+Much like the `sample_clhs()` algorithm, users can define a `cost` parameter, which will be used to constrain sub-sampling. A cost parameters is a user defined metric/attribute such as distance from roads (e.g. `calculate_distance()`), elevation, etc.
+
+Here some some basic examples:
+
+### Basic sub-sampling of `existing`
+
+First we can create an existing dataset for our example. Lets imagine we have a systematically sampled dataset of ~900 samples, and we know we only have resources to sample 300 of them. We have some ALS data available (`mraster`), which we will use as our distributions to sample within.
+
+```{r,warning=F,message=F}
+#--- generate existing samples and extract metrics ---#
+existing <- sample_systematic(raster = mraster, cellsize = 200, plot = TRUE) %>%
+  extract_metrics(mraster = mraster, existing = .)
+
+```
+
+We see our systematic sample. Notice that we used `extract_metrics()` after creating it. If the user provides a `raster` for the algorithm this isn't neccesary, it will be handled internally in the algorithm if no attributes are present, but if only samples are given, attributes must be provided and _sampling will be conducted on all included attributes_. Now lets sub-sample within it.
+
+
+```{r,warning=F,message=F}
+#--- sub sample using ---#
+sample_existing(existing = existing, # our existing sample
+                nSamp = 300, # the number of samples we want
+                plot = TRUE) # plot
+
+```
+
+We see from the output that we get 300 samples that are a sub-sample of the original `existing` sample. The plotted output shows sumulative frequency distributions of the population (all `existing` samples) and the sub-sample (the 300 samples we requested). Notice that the distributions match quite well. This is a simple example, so lets do another with a bit more complexity.
+
+### Sub-sampling using `raster` distributions
+
+Our systematic sample of ~900 plots is fairly comprehensive, however we can generate a true population distribution through the inclusion of the ALS metrics in the sampling process. The metrics will be included in internal latin hypercube sampling to help guide sub-sampling of `existing`.
+
+```{r,warning=F,message=F}
+#--- sub sample using ---#
+sample_existing(existing = existing, # our existing sample
+                nSamp = 300, # the number of samples we want
+                raster = mraster, # include mraster metrics to guide sampling of existing
+                plot = TRUE) # plot
+
+```
+The sample distribution again mimics the population distribution quite well! Now lets try using a cost variable to constrain the sub-sample.
+
+```{r,warning=F,message=F}
+#--- create distance from roads metric ---#
+dist <- calculate_distance(raster = mraster, access = access)
+
+```
+
+```{r,warning=F,message=F}
+#--- sub sample using ---#
+sample_existing(existing = existing, # our existing sample
+                nSamp = 300, # the number of samples we want
+                raster = dist, # include mraster metrics to guide sampling of existing
+                cost = 4, # either provide the index (band number) or the name of the cost layer
+                plot = TRUE) # plot
+
+```
+
+Finally, should the user wish to further constrain the sample based on `access` like other sampling approaches in `sgsR` that is also possible.
+
+```{r,warning=F,message=F}
+#--- ensure access and existing are in the same CRS ---#
+
+sf::st_crs(existing) <- sf::st_crs(access)
+
+#--- sub sample using ---#
+sample_existing(existing = existing, # our existing sample
+                nSamp = 300, # the number of samples we want
+                raster = dist, # include mraster metrics to guide sampling of existing
+                cost = 4, # either provide the index (band number) or the name of the cost layer
+                access = access, # roads layer
+                buff_inner = 50, # inner buffer - no samples within this distance from road
+                buff_outer = 300, # outer buffer - no samples further than this distance from road
+                plot = TRUE) # plot
+
+```
+
+The greater constraints we add to the samples, the less likely we will have strong correlations between the population and sample, so its always important to understand these limitations and plan accordingly.

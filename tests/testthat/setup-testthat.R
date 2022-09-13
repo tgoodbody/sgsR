@@ -1,4 +1,5 @@
 library(terra)
+suppressWarnings(library(dplyr))
 
 #--- metrics raster ---#
 mr <- system.file("extdata", "mraster.tif", package = "sgsR")
@@ -59,3 +60,11 @@ e <- extract_strata(sraster, existing)
 
 existing.df <- data.frame(strata = e$strata)
 existing.df.n <- data.frame(name = e$strata)
+
+#--- distance to access ---#
+
+d <- calculate_distance(raster = mraster, access = access)
+
+de <- calculate_distance(raster = mraster, access = access) %>%
+  extract_metrics(., existing) %>%
+  dplyr::select(-FID)

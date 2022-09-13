@@ -94,6 +94,10 @@ sample_clhs <- function(mraster,
   if (!is.numeric(iter)) {
     stop("'iter' must be type numeric.", call. = FALSE)
   }
+  
+  if (iter <= 0) {
+    stop("'iter' must be >= 0.", call. = FALSE)
+  }
 
   if (is.na(terra::crs(mraster, proj = TRUE))) {
     stop("'mraster' does not have a coordinate system.", call. = FALSE)

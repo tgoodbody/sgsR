@@ -78,6 +78,7 @@ Grafström, A. Lisic, J (2018). BalancedSampling: Balanced and Spatially Balance
 Other sample functions: 
 \code{\link{sample_ahels}()},
 \code{\link{sample_clhs}()},
+\code{\link{sample_existing}()},
 \code{\link{sample_nc}()},
 \code{\link{sample_srs}()},
 \code{\link{sample_strat}()},

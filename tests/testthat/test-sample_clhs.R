@@ -9,6 +9,7 @@ test_that("Input classes", {
   expect_error(sample_clhs(mraster = mraster, nSamp = "A", existing = e), "'nSamp' must be type numeric.")
   expect_error(sample_clhs(mraster = mraster, existing = "existing", nSamp = 5), "'existing' must be a data.frame or sf object.")
   expect_error(sample_clhs(mraster = mraster, existing = e, iter = "A", nSamp = 50), "'iter' must be type numeric.")
+  expect_error(sample_clhs(mraster = mraster, existing = e, iter = -1, nSamp = 50), "'iter' must be >= 0.")
   expect_error(sample_clhs(mraster = mraster, nSamp = 100, existing = e, plot = 1), "'plot' must be type logical.")
   expect_error(sample_clhs(mraster = mraster, nSamp = 100, existing = e, details = "A"), "'details' must be type logical.")
   expect_error(sample_clhs(mraster = mraster, nSamp = 100, existing = e, cost = TRUE), "'cost' must be either type numeric or character.")

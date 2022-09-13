@@ -41,8 +41,7 @@ from access where plots cannot be sampled.}
 \item{buff_outer}{Numeric. Outer buffer boundary specifying distance
 from access where plots can be sampled.}
 
-\item{plot}{Logical. Plots output strata raster and visualized
-strata with boundary dividers.}
+\item{plot}{Logical. Plot \code{mraster} with allocated samples.}
 
 \item{details}{Logical. If \code{FALSE} (default) output is only
 stratification raster. If \code{TRUE} return a list where \code{$details} is additional 
@@ -92,6 +91,7 @@ Other sample functions:
 \code{\link{sample_ahels}()},
 \code{\link{sample_balanced}()},
 \code{\link{sample_clhs}()},
+\code{\link{sample_existing}()},
 \code{\link{sample_srs}()},
 \code{\link{sample_strat}()},
 \code{\link{sample_systematic}()}
