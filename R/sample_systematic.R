@@ -244,15 +244,19 @@ sample_systematic <- function(raster,
         vals <- data.frame(X = runif(gridn, -radius, radius),
                            Y = runif(gridn, -radius, radius))
       } else {
+        
+      #--- parameters for hexagon random sampling ---#
+        c30 <- sqrt(3)/2
+        
         tests <- gridn * 100
         
         X <- runif(tests, -1, 1)
-        Y <- runif(tests, -.866, .866)
+        Y <- runif(tests, -c30, c30)
         
         xy <- data.frame(X = X, Y = Y)
         
         #--- test whether the sample will be within the bounds of the hexagon ---#
-        xy$pass <- abs(xy$X) < 1 - .5 * (abs(xy$Y) / .866)
+        xy$pass <- abs(xy$X) < 1 - .5 * (abs(xy$Y) / c30)
         
         #--- filter only values with TRUE in $pass ---#
         vals <- xy %>%
