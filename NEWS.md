@@ -1,3 +1,7 @@
+# sgsR 1.3.1
+
+`fixed` - `sample_systematic()` added random translation to sampling grid to ensure unbiased sampling.
+
 # sgsR 1.3.0
 
 `new` - `sample_existing()` has been added. This algorithm sub-samples and `existing` sample using internal latin hypercube sampling. Constraints in the form of the `cost` parameter akin to `sample_clhs()` exist. Sub-sampling can be performed on `existing` samples alone, or using population level `mraster` distributions.
