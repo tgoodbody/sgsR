@@ -122,6 +122,8 @@ sample_existing <- function(existing,
     #--- if raster is supplied
     if(!is.null(raster)){
       
+      crs <- terra::crs(raster)
+      
       #--- check to see if 'existing' does not contain attributes with the same names as 'raster' ---#
       if(!all(names(raster) %in% names(existing))){
         
