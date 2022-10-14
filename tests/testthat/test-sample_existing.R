@@ -1,6 +1,6 @@
 set.seed(2022)
 o <- sample_existing(existing = existing, raster = mraster, nSamp = 50)
-o1 <- sample_existing(existing = de, cost = 4, nSamp = 20)
+o1 <- sample_existing(existing = de, cost = 4, nSamp = 20, plot = TRUE)
 o2 <- sample_existing(existing = de, raster = d, cost = 4, nSamp = 20)
 o3 <- sample_existing(existing = de, raster = d, cost = 4, nSamp = 20, details = TRUE, plot = TRUE)
 
@@ -21,6 +21,11 @@ test_that("Input classes", {
   expect_error(sample_existing(existing = existing, raster = mraster, nSamp = 10, filename = file.path(tempdir(), "temp.shp"), overwrite = "A"), "'overwrite' must be type logical.")
 })
 
+test_that("non sf existing", {
+  expect_message(sample_existing(existing = existing.df.n.xy, raster = mraster, nSamp = 20, details = TRUE), "'existing' does not contain attributes with the same names as 'raster'. Extracting metrics.")
+})
+
+
 test_that("Access", {
   expect_message(sample_existing(existing = existing, raster = mraster, nSamp = 20, access = access, buff_inner = 50, buff_outer = 200, plot = TRUE), "An access layer has been provided. An internal buffer of 50 m and an external buffer of 200 m have been applied.")
   expect_message(sample_existing(existing = existing, raster = mraster, nSamp = 20, access = access, buff_outer = 200), "An access layer has been provided. An external buffer of 200 m have been applied.")
@@ -31,6 +36,8 @@ test_that("Access", {
   expect_message(sample_existing(existing = de, cost = 4, nSamp = 20), "Sub-sampling based on 'existing' metric distributions.")
   expect_message(sample_existing(existing = de, cost = 4, nSamp = 20), "Using `dist2access` as sampling constraint.")
 })
+
+
 
 test_that("Total outputs", {
   expect_equal(nrow(o), 50L)

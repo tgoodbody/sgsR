@@ -9,16 +9,21 @@ test_that("Input classes", {
   expect_error(sample_nc(mraster = mraster, nSamp = 4, iter = "100", details = TRUE),"'iter' must be type numeric.")
   expect_error(sample_nc(mraster = mraster, nSamp = 4, iter = 100, algorithm = 4),"'algorithm' must be type character.")
   expect_error(sample_nc(mraster = mraster, nSamp = 50, plot = "A"), "'plot' must be type logical")
-  expect_error(sample_nc(mraster = mraster, nSamp = 100, plot = 1), "'plot' must be type logical.")
+  expect_error(sample_nc(mraster = mraster, nSamp = 100, details = 1), "'details' must be type logical.")
   expect_error(sample_nc(mraster = mraster, nSamp = 5, filename = TRUE), "'filename' must be a file path character string.")
   expect_error(sample_nc(mraster = mraster, nSamp = 10, filename = file.path(tempdir(), "temp.shp"), overwrite = "A"), "'overwrite' must be type logical.")
 })
 
 test_that("Access", {
   expect_message(sample_nc(mraster = mraster, nSamp = 5, access = access, buff_inner = 50, buff_outer = 200, plot = TRUE), "An access layer has been provided. An internal buffer of 50 m and an external buffer of 200 m have been applied.")
+  expect_message(sample_nc(mraster = mraster, nSamp = 5, plot = TRUE), "K-means being performed on 3 layers with 5 centers.")
   expect_message(sample_nc(mraster = mraster, nSamp = 5, access = access, buff_outer = 200), "An access layer has been provided. An external buffer of 200 m have been applied.")
   expect_message(sample_nc(mraster = mraster, nSamp = 5),"K-means being performed on 3 layers with 5 centers.")
   expect_message(sample_nc(mraster = mraster, nSamp = 5, filename = file.path(tempdir(), "temp.shp"), overwrite = TRUE), "Output samples written to disc.")
+})
+
+test_that("details", {
+  expect_message(sample_nc(mraster = mraster, nSamp = 5, plot = TRUE, details = TRUE), "K-means being performed on 3 layers with 5 centers.")
 })
 
 test_that("Single metric tests", {
