@@ -82,7 +82,8 @@
 <li><p><code>fixed</code> - <code><a href="../reference/strat_quantiles.html">strat_quantiles()</a></code> no longer plots histogram / scatter plot when using <code>plot = TRUE</code>. Now correctly adds this to details list when <code>details = TRUE</code>.</p></li>
 <li>
 <p><code>new sampling method</code> - Added <code><a href="../reference/sample_nc.html">sample_nc()</a></code> based on the algorithm described in <a href="https://doi.org/10.1080/00049158.2016.1218265" class="external-link">Melville &amp; Stone (2016)</a></p>
-<ul><li>This algorithm uses kmeans clustering where the number of clusters is equal to the desired number of samples. Cluster centers are located, which then prompts the nearest neighbour raster pixel for each cluster to be located (assuming default <code>k</code> parameter). These nearest neighbours are the output samples. Visualization of the centers and samples can be dispayed if <code>details = TRUE</code> is used and <code>$kplot</code> is plotted.</li></ul></li>
+<ul><li>This algorithm uses kmeans clustering where the number of clusters is equal to the desired number of samples. Cluster centers are located, which then prompts the nearest neighbour raster pixel for each cluster to be located (assuming default <code>k</code> parameter). These nearest neighbours are the output samples. Visualization of the centers and samples can be dispayed if <code>details = TRUE</code> is used and <code>$kplot</code> is plotted.</li>
+</ul></li>
 <li><p><code>fixed</code> - <code><a href="../reference/sample_systematic.html">sample_systematic()</a></code> now has inherent randomness for lower left corner of the tessellation.</p></li>
 <li><p><code>fixed</code> - <code><a href="../reference/strat_kmeans.html">strat_kmeans()</a></code> solved issue where only first raster layer was being involved in stratification.</p></li>
 </ul></div>
@@ -96,12 +97,14 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.0" id="sgsr-100">sgsR 1.0.0<a class="anchor" aria-label="anchor" href="#sgsr-100"></a></h2><p class="text-muted">CRAN release: 2022-06-24</p>
-<ul><li>First CRAN release.</li></ul></div>
+<ul><li>First CRAN release.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.6" id="sgsr-016">sgsR 0.1.6<a class="anchor" aria-label="anchor" href="#sgsr-016"></a></h2>
 <ul><li>
 <p>Added comprehensive tests using <code>testthat</code> for most functions and <code>covr</code> reporting.</p>
-<ul><li>Resulting from tests: miscellaneous adjustments to many functions including small non-critical bug fixed, error and message improvements.</li></ul></li>
+<ul><li>Resulting from tests: miscellaneous adjustments to many functions including small non-critical bug fixed, error and message improvements.</li>
+</ul></li>
 <li><p>Changed <code>forceSamp</code> to <code>force</code> in <code><a href="../reference/sample_systematic.html">sample_systematic()</a></code>.</p></li>
 <li><p>Removed <code>details</code> from <code>sample_coob()</code>.</p></li>
 <li><p>Improved ability to use <code>data.frames()</code> of samples as inputs for numerous algorithms.</p></li>
@@ -116,7 +119,8 @@
 <li>
 <p><code>sample_strat</code></p>
 <ul><li>
-<code><a href="../reference/rules.html">strat_rule1()</a></code> and <code><a href="../reference/rules.html">strat_rule2()</a></code> functions to make code more concise. Fixed issue with <code>mindist</code> not setting distances between strata.</li></ul></li>
+<code><a href="../reference/rules.html">strat_rule1()</a></code> and <code><a href="../reference/rules.html">strat_rule2()</a></code> functions to make code more concise. Fixed issue with <code>mindist</code> not setting distances between strata.</li>
+</ul></li>
 <li>
 <p><code><a href="../reference/sample_ahels.html">sample_ahels()</a></code></p>
 <ul><li>Added <code>tolerance</code> parameter to <code><a href="../reference/sample_ahels.html">sample_ahels()</a></code> to allow users to define a tolerance around the desired sampling ratio (max <code>tolerance =  0.1</code>). This will allow the user to say “I ideally want the ratio to be <code>XX</code> but I’m OK if the ratio is <code>XX - threshold</code> if it means I don’t need to add more samples”.</li>
@@ -151,7 +155,8 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.1" id="sgsr-011">sgsR 0.1.1<a class="anchor" aria-label="anchor" href="#sgsr-011"></a></h2>
-<ul><li>Added a <code>NEWS.md</code> file to track changes to the package.</li></ul></div>
+<ul><li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
+</ul></div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
