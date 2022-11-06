@@ -99,3 +99,4 @@ thanks to to:
 
 Development of `sgsR` was made possible thanks to the financial support
 of the Canadian Wood Fibre Centre’s Forest Innovation Program.
+<a rel="me" href="https://fosstodon.org/@goodbody"> </a>
