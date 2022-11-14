@@ -29,4 +29,3 @@ test_that("Total outputs", {
   
   expect_s3_class(calculate_sampsize(mraster = mraster, rse = 0.01, plot = TRUE)$plot, "gg")
 })
-

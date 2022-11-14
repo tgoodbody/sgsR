@@ -364,7 +364,7 @@ sample_ahels <- function(mraster,
 
   if (isTRUE(plot)) {
     terra::plot(mraster[[1]])
-    suppressWarnings(terra::plot(samples, add = T, col = "black", pch = ifelse(samples$type == "existing", 3, 1)))
+    suppressWarnings(terra::plot(samples, add = T, col = "black", pch = ifelse(samples$type == "existing", 1, 3)))
   }
 
   if (!is.null(filename)) {
