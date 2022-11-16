@@ -71,9 +71,7 @@ test_that("Out classes", {
 
 #--- categorical raster ---#
 test_that("Categorical", {
-  expect_message(strat_map(sraster = sraster, sraster2 = x),"'sraster2' has factor values. Converting to allow mapping.")
-  expect_message(strat_map(sraster = x, sraster2 = sraster),"'sraster' has factor values. Converting to allow mapping.")
-  expect_equal(strat_map(sraster = x, sraster2 = x, details = TRUE)$lookUp$stratamapped_cat[1],"D_D")
-  expect_equal("D_2",strat_map(sraster = x, sraster2 = sraster, details = TRUE)$lookUp$stratamapped_cat[1])
-  expect_equal("3_D",strat_map(sraster = srasterfri, sraster2 = x, details = TRUE)$lookUp$stratamapped_cat[1])
+  expect_equal(strat_map(sraster = x, sraster2 = x, details = TRUE)$lookUp$stratamapped[1],"DD")
+  expect_equal("D2",strat_map(sraster = x, sraster2 = sraster, details = TRUE)$lookUp$stratamapped[1])
+  expect_equal("3D",strat_map(sraster = srasterfri, sraster2 = x, details = TRUE)$lookUp$stratamapped[1])
 })

@@ -67,7 +67,7 @@
 #'
 #' @return A spatRaster object.
 #'
-#' @author Tristan R.H. Goodbody
+#' @author Tristan R.H. Goodbody, Robert Hijmans
 #'
 #' @export
 
@@ -82,7 +82,7 @@ strat_map <- function(sraster,
                       ) {
 
   #--- global variables ---#
-  strata <- strata2 <- sraster_cat <- sraster2_cat <- value <- NULL
+  strata <- strata2 <- value <- NULL
 
   #--- error handling ---#
 
@@ -120,17 +120,13 @@ strat_map <- function(sraster,
     stop("'sraster2' must only contain 1 layer. Please subset the layer you would like to use for mapping.", call. = FALSE)
   }
 
-  suppressWarnings(
-    if (!grepl("strata", names(sraster))) {
-      stop("A layer name containing 'strata' does not exist within 'sraster'.", call. = FALSE)
-    }
-  )
+  if (!grepl("strata", names(sraster))) {
+    stop("A layer name containing 'strata' does not exist within 'sraster'.", call. = FALSE)
+  }
 
-  suppressWarnings(
-    if (!grepl("strata", names(sraster2))) {
-      stop("A layer name containing 'strata' does not exist within 'sraster2'.", call. = FALSE)
-    }
-  )
+  if (!grepl("strata", names(sraster2))) {
+    stop("A layer name containing 'strata' does not exist within 'sraster2'.", call. = FALSE)
+  }
 
   #--- check that extents and resolutions of sraster and sraster2 match ---#
 
@@ -143,55 +139,9 @@ strat_map <- function(sraster,
   }
 
   #--- map stratification rasters ---#
-  
-  
-#  if(!is.null(terra::cats(sraster)[[1]])){
-   if (is.factor(sraster)[1]) {
-    message("'sraster' has factor values. Converting to allow mapping.")
-
-## levels returns a list with data.frames with the 2 columns that matter (ID, value)
-## whereas cats might return many
-#    srastcats <- terra::cats(sraster) %>%
-    srastcats <- terra::levels(sraster) %>%
-       as.data.frame() %>%
-      dplyr::rename(cat = 2) %>%
-#      dplyr::mutate(value = value + 1)
-      dplyr::mutate(value = value)
-
-## catalyze creates a multi-layer raster if there are multiple attributes. 
-## Here you just want to remove the levels.
-    
-#    sraster <- sraster %>%
-#      terra::catalyze(.)
-      levels(sraster) <- NULL   
-  }
-
-  
-#  if(!is.null(terra::cats(sraster2)[[1]])){
-   if (is.factor(sraster2)[1]) {
-    message("'sraster2' has factor values. Converting to allow mapping.")
-    
-#    srastcats2 <- terra::cats(sraster2) %>%
-    srastcats2 <- terra::levels(sraster2) %>%
-      as.data.frame() %>%
-      dplyr::rename(cat = 2) %>%
-#      dplyr::mutate(value = value + 1)
-      dplyr::mutate(value = value)
-    
-    #sraster2 <- sraster2 %>%
-    #  terra::catalyze(.)
-      levels(sraster2) <- NULL   
-
-  }
 
   joined <- c(sraster, sraster2)
   names(joined) <- c("strata", "strata2")
-
-## perhaps things would be simpler if you did not to do the 
-## business with the levels you do above, and used "as.data.frame" here
-## because you would get the factor labels if there are any.
-
-#  featuresJoin <- terra::as.data.frame(joined, na.rm=FALSE)
 
   featuresJoin <- terra::values(joined, dataframe = TRUE)
 
@@ -206,60 +156,9 @@ strat_map <- function(sraster,
     stats::na.omit() %>%
     as.data.frame()
   
-  #--- if stratum variables were categorical add the categories to the lookUp table ---#
-  
-  if(exists("srastcats")){
-
-    lookUp <- dplyr::left_join(lookUp, srastcats, by=c("strata" = "value")) %>%
-      dplyr::rename(sraster_cat = names(srastcats)[2])
-
-    #--- sometimes values are factors
-
-    if(any(is.na(lookUp$sraster_cat))){
-
-      lookUp$sraster_cat <- lookUp$strata
-
-    }
-
-    if(!exists("srastcats2")){
-
-        lookUp <- lookUp %>%
-          dplyr::mutate(stratamapped_cat = paste0(sraster_cat,"_",strata2)) %>%
-          dplyr::select(-sraster_cat)
-
-    }
-  }
-
-  if(exists("srastcats2")){
-
-    lookUp <- dplyr::left_join(lookUp, srastcats2, by=c("strata2" = "value")) %>%
-      dplyr::rename(sraster2_cat = names(srastcats2)[2])
-
-    if(any(is.na(lookUp$sraster2_cat))){
-
-      lookUp$sraster2_cat <- lookUp$strata2
-
-    }
-
-    if(exists("srastcats")){
-
-      lookUp <- lookUp %>%
-        dplyr::mutate(stratamapped_cat = paste0(sraster_cat,"_",sraster2_cat)) %>%
-        dplyr::select(-sraster2_cat, -sraster_cat)
-
-    } else {
-
-      lookUp <- lookUp %>%
-        dplyr::mutate(stratamapped_cat = paste0(strata,"_",sraster2_cat)) %>%
-        dplyr::select(-sraster2_cat)
-
-    }
-
-  }
-
   #--- set newly stratified values ---#
 
-  rout <- terra::setValues(sraster, as.integer(oclass$stratamapped))
+  rout <- terra::setValues(sraster, oclass$stratamapped)
   names(rout) <- "strata"
 
   if (isTRUE(stack)) {
@@ -281,7 +180,7 @@ strat_map <- function(sraster,
   #--- plot if requested
 
   if (isTRUE(plot)) {
-    terra::plot(rout, type = "classes")
+    terra::plot(rout)
   }
 
   #--- write file to disc ---#
