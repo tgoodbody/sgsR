@@ -144,32 +144,54 @@ strat_map <- function(sraster,
 
   #--- map stratification rasters ---#
   
-  if(!is.null(terra::cats(sraster)[[1]])){
-    message("'sraster' has factor values. Converting to allow mapping.")
-    
-    srastcats <- terra::cats(sraster) %>%
-      as.data.frame() %>%
-      dplyr::rename(cat = 2) %>%
-      dplyr::mutate(value = value + 1)
-    
-    sraster <- sraster %>%
-      terra::catalyze(.)
-  }
   
-  if(!is.null(terra::cats(sraster2)[[1]])){
+#  if(!is.null(terra::cats(sraster)[[1]])){
+   if (is.factor(sraster)[1]) {
+    message("'sraster' has factor values. Converting to allow mapping.")
+
+## levels returns a list with data.frames with the 2 columns that matter (ID, value)
+## whereas cats might return many
+#    srastcats <- terra::cats(sraster) %>%
+    srastcats <- terra::levels(sraster) %>%
+       as.data.frame() %>%
+      dplyr::rename(cat = 2) %>%
+#      dplyr::mutate(value = value + 1)
+      dplyr::mutate(value = value)
+
+## catalyze creates a multi-layer raster if there are multiple attributes. 
+## Here you just want to remove the levels.
+    
+#    sraster <- sraster %>%
+#      terra::catalyze(.)
+      levels(sraster) <- NULL   
+  }
+
+  
+#  if(!is.null(terra::cats(sraster2)[[1]])){
+   if (is.factor(sraster2)[1]) {
     message("'sraster2' has factor values. Converting to allow mapping.")
     
-    srastcats2 <- terra::cats(sraster2) %>%
+#    srastcats2 <- terra::cats(sraster2) %>%
+    srastcats2 <- terra::levels(sraster2) %>%
       as.data.frame() %>%
       dplyr::rename(cat = 2) %>%
-      dplyr::mutate(value = value + 1)
+#      dplyr::mutate(value = value + 1)
+      dplyr::mutate(value = value)
     
-    sraster2 <- sraster2 %>%
-      terra::catalyze(.)
+    #sraster2 <- sraster2 %>%
+    #  terra::catalyze(.)
+      levels(sraster2) <- NULL   
+
   }
 
   joined <- c(sraster, sraster2)
   names(joined) <- c("strata", "strata2")
+
+## perhaps things would be simpler if you did not to do the 
+## business with the levels you do above, and used "as.data.frame" here
+## because you would get the factor labels if there are any.
+
+#  featuresJoin <- terra::as.data.frame(joined, na.rm=FALSE)
 
   featuresJoin <- terra::values(joined, dataframe = TRUE)
 
