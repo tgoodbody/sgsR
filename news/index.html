@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,37 +62,42 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.3.2" id="sgsr-132">sgsR 1.3.2<a class="anchor" aria-label="anchor" href="#sgsr-132"></a></h2>
+<p><code>fixed</code> - <code><a href="../reference/strat_map.html">strat_map()</a></code> - <a href="https://github.com/tgoodbody/sgsR/issues/20" class="external-link">#20</a> greatly simplified algorithm using suggestion from R. Hijmans (added as author to algorithm). Issue was related to level matching with categorical variables.</p>
+<p><code>fixed</code> - <code><a href="../reference/sample_ahels.html">sample_ahels()</a></code> - swapped plot marker icons to be consistent with other functions</p>
+</div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.3.1" id="sgsr-131">sgsR 1.3.1<a class="anchor" aria-label="anchor" href="#sgsr-131"></a></h2><p class="text-muted">CRAN release: 2022-10-14</p>
-<p><code>fixed</code> - <code><a href="../reference/sample_systematic.html">sample_systematic()</a></code> added random translation to sampling grid to ensure unbiased sampling.</p>
+<p><code>fixed</code> - <code><a href="../reference/sample_systematic.html">sample_systematic()</a></code> - added random translation to sampling grid to ensure unbiased sampling.</p>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.3.0" id="sgsr-130">sgsR 1.3.0<a class="anchor" aria-label="anchor" href="#sgsr-130"></a></h2>
-<p><code>new</code> - <code><a href="../reference/sample_existing.html">sample_existing()</a></code> has been added. This algorithm sub-samples and <code>existing</code> sample using internal latin hypercube sampling. Constraints in the form of the <code>cost</code> parameter akin to <code><a href="../reference/sample_clhs.html">sample_clhs()</a></code> exist. Sub-sampling can be performed on <code>existing</code> samples alone, or using population level <code>mraster</code> distributions.</p>
+<p><code>new</code> - <code><a href="../reference/sample_existing.html">sample_existing()</a></code> - has been added. This algorithm sub-samples and <code>existing</code> sample using internal latin hypercube sampling. Constraints in the form of the <code>cost</code> parameter akin to <code><a href="../reference/sample_clhs.html">sample_clhs()</a></code> exist. Sub-sampling can be performed on <code>existing</code> samples alone, or using population level <code>mraster</code> distributions.</p>
 <p><code>new</code> - <code><a href="../reference/masking.html">mask_existing()</a></code> - internal function for masking <code>exising</code> samples using <code>access</code> buffers.</p>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.2.1" id="sgsr-121">sgsR 1.2.1<a class="anchor" aria-label="anchor" href="#sgsr-121"></a></h2>
-<p><code>fixed</code> - <code><a href="../reference/sample_systematic.html">sample_systematic()</a></code> bug where <code>cellsize</code> values that caused no samples to intersect with the raster would cause <code><a href="../reference/extract_metrics.html">extract_metrics()</a></code> to provide an error about existing not having any samples. Added a check for intersection and corresponding error message.</p>
+<p><code>fixed</code> - <code><a href="../reference/sample_systematic.html">sample_systematic()</a></code> - bug where <code>cellsize</code> values that caused no samples to intersect with the raster would cause <code><a href="../reference/extract_metrics.html">extract_metrics()</a></code> to provide an error about existing not having any samples. Added a check for intersection and corresponding error message.</p>
 <p><code>enhancement</code> - Added <code>quiet</code> to <code><a href="../reference/extract_metrics.html">extract_metrics()</a></code> &amp; <code><a href="../reference/extract_strata.html">extract_strata()</a></code> to allow internal use without messages.</p>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.2.0" id="sgsr-120">sgsR 1.2.0<a class="anchor" aria-label="anchor" href="#sgsr-120"></a></h2><p class="text-muted">CRAN release: 2022-08-07</p>
 <ul><li><p><code>fixed</code> - <code><a href="../reference/strat_kmeans.html">strat_kmeans()</a></code> bug related to <code>terra</code> where the re-assignment of values to the output raster was causing issues. R Hijmans kindly suggested the edit made.</p></li>
 <li><p><code>fixed</code> - <code><a href="../reference/sample_ahels.html">sample_ahels()</a></code> - bug where extra attributes in <code>existing</code> would cause the algorithm to crash when re-merging after sampling.</p></li>
-<li><p><code>fixed</code> - <code><a href="../reference/strat_quantiles.html">strat_quantiles()</a></code> no longer plots histogram / scatter plot when using <code>plot = TRUE</code>. Now correctly adds this to details list when <code>details = TRUE</code>.</p></li>
+<li><p><code>fixed</code> - <code><a href="../reference/strat_quantiles.html">strat_quantiles()</a></code> - no longer plots histogram / scatter plot when using <code>plot = TRUE</code>. Now correctly adds this to details list when <code>details = TRUE</code>.</p></li>
 <li>
 <p><code>new sampling method</code> - Added <code><a href="../reference/sample_nc.html">sample_nc()</a></code> based on the algorithm described in <a href="https://doi.org/10.1080/00049158.2016.1218265" class="external-link">Melville &amp; Stone (2016)</a></p>
 <ul><li>This algorithm uses kmeans clustering where the number of clusters is equal to the desired number of samples. Cluster centers are located, which then prompts the nearest neighbour raster pixel for each cluster to be located (assuming default <code>k</code> parameter). These nearest neighbours are the output samples. Visualization of the centers and samples can be dispayed if <code>details = TRUE</code> is used and <code>$kplot</code> is plotted.</li>
 </ul></li>
-<li><p><code>fixed</code> - <code><a href="../reference/sample_systematic.html">sample_systematic()</a></code> now has inherent randomness for lower left corner of the tessellation.</p></li>
-<li><p><code>fixed</code> - <code><a href="../reference/strat_kmeans.html">strat_kmeans()</a></code> solved issue where only first raster layer was being involved in stratification.</p></li>
+<li><p><code>fixed</code> - <code><a href="../reference/sample_systematic.html">sample_systematic()</a></code> - now has inherent randomness for lower left corner of the tessellation.</p></li>
+<li><p><code>fixed</code> - <code><a href="../reference/strat_kmeans.html">strat_kmeans()</a></code> - solved issue where only first raster layer was being involved in stratification.</p></li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.1.0" id="sgsr-110">sgsR 1.1.0<a class="anchor" aria-label="anchor" href="#sgsr-110"></a></h2>
 <ul><li><p><code>enhanced</code> - <code><a href="../reference/sample_strat.html">sample_strat()</a></code> - added parameter <code>method</code> that allows users to choose between <code>"Queinnec"</code> (default method implemented in previous sgsR versions) and <code>"random"</code> (stratified random sampling). The random method ignores much of the functionality of the algorithm to allow users to use standard stratified random sampling approaches without the use of a focal window to locate contiguous stratum cells.</p></li>
-<li><p><code>fixed</code> - <code><a href="../reference/sample_strat.html">sample_strat()</a></code> factor handling improvement - GitHub issue <a href="https://github.com/tgoodbody/sgsR/issues/18" class="external-link">#18</a></p></li>
-<li><p><code>enhanced</code> - <code><a href="../reference/calculate_allocation.html">calculate_allocation()</a></code> improved documentation for output data frame to make attributes more clear.</p></li>
-<li><p><code>fixed</code> - <code><a href="../reference/calculate_representation.html">calculate_representation()</a></code> will now not plot bar chart twice &amp; <code>NA</code> values in existing will not be removed.</p></li>
+<li><p><code>fixed</code> - <code><a href="../reference/sample_strat.html">sample_strat()</a></code> - factor handling improvement - GitHub issue <a href="https://github.com/tgoodbody/sgsR/issues/18" class="external-link">#18</a></p></li>
+<li><p><code>enhanced</code> - <code><a href="../reference/calculate_allocation.html">calculate_allocation()</a></code> - improved documentation for output data frame to make attributes more clear.</p></li>
+<li><p><code>fixed</code> - <code><a href="../reference/calculate_representation.html">calculate_representation()</a></code> - will now not plot bar chart twice &amp; <code>NA</code> values in existing will not be removed.</p></li>
 <li><p><code>fixed</code> - <code>existing</code> samples with other attributes will now not break sampling using <code>sample_ahels() / sample_clhs()</code> if values are <code>NA</code>. Variables are also added back to the sample output</p></li>
 </ul></div>
     <div class="section level2">
