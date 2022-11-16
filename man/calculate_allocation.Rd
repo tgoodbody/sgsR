@@ -59,7 +59,7 @@ e <- sf::st_read(e)
 #--- proportional allocation ---#
 calculate_allocation(
   sraster = sr,
-  nSamp = 50
+  nSamp = 10
 )
 
 #--- equal allocation ---#
@@ -78,7 +78,7 @@ calculate_allocation(
   sraster = sr,
   allocation = "manual",
   weights = weights,
-  nSamp = 200
+  nSamp = 10
 )
 
 }

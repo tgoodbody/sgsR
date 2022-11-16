@@ -99,6 +99,6 @@ Other stratify functions:
 \code{\link{strat_quantiles}()}
 }
 \author{
-Tristan R.H. Goodbody
+Tristan R.H. Goodbody, Robert Hijmans
 }
 \concept{stratify functions}
