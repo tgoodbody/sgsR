@@ -41,22 +41,16 @@ test_that("random", {
   or <- sample_systematic(raster = mraster, cellsize = 1000, location = "random")
   or1 <- sample_systematic(raster = mraster, cellsize = 1000, square = FALSE, location = "random")
   
-  expect_equal(nrow(or), 34L)
-  expect_equal(nrow(or1), 41L)
+  expect_equal(nrow(or), 36L)
+  expect_equal(nrow(or1), 42L)
   
   expect_error(sample_systematic(raster = sraster, cellsize = 5000000, location = "random"),"No samples intersect with 'raster'. Ensure 'cellsize' makes sense.")
 })
 
 
 test_that("messages", {
-  expect_message(sample_systematic(raster = sraster, cellsize = 2000, access = access, buff_inner = 50, buff_outer = 200, plot = TRUE), "An access layer has been provided. An internal buffer of 50 m and an external buffer of 200 m have been applied.")
-  expect_message(sample_systematic(raster = sraster, cellsize = 2000, access = access, buff_outer = 200), "An access layer has been provided. An external buffer of 200 m have been applied.")
-  expect_message(sample_systematic(raster = sraster, cellsize = 2000, access = access, buff_outer = 200, filename = file.path(tempdir(), "temp.shp") , overwrite = TRUE), "Output samples written to disc.")
-})
-
-test_that("messages", {
   set.seed(2022)
-
+  expect_message(sample_systematic(raster = sraster, cellsize = 2000, access = access, buff_outer = 200, filename = file.path(tempdir(), "temp.shp") , overwrite = TRUE), "Output samples written to disc.")
   expect_message(sample_systematic(raster = sraster, cellsize = 20000, square = FALSE, location = "random", force = TRUE),"Forcing samples to fall in non NA locations.")
   expect_message(sample_systematic(raster = sraster, cellsize = 5000, location = "random", force = TRUE),"Forcing samples to fall in non NA locations.")
   expect_error(sample_systematic(raster = sraster, cellsize = 5000000, location = "centers"),"No samples intersect with 'raster'. Ensure 'cellsize' makes sense.")

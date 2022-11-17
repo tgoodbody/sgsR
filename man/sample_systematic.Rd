@@ -60,7 +60,7 @@ to offset grid by providing lower left coordinates.}
 An sf object with sampled points over a tessellation.
 }
 \description{
-Systematic sampling with random start point and rotation within a square or hexagonal tessellation.
+Systematic sampling with random start point and translation within a square or hexagonal tessellation.
 }
 \note{
 Specifying \code{location = "random"} can result in tessellations with no samples.

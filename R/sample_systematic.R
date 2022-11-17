@@ -1,6 +1,6 @@
 #' Systematic sampling
 #'
-#' @description Systematic sampling with random start point and rotation within a square or hexagonal tessellation.
+#' @description Systematic sampling with random start point and translation within a square or hexagonal tessellation.
 #'
 #' @family sample functions
 #'
@@ -86,7 +86,7 @@ sample_systematic <- function(raster,
   
   #--- Set global vars ---#
   
-  ext <- geometry <- x <- pass <- NULL
+  ext <- geometry <- x <- pass <- overlap <- NULL
   
   if (!inherits(raster, "SpatRaster")) {
     stop("'raster' must be type SpatRaster.", call. = FALSE)
@@ -121,7 +121,7 @@ sample_systematic <- function(raster,
   
   #--- set mraster for plotting who area in case of masking ---#
   
-  rasterP <- raster
+  r <- raster
   
   if (!is.null(access)) {
     
@@ -134,8 +134,6 @@ sample_systematic <- function(raster,
   
   rasterext <- sf::st_as_sf(terra::as.polygons(terra::ext(raster), crs = terra::crs(raster)))
 
-  r <- raster
-  
   res <- terra::res(x = r)[1]
   
   #--- add randomness to grid lower left coordinate locations ---#
@@ -156,28 +154,34 @@ sample_systematic <- function(raster,
     )
   )
 
-  sfObj <- sf::st_sfc(pol, crs = terra::crs(r))
+  sfObj <- sf::st_sfc(pol, crs = terra::crs(r)) %>%
+    sf::st_as_sf()
   
-  #--- extract centroid of object for random rotation later ---#
+  #--- extract centroid of object for random translation later ---#
   
-  cent <- sf::st_centroid(sfObj)
+  cent <- sf::st_centroid(sf::st_geometry(sfObj)) %>%
+    sf::st_as_sf()
   
-  #--- random rotation value ---#
+  #--- random translation value ---#
   
   randRot <- runif(1,0,360)
   
   #--- create tessellation ---#
   
-  grid <- sf::st_make_grid(x = tran(sfObj, -randRot, cent), 
+  grid <- sf::st_make_grid(x = tran(sf::st_geometry(sfObj), -randRot, sf::st_geometry(cent)), 
                            cellsize = cellsize, 
                            square = square, 
                            what = "polygons", 
                            crs = terra::crs(raster), 
-                           ...)
+                           ...) %>%
+    sf::st_as_sf()
   
-  #--- rotate grid for plotting---#
+  #--- translate grid ---#
   
-  gridR <- sf::st_as_sf(tran(grid, randRot, cent),crs = terra::crs(raster))
+  gridR <- sf::st_as_sf(tran(sf::st_geometry(grid), randRot, sf::st_geometry(cent)), crs = terra::crs(raster)) %>%
+    sf::st_make_valid() %>%
+    dplyr::mutate(overlap = lengths(sf::st_intersects(., rasterext))) %>%
+    dplyr::filter(overlap == 1)
   
   if(isTRUE(force)){
     
@@ -206,144 +210,153 @@ sample_systematic <- function(raster,
       
     }
 
-    p_diff <- suppressWarnings(sf::st_difference(gridR,p)) %>%
+    p_diff <- sf::st_difference(sf::st_geometry(gridR),sf::st_geometry(p)) %>%
+      sf::st_as_sf() %>%
       sf::st_intersection(.,sfObj) %>%
       dplyr::filter(sf::st_is(., c("POLYGON","MULTIPOLYGON","GEOMETRYCOLLECTION")))
     
     #--- sampling --#
     samples <- sf::st_sample(p_diff, size=c(1,1), type = "random") %>%
-      sf::st_sf(.)
+      sf::st_sf() %>%
+      dplyr::mutate(overlap = lengths(sf::st_intersects(., rasterext))) %>%
+      dplyr::filter(overlap == 1)
     
     #--- check to make sure that samples intersect raster extent (cellsize check) ---#
-    if(isFALSE(lengths(suppressMessages(sf::st_intersects(samples, rasterext))) > 0)){
+    if(nrow(samples) == 0){
       stop("No samples intersect with 'raster'. Ensure 'cellsize' makes sense.", call. = FALSE)
-    }
+    } 
     
-    samples <- samples %>% 
+    samples <- samples %>%
       extract_metrics(mraster = raster[[1]], existing = ., quiet = TRUE) %>%
       stats::na.omit() %>%
       dplyr::select(geometry)
     
   } else {
     
-  #--- random sampling within tesselations ---#
+    #--- random sampling within tesselations ---#
+    
+      if (location == "random") {
+        location <- "centers"
+        
+        #--- maximum number of samples that can be selected ---#
+        
+        gridn <- nrow(gridR)
+        
+        #--- determine maximum distance sample can be moved in X / Y to remain within each tessellation ---#
+        
+        radius <- cellsize / 2
+        
+        if (square == TRUE) {
   
-    if (location == "random") {
-      location <- "centers"
+          vals <- data.frame(X = runif(gridn, -radius, radius),
+                             Y = runif(gridn, -radius, radius))
+        } else {
+          
+        #--- parameters for hexagon random sampling ---#
+          c30 <- sqrt(3)/2
+          
+          tests <- gridn * 100
+          
+          X <- runif(tests, -1, 1)
+          Y <- runif(tests, -c30, c30)
+          
+          xy <- data.frame(X = X, Y = Y)
+          
+          #--- test whether the sample will be within the bounds of the hexagon ---#
+          xy$pass <- abs(xy$X) < 1 - .5 * (abs(xy$Y) / c30)
+          
+          #--- filter only values with TRUE in $pass ---#
+          vals <- xy %>%
+            dplyr::filter(pass == TRUE) %>%
+            dplyr::slice_sample(., n = nrow(gridR)) %>%
+            dplyr::mutate(
+              X = X * radius,
+              Y = Y * radius
+            )
+        }
       
-      #--- maximum number of samples that can be selected ---#
+      #--- create grid and locate samples ---#
       
-      gridn <- nrow(gridR)
+      samples <- sf::st_centroid(sf::st_geometry(gridR)) %>%
+        sf::st_as_sf() %>%
+        dplyr::rename(geometry = x) %>%
+        sf::st_coordinates(.) %>%
+        as.data.frame() %>%
+        #--- apply random movement by row ---#
+        dplyr::mutate(
+          X = (vals$X * cos((randRot / 180) * pi)) + (vals$Y * sin((randRot / 180) * pi)) + X,
+          Y = (vals$X * -sin((randRot / 180) * pi)) + (vals$Y * cos((randRot / 180) * pi)) + Y 
+        ) %>%
+        sf::st_as_sf(., coords = c("X", "Y"),
+                     crs = terra::crs(raster)) %>%
+        dplyr::mutate(overlap = lengths(sf::st_intersects(., rasterext))) %>%
+        dplyr::filter(overlap == 1)
       
-      #--- determine maximum distance sample can be moved in X / Y to remain within each tessellation ---#
+      #--- check to make sure that samples intersect raster extent (cellsize check) ---#
+      if(nrow(samples) == 0){
+        stop("No samples intersect with 'raster'. Ensure 'cellsize' makes sense.", call. = FALSE)
+      } 
       
-      radius <- cellsize / 2
-      
-      if (square == TRUE) {
-
-        vals <- data.frame(X = runif(gridn, -radius, radius),
-                           Y = runif(gridn, -radius, radius))
-      } else {
-        
-      #--- parameters for hexagon random sampling ---#
-        c30 <- sqrt(3)/2
-        
-        tests <- gridn * 100
-        
-        X <- runif(tests, -1, 1)
-        Y <- runif(tests, -c30, c30)
-        
-        xy <- data.frame(X = X, Y = Y)
-        
-        #--- test whether the sample will be within the bounds of the hexagon ---#
-        xy$pass <- abs(xy$X) < 1 - .5 * (abs(xy$Y) / c30)
-        
-        #--- filter only values with TRUE in $pass ---#
-        vals <- xy %>%
-          dplyr::filter(pass == TRUE) %>%
-          dplyr::slice_sample(., n = nrow(gridR)) %>%
-          dplyr::mutate(
-            X = X * radius,
-            Y = Y * radius
-          )
-      }
-    
-    #--- create grid and locate samples ---#
-    
-    samples <- sf::st_centroid(gridR) %>%
-      dplyr::rename(geometry = x) %>%
-      sf::st_coordinates(.) %>%
-      as.data.frame() %>%
-      #--- apply random movement by row ---#
-      dplyr::mutate(
-        X = (vals$X * cos((randRot / 180) * pi)) + (vals$Y * sin((randRot / 180) * pi)) + X,
-        Y = (vals$X * -sin((randRot / 180) * pi)) + (vals$Y * cos((randRot / 180) * pi)) + Y 
-      ) %>%
-      sf::st_as_sf(., coords = c("X", "Y"),
-                   crs = terra::crs(raster))
-      
-    #--- check to make sure that samples intersect raster extent (cellsize check) ---#
-    if(isFALSE(lengths(suppressMessages(sf::st_intersects(samples, rasterext))) > 0)){
-      stop("No samples intersect with 'raster'. Ensure 'cellsize' makes sense.", call. = FALSE)
-    }
-      
-      #--- need to extract a metric to determine if values are NA ---#
-      samples <- samples %>% 
+      samples <- samples %>%
         extract_metrics(mraster = raster[[1]], existing = ., quiet = TRUE) %>%
-      #--- remove samples with NA ---#
         stats::na.omit() %>%
         dplyr::select(geometry)
-    
-  } else if (location == "corners"){
-    
-    samples <- sf::st_cast(gridR, "POINT")%>%
-      dplyr::rename(geometry = x)
-    
-    #--- check to make sure that samples intersect raster extent (cellsize check) ---#
-    if(isFALSE(lengths(suppressMessages(sf::st_intersects(samples, rasterext))) > 0)){
-      stop("No samples intersect with 'raster'. Ensure 'cellsize' makes sense.", call. = FALSE)
-    }
       
-    samples <- samples %>%
-      #--- need to extract a metric to determine if values are NA ---#
-      extract_metrics(mraster = raster[[1]], existing = ., quiet = TRUE) %>%
-      #--- remove samples with NA ---#
-      stats::na.omit() %>%
-      dplyr::select(geometry)
-
-  } else if (location == "centers"){
-    
-    samples <- sf::st_centroid(gridR) %>%
-      dplyr::rename(geometry = x)
-    
-    #--- check to make sure that samples intersect raster extent (cellsize check) ---#
-    if(isFALSE(lengths(suppressMessages(sf::st_intersects(samples, rasterext))) > 0)){
-      stop("No samples intersect with 'raster'. Ensure 'cellsize' makes sense.", call. = FALSE)
+    } else if (location == "corners"){
+      
+      samples <- sf::st_cast(sf::st_geometry(gridR), "POINT") %>%
+        sf::st_as_sf() %>%
+        dplyr::rename(geometry = x) %>%
+        dplyr::mutate(overlap = lengths(sf::st_intersects(., rasterext))) %>%
+        dplyr::filter(overlap == 1)
+      
+      #--- check to make sure that samples intersect raster extent (cellsize check) ---#
+      if(nrow(samples) == 0){
+        stop("No samples intersect with 'raster'. Ensure 'cellsize' makes sense.", call. = FALSE)
+      } 
+      
+      samples <- samples %>%
+        extract_metrics(mraster = raster[[1]], existing = ., quiet = TRUE) %>%
+        stats::na.omit() %>%
+        dplyr::select(geometry)
+  
+    } else if (location == "centers"){
+      
+      samples <- sf::st_centroid(sf::st_geometry(gridR)) %>%
+        sf::st_as_sf() %>%
+        dplyr::rename(geometry = x) %>%
+        dplyr::mutate(overlap = lengths(sf::st_intersects(., rasterext))) %>%
+        dplyr::filter(overlap == 1)
+      
+      #--- check to make sure that samples intersect raster extent (cellsize check) ---#
+      if(nrow(samples) == 0){
+        stop("No samples intersect with 'raster'. Ensure 'cellsize' makes sense.", call. = FALSE)
+      } 
+      
+      samples <- samples %>%
+        extract_metrics(mraster = raster[[1]], existing = ., quiet = TRUE) %>%
+        stats::na.omit() %>%
+        dplyr::select(geometry)
+      
     }
-    
-    samples <- samples %>%
-      #--- need to extract a metric to determine if values are NA ---#
-      extract_metrics(mraster = raster[[1]], existing = ., quiet = TRUE) %>%
-      #--- remove samples with NA ---#
-      stats::na.omit() %>%
-      dplyr::select(geometry)
-    
-  }
   }
   
   if (isTRUE(plot)) {
     
     #--- plot input raster and random samples ---#
     
+    gridR <- sf::st_intersection(sf::st_geometry(gridR), sf::st_geometry(rasterext)) %>%
+      sf::st_as_sf()
+    
     if (!is.null(access)) {
-      suppressWarnings(terra::plot(rasterP[[1]]))
-      suppressWarnings(terra::plot(gridR, add = TRUE, border = c("blueviolet"), alpha = 0.01))
-      suppressWarnings(terra::plot(access_buff$buff, add = T, border = c("gray30"), col = "gray10", alpha = 0.1))
-      suppressWarnings(terra::plot(samples, add = TRUE, col = "black"))
+      terra::plot(r[[1]])
+      terra::plot(gridR, add = TRUE, col = "transparent", border = c("blueviolet"), alpha = 0.01)
+      terra::plot(access_buff$buff, add = T, border = c("gray30"), col = "gray10", alpha = 0.1)
+      terra::plot(samples, add = TRUE, col = "black")
     } else {
-      suppressWarnings(terra::plot(rasterP[[1]]))
-      suppressWarnings(terra::plot(gridR, add = TRUE, border = c("blueviolet"), alpha = 0.01))
-      suppressWarnings(terra::plot(samples, add = TRUE, col = "black"))
+      terra::plot(r[[1]])
+      terra::plot(gridR, add = TRUE, col = "transparent", border = c("blueviolet"), alpha = 0.01)
+      terra::plot(samples, add = TRUE, col = "black")
     }
   }
   
@@ -380,7 +393,7 @@ sample_systematic <- function(raster,
   }
 }
 
-#--- rotation and translate functions for random rotation ---#
+#--- rotation and translate functions for random translation ---#
 #https://r-spatial.github.io/sf/articles/sf3.html
 #https://stackoverflow.com/questions/51282724/creating-a-regular-polygon-grid-over-a-spatial-extent-rotated-by-a-given-angle
 rot <-  function(a) matrix(c(cos(a), sin(a), -sin(a), cos(a)), 2, 2)

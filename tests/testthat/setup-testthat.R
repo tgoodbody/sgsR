@@ -1,5 +1,5 @@
 library(terra)
-suppressWarnings(library(dplyr))
+library(dplyr)
 
 #--- metrics raster ---#
 mr <- system.file("extdata", "mraster.tif", package = "sgsR")
