@@ -180,103 +180,82 @@ considerably slows processing speeds.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#--- Load raster and access files ---#</span></span></span>
-<span class="r-in"><span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"sraster.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">sr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"access.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">ac</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `access' from data source </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `/home/runner/work/_temp/Library/sgsR/extdata/access.shp' </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   using driver `ESRI Shapefile'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 167 features and 2 fields</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: MULTILINESTRING</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431100 ymin: 5337700 xmax: 438560 ymax: 5343240</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: UTM_Zone_17_Northern_Hemisphere</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"existing.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `existing' from data source </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `/home/runner/work/_temp/Library/sgsR/extdata/existing.shp' </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   using driver `ESRI Shapefile'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 200 features and 1 field</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431110 ymin: 5337710 xmax: 438530 ymax: 5343230</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: UTM_Zone_17_Northern_Hemisphere</span>
-<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mraster.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co">#--- perform grid sampling ---#</span></span></span>
 <span class="r-in"><span><span class="fu">sample_systematic</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  raster <span class="op">=</span> <span class="va">sr</span>,</span></span>
+<span class="r-in"><span>  raster <span class="op">=</span> <span class="va">mr</span>,</span></span>
 <span class="r-in"><span>  cellsize <span class="op">=</span> <span class="fl">1000</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 38 features and 0 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 41 features and 0 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431195 ymin: 5337805 xmax: 438314.8 ymax: 5342829</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431162.8 ymin: 5337883 xmax: 438377.7 ymax: 5343052</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    POINT (431195 5342747)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (432609.1 5342763)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (431910.3 5342048)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  POINT (434023.3 5342779)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (433324.4 5342064)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POINT (432625.5 5341349)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POINT (431926.7 5340634)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (431227.8 5339918)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (435437.4 5342796)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (434738.5 5342081)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (438229.6 5337883)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (436816.3 5337932)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (437547.6 5338614)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    POINT (438279 5339296)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (435402.9 5337982)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POINT (436865.6 5339346)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    POINT (437597 5340028)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (438328.4 5340710)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (433989.5 5338031)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (434720.9 5338713)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">sample_systematic</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  raster <span class="op">=</span> <span class="va">sr</span>,</span></span>
+<span class="r-in"><span>  raster <span class="op">=</span> <span class="va">mr</span>,</span></span>
 <span class="r-in"><span>  cellsize <span class="op">=</span> <span class="fl">1000</span>,</span></span>
-<span class="r-in"><span>  square <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
 <span class="r-in"><span>  location <span class="op">=</span> <span class="st">"corners"</span>,</span></span>
 <span class="r-in"><span>  plot <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="sample_systematic-1.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 287 features and 0 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 180 features and 0 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431103.1 ymin: 5337717 xmax: 438466.9 ymax: 5343212</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431545.9 ymin: 5337776 xmax: 438331.1 ymax: 5343155</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (438073.8 5338259)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (436428.8 5337717)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (436977.1 5337898)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  POINT (438073.8 5338259)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (436977.1 5337898)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POINT (437094.8 5338463)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POINT (438073.8 5338259)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (436428.8 5337717)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (435449.8 5337921)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (435998.1 5338102)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (431878.7 5337776)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (431878.7 5337776)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (431545.9 5340921)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  POINT (431960.2 5340010)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (431545.9 5340921)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POINT (432374.5 5339100)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POINT (431960.2 5340010)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (431878.7 5337776)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (432788.8 5338190)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (432374.5 5339100)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">sample_systematic</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  raster <span class="op">=</span> <span class="va">sr</span>,</span></span>
+<span class="r-in"><span>  raster <span class="op">=</span> <span class="va">mr</span>,</span></span>
 <span class="r-in"><span>  cellsize <span class="op">=</span> <span class="fl">1000</span>,</span></span>
 <span class="r-in"><span>  square <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
-<span class="r-in"><span>  location <span class="op">=</span> <span class="st">"random"</span></span></span>
+<span class="r-in"><span>  location <span class="op">=</span> <span class="st">"random"</span>,</span></span>
+<span class="r-in"><span>  plot <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 39 features and 0 fields</span>
+<span class="r-plt img"><img src="sample_systematic-2.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 42 features and 0 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431127.7 ymin: 5337907 xmax: 438490.9 ymax: 5343159</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431428.4 ymin: 5337746 xmax: 438527.1 ymax: 5343189</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (438137.9 5338775)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (437379.2 5337939)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (438490.9 5339920)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  POINT (437230.2 5338454)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (437820.1 5339822)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    POINT (437446 5340818)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POINT (436697.8 5339663)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (438016.8 5341416)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (436397.7 5340466)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (435632.8 5338810)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  POINT (438527.1 5337813)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  POINT (437129.7 5338457)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  POINT (435829.6 5337838)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  POINT (433989.2 5337746)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  POINT (438088.7 5338648)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  POINT (434746.5 5337885)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  POINT (435694.5 5339100)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  POINT (433616.1 5338139)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  POINT (437775.2 5339833)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 POINT (435935.1 5339580)</span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
