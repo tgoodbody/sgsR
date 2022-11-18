@@ -70,35 +70,29 @@ considerably slows processing speeds.
 }
 \examples{
 #--- Load raster and access files ---#
-r <- system.file("extdata", "sraster.tif", package = "sgsR")
-sr <- terra::rast(r)
-
-a <- system.file("extdata", "access.shp", package = "sgsR")
-ac <- sf::st_read(a)
-
-e <- system.file("extdata", "existing.shp", package = "sgsR")
-e <- sf::st_read(e)
-
+r <- system.file("extdata", "mraster.tif", package = "sgsR")
+mr <- terra::rast(r)
 #--- perform grid sampling ---#
 sample_systematic(
-  raster = sr,
+  raster = mr,
   cellsize = 1000
 )
 
 sample_systematic(
-  raster = sr,
+  raster = mr,
   cellsize = 1000,
-  square = FALSE,
   location = "corners",
   plot = TRUE
 )
 
 sample_systematic(
-  raster = sr,
+  raster = mr,
   cellsize = 1000,
   square = FALSE,
-  location = "random"
+  location = "random",
+  plot = TRUE
 )
+
 }
 \seealso{
 Other sample functions: 

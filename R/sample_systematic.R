@@ -36,39 +36,32 @@
 #'
 #' @examples
 #' #--- Load raster and access files ---#
-#' r <- system.file("extdata", "sraster.tif", package = "sgsR")
-#' sr <- terra::rast(r)
-#'
-#' a <- system.file("extdata", "access.shp", package = "sgsR")
-#' ac <- sf::st_read(a)
-#'
-#' e <- system.file("extdata", "existing.shp", package = "sgsR")
-#' e <- sf::st_read(e)
-#'
+#' r <- system.file("extdata", "mraster.tif", package = "sgsR")
+#' mr <- terra::rast(r)
 #' #--- perform grid sampling ---#
 #' sample_systematic(
-#'   raster = sr,
+#'   raster = mr,
 #'   cellsize = 1000
 #' )
-#'
+#' 
 #' sample_systematic(
-#'   raster = sr,
+#'   raster = mr,
 #'   cellsize = 1000,
-#'   square = FALSE,
 #'   location = "corners",
 #'   plot = TRUE
 #' )
-#'
+#' 
 #' sample_systematic(
-#'   raster = sr,
+#'   raster = mr,
 #'   cellsize = 1000,
 #'   square = FALSE,
-#'   location = "random"
+#'   location = "random",
+#'   plot = TRUE
 #' )
+#' 
 #' @author Tristan R.H. Goodbody, Lukas Winiwarter
 #'
 #' @export
-
 
 sample_systematic <- function(raster,
                               cellsize,
@@ -154,32 +147,36 @@ sample_systematic <- function(raster,
     )
   )
 
-  sfObj <- sf::st_sfc(pol, crs = terra::crs(r)) %>%
-    sf::st_as_sf()
+  sfObj <- sf::st_sfc(pol, crs = terra::crs(r))
   
   #--- extract centroid of object for random translation later ---#
   
-  cent <- sf::st_centroid(sf::st_geometry(sfObj)) %>%
-    sf::st_as_sf()
+  cent <- sf::st_centroid(sf::st_geometry(sfObj))
   
   #--- random translation value ---#
   
-  randRot <- runif(1,0,360)
+  randRot <- (runif(1,0,360) / 180) * pi
   
   #--- create tessellation ---#
   
-  grid <- sf::st_make_grid(x = tran(sf::st_geometry(sfObj), -randRot, sf::st_geometry(cent)), 
+  #--- ATLAS rBLAS debugging ---#
+  
+  sfCenteredRot <- ((sfObj - cent) * matrix(c(cos(-randRot), sin(-randRot), -sin(-randRot), cos(-randRot)), 2, 2)) + cent
+
+  #--- create grid based on outer extents of centered and randomly translated raster extent ---#
+  
+  grid <- sf::st_make_grid(x = sfCenteredRot, 
                            cellsize = cellsize, 
                            square = square, 
                            what = "polygons", 
                            crs = terra::crs(raster), 
-                           ...) %>%
-    sf::st_as_sf()
+                           ...)
+  
+  #--- ATLAS debugging ---#
   
   #--- translate grid ---#
   
-  gridR <- sf::st_as_sf(tran(sf::st_geometry(grid), randRot, sf::st_geometry(cent)), crs = terra::crs(raster)) %>%
-    sf::st_make_valid() %>%
+  gridR <- sf::st_as_sf((grid - cent) * matrix(c(cos(randRot), sin(randRot), -sin(randRot), cos(randRot)), 2, 2) + cent, crs = terra::crs(raster)) %>%
     dplyr::mutate(overlap = lengths(sf::st_intersects(., rasterext))) %>%
     dplyr::filter(overlap == 1)
   
@@ -284,8 +281,8 @@ sample_systematic <- function(raster,
         as.data.frame() %>%
         #--- apply random movement by row ---#
         dplyr::mutate(
-          X = (vals$X * cos((randRot / 180) * pi)) + (vals$Y * sin((randRot / 180) * pi)) + X,
-          Y = (vals$X * -sin((randRot / 180) * pi)) + (vals$Y * cos((randRot / 180) * pi)) + Y 
+          X = (vals$X * cos(randRot)) + (vals$Y * sin(randRot)) + X,
+          Y = (vals$X * -sin(randRot)) + (vals$Y * cos(randRot)) + Y 
         ) %>%
         sf::st_as_sf(., coords = c("X", "Y"),
                      crs = terra::crs(raster)) %>%
