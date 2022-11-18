@@ -5,5 +5,5 @@
   }
 
   v <- utils::packageVersion("sgsR")
-  packageStartupMessage("sgsR ", v, ". Bug report on <github.com/tgoodbody/sgsR/issues>.")
+  packageStartupMessage("sgsR v", v, ". Bug report on <github.com/tgoodbody/sgsR/issues>.")
 }
