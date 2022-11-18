@@ -389,10 +389,3 @@ sample_systematic <- function(raster,
     return(samples)
   }
 }
-
-#--- rotation and translate functions for random translation ---#
-#https://r-spatial.github.io/sf/articles/sf3.html
-#https://stackoverflow.com/questions/51282724/creating-a-regular-polygon-grid-over-a-spatial-extent-rotated-by-a-given-angle
-rot <-  function(a) matrix(c(cos(a), sin(a), -sin(a), cos(a)), 2, 2)
-tran <-  function(geo, ang, center) (geo - center) * rot(ang * pi / 180) + center
-
