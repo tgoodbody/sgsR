@@ -81,7 +81,7 @@ names <- c("Martin Queinnec", "Joanne C. White", "Piotr Tompalski", "Andrew T. H
 
 aff <- c("University of British Columbia", "Canadian Forest Service", "Canadian Forest Service", "United States Forest Service", "Swedish University of Agricultural Sciences", "Ministère des Forêts, de la Faune et des Parcs", "Ministry of Northern Development, Mines, Natural Resources and Forestry", "Forsite Consultants Ltd.", "Université de Sherbrooke", " (Retired)	Ministry of Northern Development, Mines, Natural Resources and Forestry")
 
-urls <- c("https://www.researchgate.net/profile/Martin-Queinnec/",
+urls <- c("https://www.researchgate.net/profile/Martin-Queinnec",
           "https://scholar.google.ca/citations?user=bqjk4skAAAAJ&hl=en/",
           "https://scholar.google.ca/citations?user=RtYdz0cAAAAJ&hl=en/",
           "https://www.fs.usda.gov/rmrs/people/ahudak/",
@@ -89,8 +89,8 @@ urls <- c("https://www.researchgate.net/profile/Martin-Queinnec/",
           "https://scholar.google.com/citations?user=wGsKOK8AAAAJ&hl=en/",
           "https://ca.linkedin.com/in/ian-sinclair-984929a4/",
           "https://www.signalhire.com/profiles/grant-mccartney%27s-email/99719223/",
-          "https://www.researchgate.net/scientific-contributions/Jean-Francois-Prieur-2142960944/",
-          "https://www.researchgate.net/profile/Murray-Woods/")
+          "https://www.researchgate.net/scientific-contributions/Jean-Francois-Prieur-2142960944",
+          "https://www.researchgate.net/profile/Murray-Woods")
 
 df <- data.frame(Collaborator = names, Affiliation = aff)
 
