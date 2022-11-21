@@ -61,7 +61,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/calculating.html">calculating</a>
     <a class="dropdown-item" href="../articles/sampling.html">sampling</a>
-    <a class="dropdown-item" href="../articles/stratification.html">stratification</a>
+    <a class="dropdown-item" href="../articles/stratification.html">Stratification</a>
   </div>
 </li>
 <li class="nav-item">
@@ -103,46 +103,88 @@
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="str">Algorithm structure<a class="anchor" aria-label="anchor" href="#str"></a>
 </h2>
-<p><code>sgsR</code> is primarily scripted using the
-<code>tidyverse</code>, <code>terra</code> package to handle raster
-processing, and <code>sf</code> package for vector manipulation.
-Currently, there are 4 primary function verbs that this package
-uses:</p>
-<ul>
-<li><p><code>strat_*</code> - Stratify verb directs the functions to
-apply stratification algorithms to the input metrics raster
-<code>mraster</code> and produce stratified raster <code>sraster</code>
-as the output.</p></li>
-<li><p><code>sample_*</code> - Sample verb directs the functions to
-extract samples from <code>srasters</code>, which is produced from
-<code>strat_*</code> functions. Few algorithms (such as
-<code><a href="../reference/sample_srs.html">sample_srs()</a></code>, <code><a href="../reference/sample_balanced.html">sample_balanced()</a></code>,
-<code><a href="../reference/sample_systematic.html">sample_systematic()</a></code>) are capable of using
-<code>mrasters</code> as the input because those algorithms do not
-depend on stratified inputs for sampling.</p></li>
-<li><p><code>calculate_*</code> - Calculate verb directs the functions
-to perform calculations; values derived from these calculations are used
-in subsequent processing. Predefined sample analysis algorithms (such as
-<code><a href="../reference/calculate_representation.html">calculate_representation()</a></code>, <code><a href="../reference/calculate_coobs.html">calculate_coobs()</a></code>)
-are included.</p></li>
-<li><p><code>extract_*</code> - Derive raster data for each co-located
-sample. Includes <code><a href="../reference/extract_metrics.html">extract_metrics()</a></code> for deriving
-<code>mraster</code> data, and <code><a href="../reference/extract_strata.html">extract_strata()</a></code> for
-deriving stratum from <code>srasters</code>. Both functions are used
-internally within <code>sgsR</code>.</p></li>
-</ul>
+<p><code>sgsR</code> is scripted using the <code>terra</code> package to
+handle raster processing, and <code>sf</code> package for vector
+manipulation.</p>
+<p>Four primary function verbs exist:</p>
+<div class="section level3">
+<h3 id="strat_">
+<code>strat_*</code><a class="anchor" aria-label="anchor" href="#strat_"></a>
+</h3>
+<p>Stratification algorithms within <code>sgsR</code>. These algorithms
+use auxiliary raster data (e.g. ALS metric populations) as inputs and
+provide stratified areas of interest as outputs. Algorithms are either
+supervised (e.g. <code><a href="../reference/strat_breaks.html">strat_breaks()</a></code>), where the user provides
+quantitative values that drive stratifications, or unsupervised
+(e.g. <code><a href="../reference/strat_quantiles.html">strat_quantiles()</a></code>), where the user specifies the
+desired number of output strata (<code>nStrata</code>) and
+stratification is handled by the algorithm.</p>
+</div>
+<div class="section level3">
+<h3 id="sample_">
+<code>sample_*</code><a class="anchor" aria-label="anchor" href="#sample_"></a>
+</h3>
+<p>Sampling algorithms in <code>sgsR</code>. Depending on the sampling
+algorithm, users are able to provide either auxiliary metrics or
+stratifications derived from <code>strat_*</code> functions as inputs. A
+number of customizable parameters can be set including the sample size
+(<code>nSamp</code>), a minimum distance threshold
+(<code>mindist</code>) between allocated sample units, and the ability
+for the user to define an access network (<code>access</code>) and
+assign minimum (<code>buff_inner</code>) and maximum
+(<code>buff_outer</code>) buffer distances to constrain sampling
+extents.</p>
+</div>
+<div class="section level3">
+<h3 id="calculate_-extract_">
+<code>calculate_*</code> &amp; <code>extract_*</code><a class="anchor" aria-label="anchor" href="#calculate_-extract_"></a>
+</h3>
+<p>Additional helper functions that <code>calculate</code> varying
+descriptive / summary statistics and values to use in processing.
+<code>extract_*</code> functions derive metric values from co-located
+sample units.</p>
+</div>
 </div>
 <div class="section level2 unnumbered">
-<h2 class="unnumbered" id="example-data">Example data<a class="anchor" aria-label="anchor" href="#example-data"></a>
+<h2 class="unnumbered" id="params">Parameters<a class="anchor" aria-label="anchor" href="#params"></a>
 </h2>
-<p>We demonstrate and provide examples for functions using
-<code>sgsR</code> internal data. Use the following code to load data for
-<code>mraster</code> and road <code>access</code>. Follow along on your
-own device to explore different outputs and better comprehend the
-package functions.</p>
+<p><code>sgsR</code> uses common words that define algorithm
+parameters:</p>
+<table class="table">
+<thead><tr class="header">
+<th align="center">Parameter</th>
+<th align="center">Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="center"><code>mraster</code></td>
+<td align="center">Metric raster(s)</td>
+</tr>
+<tr class="even">
+<td align="center"><code>sraster</code></td>
+<td align="center">Stratified raster</td>
+</tr>
+<tr class="odd">
+<td align="center"><code>access</code></td>
+<td align="center">Linear vectors representing access routes</td>
+</tr>
+<tr class="even">
+<td align="center"><code>existing</code></td>
+<td align="center">Existing sample units</td>
+</tr>
+<tr class="odd">
+<td align="center">plot</td>
+<td align="center">Visually displays raster and samples</td>
+</tr>
+</tbody>
+</table>
 <div class="section level3 unnumbered">
-<h3 class="unnumbered" id="mrast">Metrics rasters - <code>mraster</code><a class="anchor" aria-label="anchor" href="#mrast"></a>
+<h3 class="unnumbered" id="mrast">
+<code>mraster</code><a class="anchor" aria-label="anchor" href="#mrast"></a>
 </h3>
+<p><code>mraster</code> are input raster(s). All raster data used by
+<code>sgsR</code> must be must be a <a href="https://cran.r-project.org/package=terra" class="external-link"><code>terra SpatRaster</code></a>
+class.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tgoodbody/sgsR" class="external-link">sgsR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/terra/" class="external-link">terra</a></span><span class="op">)</span></span>
@@ -155,10 +197,53 @@ package functions.</p>
 <span><span class="va">mraster</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3 unnumbered">
-<h3 class="unnumbered" id="vect">
-<code>access</code> data<a class="anchor" aria-label="anchor" href="#vect"></a>
+<h3 class="unnumbered" id="srast">
+<code>sraster</code><a class="anchor" aria-label="anchor" href="#srast"></a>
 </h3>
+<p><code>sraster</code> are derived from <code>strat_*</code> algorithms
+(e.g. <code><a href="../reference/strat_quantiles.html">strat_quantiles()</a></code>). This function used the
+distribution of <code>mraster$zq90</code> and stratified data into 4
+equally sized strata.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#--- apply kmeans algorithm to metrics raster ---#</span></span>
+<span><span class="va">sraster</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat_quantiles.html">strat_quantiles</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span>, <span class="co"># use mraster as input for sampling</span></span>
+<span>                           nStrata <span class="op">=</span> <span class="fl">4</span>, <span class="co"># algorithm will produce 4 strata</span></span>
+<span>                           plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># algorithm will plot output</span></span></code></pre></div>
+<p><img src="sgsR_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p>The <code>sraster</code> output then becomes an input parameter for
+the <code><a href="../reference/sample_strat.html">sample_strat()</a></code> algorithm.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#--- apply stratified sampling ---#</span></span>
+<span><span class="va">existing</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sample_strat.html">sample_strat</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># use mraster as input for sampling</span></span>
+<span>                         nSamp <span class="op">=</span> <span class="fl">200</span>, <span class="co"># request 200 samples be taken</span></span>
+<span>                         mindist <span class="op">=</span> <span class="fl">100</span>, <span class="co"># define that samples must be 100 m apart</span></span>
+<span>                         plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># algorithm will plot output</span></span></code></pre></div>
+<p><img src="sgsR_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+</div>
+<div class="section level3 unnumbered">
+<h3 class="unnumbered" id="access">
+<code>access</code><a class="anchor" aria-label="anchor" href="#access"></a>
+</h3>
+<p>One key feature of using some <code>sample_*</code> functions is its
+ability to define <code>access</code> corridors. Users can supply a road
+<code>access</code> network (must be <code>sf</code> line objects) and
+define buffers around <code>access</code> where samples should be
+excluded and included.</p>
+<p>Relevant and applicable parameters when <code>access</code> is
+defined are:</p>
+<ul>
+<li><p><code>buff_inner</code> - Can be left as <code>NULL</code>
+(default). Inner buffer parameter that defines the distance from
+<code>access</code> where samples cannot be taken (i.e. if you don’t
+want samples within 50 m of your <code>access</code> layer set
+<code>buff_inner = 50</code>).</p></li>
+<li><p><code>buff_outer</code> - Outer buffer parameter that defines the
+maximum distance that the samples can be located from
+<code>access</code> (i.e. if you don’t want samples more than 200 meters
+from your <code>access</code> layer set
+<code>buff_inner = 200</code>).</p></li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"access.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#--- load the access vector using the sf package ---#</span></span>
@@ -171,50 +256,20 @@ package functions.</p>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
 <span><span class="co">#&gt; Bounding box:  xmin: 431100 ymin: 5337700 xmax: 438560 ymax: 5343240</span></span>
 <span><span class="co">#&gt; Projected CRS: UTM_Zone_17_Northern_Hemisphere</span></span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span><span class="op">)</span></span>
 <span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">access</span>, add <span class="op">=</span> <span class="cn">TRUE</span>, col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="sgsR_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p><img src="sgsR_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 <p>From the plot output we see the first band (<code>zq90</code>) of the
 <code>mraster</code> with the <code>access</code> vector overlaid.</p>
 </div>
-</div>
-<div class="section level2 unnumbered">
-<h2 class="unnumbered" id="srast">Stratified rasters - <code>sraster</code><a class="anchor" aria-label="anchor" href="#srast"></a>
-</h2>
-<p>In this tutorial, I am going to demonstrate how to produce basic
-<code>sraster</code> and <code>existing</code> sample data, which will
-be used in subsequent examples.</p>
-<p>To produce <code>sraster</code>, we use
-<code><a href="../reference/strat_quantiles.html">strat_quantiles()</a></code>. This function used the input
-<code>mraster$zq90</code> distribution and divides it into 4 equally
-sized quantiles.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#--- apply kmeans algorithm to metrics raster ---#</span></span>
-<span><span class="va">sraster</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat_quantiles.html">strat_quantiles</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span>, <span class="co"># use mraster as input for sampling</span></span>
-<span>                           nStrata <span class="op">=</span> <span class="fl">4</span>, <span class="co"># algorithm will produce 4 strata</span></span>
-<span>                           plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># algorithm will plot output</span></span></code></pre></div>
-<p><img src="sgsR_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
-<p>After <code>sraster</code> is produced, use
-<code><a href="../reference/sample_strat.html">sample_strat()</a></code> to perform stratified sampling within our
-<code>sraster</code> to generate a representative sample output based on
-strata.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#--- apply stratified sampling ---#</span></span>
-<span><span class="va">existing</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sample_strat.html">sample_strat</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># use mraster as input for sampling</span></span>
-<span>                         nSamp <span class="op">=</span> <span class="fl">200</span>, <span class="co"># request 200 samples be taken</span></span>
-<span>                         mindist <span class="op">=</span> <span class="fl">100</span>, <span class="co"># define that samples must be 100 m apart</span></span>
-<span>                         plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># algorithm will plot output</span></span></code></pre></div>
-<p><img src="sgsR_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="pipe">
 <code>%&gt;%</code><a class="anchor" aria-label="anchor" href="#pipe"></a>
 </h2>
 <p>The sgsR package leverages the <code>%&gt;%</code> operator from the
-<code>magrittr</code> package. This allows us to “pipe” operations
-together to save in the amount of code needed to achieve an outcome. A
-simple example is demonstrated below.</p>
+<a href="https://cran.r-project.org/package=magrittr" class="external-link"><code>magrittr package</code></a>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#--- non piped ---#</span></span>
 <span><span class="va">sraster</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat_quantiles.html">strat_quantiles</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span>, <span class="co"># use mraster as input for sampling</span></span>

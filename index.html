@@ -69,7 +69,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="articles/calculating.html">calculating</a>
     <a class="dropdown-item" href="articles/sampling.html">sampling</a>
-    <a class="dropdown-item" href="articles/stratification.html">stratification</a>
+    <a class="dropdown-item" href="articles/stratification.html">Stratification</a>
   </div>
 </li>
 <li class="nav-item">
@@ -101,9 +101,6 @@
 </div>
 <!-- badges: start -->
 
-<p><code>sgsR</code> is designed to implement structurally guided sampling approaches for enhanced forest inventories. The package was designed to function using rasterized airborne laser scanning (ALS; Lidar) metrics to allow for stratification of forested areas based on structure.</p>
-<p>If you <em>aren’t</em> working with ALS data, any remote sensing data sets in a raster format (e.g. optical satellite imagery, climate data, drone-based products) can be used as inputs to help guide your environmental sampling needs.</p>
-<p><code>sgsR</code> is being actively developed, so you may encounter bugs. If that happens, <a href="https://github.com/tgoodbody/sgsR/issues" class="external-link">please report your issue here</a> by providing a reproducible example.</p>
 <div class="section level2">
 <h2 id="installation-computer">Installation <span class="emoji" data-emoji="computer">💻</span>
 <a class="anchor" aria-label="anchor" href="#installation-computer"></a>
@@ -117,6 +114,13 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"https://github.com/tgoodbody/sgsR"</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tgoodbody/sgsR" class="external-link">sgsR</a></span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
+<p><code>sgsR</code> provides a collection of stratification and sampling algorithms that use auxiliary information for allocating sample units over an areal sampling frame. ALS metrics, like those derived from the <a href="https://cran.r-project.org/package=lidR" class="external-link"><code>lidR</code> package</a> are the intended inputs.</p>
+<p>Other remotely sensed or auxiliary data can also be used (e.g. optical satellite imagery, climate data, drone-based products).</p>
+<p><code>sgsR</code> is being actively developed, so you may encounter bugs. If that happens, <a href="https://github.com/tgoodbody/sgsR/issues" class="external-link">please report your issue here</a> by providing a reproducible example.</p>
 </div>
 <div class="section level2">
 <h2 id="example-usage-bar_chart">Example usage <span class="emoji" data-emoji="bar_chart">📊</span>
