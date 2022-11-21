@@ -1,5 +1,7 @@
 # sgsR 1.3.2
 
+`enhancement` - `README.Rmd` and vignettes have been updated.
+
 `enhancement` - `sample_systematic()` - changed how tessellation was used internally and visualized during plotting.
 
 `fixed` - `strat_map()` - #20 greatly simplified algorithm using suggestion from R. Hijmans (added as author to algorithm). Issue was related to level matching with categorical variables.

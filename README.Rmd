@@ -21,12 +21,6 @@ knitr::opts_chunk$set(
 [![](https://cranlogs.r-pkg.org/badges/sgsR)](https://CRAN.R-project.org/package=sgsR)
 <!-- badges: end -->
 
-`sgsR` is designed to implement structurally guided sampling approaches for enhanced forest inventories. The package was designed to function using rasterized airborne laser scanning (ALS; Lidar) metrics to allow for stratification of forested areas based on structure.
-
-If you _aren’t_ working with ALS data, any remote sensing data sets in a raster format (e.g. optical satellite imagery, climate data, drone-based products) can be used as inputs to help guide your environmental sampling needs.
-
-`sgsR` is being actively developed, so you may encounter bugs. If that happens, [please report your issue here](https://github.com/tgoodbody/sgsR/issues) by providing a reproducible example.
-
 ## Installation :computer: {.unnumbered}
 
 Install the stable version of [`sgsR`from CRAN](https://cran.r-project.org/package=sgsR) with:
@@ -43,6 +37,14 @@ install.packages("devtools")
 devtools::install_github("https://github.com/tgoodbody/sgsR")
 library(sgsR)
 ```
+
+## Overview
+
+`sgsR` provides a collection of stratification and sampling algorithms that use auxiliary information for allocating sample units over an areal sampling frame. ALS metrics, like those derived from the [`lidR` package](https://cran.r-project.org/package=lidR) are the intended inputs.
+
+Other remotely sensed or auxiliary data can also be used (e.g. optical satellite imagery, climate data, drone-based products).
+
+`sgsR` is being actively developed, so you may encounter bugs. If that happens, [please report your issue here](https://github.com/tgoodbody/sgsR/issues) by providing a reproducible example.
 
 ## Example usage :bar_chart: {.unnumbered}
 
