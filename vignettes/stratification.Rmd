@@ -27,7 +27,7 @@ knitr::opts_chunk$set(
 }
 
 .caution {
-  background-image: url("F:/_2021_SGS/sgsR/man/figures/logo.png");
+  background-image: url("https://tgoodbody.github.io/sgsR/logo.png");
 }
 
 ```
