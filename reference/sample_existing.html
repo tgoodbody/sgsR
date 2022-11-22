@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.21</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -148,7 +148,7 @@ is the tessellation grid for sampling, and <code>samples</code> are the systemat
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>An sf object of samples</p>
+<p>An sf object of samples or a list object if `details = TRUE`</p>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
@@ -189,20 +189,20 @@ prior to using this algorithm.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 50 features and 3 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431363.5 ymin: 5337833 xmax: 438462.7 ymax: 5343126</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431319.7 ymin: 5337718 xmax: 438539.5 ymax: 5343150</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         zq90 pzabove2  zsd                 geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3416   15.80     96.9 3.43 POINT (437591.5 5338026)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 62213  21.40     89.3 6.05 POINT (431710.3 5341374)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 240100  2.30      2.8 0.31 POINT (434490.8 5339186)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11087  19.10     90.7 5.23 POINT (431363.5 5338137)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 58100  12.60     98.2 2.22 POINT (435183.2 5338037)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 288     7.39     71.4 1.73 POINT (437864.6 5339652)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 68295  23.10     85.2 7.34 POINT (436878.6 5341982)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 59366   6.08     12.6 1.58 POINT (433321.1 5341301)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 291    20.40     96.1 3.85 POINT (438462.7 5339699)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2132   17.80     31.9 4.76 POINT (434905.2 5339018)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      zq90 pzabove2  zsd                 geometry</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 121  7.04     54.1 1.80 POINT (433546.2 5342943)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 395 17.20     87.6 4.36 POINT (432433.9 5337747)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56  15.30     92.4 3.87 POINT (431704.9 5341498)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 311 11.00     45.8 2.96 POINT (434523.7 5341864)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 500 19.50     73.8 6.28 POINT (436768.9 5342823)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 377  5.61     12.4 1.48 POINT (434440.9 5340974)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 399  4.92     67.3 1.07 POINT (435561.4 5342396)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 649 14.40     88.4 3.17 POINT (438146.2 5343144)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 235 16.00     92.7 3.42 POINT (431584.7 5338275)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 712 13.80     98.7 3.55 POINT (438168.9 5342423)</span>
 <span class="r-in"><span>                </span></span>
 <span class="r-in"><span><span class="co">#--- extract metrics to sample ---#</span></span></span>
 <span class="r-in"><span><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="extract_metrics.html">extract_metrics</a></span><span class="op">(</span><span class="va">mr</span>, <span class="va">e</span><span class="op">)</span></span></span>
@@ -211,25 +211,25 @@ prior to using this algorithm.</p>
 <span class="r-in"><span><span class="fu">sample_existing</span><span class="op">(</span>existing <span class="op">=</span> <span class="va">e</span>,</span></span>
 <span class="r-in"><span>                nSamp <span class="op">=</span> <span class="fl">30</span>, </span></span>
 <span class="r-in"><span>                plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Sub-sampling based on 'existing' metric distributions.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Sub-sampling based on ALL 'existing' metric distributions. Ensure only attributes of interest are included.</span>
 <span class="r-plt img"><img src="sample_existing-1.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 30 features and 3 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431248.7 ymin: 5337754 xmax: 438552.1 ymax: 5343236</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431139.4 ymin: 5337705 xmax: 438297.3 ymax: 5343177</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      zq90 pzabove2  zsd                 geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 78  16.60     94.1 3.81   POINT (431778 5337969)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 828  1.83      0.0 0.17 POINT (437812.6 5342858)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 333 12.70     37.4 3.96 POINT (434443.7 5339784)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 153 16.20     90.9 4.15 POINT (433939.7 5338541)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 436 22.20     85.2 4.61 POINT (435991.6 5340508)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 824 19.60     92.0 5.73 POINT (436815.7 5342780)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 513 20.40     83.2 5.48 POINT (438552.1 5341111)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 600  4.79     55.9 0.92 POINT (434716.8 5341411)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 739 16.90     94.9 2.61   POINT (433657 5342130)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 79  14.50     96.3 3.04 POINT (431977.3 5337985)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 445 27.10     95.2 6.65 POINT (432879.2 5337705)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 810 11.60     89.8 2.89 POINT (436313.1 5337925)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 757  2.84      2.1 0.50 POINT (438297.3 5341872)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 673 14.20     50.8 4.23 POINT (435399.7 5338729)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 213  7.89     36.7 2.01 POINT (434331.1 5342691)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 243  8.88     12.9 2.62 POINT (434395.3 5342415)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 180 20.50     88.8 4.79 POINT (432618.3 5340694)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 187 18.50     96.6 3.45 POINT (431139.4 5338316)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 363 13.10     81.5 3.09 POINT (432369.7 5338022)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 778  9.47     61.9 2.20 POINT (438255.9 5341427)</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
