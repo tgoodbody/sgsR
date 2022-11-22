@@ -11,7 +11,7 @@
 #' @param raster spatRaster. Raster used to define population distributions.
 #' @param ... Additional arguments for clhs sampling. See \code{\link[clhs]{clhs}}.
 #' 
-#' @return An sf object of samples
+#' @return An sf object of samples or a list object if `details = TRUE`
 #' 
 #' @note 
 #' 
@@ -70,6 +70,12 @@ sample_existing <- function(existing,
   
   if (!is.null(raster) & !inherits(raster, "SpatRaster")) {
     stop("'raster' must be type SpatRaster.", call. = FALSE)
+  }
+  
+  if (!is.null(raster)){
+    if (length(names(raster)) <= 1) {
+      stop("At least 2 raster attributes are required to generate a matrix for sub-sampling.", call. = FALSE)
+    }
   }
   
   if (!is.numeric(nSamp)) {
@@ -152,6 +158,8 @@ sample_existing <- function(existing,
       }
       
     }
+    
+    existingdf <- existing
 
   } else {
     
@@ -185,7 +193,7 @@ sample_existing <- function(existing,
     }
     
   }
-  
+
   #--- incorporate cost constraint ---#
   
   if (!is.null(cost)) {
@@ -237,17 +245,17 @@ sample_existing <- function(existing,
   
   if(is.null(raster)){
     
-    #--- test if existing has attributes other than geometry ---#
-    if(ncol(existing) <= 1){
-      if(names(existing) == "geometry"){
-        stop("'existing' has no attributes that can be sampled.", call. = FALSE)
-      }
-    }
-    
-    message("Sub-sampling based on 'existing' metric distributions.")
+    message("Sub-sampling based on ALL 'existing' metric distributions. Ensure only attributes of interest are included.")
 
     all <- existing %>%
       sf::st_drop_geometry(.)
+    
+    #--- test if existing has attributes other than geometry ---#
+    if(ncol(all) <= 1){
+      # if(names(existing) == "geometry"){
+      stop("At least 2 attributes are required to generate a matrix for sub-sampling.", call. = FALSE)
+      # }
+    }
     
     #--- sampling ---#
     
@@ -274,9 +282,9 @@ sample_existing <- function(existing,
     }
   
     } else {
-    
+      
       message("Sub-sampling based on 'raster' distributions.")
-    
+      
       #--- determine crs of input raster ---#
       crs <- terra::crs(raster, proj = TRUE)
       
@@ -290,10 +298,7 @@ sample_existing <- function(existing,
     
       #--- select the variables existing in raster for sampling ---#
       
-      e <- existingdf %>%
-        dplyr::select(X,Y, names(raster))
-      
-      all <- rbind(vals, e)
+      all <- dplyr::bind_rows(vals, existingdf)
         
       
       #--- sampling ---#
@@ -304,7 +309,7 @@ sample_existing <- function(existing,
         
         #--- output clhs information to be supplied in 'details' list output ---#
         
-        clhsOut <- clhs::clhs(x = all[,3:ncol(all)], size = nSamp, iter = iter, cost = cost, can.include = sidx, simple = FALSE, ...)
+        clhsOut <- clhs::clhs(x = all[,names(raster)], size = nSamp, iter = iter, cost = cost, can.include = sidx, simple = FALSE, ...)
         
         outIdx <- clhsOut$index_samples
         #--- extract sampled rows from existing ---#
@@ -313,7 +318,7 @@ sample_existing <- function(existing,
         
       } else {
         
-        outIdx <- clhs::clhs(x = all[,3:ncol(all)], size = nSamp, iter = iter, cost = cost, can.include = sidx, ...)
+        outIdx <- clhs::clhs(x = all[,names(raster)], size = nSamp, iter = iter, cost = cost, can.include = sidx, ...)
         
         #--- extract sampled rows from existing ---#
         
@@ -336,15 +341,60 @@ sample_existing <- function(existing,
     pop <- all %>%
       dplyr::mutate(type = "population")
     
+    #--- take a sub sample of the population to make plotting faster ---#
+    if (nrow(pop) > 10000) pop <- dplyr::slice_sample(pop, n = 10000)
+    
     all <- all[outIdx,] %>%
       dplyr::mutate(type = "sample") %>%
       rbind(pop, .)
     
+    oclass <- data.frame()
+    for(c in 1:ncol(all)){
+      
+      nameM <- names(all)[c]
+      
+      classM <- class(all[,c])
+      
+      odf <- data.frame(Name = nameM,Class = classM)
+      
+      oclass <- rbind(oclass,odf)
+      
+    }
+    
+    anyCat <- oclass %>% 
+      dplyr::filter(Name != "type") %>% 
+      dplyr::select(Class)
+    
     #--- plotting ---#
     if(is.null(raster)){
       
+      if(any(anyCat != "numeric")){
+        
+        nonNumeric <- oclass[oclass$Class != 'numeric',]
+        
+        pecdfcat <- all %>% 
+          dplyr::select(nonNumeric$Name) %>%
+          tidyr::pivot_longer(c(!type), names_to = "metric") %>%
+          dplyr::group_by(type, metric, value) %>%
+          dplyr::summarize(counts = dplyr::n()) %>%
+          dplyr::mutate(counts = dplyr::case_when(
+            type == "population" ~ counts / nrow(all %>% dplyr::filter(type == "population")),
+            type == "sample" ~ counts / nrow(all %>% dplyr::filter(type == "sample")),
+          )) %>%
+          ggplot2::ggplot(ggplot2::aes(x = value, y = counts,class = type, fill = type)) + 
+          ggplot2::geom_col(position="fill") +
+          ggplot2::facet_grid(.~ metric, scales = "free") +
+          ggplot2::ggtitle(label = "Percent stacked barchart for existing samples") +
+          ggplot2::xlab("Sampling metrics") +
+          ggplot2::ylab("Representation percent")
+          
+      }
+      
+      Numeric <- oclass[oclass$Class == 'numeric',] %>% dplyr::filter(!Name %in% c("X","Y"))
+      
       pecdf <- all %>% 
-        dplyr::select(-dplyr::all_of(names(costLoc)[cost])) %>%
+        dplyr::select(Numeric$Name, type) %>% 
+        dplyr::select(-dplyr::all_of(names(costLoc)[cost]), type) %>%
         tidyr::pivot_longer(c(!type), names_to = "metric") %>%
         ggplot2::ggplot(ggplot2::aes(value, class = type, colour = type)) + 
         ggplot2::stat_ecdf(geom = "step") +
@@ -366,9 +416,33 @@ sample_existing <- function(existing,
         suppressWarnings(plot(samples, add = TRUE, col = "black"))
       }
       
+      if(any(anyCat != "numeric")){
+        
+        nonNumeric <- oclass[oclass$Class != 'numeric',]
+        
+        pecdfcat <- all %>% 
+          dplyr::select(nonNumeric$Name) %>%
+          tidyr::pivot_longer(c(!type), names_to = "metric") %>%
+          dplyr::group_by(type, metric, value) %>%
+          dplyr::summarize(counts = dplyr::n()) %>%
+          dplyr::mutate(counts = dplyr::case_when(
+            type == "population" ~ counts / nrow(all %>% dplyr::filter(type == "population")),
+            type == "sample" ~ counts / nrow(all %>% dplyr::filter(type == "sample")),
+          )) %>%
+          ggplot2::ggplot(ggplot2::aes(x = value, y = counts,class = type, fill = type)) + 
+          ggplot2::geom_col(position="fill") +
+          ggplot2::facet_grid(.~ metric, scales = "free") +
+          ggplot2::ggtitle(label = "Percent stacked barchart for existing samples") +
+          ggplot2::xlab("Sampling metrics") +
+          ggplot2::ylab("Representation percent")
+        
+      }
+      
+      Numeric <- oclass[oclass$Class == 'numeric',] %>% dplyr::filter(Name %in% names(raster) & !Name %in% c("X","Y"))
+      
       #--- generate ecdf curves comparing population and sample ---#
-      pecdf <- all %>% 
-        dplyr::select(-X,-Y,-dplyr::all_of(names(costLoc)[cost])) %>%
+      pecdf <- all[,c(names(raster),"type")] %>% 
+        dplyr::select(Numeric$Name,type, -dplyr::all_of(names(costLoc)[cost])) %>%
         tidyr::pivot_longer(c(!type), names_to = "metric") %>%
         ggplot2::ggplot(ggplot2::aes(value, class = type, colour = type)) + 
         ggplot2::stat_ecdf(geom = "step") +
@@ -377,7 +451,9 @@ sample_existing <- function(existing,
         ggplot2::xlab("Sampling metrics") +
         ggplot2::ylab("Cumulative distribution")
     }
-  
+    
+    if(exists("pecdfcat")) print(pecdfcat)
+    
     print(pecdf)
   
   }
@@ -408,7 +484,8 @@ sample_existing <- function(existing,
    
     out <- list(samples = samples, 
                 population = all, 
-                clhsOut = clhsOut, 
+                clhsOut = clhsOut,
+                plotcat = if (exists("pecdfcat")) pecdfcat,
                 plot = if (exists("pecdf")) pecdf)
     
     return(out)

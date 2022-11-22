@@ -16,13 +16,19 @@ test_that("Input classes", {
   expect_error(sample_existing(existing = existing, nSamp = 100, cost = TRUE), "'cost' must be either type numeric or character.")
   expect_error(sample_existing(existing = existing, nSamp = 100, cost = 13), "'cost' index doest not exist within 'existing'.")
   expect_error(sample_existing(existing = existing, raster = mraster, nSamp = 100, cost = 13), "'cost' index doest not exist within 'raster'.")
+  expect_error(sample_existing(existing = existing, raster = mraster$zq90, nSamp = 100), "At least 2 raster attributes are required to generate a matrix for sub-sampling.")
+  expect_error(sample_existing(existing = existing, nSamp = 100), "At least 2 attributes are required to generate a matrix for sub-sampling.")
   expect_error(sample_existing(raster = mraster, nSamp = 100, existing = data.frame(x = c(1,2,3), y = c(1,2,3))), "'nSamp' must be less than the total number of 'existing' samples.")
-  expect_error(sample_existing(existing = existing, raster = mraster, nSamp = 10, filename = TRUE), "'filename' must be a file path character string.")
-  expect_error(sample_existing(existing = existing, raster = mraster, nSamp = 10, filename = file.path(tempdir(), "temp.shp"), overwrite = "A"), "'overwrite' must be type logical.")
+  expect_error(sample_existing(existing = de, raster = mraster, nSamp = 10, filename = TRUE), "'filename' must be a file path character string.")
+  expect_error(sample_existing(existing = de, raster = mraster, nSamp = 10, filename = file.path(tempdir(), "temp.shp"), overwrite = "A"), "'overwrite' must be type logical.")
 })
 
 test_that("non sf existing", {
-  expect_message(sample_existing(existing = existing.df.n.xy, raster = mraster, nSamp = 20, details = TRUE), "'existing' does not contain attributes with the same names as 'raster'. Extracting metrics.")
+  expect_message(sample_existing(existing = existing, raster = mraster, nSamp = 20, details = TRUE), "'existing' does not contain attributes with the same names as 'raster'. Extracting metrics.")
+})
+
+test_that("categorical", {
+  expect_s3_class(sample_existing(existing = existing, raster = xmraster, nSamp = 20, details = TRUE, plot = TRUE)$plotcat, "gg")
 })
 
 
@@ -33,7 +39,7 @@ test_that("Access", {
   expect_message(sample_existing(raster = mraster, nSamp = 1, existing = existingna), "16 samples are located where metric values are NA.")
   
   expect_message(sample_existing(existing = existing, raster = mraster, nSamp = 50), "Sub-sampling based on 'raster' distributions.")
-  expect_message(sample_existing(existing = de, cost = 4, nSamp = 20), "Sub-sampling based on 'existing' metric distributions.")
+  expect_message(sample_existing(existing = de, cost = 4, nSamp = 20), "Sub-sampling based on ALL 'existing' metric distributions. Ensure only attributes of interest are included.")
   expect_message(sample_existing(existing = de, cost = 4, nSamp = 20), "Using `dist2access` as sampling constraint.")
 })
 
@@ -41,7 +47,7 @@ test_that("Access", {
 
 test_that("Total outputs", {
   expect_equal(nrow(o), 50L)
-  expect_equal(ncol(o), 4L)
+  expect_equal(ncol(o), 5L)
   expect_s3_class(o,"sf")
   
   expect_equal(nrow(o1), 20L)

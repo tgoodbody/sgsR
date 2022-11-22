@@ -40,11 +40,13 @@ names(x) <- "strata"
 
 crs(x) <- crs(mraster)
 
+xmraster <- c(mraster,x)
+
 #--- coordinates ---#
 coords <- sf::st_coordinates(existing)
 
 #--- dataframes and NA dataframes ---#
-existing.df.n.xy <- existing %>% sf::st_drop_geometry(.) %>% as.data.frame() %>% cbind(., coords)
+existing.df.n.xy <- existing %>% extract_metrics(mraster, .) %>% sf::st_drop_geometry(.) %>% as.data.frame() %>% cbind(., coords)
 
 existing.df.n.xy.lc <- existing %>% sf::st_drop_geometry(.) %>% as.data.frame() %>% cbind(., coords)
 

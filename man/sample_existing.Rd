@@ -53,7 +53,7 @@ is the tessellation grid for sampling, and \code{samples} are the systematic sam
 \item{...}{Additional arguments for clhs sampling. See \code{\link[clhs]{clhs}}.}
 }
 \value{
-An sf object of samples
+An sf object of samples or a list object if `details = TRUE`
 }
 \description{
 Sub-sample an existing sample using \code{\link[clhs]{clhs}} functionality.
