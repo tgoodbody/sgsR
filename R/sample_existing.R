@@ -60,7 +60,7 @@ sample_existing <- function(existing,
   
   #--- set global variables ---#
   
-  x <- y <- X <- Y <- type <- value <- NULL
+  x <- y <- X <- Y <- type <- value <- Name <- Class <- metric <- counts NULL
   
   #--- error handling ---#
   
@@ -303,7 +303,7 @@ sample_existing <- function(existing,
       
       #--- sampling ---#
       
-      sidx <- (nrow(all)-nrow(e)+1):nrow(all)
+      sidx <- (nrow(all)-nrow(existing)+1):nrow(all)
       
       if(isTRUE(details)){
         
