@@ -423,8 +423,7 @@ First we can create an `existing` sample for our example. Lets imagine we have a
 
 ```{r,warning=F,message=F}
 #--- generate existing samples and extract metrics ---#
-existing <- sample_systematic(raster = mraster, cellsize = 200, plot = TRUE) %>%
-  extract_metrics(mraster = mraster, existing = .)
+existing <- sample_systematic(raster = mraster, cellsize = 200, plot = TRUE)
 
 ```
 
@@ -433,9 +432,10 @@ Notice that we used `extract_metrics()` after creating it. If the user provides 
 
 ```{r,warning=F,message=F}
 #--- sub sample using ---#
-sample_existing(existing = existing, # our existing sample
-                nSamp = 300, # desired sample size
-                plot = TRUE) # plot
+e <- existing %>% 
+  extract_metrics(mraster = mraster, existing = .)
+
+sample_existing(existing = e, nSamp = 300)
 
 ```
 
