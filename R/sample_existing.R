@@ -60,7 +60,7 @@ sample_existing <- function(existing,
   
   #--- set global variables ---#
   
-  x <- y <- X <- Y <- type <- value <- Name <- Class <- metric <- counts NULL
+  x <- y <- X <- Y <- type <- value <- Name <- Class <- metric <- counts <- NULL
   
   #--- error handling ---#
   

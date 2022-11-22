@@ -1,6 +1,8 @@
-# sgsR 1.3.2
+# sgsR 1.3.21
 
 `enhancement` - `sample_existing()` - made it so extra attributes are passed to output when `raster` is provided. Added additional unit tests and updated documentation.
+
+# sgsR 1.3.2
 
 `enhancement` - `README.Rmd` and vignettes have been updated.
 
