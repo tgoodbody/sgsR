@@ -1,5 +1,7 @@
 # sgsR 1.3.2
 
+`enhancement` - `sample_existing()` - made it so extra attributes are passed to output when `raster` is provided. Added additional unit tests and updated documentation.
+
 `enhancement` - `README.Rmd` and vignettes have been updated.
 
 `enhancement` - `sample_systematic()` - changed how tessellation was used internally and visualized during plotting.
