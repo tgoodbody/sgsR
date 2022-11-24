@@ -19,7 +19,7 @@ classPlot <- function(dfc,
                       coordsgrps,
                       mraster,
                       mraster2,
-                      samp) {
+                      samp = 0.01) {
 
   #--- sample cells based on 'samp' parameter ---#
 

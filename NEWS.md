@@ -1,5 +1,7 @@
 # sgsR 1.3.21
 
+`fixed` - `strat_quantiles() / strat_kmeans()` - solved issue where correct number of strata & float strata values were being output.
+
 `enhancement` - `sample_existing()` - made it so extra attributes are passed to output when `raster` is provided. Added additional unit tests and updated documentation.
 
 # sgsR 1.3.2

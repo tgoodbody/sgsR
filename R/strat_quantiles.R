@@ -144,11 +144,13 @@ strat_quantiles <- function(mraster,
 
     #--- convert back to original mraster extent ---#
 
-    suppressWarnings(vals[, 1][idx] <- dfc$class)
+    odf <- matrix(nrow = nrow(vals), ncol = 1)
+    
+    odf[, 1][idx] <- dfc$class
 
     #--- set newly stratified values ---#
 
-    rout <- terra::setValues(mraster[[1]], vals[, 1])
+    rout <- terra::setValues(mraster[[1]], odf[, 1])
     names(rout) <- "strata"
 
     #--- if mraster2 is provided ---#
@@ -203,11 +205,13 @@ strat_quantiles <- function(mraster,
 
     #--- convert back to original mraster extent ---#
 
-    suppressWarnings(vals[, 1][idx] <- dfc$class)
+    odf <- matrix(nrow = nrow(vals), ncol = 1)
+    
+    odf[, 1][idx] <- dfc$class
 
     #--- set newly stratified values ---#
 
-    rout <- terra::setValues(mraster[[1]], vals[, 1])
+    rout <- terra::setValues(mraster[[1]], odf[, 1])
     names(rout) <- "strata"
   }
 

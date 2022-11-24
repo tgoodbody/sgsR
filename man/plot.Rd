@@ -5,7 +5,7 @@
 \alias{classPlot}
 \title{Plot}
 \usage{
-classPlot(dfc, coordsgrps, mraster, mraster2, samp)
+classPlot(dfc, coordsgrps, mraster, mraster2, samp = 0.01)
 }
 \arguments{
 \item{dfc}{data.frame. Values for mraster and mraster2}
