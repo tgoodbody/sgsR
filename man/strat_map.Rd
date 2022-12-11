@@ -11,8 +11,7 @@ strat_map(
   filename = NULL,
   overwrite = FALSE,
   plot = FALSE,
-  details = FALSE,
-  ...
+  details = FALSE
 )
 }
 \arguments{
@@ -33,8 +32,6 @@ strata with boundary dividers.}
 \item{details}{Logical. If \code{FALSE} (default) output is a mapped stratified spatRaster object.
 If \code{TRUE} return a list where \code{$outRaster} is the mapped stratified raster, and
 \code{$lookUp} is the lookup table for the stratification.}
-
-\item{...}{Additional arguments for writing files. See \code{\link[terra]{writeRaster}}.}
 }
 \value{
 A spatRaster object.
@@ -58,7 +55,7 @@ If \code{strata = 2} and \code{strata2 = 14} then \code{stratamapped = 214}.
 \examples{
 #--- load input metrics raster ---#
 raster <- system.file("extdata", "sraster.tif", package = "sgsR")
-srasterkmeans <- terra::rast(raster)
+sraster <- terra::rast(raster)
 
 #--- read polygon coverage ---#
 poly <- system.file("extdata", "inventory_polygons.shp", package = "sgsR")
@@ -78,18 +75,18 @@ srasterfri <- strat_poly(
   poly = fri,
   attribute = attribute,
   features = features,
-  raster = srasterkmeans
+  raster = sraster
 )
 
 #--- map srasters ---#
 strat_map(
   sraster = srasterfri,
-  sraster2 = srasterkmeans
+  sraster2 = sraster
 )
 
 strat_map(
   sraster = srasterfri,
-  sraster2 = srasterkmeans,
+  sraster2 = sraster,
   stack = TRUE,
   details = TRUE
 )
@@ -102,6 +99,6 @@ Other stratify functions:
 \code{\link{strat_quantiles}()}
 }
 \author{
-Tristan R.H. Goodbody
+Tristan R.H. Goodbody, Robert Hijmans
 }
 \concept{stratify functions}

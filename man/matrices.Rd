@@ -22,6 +22,9 @@ mat_covNB(vals, nQuant, nb, matQ)
 
 \item{matQ}{Quantile matrix}
 }
+\value{
+Covariate quantile and/or covariance matrices.
+}
 \description{
 Create covariate and sample matrices
 }

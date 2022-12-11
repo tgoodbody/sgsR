@@ -58,32 +58,26 @@ sample_balanced <- function(mraster,
 
   #--- Error management ---#
   if (!inherits(mraster, "SpatRaster")) {
-    stop("'mraster' must be type SpatRaster")
+    stop("'mraster' must be type SpatRaster.", call. = FALSE)
   }
 
   if (!is.numeric(nSamp)) {
-    stop("'nSamp' must be type numeric")
+    stop("'nSamp' must be type numeric.", call. = FALSE)
   }
 
   if (!is.logical(plot)) {
-    stop("'plot' must be type logical")
+    stop("'plot' must be type logical.", call. = FALSE)
   }
 
   if (!is.character(algorithm)) {
-    stop("'algorith' must be type character")
+    stop("'algorithm' must be type character.", call. = FALSE)
   }
 
   #--- list all available algorithms to determine if a valid one has been supplied ---#
   algs <- c("lpm2_kdtree", "lcube", "lcubestratified")
 
   if (!algorithm %in% algs) {
-    stop("Unknown algorithm specified. Please use one of 'lpm2_kdtree', 'lcube', 'lcubestratified'.")
-  }
-
-  ### --- DETERMINE NULL / NA SYNTAX FOR CRS ---###
-
-  if (is.na(terra::crs(mraster, proj = TRUE))) {
-    stop("'mraster' does not have a coordinate system")
+    stop("Unknown algorithm specified. Please use one of 'lpm2_kdtree', 'lcube', 'lcubestratified'.", call. = FALSE)
   }
 
   #--- determine crs of input mraster ---#
@@ -94,15 +88,6 @@ sample_balanced <- function(mraster,
   mrasterP <- mraster
 
   if (!is.null(access)) {
-
-    #--- error handling in the presence of 'access' ---#
-    if (!inherits(access, "sf")) {
-      stop("'access' must be an 'sf' object")
-    }
-
-    if (!inherits(sf::st_geometry(access), "sfc_MULTILINESTRING") && !inherits(sf::st_geometry(access), "sfc_LINESTRING")) {
-      stop("'access' geometry type must be 'LINESTRING' or 'MULTILINESTRING'")
-    }
 
     #--- buffer roads and mask ---#
 
@@ -137,7 +122,11 @@ sample_balanced <- function(mraster,
     p <- rep(nSamp / N, N)
   } else {
     if (!is.numeric(p)) {
-      stop("'p' must be type numeric")
+      stop("'p' must be type numeric.", call. = FALSE)
+    }
+    
+    if(length(p) != N){
+      stop(paste0("'p' have a length of ", N ,"."), call. = FALSE)
     }
   }
 
@@ -153,7 +142,7 @@ sample_balanced <- function(mraster,
 
   if (algorithm == "lcubestratified") {
     if (!"strata" %in% names(mraster)) {
-      stop("'mraster' must have a variable named 'strata' to use the 'lcubestratified' algorithm")
+      stop("'mraster' must have a variable named 'strata' to use the 'lcubestratified' algorithm.", call. = FALSE)
     }
 
     #--- create indices for all, NA, and valid sampling candidates ---#
@@ -203,15 +192,21 @@ sample_balanced <- function(mraster,
   }
 
   if (!is.null(filename)) {
+    
+    if (!is.character(filename)) {
+      stop("'filename' must be a file path character string.", call. = FALSE)
+    }
+    
     if (!is.logical(overwrite)) {
-      stop("'overwrite' must be either TRUE or FALSE")
+      stop("'overwrite' must be type logical.", call. = FALSE)
     }
-
+    
     if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(paste0("'",filename, "' already exists and overwrite = FALSE"))
+      stop(paste0("'",filename, "' already exists and overwrite = FALSE."), call. = FALSE)
     }
-
+    
     sf::st_write(samples, filename, delete_layer = overwrite)
+    message("Output samples written to disc.")
   }
 
   #--- output samples sf ---#

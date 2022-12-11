@@ -13,8 +13,7 @@ strat_quantiles(
   details = FALSE,
   samp = 0.2,
   filename = NULL,
-  overwrite = FALSE,
-  ...
+  overwrite = FALSE
 )
 }
 \arguments{
@@ -39,8 +38,6 @@ Lower values reduce visualization time.}
 \item{filename}{Character. Path to write stratified raster to disc.}
 
 \item{overwrite}{Logical. Specify whether \code{filename} should be overwritten on disc.}
-
-\item{...}{Additional arguments to be passed to \code{\link[stats]{kmeans}} function.}
 }
 \value{
 Returns an output stratification \code{spatRaster} or a list when \code{details = TRUE}.

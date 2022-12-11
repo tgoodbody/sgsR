@@ -1,10 +1,10 @@
 ---
-title: "stratification"
+title: "Stratification"
 output: rmarkdown::html_vignette
 description: >
   Learn how to use strat* functions.
 vignette: >
-  %\VignetteIndexEntry{stratification}
+  %\VignetteIndexEntry{Stratification}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,7 +14,24 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+
 ```
+
+```{css,echo=FALSE}
+.infobox {
+  padding: 1em 1em 1em 4em;
+  margin-bottom: 10px;
+  border: 2px solid #43602d;
+  border-radius: 10px;
+  background: #738e41 5px center/3em no-repeat;
+}
+
+.caution {
+  background-image: url("https://tgoodbody.github.io/sgsR/logo.png");
+}
+
+```
+
 
 ```{r,warning=F,message=F,echo=FALSE,results=FALSE}
 library(sgsR)
@@ -41,25 +58,33 @@ existing <- sample_strat(sraster = sraster, # use mraster as input for sampling
                          nSamp = 200, # request 200 samples be taken
                          mindist = 100) # define that samples must be 100 m apart
 
+#--- algorithm table ---#
+
+a <- c("`strat_kmeans()`","`strat_quantiles()`","`strat_breaks()`","`strat_poly()`","`strat_map()`")
+
+d <- c("kmeans", "Quantiles", "User-defined breaks", "Polygons", "Maps (combines) `srasters`")
+
+s <- c("Unsupervised", "Unsupervised", "Supervised", "Supervised", "Unsupervised")
+
+urls <- c("#kmeans","#quantiles","#breaks","poly","#map")
+
+df <- data.frame(Algorithm = a, Description = d, Approach = s)
+
+df$Algorithm <- paste0("[", df$Algorithm, "](", urls, ")")
+
 ```
 
-Fundamental to many structurally guided sampling approaches is the use of stratification methods that allow for more effective and representative sampling protocols. Below, I will identify the stratification methods included in `sgsR` and demonstrate some worked examples for each functions. 
+Fundamental to many structurally guided sampling approaches is the use of stratification methods that allow for more effective and representative sampling protocols. It is important to note that the data sets being used as inputs are considered to be populations.
 
 Currently, there are 5 functions associated with the `strat` verb in the `sgsR` package:
 
-*   `strat_kmeans()` - kmeans stratification
-
-*   `strat_quantiles()`- quantile stratification
-
-*   `strat_breaks()` - user-defined break stratification
-
-*   `strat_poly()` - polygon attribute stratification
-
-*   `strat_map()` - maps (combines) 2 stratifications
+```{r echo=FALSE}
+knitr::kable(df, align = 'c')
+```
 
 ## `strat_kmeans` {#kmeans .unnumbered}
 
-We will demonstrate a preliminary example of using the `strat_kmeans()` algorithm to prepare our `sraster` input data and provide additional examples below.
+`strat_kmeans()` uses kmeans clustering to produce an `sraster` output.
 
 ```{r,warning=F,message=F}
 #--- perform stratification using k-means ---#
@@ -68,7 +93,11 @@ strat_kmeans(mraster = mraster, # input
 
 ```
 
-Notice that the code above did not plot anything. This is because `plot = FALSE` is set as the default for all functions in the `sgsR` package. Below, we will demonstrate examples where the `plot = TRUE` was set. 
+::: {.infobox .caution data-latex="{caution}"}
+**TIP!**
+
+`plot = FALSE` is the default for all functions. `plot = TRUE` will visualize raster and vector ouputs. 
+:::
 
 ```{r,warning=F,message=F}
 strat_kmeans(mraster = mraster, # input
@@ -78,9 +107,11 @@ strat_kmeans(mraster = mraster, # input
              plot = TRUE) # plot output
 ```
 
-## `strat_quantiles` {.unnumbered}
+## `strat_quantiles` {#quantiles .unnumbered}
 
-The `strat_quantiles()` algorithm divides data into equally sized strata (`nStrata`). Similar to the `strat_breaks()` function, the (quantile) algorithm have the capability to perform stratification on a single `mraster`; users can also input a secondary `mraster` (`mraster2`) and specify the number associated with the desired strata (`nStrata2`). Note that the dual stratification output will result in a product of $nStrata * nStrata2$.
+The `strat_quantiles()` algorithm divides data into equally sized strata (`nStrata`). Similar to `strat_breaks()` users can perform stratification on a single `mraster` or also input a secondary `mraster` (`mraster2`) and specify the desired number of strata (`nStrata2`). 
+
+Note that the dual stratification output will result in a product of $nStrata * nStrata2$.
 
 ```{r,warning=F,message=F}
 #--- perform quantiles stratification ---#
@@ -95,9 +126,9 @@ strat_quantiles(mraster = mraster$zq90,
                 nStrata2 = 4)
 ```
 
-## `strat_breaks` {.unnumbered}
+## `strat_breaks` {#breaks .unnumbered}
 
-`strat_breaks()` function stratifies the data based on the breaks in covariates that the user defines. Single `mraster` can be defined or additional `mraster2` can also be defined. `breaks` and `breaks2` coincide with the user defined breaks for `mraster` and `mraster2` respectively. 
+`strat_breaks()` stratifies data based on user-defined breaks in `mraster`. A single `mraster` can be used, or `mraster2` can also be defined. `breaks` and `breaks2` coincide with the user defined breaks for `mraster` and `mraster2` respectively. 
 
 ```{r,warning=F,message=F}
 #--- perform stratification using user-defined breaks ---#
@@ -122,7 +153,6 @@ Once the breaks are created, we can use them as input into the `strat_breaks` fu
 
 ```{r,warning=F,message=F}
 #--- stratify on 1 metric only ---#
-
 strat_breaks(mraster = mraster$pzabove2,
              breaks = breaks,
              plot = TRUE)
@@ -130,15 +160,20 @@ strat_breaks(mraster = mraster$pzabove2,
 
 ```{r,warning=F,message=F}
 #--- stratify on 1 metric only ---#
-
 strat_breaks(mraster = mraster$zq90,
              breaks = breaks2,
              plot = TRUE)
 ```   
 
-## `strat_poly` {.unnumbered}
+## `strat_poly` {#poly .unnumbered}
 
-The `strat_poly()` algorithm stratifies the input based on spatial polygon attributes and features. Users may wish to stratify based on categorical or empirical variables that are not available through ALS data (e.g. species from forest inventory polygons). This function allows the user to define the attribute of interest as well as how the features within the attribute are to be grouped for stratification. 
+Forest inventories with polygon coverages summarizing forest attributes such as species, management type, or photo-interpreted estimates of volume can be stratified using `strat_poly()`. 
+
+::: {.infobox .caution data-latex="{caution}"}
+**TIP!**
+
+Users may wish to stratify based on categorical or empirical variables that are not available through raster data (e.g. species from forest inventory polygons).
+:::
 
 Users define the input `poly` and its associated `attribute`. A `raster` layer must be defined to guide the spatial extent and resolution for the output stratification polygon. Based on the vector or list of `features`, stratification is applied and the polygon is rasterized into its appropriate strata. 
 
@@ -147,12 +182,7 @@ Users define the input `poly` and its associated `attribute`. A `raster` layer m
 poly <- system.file("extdata", "inventory_polygons.shp", package = "sgsR")
 
 fri <- sf::st_read(poly)
-```
 
-`attribute` column within the polygon must be defined and the `features` (within the `attribute`) must be specified to define the composition of the output strata. In our demonstration below, `attribute = "NUTRIENTS"` and features within `NUTRIENTS` (poor, rich, medium) will define the 3 desired output classes.   
-
-```{r}
-#--- stratify polygon coverage ---#
 #--- specify polygon attribute to stratify ---#
 
 attribute <- "NUTRIENTS"
@@ -161,6 +191,12 @@ attribute <- "NUTRIENTS"
 #--- as a single vector ---#
 
 features <- c("poor", "rich", "medium")
+```
+
+In our example, `attribute = "NUTRIENTS"` and features within, `c("poor", "rich", "medium")`, define the 3 desired strata.   
+
+```{r}
+#--- stratify polygon coverage ---#
 
 srasterpoly <- strat_poly(poly = fri, # input polygon
                           attribute = attribute, # attribute to stratify by
@@ -169,7 +205,7 @@ srasterpoly <- strat_poly(poly = fri, # input polygon
                           plot = TRUE) # plot output
 ```
 
-`features` can be converted into amalgamated classes. In our demonstration below, `rich` and `medium` features are combined together, while `low` is left in isolation. The 2 vectors are specified into a list, which will result in the output of 2 classes (low & rich/medium).  
+`features` can be grouped. In our example below, `rich` and `medium` features are combined into a single strata, while `low` is left in isolation. The 2 vectors are specified into a list, which will result in the output of 2 strata (low & rich/medium).  
 
 ```{r}
 #--- or as multiple lists ---#
@@ -186,13 +222,21 @@ strat_poly(poly = fri,
            details = TRUE)
 ```
 
-You may have noticed that the `details` parameter was present in the demonstration code above. `details` parameter returns the output `outRaster`, the `$lookUp` table associated with the strata, and the polygon (`$poly`) is created to drive the stratification based on attributes and features specified by the users. 
+::: {.infobox .caution data-latex="{caution}"}
+**`details`**
 
-## `strat_map` {.unnumbered}
+`details` returns the output `outRaster`, the stratification `$lookUp` table, and the polygon (`$poly`) used to drive the stratification based on attributes and features specified by the users.
+:::
 
-There are situations where multiple levels of stratification may be sought-after. For instance, the user may wish to combine the output from `strat_poly()` (see the demonstration above) with 3 classes, with the 4 class kmeans stratification generated above in this vignette. 
+## `strat_map` {#map .unnumbered}
 
-The total number of classes of the output is multiplicative of the number of the strata. For example, if `sraster` has 3 strata and `sraster2` has 4 strata, then the output of `strat_map()` will be 12 strata in total. There may be occasions where stratum do not interact spatially, this will result in fewer output strata. 
+Users may wish to pair stratifications. `strat_map()` faciliates two stratifications of matching extent and resolution to be mapped against one another to generate unique strata based on stratum pairings. 
+
+This facilitates the user to generate stratifications detailing quantitative and qualitative measures such as structure by species, or multiple qualitative measures such as species by management type.
+
+The total number of classes of the output `sraster` is multiplicative of the number of input strata. For example, if the input `sraster` has 3 strata and `sraster2` has 4 strata, then the output of `strat_map()` will be 12 strata.
+
+There may be occasions where stratum do not interact spatially, this will result in fewer output strata. 
 
 ```{r}
 #--- map srasters ---#

@@ -40,14 +40,6 @@
 #'   details = TRUE
 #' )
 #'
-#' kmeans <- strat_kmeans(
-#'   mraster = mr,
-#'   nStrata = 5,
-#'   iter = 1000,
-#'   plot = TRUE,
-#'   filename = tempfile(fileext = ".tif"),
-#'   overwrite = TRUE
-#' )
 #' @author Tristan R.H. Goodbody
 #'
 #' @export
@@ -67,39 +59,39 @@ strat_kmeans <- function(mraster,
   #--- Error management ---#
 
   if (!inherits(mraster, "SpatRaster")) {
-    stop("'mraster' must be type SpatRaster")
+    stop("'mraster' must be type SpatRaster.", call. = FALSE)
   }
 
   if (!is.numeric(nStrata)) {
-    stop("'nStrata' must be type numeric")
+    stop("'nStrata' must be type numeric.", call. = FALSE)
   }
 
   if (!is.numeric(iter)) {
-    stop("'iter.max' must be type numeric")
+    stop("'iter' must be type numeric.", call. = FALSE)
   }
 
   if (!is.character(algorithm)) {
-    stop("'algorithm' must be type character")
+    stop("'algorithm' must be type character.", call. = FALSE)
   }
 
   if (algorithm != "Lloyd" && algorithm != "MacQueen") {
-    stop("Unknown algorithm '", algorithm, "' selected. Please use 'Lloyd' (default) or 'MacQueen'")
+    stop("Unknown algorithm '", algorithm, "' selected. Please use 'Lloyd' (default) or 'MacQueen'.", call. = FALSE)
   }
 
   if (!is.logical(center)) {
-    stop("'center' must be type logical")
+    stop("'center' must be type logical.", call. = FALSE)
   }
 
   if (!is.logical(scale)) {
-    stop("'scale' must be type logical")
+    stop("'scale' must be type logical.", call. = FALSE)
   }
 
   if (!is.logical(plot)) {
-    stop("'plot' must be type logical")
+    stop("'plot' must be type logical.", call. = FALSE)
   }
 
   if (!is.logical(details)) {
-    stop("'details' must be type logical")
+    stop("'details' must be type logical.", call. = FALSE)
   }
 
   #--- Extract values from mraster ---#
@@ -110,18 +102,23 @@ strat_kmeans <- function(mraster,
 
   idx <- which(complete.cases(vals))
 
-  valsOut <- vals
-
   #--- conduct unsupervised k-means with center/scale parameters based on algorithm ---#
 
   message("K-means being performed on ", terra::nlyr(mraster), " layers with ", nStrata, " centers.")
 
-  km_clust <- stats::kmeans(scale(vals[idx], center = center, scale = scale), centers = nStrata, iter.max = iter, algorithm = algorithm)
+  km_clust <- stats::kmeans(scale(vals[idx,], center = center, scale = scale), centers = nStrata, iter.max = iter, algorithm = algorithm)
 
   #--- convert k-means values back to original mraster extent ---#
-  valsOut[idx] <- km_clust$cluster
-
-  kmv <- suppressWarnings(terra::setValues(mraster[[1]], valsOut))
+  
+  #--- R Hijmans suggested edit ---#
+  #--- create a single vector of NAs of length ncell ---#
+  odf <- matrix(nrow = nrow(vals), ncol = 1)
+  
+  odf[,1][idx] <- km_clust$cluster
+  
+  #--- re-assign kmeans values to raster ---#
+  kmv <- terra::setValues(mraster[[1]], odf[,1])
+  
   names(kmv) <- "strata"
 
   #--- plot if requested ---#
@@ -133,7 +130,8 @@ strat_kmeans <- function(mraster,
   #--- write file to disc ---#
 
   if (!is.null(filename)) {
-    terra::writeRaster(kmv, filename, overwrite = overwrite)
+    terra::writeRaster(x = kmv, filename = filename, overwrite = overwrite)
+    message("Output raster written to disc.")
   }
 
   #--- Output based on 'details' to return raster alone or list with details ---#

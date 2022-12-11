@@ -5,7 +5,7 @@
 #'
 #' @inheritParams calculate_pop
 #'
-#' @param popLHS List. Output from \code{\link{calculate_pop}} function.
+#' @param mats List. Output from \code{\link{calculate_pop}} function.
 #' @param KLdiv Logical. Perform Kullback–Leibler divergence testing.
 #' @param quant Logical. Perform quantile comparison testing.
 #' @param minSamp Numeric. Minimum sample size to test. \code{default = 10}.
@@ -27,12 +27,12 @@
 #' mr <- terra::rast(r)
 #'
 #' #--- calculate lhsPop details ---#
-#' poplhs <- calculate_pop(mraster = mr)
+#' mats <- calculate_pop(mraster = mr)
 #'
-#' calculate_lhsOpt(popLHS = poplhs)
+#' calculate_lhsOpt(mats = mats)
 #'
 #' calculate_lhsOpt(
-#'   popLHS = poplhs,
+#'   mats = mats,
 #'   PCA = FALSE,
 #'   iter = 200
 #' )
@@ -46,7 +46,7 @@
 #' @export
 
 
-calculate_lhsOpt <- function(popLHS,
+calculate_lhsOpt <- function(mats,
                              PCA = TRUE,
                              quant = TRUE,
                              KLdiv = TRUE,
@@ -61,12 +61,12 @@ calculate_lhsOpt <- function(popLHS,
 
   #--- Error handling ---#
 
-  if (!is.list(popLHS)) {
-    stop("'popLHS' must be a list - see output from sgsR::calculate_pop()")
+  if (!is.list(mats)) {
+    stop("'mats' must be a list - see output from sgsR::calculate_pop()")
   }
 
-  if (any(!names(popLHS) %in% c("values", "pcaLoad", "matQ", "matCov"))) {
-    stop(paste0("'popLHS' must be the output from the 'sgsR::calculate_pop()' function"))
+  if (any(!names(mats) %in% c("values", "pcaLoad", "matQ", "matCov"))) {
+    stop(paste0("'mats' must be the output from the 'sgsR::calculate_pop()' function"))
   }
 
   if (!is.logical(PCA)) {
@@ -93,7 +93,7 @@ calculate_lhsOpt <- function(popLHS,
     stop("'step' must be type numeric")
   }
 
-  nb <- ncol(popLHS$values)
+  nb <- ncol(mats$values)
 
   #--- Establish sampling sequence ---#
 
@@ -115,16 +115,16 @@ calculate_lhsOpt <- function(popLHS,
 
       #--- perform conditionel Latin Hypercube Sampling ---#
 
-      ss <- clhs::clhs(popLHS$values, size = sampSeq[tSamp], progress = TRUE, iter = iter)
+      ss <- clhs::clhs(mats$values, size = sampSeq[tSamp], progress = TRUE, iter = iter)
 
-      samples <- popLHS$values[ss, ]
+      samples <- mats$values[ss, ]
 
       # --- PCA similarity factor testing ---#
 
       if (isTRUE(PCA)) {
         
-        if (any(!c("pcaLoad") %in% names(popLHS))) {
-          stop("'popLHS' does not have PCA loadings. Use `calculate_pop(PCA = TRUE)`.", call. = FALSE)
+        if (any(!c("pcaLoad") %in% names(mats))) {
+          stop("'mats' does not have PCA loadings. Use `calculate_pop(PCA = TRUE)`.", call. = FALSE)
         }
 
         #--- perform PCA analysis for the samples to determine variance in each component ---#
@@ -145,7 +145,7 @@ calculate_lhsOpt <- function(popLHS,
 
         #--- Perfrom the Krznowski 1979 calculation ---#
 
-        pop <- popLHS$pcaLoad[, 1:2]
+        pop <- mats$pcaLoad[, 1:2]
         samp <- pcaLoadSamp[, 1:2]
 
         #--- transpose matrices ---#
@@ -171,7 +171,7 @@ calculate_lhsOpt <- function(popLHS,
 
           #--- Calculate population quantiles ---#
 
-          popQuant <- stats::quantile(popLHS$values[, var], probs = seq(0, 1, 0.25), names = F, type = 7)
+          popQuant <- stats::quantile(mats$values[, var], probs = seq(0, 1, 0.25), names = F, type = 7)
 
           #--- populate quantile differences into matFinal ---#
 
@@ -192,9 +192,9 @@ calculate_lhsOpt <- function(popLHS,
 
         sampleCov <- mat_cov(
           vals = samples,
-          nQuant = nrow(popLHS$matCov),
+          nQuant = nrow(mats$matCov),
           nb = nb,
-          matQ = popLHS$matQ
+          matQ = mats$matQ
         )
 
         #--- calculate KL divergence ---#
@@ -211,7 +211,7 @@ calculate_lhsOpt <- function(popLHS,
           
           sampleCov[which(sampleCov == 0)] <- 0.0000001
 
-          kld <- entropy::KL.empirical(popLHS$matCov[, kl], sampleCov[, kl])
+          kld <- entropy::KL.empirical(mats$matCov[, kl], sampleCov[, kl])
 
           #--- populate vector ---#
 
@@ -267,7 +267,7 @@ plot_LHCOptim <- function(dfFinal,
   )
 
   #--- Parametise Exponential decay function ---#
-  plot(df$x, df$y, xlab = "sample number", ylab = "1 - KL Divergence") # Initial plot of the data
+  graphics::plot(df$x, df$y, xlab = "sample number", ylab = "1 - KL Divergence") # Initial plot of the data
 
   #--- Prepare a good inital state ---#
   theta.0 <- max(df$y) * 1.1
@@ -285,7 +285,7 @@ plot_LHCOptim <- function(dfFinal,
 
   predicted <- stats::predict(model, list(x = df$x))
 
-  plot(df$x, df$y, xlab = "# of samples", ylab = "norm mean KL divergence")
+  graphics::plot(df$x, df$y, xlab = "# of samples", ylab = "norm mean KL divergence")
   graphics::lines(df$x, predicted, col = "skyblue", lwd = 3)
 
   x1 <- c(-1, maxSamp)

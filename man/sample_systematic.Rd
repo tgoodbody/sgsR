@@ -9,7 +9,7 @@ sample_systematic(
   cellsize,
   square = TRUE,
   location = "centers",
-  forceSamp = FALSE,
+  force = FALSE,
   access = NULL,
   buff_inner = NULL,
   buff_outer = NULL,
@@ -32,7 +32,7 @@ if \code{FALSE} hexagons are used.}
 returns samples at tessellation centers, \code{"corners"} - corners of tessellation are returned,
 \code{"random"} - samples are randomly located within tessellations.}
 
-\item{forceSamp}{Logical. Only applies when \code{location = "random"}. If \code{TRUE}, random samples are
+\item{force}{Logical. Only applies when \code{location = "random"}. If \code{TRUE}, random samples are
 forced to fall in areas where \code{raster} does not have \code{NA} values. This will considerably slow processing.}
 
 \item{access}{sf. Road access network - must be lines.}
@@ -60,55 +60,51 @@ to offset grid by providing lower left coordinates.}
 An sf object with sampled points over a tessellation.
 }
 \description{
-Systematic sampling within a square or hexagonal tessellation.
+Systematic sampling with random start point and translation within a square or hexagonal tessellation.
 }
 \note{
 Specifying \code{location = "random"} can result in tessellations with no samples.
 This results from \code{raster} have \code{NA} values at the random location chosen.
-Using \code{forceSamp = TRUE} removes areas of \code{NA} from sampling entirely, but
+Using \code{force = TRUE} removes areas of \code{NA} from sampling entirely, but
 considerably slows processing speeds.
 }
 \examples{
 #--- Load raster and access files ---#
-r <- system.file("extdata", "sraster.tif", package = "sgsR")
-sr <- terra::rast(r)
-
-a <- system.file("extdata", "access.shp", package = "sgsR")
-ac <- sf::st_read(a)
-
-e <- system.file("extdata", "existing.shp", package = "sgsR")
-e <- sf::st_read(e)
-
+r <- system.file("extdata", "mraster.tif", package = "sgsR")
+mr <- terra::rast(r)
 #--- perform grid sampling ---#
 sample_systematic(
-  raster = sr,
+  raster = mr,
   cellsize = 1000
 )
 
 sample_systematic(
-  raster = sr,
+  raster = mr,
   cellsize = 1000,
-  square = FALSE,
   location = "corners",
   plot = TRUE
 )
 
 sample_systematic(
-  raster = sr,
+  raster = mr,
   cellsize = 1000,
   square = FALSE,
-  location = "random"
+  location = "random",
+  plot = TRUE
 )
+
 }
 \seealso{
 Other sample functions: 
 \code{\link{sample_ahels}()},
 \code{\link{sample_balanced}()},
 \code{\link{sample_clhs}()},
+\code{\link{sample_existing}()},
+\code{\link{sample_nc}()},
 \code{\link{sample_srs}()},
 \code{\link{sample_strat}()}
 }
 \author{
-Tristan R.H. Goodbody
+Tristan R.H. Goodbody, Lukas Winiwarter
 }
 \concept{sample functions}

@@ -4,11 +4,11 @@
 \name{sgsR-package}
 \alias{sgsR}
 \alias{sgsR-package}
-\title{sgsR: Structurally Guided Sampling in R}
+\title{sgsR: Structurally Guided Sampling}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Functions to enable structurally guided sampling (SGS) approaches using airborne laser scanning (ALS; LIDAR) data. Primary functions provide means to generate data-driven stratifications & samples. Intermediate functions for calculating and extracting important information about input covariates and samples are also included. Processing outcomes are intended to help forest and environmental management practitioners better optimize field sample placement as well as assess and augment existing sample networks in the context of structural conditions. ALS data is the primary intended use case, however any rasterized remote sensing data can be used, enabling data-driven stratifications and sampling approaches.
+Structurally guided sampling (SGS) approaches for airborne laser scanning (ALS; LIDAR). Primary functions provide means to generate data-driven stratifications & methods for allocating samples. Intermediate functions for calculating and extracting important information about input covariates and samples are also included. Processing outcomes are intended to help forest and environmental management practitioners better optimize field sample placement as well as assess and augment existing sample networks in the context of data distributions and conditions. ALS data is the primary intended use case, however any rasterized remote sensing data can be used, enabling data-driven stratifications and sampling approaches.
 }
 \seealso{
 Useful links:

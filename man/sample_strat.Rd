@@ -8,6 +8,8 @@ sample_strat(
   sraster,
   nSamp,
   allocation = "prop",
+  method = "Queinnec",
+  weights = NULL,
   force = FALSE,
   mraster = NULL,
   mindist = NULL,
@@ -33,6 +35,13 @@ sample_strat(
 \item{allocation}{Character. Allocation algorithm to be used. Either \code{prop} (default) for proportional allocation,
 \code{optim} for optimal allocation (equal sampling cost), \code{equal} for equal number of samples (defined by \code{nSamp})
 for each strata, or \code{"manual"} for user defined strata weights defined using \code{weights}.}
+
+\item{method}{Character. Sampling design approach \code{"Queinnec"} (default) or \code{"random"}. \code{"Queinnec"} method is
+described in notes below. \code{"random"} performs traditional stratified random sampling where probability to sample each
+cell within each stratum is equal assuming default parameters for \code{mindist}. \code{existing, include, remove} are ignored when \code{method = "random"}.}
+
+\item{weights}{Numeric. Only applicable when \code{allocation = "manual"}. Vector of weights where \code{sum(weights) == 1}. Vector length
+must be equal to the number of unique strata where the first numeric value corresponds to stratum 1, second stratum 2 etc.}
 
 \item{force}{Logical. \code{Default = FALSE} - force \code{nSamp} to be exactly the user defined value
 in cases where \code{nSamp} and \code{sraster} strata count are not equally divisible. Additional samples often need to be allocated or removed
@@ -64,7 +73,7 @@ from access where plots can be sampled.}
 
 \item{wcol}{Numeric. Number of columns in the focal window (\code{default = 3}).}
 
-\item{plot}{Logical. Plots existing (if provided; circles) and new (crosses) samples.}
+\item{plot}{Logical. Plots samples of type `existing` (if provided; croses) and `new` (circles) along with \code{sraster}.}
 
 \item{details}{Logical. If \code{FALSE} (default) output is sf object of
 stratified samples. If \code{TRUE} return a list
@@ -82,10 +91,7 @@ An sf object with \code{nSamp} stratified samples.
 Sampling based on a stratified raster.
 }
 \note{
-\code{existing} may contain samples that fall in \code{sraster} cells that are `NA`. If this occurs and \code{include = TRUE}, `NA` samples
-are separated during sampling and re-appended at the end of the sampling process.
-
-The sampling is performed in 2 stages:
+The sampling is performed in 2 stages when \code{method = "Queinnec"}:
 \enumerate{
 
 \item \code{Rule 1} - Sample within grouped stratum pixels defined within the
@@ -97,6 +103,12 @@ The sampling is performed in 2 stages:
  The rule applied to allocate each sample is defined in the \code{rule} attribute of output samples.
 
 }
+
+\code{existing} may contain samples that fall in \code{sraster} cells that are `NA`. If this occurs and \code{include = TRUE}, `NA` samples
+are separated during sampling and re-appended at the end of the sampling process.
+
+If the \code{sraster} provided contains factor values, the algorithm will automatically convert these into the numeric factor levels and 
+perform sampling using those values. The categories (factor values) will be extracted and appended to the algorithm output as the `category` attribute.
 }
 \examples{
 #--- Load raster and access files ---#
@@ -124,6 +136,8 @@ Other sample functions:
 \code{\link{sample_ahels}()},
 \code{\link{sample_balanced}()},
 \code{\link{sample_clhs}()},
+\code{\link{sample_existing}()},
+\code{\link{sample_nc}()},
 \code{\link{sample_srs}()},
 \code{\link{sample_systematic}()}
 }

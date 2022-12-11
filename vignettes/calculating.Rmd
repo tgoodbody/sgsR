@@ -16,6 +16,21 @@ knitr::opts_chunk$set(
 )
 ```
 
+```{css,echo=FALSE}
+.infobox {
+  padding: 1em 1em 1em 4em;
+  margin-bottom: 10px;
+  border: 2px solid #43602d;
+  border-radius: 10px;
+  background: #738e41 5px center/3em no-repeat;
+}
+
+.caution {
+  background-image: url("https://tgoodbody.github.io/sgsR/logo.png");
+}
+
+```
+
 ```{r,warning=F,message=F,echo=FALSE,results=FALSE}
 library(sgsR)
 library(terra)
@@ -40,31 +55,29 @@ existing <- sample_strat(sraster = sraster, # use mraster as input for sampling
                          nSamp = 200, # request 200 samples be taken
                          mindist = 100) # define that samples must be 100 m apart
 
+#--- algorithm table ---#
+
+a <- c("`calculate_representation()`","`calculate_distance()`","`calculate_pcomp()`","`calculate_sampsize()`","`calculate_allocation()`","`calculate_coobs()`","`calculate_pop()`","`calculate_lhsOpt()`")
+
+d <- c("Determine representation of strata in existing sample", "Per pixel distance to closest `access` vector", "Principal components of input `mraster`", "Estimated sample sizes based on relative standard error", "proportional / optimal / equal / manual allocation", "Detail how `existing` sample units are distributed among `mraster`", "Population level information (PCA / quantile matrix / covariance matrix) of `mraster`", "determine optimal Latin hypercube sampling parameters including sample number")
+
+urls <- c("#rep","#dist","#pcomp","#sampsize","#allocation","#coobs","#lhspop","#lhsopt")
+
+df <- data.frame(Algorithm = a, Description = d)
+
+df$Algorithm <- paste0("[", df$Algorithm, "](", urls, ")")
+
 ```
 
 Currently, there are 8 functions associated with the `calculate` verb in the `sgsR` package:
 
-*   `calculate_representation()` - compare the representation of strata in existing samples
-
-*   `calculate_distance()` - per pixel distance to the closest `access` vector
-
-*   `calculate_pcomp()`- principal components of the input `mraster`
-
-*   `calculate_sampsize()` - determines appropriate estimated sample sizes based on relative standard error
-
-*   `calculate_allocation()` - sample allocation algorithm - proportional / optimal / equal sampling
-
-*   `calculate_coobs()` - determine how `existing` samples are distributed among `mraster` covariates
-
-*   `calculate_pop()` - generate population level information (PCA / quantile matrix / covariance matrix) of input `mraster`
-
-*   `calculate_lhsOpt()` - testing to determine optimal Latin hypercube sampling parameters including sample number
-
-`calculate_*` functions serve as intermediary helper functions. In this section we outline and demonstrate how these functions can be used.
+```{r echo=FALSE}
+knitr::kable(df, align = 'c')
+```
 
 ## `calculate_representation()` {#rep .unnumbered}
 
-`calculate_representation()` function allows the users to verify how well the stratification is represented in their `existing` sample networks. Users input an `sraster` and their `existing` samples to the `calculate_representation()` function, which will result in tabular and graphical (if `plot = TRUE`) outputs that compare strata coverage frequency and sampling frequency. 
+`calculate_representation()` function allows the users to verify how a stratification is represented in an `existing` sample. Result in tabular and graphical (if `plot = TRUE`) outputs that compare strata coverage frequency and sampling frequency. 
 
 ```{r,warning=F,message=F}
 #--- quantile sraster ---#
@@ -91,11 +104,15 @@ calculate_representation(sraster = sraster,
                          plot = TRUE)
 ```
 
+::: {.infobox .caution data-latex="{caution}"}
+**TIP!**
+
 Presence of very small (negligible) differences between `srasterFreq` and `sampleFreq` is common. __In these situations, it is important for the user to determine whether to add or remove the samples.__  
+:::
 
 ## `calculate_distance` {#dist .unnumbered}
 
-`calculate_distance()` function takes the input `raster` and `access` data and outputs the per pixel distance to the nearest access point. This function has a specific value for constraining the sampling protocols, such as the `sample_clhs()` function, where the output raster layer can be used as the `cost` for the constraint. The output raster consists of the input appended with the calculated distance layer (`dist2access`).
+`calculate_distance()` uses input `raster` and `access` data and outputs the per pixel distance to the nearest access point. This algorithm has a specific value for constraining  sampling protocols, such as with `sample_clhs()`, where the output raster layer can be used as the `cost` for the constraint. The output raster consists of the input appended with the calculated distance layer (`dist2access`).
 
 ```{r,warning=F,message=F}
 calculate_distance(raster = sraster, # input
@@ -105,19 +122,18 @@ calculate_distance(raster = sraster, # input
 
 _Access network polygons with a large number of features and/or large spatial extent could result in slow processing times._
 
-## `calculate_pcomp` {.unnumbered}
+## `calculate_pcomp` {#pcomp .unnumbered}
 
-`calculate_pcomp()` function takes `mraster` as the input and performs principal component analysis. The number of components defined by the `nComp` parameter specifies the number of components that will be rasterized onto the output. 
+`calculate_pcomp()` uses `mraster` as the input and performs principal component analysis. The number of components defined by the `nComp` parameter specifies the number of components that will be rasterized. 
 
 ```{r,warning=F,message=F}
 calculate_pcomp(mraster = mraster, # input
                 nComp = 3, # number of components to output
                 plot = TRUE, # plot
                 details = TRUE) # details about the principal component analysis appended
-
 ```
 
-## `calculate_sampsize` {.unnumbered}
+## `calculate_sampsize` {#sampsize .unnumbered}
 
 `calculate_sampsize()` function allows the user to estimate an appropriate sample size using the relative standard error (`rse`) of input metrics. If the input `mraster` contains multiple layers, the sample sizes will be determined for all layers. If `plot = TRUE` and `rse` is defined, a sequence of `rse` values will be visualized with the indicators and the values for the matching sample size.
 
@@ -141,16 +157,14 @@ p <- calculate_sampsize(mraster = mraster,
 p
 ```
 
-## `calculate_allocation` {.unnumbered}
+## `calculate_allocation` {#allocation .unnumbered}
 
-`calculate_allocation()` function determines how to allocate samples based on the desired number of samples (`nSamp`) and the input `sraster`. This function is used internally in a number of functions, including [`sample_strat`](#strat). Currently, there are three methods for allocations included: proportional (`prop`; default), optimal (`optim`), equal (`equal`), and manual (`manual`) allocation.
+`calculate_allocation()` determines how to allocate sample units based on the desired sample size (`nSamp`) and the input `sraster`. It is used internally in a number of algorithms, including [`sample_strat`](#strat). Currently, there are three methods for allocation: proportional (`prop`; default), optimal (`optim`), equal (`equal`), and manual (`manual`) allocation.
 
-* Proportional - Samples are allocated based on the coverage area of the strata. This is the default allocation method.
-* Optimal - Samples are allocated based on the variation within the strata.
-* Equal - Same number of samples ( defined by `nSamp`) are allocated to each strata.
-* Manual - Numeric vector `weights` is provided allowing users to manually assign weights to strata.
 
 ### Proportional allocation {#proportional .unnumbered}
+
+Samples are allocated based on the coverage area of the strata. This is the default allocation method.
 
 ```{r,warning=F,message=F}
 #--- perform grid sampling ---#
@@ -172,7 +186,7 @@ Notice that some of the values under `total` from the result above are negative.
 
 ### Optimal Allocation {#optimal .unnumbered}
 
-Optimal allocation method uses the variation within the strata metric to allocate samples. This means that in addition to providing and `sraster`, that a specific metric (`mraster`) must be provided to calculate variation to optimally allocate samples.
+Samples are allocated based on within strata variance. Optimal allocation method uses the variation within the strata metric to allocate samples. This means that in addition to providing and `sraster`, that a specific metric (`mraster`) must be provided to calculate variation to optimally allocate samples.
 
 ```{r, warning=F,message=F}
 calculate_allocation(sraster = sraster, # stratified raster
@@ -185,6 +199,7 @@ calculate_allocation(sraster = sraster, # stratified raster
 ```
 
 ### Equal allocation {#equal .unnumbered}
+
 There may be situations where the user wants to have the same number of samples allocated to each strata. In these situations use `allocation = equal`. In this case, `nSamp` refers to the total number of samples per strata, instead of the overall total number of samples. 
 
 ```{r}
@@ -199,44 +214,61 @@ The code in the demonstration above yields a total of 80 samples (20 `nSamp` for
 The user may wish to manually assign weights to strata. In this case, `allocation = manual` can be used and `weights` must be provided as a numeric vector (e.g. `weights = c(0.2, 0.2, 0.2, 0.4)` where `sum(weights) == 1`). In this case, `nSamp` will be allocated based on `weights`. 
 
 ```{r}
+weights <- c(0.2, 0.2, 0.2, 0.4)
+
 calculate_allocation(sraster = sraster, # stratified raster
                      nSamp = 20, # desired sample number
-                     allocation = "manual", # optimal allocation
-                     weights = c(0.2, 0.2, 0.2, 0.4)) # weights adding to 1
+                     allocation = "manual", # manual allocation
+                     weights = weights) # weights adding to 1
+
 ```
 
 The code in the demonstration above yields a total of 20 samples with plots being allocated based on the `weights` provided in ascending strata order.
 
 ## Sample evaluation algorithms {#sampeval .unnumbered}
 
-The following algorithms were initially developed by Dr. Brendan Malone from the University of Sydney. Dr. Brendan Malone and his colleagues graciously supplied an in depth description of the functionality of these algorithms, which were originally developed to improve soil sampling strategies. These functions were modified and implemented to be used for structurally guided sampling approaches. Many thanks to Dr. Malone for his excellent collaboration and being a proponent of open source algorithms.
+The following algorithms were initially developed by Dr. Brendan Malone from the University of Sydney. Dr. Malone and his colleagues supplied an in depth description of the functionality of these algorithms, which were originally developed to improve soil sampling strategies. These functions were modified and implemented to be used for structurally guided sampling approaches. Many thanks to Dr. Malone for being a proponent of open source algorithms.
 
-Please consult the original reference for these scripts and ideas as their paper holds extremely helpful and valuable information to understand their rationale for sampling and algorithm development.
+Please consult the original reference for these scripts and ideas as their publication holds  helpful and valuable information to understand their rationale for sampling and algorithm development.
 
 _Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451_ 
 
 ### `calculate_coobs` {#coobs .unnumbered}
 
-`calculate_coobs()` function performs the COunt of OBServations (coobs) algorithm using `existing` sample data and `mraster` covariates. This algorithm helps the user understand how the `existing` sample data set is distributed among the landscape in relation to the `mraster` covariates. The output coobs raster can be used to constrain clhs sampling using the `sample_clhs()` function to the areas that are under-represented.
+`calculate_coobs()` function performs the **CO**unt of **OBS**ervations (coobs) algorithm using an `existing` sample and `mraster`. This algorithm helps the user understand how an `existing` sample set is distributed among the landscape in relation to `mraster` data. 
 
-The coobs raster determines how many observations are similar in terms of the covariate space at every pixel. This function takes advantage of parallel processing routines.
+::: {.infobox .caution data-latex="{caution}"}
+**TIP!**
+
+The output coobs raster can be used to constrain clhs sampling using the `sample_clhs()` function to the areas that are under-represented.
+:::
+
+The coobs raster determines how many observations are similar in terms of the covariate space at every pixel, and takes advantage of parallel processing routines.
 
 ```{r,warning=F,message=F, eval = FALSE}
 calculate_coobs(mraster = mraster, # input
                 existing = existing, # existing samples
                 cores = 4, # parallel cores to use
                 details = TRUE, # provide details from algorithm output
-                plot = TRUE, # plot
-                filename = tempfile(fileext = ".tif")) # write output raster to tif
+                plot = TRUE) # plot
 ```
 
 ## Latin hypercube sampling evaluation algorithms {#lhseval .unnumbered}
 
-The following 2 algorithms presents the means to maximize the effectiveness of the [latin hypercube sampling](#clhs) protocols. 
+The following 2 algorithms present the means to maximize the effectiveness of the [latin hypercube sampling](#clhs) protocols. 
 
 ### `calculate_pop` {#lhspop .unnumbered}
 
-`calculate_pop()` function calculates population level statistics of the `mraster` covariates that are being used, which includes calculating the principal components, quantile & covariate distributions, and Kullback-Leibler divergence testing. The outputs produced from this functions are required to use the `calculate_lhsOpt()` function described in the following section. Additionally, this algorithm can be pre-emptively used to calculate `matQ` and `MatCov`, two values that are used for the `sample_ahels()` function. This will save processing time during sampling.
+`calculate_pop()` calculates population level statistics of `mraster`, including calculating the principal components, quantile & covariate distributions, and Kullback-Leibler divergence testing. 
+
+The outputs produced from this functions are required to use the `calculate_lhsOpt()` function described in the following section. 
+
+::: {.infobox .caution data-latex="{caution}"}
+**TIP!**
+
+This algorithm can be pre-emptively used to calculate `matQ` and `MatCov`, two values that are used for the `sample_ahels()` function. This will save processing time during sampling.
+:::
+
 
 ```{r,warning=F,message=F, eval = FALSE}
 #--- by default all statistical data are calculated ---#
@@ -259,18 +291,18 @@ mat <- calculate_pop(mraster = mraster, # input
                      nQuant = 10) # desired number of quantiles
 
 #--- use matrix output within sample ahels algorithm ---#
-sample_ahels(mraster = mraster, 
-             existing = existing, 
-             nQuant = 10, 
-             nSamp = 50,
-             matCov = mat)
+sample_ahels(mraster = mraster, # input
+             existing = existing, # existing sample
+             nQuant = 10, # number of desired quantiles
+             nSamp = 50, # desired sample size
+             matCov = mat) # covariance matrix
 ```
 
 ### `calculate_lhsOpt` {#lhsopt .unnumbered}
 
 `calculate_lhsOpt()` function performs a bootstrapped latin hypercube sampling approach where population level analysis of `mraster` data is performed to determine the optimal latin hypercube sample size.
 
-Using data calculated using the `calculate_pop()` and varying sample sizes defined by `minSamp`, `maxSamp`, `step` and `rep`. Sampling protocols are conducted and statistical effectiveness of those sampling outcomes are evaluated to determine where sample size is minimized and statistical representation is maximized.
+`calculate_pop()` and varying sample sizes defined by `minSamp`, `maxSamp`, `step` and `rep`. Sampling protocols are conducted and statistical effectiveness of those sampling outcomes are evaluated to determine where sample size is minimized and statistical representation is maximized.
 
 ```{r,warning=F,message=F, eval = FALSE}
 #--- calculate lhsPop details ---#

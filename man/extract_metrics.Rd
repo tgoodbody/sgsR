@@ -7,6 +7,7 @@
 extract_metrics(
   mraster,
   existing,
+  quiet = FALSE,
   data.frame = FALSE,
   filename = NULL,
   overwrite = FALSE
@@ -17,6 +18,9 @@ extract_metrics(
 
 \item{existing}{sf 'POINT'.  Existing plot network.}
 
+\item{quiet}{Logical. If \code{TRUE} the user will not get messages
+about samples with \code{NA} values.}
+
 \item{data.frame}{Logical. Output as data.frame if \code{TRUE}}
 
 \item{filename}{Character. Path to write output samples.}
@@ -24,10 +28,13 @@ extract_metrics(
 \item{overwrite}{Logical. Choice to overwrite existing \code{filename} if it exists.}
 }
 \value{
-An sf or data.frame object of samples with metrics attributes
+An sf or data.frame object of samples with metrics attributes.
 }
 \description{
 Extract metric values to existing samples
+}
+\note{
+If \code{data.frame = TRUE} output will be written using \code{\link[utils]{write.table}}
 }
 \examples{
 #--- Load mraster ---#

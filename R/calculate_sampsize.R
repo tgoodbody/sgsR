@@ -73,23 +73,23 @@ calculate_sampsize <- function(mraster,
   #--- error management ---#
 
   if (!inherits(mraster, "SpatRaster")) {
-    stop("'mraster' must be type SpatRaster")
+    stop("'mraster' must be type SpatRaster.", call. = FALSE)
   }
 
   if (!is.numeric(start)) {
-    stop("'start' must be type numeric")
+    stop("'start' must be type numeric.", call. = FALSE)
   }
 
   if (!is.numeric(end)) {
-    stop("'end' must be type numeric")
+    stop("'end' must be type numeric.", call. = FALSE)
   }
 
   if (!is.numeric(increment)) {
-    stop("'increment' must be type increment")
+    stop("'increment' must be type numeric.", call. = FALSE)
   }
 
   if (!is.logical(plot)) {
-    stop("'plot' must be type logical")
+    stop("'plot' must be type logical.", call. = FALSE)
   }
 
   #--- convert raster to data.frame ---#
@@ -97,7 +97,7 @@ calculate_sampsize <- function(mraster,
     na.omit()
 
   if (!any(apply(vals, 2, is.numeric))) {
-    stop("'mraster' must contain all numeric values.")
+    stop("'mraster' must contain all numeric values.", call. = FALSE)
   }
 
   #--- calculate adequate sample sizes based on sequence of relative standard errors ---#
@@ -144,19 +144,19 @@ calculate_sampsize <- function(mraster,
     #--- checks for rse ---#
 
     if (!is.numeric(rse)) {
-      stop("'rse' must be type numeric")
+      stop("'rse' must be type numeric.", call. = FALSE)
     }
 
     if (rse < 0) {
-      stop("`rse` must be > 0")
+      stop("'rse' must be > 0.", call. = FALSE)
     }
 
     if (rse > 0.15) {
-      message("`rse` > 0.15 -  are you sure you want this?")
+      message("'rse' > 0.15 -  are you sure you want this?")
     }
 
     if (rse < start | rse > end) {
-      stop("'rse' must be >= `start` and <= `end`")
+      stop("'rse' must be >= 'start' and <= 'end'.", call. = FALSE)
     }
 
     #--- determine if increment and rse are divisble ---#
@@ -168,7 +168,7 @@ calculate_sampsize <- function(mraster,
         dplyr::filter(rse_var_dif == min(rse_var_dif)) %>%
         dplyr::select(-rse_var_dif)
 
-      message(paste0("'rse' not perfectly divisible by 'incremenent. Selecting closest sample size (rse = ", unique(lines$rse_var), ") based on values."))
+      message(paste0("'rse' not perfectly divisible by 'increment'. Selecting closest sample size (rse = ", unique(lines$rse_var), ") based on values."))
     } else {
       lines <- sampsize %>%
         dplyr::filter(rse_var == rse)

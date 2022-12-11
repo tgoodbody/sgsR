@@ -10,6 +10,7 @@ sample_ahels(
   nQuant = 10,
   nSamp = NULL,
   threshold = 0.9,
+  tolerance = 0,
   matrices = NULL,
   plot = FALSE,
   details = FALSE,
@@ -30,19 +31,24 @@ cover at least 1 percent of the area of interest will be excluded and be returne
 \item{threshold}{Numeric. Sample quantile ratio threshold. After the threshold \code{default = 0.9} is reached,
 no additional samples will be added. Values close to 1 can cause the algorithm to continually loop.}
 
+\item{tolerance}{Numeric. Allowable tolerance (<= 0.1 (10%)) around quantile density of 1. If \code{nSamp} is used samples will be
+added until the \code{1 - tolerance} density is reached. If \code{threshold} is used, samples will be added until the 
+\code{threshold - tolerance} value is reached. This parameter allows the user to define a buffer around desired quantile densities
+to permit the algorithm to not add additional samples if quantile density is very close to 1, or user-defined \code{threshold}.}
+
 \item{matrices}{List. Quantile and covariance matrices generated from \code{calculate_pop(mraster = mraster, nQuant = nQuant)}.
 Both \code{mraster} & \code{nQuant} inputs must be the same to supply the covariance matrix. Supplying the matrix allows users
 with very large \code{mrasters} to pre-process the covariance matrix to avoid longer sampling processing times.}
 
-\item{plot}{Logial. Plots existing (circles) and new (crosses) samples on the first band of \code{mraster}.}
+\item{plot}{Logical. Plots samples of type `existing` (if provided; croses) and `new` (circles) along with \code{mraster}.}
 
-\item{details}{Logical. If \code{FALSE} (default) output is only
-stratification raster. If \code{TRUE} return a list where \code{$details} is additional 
-stratification information and \code{$raster} is the output stratification spatRaster.}
+\item{details}{Logical. If \code{FALSE} (default) output is sf object of
+systematic samples. If \code{TRUE} returns a list of sf objects where \code{tessellation}
+is the tessellation grid for sampling, and \code{samples} are the systematic samples.}
 
-\item{filename}{Character. Path to write stratified raster to disc.}
+\item{filename}{Character. Path to write output samples.}
 
-\item{overwrite}{Logical. Specify whether \code{filename} should be overwritten on disc.}
+\item{overwrite}{Logical. Choice to overwrite existing \code{filename} if it exists.}
 }
 \value{
 Returns sf point object with existing samples and supplemental samples added by the ahels algorithm.
@@ -83,8 +89,7 @@ sample_ahels(
   mraster = mr,
   existing = e,
   matrices = mat,
-  nSamp = 300,
-  filename = tempfile(fileext = ".shp")
+  nSamp = 300
 )
 }
 }
@@ -95,6 +100,8 @@ Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of c
 Other sample functions: 
 \code{\link{sample_balanced}()},
 \code{\link{sample_clhs}()},
+\code{\link{sample_existing}()},
+\code{\link{sample_nc}()},
 \code{\link{sample_srs}()},
 \code{\link{sample_strat}()},
 \code{\link{sample_systematic}()}

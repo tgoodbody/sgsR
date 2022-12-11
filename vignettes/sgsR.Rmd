@@ -14,25 +14,47 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+
 ```
 
 ## Algorithm structure {#str .unnumbered}
 
-`sgsR` is primarily scripted using the `tidyverse`, `terra` package to handle raster processing, and `sf` package for vector manipulation. Currently, there are 4 primary function verbs that this package uses:
+`sgsR` is scripted using the `terra` package to handle raster processing, and `sf` package for vector manipulation. 
 
-*   `strat_*` - Stratify verb directs the functions to apply stratification algorithms to the input metrics raster `mraster` and produce stratified raster `sraster` as the output.
+Four primary function verbs exist:
 
-*   `sample_*` - Sample verb directs the functions to extract samples from `srasters`, which is produced from `strat_*` functions. Few algorithms (such as `sample_srs()`, `sample_balanced()`, `sample_systematic()`) are capable of using `mrasters` as the input because those algorithms do not depend on stratified inputs for sampling.  
+### `strat_*`
 
-*   `calculate_*` - Calculate verb directs the functions to perform calculations; values derived from these calculations are used in subsequent processing. Predefined sample analysis algorithms (such as `calculate_representation()`, `calculate_coobs()`) are included. 
+Stratification algorithms within `sgsR`. These algorithms use auxiliary raster data (e.g. ALS metric populations) as inputs and provide stratified areas of interest as outputs. Algorithms are either supervised (e.g. `strat_breaks()`), where the user provides quantitative values that drive stratifications, or unsupervised (e.g. `strat_quantiles()`), where the user specifies the desired number of output strata (`nStrata`) and stratification is handled by the algorithm.
 
-*   `extract_*` - Derive raster data for each co-located sample. Includes `extract_metrics()` for deriving `mraster` data, and `extract_strata()` for deriving stratum from `srasters`. Both functions are used internally within `sgsR`.
+### `sample_*`
 
+Sampling algorithms in `sgsR`. Depending on the sampling algorithm, users are able to provide either auxiliary metrics or stratifications derived from `strat_*` functions as inputs. A number of customizable parameters can be set including the sample size (`nSamp`), a minimum distance threshold (`mindist`) between allocated sample units, and the ability for the user to define an access network (`access`) and assign minimum (`buff_inner`) and maximum (`buff_outer`) buffer distances to constrain sampling extents.
 
-## Example data {.unnumbered}
-We demonstrate and provide examples for functions using `sgsR` internal data. Use the following code to load data for `mraster` and road `access`. Follow along on your own device to explore different outputs and better comprehend the package functions.
+### `calculate_*` & `extract_*`
 
-### Metrics rasters - `mraster` {#mrast .unnumbered}
+Additional helper functions that `calculate` varying descriptive / summary statistics and values to use in processing. `extract_*` functions derive metric values from co-located sample units. 
+
+## Parameters {#params .unnumbered}
+
+`sgsR` uses common words that define algorithm parameters:
+
+```{r echo=FALSE}
+
+p <- c("`mraster`", "`sraster`", "`access`", "`existing`", "plot")
+
+d <- c("Metric raster(s)", "Stratified raster", "Linear vectors representing access routes", "Existing sample units", "Visually displays raster and samples")
+
+df <- data.frame(Parameter = p, Description = d)
+
+knitr::kable(df, align = 'c')
+
+```
+
+### `mraster` {#mrast .unnumbered}
+
+`mraster` are input raster(s). All raster data used by `sgsR` must be must be a [`terra SpatRaster`](https://cran.r-project.org/package=terra) class.
+
 ```{r,warning=F,message=F}
 library(sgsR)
 library(terra)
@@ -45,7 +67,39 @@ r <- system.file("extdata", "mraster.tif", package = "sgsR")
 mraster <- terra::rast(r)
 ```
 
-### `access` data {#vect .unnumbered}
+### `sraster` {#srast .unnumbered}
+
+`sraster` are derived from `strat_*` algorithms (e.g. `strat_quantiles()`). This function used the distribution of `mraster$zq90` and stratified data into 4 equally sized strata.
+
+```{r,warning=F,message=F}
+#--- apply kmeans algorithm to metrics raster ---#
+sraster <- strat_quantiles(mraster = mraster$zq90, # use mraster as input for sampling
+                           nStrata = 4, # algorithm will produce 4 strata
+                           plot = TRUE) # algorithm will plot output
+
+```
+
+The `sraster` output then becomes an input parameter for the `sample_strat()` algorithm.
+
+```{r,warning=F,message=F}
+#--- apply stratified sampling ---#
+existing <- sample_strat(sraster = sraster, # use mraster as input for sampling
+                         nSamp = 200, # request 200 samples be taken
+                         mindist = 100, # define that samples must be 100 m apart
+                         plot = TRUE) # algorithm will plot output
+
+```
+
+### `access` {#access .unnumbered}
+
+One key feature of using some `sample_*` functions is its ability to define `access` corridors. Users can supply a road `access` network (must be `sf` line objects) and define buffers around `access` where samples should be excluded and included. 
+
+Relevant and applicable parameters when `access` is defined are:
+
+* `buff_inner` - Can be left as `NULL` (default). Inner buffer parameter that defines the distance from `access` where samples cannot be taken (i.e. if you don't want samples within 50 m of your `access` layer set `buff_inner = 50`). 
+
+* `buff_outer` - Outer buffer parameter that defines the maximum distance that the samples can be located from `access` (i.e. if you don't want samples more than 200 meters from your `access` layer set `buff_inner = 200`).
+
 ```{r,warning=F,message=F}
 a <- system.file("extdata", "access.shp", package = "sgsR")
 
@@ -60,34 +114,9 @@ terra::plot(access, add = TRUE, col = "black")
 
 From the plot output we see the first band (`zq90`) of the `mraster` with the `access` vector overlaid. 
 
-## Stratified rasters - `sraster` {#srast .unnumbered}
-
-In this tutorial, I am going to demonstrate how to produce basic `sraster` and `existing` sample data, which will be used in subsequent examples. 
-
-To produce `sraster`, we use `strat_quantiles()`. This function used the input `mraster$zq90` distribution and divides it into 4 equally sized quantiles.
-
-```{r,warning=F,message=F}
-#--- apply kmeans algorithm to metrics raster ---#
-sraster <- strat_quantiles(mraster = mraster$zq90, # use mraster as input for sampling
-                           nStrata = 4, # algorithm will produce 4 strata
-                           plot = TRUE) # algorithm will plot output
-
-```
-
-After `sraster` is produced, use `sample_strat()` to perform stratified sampling within our `sraster` to generate a representative sample output based on strata.
-
-```{r,warning=F,message=F}
-#--- apply stratified sampling ---#
-existing <- sample_strat(sraster = sraster, # use mraster as input for sampling
-                         nSamp = 200, # request 200 samples be taken
-                         mindist = 100, # define that samples must be 100 m apart
-                         plot = TRUE) # algorithm will plot output
-
-```
-
 ## `%>%` {#pipe .unnumbered}
 
-The sgsR package leverages the `%>%` operator from the `magrittr` package. This allows us to "pipe" operations together to save in the amount of code needed to achieve an outcome. A simple example is demonstrated below.
+The sgsR package leverages the `%>%` operator from the [`magrittr package`](https://cran.r-project.org/package=magrittr).
 
 ```{r pipe, eval= FALSE}
 #--- non piped ---#

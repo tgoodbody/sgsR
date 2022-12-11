@@ -79,32 +79,36 @@ sample_clhs <- function(mraster,
 
   #--- Set global vars ---#
 
-  x <- y <- type <- NULL
+  x <- y <- X <- Y <- type <- NULL
 
   #--- Error management ---#
 
   if (!inherits(mraster, "SpatRaster")) {
-    stop("'mraster' must be type SpatRaster")
+    stop("'mraster' must be type SpatRaster.", call. = FALSE)
   }
 
   if (!is.numeric(nSamp)) {
-    stop("'nSamp' must be type numeric")
+    stop("'nSamp' must be type numeric.", call. = FALSE)
   }
 
   if (!is.numeric(iter)) {
-    stop("'iter' must be type numeric")
+    stop("'iter' must be type numeric.", call. = FALSE)
+  }
+  
+  if (iter <= 0) {
+    stop("'iter' must be >= 0.", call. = FALSE)
   }
 
   if (is.na(terra::crs(mraster, proj = TRUE))) {
-    stop("'mraster' does not have a coordinate system")
+    stop("'mraster' does not have a coordinate system.", call. = FALSE)
   }
 
   if (!is.logical(plot)) {
-    stop("'plot' must be type logical")
+    stop("'plot' must be type logical.", call. = FALSE)
   }
 
   if (!is.logical(details)) {
-    stop("'details' must be type logical")
+    stop("'details' must be type logical.", call. = FALSE)
   }
 
 
@@ -114,15 +118,6 @@ sample_clhs <- function(mraster,
   #--- access buffering if specified ---#
 
   if (!is.null(access)) {
-
-    #--- error handling in the presence of 'access' ---#
-    if (!inherits(access, "sf")) {
-      stop("'access' must be an 'sf' object")
-    }
-
-    if (!inherits(sf::st_geometry(access), "sfc_MULTILINESTRING") && !inherits(sf::st_geometry(access), "sfc_LINESTRING")) {
-      stop("'access' geometry type must be 'LINESTRING' or 'MULTILINESTRING'")
-    }
 
     #--- buffer roads and mask ---#
 
@@ -156,19 +151,34 @@ sample_clhs <- function(mraster,
   #--- incorporate cost constraint ---#
 
   if (!is.null(cost)) {
+    
+    if(!is.character(cost) & !is.numeric(cost)){
+      stop("'cost' must be either type numeric or character.", call. = FALSE)
+    }
+    
     if (is.numeric(cost)) {
       if ((cost + 2) > (ncol(vals)) | cost < 0) {
-        stop("'cost' index doest not exist within 'mraster'")
+        stop("'cost' index doest not exist within 'mraster'.", call. = FALSE)
       }
 
       #--- need to add 2 because X and Y are added to vals ---#
 
       cost <- cost + 2
-    } else if (is.character(cost)) {
-      cost <- which(names(vals) == cost)
+      
     } else {
-      stop("'cost' must be either a numeric index or name of covariate within 'mraster'")
+
+      if(length(which(names(vals) == cost)) == 0){
+        
+        stop(paste0("No layer named '",cost,"' exists in 'mraster'."), call. = FALSE)
+        
+      } else {
+        
+        cost <- which(names(vals) == cost)
+        
+      }
     }
+    
+    message(paste0("Using `", names(vals)[cost], "` as sampling constraint."))
   }
 
   #--- Remove NA / NaN / Inf values ---#
@@ -183,13 +193,13 @@ sample_clhs <- function(mraster,
 
   if (!is.null(existing)) {
     if (!inherits(existing, "data.frame") && !inherits(existing, "sf")) {
-      stop("'existing' must be a data.frame or sf object")
+      stop("'existing' must be a data.frame or sf object.", call. = FALSE)
     }
 
     #--- check that nSamp is > than existing ---#
 
     if (nrow(existing) > nSamp) {
-      stop("nSamp must be > than number of existing samples")
+      stop("nSamp must be > than number of existing samples.", call. = FALSE)
     }
 
     #--- combine existing samples with vals dataframe ---#
@@ -203,41 +213,46 @@ sample_clhs <- function(mraster,
               X = x,
               Y = y
             )
-          message("Column coordinates names for 'existing' are lowercase - converting to uppercase")
+          message("Column coordinates names for 'existing' are lowercase - converting to uppercase.")
         } else {
           #--- if no x/y columns are present stop ---#
-          stop("'existing' must have columns named 'X' and 'Y'")
+          stop("'existing' must have columns named 'X' and 'Y'.", call. = FALSE)
         }
       }
 
-      existingSamples <- existing
-    } else {
-      existingSamples <- extract_metrics(mraster = mraster, existing = existing, data.frame = TRUE)
     }
     
-    #--- determine if existing samples fall in areas where metric values are NA ---#
+    existingSamples <- extract_metrics(mraster = mraster, existing = existing, data.frame = TRUE)
+    
+    #--- do other attributes exist in `existing` - if yes, save them for later ---#
+    
+    if(length(names(existingSamples))-2 != length(names(mraster))){
+      
+      extraCols <- existingSamples %>%
+        dplyr::select(!names(mraster))
+      
+    }
+
+    #--- Assign attribute to differentiate between original samples and those added during HELS algorithm ---#
+    
+    existingSamples$type <- "existing"
+    
+    #--- subset columns for sampling ---#
+    
+    existingSamples <- existingSamples %>%
+      dplyr::select(X, Y, type, names(mraster))
+    
+    #--- check if samples fall in areas where stratum values are NA ---#
+    
     if(any(!complete.cases(existingSamples))){
       
       samples_NA <- existingSamples %>%
-        dplyr::filter(!complete.cases(.)) %>%
-        dplyr::mutate(type = "existing")
-      
-      nNA <-  samples_NA %>%
-        dplyr::tally() %>%
-        dplyr::pull()
-      
-      message(paste0(nNA," samples in `existing` are located where mraster values are NA. These samples will be ignored during the sampling process."))
+        dplyr::filter(!complete.cases(.))
       
       existingSamples <- existingSamples %>%
         stats::na.omit()
       
     }
-
-    #--- create dataset with labels for plotting ---#
-
-    existingSamples <- existingSamples %>%
-      dplyr::mutate(type = "existing") %>%
-      dplyr::select(names(vals))
 
     #--- create conjoined existing dataset ---#
 
@@ -283,24 +298,48 @@ sample_clhs <- function(mraster,
     }
   }
   
-  #--- add samples with NA metrics back to dataset if they existed ---#
+  #--- replace existing samples (if they exist) that had NA values for metrics ---#
+  
   if(exists("samples_NA")){
     
-    #--- convert coordinates to a spatial points object ---#
-    samples <- samples %>%
-      rbind(., samples_NA) %>%
-      sf::st_as_sf(., coords = c("X", "Y"))
+    if(exists("extraCols")){
+      
+      samples <- samples %>%
+        dplyr::bind_rows(., samples_NA) %>%
+        dplyr::left_join(., extraCols,  by = c("X","Y")) %>%
+        sf::st_as_sf(., coords = c("X", "Y"))
+      
+    } else {
+      
+      #--- convert coordinates to a spatial points object ---#
+      samples <- samples %>%
+        dplyr::bind_rows(., samples_NA) %>%
+        sf::st_as_sf(., coords = c("X", "Y"))
+      
+    }
     
   } else {
     
-    #--- convert coordinates to a spatial points object ---#
-    samples <- samples %>%
-      as.data.frame() %>%
-      sf::st_as_sf(., coords = c("X", "Y"))
+    if(exists("extraCols")){
+      
+      samples <- samples %>%
+        dplyr::left_join(., extraCols,  by = c("X","Y")) %>%
+        sf::st_as_sf(., coords = c("X", "Y"))
+      
+    } else {
+      
+      #--- convert coordinates to a spatial points object ---#
+      samples <- samples %>%
+        as.data.frame() %>%
+        sf::st_as_sf(., coords = c("X", "Y"))
+      
+    }
     
   }
 
-    #--- assign sraster crs to spatial points object ---#
+
+  #--- assign sraster crs to spatial points object ---#
+  
   sf::st_crs(samples) <- crs
 
   if (isTRUE(plot)) {
@@ -310,23 +349,29 @@ sample_clhs <- function(mraster,
 
       terra::plot(mraster[[1]])
       suppressWarnings(terra::plot(access_buff$buff, add = T, border = c("gray30"), col = "gray10", alpha = 0.1))
-      suppressWarnings(terra::plot(samples, add = T, col = "black", pch = ifelse(samples$type == "existing", 1, 3)))
+      suppressWarnings(terra::plot(samples, add = T, col = "black", pch = ifelse(samples$type == "existing", 3, 1)))
     } else {
       terra::plot(mraster[[1]])
-      suppressWarnings(terra::plot(samples, add = T, col = "black", pch = ifelse(samples$type == "existing", 1, 3)))
+      suppressWarnings(terra::plot(samples, add = T, col = "black", pch = ifelse(samples$type == "existing", 3, 1)))
     }
   }
 
   if (!is.null(filename)) {
-    if (!is.logical(overwrite)) {
-      stop("'overwrite' must be either TRUE or FALSE")
+    
+    if (!is.character(filename)) {
+      stop("'filename' must be a file path character string.", call. = FALSE)
     }
-
+    
+    if (!is.logical(overwrite)) {
+      stop("'overwrite' must be type logical.", call. = FALSE)
+    }
+    
     if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(paste0("'",filename, "' already exists and overwrite = FALSE"))
+      stop(paste0("'",filename, "' already exists and overwrite = FALSE."), call. = FALSE)
     }
 
     sf::st_write(samples, filename, delete_layer = overwrite)
+    message("Output samples written to disc.")
   }
 
   if (isTRUE(details)) {

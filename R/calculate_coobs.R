@@ -8,6 +8,7 @@
 #'
 #' @inheritParams strat_kmeans
 #' @inheritParams extract_strata
+#' @inheritParams strat_breaks
 #'
 #' @param mraster spatRaster. ALS metrics raster. Requires at least 2 layers to calculate covariance matrix.
 #' @param threshold Numeric. Proxy maximum pixel quantile to avoid outliers. \code{default = 0.95}.
@@ -30,9 +31,7 @@
 #' calculate_coobs(
 #'   mraster = mr,
 #'   existing = e,
-#'   cores = 4,
-#'   details = TRUE,
-#'   filename = tempfile(fileext = ".tif")
+#'   cores = 4
 #' )
 #' }
 #' @note
@@ -42,43 +41,41 @@
 #'
 #' @export
 
-
 calculate_coobs <- function(mraster,
                             existing,
                             cores = 1,
                             threshold = 0.95,
                             plot = FALSE,
-                            details = FALSE,
                             filename = NULL,
                             overwrite = FALSE) {
   
   #--- check for required packages ---#
   if (!requireNamespace("doParallel", quietly = TRUE)) {
-    stop("Packages \"doParallel\" needed for this function to work. Please install it.",
+    stop("Package \"doParallel\" is needed for this function to work. Please install it.",
          call. = FALSE
     )
   }
   
   if (!requireNamespace("doSNOW", quietly = TRUE)) {
-    stop("Package \"doSNOW\" needed for this function to work. Please install it.",
+    stop("Packag \"doSNOW\" is needed for this function to work. Please install it.",
          call. = FALSE
     )
   }
   
   if (!requireNamespace("foreach", quietly = TRUE)) {
-    stop("Packages \"foreach\" needed for this function to work. Please install it.",
+    stop("Package \"foreach\" is needed for this function to work. Please install it.",
          call. = FALSE
     )
   }
   
   if (!requireNamespace("snow", quietly = TRUE)) {
-    stop("Package \"snow\" needed for this function to work. Please install it.",
+    stop("Package \"snow\" is needed for this function to work. Please install it.",
          call. = FALSE
     )
   }
   
   if (!requireNamespace("Rfast", quietly = TRUE)) {
-    stop("Package \"Rfast\" needed for this function to work. Please install it.",
+    stop("Package \"Rfast\" is needed for this function to work. Please install it.",
          call. = FALSE
     )
   }
@@ -99,10 +96,6 @@ calculate_coobs <- function(mraster,
   
   if (!is.numeric(threshold)) {
     stop("'threshold' must be type numeric")
-  }
-  
-  if (!is.logical(details)) {
-    stop("'details' must be type logical")
   }
   
   nb <- terra::nlyr(mraster)
@@ -140,13 +133,7 @@ calculate_coobs <- function(mraster,
     samples_NA <- samples %>%
       dplyr::filter(!complete.cases(.)) %>%
       dplyr::mutate(type = "existing")
-    
-    nNA <-  samples_NA %>%
-      dplyr::tally() %>%
-      dplyr::pull()
-    
-    message(paste0(nNA," samples in `existing` are located where mraster values are NA. These samples will be ignored during the sampling process."))
-    
+
     samples <- samples %>%
       stats::na.omit()
     
@@ -245,7 +232,8 @@ calculate_coobs <- function(mraster,
   }
   
   if (!is.null(filename)) {
-    terra::writeRaster(rout, filename, overwrite = overwrite)
+    terra::writeRaster(x = rout, filename = filename, overwrite = overwrite)
+    message("Output raster written to disc.")
   }
   
   return(rout)

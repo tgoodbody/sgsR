@@ -6,6 +6,7 @@
 #' @param samp Numeric. Determines proportion of cells to plot
 #' @family plot
 #' @name plot
+#' @return Scatter plot of available raster cells coloured and delineated by stratum.
 NULL
 
 #' Class Plot
@@ -18,7 +19,7 @@ classPlot <- function(dfc,
                       coordsgrps,
                       mraster,
                       mraster2,
-                      samp) {
+                      samp = 0.01) {
 
   #--- sample cells based on 'samp' parameter ---#
 

@@ -7,6 +7,7 @@
 #' @param nb Number of bands
 #' @family matrices
 #' @name matrices
+#' @return Covariate quantile and/or covariance matrices.
 NULL
 
 #' @export

@@ -49,8 +49,7 @@ strat_quantiles <- function(mraster,
                             details = FALSE,
                             samp = 0.2,
                             filename = NULL,
-                            overwrite = FALSE,
-                            ...) {
+                            overwrite = FALSE) {
 
   #--- Set global vars ---#
 
@@ -58,54 +57,58 @@ strat_quantiles <- function(mraster,
 
   #--- error handling ---#
   if (!inherits(mraster, "SpatRaster")) {
-    stop("all specified bands must be type SpatRaster", call. = FALSE)
+    stop("'mraster' must be type SpatRaster.", call. = FALSE)
   }
 
   if (!is.numeric(nStrata)) {
-    stop("'nStrata' must be type numeric")
+    stop("'nStrata' must be type numeric.", call. = FALSE)
   }
 
   if (!is.logical(plot)) {
-    stop("'plot' must be type logical")
+    stop("'plot' must be type logical.", call. = FALSE)
   }
 
   if (!is.numeric(samp)) {
-    stop("'samp' must be type numeric")
+    stop("'samp' must be type numeric.", call. = FALSE)
   }
 
   if (!is.logical(details)) {
-    stop("'details' must be type logical")
+    stop("'details' must be type logical.", call. = FALSE)
   }
 
   #--- if there is only 1 band in mraster use it as default ---#
 
   if (terra::nlyr(mraster) > 1) {
-    stop("Multiple layers detected in 'mraster'. Please define a singular band to stratify.")
+    stop("Multiple layers detected in 'mraster'. Please define a singular band to stratify.", call. = FALSE)
   }
 
   if (!is.null(mraster2)) {
     if (!inherits(mraster2, "SpatRaster")) {
-      stop("'mraster2' must be type SpatRaster")
+      stop("'mraster2' must be type SpatRaster.", call. = FALSE)
     }
 
-    if (!all.equal(terra::ext(mraster), terra::ext(mraster2))) {
-      stop("Extents of 'mraster' and 'mraster2' do not match.")
+    if (isFALSE(terra::compareGeom(mraster, mraster2, stopOnError = FALSE))) {
+      stop("Extents of 'mraster' and 'mraster2' do not match.", call. = FALSE)
     }
-
-    if (!all.equal(terra::res(mraster), terra::res(mraster2))) {
-      stop("Spatial resolutions of 'mraster' and 'mraster2' do not match.")
+    
+    if (isFALSE(terra::compareGeom(mraster, mraster2, stopOnError = FALSE, ext = FALSE, res = TRUE))) {
+      stop("Spatial resolutions of 'mraster' and 'mraster2' do not match.", call. = FALSE)
     }
 
     #--- if there is only 1 band in mraster2 use it as default ---#
 
     if (terra::nlyr(mraster2) > 1) {
-      stop("Multiple layers detected in 'mraster2'. Please define a singular band to stratify.")
+      stop("Multiple layers detected in 'mraster2'. Please define a singular band to stratify.", call. = FALSE)
     }
 
     #--- ensure names of rasters are not the same ---#
 
     if (identical(names(mraster), names(mraster2))) {
-      stop("mraster and mraster2 must have different metric names.")
+      stop("'mraster' and 'mraster2' must have different metric names.", call. = FALSE)
+    }
+    
+    if (!is.numeric(nStrata2)) {
+      stop("'nStrata2' must be type numeric.", call. = FALSE)
     }
   }
 
@@ -141,11 +144,13 @@ strat_quantiles <- function(mraster,
 
     #--- convert back to original mraster extent ---#
 
-    suppressWarnings(vals[, 1][idx] <- dfc$class)
+    odf <- matrix(nrow = nrow(vals), ncol = 1)
+    
+    odf[, 1][idx] <- dfc$class
 
     #--- set newly stratified values ---#
 
-    rout <- terra::setValues(mraster[[1]], vals[, 1])
+    rout <- terra::setValues(mraster[[1]], odf[, 1])
     names(rout) <- "strata"
 
     #--- if mraster2 is provided ---#
@@ -200,11 +205,13 @@ strat_quantiles <- function(mraster,
 
     #--- convert back to original mraster extent ---#
 
-    suppressWarnings(vals[, 1][idx] <- dfc$class)
+    odf <- matrix(nrow = nrow(vals), ncol = 1)
+    
+    odf[, 1][idx] <- dfc$class
 
     #--- set newly stratified values ---#
 
-    rout <- terra::setValues(mraster[[1]], vals[, 1])
+    rout <- terra::setValues(mraster[[1]], odf[, 1])
     names(rout) <- "strata"
   }
 
@@ -233,8 +240,6 @@ strat_quantiles <- function(mraster,
         ggplot2::geom_vline(xintercept = breaks, linetype = "dashed") +
         ggplot2::ggtitle(paste0(metric, " histogram with defined breaks"))
 
-      print(p)
-
       terra::plot(rout, main = "Classes")
     } else {
       terra::plot(rout, main = "Classes")
@@ -244,7 +249,8 @@ strat_quantiles <- function(mraster,
   #--- write file to disc ---#
 
   if (!is.null(filename)) {
-    terra::writeRaster(rout, filename, overwrite = overwrite, ...)
+    terra::writeRaster(x = rout, filename = filename, overwrite = overwrite)
+    message("Output raster written to disc.")
   }
 
   #--- Output based on 'details' to return raster alone or list with details ---#
@@ -252,7 +258,7 @@ strat_quantiles <- function(mraster,
   if (isTRUE(details)) {
     if (!is.null(mraster2)) {
       if (samp > 1 | samp < 0) {
-        stop("'samp' must be between 0 and 1")
+        stop("'samp' must be > 0 <= 1.", call. = FALSE)
       }
 
       #--- create classplot summary ---#

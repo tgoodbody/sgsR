@@ -11,7 +11,6 @@
 #' @param breaks2 Numeric. Vector of breakpoints for \code{mraster2} (if provided).
 #' @param filename Character. Path to write stratified raster to disc.
 #' @param overwrite Logical. Specify whether \code{filename} should be overwritten on disc.
-#' @param ... Additional arguments for writing files. See \code{\link[terra]{writeRaster}}.
 #'
 #' @return Returns an output stratification \code{spatRaster} or a list when \code{details = TRUE}.
 #'
@@ -55,8 +54,8 @@ strat_breaks <- function(mraster,
                          plot = FALSE,
                          details = FALSE,
                          filename = NULL,
-                         overwrite = FALSE,
-                         ...) {
+                         overwrite = FALSE
+                         ) {
 
   #--- Set global vars ---#
   from <- strata <- strata2 <- val <- brk <- NULL
@@ -64,19 +63,19 @@ strat_breaks <- function(mraster,
   #--- Error management ---#
 
   if (!inherits(mraster, "SpatRaster")) {
-    stop("'mraster' must be type SpatRaster")
+    stop("'mraster' must be type SpatRaster.", call. = FALSE)
   }
 
   if (!is.numeric(breaks)) {
-    stop("'breaks' must be type numeric")
+    stop("'breaks' must be type numeric.", call. = FALSE)
   }
 
   if (!is.logical(plot)) {
-    stop("'plot' must be type logical")
+    stop("'plot' must be type logical.", call. = FALSE)
   }
 
   if (!is.logical(details)) {
-    stop("'details' must be type logical")
+    stop("'details' must be type logical.", call. = FALSE)
   }
 
   #--- if there is only 1 band in mraster use it as default ---#
@@ -84,45 +83,49 @@ strat_breaks <- function(mraster,
   if (terra::nlyr(mraster) == 1) {
     rastermetric <- mraster
   } else {
-    stop("Multiple layers detected in 'mraster'. Please define a singular band to stratify.")
+    stop("Multiple layers detected in 'mraster'. Please define a singular band to stratify.", call. = FALSE)
   }
 
   if (!is.null(mraster2)) {
     if (!inherits(mraster2, "SpatRaster")) {
-      stop("'mraster2' must be type SpatRaster")
+      stop("'mraster2' must be type SpatRaster.", call. = FALSE)
+    }
+    
+    #--- if there is only 1 band in mraster2 use it as default ---#
+    
+    if (terra::nlyr(mraster2) == 1) {
+      rastermetric2 <- mraster2
+    } else {
+      stop("Multiple layers detected in 'mraster2'. Please define a singular band to stratify.", call. = FALSE)
     }
 
-    if (!all.equal(terra::ext(mraster), terra::ext(mraster2))) {
-      stop("Extents of 'mraster' and 'mraster2' do not match.")
+    if (isFALSE(terra::compareGeom(mraster, mraster2, stopOnError = FALSE))) {
+      stop("Extents of 'mraster' and 'mraster2' do not match.", call. = FALSE)
     }
 
-    if (!all.equal(terra::res(mraster), terra::res(mraster2))) {
-      stop("Spatial resolutions of 'mraster' and 'mraster2' do not match.")
+    if (isFALSE(terra::compareGeom(mraster, mraster2, stopOnError = FALSE, ext = FALSE, res = TRUE))) {
+      stop("Spatial resolutions of 'mraster' and 'mraster2' do not match.", call. = FALSE)
     }
 
     #--- subset mraster2 based on whether it is a character of number ---#
 
     if (is.null(breaks2)) {
-      stop("If using mraster2 to stratify, 'breaks2' must be defined")
+      stop("If using mraster2 to stratify, 'breaks2' must be defined", call. = FALSE)
     }
-
-    #--- if there is only 1 band in mraster2 use it as default ---#
-
-    if (terra::nlyr(mraster2) == 1) {
-      rastermetric2 <- mraster2
-    } else {
-      stop("Multiple layers detected in 'mraster2'. Please define a singular band to stratify.")
+    
+    if (!is.numeric(breaks2)) {
+      stop("'breaks2' must be type numeric.", call. = FALSE)
     }
   }
 
   minmax <- terra::minmax(rastermetric)
 
   if (any(breaks < minmax[1])) {
-    message("'breaks' contains values < the minimum 'mraster' value.")
+    stop("'breaks' contains values < the minimum 'mraster' value.", call. = FALSE)
   }
 
   if (any(breaks > minmax[2])) {
-    message("'breaks' contains values > the maximum 'mraster' value.")
+    stop("'breaks' contains values > the maximum 'mraster' value.", call. = FALSE)
   }
 
   #--- apply breaks to primary metric ---#
@@ -137,7 +140,7 @@ strat_breaks <- function(mraster,
     stats::na.omit() %>%
     as.matrix()
 
-  rcl <- terra::classify(rastermetric, breaks_m, othersNA = TRUE)
+  rcl <- terra::classify(rastermetric, breaks_m, others = NA)
   names(rcl) <- "strata"
 
 
@@ -150,11 +153,11 @@ strat_breaks <- function(mraster,
     minmax2 <- terra::minmax(rastermetric2)
 
     if (any(breaks2 < minmax2[1])) {
-      stop("'breaks2' contains values < the minimum 'mraster2' value.")
+      stop("'breaks2' contains values < the minimum 'mraster2' value.", call. = FALSE)
     }
 
     if (any(breaks2 > minmax2[2])) {
-      stop("'breaks2' contains values > the maximum 'mraster2' value.")
+      stop("'breaks2' contains values > the maximum 'mraster2' value.", call. = FALSE)
     }
 
     #--- reclassify values based on breaks ---#
@@ -167,7 +170,7 @@ strat_breaks <- function(mraster,
       stats::na.omit() %>%
       as.matrix()
 
-    rcl2 <- terra::classify(rastermetric2, breaks2_m, othersNA = TRUE)
+    rcl2 <- terra::classify(rastermetric2, breaks2_m, others = NA)
     names(rcl2) <- "strata2"
 
     #--- stack rcl and rcl2
@@ -235,7 +238,8 @@ strat_breaks <- function(mraster,
   #--- write file to disc ---#
 
   if (!is.null(filename)) {
-    terra::writeRaster(rcl, filename, overwrite = overwrite, ...)
+    terra::writeRaster(x = rcl, filename = filename, overwrite = overwrite)
+    message("Output raster written to disc.")
   }
 
   #--- Output based on 'details' to return raster alone or list with details ---#

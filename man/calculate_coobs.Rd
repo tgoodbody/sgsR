@@ -10,7 +10,6 @@ calculate_coobs(
   cores = 1,
   threshold = 0.95,
   plot = FALSE,
-  details = FALSE,
   filename = NULL,
   overwrite = FALSE
 )
@@ -26,10 +25,6 @@ calculate_coobs(
 
 \item{plot}{Logical. Plots output strata raster and visualized
 strata with boundary dividers.}
-
-\item{details}{Logical. If \code{FALSE} (default) output is only
-stratification raster. If \code{TRUE} return a list where \code{$details} is additional 
-stratification information and \code{$raster} is the output stratification spatRaster.}
 
 \item{filename}{Character. Path to write stratified raster to disc.}
 
@@ -59,9 +54,7 @@ e <- sf::st_read(e)
 calculate_coobs(
   mraster = mr,
   existing = e,
-  cores = 4,
-  details = TRUE,
-  filename = tempfile(fileext = ".tif")
+  cores = 4
 )
 }
 }

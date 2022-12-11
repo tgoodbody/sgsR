@@ -6,6 +6,7 @@
 #'
 #' @family sample functions
 #'
+#' @inheritParams sample_systematic
 #' @inheritParams strat_kmeans
 #' @inheritParams extract_strata
 #'
@@ -14,10 +15,14 @@
 #' @param nSamp Numeric. Maximum number of new samples to allocate.
 #' @param threshold Numeric. Sample quantile ratio threshold. After the threshold \code{default = 0.9} is reached,
 #' no additional samples will be added. Values close to 1 can cause the algorithm to continually loop.
+#' @param tolerance Numeric. Allowable tolerance (<= 0.1 (10%)) around quantile density of 1. If \code{nSamp} is used samples will be
+#' added until the \code{1 - tolerance} density is reached. If \code{threshold} is used, samples will be added until the 
+#' \code{threshold - tolerance} value is reached. This parameter allows the user to define a buffer around desired quantile densities
+#' to permit the algorithm to not add additional samples if quantile density is very close to 1, or user-defined \code{threshold}.
 #' @param matrices List. Quantile and covariance matrices generated from \code{calculate_pop(mraster = mraster, nQuant = nQuant)}.
 #' Both \code{mraster} & \code{nQuant} inputs must be the same to supply the covariance matrix. Supplying the matrix allows users
 #' with very large \code{mrasters} to pre-process the covariance matrix to avoid longer sampling processing times.
-#' @param plot Logial. Plots existing (circles) and new (crosses) samples on the first band of \code{mraster}.
+#' @param plot Logical. Plots samples of type `existing` (if provided; croses) and `new` (circles) along with \code{mraster}.
 #'
 #' @references
 #' Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451
@@ -46,8 +51,7 @@
 #'   mraster = mr,
 #'   existing = e,
 #'   matrices = mat,
-#'   nSamp = 300,
-#'   filename = tempfile(fileext = ".shp")
+#'   nSamp = 300
 #' )
 #' }
 #' @note
@@ -69,6 +73,7 @@ sample_ahels <- function(mraster,
                          nQuant = 10,
                          nSamp = NULL,
                          threshold = 0.9,
+                         tolerance = 0,
                          matrices = NULL,
                          plot = FALSE,
                          details = FALSE,
@@ -77,32 +82,45 @@ sample_ahels <- function(mraster,
 
   #--- Set global vars ---#
 
-  x <- y <- X <- Y <- n <- type <- geometry <- NULL
+  x <- y <- X <- Y <- n <- type <- geometry <- extraCols <- NULL
 
   #--- Error handling ---#
 
   if (!inherits(mraster, "SpatRaster")) {
-    stop("'mraster' must be type SpatRaster", call. = FALSE)
+    stop("'mraster' must be type SpatRaster.", call. = FALSE)
   }
 
   if (!inherits(existing, "data.frame") && !inherits(existing, "sf")) {
-    stop("'existing' must be a data.frame or sf object", call. = FALSE)
+    stop("'existing' must be a data.frame or sf object.", call. = FALSE)
   }
 
   if (!is.numeric(nQuant)) {
-    stop("'nQuant' must be type numeric", call. = FALSE)
+    stop("'nQuant' must be type numeric.", call. = FALSE)
   }
 
   if (!is.numeric(threshold)) {
-    stop("'threshold' must be type numeric", call. = FALSE)
+    stop("'threshold' must be type numeric.", call. = FALSE)
   }
-
+  
   if (threshold < 0 | threshold > 1) {
-    stop("'threshold' must be > 0 and < 1", call. = FALSE)
+    stop("'threshold' must be > 0 and < 1.", call. = FALSE)
   }
-
+  
   if (!is.logical(details)) {
-    stop("'details' must be type logical", call. = FALSE)
+    stop("'details' must be type logical.", call. = FALSE)
+  }
+  
+  #--- tolerance ---#
+  if (!is.numeric(tolerance)) {
+    stop("'tolerance' must be type numeric.", call. = FALSE)
+  }
+  
+  if (tolerance >= threshold) {
+    stop("'tolerance' cannot be >= `threshold`.", call. = FALSE)
+  }
+  
+  if (tolerance < 0 | tolerance > 0.1) {
+    stop("'tolerance' must be > 0 and <= 0.1.", call. = FALSE)
   }
 
   #--- determine number of bands in mraster ---#
@@ -137,17 +155,17 @@ sample_ahels <- function(mraster,
   } else {
     
     #--- if quantile matrix is provided ---#
-    
+
     if (any(!c("matQ", "matCov") %in% names(matrices))) {
-      stop("'matrices' must be the output from `calculate_pop()`.", call. = FALSE)
+      stop("'matrices' must be the output from 'calculate_pop()'.", call. = FALSE)
     }
     
-    if(nrow(matrices$matCov) > nQuant){
-      stop("Number of quantiles in provided 'matrices' does not match nQuant.", call. = FALSE)
+    if(nrow(matrices$matCov) != nQuant){
+      stop("Number of quantiles in provided 'matrices' does not match 'nQuant'.", call. = FALSE)
     }
     
-    if(any(!names(matrices$values) %in% names(mraster))){
-      message("'mraster' used to generate 'matrices' must be identical,", call. = FALSE)
+    if(!all(names(matrices$values) == names(mraster))) {
+      stop("'mraster' used to generate 'matrices' must be identical.", call. = FALSE)
     }
     
     mats <- matrices
@@ -167,15 +185,63 @@ sample_ahels <- function(mraster,
   matCovDens[which(matCovDens <= 0.01)] <- NA
 
   ### --- Prepare existing sample data ---###
-
-  #--- select geometry attribute ---#
-
-  existing <- existing %>%
-    dplyr::select(geometry)
+  if(!inherits(existing, "sf")){
+    
+    if (any(!c("X", "Y") %in% colnames(existing))) {
+      
+      #--- if coordinate column names are lowercase change them to uppercase to match requirements ---#
+      
+      if (any(c("x", "y") %in% colnames(existing))) {
+        existing <- existing %>%
+          dplyr::rename(
+            X = x,
+            Y = y
+          )
+        
+        message("'existing' column coordinate names are lowercase - converting to uppercase.")
+      } else {
+        
+        #--- if no x/y columns are present stop ---#
+        
+        stop("'existing' must have columns named 'X' and 'Y'.", call. = FALSE)
+      }
+    }
+    
+    existing <- existing %>%
+      sf::st_as_sf(., coords = c("X", "Y"))
+    
+    #--- assign sraster crs to spatial points object ---#
+    sf::st_crs(existing) <- crs
+  }
 
   #--- extract covariates at existing sample locations ---#
 
   samples <- extract_metrics(mraster, existing, data.frame = TRUE)
+  
+  #--- remove already existing samples from vals to not repeat sample ---#
+  
+  vals <- vals %>%
+    dplyr::anti_join(samples, by = c("X", "Y"))
+  
+  #--- Rearrange columns ---#
+  
+  #--- do other attributes exist in `existing` - if yes, save them for later ---#
+  
+  if(length(names(samples))-2 != length(names(mraster))){
+    
+    extraCols <- samples %>%
+      dplyr::select(!names(mraster))
+    
+  }
+  
+  #--- Assign attribute to differentiate between original samples and those added during HELS algorithm ---#
+  
+  samples$type <- "existing"
+  
+  #--- subset columns for sampling ---#
+  
+  samples <- samples %>%
+    dplyr::select(X, Y, type, names(mraster))
   
   #--- check if samples fall in areas where stratum values are NA ---#
   
@@ -184,31 +250,11 @@ sample_ahels <- function(mraster,
     samples_NA <- samples %>%
       dplyr::filter(!complete.cases(.)) %>%
       dplyr::mutate(type = "existing")
-    
-    nNA <-  samples_NA %>%
-      dplyr::tally() %>%
-      dplyr::pull()
-    
-    message(paste0(nNA," samples in `existing` are located where mraster values are NA. These samples will be ignored during the sampling process."))
-    
+
     samples <- samples %>%
       stats::na.omit()
     
   }
-
-  #--- remove already existing samples from vals to not repeat sample ---#
-
-  vals <- vals %>%
-    dplyr::anti_join(samples, by = c("X", "Y"))
-
-  #--- Assign attribute to differentiate between original samples and those added during HELS algorithm ---#
-
-  samples$type <- "existing"
-
-  #--- Rearrange columns ---#
-
-  samples <- samples %>%
-    dplyr::select(X, Y, type, names(mraster))
 
   #--- Create data hypercube of existing samples to compare with mraster data ---#
 
@@ -236,241 +282,80 @@ sample_ahels <- function(mraster,
 
   #--- Outline quantiles that are underrepresented (< 1) in the sample ---#
 
-  underRep <- which(ratio < 1, arr.ind = TRUE)
-  underRep <- cbind(underRep, which(ratio < 1))
+  underRep <- which(ratio < (1 - tolerance), arr.ind = TRUE)
+  underRep <- cbind(underRep, which(ratio < (1 - tolerance)))
 
-  #--- begin sampling from highest discrepancy to lowest ---#
-
-  newSamp <- nSamp
-  sTot <- 0
-
-  #--- begin while loop to sample ---#
-
+  #--- perform sampling ---#
 
   if (!is.null(nSamp)) {
 
-    #--- ensure nSamp is numeric ---#
-
-    if (!is.numeric(nSamp)) {
-      stop("'nSamp' must be type numeric", call. = FALSE)
-    }
-
-    message(paste0("nSamp of ", nSamp, " has been provided. Samples will be added until this number is reached or until sampling ratios are all >= 1"))
-
-    while (newSamp != 0) {
-
-      #--- determine the greatest discrepancy between sample and covariate data ---#
-
-      repRankUnder <- which(underRep[, 3] == ratOrderUnder[1])
-
-      #--- determine row and column of most under represented quantile ---#
-
-      repRow <- underRep[repRankUnder, 1]
-      repCol <- underRep[repRankUnder, 2]
-      
-      #--- if all sampling ratios in matCovSampDens are >= 1 stop adding samples ---#
-      
-      if(length(repRankUnder) == 0){
-        
-        message(paste0("Sampling ratios are all >= 1. A total of ", sTot, " samples were added."))
-        
-        break
-      }
-
-      #--- determine number of existing samples in selected quantile ---#
-      sampExist <- floor(matCovSamp[repRow, repCol])
-
-      #--- determine max number of samples based on covariate density ---#
-
-      sampOptim <- ceiling(nrow(samples) * matCovDens[repRow, repCol])
-
-      #--- number of samples needed ---#
-
-      sampNeed <- sampOptim - sampExist
-      
-      #--- we have a limited number of samples so we need to be sure not to over allocate ---#
-      if (newSamp <= sampNeed) sampNeed <- newSamp
-      
-      #--- selecting covariates based on quantile chosen ---#
-
-      covLower <- mats$matQ[repRow, repCol]
-
-      covUpper <- mats$matQ[repRow + 1, repCol]
-
-      #--- subset covariate dataset for potential new samples ---#
-
-      valsSub <- vals[vals[, (2 + repCol)] >= covLower & vals[, (2 + repCol)] <= covUpper, ]
-
-      #--- randomly sample within valsSub and extract randomly sampled cells ---#
-
-      addSamp <- sample(nrow(valsSub), sampNeed)
-
-      valsSubSamp <- valsSub[addSamp, ]
-
-      valsSubSamp$type <- "new"
-
-      #--- remove samples from pool to ensure same cells are not sampled again ---#
-
-      vals <- vals[-addSamp, ]
-
-      #--- add new samples to existing sample dataframe ---#
-
-      samples <- rbind(samples, valsSubSamp)
-
-      #--- update loop parameters ---#
-
-      message("Under-represented Quantile ", paste0("[",repRow, ",",repCol, "]"), " - A total of ", sampNeed, " samples have been allocated.")
-
-      #--- update total allocated samples ---#
-
-      sTot <- sTot + sampNeed
-
-      #--- update available sample number ---#
-
-      newSamp <- newSamp - sampNeed
-
-      #--- recompute ratio's in the presence of newly added samples ---#
-
-      matCovSamp <- mat_covNB(vals = samples[4:ncol(samples)], nQuant = nQuant, nb = nb, matQ = mats$matQ)
-
-      #--- Change 0's to very small number to avoid division issues ---#
-
-      matCovSamp[which(matCovSamp == 0)] <- 0.0000001
-
-      #--- Create density matrix from covariates and length of mraster ---#
-
-      matCovSampDens <- matCovSamp / nrow(samples)
-
-      ### --- Selection of new samples based on density ---###
-
-      #--- Ratio and ordering of data density and covariate density ---#
-
-      ratio <- matCovSampDens / matCovDens
-
-      #--- order the densities based on representation ---#
-
-      #--- low to high ---#
-
-      ratOrderUnder <- order(ratio)
-
-      #--- Outline quantiles that are underrepresented (< 1) in the sample ---#
-
-      underRep <- which(ratio < 1, arr.ind = TRUE)
-      underRep <- cbind(underRep, which(ratio < 1))
-    }
+    out <- ahels_nSamp(nSamp = nSamp,
+                       nQuant = nQuant,
+                       tolerance = tolerance,
+                       nb = nb,
+                       underRep = underRep,
+                       ratio = ratio,
+                       ratOrderUnder = ratOrderUnder,
+                       matCovDens = matCovDens,
+                       matCovSampDens = matCovSampDens,
+                       samples = samples,
+                       mats = mats,
+                       vals = vals)
+    
   } else {
-    message(paste0("Threshold of ", threshold, " provided. Samples will be added until sampling ratios are >= ", threshold, "."))
+    
+    out <- ahels_threshold(threshold = threshold,
+                           tolerance = tolerance,
+                           ratio = ratio,
+                           nQuant = nQuant,
+                           nb = nb,
+                           underRep = underRep,
+                           ratOrderUnder = ratOrderUnder,
+                           matCovDens = matCovDens,
+                           matCovSampDens = matCovSampDens,
+                           samples = samples,
+                           mats = mats,
+                           vals = vals)
 
-    ### --- If 'nSamp' is not provided a threshold is used ---###
-
-    while (isTRUE(any(ratio < threshold))) {
-
-      #--- determine the greatest discrepancy between sample and covariate data ---#
-
-      repRankUnder <- which(underRep[, 3] == ratOrderUnder[1])
-
-      #--- determine row and column of most under represented quantile ---#
-
-      repRow <- underRep[repRankUnder, 1]
-      repCol <- underRep[repRankUnder, 2]
-
-      #--- determine number of existing samples in selected quantile ---#
-
-      sampExist <- floor(nrow(samples) * matCovSampDens[repRow, repCol])
-
-      #--- determine max number of samples based on covariate density ---#
-
-      sampOptim <- ceiling(nrow(samples) * matCovDens[repRow, repCol])
-
-      #--- number of samples needed ---#
-
-      sampNeed <- sampOptim - sampExist
-
-      #--- selecting covariates based on quantile chosen ---#
-
-      covLower <- mats$matQ[repRow, repCol]
-
-      covUpper <- mats$matQ[repRow + 1, repCol]
-
-      #--- subset covariate dataset for potential new samples ---#
-
-      valsSub <- vals[vals[, (2 + repCol)] >= covLower & vals[, (2 + repCol)] <= covUpper, ]
-
-      #--- randomly sample within valsSub and extract randomly sampled cells ---#
-
-      addSamp <- sample(nrow(valsSub), sampNeed)
-
-      valsSubSamp <- valsSub[addSamp, ]
-
-      valsSubSamp$type <- "new"
-
-      #--- remove samples from pool to ensure same cells are not sampled again ---#
-
-      vals <- vals[-addSamp, ]
-
-      #--- add new samples to existing sample dataframe ---#
-
-      samples <- rbind(samples, valsSubSamp)
-
-      #--- update loop parameters ---#
-
-      message("Under-represented Quantile ", paste0("[",repRow, ",",repCol, "]"), " - A total of ", sampNeed, " samples have been allocated.")
-
-      #--- update total allocated samples ---#
-
-      sTot <- sTot + sampNeed
-
-      #--- recompute ratio's in the presence of newly added samples ---#
-
-      matCovSamp <- mat_covNB(vals = samples[4:ncol(samples)], nQuant = nQuant, nb = nb, matQ = mats$matQ)
-
-      #--- Change 0's to very small number to avoid division issues ---#
-
-      matCovSamp[which(matCovSamp == 0)] <- 0.0000001
-
-      #--- Create density matrix from covariates and length of mraster ---#
-
-      matCovSampDens <- matCovSamp / nrow(samples)
-
-      ### --- Selection of new samples based on density ---###
-
-      #--- Ratio and ordering of data density and covariate density ---#
-
-      ratio <- matCovSampDens / matCovDens
-
-      #--- order the densities based on representation ---#
-
-      #--- low to high ---#
-
-      ratOrderUnder <- order(ratio)
-
-      #--- high to low ---#
-
-      ratOrderOver <- rev(ratOrderUnder)
-
-      #--- Outline quantiles that are underrepresented (< 1) in the sample ---#
-
-      underRep <- which(ratio < 1, arr.ind = TRUE)
-      underRep <- cbind(underRep, which(ratio < 1))
-    }
   }
 
-  message(paste0("A total of ", sTot, " new samples added."))
+  message(paste0("A total of ", out$sTot, " new samples added."))
 
   #--- replace existing samples (if they exist) that had NA values for metrics ---#
   
   if(exists("samples_NA")){
     
-    #--- convert coordinates to a spatial points object ---#
-    samples <- samples %>%
-      rbind(., samples_NA) %>%
-      sf::st_as_sf(., coords = c("X", "Y"))
+    if(!is.null(extraCols)){
+      
+      samples <- out$samples %>%
+        dplyr::bind_rows(., samples_NA) %>%
+        dplyr::left_join(., extraCols,  by = c("X","Y")) %>%
+        sf::st_as_sf(., coords = c("X", "Y"))
+      
+    } else {
+    
+      #--- convert coordinates to a spatial points object ---#
+      samples <- out$samples %>%
+        dplyr::bind_rows(., samples_NA) %>%
+        sf::st_as_sf(., coords = c("X", "Y"))
+    
+    }
     
   } else {
     
-    #--- convert coordinates to a spatial points object ---#
-    samples <- samples %>%
-      sf::st_as_sf(., coords = c("X", "Y"))
+    if(!is.null(extraCols)){
+      
+      samples <- out$samples %>%
+        dplyr::left_join(., extraCols,  by = c("X","Y")) %>%
+        sf::st_as_sf(., coords = c("X", "Y"))
+      
+    } else {
+      
+      #--- convert coordinates to a spatial points object ---#
+      samples <- out$samples %>%
+        sf::st_as_sf(., coords = c("X", "Y"))
+      
+    }
     
   }
 
@@ -483,15 +368,21 @@ sample_ahels <- function(mraster,
   }
 
   if (!is.null(filename)) {
-    if (!is.logical(overwrite)) {
-      stop("'overwrite' must be either TRUE or FALSE")
+    
+    if (!is.character(filename)) {
+      stop("'filename' must be a file path character string.", call. = FALSE)
     }
-
+    
+    if (!is.logical(overwrite)) {
+      stop("'overwrite' must be type logical.", call. = FALSE)
+    }
+    
     if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(paste0("'",filename, "' already exists and overwrite = FALSE"))
+      stop(paste0("'",filename, "' already exists and overwrite = FALSE."), call. = FALSE)
     }
 
     sf::st_write(samples, filename, delete_layer = overwrite)
+    message("Output samples written to disc.")
   }
 
   #--- output samples & / or samples and details (ratio matrix) ---#
@@ -501,8 +392,8 @@ sample_ahels <- function(mraster,
   } else {
     return(list(samples = samples, details = list(
       existingRatio = ratioExisting,
-      sampledRatio = ratio,
-      diffRatio = ratio - ratioExisting
+      sampledRatio = out$ratio,
+      diffRatio = out$ratio - ratioExisting
     )))
   }
 }

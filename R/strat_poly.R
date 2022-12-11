@@ -71,47 +71,43 @@ strat_poly <- function(poly,
                        filename = NULL,
                        overwrite = FALSE,
                        plot = FALSE,
-                       details = FALSE,
-                       ...) {
+                       details = FALSE
+                       ) {
 
   #--- error handling ---#
 
   if (!inherits(poly, "sf")) {
-    stop("'poly' must be an 'sf' object")
+    stop("'poly' must be an 'sf' object.", call. = FALSE)
   }
 
   if (!inherits(sf::st_geometry(poly), "sfc_POLYGON") && !inherits(sf::st_geometry(poly), "sfc_MULTIPOLYGON")) {
-    stop("'poly' geometry type must be 'POLYGON' or 'MULTIPOLYGON'")
+    stop("'poly' geometry type must be 'POLYGON' or 'MULTIPOLYGON'.", call. = FALSE)
   }
 
   if (!is.character(attribute)) {
-    stop("'attribute' must be type character")
+    stop("'attribute' must be type character.", call. = FALSE)
   }
 
   if (!is.vector(features) && !is.list(features)) {
-    stop("'features' must supply a vector or a list of vectors")
+    stop("'features' must supply a vector or a list of vectors.", call. = FALSE)
   }
 
   if (!inherits(raster, "SpatRaster")) {
-    stop("'raster' must be type SpatRaster")
-  }
-
-  if (!is.logical(overwrite)) {
-    stop("'overwrite' must be either TRUE or FALSE")
+    stop("'raster' must be type SpatRaster.", call. = FALSE)
   }
 
   if (!is.logical(plot)) {
-    stop("'plot' must be type logical")
+    stop("'plot' must be type logical.", call. = FALSE)
   }
 
   if (!is.logical(details)) {
-    stop("'details' must be type logical")
+    stop("'details' must be type logical.", call. = FALSE)
   }
 
   #--- subset inventory polygon ---#
 
   if (!any(grepl(attribute, names(poly)))) {
-    stop(paste0("'poly' does not have a layer named ", attribute))
+    stop(paste0("'poly' does not have a layer named ", attribute,"."), call. = FALSE)
   }
 
   #--- check that features are not duplicated across proposed attribute classes ---#
@@ -125,7 +121,7 @@ strat_poly <- function(poly,
   unFeatObjs <- unFeat[duplicated(unFeat)]
 
   if (length(unFeatObjs) > 0) {
-    stop(paste(c("Repeated within 'features':", unFeatObjs), collapse = " "))
+    stop(paste(c("Repeated within 'features':", unFeatObjs), collapse = " "), call. = FALSE)
   }
 
   #--- begin polygon manipulation ---#
@@ -144,7 +140,7 @@ strat_poly <- function(poly,
   #--- check if features specifiec are included within poly attribute ---#
 
   if (any(!lookUp$features %in% poly[[1]])) {
-    stop("'attribute' does not have specified 'features'.")
+    stop("'attribute' does not have specified 'features'.", call. = FALSE)
   }
 
   #--- create new column with mutated values based on features and associated group ---#
@@ -161,11 +157,27 @@ strat_poly <- function(poly,
 
   #--- rasterize vector ---#
   outpolyrast <- terra::rasterize(x = poly, y = raster[[1]], field = "strata")
+  
+  terra::crs(outpolyrast) <- terra::crs(raster)
 
   #--- write file to disc if requested ---#
 
   if (!is.null(filename)) {
-    terra::writeRaster(x = outpolyrast, filename = filename, overwrite = overwrite, ...)
+    
+    if (!is.character(filename)) {
+      stop("'filename' must be a file path character string.", call. = FALSE)
+    }
+    
+    if (!is.logical(overwrite)) {
+      stop("'overwrite' must be type logical.", call. = FALSE)
+    }
+    
+    if (file.exists(filename) & isFALSE(overwrite)) {
+      stop(paste0("'",filename, "' already exists and overwrite = FALSE."), call. = FALSE)
+    }
+    
+    terra::writeRaster(x = outpolyrast, filename = filename, overwrite = overwrite)
+    message("Output raster written to disc.")
   }
 
   #--- plot if requested ---#
@@ -180,7 +192,7 @@ strat_poly <- function(poly,
 
     #--- output metrics details along with stratification raster ---#
 
-    output <- list(outRaster = outpolyrast, lookUp = lookUp, poly = poly)
+    output <- list(raster = outpolyrast, lookUp = lookUp, poly = poly)
 
     #--- output samples dataframe ---#
 
