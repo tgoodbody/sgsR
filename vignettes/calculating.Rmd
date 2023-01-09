@@ -1,5 +1,5 @@
 ---
-title: "calculating"
+title: "Calculating"
 output: rmarkdown::html_vignette
 description: >
   Learn how to use calculate_* functions.
@@ -59,7 +59,7 @@ existing <- sample_strat(sraster = sraster, # use mraster as input for sampling
 
 a <- c("`calculate_representation()`","`calculate_distance()`","`calculate_pcomp()`","`calculate_sampsize()`","`calculate_allocation()`","`calculate_coobs()`","`calculate_pop()`","`calculate_lhsOpt()`")
 
-d <- c("Determine representation of strata in existing sample", "Per pixel distance to closest `access` vector", "Principal components of input `mraster`", "Estimated sample sizes based on relative standard error", "proportional / optimal / equal / manual allocation", "Detail how `existing` sample units are distributed among `mraster`", "Population level information (PCA / quantile matrix / covariance matrix) of `mraster`", "determine optimal Latin hypercube sampling parameters including sample number")
+d <- c("Determine representation of strata in existing sample unit", "Per pixel distance to closest `access` vector", "Principal components of input `mraster`", "Estimated sample sizes based on relative standard error", "Proportional / optimal / equal / manual allocation", "Detail how `existing` sample units are distributed among `mraster`", "Population level information (PCA / quantile matrix / covariance matrix) of `mraster`", "Determine optimal Latin hypercube sampling parameters including sample size")
 
 urls <- c("#rep","#dist","#pcomp","#sampsize","#allocation","#coobs","#lhspop","#lhsopt")
 
@@ -77,7 +77,7 @@ knitr::kable(df, align = 'c')
 
 ## `calculate_representation()` {#rep .unnumbered}
 
-`calculate_representation()` function allows the users to verify how a stratification is represented in an `existing` sample. Result in tabular and graphical (if `plot = TRUE`) outputs that compare strata coverage frequency and sampling frequency. 
+`calculate_representation()` function allows the users to verify how a stratification is spatially represented in an `existing` sample. Result in tabular and graphical (if `plot = TRUE`) outputs that compare strata coverage frequency and sampling frequency. 
 
 ```{r,warning=F,message=F}
 #--- quantile sraster ---#
@@ -94,9 +94,9 @@ calculate_representation(sraster = quantiles,
                          plot = TRUE)
 ```
 
-The tabular output presents the frequency of coverage for each strata (`srasterFreq`) (what % of the landscape does the strata cover) and the sampling frequency within each strata (`sampleFreq`) (what % of total `existing` samples are in the strata). The difference (`diffFreq`) between coverage frequency and sampling frequency determines whether the values are over-represented (positive numbers) or under-represented (negative numbers). This value translates to a discrete `need` attribute that defines whether there is a need to add or remove samples to meet the number of samples necessary to be considered representative of the strata inputted in `sraster`. 
+The tabular output presents the frequency of coverage for each strata (`srasterFreq`) (what % of the landscape does the strata cover) and the sampling frequency within each strata (`sampleFreq`) (what % of total `existing` samples are in the strata). The difference (`diffFreq`) between coverage frequency and sampling frequency determines whether the values are over-represented (positive numbers) or under-represented (negative numbers). This value translates to a discrete `need` attribute that defines whether there is a need to add or remove samples to meet the number of samples necessary to be considered representative of the spatial coverage of strata inputted in `sraster`. 
 
-Performing the algorithm on a sample set derived using `sample_strat()` exhibits proportional sampling to strata coverage.
+Performing the algorithm on a sample set derived using `sample_strat()` exhibits proportional sampling to strata coverage given that samples were allocated proportionally to spatial coverage.
 
 ```{r,warning=F,message=F}
 calculate_representation(sraster = sraster,
@@ -112,15 +112,15 @@ Presence of very small (negligible) differences between `srasterFreq` and `sampl
 
 ## `calculate_distance` {#dist .unnumbered}
 
-`calculate_distance()` uses input `raster` and `access` data and outputs the per pixel distance to the nearest access point. This algorithm has a specific value for constraining  sampling protocols, such as with `sample_clhs()`, where the output raster layer can be used as the `cost` for the constraint. The output raster consists of the input appended with the calculated distance layer (`dist2access`).
+`calculate_distance()` uses input `raster` and `access` data and outputs the per pixel distance to the nearest access point. This algorithm has a specific value for constraining  sampling protocols, such as with `sample_clhs()`, where the output raster layer can be used as the `cost` for the constraint. The output raster consists of the input appended with the calculated distance layer (`dist2access`). 
 
-```{r,warning=F,message=F}
+```{r,warning=F,message=F message=FALSE, warning=FALSE, r,warning=F}
 calculate_distance(raster = sraster, # input
                    access = access, # define access road network
                    plot = TRUE) # plot
 ```
 
-_Access network polygons with a large number of features and/or large spatial extent could result in slow processing times._
+_This function performs considerably slower when `access` has many features. Consider mergeing features for improved efficiency._
 
 ## `calculate_pcomp` {#pcomp .unnumbered}
 
@@ -159,18 +159,20 @@ p
 
 ## `calculate_allocation` {#allocation .unnumbered}
 
-`calculate_allocation()` determines how to allocate sample units based on the desired sample size (`nSamp`) and the input `sraster`. It is used internally in a number of algorithms, including [`sample_strat`](#strat). Currently, there are three methods for allocation: proportional (`prop`; default), optimal (`optim`), equal (`equal`), and manual (`manual`) allocation.
+`calculate_allocation()` determines how sample units are allocated based on the desired sample size (`nSamp`) and the input `sraster`. It is used internally in a number of algorithms, including [`sample_strat`](#strat). Currently, there are four allocation methods: proportional (`prop`; default), optimal (`optim`), equal (`equal`), and manual (`manual`).
 
 
 ### Proportional allocation {#proportional .unnumbered}
 
-Samples are allocated based on the coverage area of the strata. This is the default allocation method.
+Samples are allocated based on the spatial coverage area of the strata. This is the default allocation method.
 
 ```{r,warning=F,message=F}
 #--- perform grid sampling ---#
 calculate_allocation(sraster = sraster, 
                      nSamp = 200)
 ```
+
+In this case the sraster has equally sized strata, so the number of allocated sample units is always the same.
 
 ```{r,warning=F,message=F}
 #--- calculate existing samples to include ---#
@@ -182,11 +184,11 @@ calculate_allocation(sraster = sraster,
                      existing = e.sr)
 ```
 
-Notice that some of the values under `total` from the result above are negative. The negative value indicates that the `existing` samples over represent those strata and that some of the samples could removed to prevent over-representation. `$total` indicates the number of samples that could be added or removed. 
+At times, values under `total` can be negative. Negative values indicate that  `existing` sample units over represent those strata and that some sample units could removed to prevent over-representation. `$total` indicates the number of sample units that could be added or removed. 
 
 ### Optimal Allocation {#optimal .unnumbered}
 
-Samples are allocated based on within strata variance. Optimal allocation method uses the variation within the strata metric to allocate samples. This means that in addition to providing and `sraster`, that a specific metric (`mraster`) must be provided to calculate variation to optimally allocate samples.
+Sample units are allocated based on within strata variance. The optimal allocation method uses the variation within the strata metric to allocate sample units. This means that in addition to providing an `sraster`, that a specific metric (`mraster`) must be provided to calculate variation to optimally allocate sample units.
 
 ```{r, warning=F,message=F}
 calculate_allocation(sraster = sraster, # stratified raster
@@ -200,7 +202,7 @@ calculate_allocation(sraster = sraster, # stratified raster
 
 ### Equal allocation {#equal .unnumbered}
 
-There may be situations where the user wants to have the same number of samples allocated to each strata. In these situations use `allocation = equal`. In this case, `nSamp` refers to the total number of samples per strata, instead of the overall total number of samples. 
+There may be situations where the user wants an equal number of sample units allocated to each strata. In these situations use `allocation = equal`. In this case, `nSamp` refers to the total number of sample units per strata, instead of the overall total number. 
 
 ```{r}
 calculate_allocation(sraster = sraster, # stratified raster
@@ -223,19 +225,19 @@ calculate_allocation(sraster = sraster, # stratified raster
 
 ```
 
-The code in the demonstration above yields a total of 20 samples with plots being allocated based on the `weights` provided in ascending strata order.
+The code above yields a total of 20 sample units with plots being allocated based on the `weights` provided in ascending strata order.
 
 ## Sample evaluation algorithms {#sampeval .unnumbered}
 
 The following algorithms were initially developed by Dr. Brendan Malone from the University of Sydney. Dr. Malone and his colleagues supplied an in depth description of the functionality of these algorithms, which were originally developed to improve soil sampling strategies. These functions were modified and implemented to be used for structurally guided sampling approaches. Many thanks to Dr. Malone for being a proponent of open source algorithms.
 
-Please consult the original reference for these scripts and ideas as their publication holds  helpful and valuable information to understand their rationale for sampling and algorithm development.
+Please consult the original reference for these scripts and ideas as their publication holds helpful and valuable information to understand their rationale for sampling and algorithm development.
 
 _Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451_ 
 
 ### `calculate_coobs` {#coobs .unnumbered}
 
-`calculate_coobs()` function performs the **CO**unt of **OBS**ervations (coobs) algorithm using an `existing` sample and `mraster`. This algorithm helps the user understand how an `existing` sample set is distributed among the landscape in relation to `mraster` data. 
+`calculate_coobs()` function performs the **CO**unt of **OBS**ervations (coobs) algorithm using an `existing` sample and `mraster`. This algorithm helps the user understand how an `existing` sample is distributed among the landscape in relation to `mraster` data. 
 
 ::: {.infobox .caution data-latex="{caution}"}
 **TIP!**
@@ -259,7 +261,7 @@ The following 2 algorithms present the means to maximize the effectiveness of th
 
 ### `calculate_pop` {#lhspop .unnumbered}
 
-`calculate_pop()` calculates population level statistics of `mraster`, including calculating the principal components, quantile & covariate distributions, and Kullback-Leibler divergence testing. 
+`calculate_pop()` calculates population level statistics of an `mraster`, including calculating the principal components, quantile & covariate distributions, and Kullback-Leibler divergence testing. 
 
 The outputs produced from this functions are required to use the `calculate_lhsOpt()` function described in the following section. 
 
