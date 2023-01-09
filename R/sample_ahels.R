@@ -122,6 +122,12 @@ sample_ahels <- function(mraster,
   if (tolerance < 0 | tolerance > 0.1) {
     stop("'tolerance' must be > 0 and <= 0.1.", call. = FALSE)
   }
+  
+  if("type" %in% colnames(existing))
+  {
+    message("`existing` has a variable named `type`. This will cause issues with plotting. Consider removing.")
+  }
+  
 
   #--- determine number of bands in mraster ---#
 
