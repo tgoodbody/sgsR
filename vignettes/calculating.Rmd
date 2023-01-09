@@ -114,7 +114,7 @@ Presence of very small (negligible) differences between `srasterFreq` and `sampl
 
 `calculate_distance()` uses input `raster` and `access` data and outputs the per pixel distance to the nearest access point. This algorithm has a specific value for constraining  sampling protocols, such as with `sample_clhs()`, where the output raster layer can be used as the `cost` for the constraint. The output raster consists of the input appended with the calculated distance layer (`dist2access`). 
 
-```{r,warning=F,message=F message=FALSE, warning=FALSE, r,warning=F}
+```{r,warning=F,message=F}
 calculate_distance(raster = sraster, # input
                    access = access, # define access road network
                    plot = TRUE) # plot

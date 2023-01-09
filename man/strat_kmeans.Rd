@@ -21,12 +21,12 @@ strat_kmeans(
 \arguments{
 \item{mraster}{spatRaster. ALS metrics raster.}
 
-\item{nStrata}{Character. Number of desired strata.}
+\item{nStrata}{Numeric. Number of desired strata.}
 
 \item{iter}{Numeric. The maximum number of iterations allowed.}
 
-\item{algorithm}{Character. \code{Lloyd} (default) or
-\code{MacQueen} algorithms.}
+\item{algorithm}{Character. \code{"Lloyd"} (default) or
+\code{"MacQueen"} algorithms.}
 
 \item{center}{Logical. Value indicating whether the variables should be shifted to be zero centered.}
 

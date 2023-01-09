@@ -40,7 +40,7 @@ to permit the algorithm to not add additional samples if quantile density is ver
 Both \code{mraster} & \code{nQuant} inputs must be the same to supply the covariance matrix. Supplying the matrix allows users
 with very large \code{mrasters} to pre-process the covariance matrix to avoid longer sampling processing times.}
 
-\item{plot}{Logical. Plots samples of type `existing` (if provided; croses) and `new` (circles) along with \code{mraster}.}
+\item{plot}{Logical. Plots samples of type \code{existing} (if provided; crosses) and \code{new} (circles) along with \code{mraster}.}
 
 \item{details}{Logical. If \code{FALSE} (default) output is sf object of
 systematic samples. If \code{TRUE} returns a list of sf objects where \code{tessellation}

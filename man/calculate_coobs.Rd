@@ -31,7 +31,7 @@ strata with boundary dividers.}
 \item{overwrite}{Logical. Specify whether \code{filename} should be overwritten on disc.}
 }
 \value{
-output raster with coobs and classified coobs layers.
+Output raster with coobs and classified coobs layers.
 }
 \description{
 Perform the COunt of OBServations (coobs) algorithm using existing site data
