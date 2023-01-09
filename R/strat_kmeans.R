@@ -6,10 +6,10 @@
 #' @inheritParams strat_breaks
 #'
 #' @param mraster spatRaster. ALS metrics raster.
-#' @param nStrata Character. Number of desired strata.
+#' @param nStrata Numeric. Number of desired strata.
 #' @param iter Numeric. The maximum number of iterations allowed.
-#' @param algorithm Character. \code{Lloyd} (default) or
-#' \code{MacQueen} algorithms.
+#' @param algorithm Character. \code{"Lloyd"} (default) or
+#' \code{"MacQueen"} algorithms.
 #' @param center Logical. Value indicating whether the variables should be shifted to be zero centered.
 #' @param scale Logical. Value indicating whether the variables should be scaled to have unit variance.
 #' @param plot Logical. Plots output strata raster and visualized

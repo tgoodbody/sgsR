@@ -1,3 +1,9 @@
+# sgsR 1.3.3
+
+`fixed` - CRAN issue where errors were encountered when run on ATLAS instances.
+
+`enhancement` - Edited vignettes and documentation for clarity.
+
 # sgsR 1.3.21
 
 `fixed` - `strat_quantiles() / strat_kmeans()` - solved issue where correct number of strata & float strata values were being output.

@@ -20,11 +20,11 @@
 #' @note
 #' When \code{details = TRUE}, a list is returned where:
 #' \enumerate{
-#' \item \code{samples} output nearest centroid samples with `kcenter` attribute linking 
+#' \item \code{samples} output nearest centroid samples with \code{kcenter} attribute linking 
 #' to associated kmeans centers.
 #' \item \code{kmeans} is a list output of the \code{\link[stats]{kmeans}} function
 #' \item \code{centers} Un-scaled kmeans center values for each layer in \code{mraster} 
-#' with `kcenter` attribute to link with the same attribute in \code{samples}.
+#' with \code{kcenter} attribute to link with the same attribute in \code{samples}.
 #' \item \code{kplot} is a \code{ggplot} scatterplot object visualizing the kmeans centers
 #'  and associated nearest neighbor samples.
 #' }
