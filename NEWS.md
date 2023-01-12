@@ -4,6 +4,8 @@
 
 `enhancement` - Edited vignettes and documentation for clarity.
 
+`enhancement` - `sample_srs()` - Added message to tell users when `nSamp` sample units were unable to be allocated. From Evan Muise.
+
 # sgsR 1.3.21
 
 `fixed` - `strat_quantiles() / strat_kmeans()` - solved issue where correct number of strata & float strata values were being output.
