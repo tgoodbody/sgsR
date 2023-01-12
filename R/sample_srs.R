@@ -139,6 +139,12 @@ sample_srs <- function(raster,
       nCount <- nCount + 1
     }
   }
+  
+  if(nrow(add_strata) < nSamp){
+    
+    message(paste0("Sampling was not able to select ",nSamp, " sample units. Output has ", nrow(add_strata), " sample units."))
+    
+  }
 
   #--- convert coordinates to a spatial points object ---#
   samples <- add_strata %>%
