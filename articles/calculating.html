@@ -197,14 +197,14 @@ and sampling frequency.</p>
 <pre><code><span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 8 × 6</span></span></span>
 <span><span class="co">#&gt;   strata srasterFreq sampleFreq diffFreq nSamp  need</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>      1        0.13       0.1     -<span style="color: #BB0000;">0.03</span>     5     2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>      2        0.13       0.18     0.05     9    -<span style="color: #BB0000;">2</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>      3        0.13       0.06    -<span style="color: #BB0000;">0.07</span>     3     4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>      4        0.12       0.18     0.06     9    -<span style="color: #BB0000;">3</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>      5        0.12       0.08    -<span style="color: #BB0000;">0.04</span>     4     2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>      6        0.12       0.18     0.06     9    -<span style="color: #BB0000;">3</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span>      7        0.12       0.04    -<span style="color: #BB0000;">0.08</span>     2     4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span>      8        0.12       0.18     0.06     9    -<span style="color: #BB0000;">3</span></span></span></code></pre>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>      1        0.13       0.16   0.03       8    -<span style="color: #BB0000;">1</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>      2        0.13       0.08  -<span style="color: #BB0000;">0.05</span>       4     3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>      3        0.13       0.08  -<span style="color: #BB0000;">0.05</span>       4     3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>      4        0.12       0.12   0          6     0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>      5        0.12       0.08  -<span style="color: #BB0000;">0.04</span>       4     2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>      6        0.12       0.16   0.04       8    -<span style="color: #BB0000;">2</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span>      7        0.12       0.14   0.020<span style="text-decoration: underline;">0</span>     7    -<span style="color: #BB0000;">1</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span>      8        0.12       0.18   0.06       9    -<span style="color: #BB0000;">3</span></span></span></code></pre>
 <p>The tabular output presents the frequency of coverage for each strata
 (<code>srasterFreq</code>) (what % of the landscape does the strata
 cover) and the sampling frequency within each strata
@@ -418,9 +418,9 @@ units.</p>
 <span><span class="co">#&gt;   strata total  need</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>      1    27    77</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>      2   -<span style="color: #BB0000;">14</span>    36</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>      2   -<span style="color: #BB0000;">15</span>    36</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>      3   -<span style="color: #BB0000;">25</span>    25</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>      4    12    63</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>      4    13    63</span></span></code></pre></div>
 </div>
 <div class="section level3 unnumbered">
 <h3 class="unnumbered" id="equal">Equal allocation<a class="anchor" aria-label="anchor" href="#equal"></a>
