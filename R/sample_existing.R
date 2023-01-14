@@ -31,13 +31,6 @@
 #'                 raster = mr,
 #'                 nSamp = 50)
 #'                 
-#' #--- extract metrics to sample ---#
-#' e <- extract_metrics(mr, e)
-#' 
-#' #--- perform sub-sampling ---#
-#' sample_existing(existing = e,
-#'                 nSamp = 30, 
-#'                 plot = TRUE)
 #' 
 #' @author Tristan R.H. Goodbody
 #' 
