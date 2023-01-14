@@ -9,6 +9,7 @@ test_that("inputs", {
 
 
 test_that("Total outputs", {
+  skip_on_cran()
 
   expect_equal(nrow(o), 277L)
   expect_equal(ncol(o), 373L)

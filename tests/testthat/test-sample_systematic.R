@@ -49,6 +49,7 @@ test_that("random", {
 
 
 test_that("messages", {
+  skip_on_cran()
   set.seed(2022)
   expect_message(sample_systematic(raster = sraster, cellsize = 2000, access = access, buff_outer = 200, filename = file.path(tempdir(), "temp.shp") , overwrite = TRUE), "Output samples written to disc.")
   expect_message(sample_systematic(raster = sraster, cellsize = 20000, square = FALSE, location = "random", force = TRUE),"Forcing samples to fall in non NA locations.")
