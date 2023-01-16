@@ -8,6 +8,8 @@
 
 `enchancement` - `calculate_pcomp()` - Added `maxcells` parameter based on suggestion from R. Hijmans.
 
+`fixed` - `sample_systematic()` - Fixed issue related to ATLAS Blas and CRAN errors with suggestions and support from R. Hijmans.
+
 # sgsR 1.3.21
 
 `fixed` - `strat_quantiles() / strat_kmeans()` - solved issue where correct number of strata & float strata values were being output.

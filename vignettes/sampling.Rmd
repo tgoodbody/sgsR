@@ -110,14 +110,14 @@ The `sample_systematic()` function applies systematic sampling across an area wi
 
 The location of sample units can also be adjusted using the `locations` parameter, where `centers` takes the center, `corners` takes all corners, and `random` takes a random location within each tessellation. Random start points and translations are applied when the function is called.
 
-```{r,warning=F,message=F,eval = FALSE} 
+```{r,warning=F,message=F} 
 #--- perform grid sampling ---#
 sample_systematic(raster = sraster, # input sraster
                   cellsize = 1000, # grid distance
                   plot = TRUE) # plot
 ```
 
-```{r,warning=F,message=F,eval = FALSE} 
+```{r,warning=F,message=F} 
 #--- perform grid sampling ---#
 sample_systematic(raster = sraster, # input sraster
                   cellsize = 500, # grid distance
@@ -126,7 +126,7 @@ sample_systematic(raster = sraster, # input sraster
                   plot = TRUE) # plot
 ```      
 
-```{r,warning=F,message=F,eval = FALSE} 
+```{r,warning=F,message=F} 
 sample_systematic(raster = sraster, # input sraster
             cellsize = 500, # grid distance
             access = access, # define access road network

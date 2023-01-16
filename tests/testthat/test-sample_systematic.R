@@ -17,13 +17,13 @@ test_that("Total outputs", {
   o <- sample_systematic(raster = mraster, cellsize = 1000,square = FALSE, plot = TRUE)
   o1 <- sample_systematic(raster = mraster, cellsize = 1000)
   
-  expect_equal(nrow(o), 43L)
+  expect_equal(nrow(o), 39L)
   expect_equal(ncol(o), 1L)
   
-  expect_equal(nrow(o1), 34L)
+  expect_equal(nrow(o1), 40L)
   expect_equal(ncol(o1), 1L)
   
-  expect_equal(nrow(sample_systematic(raster = mraster, cellsize = 2000, details = TRUE)$samples), 9L)
+  expect_equal(nrow(sample_systematic(raster = mraster, cellsize = 2000, details = TRUE)$samples), 7L)
   expect_s3_class(o,"sf")
   expect_s3_class(sample_systematic(raster = mraster, cellsize = 2000, details = TRUE)$tessellation,"sf")
 })
@@ -36,7 +36,7 @@ test_that("corners", {
   o2 <- sample_systematic(raster = mraster, cellsize = 1000, square = FALSE, location = "corners")
   
   expect_equal(nrow(o1), 195L)
-  expect_equal(nrow(o2), 302L)
+  expect_equal(nrow(o2), 285L)
 })
 
 test_that("random", {
@@ -45,8 +45,8 @@ test_that("random", {
   or <- sample_systematic(raster = mraster, cellsize = 1000, location = "random")
   or1 <- sample_systematic(raster = mraster, cellsize = 1000, square = FALSE, location = "random")
   
-  expect_equal(nrow(or), 36L)
-  expect_equal(nrow(or1), 42L)
+  expect_equal(nrow(or), 34L)
+  expect_equal(nrow(or1), 44L)
   
   expect_error(sample_systematic(raster = sraster, cellsize = 5000000, location = "random"),"No samples intersect with 'raster'. Ensure 'cellsize' makes sense.")
 })

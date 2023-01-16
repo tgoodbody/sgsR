@@ -19,7 +19,6 @@
 #' prior to using this algorithm.
 #' 
 #' @examples 
-#' \dontrun{
 #' #--- Load raster ---#
 #' r <- system.file("extdata", "mraster.tif", package = "sgsR")
 #' mr <- terra::rast(r)
@@ -31,7 +30,6 @@
 #' sample_existing(existing = e,
 #'                 raster = mr,
 #'                 nSamp = 50)
-#'}          
 #' 
 #' @author Tristan R.H. Goodbody
 #' 
