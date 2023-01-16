@@ -125,37 +125,19 @@ within the <code><a href="sample_clhs.html">sample_clhs</a></code> function</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#--- Load raster and access files ---#</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co">#--- Load raster and access files ---#</span></span></span>
 <span class="r-in"><span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mraster_small.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"access.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">ac</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `access' from data source </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `/home/runner/work/_temp/Library/sgsR/extdata/access.shp' </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   using driver `ESRI Shapefile'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 167 features and 2 fields</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: MULTILINESTRING</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431100 ymin: 5337700 xmax: 438560 ymax: 5343240</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: UTM_Zone_17_Northern_Hemisphere</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">calculate_distance</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  raster <span class="op">=</span> <span class="va">mr</span>,</span></span>
 <span class="r-in"><span>  access <span class="op">=</span> <span class="va">ac</span>,</span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> calculating per pixel distance to provided access layer</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |---------|---------|---------|---------|=========================================                                          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> class       : SpatRaster </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dimensions  : 110, 141, 4  (nrow, ncol, nlyr)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> resolution  : 20, 20  (x, y)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> extent      : 432440, 435260, 5340000, 5342200  (xmin, xmax, ymin, ymax)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> coord. ref. : UTM_Zone_17_Northern_Hemisphere </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sources     : mraster_small.tif  (3 layers) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               memory  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> names       : zq90, pzabove2,   zsd, dist2access </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> min values  :  0.0,      0.0,  0.00,    1.047691 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> max values  : 32.5,     99.9, 12.59,  593.216505 </span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
