@@ -63,6 +63,7 @@ If providing only \code{existing} - all attributes will be used for sampling. Re
 prior to using this algorithm.
 }
 \examples{
+\dontrun{
 #--- Load raster ---#
 r <- system.file("extdata", "mraster.tif", package = "sgsR")
 mr <- terra::rast(r)
@@ -74,7 +75,7 @@ e <- sample_systematic(raster = mr, cellsize = 200)
 sample_existing(existing = e,
                 raster = mr,
                 nSamp = 50)
-                
+}          
 
 }
 \seealso{

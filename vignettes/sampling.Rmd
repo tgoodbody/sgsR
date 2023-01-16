@@ -110,14 +110,14 @@ The `sample_systematic()` function applies systematic sampling across an area wi
 
 The location of sample units can also be adjusted using the `locations` parameter, where `centers` takes the center, `corners` takes all corners, and `random` takes a random location within each tessellation. Random start points and translations are applied when the function is called.
 
-```{r,warning=F,message=F} 
+```{r,warning=F,message=F,eval = FALSE} 
 #--- perform grid sampling ---#
 sample_systematic(raster = sraster, # input sraster
                   cellsize = 1000, # grid distance
                   plot = TRUE) # plot
 ```
 
-```{r,warning=F,message=F} 
+```{r,warning=F,message=F,eval = FALSE} 
 #--- perform grid sampling ---#
 sample_systematic(raster = sraster, # input sraster
                   cellsize = 500, # grid distance
@@ -126,7 +126,7 @@ sample_systematic(raster = sraster, # input sraster
                   plot = TRUE) # plot
 ```      
 
-```{r,warning=F,message=F} 
+```{r,warning=F,message=F,eval = FALSE} 
 sample_systematic(raster = sraster, # input sraster
             cellsize = 500, # grid distance
             access = access, # define access road network
@@ -411,11 +411,11 @@ Much like the `sample_clhs()` algorithm, users can define a `cost` parameter, wh
 
 ### Basic sub-sampling of `existing`
 
-First we can create an `existing` sample for our example. Lets imagine we have a systematically sampled dataset of ~900 samples, and we know we only have resources to sample 300 of them. We have some ALS data available (`mraster`), which we will use as our distributions to sample within.
+First we can create an `existing` sample for our example. Lets imagine we have a dataset of ~900 samples, and we know we only have resources to sample 300 of them. We have some ALS data available (`mraster`), which we will use as our distributions to sample within.
 
 ```{r,warning=F,message=F}
 #--- generate existing samples and extract metrics ---#
-existing <- sample_systematic(raster = mraster, cellsize = 200, plot = TRUE)
+existing <- sample_srs(raster = mraster, nSamp = 900, plot = TRUE)
 
 ```
 Now lets sub-sample.

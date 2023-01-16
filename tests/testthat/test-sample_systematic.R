@@ -1,4 +1,5 @@
 test_that("Input classes", {
+  skip_on_cran()
   expect_error(sample_systematic(raster = "A", cellsize = 1000), "'raster' must be type SpatRaster.")
   expect_error(sample_systematic(raster = mraster, cellsize = TRUE), "'cellsize' must be type numeric.")
   expect_error(sample_systematic(raster = mraster, cellsize = -1), "'cellsize' must be > 0.")
@@ -11,6 +12,7 @@ test_that("Input classes", {
 })
 
 test_that("Total outputs", {
+  skip_on_cran()
   set.seed(2022)
   o <- sample_systematic(raster = mraster, cellsize = 1000,square = FALSE, plot = TRUE)
   o1 <- sample_systematic(raster = mraster, cellsize = 1000)
@@ -28,6 +30,7 @@ test_that("Total outputs", {
 
 
 test_that("corners", {
+  skip_on_cran()
   set.seed(2022)
   o1 <- sample_systematic(raster = mraster, cellsize = 1000, location = "corners")
   o2 <- sample_systematic(raster = mraster, cellsize = 1000, square = FALSE, location = "corners")
@@ -37,6 +40,7 @@ test_that("corners", {
 })
 
 test_that("random", {
+  skip_on_cran()
   set.seed(2022)
   or <- sample_systematic(raster = mraster, cellsize = 1000, location = "random")
   or1 <- sample_systematic(raster = mraster, cellsize = 1000, square = FALSE, location = "random")

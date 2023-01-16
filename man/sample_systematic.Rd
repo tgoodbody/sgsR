@@ -69,6 +69,7 @@ Using \code{force = TRUE} removes areas of \code{NA} from sampling entirely, but
 considerably slows processing speeds.
 }
 \examples{
+\dontrun{
 #--- Load raster and access files ---#
 r <- system.file("extdata", "mraster.tif", package = "sgsR")
 mr <- terra::rast(r)
@@ -92,6 +93,7 @@ sample_systematic(
   location = "random",
   plot = TRUE
 )
+}
 
 }
 \seealso{

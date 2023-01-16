@@ -35,6 +35,7 @@
 #' considerably slows processing speeds. 
 #'
 #' @examples
+#' \dontrun{
 #' #--- Load raster and access files ---#
 #' r <- system.file("extdata", "mraster.tif", package = "sgsR")
 #' mr <- terra::rast(r)
@@ -58,6 +59,7 @@
 #'   location = "random",
 #'   plot = TRUE
 #' )
+#' }
 #' 
 #' @author Tristan R.H. Goodbody, Lukas Winiwarter
 #'

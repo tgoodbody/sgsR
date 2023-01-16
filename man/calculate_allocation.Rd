@@ -62,25 +62,6 @@ calculate_allocation(
   nSamp = 10
 )
 
-#--- equal allocation ---#
-calculate_allocation(
-  sraster = sr,
-  allocation = "equal",
-  nSamp = 10
-)
-
-#--- manual allocation ---#
-#--- define user-defined weights ---#
-
-weights <- c(0.2, 0.2, 0.5, 0.1)
-
-calculate_allocation(
-  sraster = sr,
-  allocation = "manual",
-  weights = weights,
-  nSamp = 10
-)
-
 }
 \references{
 Gregoire, T.G., & Valentine, H.T. (2007). Sampling Strategies for Natural Resources and the Environment (1st ed.).
