@@ -31,6 +31,7 @@ Per pixel distance to nearest access vector. Intended to be used as a `cost` con
 within the \code{\link{sample_clhs}} function
 }
 \examples{
+\dontrun{
 #--- Load raster and access files ---#
 r <- system.file("extdata", "mraster_small.tif", package = "sgsR")
 mr <- terra::rast(r)
@@ -42,6 +43,7 @@ calculate_distance(
   raster = mr,
   access = ac,
 )
+}
 
 }
 \seealso{

@@ -59,7 +59,8 @@ e <- sf::st_read(e)
 #--- proportional allocation ---#
 calculate_allocation(
   sraster = sr,
-  nSamp = 10
+  nSamp = 10,
+  allocation = "prop"
 )
 
 }
