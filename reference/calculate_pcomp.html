@@ -73,6 +73,7 @@
 <span>  <span class="va">nComp</span>,</span>
 <span>  center <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  scale <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  maxcells <span class="op">=</span> <span class="cn">Inf</span>,</span>
 <span>  plot <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  details <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  filename <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -97,6 +98,11 @@
 
 <dt>scale</dt>
 <dd><p>Logical. Value indicating whether the variables should be scaled to have unit variance.</p></dd>
+
+
+<dt>maxcells</dt>
+<dd><p>Numeric. Maximum number of samples to use to generate principal components.
+For objects that are too large to feed into <code><a href="https://rdrr.io/r/stats/prcomp.html" class="external-link">prcomp</a></code>.</p></dd>
 
 
 <dt>plot</dt>

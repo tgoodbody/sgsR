@@ -173,7 +173,8 @@ prior to using this algorithm.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#--- Load raster ---#</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co">#--- Load raster ---#</span></span></span>
 <span class="r-in"><span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mraster.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -184,26 +185,7 @@ prior to using this algorithm.</p>
 <span class="r-in"><span><span class="fu">sample_existing</span><span class="op">(</span>existing <span class="op">=</span> <span class="va">e</span>,</span></span>
 <span class="r-in"><span>                raster <span class="op">=</span> <span class="va">mr</span>,</span></span>
 <span class="r-in"><span>                nSamp <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'existing' does not contain attributes with the same names as 'raster'. Extracting metrics.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Sub-sampling based on 'raster' distributions.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 50 features and 3 fields</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431140.5 ymin: 5337780 xmax: 438359.9 ymax: 5343080</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      zq90 pzabove2  zsd                 geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 470 17.40     70.5 4.06 POINT (432893.2 5341306)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 728 12.50     93.0 3.08   POINT (435037 5342084)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 431 18.90     82.8 5.51 POINT (432641.3 5341178)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 62   9.28     44.5 2.45 POINT (434693.9 5337780)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 630 13.60     74.0 3.74 POINT (437325.5 5340711)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 616  4.12     33.1 0.85 POINT (434281.3 5341698)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 419 10.70     96.7 2.25 POINT (437716.8 5339323)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 59  15.10     87.7 3.07 POINT (434123.1 5337965)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 80  11.40     68.0 2.66 POINT (435136.1 5337847)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 744 21.90     79.1 6.21 POINT (438271.5 5341036)</span>
-<span class="r-in"><span>                </span></span>
+<span class="r-in"><span><span class="op">}</span>          </span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
