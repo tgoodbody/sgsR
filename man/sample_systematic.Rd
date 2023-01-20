@@ -70,7 +70,6 @@ considerably slows processing speeds. Thanks to R. Hijmans for help in debugging
 providing suggestions for this script.
 }
 \examples{
-\dontrun{
 #--- Load raster and access files ---#
 r <- system.file("extdata", "mraster.tif", package = "sgsR")
 mr <- terra::rast(r)
@@ -94,7 +93,6 @@ sample_systematic(
   location = "random",
   plot = TRUE
 )
-}
 
 }
 \seealso{

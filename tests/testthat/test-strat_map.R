@@ -56,7 +56,7 @@ test_that("Total outputs", {
   expect_equal(sum(o1$lookUp$strata), 24L)
   expect_equal(length(o1dfna), 3L)
   expect_equal(nrow(o1dfna), 87431L)
-  expect_equal("14", o1$lookUp$stratamapped[4])
+  expect_equal(14, o1$lookUp$stratamapped[4])
   
   
   expect_message(strat_map(sraster = sraster, sraster2 = srasterfri, filename = file.path(tempdir(), "temp.tif"), overwrite = TRUE),"Output raster written to disc.")

@@ -1,10 +1,12 @@
+# sgsR 1.3.32
+
+`fixed` - `strat_map()` - `stratamapped` was outputting as character and not as integer as intended from Tommaso Trotto.
+
 # sgsR 1.3.31
 
 `enchancement` - `calculate_pcomp()` - Added `maxcells` parameter based on suggestion from R. Hijmans.
 
 `fixed` - `sample_systematic()` - Fixed issue related to ATLAS Blas and CRAN errors with suggestions and support from R. Hijmans.
-
-`fixed` - `strat_map()` - `stratamapped` was outputting as character and not as integer as intended from Tommaso Trotto.
 
 # sgsR 1.3.3
 

@@ -148,7 +148,21 @@ strat_map <- function(sraster,
   oclass <- featuresJoin %>%
     dplyr::group_by(strata, strata2) %>%
     #--- ensure NA's are transfered ---#
-    dplyr::mutate(stratamapped = as.integer(ifelse(is.na(strata) | is.na(strata2), NA, paste0(strata,strata2))))
+    dplyr::mutate(stratamapped = ifelse(is.na(strata) | is.na(strata2), NA, paste0(strata,strata2)))
+  
+  if(is.character(oclass$strata) || is.character(oclass$strata2)){
+    
+    oclass$stratamapped <- as.character(oclass$stratamapped)
+    
+  } else if(is.factor(oclass$strata) || is.factor(oclass$strata2)){
+    
+    oclass$stratamapped <- as.character(oclass$stratamapped)
+    
+  } else {
+    
+    oclass$stratamapped <- as.integer(oclass$stratamapped)
+    
+  }
 
   #--- create lookUp table ---#
 
