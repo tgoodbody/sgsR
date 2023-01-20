@@ -4,6 +4,8 @@
 
 `fixed` - `sample_systematic()` - Fixed issue related to ATLAS Blas and CRAN errors with suggestions and support from R. Hijmans.
 
+`fixed` - `strat_map()` - `stratamapped` was outputting as character and not as integer as intended from Tommaso Trotto.
+
 # sgsR 1.3.3
 
 `fixed` - CRAN issue where errors were encountered when run on ATLAS instances.
