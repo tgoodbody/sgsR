@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.31</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.32</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -173,8 +173,7 @@ prior to using this algorithm.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="co">#--- Load raster ---#</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#--- Load raster ---#</span></span></span>
 <span class="r-in"><span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mraster.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -185,7 +184,25 @@ prior to using this algorithm.</p>
 <span class="r-in"><span><span class="fu">sample_existing</span><span class="op">(</span>existing <span class="op">=</span> <span class="va">e</span>,</span></span>
 <span class="r-in"><span>                raster <span class="op">=</span> <span class="va">mr</span>,</span></span>
 <span class="r-in"><span>                nSamp <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span>          </span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 'existing' does not contain attributes with the same names as 'raster'. Extracting metrics.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Sub-sampling based on 'raster' distributions.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 50 features and 3 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431279.8 ymin: 5337738 xmax: 438429.9 ymax: 5343147</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      zq90 pzabove2  zsd                 geometry</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 227 16.10     93.4 2.69 POINT (433840.9 5342098)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 553 23.30     87.8 7.29 POINT (436698.9 5342487)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 371 14.90     94.7 3.85 POINT (435002.6 5342200)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 254  7.46     19.5 2.08 POINT (434283.2 5342550)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 422  3.47     28.0 0.66 POINT (435887.1 5343104)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 97  21.20     94.8 5.02 POINT (431537.3 5340104)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67  18.10     71.2 4.42 POINT (432319.5 5342170)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 284  8.59     10.4 2.44   POINT (434463 5342462)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83  10.10     60.7 2.38 POINT (432849.2 5342802)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 763 12.10     91.3 2.90 POINT (436733.5 5339357)</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
