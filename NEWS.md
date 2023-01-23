@@ -1,6 +1,6 @@
 # sgsR 1.3.32
 
-`fixed` - `strat_map()` - `stratamapped` was outputting as character and not as integer as intended from Tommaso Trotto.
+`fixed` - `strat_map()` - `stratamapped` was outputting as character and not as integer or character depending on input strata type as intended from Tommaso Trotto.
 
 # sgsR 1.3.31
 
