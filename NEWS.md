@@ -1,3 +1,7 @@
+# sgsR 1.3.33
+
+`fixed` - `sample_strat()` - `srasters` with categorical values were crashing the algorithm due to inability to combine facter and non-factor values from Evan Muise.
+
 # sgsR 1.3.32
 
 `fixed` - `strat_map()` - `stratamapped` was outputting as character and not as integer or character depending on input strata type as intended from Tommaso Trotto.

@@ -584,8 +584,11 @@ sample_strat <- function(sraster,
   
   if(exists("sraster_cats")){
     
-    samples <- samples %>%
-      dplyr::left_join(., sraster_cats, by = c("strata" = "value"))
+    #--- match label to value from categorical raster ---#
+    category <- match(samples$strata, sraster_cats$label)
+    
+    #--- add category to output samples ---#
+    samples$category <- category
     
   }
   
