@@ -41,7 +41,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.32</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.33</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -201,16 +201,16 @@ will demonstrate additional examples below.</p>
 <span><span class="co">#&gt; CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;                  geometry</span></span>
-<span><span class="co">#&gt; 1  POINT (432910 5341830)</span></span>
-<span><span class="co">#&gt; 2  POINT (432910 5341830)</span></span>
-<span><span class="co">#&gt; 3  POINT (435030 5337950)</span></span>
-<span><span class="co">#&gt; 4  POINT (432130 5337810)</span></span>
-<span><span class="co">#&gt; 5  POINT (435490 5342930)</span></span>
-<span><span class="co">#&gt; 6  POINT (431570 5337750)</span></span>
-<span><span class="co">#&gt; 7  POINT (432730 5341870)</span></span>
-<span><span class="co">#&gt; 8  POINT (432810 5341910)</span></span>
-<span><span class="co">#&gt; 9  POINT (432050 5342810)</span></span>
-<span><span class="co">#&gt; 10 POINT (436910 5338530)</span></span></code></pre>
+<span><span class="co">#&gt; 1  POINT (437910 5340870)</span></span>
+<span><span class="co">#&gt; 2  POINT (437910 5340870)</span></span>
+<span><span class="co">#&gt; 3  POINT (437870 5342950)</span></span>
+<span><span class="co">#&gt; 4  POINT (434510 5342510)</span></span>
+<span><span class="co">#&gt; 5  POINT (432970 5338830)</span></span>
+<span><span class="co">#&gt; 6  POINT (437230 5341770)</span></span>
+<span><span class="co">#&gt; 7  POINT (436490 5338410)</span></span>
+<span><span class="co">#&gt; 8  POINT (432030 5337970)</span></span>
+<span><span class="co">#&gt; 9  POINT (433450 5340290)</span></span>
+<span><span class="co">#&gt; 10 POINT (431510 5342890)</span></span></code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/sample_srs.html">sample_srs</a></span><span class="op">(</span>raster <span class="op">=</span> <span class="va">mraster</span>, <span class="co"># input mraster</span></span>
 <span>           nSamp <span class="op">=</span> <span class="fl">200</span>, <span class="co"># number of desired sample units</span></span>
@@ -223,20 +223,20 @@ will demonstrate additional examples below.</p>
 <pre><code><span><span class="co">#&gt; Simple feature collection with 200 features and 0 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 431130 ymin: 5337710 xmax: 438430 ymax: 5343230</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 431130 ymin: 5337710 xmax: 438490 ymax: 5343230</span></span>
 <span><span class="co">#&gt; CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;                  geometry</span></span>
-<span><span class="co">#&gt; 1  POINT (436210 5339690)</span></span>
-<span><span class="co">#&gt; 2  POINT (436530 5338170)</span></span>
-<span><span class="co">#&gt; 3  POINT (437230 5343030)</span></span>
-<span><span class="co">#&gt; 4  POINT (433010 5342970)</span></span>
-<span><span class="co">#&gt; 5  POINT (435170 5339330)</span></span>
-<span><span class="co">#&gt; 6  POINT (436810 5338470)</span></span>
-<span><span class="co">#&gt; 7  POINT (434070 5343010)</span></span>
-<span><span class="co">#&gt; 8  POINT (434570 5340910)</span></span>
-<span><span class="co">#&gt; 9  POINT (438410 5338110)</span></span>
-<span><span class="co">#&gt; 10 POINT (437010 5337890)</span></span></code></pre>
+<span><span class="co">#&gt; 1  POINT (438030 5341150)</span></span>
+<span><span class="co">#&gt; 2  POINT (434390 5338590)</span></span>
+<span><span class="co">#&gt; 3  POINT (431270 5342790)</span></span>
+<span><span class="co">#&gt; 4  POINT (431630 5338290)</span></span>
+<span><span class="co">#&gt; 5  POINT (432430 5338870)</span></span>
+<span><span class="co">#&gt; 6  POINT (438070 5340270)</span></span>
+<span><span class="co">#&gt; 7  POINT (433950 5337930)</span></span>
+<span><span class="co">#&gt; 8  POINT (436250 5341250)</span></span>
+<span><span class="co">#&gt; 9  POINT (435450 5338730)</span></span>
+<span><span class="co">#&gt; 10 POINT (437990 5343070)</span></span></code></pre>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="systematic">
@@ -260,23 +260,23 @@ and translations are applied when the function is called.</p>
 <span>                  cellsize <span class="op">=</span> <span class="fl">1000</span>, <span class="co"># grid distance</span></span>
 <span>                  plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># plot</span></span></code></pre></div>
 <p><img src="sampling_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
-<pre><code><span><span class="co">#&gt; Simple feature collection with 40 features and 0 fields</span></span>
+<pre><code><span><span class="co">#&gt; Simple feature collection with 36 features and 0 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 431153.9 ymin: 5337827 xmax: 438380.9 ymax: 5343234</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 431174.9 ymin: 5337893 xmax: 438477.8 ymax: 5343223</span></span>
 <span><span class="co">#&gt; CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;                    geometry</span></span>
-<span><span class="co">#&gt; 1  POINT (437497.2 5337932)</span></span>
-<span><span class="co">#&gt; 2  POINT (438380.9 5338400)</span></span>
-<span><span class="co">#&gt; 3  POINT (435261.8 5337879)</span></span>
-<span><span class="co">#&gt; 4  POINT (437912.8 5339284)</span></span>
-<span><span class="co">#&gt; 5  POINT (433026.3 5337827)</span></span>
-<span><span class="co">#&gt; 6    POINT (433910 5338295)</span></span>
-<span><span class="co">#&gt; 7  POINT (434793.7 5338763)</span></span>
-<span><span class="co">#&gt; 8  POINT (435677.4 5339231)</span></span>
-<span><span class="co">#&gt; 9    POINT (436561 5339699)</span></span>
-<span><span class="co">#&gt; 10 POINT (437444.7 5340167)</span></span></code></pre>
+<span><span class="co">#&gt; 1  POINT (436062.7 5343223)</span></span>
+<span><span class="co">#&gt; 2  POINT (434119.1 5342752)</span></span>
+<span><span class="co">#&gt; 3  POINT (433147.3 5342516)</span></span>
+<span><span class="co">#&gt; 4  POINT (432175.4 5342280)</span></span>
+<span><span class="co">#&gt; 5  POINT (431203.6 5342044)</span></span>
+<span><span class="co">#&gt; 6  POINT (438242.1 5342723)</span></span>
+<span><span class="co">#&gt; 7  POINT (437270.3 5342487)</span></span>
+<span><span class="co">#&gt; 8  POINT (435326.6 5342016)</span></span>
+<span><span class="co">#&gt; 9  POINT (434354.8 5341780)</span></span>
+<span><span class="co">#&gt; 10   POINT (433383 5341544)</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#--- perform grid sampling ---#</span></span>
 <span><span class="fu"><a href="../reference/sample_systematic.html">sample_systematic</a></span><span class="op">(</span>raster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># input sraster</span></span>
@@ -285,23 +285,23 @@ and translations are applied when the function is called.</p>
 <span>                  location <span class="op">=</span> <span class="st">"random"</span>, <span class="co"># randomly sample within tessellation</span></span>
 <span>                  plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># plot</span></span></code></pre></div>
 <p><img src="sampling_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
-<pre><code><span><span class="co">#&gt; Simple feature collection with 161 features and 0 fields</span></span>
+<pre><code><span><span class="co">#&gt; Simple feature collection with 168 features and 0 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 431266.3 ymin: 5337753 xmax: 438506.5 ymax: 5343211</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 431141.6 ymin: 5337774 xmax: 438530.6 ymax: 5343238</span></span>
 <span><span class="co">#&gt; CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;                    geometry</span></span>
-<span><span class="co">#&gt; 1  POINT (438326.6 5341543)</span></span>
-<span><span class="co">#&gt; 2  POINT (438506.5 5340779)</span></span>
-<span><span class="co">#&gt; 3  POINT (438176.5 5339844)</span></span>
-<span><span class="co">#&gt; 4    POINT (438392 5338773)</span></span>
-<span><span class="co">#&gt; 5  POINT (438165.8 5338025)</span></span>
-<span><span class="co">#&gt; 6  POINT (438151.4 5342165)</span></span>
-<span><span class="co">#&gt; 7  POINT (438109.9 5341019)</span></span>
-<span><span class="co">#&gt; 8  POINT (438059.7 5340135)</span></span>
-<span><span class="co">#&gt; 9  POINT (438202.9 5339473)</span></span>
-<span><span class="co">#&gt; 10   POINT (438096 5338719)</span></span></code></pre>
+<span><span class="co">#&gt; 1  POINT (431203.3 5337881)</span></span>
+<span><span class="co">#&gt; 2  POINT (431500.4 5338171)</span></span>
+<span><span class="co">#&gt; 3    POINT (431922 5338156)</span></span>
+<span><span class="co">#&gt; 4  POINT (431871.4 5338653)</span></span>
+<span><span class="co">#&gt; 5  POINT (432442.1 5338128)</span></span>
+<span><span class="co">#&gt; 6  POINT (431418.9 5339600)</span></span>
+<span><span class="co">#&gt; 7  POINT (432948.3 5338253)</span></span>
+<span><span class="co">#&gt; 8  POINT (432406.2 5338658)</span></span>
+<span><span class="co">#&gt; 9  POINT (431299.6 5340052)</span></span>
+<span><span class="co">#&gt; 10   POINT (433074 5337879)</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/sample_systematic.html">sample_systematic</a></span><span class="op">(</span>raster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># input sraster</span></span>
 <span>            cellsize <span class="op">=</span> <span class="fl">500</span>, <span class="co"># grid distance</span></span>
@@ -311,23 +311,23 @@ and translations are applied when the function is called.</p>
 <span>            location <span class="op">=</span> <span class="st">"corners"</span>, <span class="co"># take corners instead of centers</span></span>
 <span>            plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="sampling_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
-<pre><code><span><span class="co">#&gt; Simple feature collection with 621 features and 0 fields</span></span>
+<pre><code><span><span class="co">#&gt; Simple feature collection with 654 features and 0 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 431118.9 ymin: 5337710 xmax: 438489.9 ymax: 5343236</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 431111.9 ymin: 5337749 xmax: 438551 ymax: 5343210</span></span>
 <span><span class="co">#&gt; CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;                    geometry</span></span>
-<span><span class="co">#&gt; 1  POINT (438429.1 5337812)</span></span>
-<span><span class="co">#&gt; 2  POINT (438429.1 5337812)</span></span>
-<span><span class="co">#&gt; 3    POINT (438340 5338087)</span></span>
-<span><span class="co">#&gt; 4  POINT (438444.3 5338576)</span></span>
-<span><span class="co">#&gt; 5    POINT (438340 5338087)</span></span>
-<span><span class="co">#&gt; 6  POINT (438429.1 5337812)</span></span>
-<span><span class="co">#&gt; 7  POINT (437864.4 5337932)</span></span>
-<span><span class="co">#&gt; 8  POINT (438057.7 5338147)</span></span>
-<span><span class="co">#&gt; 9    POINT (438340 5338087)</span></span>
-<span><span class="co">#&gt; 10 POINT (438444.3 5338576)</span></span></code></pre>
+<span><span class="co">#&gt; 1  POINT (438517.8 5337961)</span></span>
+<span><span class="co">#&gt; 2  POINT (438517.8 5337961)</span></span>
+<span><span class="co">#&gt; 3  POINT (438018.1 5337980)</span></span>
+<span><span class="co">#&gt; 4  POINT (438273.5 5338114)</span></span>
+<span><span class="co">#&gt; 5  POINT (438517.8 5337961)</span></span>
+<span><span class="co">#&gt; 6  POINT (438517.8 5337961)</span></span>
+<span><span class="co">#&gt; 7  POINT (438273.5 5338114)</span></span>
+<span><span class="co">#&gt; 8  POINT (438284.5 5338403)</span></span>
+<span><span class="co">#&gt; 9  POINT (438539.9 5338537)</span></span>
+<span><span class="co">#&gt; 10 POINT (438018.1 5337980)</span></span></code></pre>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="sstrat">
@@ -379,20 +379,20 @@ below:</p>
 <pre><code><span><span class="co">#&gt; Simple feature collection with 200 features and 3 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 431110 ymin: 5337750 xmax: 438510 ymax: 5343230</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 431110 ymin: 5337710 xmax: 438550 ymax: 5343230</span></span>
 <span><span class="co">#&gt; CRS:           NA</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;    strata type  rule               geometry</span></span>
-<span><span class="co">#&gt; x       1  new rule1 POINT (434810 5341950)</span></span>
-<span><span class="co">#&gt; x1      1  new rule2 POINT (437590 5339310)</span></span>
-<span><span class="co">#&gt; x2      1  new rule2 POINT (438490 5340430)</span></span>
-<span><span class="co">#&gt; x3      1  new rule2 POINT (434410 5341810)</span></span>
-<span><span class="co">#&gt; x4      1  new rule2 POINT (434950 5339470)</span></span>
-<span><span class="co">#&gt; x5      1  new rule2 POINT (437810 5341130)</span></span>
-<span><span class="co">#&gt; x6      1  new rule2 POINT (434250 5340070)</span></span>
-<span><span class="co">#&gt; x7      1  new rule2 POINT (438230 5339370)</span></span>
-<span><span class="co">#&gt; x8      1  new rule2 POINT (436330 5338310)</span></span>
-<span><span class="co">#&gt; x9      1  new rule2 POINT (434150 5337750)</span></span></code></pre>
+<span><span class="co">#&gt; x       1  new rule1 POINT (433090 5341970)</span></span>
+<span><span class="co">#&gt; x1      1  new rule2 POINT (435490 5342670)</span></span>
+<span><span class="co">#&gt; x2      1  new rule2 POINT (431330 5340790)</span></span>
+<span><span class="co">#&gt; x3      1  new rule2 POINT (438030 5340930)</span></span>
+<span><span class="co">#&gt; x4      1  new rule2 POINT (437650 5338930)</span></span>
+<span><span class="co">#&gt; x5      1  new rule2 POINT (434790 5342770)</span></span>
+<span><span class="co">#&gt; x6      1  new rule2 POINT (433510 5341650)</span></span>
+<span><span class="co">#&gt; x7      1  new rule2 POINT (437990 5338130)</span></span>
+<span><span class="co">#&gt; x8      1  new rule2 POINT (435730 5342010)</span></span>
+<span><span class="co">#&gt; x9      1  new rule2 POINT (438310 5342650)</span></span></code></pre>
 <p>In some cases, users might want to include an <code>existing</code>
 sample within the algorithm. In order to adjust the total number of
 sample units needed per stratum to reflect those already present in
@@ -426,20 +426,20 @@ it doesn’t.</p>
 <pre><code><span><span class="co">#&gt; Simple feature collection with 400 features and 3 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 431150 ymin: 5337710 xmax: 438550 ymax: 5343210</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 431110 ymin: 5337710 xmax: 438550 ymax: 5343230</span></span>
 <span><span class="co">#&gt; CRS:           NA</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;    strata     type     rule               geometry</span></span>
-<span><span class="co">#&gt; 1       1 existing existing POINT (437530 5338590)</span></span>
-<span><span class="co">#&gt; 2       1 existing existing POINT (436010 5342430)</span></span>
-<span><span class="co">#&gt; 3       1 existing existing POINT (437590 5341630)</span></span>
-<span><span class="co">#&gt; 4       1 existing existing POINT (435910 5339710)</span></span>
-<span><span class="co">#&gt; 5       1 existing existing POINT (436630 5337710)</span></span>
-<span><span class="co">#&gt; 6       1 existing existing POINT (436730 5337930)</span></span>
-<span><span class="co">#&gt; 7       1 existing existing POINT (436750 5338290)</span></span>
-<span><span class="co">#&gt; 8       1 existing existing POINT (435050 5339430)</span></span>
-<span><span class="co">#&gt; 9       1 existing existing POINT (436530 5339550)</span></span>
-<span><span class="co">#&gt; 10      1 existing existing POINT (432850 5343030)</span></span></code></pre>
+<span><span class="co">#&gt; 1       1 existing existing POINT (437530 5338990)</span></span>
+<span><span class="co">#&gt; 2       1 existing existing POINT (434670 5342270)</span></span>
+<span><span class="co">#&gt; 3       1 existing existing POINT (438270 5338310)</span></span>
+<span><span class="co">#&gt; 4       1 existing existing POINT (434390 5341630)</span></span>
+<span><span class="co">#&gt; 5       1 existing existing POINT (434450 5342470)</span></span>
+<span><span class="co">#&gt; 6       1 existing existing POINT (434630 5341510)</span></span>
+<span><span class="co">#&gt; 7       1 existing existing POINT (436590 5339870)</span></span>
+<span><span class="co">#&gt; 8       1 existing existing POINT (434370 5341090)</span></span>
+<span><span class="co">#&gt; 9       1 existing existing POINT (438310 5342550)</span></span>
+<span><span class="co">#&gt; 10      1 existing existing POINT (436290 5342030)</span></span></code></pre>
 <p>The code in the example above defined the <code>mindist</code>
 parameter, which specifies the minimum euclidean distance that new
 sample units must be apart from one another.</p>
@@ -462,20 +462,20 @@ sample units must be apart from one another.</p>
 <pre><code><span><span class="co">#&gt; Simple feature collection with 200 features and 3 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 431190 ymin: 5337710 xmax: 438550 ymax: 5343210</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 431130 ymin: 5337730 xmax: 438550 ymax: 5343210</span></span>
 <span><span class="co">#&gt; CRS:           NA</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;    strata     type     rule               geometry</span></span>
-<span><span class="co">#&gt; 1       1 existing existing POINT (437530 5338590)</span></span>
-<span><span class="co">#&gt; 2       1 existing existing POINT (436010 5342430)</span></span>
-<span><span class="co">#&gt; 3       1 existing existing POINT (437590 5341630)</span></span>
-<span><span class="co">#&gt; 4       1 existing existing POINT (435910 5339710)</span></span>
-<span><span class="co">#&gt; 5       1 existing existing POINT (436630 5337710)</span></span>
-<span><span class="co">#&gt; 6       1 existing existing POINT (436730 5337930)</span></span>
-<span><span class="co">#&gt; 7       1 existing existing POINT (436750 5338290)</span></span>
-<span><span class="co">#&gt; 8       1 existing existing POINT (435050 5339430)</span></span>
-<span><span class="co">#&gt; 9       1 existing existing POINT (436530 5339550)</span></span>
-<span><span class="co">#&gt; 10      1 existing existing POINT (432850 5343030)</span></span></code></pre>
+<span><span class="co">#&gt; 1       1 existing existing POINT (437530 5338990)</span></span>
+<span><span class="co">#&gt; 2       1 existing existing POINT (434670 5342270)</span></span>
+<span><span class="co">#&gt; 3       1 existing existing POINT (438270 5338310)</span></span>
+<span><span class="co">#&gt; 4       1 existing existing POINT (434390 5341630)</span></span>
+<span><span class="co">#&gt; 5       1 existing existing POINT (434450 5342470)</span></span>
+<span><span class="co">#&gt; 6       1 existing existing POINT (434630 5341510)</span></span>
+<span><span class="co">#&gt; 7       1 existing existing POINT (436590 5339870)</span></span>
+<span><span class="co">#&gt; 8       1 existing existing POINT (434370 5341090)</span></span>
+<span><span class="co">#&gt; 9       1 existing existing POINT (438310 5342550)</span></span>
+<span><span class="co">#&gt; 10      1 existing existing POINT (436290 5342030)</span></span></code></pre>
 <p>The <code>include</code> parameter determines whether
 <code>existing</code> sample units should be included in the total
 sample size defined by <code>nSamp</code>. By default, the
@@ -500,20 +500,20 @@ the specified sample size.</p>
 <pre><code><span><span class="co">#&gt; Simple feature collection with 200 features and 1 field</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 431290 ymin: 5337750 xmax: 438550 ymax: 5343230</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 431130 ymin: 5337710 xmax: 438550 ymax: 5343230</span></span>
 <span><span class="co">#&gt; Projected CRS: UTM Zone 17, Northern Hemisphere</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;    strata               geometry</span></span>
-<span><span class="co">#&gt; 1       1 POINT (433030 5341850)</span></span>
-<span><span class="co">#&gt; 2       1 POINT (433030 5341850)</span></span>
-<span><span class="co">#&gt; 3       1 POINT (433730 5340870)</span></span>
-<span><span class="co">#&gt; 4       1 POINT (435010 5342470)</span></span>
-<span><span class="co">#&gt; 5       1 POINT (434470 5341750)</span></span>
-<span><span class="co">#&gt; 6       1 POINT (434610 5341250)</span></span>
-<span><span class="co">#&gt; 7       1 POINT (433570 5341570)</span></span>
-<span><span class="co">#&gt; 8       1 POINT (434650 5342230)</span></span>
-<span><span class="co">#&gt; 9       1 POINT (437870 5338110)</span></span>
-<span><span class="co">#&gt; 10      1 POINT (437350 5337930)</span></span></code></pre>
+<span><span class="co">#&gt; 1       1 POINT (434310 5339870)</span></span>
+<span><span class="co">#&gt; 2       1 POINT (434310 5339870)</span></span>
+<span><span class="co">#&gt; 3       1 POINT (436490 5337790)</span></span>
+<span><span class="co">#&gt; 4       1 POINT (433590 5341250)</span></span>
+<span><span class="co">#&gt; 5       1 POINT (433670 5341330)</span></span>
+<span><span class="co">#&gt; 6       1 POINT (434610 5341130)</span></span>
+<span><span class="co">#&gt; 7       1 POINT (435210 5341890)</span></span>
+<span><span class="co">#&gt; 8       1 POINT (434810 5339890)</span></span>
+<span><span class="co">#&gt; 9       1 POINT (435150 5342230)</span></span>
+<span><span class="co">#&gt; 10      1 POINT (436650 5339210)</span></span></code></pre>
 </div>
 </div>
 <div class="section level2 unnumbered">
@@ -539,20 +539,20 @@ output sample units.</p>
 <pre><code><span><span class="co">#&gt; Simple feature collection with 25 features and 4 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 431190 ymin: 5337890 xmax: 438530 ymax: 5342530</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 431190 ymin: 5337910 xmax: 438530 ymax: 5342970</span></span>
 <span><span class="co">#&gt; CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
-<span><span class="co">#&gt;        zq90 pzabove2  zsd kcenter               geometry</span></span>
-<span><span class="co">#&gt; 32048 26.50     87.4 8.24       1 POINT (437950 5341530)</span></span>
-<span><span class="co">#&gt; 84903 11.40     50.3 3.12       2 POINT (435730 5338690)</span></span>
-<span><span class="co">#&gt; 99628 18.30     87.6 4.81       3 POINT (431830 5337890)</span></span>
-<span><span class="co">#&gt; 70502 21.60     92.2 5.02       4 POINT (431190 5339450)</span></span>
-<span><span class="co">#&gt; 49459 19.10     92.6 3.82       5 POINT (435550 5340590)</span></span>
-<span><span class="co">#&gt; 32927  6.83     13.4 1.80       6 POINT (433150 5341470)</span></span>
-<span><span class="co">#&gt; 99897  8.11     86.2 1.78       7 POINT (437210 5337890)</span></span>
-<span><span class="co">#&gt; 77781 15.60     22.0 4.68       8 POINT (435030 5339070)</span></span>
-<span><span class="co">#&gt; 90156  9.95     68.6 2.59       9 POINT (436350 5338410)</span></span>
-<span><span class="co">#&gt; 16979  4.55     32.1 1.02      10 POINT (434970 5342330)</span></span></code></pre>
+<span><span class="co">#&gt;       zq90 pzabove2  zsd kcenter               geometry</span></span>
+<span><span class="co">#&gt; 16935 15.5     94.8 2.71       1 POINT (434090 5342330)</span></span>
+<span><span class="co">#&gt; 21644 18.7     87.7 5.09       2 POINT (431290 5342070)</span></span>
+<span><span class="co">#&gt; 99324 23.5     89.9 6.85       3 POINT (433210 5337910)</span></span>
+<span><span class="co">#&gt; 28802 14.9     70.9 3.98       4 POINT (432710 5341690)</span></span>
+<span><span class="co">#&gt; 43260 16.9     86.9 4.23       5 POINT (438390 5340930)</span></span>
+<span><span class="co">#&gt; 38886 19.9     74.9 6.06       6 POINT (432970 5341150)</span></span>
+<span><span class="co">#&gt; 73113 17.8     93.0 3.49       7 POINT (431190 5339310)</span></span>
+<span><span class="co">#&gt; 5627  21.5     91.2 5.62       8 POINT (431730 5342930)</span></span>
+<span><span class="co">#&gt; 87494 12.3     17.4 3.67       9 POINT (435330 5338550)</span></span>
+<span><span class="co">#&gt; 57393 26.5     85.7 8.38      10 POINT (437570 5340170)</span></span></code></pre>
 <p>Altering the <code>k</code> parameter leads to a multiplicative
 increase in output sample units where total output samples = <span class="math inline">\(nSamp * k\)</span>.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
@@ -652,20 +652,20 @@ packages.</p>
 <pre><code><span><span class="co">#&gt; Simple feature collection with 200 features and 0 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 431110 ymin: 5337710 xmax: 438490 ymax: 5343210</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 431130 ymin: 5337730 xmax: 438550 ymax: 5343230</span></span>
 <span><span class="co">#&gt; CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;                  geometry</span></span>
-<span><span class="co">#&gt; 1  POINT (432590 5343210)</span></span>
-<span><span class="co">#&gt; 2  POINT (435550 5343190)</span></span>
-<span><span class="co">#&gt; 3  POINT (437310 5343170)</span></span>
-<span><span class="co">#&gt; 4  POINT (437870 5343150)</span></span>
-<span><span class="co">#&gt; 5  POINT (435710 5343130)</span></span>
-<span><span class="co">#&gt; 6  POINT (432410 5343050)</span></span>
-<span><span class="co">#&gt; 7  POINT (433510 5343050)</span></span>
-<span><span class="co">#&gt; 8  POINT (438210 5343030)</span></span>
-<span><span class="co">#&gt; 9  POINT (434790 5342970)</span></span>
-<span><span class="co">#&gt; 10 POINT (435670 5342970)</span></span></code></pre>
+<span><span class="co">#&gt; 1  POINT (432710 5343230)</span></span>
+<span><span class="co">#&gt; 2  POINT (433190 5343230)</span></span>
+<span><span class="co">#&gt; 3  POINT (431510 5343170)</span></span>
+<span><span class="co">#&gt; 4  POINT (435550 5343170)</span></span>
+<span><span class="co">#&gt; 5  POINT (432230 5343130)</span></span>
+<span><span class="co">#&gt; 6  POINT (434670 5343070)</span></span>
+<span><span class="co">#&gt; 7  POINT (435090 5343050)</span></span>
+<span><span class="co">#&gt; 8  POINT (434850 5343030)</span></span>
+<span><span class="co">#&gt; 9  POINT (433550 5343010)</span></span>
+<span><span class="co">#&gt; 10 POINT (436830 5343010)</span></span></code></pre>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/sample_balanced.html">sample_balanced</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, <span class="co"># input</span></span>
 <span>                nSamp <span class="op">=</span> <span class="fl">100</span>, <span class="co"># desired sample size</span></span>
@@ -676,20 +676,20 @@ packages.</p>
 <span><span class="co">#&gt; Simple feature collection with 100 features and 0 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 431530 ymin: 5337710 xmax: 438530 ymax: 5343190</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 431130 ymin: 5337790 xmax: 438530 ymax: 5343210</span></span>
 <span><span class="co">#&gt; CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;                  geometry</span></span>
-<span><span class="co">#&gt; 1  POINT (434630 5340950)</span></span>
-<span><span class="co">#&gt; 2  POINT (436310 5342650)</span></span>
-<span><span class="co">#&gt; 3  POINT (438410 5340790)</span></span>
-<span><span class="co">#&gt; 4  POINT (438470 5340750)</span></span>
-<span><span class="co">#&gt; 5  POINT (435130 5338290)</span></span>
-<span><span class="co">#&gt; 6  POINT (434370 5342410)</span></span>
-<span><span class="co">#&gt; 7  POINT (438090 5342430)</span></span>
-<span><span class="co">#&gt; 8  POINT (437730 5342410)</span></span>
-<span><span class="co">#&gt; 9  POINT (436390 5342750)</span></span>
-<span><span class="co">#&gt; 10 POINT (435610 5338650)</span></span></code></pre></div>
+<span><span class="co">#&gt; 1  POINT (436450 5342810)</span></span>
+<span><span class="co">#&gt; 2  POINT (434150 5343210)</span></span>
+<span><span class="co">#&gt; 3  POINT (436070 5342370)</span></span>
+<span><span class="co">#&gt; 4  POINT (434590 5343130)</span></span>
+<span><span class="co">#&gt; 5  POINT (432410 5343210)</span></span>
+<span><span class="co">#&gt; 6  POINT (432210 5341710)</span></span>
+<span><span class="co">#&gt; 7  POINT (433150 5342650)</span></span>
+<span><span class="co">#&gt; 8  POINT (432210 5343050)</span></span>
+<span><span class="co">#&gt; 9  POINT (433350 5341130)</span></span>
+<span><span class="co">#&gt; 10 POINT (434330 5338130)</span></span></code></pre></div>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="ahels">
@@ -728,34 +728,34 @@ quantiles - default is 0.9) parameters.</p>
 <span><span class="fu"><a href="../reference/sample_ahels.html">sample_ahels</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>, </span>
 <span>             existing <span class="op">=</span> <span class="va">existing</span>, <span class="co"># existing sample</span></span>
 <span>             plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># plot</span></span></code></pre></div>
-<pre><code><span><span class="co">#&gt; Simple feature collection with 275 features and 7 fields</span></span>
+<pre><code><span><span class="co">#&gt; Simple feature collection with 305 features and 7 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
 <span><span class="co">#&gt; Bounding box:  xmin: 431130 ymin: 5337710 xmax: 438550 ymax: 5343210</span></span>
 <span><span class="co">#&gt; CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;      type.x  zq90 pzabove2  zsd strata type.y  rule</span></span>
-<span><span class="co">#&gt; 1  existing  8.21     57.7 2.14      1    new rule1</span></span>
-<span><span class="co">#&gt; 2  existing  4.28     52.2 0.89      1    new rule2</span></span>
-<span><span class="co">#&gt; 3  existing  7.87     66.8 2.04      1    new rule2</span></span>
-<span><span class="co">#&gt; 4  existing  6.67     26.3 1.65      1    new rule2</span></span>
-<span><span class="co">#&gt; 5  existing  8.87     62.4 2.38      1    new rule2</span></span>
-<span><span class="co">#&gt; 6  existing  5.18     39.2 1.16      1    new rule2</span></span>
-<span><span class="co">#&gt; 7  existing  7.75     76.2 1.70      1    new rule2</span></span>
-<span><span class="co">#&gt; 8  existing  8.33      7.2 2.20      1    new rule2</span></span>
-<span><span class="co">#&gt; 9  existing 10.10     88.2 2.41      1    new rule2</span></span>
-<span><span class="co">#&gt; 10 existing  7.99     57.0 2.16      1    new rule2</span></span>
+<span><span class="co">#&gt; 1  existing  2.55      9.0 0.38      1    new rule1</span></span>
+<span><span class="co">#&gt; 2  existing  7.64     68.2 1.84      1    new rule2</span></span>
+<span><span class="co">#&gt; 3  existing  2.31      1.0 0.31      1    new rule2</span></span>
+<span><span class="co">#&gt; 4  existing  3.94     19.7 0.85      1    new rule2</span></span>
+<span><span class="co">#&gt; 5  existing  4.15     47.1 0.88      1    new rule2</span></span>
+<span><span class="co">#&gt; 6  existing  9.19     82.1 2.28      1    new rule2</span></span>
+<span><span class="co">#&gt; 7  existing 10.20     88.8 2.57      1    new rule2</span></span>
+<span><span class="co">#&gt; 8  existing  5.12     10.2 1.14      1    new rule2</span></span>
+<span><span class="co">#&gt; 9  existing  6.25     12.8 2.37      1    new rule2</span></span>
+<span><span class="co">#&gt; 10 existing  0.00      0.0 0.00      1    new rule2</span></span>
 <span><span class="co">#&gt;                  geometry</span></span>
-<span><span class="co">#&gt; 1  POINT (437530 5338590)</span></span>
-<span><span class="co">#&gt; 2  POINT (436010 5342430)</span></span>
-<span><span class="co">#&gt; 3  POINT (437590 5341630)</span></span>
-<span><span class="co">#&gt; 4  POINT (435910 5339710)</span></span>
-<span><span class="co">#&gt; 5  POINT (436630 5337710)</span></span>
-<span><span class="co">#&gt; 6  POINT (436730 5337930)</span></span>
-<span><span class="co">#&gt; 7  POINT (436750 5338290)</span></span>
-<span><span class="co">#&gt; 8  POINT (435050 5339430)</span></span>
-<span><span class="co">#&gt; 9  POINT (436530 5339550)</span></span>
-<span><span class="co">#&gt; 10 POINT (432850 5343030)</span></span></code></pre>
+<span><span class="co">#&gt; 1  POINT (437530 5338990)</span></span>
+<span><span class="co">#&gt; 2  POINT (434670 5342270)</span></span>
+<span><span class="co">#&gt; 3  POINT (438270 5338310)</span></span>
+<span><span class="co">#&gt; 4  POINT (434390 5341630)</span></span>
+<span><span class="co">#&gt; 5  POINT (434450 5342470)</span></span>
+<span><span class="co">#&gt; 6  POINT (434630 5341510)</span></span>
+<span><span class="co">#&gt; 7  POINT (436590 5339870)</span></span>
+<span><span class="co">#&gt; 8  POINT (434370 5341090)</span></span>
+<span><span class="co">#&gt; 9  POINT (438310 5342550)</span></span>
+<span><span class="co">#&gt; 10 POINT (436290 5342030)</span></span></code></pre>
 <div class="infobox caution">
 <p><strong>TIP!</strong></p>
 <p>Notice that no <code>threshold</code>, <code>nSamp</code>, or
@@ -779,27 +779,27 @@ representation.</p>
 <span><span class="co">#&gt; CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;      type.x  zq90 pzabove2  zsd strata type.y  rule</span></span>
-<span><span class="co">#&gt; 1  existing  8.21     57.7 2.14      1    new rule1</span></span>
-<span><span class="co">#&gt; 2  existing  4.28     52.2 0.89      1    new rule2</span></span>
-<span><span class="co">#&gt; 3  existing  7.87     66.8 2.04      1    new rule2</span></span>
-<span><span class="co">#&gt; 4  existing  6.67     26.3 1.65      1    new rule2</span></span>
-<span><span class="co">#&gt; 5  existing  8.87     62.4 2.38      1    new rule2</span></span>
-<span><span class="co">#&gt; 6  existing  5.18     39.2 1.16      1    new rule2</span></span>
-<span><span class="co">#&gt; 7  existing  7.75     76.2 1.70      1    new rule2</span></span>
-<span><span class="co">#&gt; 8  existing  8.33      7.2 2.20      1    new rule2</span></span>
-<span><span class="co">#&gt; 9  existing 10.10     88.2 2.41      1    new rule2</span></span>
-<span><span class="co">#&gt; 10 existing  7.99     57.0 2.16      1    new rule2</span></span>
+<span><span class="co">#&gt; 1  existing  2.55      9.0 0.38      1    new rule1</span></span>
+<span><span class="co">#&gt; 2  existing  7.64     68.2 1.84      1    new rule2</span></span>
+<span><span class="co">#&gt; 3  existing  2.31      1.0 0.31      1    new rule2</span></span>
+<span><span class="co">#&gt; 4  existing  3.94     19.7 0.85      1    new rule2</span></span>
+<span><span class="co">#&gt; 5  existing  4.15     47.1 0.88      1    new rule2</span></span>
+<span><span class="co">#&gt; 6  existing  9.19     82.1 2.28      1    new rule2</span></span>
+<span><span class="co">#&gt; 7  existing 10.20     88.8 2.57      1    new rule2</span></span>
+<span><span class="co">#&gt; 8  existing  5.12     10.2 1.14      1    new rule2</span></span>
+<span><span class="co">#&gt; 9  existing  6.25     12.8 2.37      1    new rule2</span></span>
+<span><span class="co">#&gt; 10 existing  0.00      0.0 0.00      1    new rule2</span></span>
 <span><span class="co">#&gt;                  geometry</span></span>
-<span><span class="co">#&gt; 1  POINT (437530 5338590)</span></span>
-<span><span class="co">#&gt; 2  POINT (436010 5342430)</span></span>
-<span><span class="co">#&gt; 3  POINT (437590 5341630)</span></span>
-<span><span class="co">#&gt; 4  POINT (435910 5339710)</span></span>
-<span><span class="co">#&gt; 5  POINT (436630 5337710)</span></span>
-<span><span class="co">#&gt; 6  POINT (436730 5337930)</span></span>
-<span><span class="co">#&gt; 7  POINT (436750 5338290)</span></span>
-<span><span class="co">#&gt; 8  POINT (435050 5339430)</span></span>
-<span><span class="co">#&gt; 9  POINT (436530 5339550)</span></span>
-<span><span class="co">#&gt; 10 POINT (432850 5343030)</span></span></code></pre>
+<span><span class="co">#&gt; 1  POINT (437530 5338990)</span></span>
+<span><span class="co">#&gt; 2  POINT (434670 5342270)</span></span>
+<span><span class="co">#&gt; 3  POINT (438270 5338310)</span></span>
+<span><span class="co">#&gt; 4  POINT (434390 5341630)</span></span>
+<span><span class="co">#&gt; 5  POINT (434450 5342470)</span></span>
+<span><span class="co">#&gt; 6  POINT (434630 5341510)</span></span>
+<span><span class="co">#&gt; 7  POINT (436590 5339870)</span></span>
+<span><span class="co">#&gt; 8  POINT (434370 5341090)</span></span>
+<span><span class="co">#&gt; 9  POINT (438310 5342550)</span></span>
+<span><span class="co">#&gt; 10 POINT (436290 5342030)</span></span></code></pre>
 <p>Notice that the total number of samples is 500. This value is the sum
 of existing units (200) and number of sample units defined by
 <code>nSamp = 300</code>.</p>
@@ -853,20 +853,20 @@ Now lets sub-sample.</p>
 <pre><code><span><span class="co">#&gt; Simple feature collection with 300 features and 3 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 431110 ymin: 5337710 xmax: 438530 ymax: 5343230</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 431110 ymin: 5337710 xmax: 438550 ymax: 5343230</span></span>
 <span><span class="co">#&gt; CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;      zq90 pzabove2  zsd               geometry</span></span>
-<span><span class="co">#&gt; 88  12.50     91.1 2.12 POINT (432670 5339510)</span></span>
-<span><span class="co">#&gt; 103  5.21     56.1 1.17 POINT (433590 5343170)</span></span>
-<span><span class="co">#&gt; 383  4.95      7.4 1.32 POINT (435190 5339070)</span></span>
-<span><span class="co">#&gt; 58  22.40     76.0 5.65 POINT (435770 5339970)</span></span>
-<span><span class="co">#&gt; 124  2.55     11.2 0.40 POINT (438170 5339290)</span></span>
-<span><span class="co">#&gt; 263  2.22      0.3 0.29 POINT (434250 5339010)</span></span>
-<span><span class="co">#&gt; 640  8.20     45.6 2.09 POINT (436430 5338370)</span></span>
-<span><span class="co">#&gt; 50  13.20     95.4 2.42 POINT (432670 5338970)</span></span>
-<span><span class="co">#&gt; 770 14.80     99.5 2.76 POINT (436710 5339750)</span></span>
-<span><span class="co">#&gt; 398 16.30     89.9 2.63 POINT (437450 5342230)</span></span></code></pre>
+<span><span class="co">#&gt; 818  3.89      3.2 0.78 POINT (434510 5342410)</span></span>
+<span><span class="co">#&gt; 160 13.40     83.6 3.85 POINT (432830 5341570)</span></span>
+<span><span class="co">#&gt; 431  7.04     45.2 1.75 POINT (436090 5342350)</span></span>
+<span><span class="co">#&gt; 745  9.06     61.4 2.60 POINT (434330 5340470)</span></span>
+<span><span class="co">#&gt; 649 13.10     92.5 3.18 POINT (435390 5340730)</span></span>
+<span><span class="co">#&gt; 42  16.50     81.3 4.14 POINT (432850 5342230)</span></span>
+<span><span class="co">#&gt; 2   19.00     87.1 5.88 POINT (437130 5341950)</span></span>
+<span><span class="co">#&gt; 455 13.80     26.4 4.55 POINT (434330 5338690)</span></span>
+<span><span class="co">#&gt; 141  3.70     16.4 0.88 POINT (435750 5342770)</span></span>
+<span><span class="co">#&gt; 707 13.10     90.8 3.05 POINT (437610 5342090)</span></span></code></pre>
 <div class="infobox caution">
 <p><strong>TIP!</strong></p>
 <p>Notice that we used <code><a href="../reference/extract_metrics.html">extract_metrics()</a></code> after creating our
@@ -898,20 +898,20 @@ internal latin hypercube sampling to help guide sub-sampling of
 <pre><code><span><span class="co">#&gt; Simple feature collection with 300 features and 3 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 431110 ymin: 5337710 xmax: 438510 ymax: 5343230</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 431170 ymin: 5337710 xmax: 438510 ymax: 5343230</span></span>
 <span><span class="co">#&gt; CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;      zq90 pzabove2  zsd               geometry</span></span>
-<span><span class="co">#&gt; 714 21.30     78.4 6.03 POINT (431790 5342870)</span></span>
-<span><span class="co">#&gt; 775 20.80     95.1 5.07 POINT (436230 5340870)</span></span>
-<span><span class="co">#&gt; 612 14.70     83.7 4.12 POINT (431930 5340130)</span></span>
-<span><span class="co">#&gt; 565 21.90     16.6 6.85 POINT (435050 5338990)</span></span>
-<span><span class="co">#&gt; 732 15.20     88.1 4.40 POINT (435910 5339870)</span></span>
-<span><span class="co">#&gt; 93  19.40     95.9 5.39 POINT (438350 5339970)</span></span>
-<span><span class="co">#&gt; 349 11.50     71.2 2.65 POINT (432910 5342830)</span></span>
-<span><span class="co">#&gt; 564  6.44     79.4 1.30 POINT (432950 5343190)</span></span>
-<span><span class="co">#&gt; 158 19.70     87.5 4.64 POINT (435110 5338550)</span></span>
-<span><span class="co">#&gt; 527 13.20     93.0 3.07 POINT (437530 5342090)</span></span></code></pre>
+<span><span class="co">#&gt; 767 14.00     86.4 4.09 POINT (434810 5339010)</span></span>
+<span><span class="co">#&gt; 150  7.32     63.4 1.84 POINT (432770 5341710)</span></span>
+<span><span class="co">#&gt; 483  9.40     80.3 2.43 POINT (437810 5340570)</span></span>
+<span><span class="co">#&gt; 33   7.60     69.6 1.87 POINT (436790 5339410)</span></span>
+<span><span class="co">#&gt; 793 16.70      9.1 5.30 POINT (435250 5338670)</span></span>
+<span><span class="co">#&gt; 562 20.60     79.3 5.34 POINT (438430 5341350)</span></span>
+<span><span class="co">#&gt; 849 15.20     93.4 2.75 POINT (434110 5337970)</span></span>
+<span><span class="co">#&gt; 490  8.00     98.2 1.62 POINT (436730 5337950)</span></span>
+<span><span class="co">#&gt; 597 11.70     25.3 3.43 POINT (431850 5342690)</span></span>
+<span><span class="co">#&gt; 320 23.70     89.3 7.13 POINT (433930 5340250)</span></span></code></pre>
 <p>The sample distribution again mimics the population distribution
 quite well! Now lets try using a cost variable to constrain the
 sub-sample.</p>
@@ -932,20 +932,20 @@ sub-sample.</p>
 <pre><code><span><span class="co">#&gt; Simple feature collection with 300 features and 4 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 431110 ymin: 5337710 xmax: 438530 ymax: 5343230</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 431170 ymin: 5337710 xmax: 438550 ymax: 5343230</span></span>
 <span><span class="co">#&gt; CRS:           +proj=utm +zone=17 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;      zq90 pzabove2  zsd dist2access               geometry</span></span>
-<span><span class="co">#&gt; 850  8.01     33.6 1.93    38.18888 POINT (434430 5341290)</span></span>
-<span><span class="co">#&gt; 838 20.90     91.5 3.92   186.82412 POINT (432910 5338730)</span></span>
-<span><span class="co">#&gt; 333 12.50     95.3 3.22   113.55590 POINT (433810 5342830)</span></span>
-<span><span class="co">#&gt; 216 22.80     92.0 5.86   239.38097 POINT (432970 5338770)</span></span>
-<span><span class="co">#&gt; 823  6.60     38.4 1.60   174.65181 POINT (437670 5343150)</span></span>
-<span><span class="co">#&gt; 459  9.25     59.3 2.37   294.22198 POINT (437630 5338590)</span></span>
-<span><span class="co">#&gt; 452 14.40     80.6 3.74   142.78095 POINT (435430 5338230)</span></span>
-<span><span class="co">#&gt; 319 19.20     74.5 4.82   224.25636 POINT (435370 5341890)</span></span>
-<span><span class="co">#&gt; 35  19.60     87.1 5.46   124.89421 POINT (432330 5341970)</span></span>
-<span><span class="co">#&gt; 702 20.30     79.0 6.24   226.18226 POINT (431370 5342870)</span></span></code></pre>
+<span><span class="co">#&gt; 853 18.70     91.5 3.40   158.25181 POINT (437150 5341530)</span></span>
+<span><span class="co">#&gt; 531 13.60     97.1 1.97   142.19508 POINT (436530 5341370)</span></span>
+<span><span class="co">#&gt; 235 15.70     90.4 3.61   806.75510 POINT (431550 5341650)</span></span>
+<span><span class="co">#&gt; 517 17.90     95.8 3.72   185.99738 POINT (434930 5339990)</span></span>
+<span><span class="co">#&gt; 548 18.60     76.8 4.79   286.83467 POINT (433490 5341790)</span></span>
+<span><span class="co">#&gt; 247 18.80     92.5 5.18    78.71113 POINT (432870 5339730)</span></span>
+<span><span class="co">#&gt; 460 27.10     89.2 7.18   224.03575 POINT (432370 5338770)</span></span>
+<span><span class="co">#&gt; 846 16.40     78.5 4.16   176.35335 POINT (433470 5340550)</span></span>
+<span><span class="co">#&gt; 897  3.28     22.5 1.71   154.17998 POINT (438450 5338310)</span></span>
+<span><span class="co">#&gt; 182 20.10     92.4 4.53    91.15905 POINT (432830 5339250)</span></span></code></pre>
 <p>Finally, should the user wish to further constrain the sample based
 on <code>access</code> like other sampling approaches in
 <code>sgsR</code> that is also possible.</p>
@@ -967,20 +967,20 @@ on <code>access</code> like other sampling approaches in
 <pre><code><span><span class="co">#&gt; Simple feature collection with 300 features and 4 fields</span></span>
 <span><span class="co">#&gt; Geometry type: POINT</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 431110 ymin: 5337710 xmax: 438530 ymax: 5343230</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: 431430 ymin: 5337730 xmax: 438510 ymax: 5343230</span></span>
 <span><span class="co">#&gt; Projected CRS: UTM_Zone_17_Northern_Hemisphere</span></span>
 <span><span class="co">#&gt; First 10 features:</span></span>
 <span><span class="co">#&gt;      zq90 pzabove2  zsd dist2access               geometry</span></span>
-<span><span class="co">#&gt; 231  6.94     11.3 1.97   114.74818 POINT (433010 5341690)</span></span>
-<span><span class="co">#&gt; 217 19.80     79.9 5.33    62.46923 POINT (433510 5343050)</span></span>
-<span><span class="co">#&gt; 227  5.69     51.6 1.34   124.07564 POINT (434870 5341970)</span></span>
-<span><span class="co">#&gt; 414 11.10     66.7 3.01    56.89165 POINT (431110 5340550)</span></span>
-<span><span class="co">#&gt; 141  6.90     54.4 1.99   129.09362 POINT (432810 5343010)</span></span>
-<span><span class="co">#&gt; 370 17.50     94.8 3.65    96.34562 POINT (431790 5337850)</span></span>
-<span><span class="co">#&gt; 310 22.10     82.9 6.91   144.16373 POINT (436390 5340210)</span></span>
-<span><span class="co">#&gt; 99  13.50     89.5 3.13   112.19848 POINT (432350 5340090)</span></span>
-<span><span class="co">#&gt; 45  15.00     96.3 3.01   103.75291 POINT (435290 5337770)</span></span>
-<span><span class="co">#&gt; 93  21.00     87.9 6.93    86.26224 POINT (435490 5340210)</span></span></code></pre>
+<span><span class="co">#&gt; 111 13.00     63.3 4.07    96.06722 POINT (434410 5338210)</span></span>
+<span><span class="co">#&gt; 353 12.30     36.6 3.53   133.98021 POINT (435370 5338670)</span></span>
+<span><span class="co">#&gt; 457 21.30     30.3 5.97    83.61908 POINT (434710 5339730)</span></span>
+<span><span class="co">#&gt; 387  7.62     84.8 2.13   114.54188 POINT (435150 5342870)</span></span>
+<span><span class="co">#&gt; 243 14.90     84.0 3.04   114.55348 POINT (432210 5339410)</span></span>
+<span><span class="co">#&gt; 179  5.34     75.0 1.12    77.81150 POINT (434770 5341290)</span></span>
+<span><span class="co">#&gt; 272 11.80     55.0 3.28   156.93033 POINT (435230 5342450)</span></span>
+<span><span class="co">#&gt; 230  7.04     45.2 1.75   104.27699 POINT (436090 5342350)</span></span>
+<span><span class="co">#&gt; 322 13.30     94.7 3.33    77.39832 POINT (435330 5340570)</span></span>
+<span><span class="co">#&gt; 311 22.00     82.6 6.55    91.17741 POINT (435650 5340090)</span></span></code></pre>
 <div class="infobox caution">
 <p><strong>TIP!</strong></p>
 <p>The greater constraints we add to sampling, the less likely we will
