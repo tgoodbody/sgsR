@@ -217,6 +217,12 @@ sample_systematic <- function(raster,
       dplyr::mutate(overlap = lengths(sf::st_intersects(., rasterext))) %>%
       dplyr::filter(overlap == 1)
     
+    #--- check to make sure that samples intersect raster extent (cellsize check) ---#
+    
+    if(is.null(nrow(samples)) || nrow(samples) == 0){
+      stop("No samples intersect with 'raster'. Ensure 'cellsize' makes sense.", call. = FALSE)
+    } 
+    
     samples <- samples %>%
       extract_metrics(mraster = raster[[1]], existing = ., quiet = TRUE) %>%
       stats::na.omit() %>%
@@ -283,6 +289,11 @@ sample_systematic <- function(raster,
         dplyr::mutate(overlap = lengths(sf::st_intersects(., rasterext))) %>%
         dplyr::filter(overlap == 1)
       
+      #--- check to make sure that samples intersect raster extent (cellsize check) ---#
+      
+      if(is.null(nrow(samples)) || nrow(samples) == 0){
+        stop("No samples intersect with 'raster'. Ensure 'cellsize' makes sense.", call. = FALSE)
+      } 
       
       samples <- samples %>%
         extract_metrics(mraster = raster[[1]], existing = ., quiet = TRUE) %>%
@@ -296,6 +307,12 @@ sample_systematic <- function(raster,
         dplyr::rename(geometry = x) %>%
         dplyr::mutate(overlap = lengths(sf::st_intersects(., rasterext))) %>%
         dplyr::filter(overlap == 1)
+      
+      #--- check to make sure that samples intersect raster extent (cellsize check) ---#
+      
+      if(is.null(nrow(samples)) || nrow(samples) == 0){
+        stop("No samples intersect with 'raster'. Ensure 'cellsize' makes sense.", call. = FALSE)
+      } 
 
       samples <- samples %>%
         extract_metrics(mraster = raster[[1]], existing = ., quiet = TRUE) %>%
@@ -309,6 +326,12 @@ sample_systematic <- function(raster,
         dplyr::rename(geometry = x) %>%
         dplyr::mutate(overlap = lengths(sf::st_intersects(., rasterext))) %>%
         dplyr::filter(overlap == 1)
+      
+      #--- check to make sure that samples intersect raster extent (cellsize check) ---#
+      
+      if(is.null(nrow(samples)) || nrow(samples) == 0){
+        stop("No samples intersect with 'raster'. Ensure 'cellsize' makes sense.", call. = FALSE)
+      } 
 
       samples <- samples %>%
         extract_metrics(mraster = raster[[1]], existing = ., quiet = TRUE) %>%
