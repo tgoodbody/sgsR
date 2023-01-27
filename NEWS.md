@@ -2,7 +2,7 @@
 
 `fixed` - `sample_srs() / sample_strat(method = "random")` - First sample unit was always duplicated From Tommaso Trotto.
 
-`added` - `plot_scatter()` - Scatter plot visualizing relationship between 2 `mraster` metrics with `existing` samples superimposed. 
+`added` - `plot_scatter()` - Internal function. Scatter plot visualizing relationship between 2 `mraster` metrics with `existing` samples superimposed. 
 
 # sgsR 1.3.33
 
