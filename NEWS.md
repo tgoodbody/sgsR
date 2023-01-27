@@ -1,3 +1,9 @@
+# sgsR 1.3.4
+
+`fixed` - `sample_srs() / sample_strat(method = "random")` - First sample unit was always duplicated From Tommaso Trotto.
+
+`added` - `plot_scatter()` - Scatter plot visualizing relationship between 2 `mraster` metrics with `existing` samples superimposed. 
+
 # sgsR 1.3.33
 
 `fixed` - `sample_strat()` - `srasters` with categorical values were crashing the algorithm due to inability to combine facter and non-factor values from Evan Muise.
