@@ -70,6 +70,8 @@ plot_scatter <- function(mraster,
                          reverse = FALSE,
                          samp = 0.01) {
   
+  .data <- NULL
+  
   #--- Error management ---#
   if (!inherits(mraster, "SpatRaster")) {
     stop("'mraster' must be type SpatRaster.", call. = FALSE)
