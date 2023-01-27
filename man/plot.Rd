@@ -35,5 +35,8 @@ Class Plot
 
 Scatter Plot
 }
+\note{
+Population in dark grey and samples in red.
+}
 \concept{plot}
 \keyword{internal}

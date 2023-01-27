@@ -4,8 +4,6 @@
 #' @inheritParams extract_metrics
 #' @param dfc data.frame. Values for mraster and mraster2
 #' @param coordsgrps List. Cartesian coordinates of each strata
-#' @param samp Numeric. Determines proportion of cells to plot
-#' @param reverse Logical. Reverse x and y axis
 #' @family plot
 #' @name plot
 #' @return Scatter plot of available raster cells coloured and delineated by stratum.
@@ -63,6 +61,9 @@ classPlot <- function(dfc,
 #' @family plot
 #' @rdname plot
 #' @keywords internal
+#' @param samp Numeric. Determines proportion of cells to plot
+#' @param reverse Logical. Reverse x and y axis
+#' @note Population in dark grey and samples in red.
 #' @export
 
 plot_scatter <- function(mraster,
@@ -121,14 +122,14 @@ plot_scatter <- function(mraster,
   
   if(isFALSE(reverse)){
   p <- ggplot2::ggplot(data = vals, mapping = ggplot2::aes(x = .data[[x]], y = .data[[y]])) +
-    ggplot2::geom_point(alpha = 0.3, color = "#333333") +
+    ggplot2::geom_point(color = "#333333") +
     ggplot2::geom_point(data = samples, color = "red") +
     ggplot2::theme_bw() +
     ggplot2::theme(legend.position = "none")
   
   } else {
     p <- ggplot2::ggplot(data = vals, mapping = ggplot2::aes(x = .data[[y]], y = .data[[x]])) +
-      ggplot2::geom_point(alpha = 0.3, color = "#333333") +
+      ggplot2::geom_point(color = "#333333") +
       ggplot2::geom_point(data = samples, color = "red") +
       ggplot2::theme_bw() +
       ggplot2::theme(legend.position = "none")
