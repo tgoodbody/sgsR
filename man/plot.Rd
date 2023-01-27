@@ -3,9 +3,12 @@
 \name{plot}
 \alias{plot}
 \alias{classPlot}
+\alias{plot_scatter}
 \title{Plot}
 \usage{
 classPlot(dfc, coordsgrps, mraster, mraster2, samp = 0.01)
+
+plot_scatter(mraster, existing, reverse = FALSE, samp = 0.01)
 }
 \arguments{
 \item{dfc}{data.frame. Values for mraster and mraster2}
@@ -17,6 +20,10 @@ classPlot(dfc, coordsgrps, mraster, mraster2, samp = 0.01)
 \item{mraster2}{Spatraster. Secondary covariate raster to stratify.}
 
 \item{samp}{Numeric. Determines proportion of cells to plot}
+
+\item{existing}{sf 'POINT'.  Existing plot network.}
+
+\item{reverse}{Logical. Reverse x and y axis}
 }
 \value{
 Scatter plot of available raster cells coloured and delineated by stratum.
@@ -25,6 +32,8 @@ Scatter plot of available raster cells coloured and delineated by stratum.
 Plot
 
 Class Plot
+
+Scatter Plot
 }
 \concept{plot}
 \keyword{internal}
