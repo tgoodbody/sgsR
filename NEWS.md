@@ -1,6 +1,14 @@
-# sgsR 1.3.41
+# sgsR 1.4.0
 
-`enhanced` - `strat_breaks()` - Vectorized function to allow for any number of input mraster layers and a corresponding number of breaks vectors (as list in respective order as `mraster` layers). Removed `mraster2` & `breaks2`. Users can now supply an `mraster` with as many layers as they wish. Added `stack` to allow output of all vectorized stratifications aswell as the final `strata` output `sraster`.
+`enhanced` - `strat_breaks()` - Vectorized function to allow for any number of input mraster layers and a corresponding number of breaks vectors (as list in respective order as `mraster` layers). Removed `mraster2` & `breaks2`. Users can now supply an `mraster` with as many layers as they wish. Added `map` to allow for creating a combined (mapped) stratification output (`strata`). Internal function `calculate_breaks()` was added that facilitates vectorization.
+
+`enhanced` - `strat_quantiles()` - Vectorized function to allow for any number of input mraster layers and a corresponding number of breaks vectors (as list in respective order as `mraster` layers). Removed `mraster2` & `nStrata2`. Users can now supply an `mraster` with as many layers as they wish along side `nStrata` as a list with `length(nStrata) == terra::nlyr(mraster)`. `nStrata` can be either a scalar integer representing the number of desired output strata, or a numeric vector of probabilities between 0-1 demarcating quantile break points. The `nStrata` list can be a mix of these (e.g. `nStrata = list(c(0.1,0.8,1), 4, 9)` where `mraster` would have 3 layers) to allow users to define both explicit quantile breaks or a desired strata number that is converted to quantiles breaks internally. Added `map` to allow for creating a combined (mapped) stratification output (`strata`). Internal functions `calculate_quantile_breaks() / quantile_breaks_integer() / quantile_breaks()` were added that facilitate vectorization.
+
+`enhanced` - `strat_map()` - Vectorized function to allow for any number of input mraster layers and a corresponding number of breaks vectors (as list in respective order as `mraster` layers). Removed `raster2`. Users can now supply an `sraster` with as many layers as they wish. Thank you, Tommaso Trotto.
+
+`enhanced` - Updated vignettes and documentation to account for vectorized functionality of the above functions.
+
+`enhanced` - `plot_scatter()` - now visualizes with `viridis` colour scheme.
 
 # sgsR 1.3.4
 

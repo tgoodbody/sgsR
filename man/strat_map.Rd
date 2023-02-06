@@ -2,11 +2,10 @@
 % Please edit documentation in R/strat_map.R
 \name{strat_map}
 \alias{strat_map}
-\title{Map 2 stratified rasters}
+\title{Map a raster stack of a list of rasters}
 \usage{
 strat_map(
   sraster,
-  sraster2,
   stack = FALSE,
   filename = NULL,
   overwrite = FALSE,
@@ -15,12 +14,11 @@ strat_map(
 )
 }
 \arguments{
-\item{sraster}{spatRaster. Primary stratification raster.}
+\item{sraster}{spatRaster or list. Stratification raster stack or list of rasters. If \code{sraster}
+is of class \code{list}, then it is internally converted into a raster stack.}
 
-\item{sraster2}{spatRaster. Secondary stratification raster.}
-
-\item{stack}{Logical. Default = \code{FALSE}. If \code{TRUE}, output raster will be
-3 layers: \code{strata, strata2, stratamapped}.}
+\item{stack}{Logical. Default = \code{FALSE}. If \code{TRUE}, inputs and output will be stacked:
+\code{strata_1, strata_2, ..., strata}.}
 
 \item{filename}{Character. Path to write stratified raster to disc.}
 
@@ -42,18 +40,20 @@ Map stratified rasters to a combined stratification.
 \section{Mapping}{
 
 The mapping algorithm will take the stratification from \code{sraster} and combine it with
-overlying strata values in \code{sraster2}. This will result in a \code{stratamapped} attribute
-where the values from both inputs are combined.
+overlying strata values across all layers. This will result in a \code{strata} attribute
+where the values from all inputs are combined.
 
 i.e.
 
-If \code{strata = 1} and \code{strata2 = 1} then \code{stratamapped = 11}.
+If \code{strata_1 = 1} and \code{strata_2 = 1} then \code{strata = 11}.
 
-If \code{strata = 2} and \code{strata2 = 14} then \code{stratamapped = 214}.
+If \code{strata_1 = 2} and \code{strata_2 = 14} then \code{strata = 214}.
+
+If \code{strata_1 = "A"} and \code{strata_2 = 14} then \code{strata = "A14"}.
 }
 
 \examples{
-#--- load input metrics raster ---#
+#--- load input metrics rasters ---#
 raster <- system.file("extdata", "sraster.tif", package = "sgsR")
 sraster <- terra::rast(raster)
 
@@ -78,15 +78,16 @@ srasterfri <- strat_poly(
   raster = sraster
 )
 
-#--- map srasters ---#
+#--- map srasters with raster stack ---#
+stack <- c(srasterfri, sraster)
 strat_map(
-  sraster = srasterfri,
-  sraster2 = sraster
+  sraster = stack
 )
 
+#--- map sraster with list of rasters ---#
+rast_list <- list(srasterfri, sraster)
 strat_map(
-  sraster = srasterfri,
-  sraster2 = sraster,
+  sraster = rast_list,
   stack = TRUE,
   details = TRUE
 )
@@ -99,6 +100,6 @@ Other stratify functions:
 \code{\link{strat_quantiles}()}
 }
 \author{
-Tristan R.H. Goodbody, Robert Hijmans
+Tristan R.H. Goodbody, Tommaso Trotto, Robert Hijmans
 }
 \concept{stratify functions}

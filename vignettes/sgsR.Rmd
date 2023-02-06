@@ -41,7 +41,7 @@ Additional helper functions that `calculate` varying descriptive / summary stati
 
 ```{r echo=FALSE}
 
-p <- c("`mraster`", "`sraster`", "`access`", "`existing`", "plot")
+p <- c("`mraster`", "`sraster`", "`access`", "`existing`", "`plot`")
 
 d <- c("Metric raster(s)", "Stratified raster", "Linear vectors representing access routes", "Existing sample units", "Visually displays raster and samples")
 

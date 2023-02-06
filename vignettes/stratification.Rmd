@@ -64,7 +64,7 @@ a <- c("`strat_kmeans()`","`strat_quantiles()`","`strat_breaks()`","`strat_poly(
 
 d <- c("kmeans", "Quantiles", "User-defined breaks", "Polygons", "Maps (combines) `srasters`")
 
-s <- c("Unsupervised", "Unsupervised", "Supervised", "Supervised", "Unsupervised")
+s <- c("Unsupervised", "Either", "Supervised", "Supervised", "Unsupervised")
 
 urls <- c("#kmeans","#quantiles","#breaks","#poly","#map")
 
@@ -109,9 +109,8 @@ strat_kmeans(mraster = mraster, # input
 
 ## `strat_quantiles` {#quantiles .unnumbered}
 
-The `strat_quantiles()` algorithm divides data into equally sized strata (`nStrata`). Similar to `strat_breaks()` users can perform stratification on a single `mraster` or also input a secondary `mraster` (`mraster2`) and specify the desired number of strata (`nStrata2`). 
+The `strat_quantiles()` algorithm divides data into equally sized strata (`nStrata`). Similar to `strat_breaks()`, this function is vectorized to allow users to input any number of metrics to stratify (`mraster`) so long as `nStrata` is a list containing a matching number of numeric objects. `nStrata` can be either `nStrata` can be either a scalar integer representing the number of desired output strata, or a numeric vector of probabilities between 0-1 demarcating quantile break points. The `nStrata` list can be a mix of these (e.g. `nStrata = list(c(0.1,0.8,1), 4, 9)` where `mraster` would have 3 layers) to allow users to define both explicit quantile breaks or a desired strata number that is converted to quantiles breaks internally. Specifying `map = TRUE` will combine (map) stratifications of all input `mraster` layers to produce a combined stratified output.
 
-Note that the dual stratification output will result in a product of $nStrata * nStrata2$.
 
 ```{r,warning=F,message=F}
 #--- perform quantiles stratification ---#
@@ -119,16 +118,17 @@ strat_quantiles(mraster = mraster$zq90,
                 nStrata = 6,
                 plot = TRUE)
 
-#--- dual stratification - will produce 12 output strata ---#
-strat_quantiles(mraster = mraster$zq90, 
-                mraster2 = mraster$zsd,
-                nStrata = 3, 
-                nStrata2 = 4)
+#--- vectorized ---#
+strat_quantiles(
+  mraster = mraster[[1:2]], # two metric layers
+  nStrata = list(c(0.2,0.4,0.8), 3), # list with two objects - 1 probability breaks, 1 scalar integer
+  plot = TRUE, # plot output srasters
+  map = TRUE) # combine stratifications to a mapped output
 ```
 
 ## `strat_breaks` {#breaks .unnumbered}
 
-`strat_breaks()` stratifies data based on user-defined breaks in `mraster`. This algorithm is vectorized. The user can provide an `mraster` with as many layers as they wish as long as the `breaks` paramters is list of equal length comprised of numeric vectors. 
+`strat_breaks()` stratifies data based on user-defined breaks in `mraster`. This algorithm is vectorized. The user can provide an `mraster` with as many layers as they wish as long as the `breaks` parameters is a list of equal length comprised of numeric vectors. Like `strat_quantiles()` this function has the `map` parameter to combine input stratifications to generate a mapped output. 
 
 ```{r,warning=F,message=F}
 #--- perform stratification using user-defined breaks ---#
@@ -151,18 +151,19 @@ Once the breaks are created, we can use them as input into the `strat_breaks()` 
 
 ```{r,warning=F,message=F}
 #--- stratify on 1 metric only ---#
-strat_breaks(mraster = mraster$pzabove2,
-             breaks = br.pz2,
-             plot = TRUE)
+strat_breaks(mraster = mraster$pzabove2, # single raster
+             breaks = br.pz2, # single set of breaks
+             plot = TRUE) # plot output
 ```
 
 ```{r,warning=F,message=F}
-#--- stratify on 1 metric only ---#
-strat_breaks(mraster = mraster[[1:2]],
-             breaks = list(br.zq90,br.pz2),
-             stack = TRUE,
-             plot = TRUE)
+#--- vectorized ---#
+strat_breaks(mraster = mraster[[1:2]], # two metrics
+             breaks = list(br.zq90,br.pz2), # list of two breaks vectors
+             map = TRUE, # map final output
+             plot = TRUE) # plot outputs
 ```   
+
 ## `strat_poly` {#poly .unnumbered}
 
 Forest inventories with polygon coverages summarizing forest attributes such as species, management type, or photo-interpreted estimates of volume can be stratified using `strat_poly()`. 
@@ -228,28 +229,30 @@ strat_poly(poly = fri,
 
 ## `strat_map` {#map .unnumbered}
 
-Users may wish to pair stratifications. `strat_map()` faciliates two stratifications of matching extent and resolution to be mapped against one another to generate unique strata based on stratum pairings. 
+Users may wish to pair stratifications. `strat_map()` facilitates vectorized mapping of `sraster` layers to generate a unique mapped strata output based on stratum pairings. The `stack` parameter will output a multilayer `sraster` with the inputs (`strata_1, strata_2 ...`) and mapped output (`strata`).
 
 This facilitates the user to generate stratifications detailing quantitative and qualitative measures such as structure by species, or multiple qualitative measures such as species by management type.
 
-The total number of classes of the output `sraster` is multiplicative of the number of input strata. For example, if the input `sraster` has 3 strata and `sraster2` has 4 strata, then the output of `strat_map()` will be 12 strata.
+```{r}
+#--- stack srasters together ---#
 
-There may be occasions where stratum do not interact spatially, this will result in fewer output strata. 
+srasters <- c(srasterpoly, sraster)
+
+plot(srasters)
+```
 
 ```{r}
 #--- map srasters ---#
-strat_map(sraster = srasterpoly, # strat_poly 3 class stratification
-          sraster2 = sraster, # strat_kmeans 4 class stratification
+strat_map(sraster = srasters, # two layer sraster
           plot = TRUE)
 
 ```
 
-The convention for the numeric value of the output strata is the concatenation (merging) of `sraster` strata and `sraster2` strata. Check `$lookUP` for a clear depiction of this step. 
+The convention for the numeric value of the output strata is the concatenation (merging) of `sraster` layers. Check `$lookUP` for a clear depiction of this step. 
 
 ```{r}
-strat_map(sraster = srasterpoly, # strat_poly 3 class stratification
-          sraster2 = sraster, # strat_poly 3 class stratification
-          stack = TRUE, # stack input and output strata into multi layer output raster
+strat_map(sraster = srasters, # strat_poly 3 class stratification
+          stack = TRUE, # output stacked input (strata_1, strata_2) and output (strata) layers
           details = TRUE, # provide additional details
           plot = TRUE) # plot output
 ```

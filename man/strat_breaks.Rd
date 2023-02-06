@@ -7,7 +7,7 @@
 strat_breaks(
   mraster,
   breaks,
-  stack = FALSE,
+  map = FALSE,
   plot = FALSE,
   details = FALSE,
   filename = NULL,
@@ -18,10 +18,12 @@ strat_breaks(
 \item{mraster}{Spatraster. Raster to stratify. Layers in \code{mraster} must match the number of
 \code{breaks} vectors provided.}
 
-\item{breaks}{Numeric. Vector of breakpoints for each layer of \code{mraster}. Must be a list
-if \code{mraster} has multiple layers.}
+\item{breaks}{Numeric. Vector of breakpoints for each layer of \code{mraster}. If \code{mraster} has multiple layers,
+\code{breaks} must be a list with an equal number of objects.}
 
-\item{stack}{Logical. Stack individual stratified layers and combined stratification.}
+\item{map}{Logical. Map individual stratified layers to a combined stratification. Will output a multi-layer
+\code{SpatRaster} with individual stratifications for each \code{mraster} layer and an additional mapped stratification
+ named \code{"strata"}.}
 
 \item{plot}{Logical. Plots output strata raster and visualized
 strata with boundary dividers.}
@@ -59,15 +61,14 @@ br.pz2 <- c(20, 40, 60, 80)
 
 strat_breaks(
   mraster = mr$zq90,
-  breaks = br.zq90,
-  plot = TRUE,
-  details = TRUE
+  breaks = br.zq90
 )
 
 
 strat_breaks(
   mraster = mr[[1:2]],
   breaks = list(br.zq90, br.pz2),
+  details = TRUE
 )
 }
 \seealso{

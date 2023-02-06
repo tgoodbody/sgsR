@@ -6,12 +6,10 @@
 \usage{
 strat_quantiles(
   mraster,
-  mraster2 = NULL,
   nStrata,
-  nStrata2 = NULL,
+  map = FALSE,
   plot = FALSE,
   details = FALSE,
-  samp = 0.2,
   filename = NULL,
   overwrite = FALSE
 )
@@ -19,9 +17,13 @@ strat_quantiles(
 \arguments{
 \item{mraster}{spatRaster. ALS metrics raster.}
 
-\item{nStrata}{Numeric. Number of quantiles to stratify \code{mraster}.}
+\item{nStrata}{Numeric. A positive integer representing the number of desired classes 
+or a numeric vector of probabilities with values between \code{0-1}. If \code{mraster} has multiple layers,
+\code{nStrata} must be a list with an equal number of objects.}
 
-\item{nStrata2}{Numeric. Number of quantiles to stratify \code{mraster2}.}
+\item{map}{Logical. Map individual stratified layers to a combined stratification. Will output a multi-layer
+\code{SpatRaster} with individual stratifications for each \code{mraster} layer and an additional mapped stratification
+ named \code{"strata"}.}
 
 \item{plot}{Logical. Plots output strata raster and visualized
 strata with boundary dividers.}
@@ -29,9 +31,6 @@ strata with boundary dividers.}
 \item{details}{Logical. If \code{FALSE} (default) output is only
 stratification raster. If \code{TRUE} return a list where \code{$details} is additional 
 stratification information and \code{$raster} is the output stratification spatRaster.}
-
-\item{samp}{Numeric. Determines proportion of cells to plot in scatterplot (default = \code{0.2}).
-Lower values reduce visualization time.}
 
 \item{filename}{Character. Path to write stratified raster to disc.}
 
@@ -42,10 +41,10 @@ Returns an output stratification \code{spatRaster} or a list when \code{details 
 
 When a list is returned:
 \enumerate{
-\item \code{details} generates is a strata lookUp table for the stratification.
+\item \code{details} lookUp table for stratification(s).
 \item \code{raster} is a stratified \code{spatRaster} based on quantiles
 \item \code{plot} is a \code{ggplot} histogram / scatter plot object (depends on whether metric2 was supplied).
-Histogram shows distribution and break points while scatter plot shows colour coded and strata boundaries.
+Histogram shows distribution and break points.
 }
 }
 \description{
@@ -58,16 +57,15 @@ mr <- terra::rast(r)
 
 strat_quantiles(
   mraster = mr$zq90,
-  nStrata = 4,
-  plot = TRUE
+  nStrata = 4
 )
 
 strat_quantiles(
-  mraster = mr$zq90,
-  mraster2 = mr$zsd,
-  nStrata = 3,
-  nStrata2 = 4
+  mraster = mr[[1:2]],
+  nStrata = list(c(0.2,0.4,0.8), 3),
+  map = TRUE
 )
+  
 }
 \seealso{
 Other stratify functions: 

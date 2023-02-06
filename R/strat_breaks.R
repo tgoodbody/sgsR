@@ -7,9 +7,11 @@
 #' @inheritParams sample_systematic
 #' @param mraster Spatraster. Raster to stratify. Layers in \code{mraster} must match the number of
 #' \code{breaks} vectors provided.
-#' @param breaks Numeric. Vector of breakpoints for each layer of \code{mraster}. Must be a list
-#' if \code{mraster} has multiple layers.
-#' @param stack Logical. Stack individual stratified layers and combined stratification. 
+#' @param breaks Numeric. Vector of breakpoints for each layer of \code{mraster}. If \code{mraster} has multiple layers,
+#' \code{breaks} must be a list with an equal number of objects.
+#' @param map Logical. Map individual stratified layers to a combined stratification. Will output a multi-layer
+#' \code{SpatRaster} with individual stratifications for each \code{mraster} layer and an additional mapped stratification
+#'  named \code{"strata"}.
 #' @param filename Character. Path to write stratified raster to disc.
 #' @param overwrite Logical. Specify whether \code{filename} should be overwritten on disc.
 #'
@@ -34,15 +36,14 @@
 #'
 #' strat_breaks(
 #'   mraster = mr$zq90,
-#'   breaks = br.zq90,
-#'   plot = TRUE,
-#'   details = TRUE
+#'   breaks = br.zq90
 #' )
 #' 
 #'
 #' strat_breaks(
 #'   mraster = mr[[1:2]],
 #'   breaks = list(br.zq90, br.pz2),
+#'   details = TRUE
 #' )
 #' @author Tristan R.H. Goodbody
 #'
@@ -50,7 +51,7 @@
 
 strat_breaks <- function(mraster,
                          breaks,
-                         stack = FALSE,
+                         map = FALSE,
                          plot = FALSE,
                          details = FALSE,
                          filename = NULL,
@@ -58,7 +59,7 @@ strat_breaks <- function(mraster,
 ) {
     
   #--- Set global vars ---#
-  value <- val <- NULL
+  strata <- x <- y <- value <- val <- NULL
   
   #--- Error management ---#
     
@@ -70,8 +71,8 @@ strat_breaks <- function(mraster,
     stop("'breaks' must be type numeric.", call. = FALSE)
   }
   
-  if (!is.logical(stack)) {
-    stop("'stack' must be type logical.", call. = FALSE)
+  if (!is.logical(map)) {
+    stop("'map' must be type logical.", call. = FALSE)
   }
   
   if (!is.logical(plot)) {
@@ -82,14 +83,17 @@ strat_breaks <- function(mraster,
     stop("'details' must be type logical.", call. = FALSE)
   }
   
+  #--- get number of layers ---#
+  nlayer <- terra::nlyr(mraster)
+  
   #--- if there is only 1 band in mraster use it as default ---#
-  if(terra::nlyr(mraster) > 1){
+  if(nlayer > 1){
     
-    if(!is.list(breaks)){
+    if(!inherits(breaks, "list")){
       stop("`breaks` must be a list of numeric vectors of the same length as `mraster`.", call. = FALSE)
     }
     
-    if (terra::nlyr(mraster) != length(breaks)) {
+    if (nlayer != length(breaks)) {
       stop("`mraster` and `breaks` must have the same number of layers & objects.", call. = FALSE)
     }
     
@@ -120,29 +124,49 @@ strat_breaks <- function(mraster,
   mrl <- as.list(mraster)
   
   #--- vectorize vect_breaks to determine raster break points ---#
-  rstack <- terra::rast(mapply(vect_breaks,mraster = mrl, breaks = breaks))
+  rstack <- terra::rast(mapply(calculate_breaks, mraster = mrl, breaks = breaks))
   
   #--- rename to append raster metric name ---#
   names(rstack) <- paste0("strata_",names(mraster))
   
-  #--- establish newly formed unique class ---#
-  breaks_c <- terra::as.data.frame(rstack, xy = TRUE)%>%
-    dplyr::group_by(dplyr::across(tidyr::starts_with("strata"))) %>%
-    dplyr::mutate(class = dplyr::cur_group_id()) %>%
-    dplyr::ungroup()
-  
-  idx <- terra::cellFromXY(mraster[[1]], cbind(breaks_c$x, breaks_c$y))
-  
-  rcl <- mraster[[1]]
-  #--- convert back to original extent ---#
-  rcl[idx] <- breaks_c$class
-  
-  names(rcl) <- "strata"
-  
-  if(isTRUE(stack)){
+  if(nlayer > 1){
+    #--- establish newly formed unique strata ---#
+    breaks_c <- terra::as.data.frame(rstack, xy = TRUE)%>%
+      dplyr::group_by(dplyr::across(tidyr::starts_with("strata"))) %>%
+      dplyr::mutate(strata = dplyr::cur_group_id()) %>%
+      dplyr::ungroup()
     
-    rcl <- c(rstack,rcl)
+    lookUp <- dplyr::arrange(breaks_c, strata) %>% 
+      dplyr::select(-x,-y) %>% 
+      unique()
     
+    idx <- terra::cellFromXY(mraster[[1]], cbind(breaks_c$x, breaks_c$y))
+    
+    rcl <- mraster[[1]]
+    #--- convert back to original extent ---#
+    rcl[idx] <- breaks_c$strata
+  
+    names(rcl) <- "strata"
+    
+    if(isTRUE(map)){
+      
+      message("Mapping stratifications.")
+      
+      rcl <- c(rstack,rcl)
+      
+    } else {
+      
+      rcl <- rstack
+      
+      names(rcl) <- rep("strata",nlayer)
+      
+    }
+    
+  } else {
+    
+    rcl <- rstack
+    
+    names(rcl) <- "strata"
   }
   
   if (isTRUE(plot)) {
@@ -162,7 +186,7 @@ strat_breaks <- function(mraster,
     
     #--- set colour palette ---#
     
-    terra::plot(rcl, main = "User break defined strata")
+    terra::plot(rcl)
   }
   
   #--- write file to disc ---#
@@ -175,12 +199,10 @@ strat_breaks <- function(mraster,
   #--- Output based on 'details' to return raster alone or list with details ---#
   
   if (isTRUE(details)) {
-    
-    names(breaks) <- names(mraster)
-    
+
     #--- output break points raster with associated breaks ---#
     breaks_rcl <- list(
-      breaks = breaks,
+      breaks = if (exists("lookUp")) lookUp,
       raster = rcl,
       plot = if (exists("p")) p
     )
@@ -194,21 +216,3 @@ strat_breaks <- function(mraster,
   }
 }
 
-#--- vectorization of layers ---#
-vect_breaks <- function(mraster, breaks){
-  
-  from <- NULL
-  
-  breaks <- data.frame(from = c(-Inf, breaks, Inf)) %>%
-    dplyr::mutate(
-      to = dplyr::lead(from),
-      becomes = seq(1:length(from))
-    ) %>%
-    stats::na.omit() %>%
-    as.matrix()
-  
-  rcl <- terra::classify(mraster, breaks, others = NA)
-  names(rcl) <- "strata"
-  
-  return(rcl)
-}
