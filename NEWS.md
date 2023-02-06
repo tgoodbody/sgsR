@@ -1,3 +1,7 @@
+# sgsR 1.3.41
+
+`enhanced` - `strat_breaks()` - Vectorized function to allow for any number of input mraster layers and a corresponding number of breaks vectors (as list in respective order as `mraster` layers). Removed `mraster2` & `breaks2`. Users can now supply an `mraster` with as many layers as they wish. Added `stack` to allow output of all vectorized stratifications aswell as the final `strata` output `sraster`.
+
 # sgsR 1.3.4
 
 `fixed` - `sample_srs() / sample_strat(method = "random")` - First sample unit was always duplicated From Tommaso Trotto.

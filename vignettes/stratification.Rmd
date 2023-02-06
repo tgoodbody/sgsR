@@ -128,43 +128,41 @@ strat_quantiles(mraster = mraster$zq90,
 
 ## `strat_breaks` {#breaks .unnumbered}
 
-`strat_breaks()` stratifies data based on user-defined breaks in `mraster`. A single `mraster` can be used, or `mraster2` can also be defined. `breaks` and `breaks2` coincide with the user defined breaks for `mraster` and `mraster2` respectively. 
+`strat_breaks()` stratifies data based on user-defined breaks in `mraster`. This algorithm is vectorized. The user can provide an `mraster` with as many layers as they wish as long as the `breaks` paramters is list of equal length comprised of numeric vectors. 
 
 ```{r,warning=F,message=F}
 #--- perform stratification using user-defined breaks ---#
 
 #--- define breaks for metric ---#
-breaks <- c(seq(0,100,20))
+br.pz2 <- c(20, 40, 60, 80)
 
-breaks
+br.pz2
 
 #--- perform stratification using user-defined breaks ---#
 
-values <- terra::values(mraster$zq90)
-
 #--- define breaks for metric ---#
-breaks2 <- c(5,10,15,20,25)
+br.zq90 <- c(3, 5, 11, 18)
 
-breaks2
+br.zq90
 
 ```
 
-Once the breaks are created, we can use them as input into the `strat_breaks` function using the `breaks` and `breaks2` parameters. 
+Once the breaks are created, we can use them as input into the `strat_breaks()` function using the `breaks` parameter.
 
 ```{r,warning=F,message=F}
 #--- stratify on 1 metric only ---#
 strat_breaks(mraster = mraster$pzabove2,
-             breaks = breaks,
+             breaks = br.pz2,
              plot = TRUE)
 ```
 
 ```{r,warning=F,message=F}
 #--- stratify on 1 metric only ---#
-strat_breaks(mraster = mraster$zq90,
-             breaks = breaks2,
+strat_breaks(mraster = mraster[[1:2]],
+             breaks = list(br.zq90,br.pz2),
+             stack = TRUE,
              plot = TRUE)
 ```   
-
 ## `strat_poly` {#poly .unnumbered}
 
 Forest inventories with polygon coverages summarizing forest attributes such as species, management type, or photo-interpreted estimates of volume can be stratified using `strat_poly()`. 

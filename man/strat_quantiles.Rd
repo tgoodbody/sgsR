@@ -19,8 +19,6 @@ strat_quantiles(
 \arguments{
 \item{mraster}{spatRaster. ALS metrics raster.}
 
-\item{mraster2}{Spatraster. Secondary covariate raster to stratify.}
-
 \item{nStrata}{Numeric. Number of quantiles to stratify \code{mraster}.}
 
 \item{nStrata2}{Numeric. Number of quantiles to stratify \code{mraster2}.}
