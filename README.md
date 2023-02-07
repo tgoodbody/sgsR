@@ -31,6 +31,17 @@ devtools::install_github("https://github.com/tgoodbody/sgsR")
 library(sgsR)
 ```
 
+## Citing `sgsR` in literature
+
+To cite `sgsR` use `citation()` from within R with:
+
+``` r
+citation("sgsR")
+#> Goodbody, TRH., Coops, NC., Queinnec, M., White, JC., Tompalski, P., Hudak, AT., Auty, D., Valbuena, R., LeBoeuf, A., Sinclair, I., McCartney, G., Prieur, J-F., Woods, ME. (2023). sgsR: a structurally guided sampling toolbox for LiDAR-based forest inventories. Forestry: An International Journal of Forest Research. https://doi.org/10.1093/forestry/cpac055.
+
+#> Tristan RH Goodbody, Nicholas C Coops and Martin Queinnec (2023). Structurally Guided Sampling. R package version 1.4.0. https://cran.r-project.org/package=sgsR.
+```
+
 ## Overview
 
 `sgsR` provides a collection of stratification and sampling algorithms

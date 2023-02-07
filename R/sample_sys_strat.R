@@ -168,7 +168,9 @@ sample_sys_strat <- function(sraster,
     nrows <- ceiling(nplots / ncols)
     
     # set the mfrow parameter
-    par(mfrow = c(nrows, ncols))
+    par(mfrow = c(nrows, ncols),mai = c(1, 0.1, 0.1, 0.1))
+    
+    m <- c(3.1, 3.1, 1.1, 1.1)
     
     # generate plots
     for (i in 1:nplots) {
@@ -179,12 +181,12 @@ sample_sys_strat <- function(sraster,
       ss <- samples %>% dplyr::filter(strata == i)
       
       if (!is.null(access)) {
-        terra::plot(sraster, main = paste0("strata_",i))
+        terra::plot(sraster, main = paste0("strata_",i), mar=m, legend = FALSE)
         terra::plot(gridR, add = TRUE, col = "transparent", border = c("blueviolet"), alpha = 0.01)
-        terra::plot(access_buff$buff, add = T, border = c("gray30"), col = "gray10", alpha = 0.1)
+        terra::plot(access_buff$buff, add = TRUE, border = c("gray30"), col = "gray10", alpha = 0.1)
         terra::plot(ss, add = TRUE, col = "black")
       } else {
-        terra::plot(r, main = paste0("strata_",i))
+        terra::plot(r, main = paste0("strata_",i),mar=m, legend = FALSE)
         terra::plot(gridR, add = TRUE, col = "transparent", border = c("blueviolet"), alpha = 0.01)
         terra::plot(ss, add = TRUE, col = "black")
       }

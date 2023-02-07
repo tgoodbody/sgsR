@@ -66,7 +66,7 @@ d <- c("Simple random", "Systematic", "Stratified","Systematic Stratified", "Nea
 
 s <- c("", "", "[Queinnec, White, & Coops (2021)](https://www.sciencedirect.com/science/article/pii/S0034425721002303)","","[Melville & Stone (2016)](https://doi.org/10.1080/00049158.2016.1218265)", "[Minasny & McBratney (2006)](https://www.sciencedirect.com/science/article/pii/S009830040500292X?via%3Dihub)","[Grafström, A. Lisic, J (2018)](http://www.antongrafstrom.se/balancedsampling/)","[Malone, Minasny, & Brungard (2019)](https://peerj.com/articles/6451/)","")
 
-urls <- c("#srs","#systematic","#sstrat","#nc","#clhs","#balanced","#ahels","#samp-existing")
+urls <- c("#srs","#systematic","#sstrat","#sysstrat","#nc","#clhs","#balanced","#ahels","#samp-existing")
 
 df <- data.frame(Algorithm = a, Description = d, Reference = s)
 
@@ -227,10 +227,11 @@ sample_strat(sraster = sraster, # input sraster
 `sample_sys_strat()` function implements systematic stratified sampling on and `sraster`. This function uses the same functionality as `sample_systematic()` but takes an `sraster` as input and performs sampling on each stratum iteratively.
 
 ```{r}
-#--- perform grid sampling on each stratum seperately ---#
+#--- perform grid sampling on each stratum separately ---#
 sample_sys_strat(
-  sraster = sraster,
-  cellsize = 1000
+  sraster = sraster, # input sraster
+  cellsize = 1000, # grid size
+  plot = TRUE # plot output
 )
 
 ```
@@ -239,9 +240,11 @@ Just like with `sample_systematic()` we can specify where we want our samples to
 
 ```{r}
 sample_sys_strat(
-  sraster = sraster,
-  cellsize = 1000,
-  location = "corners"
+  sraster = sraster, # input sraster
+  cellsize = 500, # grid size
+  square = FALSE, # hexagon tessellation
+  location = "corners", # samples on tessellation corners
+  plot = TRUE # plot output
 )
 ```
 
@@ -268,12 +271,13 @@ srasterpoly <- strat_poly(
   raster = sraster
 )
 
-#--- systemtatic stratified sampling for each stratum ---#
+#--- systematatic stratified sampling for each stratum ---#
 sample_sys_strat(
-  sraster = srasterpoly,
-  cellsize = 1000,
-  square = FALSE,
-  location = "random"
+  sraster = srasterpoly, # input sraster from strat_poly()
+  cellsize = 1000, # grid size
+  square = FALSE, # hexagon tessellation
+  location = "random", # randomize plot location
+  plot = TRUE # plot output
 )
 ```
 

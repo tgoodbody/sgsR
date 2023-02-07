@@ -12,6 +12,8 @@
 
 `enhanced` - `plot_scatter()` - now visualizes with `viridis` colour scheme.
 
+`fixed` - Added new citation information for upcoming manuscript release.
+
 # sgsR 1.3.4
 
 `fixed` - `sample_srs() / sample_strat(method = "random")` - First sample unit was always duplicated From Tommaso Trotto.
