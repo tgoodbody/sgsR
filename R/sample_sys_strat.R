@@ -60,6 +60,8 @@ sample_sys_strat <- function(sraster,
                              overwrite = FALSE,
                              details = FALSE){
   
+  strata <- NULL
+  
   if (!inherits(sraster, "SpatRaster")) {
     stop("'sraster' must be type SpatRaster.", call. = FALSE)
   }
@@ -155,7 +157,7 @@ sample_sys_strat <- function(sraster,
     #--- add tesselation for each stratum to a list object ---#
     
     tessellation[[i]] <- s$tessellation %>%
-      mutate(strata = uniquevals[i,])
+      dplyr::mutate(strata = uniquevals[i,])
     
   }
   
