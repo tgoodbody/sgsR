@@ -74,7 +74,7 @@ df$Algorithm <- paste0("[", df$Algorithm, "](", urls, ")")
 
 ```
 
-Currently, there are 8 functions associated with the `sample` verb in the `sgsR` package:
+Currently, there are 9 functions associated with the `sample` verb in the `sgsR` package:
 
 ```{r echo=FALSE}
 knitr::kable(df, align = 'c')
