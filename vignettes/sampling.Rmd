@@ -36,6 +36,8 @@ library(sgsR)
 library(terra)
 library(dplyr)
 
+par(mar=c(1,1,1,1))
+
 #--- Load mraster and access files ---#
 r <- system.file("extdata", "mraster.tif", package = "sgsR")
 
@@ -58,11 +60,11 @@ existing <- sample_strat(sraster = sraster, # use mraster as input for sampling
 
 #--- algorithm table ---#
 
-a <- c("`sample_srs()`","`sample_systematic()`","`sample_strat()`","`sample_nc()`","`sample_clhs()`","`sample_balanced()`","`sample_ahels()`","`sample_existing()`")
+a <- c("`sample_srs()`","`sample_systematic()`","`sample_strat()`","`sample_sys_strat()`","`sample_nc()`","`sample_clhs()`","`sample_balanced()`","`sample_ahels()`","`sample_existing()`")
 
-d <- c("Simple random", "Systematic", "Stratified", "Nearest centroid", "Conditioned Latin hypercube", "Balanced sampling", "Adapted hypercube evaluation of a legacy sample", "Sub-sampling an existing sample")
+d <- c("Simple random", "Systematic", "Stratified","Systematic Stratified", "Nearest centroid", "Conditioned Latin hypercube", "Balanced sampling", "Adapted hypercube evaluation of a legacy sample", "Sub-sampling an existing sample")
 
-s <- c("", "", "[Queinnec, White, & Coops (2021)](https://www.sciencedirect.com/science/article/pii/S0034425721002303)","[Melville & Stone (2016)](https://doi.org/10.1080/00049158.2016.1218265)", "[Minasny & McBratney (2006)](https://www.sciencedirect.com/science/article/pii/S009830040500292X?via%3Dihub)","[Grafström, A. Lisic, J (2018)](http://www.antongrafstrom.se/balancedsampling/)","[Malone, Minasny, & Brungard (2019)](https://peerj.com/articles/6451/)","")
+s <- c("", "", "[Queinnec, White, & Coops (2021)](https://www.sciencedirect.com/science/article/pii/S0034425721002303)","","[Melville & Stone (2016)](https://doi.org/10.1080/00049158.2016.1218265)", "[Minasny & McBratney (2006)](https://www.sciencedirect.com/science/article/pii/S009830040500292X?via%3Dihub)","[Grafström, A. Lisic, J (2018)](http://www.antongrafstrom.se/balancedsampling/)","[Malone, Minasny, & Brungard (2019)](https://peerj.com/articles/6451/)","")
 
 urls <- c("#srs","#systematic","#sstrat","#nc","#clhs","#balanced","#ahels","#samp-existing")
 
@@ -161,8 +163,7 @@ The rule applied to a select each sample unit is defined in the `rule` attribute
 ```{r,warning=F,message=F} 
 #--- perform stratified sampling random sampling ---#
 sample_strat(sraster = sraster, # input sraster
-             nSamp = 200, # desired sample size
-             plot = TRUE) # plot
+             nSamp = 200) # desired sample size # plot
 ```
 
 In some cases, users might want to include an `existing` sample  within the algorithm. In order to adjust the total number of sample units needed per stratum to reflect those already present in `existing`, we can use the intermediate function `extract_strata()`.
@@ -219,6 +220,61 @@ sample_strat(sraster = sraster, # input sraster
              method = "random", #stratified random sampling
              nSamp = 200, # desired sample size
              plot = TRUE) # plot
+```
+
+## `sample_sys_strat` {#sysstrat .unnumbered}
+
+`sample_sys_strat()` function implements systematic stratified sampling on and `sraster`. This function uses the same functionality as `sample_systematic()` but takes an `sraster` as input and performs sampling on each stratum iteratively.
+
+```{r}
+#--- perform grid sampling on each stratum seperately ---#
+sample_sys_strat(
+  sraster = sraster,
+  cellsize = 1000
+)
+
+```
+
+Just like with `sample_systematic()` we can specify where we want our samples to fall within our tessellations. We specify `location = "corners"` below. Note that the tesselations are all saved to a list file when `details = TRUE` should the user want to save them.
+
+```{r}
+sample_sys_strat(
+  sraster = sraster,
+  cellsize = 1000,
+  location = "corners"
+)
+```
+
+This sampling approach could be especially useful incombination with `strat_poly()` to ensure consistency of sampling accross specific management units.
+
+```{r}
+#--- read polygon coverage ---#
+poly <- system.file("extdata", "inventory_polygons.shp", package = "sgsR")
+fri <- sf::st_read(poly)
+
+#--- stratify polygon coverage ---#
+#--- specify polygon attribute to stratify ---#
+attribute <- "NUTRIENTS"
+
+#--- specify features within attribute & how they should be grouped ---#
+#--- as a single vector ---#
+features <- c("poor", "rich", "medium")
+
+#--- get polygon stratification ---#
+srasterpoly <- strat_poly(
+  poly = fri,
+  attribute = attribute,
+  features = features,
+  raster = sraster
+)
+
+#--- systemtatic stratified sampling for each stratum ---#
+sample_sys_strat(
+  sraster = srasterpoly,
+  cellsize = 1000,
+  square = FALSE,
+  location = "random"
+)
 ```
 
 ## `sample_nc` {#nc .unnumbered}
