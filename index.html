@@ -116,6 +116,16 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tgoodbody/sgsR" class="external-link">sgsR</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="citing-sgsr-in-literature">Citing <code>sgsR</code> in literature<a class="anchor" aria-label="anchor" href="#citing-sgsr-in-literature"></a>
+</h2>
+<p>To cite <code>sgsR</code> use <code><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation()</a></code> from within R with:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"sgsR"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Goodbody, TRH., Coops, NC., Queinnec, M., White, JC., Tompalski, P., Hudak, AT., Auty, D., Valbuena, R., LeBoeuf, A., Sinclair, I., McCartney, G., Prieur, J-F., Woods, ME. (2023). sgsR: a structurally guided sampling toolbox for LiDAR-based forest inventories. Forestry: An International Journal of Forest Research. https://doi.org/10.1093/forestry/cpac055.</span></span>
+<span></span>
+<span><span class="co">#&gt; Tristan RH Goodbody, Nicholas C Coops and Martin Queinnec (2023). Structurally Guided Sampling. R package version 1.4.0. https://cran.r-project.org/package=sgsR.</span></span></code></pre></div>
+</div>
+<div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
 <p><code>sgsR</code> provides a collection of stratification and sampling algorithms that use auxiliary information for allocating sample units over an areal sampling frame. ALS metrics, like those derived from the <a href="https://cran.r-project.org/package=lidR" class="external-link"><code>lidR</code> package</a> are the intended inputs.</p>
@@ -126,7 +136,7 @@
 <h2 id="example-usage-bar_chart">Example usage <span class="emoji" data-emoji="bar_chart">📊</span>
 <a class="anchor" aria-label="anchor" href="#example-usage-bar_chart"></a>
 </h2>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#--- Load mraster files ---#</span></span>
 <span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mraster.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span></span>
