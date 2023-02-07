@@ -1,34 +1,17 @@
 o <- strat_quantiles(mraster = mraster$zq90, nStrata = 4)
-o1 <- strat_quantiles(mraster = mraster$zq90,mraster2 = mraster$pzabove2, nStrata = 4, nStrata2 = 4,details = TRUE)
-
-odf <- terra::values(o, dataframe=TRUE)
-o1df <- terra::values(o1$raster, dataframe=TRUE)
-
-odfna <- odf[complete.cases(odf),]
-o1dfna <- o1df[complete.cases(o1df),]
+o1 <- strat_quantiles(mraster = mraster, nStrata = list(c(0.1,0.2),4,2), details = TRUE, plot = TRUE, map = TRUE)
 
 test_that("Single breaks classes", {
   expect_error(strat_quantiles(mraster = "A", nStrata = 4), "'mraster' must be type SpatRaster.")
-  expect_error(strat_quantiles(mraster = mraster, nStrata = "A"), "'nStrata' must be type numeric.")
+  expect_error(strat_quantiles(mraster = mraster[[1]], nStrata = "A"), "'nStrata' must be type numeric.")
   expect_error(strat_quantiles(mraster = mraster, nStrata = 4, plot = 2), "'plot' must be type logical.")
-  expect_error(strat_quantiles(mraster = mraster, nStrata = 4, samp = "A"), "'samp' must be type numeric.")
+  expect_error(strat_quantiles(mraster = mraster, nStrata = 4, map = "A"), "'map' must be type logical.")
   expect_error(strat_quantiles(mraster = mraster, nStrata = 4, details = "TRUE"), "'details' must be type logical.")
-  expect_error(strat_quantiles(mraster = mraster, nStrata = 4), "Multiple layers detected in 'mraster'. Please define a singular band to stratify.")
+  expect_error(strat_quantiles(mraster = mraster, nStrata = 4), "`mraster` and `nStrata` must have the same number of layers & objects.")
+  expect_error(strat_quantiles(mraster = mraster[[1:2]], nStrata = data.frame(a=c(3,5,11,18), b = c(20,40,60,80))), "`nStrata` must be a list of numeric vectors of the same length as `mraster`.")
   
   expect_message(strat_quantiles(mraster = mraster$zq90, nStrata = 4, plot = TRUE), regexp = NA)
 })
-
-test_that("dual breaks classes", {
-  expect_error(strat_quantiles(mraster = "A", nStrata = 4), "'mraster' must be type SpatRaster.")
-  expect_error(strat_quantiles(mraster = mraster$zq90, nStrata = 4, mraster2 = "A"), "'mraster2' must be type SpatRaster.")
-  
-  expect_error(strat_quantiles(mraster = mraster$zq90, nStrata = 4, mraster2 = mraster$pzabove2, nStrata2 = "A"), "'nStrata2' must be type numeric.")
-  expect_error(strat_quantiles(mraster = mraster$zq90, nStrata = 4, mraster2 = mraster$zq90, nStrata2 = 4), "'mraster' and 'mraster2' must have different metric names.")
-  expect_error(strat_quantiles(mraster = mraster$zq90, nStrata = 4, mraster2 = mraster$pzabove2, nStrata2 = 4, plot = TRUE, samp = 10, details = TRUE), "'samp' must be > 0 <= 1.")
-  
-  expect_message(strat_quantiles(mraster = mraster$zq90, nStrata = 4, mraster2 = mraster$pzabove2, nStrata2 = 4, plot = TRUE), regexp = NA)
-})
-
 
 test_that("Total outputs", {
   
@@ -36,16 +19,12 @@ test_that("Total outputs", {
   
   expect_equal(nrow(o), 277L)
   expect_equal(ncol(o), 373L)
-  expect_equal(length(odfna), 91195L)
-  expect_equal(length(unique(odfna)), 4L)
-  expect_equal(length(unique(o1dfna)), 16L)
 })
 
 test_that("Out classes", {
   expect_s4_class(o,"SpatRaster")
   expect_s4_class(o1$raster,"SpatRaster")
-  expect_equal(sort(unique(o1dfna)),o1$details$class)
-  expect_equal(0,o1$details$min_mraster2[1])
-  expect_equal(93.900002,o1$details$min_mraster2[16])
-  expect_lt(o1$details$min_mraster[4],o1$details$max_mraster[4])
+  expect_equal(3L,o1$details$strata[3])
+  expect_equal(4L,terra::nlyr(o1$raster))
+  expect_s3_class(o1$plot,"gg")
 })

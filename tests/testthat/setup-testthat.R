@@ -13,6 +13,9 @@ mrastersmall <- terra::rast(mr)
 sr <- system.file("extdata", "sraster.tif", package = "sgsR")
 sraster <- terra::rast(sr)
 
+#--- strat raster stack ---#
+sraster2 <- c(sraster, sraster)
+
 #--- existing samples ---#
 e <- system.file("extdata", "existing.shp", package = "sgsR")
 existing <- sf::st_read(e, quiet = TRUE)
@@ -41,6 +44,12 @@ names(x) <- "strata"
 crs(x) <- crs(mraster)
 
 xmraster <- c(mraster,x)
+
+#--- logical raster ---#
+x2 <- x1 %>%
+  terra::setValues(., rep(TRUE, 100))
+x2 <- c(x2, x2)
+names(x2) <- c("strata1", "strata2")
 
 #--- coordinates ---#
 coords <- sf::st_coordinates(existing)

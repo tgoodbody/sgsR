@@ -121,15 +121,19 @@ plot_scatter <- function(mraster,
   y <- ggplot2::sym(names(vals[2]))
   
   if(isFALSE(reverse)){
-  p <- ggplot2::ggplot(data = vals, mapping = ggplot2::aes(x = .data[[x]], y = .data[[y]])) +
-    ggplot2::geom_point(color = "#333333") +
-    ggplot2::geom_point(data = samples, color = "red") +
-    ggplot2::theme_bw() +
-    ggplot2::theme(legend.position = "none")
+    
+    p <- ggplot2::ggplot(data = vals, mapping = ggplot2::aes(x = .data[[x]], y = .data[[y]])) +
+      ggplot2::geom_bin2d(bins = 70) +
+      ggplot2::scale_fill_continuous(type = "viridis") +
+      ggplot2::geom_point(data = samples, color = "red") +
+      ggplot2::theme_bw() +
+      ggplot2::theme(legend.position = "none")
   
   } else {
+    
     p <- ggplot2::ggplot(data = vals, mapping = ggplot2::aes(x = .data[[y]], y = .data[[x]])) +
-      ggplot2::geom_point(color = "#333333") +
+      ggplot2::geom_bin2d(bins = 70) +
+      ggplot2::scale_fill_continuous(type = "viridis") +
       ggplot2::geom_point(data = samples, color = "red") +
       ggplot2::theme_bw() +
       ggplot2::theme(legend.position = "none")

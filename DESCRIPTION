@@ -1,6 +1,6 @@
 Package: sgsR
 Type: Package
-Version: 1.3.4
+Version: 1.4.0
 License: GPL (>= 3)
 Title: Structurally Guided Sampling
 Authors@R: c(
