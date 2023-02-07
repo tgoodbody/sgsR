@@ -81,15 +81,8 @@ sample_sys_strat(
 sample_sys_strat(
   sraster = sr,
   cellsize = 1000,
-  location = "corners",
-  plot = TRUE
-)
-
-sample_sys_strat(
-  sraster = sr,
-  cellsize = 1000,
   square = FALSE,
-  location = "random",
+  location = "corners",
   plot = TRUE
 )
 
