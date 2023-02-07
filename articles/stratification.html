@@ -41,7 +41,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -140,7 +140,7 @@ sets being used as inputs are considered to be populations.</p>
 <tr class="even">
 <td align="center"><a href="#quantiles"><code>strat_quantiles()</code></a></td>
 <td align="center">Quantiles</td>
-<td align="center">Unsupervised</td>
+<td align="center">Either</td>
 </tr>
 <tr class="odd">
 <td align="center"><a href="#breaks"><code>strat_breaks()</code></a></td>
@@ -207,18 +207,25 @@ sets being used as inputs are considered to be populations.</p>
 </h2>
 <p>The <code><a href="../reference/strat_quantiles.html">strat_quantiles()</a></code> algorithm divides data into
 equally sized strata (<code>nStrata</code>). Similar to
-<code><a href="../reference/strat_breaks.html">strat_breaks()</a></code> users can perform stratification on a single
-<code>mraster</code> or also input a secondary <code>mraster</code>
-(<code>mraster2</code>) and specify the desired number of strata
-(<code>nStrata2</code>).</p>
-<p>Note that the dual stratification output will result in a product of
-<span class="math inline">\(nStrata * nStrata2\)</span>.</p>
+<code><a href="../reference/strat_breaks.html">strat_breaks()</a></code>, this function is vectorized to allow users
+to input any number of metrics to stratify (<code>mraster</code>) so
+long as <code>nStrata</code> is a list containing a matching number of
+numeric objects. <code>nStrata</code> can be either <code>nStrata</code>
+can be either a scalar integer representing the number of desired output
+strata, or a numeric vector of probabilities between 0-1 demarcating
+quantile break points. The <code>nStrata</code> list can be a mix of
+these (e.g. <code>nStrata = list(c(0.1,0.8,1), 4, 9)</code> where
+<code>mraster</code> would have 3 layers) to allow users to define both
+explicit quantile breaks or a desired strata number that is converted to
+quantiles breaks internally. Specifying <code>map = TRUE</code> will
+combine (map) stratifications of all input <code>mraster</code> layers
+to produce a combined stratified output.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#--- perform quantiles stratification ---#</span></span>
 <span><span class="fu"><a href="../reference/strat_quantiles.html">strat_quantiles</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span>,</span>
 <span>                nStrata <span class="op">=</span> <span class="fl">6</span>,</span>
 <span>                plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="stratification_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p><img src="stratification_files/figure-html/unnamed-chunk-7-1.png" width="700"><img src="stratification_files/figure-html/unnamed-chunk-7-2.png" width="700"></p>
 <pre><code><span><span class="co">#&gt; class       : SpatRaster </span></span>
 <span><span class="co">#&gt; dimensions  : 277, 373, 1  (nrow, ncol, nlyr)</span></span>
 <span><span class="co">#&gt; resolution  : 20, 20  (x, y)</span></span>
@@ -229,56 +236,58 @@ equally sized strata (<code>nStrata</code>). Similar to
 <span><span class="co">#&gt; min value   :      1 </span></span>
 <span><span class="co">#&gt; max value   :      6</span></span>
 <span></span>
-<span><span class="co">#--- dual stratification - will produce 12 output strata ---#</span></span>
-<span><span class="fu"><a href="../reference/strat_quantiles.html">strat_quantiles</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span>, </span>
-<span>                mraster2 <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zsd</span>,</span>
-<span>                nStrata <span class="op">=</span> <span class="fl">3</span>, </span>
-<span>                nStrata2 <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
-<span><span class="co">#&gt; class       : SpatRaster </span></span>
-<span><span class="co">#&gt; dimensions  : 277, 373, 1  (nrow, ncol, nlyr)</span></span>
+<span><span class="co">#--- vectorized ---#</span></span>
+<span><span class="fu"><a href="../reference/strat_quantiles.html">strat_quantiles</a></span><span class="op">(</span></span>
+<span>  mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">[[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, <span class="co"># two metric layers</span></span>
+<span>  nStrata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>,<span class="fl">0.4</span>,<span class="fl">0.8</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span>, <span class="co"># list with two objects - 1 probability breaks, 1 scalar integer</span></span>
+<span>  plot <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># plot output srasters</span></span>
+<span>  map <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># combine stratifications to a mapped output</span></span></code></pre>
+<p><img src="stratification_files/figure-html/unnamed-chunk-7-3.png" width="700"><img src="stratification_files/figure-html/unnamed-chunk-7-4.png" width="700"></p>
+<pre><code><span><span class="co">#&gt; class       : SpatRaster </span></span>
+<span><span class="co">#&gt; dimensions  : 277, 373, 3  (nrow, ncol, nlyr)</span></span>
 <span><span class="co">#&gt; resolution  : 20, 20  (x, y)</span></span>
 <span><span class="co">#&gt; extent      : 431100, 438560, 5337700, 5343240  (xmin, xmax, ymin, ymax)</span></span>
 <span><span class="co">#&gt; coord. ref. : UTM Zone 17, Northern Hemisphere </span></span>
 <span><span class="co">#&gt; source(s)   : memory</span></span>
-<span><span class="co">#&gt; name        : strata </span></span>
-<span><span class="co">#&gt; min value   :      1 </span></span>
-<span><span class="co">#&gt; max value   :     12</span></span></code></pre>
+<span><span class="co">#&gt; names       : strata_zq90, strata_pzabove2, strata </span></span>
+<span><span class="co">#&gt; min values  :           1,               1,      1 </span></span>
+<span><span class="co">#&gt; max values  :           4,               3,     12</span></span></code></pre>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="breaks">
 <code>strat_breaks</code><a class="anchor" aria-label="anchor" href="#breaks"></a>
 </h2>
 <p><code><a href="../reference/strat_breaks.html">strat_breaks()</a></code> stratifies data based on user-defined
-breaks in <code>mraster</code>. A single <code>mraster</code> can be
-used, or <code>mraster2</code> can also be defined. <code>breaks</code>
-and <code>breaks2</code> coincide with the user defined breaks for
-<code>mraster</code> and <code>mraster2</code> respectively.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+breaks in <code>mraster</code>. This algorithm is vectorized. The user
+can provide an <code>mraster</code> with as many layers as they wish as
+long as the <code>breaks</code> parameters is a list of equal length
+comprised of numeric vectors. Like <code><a href="../reference/strat_quantiles.html">strat_quantiles()</a></code> this
+function has the <code>map</code> parameter to combine input
+stratifications to generate a mapped output.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#--- perform stratification using user-defined breaks ---#</span></span>
 <span></span>
 <span><span class="co">#--- define breaks for metric ---#</span></span>
-<span><span class="va">breaks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">100</span>,<span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">br.pz2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fl">40</span>, <span class="fl">60</span>, <span class="fl">80</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">breaks</span></span>
-<span><span class="co">#&gt; [1]   0  20  40  60  80 100</span></span>
+<span><span class="va">br.pz2</span></span>
+<span><span class="co">#&gt; [1] 20 40 60 80</span></span>
 <span></span>
 <span><span class="co">#--- perform stratification using user-defined breaks ---#</span></span>
 <span></span>
-<span><span class="va">values</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/values.html" class="external-link">values</a></span><span class="op">(</span><span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span><span class="op">)</span></span>
-<span></span>
 <span><span class="co">#--- define breaks for metric ---#</span></span>
-<span><span class="va">breaks2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">10</span>,<span class="fl">15</span>,<span class="fl">20</span>,<span class="fl">25</span><span class="op">)</span></span>
+<span><span class="va">br.zq90</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">11</span>, <span class="fl">18</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">breaks2</span></span>
-<span><span class="co">#&gt; [1]  5 10 15 20 25</span></span></code></pre></div>
+<span><span class="va">br.zq90</span></span>
+<span><span class="co">#&gt; [1]  3  5 11 18</span></span></code></pre></div>
 <p>Once the breaks are created, we can use them as input into the
-<code>strat_breaks</code> function using the <code>breaks</code> and
-<code>breaks2</code> parameters.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code><a href="../reference/strat_breaks.html">strat_breaks()</a></code> function using the <code>breaks</code>
+parameter.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#--- stratify on 1 metric only ---#</span></span>
-<span><span class="fu"><a href="../reference/strat_breaks.html">strat_breaks</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">pzabove2</span>,</span>
-<span>             breaks <span class="op">=</span> <span class="va">breaks</span>,</span>
-<span>             plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/strat_breaks.html">strat_breaks</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">pzabove2</span>, <span class="co"># single raster</span></span>
+<span>             breaks <span class="op">=</span> <span class="va">br.pz2</span>, <span class="co"># single set of breaks</span></span>
+<span>             plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># plot output</span></span></code></pre></div>
 <p><img src="stratification_files/figure-html/unnamed-chunk-9-1.png" width="700"><img src="stratification_files/figure-html/unnamed-chunk-9-2.png" width="700"></p>
 <pre><code><span><span class="co">#&gt; class       : SpatRaster </span></span>
 <span><span class="co">#&gt; dimensions  : 277, 373, 1  (nrow, ncol, nlyr)</span></span>
@@ -288,22 +297,23 @@ and <code>breaks2</code> coincide with the user defined breaks for
 <span><span class="co">#&gt; source(s)   : memory</span></span>
 <span><span class="co">#&gt; name        : strata </span></span>
 <span><span class="co">#&gt; min value   :      1 </span></span>
-<span><span class="co">#&gt; max value   :      6</span></span></code></pre>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#--- stratify on 1 metric only ---#</span></span>
-<span><span class="fu"><a href="../reference/strat_breaks.html">strat_breaks</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span>,</span>
-<span>             breaks <span class="op">=</span> <span class="va">breaks2</span>,</span>
-<span>             plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co">#&gt; max value   :      5</span></span></code></pre>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#--- vectorized ---#</span></span>
+<span><span class="fu"><a href="../reference/strat_breaks.html">strat_breaks</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">[[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, <span class="co"># two metrics</span></span>
+<span>             breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">br.zq90</span>,<span class="va">br.pz2</span><span class="op">)</span>, <span class="co"># list of two breaks vectors</span></span>
+<span>             map <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># map final output</span></span>
+<span>             plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># plot outputs</span></span></code></pre></div>
 <p><img src="stratification_files/figure-html/unnamed-chunk-10-1.png" width="700"><img src="stratification_files/figure-html/unnamed-chunk-10-2.png" width="700"></p>
 <pre><code><span><span class="co">#&gt; class       : SpatRaster </span></span>
-<span><span class="co">#&gt; dimensions  : 277, 373, 1  (nrow, ncol, nlyr)</span></span>
+<span><span class="co">#&gt; dimensions  : 277, 373, 3  (nrow, ncol, nlyr)</span></span>
 <span><span class="co">#&gt; resolution  : 20, 20  (x, y)</span></span>
 <span><span class="co">#&gt; extent      : 431100, 438560, 5337700, 5343240  (xmin, xmax, ymin, ymax)</span></span>
 <span><span class="co">#&gt; coord. ref. : UTM Zone 17, Northern Hemisphere </span></span>
 <span><span class="co">#&gt; source(s)   : memory</span></span>
-<span><span class="co">#&gt; name        : strata </span></span>
-<span><span class="co">#&gt; min value   :      1 </span></span>
-<span><span class="co">#&gt; max value   :      6</span></span></code></pre>
+<span><span class="co">#&gt; names       : strata_zq90, strata_pzabove2, strata </span></span>
+<span><span class="co">#&gt; min values  :           1,               1,      1 </span></span>
+<span><span class="co">#&gt; max values  :           5,               5,     22</span></span></code></pre>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="poly">
@@ -325,7 +335,7 @@ guide the spatial extent and resolution for the output stratification
 polygon. Based on the vector or list of <code>features</code>,
 stratification is applied and the polygon is rasterized into its
 appropriate strata.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#--- load in polygon coverage ---#</span></span>
 <span><span class="va">poly</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"inventory_polygons.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span>
 <span></span>
@@ -350,7 +360,7 @@ appropriate strata.</p>
 <p>In our example, <code>attribute = "NUTRIENTS"</code> and features
 within, <code>c("poor", "rich", "medium")</code>, define the 3 desired
 strata.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#--- stratify polygon coverage ---#</span></span>
 <span></span>
 <span><span class="va">srasterpoly</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat_poly.html">strat_poly</a></span><span class="op">(</span>poly <span class="op">=</span> <span class="va">fri</span>, <span class="co"># input polygon</span></span>
@@ -364,7 +374,7 @@ strata.</p>
 single strata, while <code>low</code> is left in isolation. The 2
 vectors are specified into a list, which will result in the output of 2
 strata (low &amp; rich/medium).</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#--- or as multiple lists ---#</span></span>
 <span><span class="va">g1</span> <span class="op">&lt;-</span> <span class="st">"poor"</span></span>
 <span><span class="va">g2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"rich"</span>, <span class="st">"medium"</span><span class="op">)</span></span>
@@ -419,25 +429,27 @@ attributes and features specified by the users.</p>
 <code>strat_map</code><a class="anchor" aria-label="anchor" href="#map"></a>
 </h2>
 <p>Users may wish to pair stratifications. <code><a href="../reference/strat_map.html">strat_map()</a></code>
-faciliates two stratifications of matching extent and resolution to be
-mapped against one another to generate unique strata based on stratum
-pairings.</p>
+facilitates vectorized mapping of <code>sraster</code> layers to
+generate a unique mapped strata output based on stratum pairings. The
+<code>stack</code> parameter will output a multilayer
+<code>sraster</code> with the inputs
+(<code>strata_1, strata_2 ...</code>) and mapped output
+(<code>strata</code>).</p>
 <p>This facilitates the user to generate stratifications detailing
 quantitative and qualitative measures such as structure by species, or
 multiple qualitative measures such as species by management type.</p>
-<p>The total number of classes of the output <code>sraster</code> is
-multiplicative of the number of input strata. For example, if the input
-<code>sraster</code> has 3 strata and <code>sraster2</code> has 4
-strata, then the output of <code><a href="../reference/strat_map.html">strat_map()</a></code> will be 12
-strata.</p>
-<p>There may be occasions where stratum do not interact spatially, this
-will result in fewer output strata.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#--- map srasters ---#</span></span>
-<span><span class="fu"><a href="../reference/strat_map.html">strat_map</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">srasterpoly</span>, <span class="co"># strat_poly 3 class stratification</span></span>
-<span>          sraster2 <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># strat_kmeans 4 class stratification</span></span>
-<span>          plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#--- stack srasters together ---#</span></span>
+<span></span>
+<span><span class="va">srasters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">srasterpoly</span>, <span class="va">sraster</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">srasters</span><span class="op">)</span></span></code></pre></div>
 <p><img src="stratification_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#--- map srasters ---#</span></span>
+<span><span class="fu"><a href="../reference/strat_map.html">strat_map</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">srasters</span>, <span class="co"># two layer sraster</span></span>
+<span>          plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="stratification_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
 <pre><code><span><span class="co">#&gt; class       : SpatRaster </span></span>
 <span><span class="co">#&gt; dimensions  : 277, 373, 1  (nrow, ncol, nlyr)</span></span>
 <span><span class="co">#&gt; resolution  : 20, 20  (x, y)</span></span>
@@ -448,17 +460,15 @@ will result in fewer output strata.</p>
 <span><span class="co">#&gt; min value   :     11 </span></span>
 <span><span class="co">#&gt; max value   :     34</span></span></code></pre>
 <p>The convention for the numeric value of the output strata is the
-concatenation (merging) of <code>sraster</code> strata and
-<code>sraster2</code> strata. Check <code>$lookUP</code> for a clear
-depiction of this step.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/strat_map.html">strat_map</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">srasterpoly</span>, <span class="co"># strat_poly 3 class stratification</span></span>
-<span>          sraster2 <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># strat_poly 3 class stratification</span></span>
-<span>          stack <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># stack input and output strata into multi layer output raster</span></span>
+concatenation (merging) of <code>sraster</code> layers. Check
+<code>$lookUP</code> for a clear depiction of this step.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/strat_map.html">strat_map</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">srasters</span>, <span class="co"># strat_poly 3 class stratification</span></span>
+<span>          stack <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># output stacked input (strata_1, strata_2) and output (strata) layers</span></span>
 <span>          details <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># provide additional details</span></span>
 <span>          plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># plot output</span></span>
-<span><span class="co">#&gt; Stacking sraster, sraster2, and their combination (stratamapped).</span></span></code></pre></div>
-<p><img src="stratification_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
+<span><span class="co">#&gt; Stacking srasters and their combination (strata).</span></span></code></pre></div>
+<p><img src="stratification_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
 <pre><code><span><span class="co">#&gt; $raster</span></span>
 <span><span class="co">#&gt; class       : SpatRaster </span></span>
 <span><span class="co">#&gt; dimensions  : 277, 373, 3  (nrow, ncol, nlyr)</span></span>
@@ -466,24 +476,24 @@ depiction of this step.</p>
 <span><span class="co">#&gt; extent      : 431100, 438560, 5337700, 5343240  (xmin, xmax, ymin, ymax)</span></span>
 <span><span class="co">#&gt; coord. ref. : UTM Zone 17, Northern Hemisphere </span></span>
 <span><span class="co">#&gt; source(s)   : memory</span></span>
-<span><span class="co">#&gt; names       : strata, strata2, stratamapped </span></span>
-<span><span class="co">#&gt; min values  :      1,       1,           11 </span></span>
-<span><span class="co">#&gt; max values  :      3,       4,           34 </span></span>
+<span><span class="co">#&gt; names       : strata_1, strata_2, strata </span></span>
+<span><span class="co">#&gt; min values  :        1,        1,     11 </span></span>
+<span><span class="co">#&gt; max values  :        3,        4,     34 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $lookUp</span></span>
-<span><span class="co">#&gt;    strata strata2 stratamapped</span></span>
-<span><span class="co">#&gt; 1       3       2           32</span></span>
-<span><span class="co">#&gt; 2       3       1           31</span></span>
-<span><span class="co">#&gt; 3       1       3           13</span></span>
-<span><span class="co">#&gt; 4       1       4           14</span></span>
-<span><span class="co">#&gt; 5       3       4           34</span></span>
-<span><span class="co">#&gt; 6       3       3           33</span></span>
-<span><span class="co">#&gt; 7       1       2           12</span></span>
-<span><span class="co">#&gt; 8       1       1           11</span></span>
-<span><span class="co">#&gt; 9       2       2           22</span></span>
-<span><span class="co">#&gt; 10      2       3           23</span></span>
-<span><span class="co">#&gt; 11      2       4           24</span></span>
-<span><span class="co">#&gt; 12      2       1           21</span></span></code></pre>
+<span><span class="co">#&gt;    strata_1 strata_2 strata</span></span>
+<span><span class="co">#&gt; 1         1        1     11</span></span>
+<span><span class="co">#&gt; 2         1        2     12</span></span>
+<span><span class="co">#&gt; 3         1        3     13</span></span>
+<span><span class="co">#&gt; 4         1        4     14</span></span>
+<span><span class="co">#&gt; 5         2        1     21</span></span>
+<span><span class="co">#&gt; 6         2        2     22</span></span>
+<span><span class="co">#&gt; 7         2        3     23</span></span>
+<span><span class="co">#&gt; 8         2        4     24</span></span>
+<span><span class="co">#&gt; 9         3        1     31</span></span>
+<span><span class="co">#&gt; 10        3        2     32</span></span>
+<span><span class="co">#&gt; 11        3        3     33</span></span>
+<span><span class="co">#&gt; 12        3        4     34</span></span></code></pre>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

@@ -100,6 +100,9 @@
     <loc>/reference/sample_strat.html</loc>
   </url>
   <url>
+    <loc>/reference/sample_sys_strat.html</loc>
+  </url>
+  <url>
     <loc>/reference/sample_systematic.html</loc>
   </url>
   <url>
@@ -119,5 +122,8 @@
   </url>
   <url>
     <loc>/reference/strat_quantiles.html</loc>
+  </url>
+  <url>
+    <loc>/reference/vectorize.html</loc>
   </url>
 </urlset>
