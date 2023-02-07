@@ -41,26 +41,8 @@
 #' #--- proportional allocation ---#
 #' calculate_allocation(
 #'   sraster = sr,
-#'   nSamp = 10
-#' )
-#' 
-#' #--- equal allocation ---#
-#' calculate_allocation(
-#'   sraster = sr,
-#'   allocation = "equal",
-#'   nSamp = 10
-#' )
-#' 
-#' #--- manual allocation ---#
-#' #--- define user-defined weights ---#
-#' 
-#' weights <- c(0.2, 0.2, 0.5, 0.1)
-#' 
-#' calculate_allocation(
-#'   sraster = sr,
-#'   allocation = "manual",
-#'   weights = weights,
-#'   nSamp = 10
+#'   nSamp = 10,
+#'   allocation = "prop"
 #' )
 #'
 #' @author Tristan R.H. Goodbody

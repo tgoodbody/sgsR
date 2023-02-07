@@ -36,6 +36,7 @@ test_that("Total outputs", {
 })
 
 test_that("Messages", {
+  skip_on_cran()
   expect_message(sample_ahels(mraster = mraster, matrices = mat, existing = existing.df.n.xy.lc), "'existing' column coordinate names are lowercase - converting to uppercase.")
   expect_message(sample_ahels(mraster = mraster, matrices = mat, existing = existingna), "16 samples are located where metric values are NA.")
   

@@ -1,3 +1,47 @@
+# sgsR 1.4.0
+
+`added` - `sample_sys_strat()` - Systematic stratified sampling. Using same functionality as `sample_systematic()` but takes an `sraster` as input and performs sampling on each stratum iteratively.
+
+`enhanced` - `strat_breaks()` - Vectorized function to allow for any number of input mraster layers and a corresponding number of breaks vectors (as list in respective order as `mraster` layers). Removed `mraster2` & `breaks2`. Users can now supply an `mraster` with as many layers as they wish. Added `map` to allow for creating a combined (mapped) stratification output (`strata`). Internal function `calculate_breaks()` was added that facilitates vectorization.
+
+`enhanced` - `strat_quantiles()` - Vectorized function to allow for any number of input mraster layers and a corresponding number of breaks vectors (as list in respective order as `mraster` layers). Removed `mraster2` & `nStrata2`. Users can now supply an `mraster` with as many layers as they wish along side `nStrata` as a list with `length(nStrata) == terra::nlyr(mraster)`. `nStrata` can be either a scalar integer representing the number of desired output strata, or a numeric vector of probabilities between 0-1 demarcating quantile break points. The `nStrata` list can be a mix of these (e.g. `nStrata = list(c(0.1,0.8,1), 4, 9)` where `mraster` would have 3 layers) to allow users to define both explicit quantile breaks or a desired strata number that is converted to quantiles breaks internally. Added `map` to allow for creating a combined (mapped) stratification output (`strata`). Internal functions `calculate_quantile_breaks() / quantile_breaks_integer() / quantile_breaks()` were added that facilitate vectorization.
+
+`enhanced` - `strat_map()` - Vectorized function to allow for any number of input mraster layers and a corresponding number of breaks vectors (as list in respective order as `mraster` layers). Removed `raster2`. Users can now supply an `sraster` with as many layers as they wish. Thank you, Tommaso Trotto.
+
+`enhanced` - Updated vignettes and documentation to account for vectorized functionality of the above functions.
+
+`enhanced` - `plot_scatter()` - now visualizes with `viridis` colour scheme.
+
+# sgsR 1.3.4
+
+`fixed` - `sample_srs() / sample_strat(method = "random")` - First sample unit was always duplicated From Tommaso Trotto.
+
+`added` - `plot_scatter()` - Internal function. Scatter plot visualizing relationship between 2 `mraster` metrics with `existing` samples superimposed. 
+
+# sgsR 1.3.33
+
+`fixed` - `sample_strat()` - `srasters` with categorical values were crashing the algorithm due to inability to combine facter and non-factor values from Evan Muise.
+
+`fixed` - `sample_systematic()` - Added more contingency for `cellsize` values that resulted in empty sample output.
+
+# sgsR 1.3.32
+
+`fixed` - `strat_map()` - `stratamapped` was outputting as character and not as integer or character depending on input strata type as intended from Tommaso Trotto.
+
+# sgsR 1.3.31
+
+`enchancement` - `calculate_pcomp()` - Added `maxcells` parameter based on suggestion from R. Hijmans.
+
+`fixed` - `sample_systematic()` - Fixed issue related to ATLAS Blas and CRAN errors with suggestions and support from R. Hijmans.
+
+# sgsR 1.3.3
+
+`fixed` - CRAN issue where errors were encountered when run on ATLAS instances.
+
+`enhancement` - Edited vignettes and documentation for clarity.
+
+`enhancement` - `sample_srs()` - Added message to tell users when `nSamp` sample units were unable to be allocated. From Evan Muise.
+
 # sgsR 1.3.21
 
 `fixed` - `strat_quantiles() / strat_kmeans()` - solved issue where correct number of strata & float strata values were being output.

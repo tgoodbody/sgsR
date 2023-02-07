@@ -74,14 +74,6 @@ e <- sample_systematic(raster = mr, cellsize = 200)
 sample_existing(existing = e,
                 raster = mr,
                 nSamp = 50)
-                
-#--- extract metrics to sample ---#
-e <- extract_metrics(mr, e)
-
-#--- perform sub-sampling ---#
-sample_existing(existing = e,
-                nSamp = 30, 
-                plot = TRUE)
 
 }
 \seealso{
@@ -92,6 +84,7 @@ Other sample functions:
 \code{\link{sample_nc}()},
 \code{\link{sample_srs}()},
 \code{\link{sample_strat}()},
+\code{\link{sample_sys_strat}()},
 \code{\link{sample_systematic}()}
 }
 \author{

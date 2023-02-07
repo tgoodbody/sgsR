@@ -9,6 +9,7 @@ calculate_pcomp(
   nComp,
   center = TRUE,
   scale = TRUE,
+  maxcells = Inf,
   plot = FALSE,
   details = FALSE,
   filename = NULL,
@@ -24,6 +25,9 @@ calculate_pcomp(
 \item{center}{Logical. Value indicating whether the variables should be shifted to be zero centered.}
 
 \item{scale}{Logical. Value indicating whether the variables should be scaled to have unit variance.}
+
+\item{maxcells}{Numeric. Maximum number of samples to use to generate principal components.
+For objects that are too large to feed into \code{\link[stats]{prcomp}}.}
 
 \item{plot}{Logical. Plots output strata raster with samples.}
 

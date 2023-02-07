@@ -1,4 +1,4 @@
-#' Map 2 stratified rasters
+#' Map a raster stack of a list of rasters
 #'
 #' @description Map stratified rasters to a combined stratification.
 #'
@@ -6,27 +6,29 @@
 #'
 #' @inheritParams strat_breaks
 #' @inheritParams strat_poly
-#' @param sraster spatRaster. Primary stratification raster.
-#' @param sraster2 spatRaster. Secondary stratification raster.
-#' @param stack Logical. Default = \code{FALSE}. If \code{TRUE}, output raster will be
-#' 3 layers: \code{strata, strata2, stratamapped}.
+#' @param sraster spatRaster or list. Stratification raster stack or list of rasters. If \code{sraster}
+#' is of class \code{list}, then it is internally converted into a raster stack.
+#' @param stack Logical. Default = \code{FALSE}. If \code{TRUE}, inputs and output will be stacked:
+#'  \code{strata_1, strata_2, ..., strata}.
 #' @param details Logical. If \code{FALSE} (default) output is a mapped stratified spatRaster object.
 #' If \code{TRUE} return a list where \code{$outRaster} is the mapped stratified raster, and
 #' \code{$lookUp} is the lookup table for the stratification.
 #'
 #' @section Mapping:
 #' The mapping algorithm will take the stratification from \code{sraster} and combine it with
-#' overlying strata values in \code{sraster2}. This will result in a \code{stratamapped} attribute
-#' where the values from both inputs are combined.
+#' overlying strata values across all layers. This will result in a \code{strata} attribute
+#' where the values from all inputs are combined.
 #'
 #' i.e.
 #'
-#' If \code{strata = 1} and \code{strata2 = 1} then \code{stratamapped = 11}.
+#' If \code{strata_1 = 1} and \code{strata_2 = 1} then \code{strata = 11}.
 #'
-#' If \code{strata = 2} and \code{strata2 = 14} then \code{stratamapped = 214}.
+#' If \code{strata_1 = 2} and \code{strata_2 = 14} then \code{strata = 214}.
+#' 
+#' If \code{strata_1 = "A"} and \code{strata_2 = 14} then \code{strata = "A14"}.
 #'
 #' @examples
-#' #--- load input metrics raster ---#
+#' #--- load input metrics rasters ---#
 #' raster <- system.file("extdata", "sraster.tif", package = "sgsR")
 #' sraster <- terra::rast(raster)
 #'
@@ -50,16 +52,17 @@
 #'   features = features,
 #'   raster = sraster
 #' )
-#'
-#' #--- map srasters ---#
+#' 
+#' #--- map srasters with raster stack ---#
+#' stack <- c(srasterfri, sraster)
 #' strat_map(
-#'   sraster = srasterfri,
-#'   sraster2 = sraster
+#'   sraster = stack
 #' )
 #'
+#' #--- map sraster with list of rasters ---#
+#' rast_list <- list(srasterfri, sraster)
 #' strat_map(
-#'   sraster = srasterfri,
-#'   sraster2 = sraster,
+#'   sraster = rast_list,
 #'   stack = TRUE,
 #'   details = TRUE
 #' )
@@ -67,132 +70,151 @@
 #'
 #' @return A spatRaster object.
 #'
-#' @author Tristan R.H. Goodbody, Robert Hijmans
+#' @author Tristan R.H. Goodbody, Tommaso Trotto, Robert Hijmans
 #'
 #' @export
 
-
 strat_map <- function(sraster,
-                      sraster2,
                       stack = FALSE,
                       filename = NULL,
                       overwrite = FALSE,
                       plot = FALSE,
                       details = FALSE
-                      ) {
-
+) 
+{
   #--- global variables ---#
-  strata <- strata2 <- value <- NULL
-
+  strata <- value <- NULL
+  
   #--- error handling ---#
-
-  if (!inherits(sraster, "SpatRaster")) {
-    stop("'sraster' must be type SpatRaster.", call. = FALSE)
+  if (!inherits(sraster, "SpatRaster") & !is.list(sraster)) {
+    stop("'sraster' must be type SpatRaster or a list.", call. = FALSE)
   }
 
-  if (!inherits(sraster2, "SpatRaster")) {
-    stop("'sraster2' must be type SpatRaster.", call. = FALSE)
+  if (is.list(sraster)) {
+    if (length(sraster) <= 1) {
+      stop("List must have at least 2 'SpatRaster' objects.")
+    }
   }
 
   if (!is.logical(stack)) {
     stop("'stack' must be type logical.", call. = FALSE)
   }
-
+  
   if (!is.logical(overwrite)) {
     stop("'overwrite' must be type logical.", call. = FALSE)
   }
-
+  
   if (!is.logical(plot)) {
     stop("'plot' must be type logical.", call. = FALSE)
   }
-
+  
   if (!is.logical(details)) {
     stop("'details' must be type logical.", call. = FALSE)
   }
-
+  
+  #--- list convertion into SpatRaster ---#
+  if (is.list(sraster)) {
+    sraster <- terra::rast(sraster)
+  }
+      
   #--- error handling for raster inputs ---#
-
-  if (terra::nlyr(sraster) > 1) {
-    stop("'sraster' must only contain 1 layer. Please subset the layer you would like to use for mapping.", call. = FALSE)
+  if (isFALSE(sraster@ptr$hasValues)) {
+    stop("'sraster' has no values.", call. = FALSE)
   }
-
-  if (terra::nlyr(sraster2) > 1) {
-    stop("'sraster2' must only contain 1 layer. Please subset the layer you would like to use for mapping.", call. = FALSE)
+  
+  #--- define number of input layers ---#
+  nlayer <- terra::nlyr(sraster)
+  
+  if (nlayer <= 1) {
+    stop("'sraster' must contain at least 2 layers. Please provide a 'SpatRaster' stack or a list of 'SpatRaster' objects.", call. = FALSE)
   }
-
-  if (!grepl("strata", names(sraster))) {
+  
+  if (!any(grepl("strata", names(sraster)))) {
     stop("A layer name containing 'strata' does not exist within 'sraster'.", call. = FALSE)
   }
+  
+  #--- map stratification rasters ---#
+  names(sraster) <- paste0("strata_", seq(1, nlayer))
 
-  if (!grepl("strata", names(sraster2))) {
-    stop("A layer name containing 'strata' does not exist within 'sraster2'.", call. = FALSE)
-  }
-
-  #--- check that extents and resolutions of sraster and sraster2 match ---#
-
-  if (isFALSE(terra::compareGeom(sraster, sraster2, stopOnError = FALSE))) {
-    stop("Extents of 'sraster' and 'sraster2' do not match.", call. = FALSE)
+  featuresJoin <- terra::values(sraster, dataframe = TRUE)
+  
+  #--- Determine index of each cell so to map values correctly without NA ---#
+  
+  idx <- which(complete.cases(featuresJoin))
+  
+  #--- check that all sraster values are the same class ---#
+  classes <- c("numeric", "integer", "factor", "character")
+  
+  # vectorized boolean
+  is_class <- sapply(seq_along(classes), function(i) {
+    sapply(sapply(featuresJoin, class), identical, classes[i])
+  })
+  
+  if (isFALSE(all(rowSums(is_class) > 0L))) {
+    stop("'SpatRaster' layers must be of class 'numeric', 'integer', 'factor', or 'character'.", call. = FALSE)
   }
   
-  if (isFALSE(terra::compareGeom(sraster, sraster2, stopOnError = FALSE, ext = FALSE, res = TRUE))) {
-    stop("Spatial resolutions of 'sraster' and 'sraster2' do not match.", call. = FALSE)
+  #--- vectorize stratification across raster layers ---#
+  oclass <- featuresJoin[idx,] %>%
+    tidyr::unite("strata", remove = FALSE, sep = "") %>%
+    dplyr::relocate(strata, .after = dplyr::last_col())
+
+  #--- assign class to strata based on current class ---#
+  if (sum(is_class[,3]) >= 1L || sum(is_class[,4]) >= 1L) { # represents classes 'factor' or 'character'
+    
+    oclass$strata <- as.character(oclass$strata)
+    
+  } else if (sum(is_class[,3]) >= 1L & sum(is_class[,4]) >= 1L) {
+    
+    oclass$strata <- as.character(oclass$strata)
+    
+  } else {
+    
+    oclass$strata <- as.integer(oclass$strata)
+    
   }
-
-  #--- map stratification rasters ---#
-
-  joined <- c(sraster, sraster2)
-  names(joined) <- c("strata", "strata2")
-
-  featuresJoin <- terra::values(joined, dataframe = TRUE)
-
-  oclass <- featuresJoin %>%
-    dplyr::group_by(strata, strata2) %>%
-    #--- ensure NA's are transfered ---#
-    dplyr::mutate(stratamapped = ifelse(is.na(strata) | is.na(strata2), NA, paste0(strata,strata2)))
-
+       
   #--- create lookUp table ---#
-
   lookUp <- dplyr::distinct(oclass) %>%
     stats::na.omit() %>%
-    as.data.frame()
+    as.data.frame() %>%
+    dplyr::arrange(., strata)
   
-  #--- set newly stratified values ---#
+  #--- make new raster with stratified values from template ---#
+  odf <- matrix(nrow = nrow(featuresJoin), ncol = 1)
+  
+  odf[,1][idx] <- oclass$strata
 
-  rout <- terra::setValues(sraster, oclass$stratamapped)
+  rout <- terra::setValues(sraster[[1]], odf)
   names(rout) <- "strata"
-
+  
+  #--- make raster stack with original sraster ---#
   if (isTRUE(stack)) {
-    message("Stacking sraster, sraster2, and their combination (stratamapped).")
-
-    #--- stack 3 rasters if requested ---#
-
-    routstack <- c(sraster, sraster2, rout)
-    names(routstack) <- c("strata", "strata2", "stratamapped")
+    message("Stacking srasters and their combination (strata).")
+    
+    #--- stack rasters if requested ---#
+    routstack <- c(sraster,rout)
+    names(routstack) <- names(oclass)
   }
-
-  #--- if not stacking rename for output ---#
-
+  
+  #--- if stacking rename for output ---##
   if (exists("routstack")) {
     rout <- routstack
   }
-
-
-  #--- plot if requested
-
+  
+  #--- plot if requested ---#
   if (isTRUE(plot)) {
     terra::plot(rout)
   }
-
-  #--- write file to disc ---#
-
+  
+  #--- write file to disc depending on whether 'stack' was specified ---#
   if (!is.null(filename)) {
     
     if (!is.character(filename)) {
       stop("'filename' must be type character.", call. = FALSE)
     }
-
+    
     #--- write file to disc depending on whether 'stack' was specified ---#
-
     if (isTRUE(stack)) {
       terra::writeRaster(x = routstack, filename = filename, overwrite = overwrite)
       message("Output stack written to disc.")
@@ -201,22 +223,19 @@ strat_map <- function(sraster,
       message("Output raster written to disc.")
     }
   }
-
+  
   #--- output details if desired ---#
-
   if (isTRUE(details)) {
-
+    
     #--- output metrics details along with stratification raster ---#
-
     output <- list(raster = rout, lookUp = lookUp)
-
+    
     #--- output samples dataframe ---#
-
     return(output)
-  } else {
-
+  } 
+  else {
+    
     #--- just output raster ---#
-
     return(rout)
   }
 }

@@ -94,6 +94,7 @@ sample_srs <- function(raster,
 
   #--- Rule 1 sampling ---#
   nCount <- 0 # Number of sampled cells
+  iter <- 0 # Number of sample iterations
 
   # While loop for RULE 1
   while (length(validCandidates) > 0 & nCount < nSamp) {
@@ -133,11 +134,19 @@ sample_srs <- function(raster,
 
         nCount <- nCount + 1
       }
-    } else {
+    } else if(iter != 0){
       add_strata <- rbind(add_strata, add_temp[, c("X", "Y")])
 
       nCount <- nCount + 1
     }
+    
+    iter <- iter + 1
+  }
+  
+  if(nrow(add_strata) < nSamp){
+    
+    message(paste0("Sampling was not able to select ",nSamp, " sample units. Output has ", nrow(add_strata), " sample units."))
+    
   }
 
   #--- convert coordinates to a spatial points object ---#

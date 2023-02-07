@@ -11,11 +11,13 @@ test_that("Total outputs", {
 })
 
 test_that("messages", {
+  skip_on_cran()
   expect_equal(length(calculate_pop(mraster = mraster, matCov = FALSE)), 2L)
   
 })
 
 test_that("Total outputs", {
+  skip_on_cran()
   set.seed(2022)
   #--- supply quantile and covariance matrices ---#
   mats <- calculate_pop(mraster = mraster, PCA = TRUE)
@@ -34,6 +36,7 @@ test_that("Total outputs", {
 
 
 test_that("small raster", {
+  skip_on_cran()
   
   mr1 <- mr <- rast(nrow = 50, ncol = 50)
   values(mr) <- runif(50*50)

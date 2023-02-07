@@ -22,7 +22,7 @@
 #' @param matrices List. Quantile and covariance matrices generated from \code{calculate_pop(mraster = mraster, nQuant = nQuant)}.
 #' Both \code{mraster} & \code{nQuant} inputs must be the same to supply the covariance matrix. Supplying the matrix allows users
 #' with very large \code{mrasters} to pre-process the covariance matrix to avoid longer sampling processing times.
-#' @param plot Logical. Plots samples of type `existing` (if provided; croses) and `new` (circles) along with \code{mraster}.
+#' @param plot Logical. Plots samples of type \code{existing} (if provided; crosses) and \code{new} (circles) along with \code{mraster}.
 #'
 #' @references
 #' Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451
@@ -122,6 +122,12 @@ sample_ahels <- function(mraster,
   if (tolerance < 0 | tolerance > 0.1) {
     stop("'tolerance' must be > 0 and <= 0.1.", call. = FALSE)
   }
+  
+  if("type" %in% colnames(existing))
+  {
+    message("`existing` has a variable named `type`. This will cause issues with plotting. Consider removing.")
+  }
+  
 
   #--- determine number of bands in mraster ---#
 

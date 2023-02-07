@@ -41,7 +41,7 @@ Additional helper functions that `calculate` varying descriptive / summary stati
 
 ```{r echo=FALSE}
 
-p <- c("`mraster`", "`sraster`", "`access`", "`existing`", "plot")
+p <- c("`mraster`", "`sraster`", "`access`", "`existing`", "`plot`")
 
 d <- c("Metric raster(s)", "Stratified raster", "Linear vectors representing access routes", "Existing sample units", "Visually displays raster and samples")
 
@@ -69,7 +69,7 @@ mraster <- terra::rast(r)
 
 ### `sraster` {#srast .unnumbered}
 
-`sraster` are derived from `strat_*` algorithms (e.g. `strat_quantiles()`). This function used the distribution of `mraster$zq90` and stratified data into 4 equally sized strata.
+`sraster` are derived from `strat_*` algorithms (e.g. see `strat_quantiles()` below). The function below used the distribution of `mraster$zq90` and stratified data into 4 equally sized strata.
 
 ```{r,warning=F,message=F}
 #--- apply kmeans algorithm to metrics raster ---#
@@ -79,7 +79,7 @@ sraster <- strat_quantiles(mraster = mraster$zq90, # use mraster as input for sa
 
 ```
 
-The `sraster` output then becomes an input parameter for the `sample_strat()` algorithm.
+The `sraster` output can then become an input parameter (`sraster`) for the `sample_strat()` algorithm.
 
 ```{r,warning=F,message=F}
 #--- apply stratified sampling ---#

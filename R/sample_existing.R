@@ -30,14 +30,6 @@
 #' sample_existing(existing = e,
 #'                 raster = mr,
 #'                 nSamp = 50)
-#'                 
-#' #--- extract metrics to sample ---#
-#' e <- extract_metrics(mr, e)
-#' 
-#' #--- perform sub-sampling ---#
-#' sample_existing(existing = e,
-#'                 nSamp = 30, 
-#'                 plot = TRUE)
 #' 
 #' @author Tristan R.H. Goodbody
 #' 
@@ -373,7 +365,7 @@ sample_existing <- function(existing,
         nonNumeric <- oclass[oclass$Class != 'numeric',]
         
         pecdfcat <- all %>% 
-          dplyr::select(nonNumeric$Name) %>%
+          dplyr::select(dplyr::any_of(nonNumeric$Name)) %>%
           tidyr::pivot_longer(c(!type), names_to = "metric") %>%
           dplyr::group_by(type, metric, value) %>%
           dplyr::summarize(counts = dplyr::n()) %>%

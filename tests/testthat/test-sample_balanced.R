@@ -32,6 +32,7 @@ test_that("Messages", {
 })
 
 test_that("Messages", {
+  skip_on_cran()
   expect_message(sample_balanced(mraster = mraster, nSamp = 50, access = access, buff_inner = 50, buff_outer = 200, plot = TRUE), "An access layer has been provided. An internal buffer of 50 m and an external buffer of 200 m have been applied.")
   expect_message(sample_balanced(mraster = mraster, nSamp = 50, access = access, buff_outer = 200), "An access layer has been provided. An external buffer of 200 m have been applied.")
   expect_message(sample_balanced(mraster = mraster, nSamp = 50, access = access, buff_outer = 200, filename = file.path(tempdir(), "temp.shp") , overwrite = TRUE), "Output samples written to disc.")

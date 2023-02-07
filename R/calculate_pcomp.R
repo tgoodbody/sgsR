@@ -9,6 +9,8 @@
 #' @inheritParams strat_breaks
 #'
 #' @param nComp Numeric. Value indicating number of principal components to be rasterized.
+#' @param maxcells Numeric. Maximum number of samples to use to generate principal components.
+#' For objects that are too large to feed into \code{\link[stats]{prcomp}}. 
 #' @param ... Additional arguments to be passed to \code{\link[stats]{prcomp}}.
 #'
 #' @importFrom stats na.exclude na.omit prcomp
@@ -44,6 +46,7 @@ calculate_pcomp <- function(mraster,
                             nComp,
                             center = TRUE,
                             scale = TRUE,
+                            maxcells = Inf,
                             plot = FALSE,
                             details = FALSE,
                             filename = NULL,
@@ -71,6 +74,10 @@ calculate_pcomp <- function(mraster,
   if (!is.logical(scale)) {
     stop("'scale' must be type logical.", call. = FALSE)
   }
+  
+  if (!is.numeric(maxcells)) {
+    stop("'maxcells' must be type numeric.", call. = FALSE)
+  }
 
   if (!is.logical(plot)) {
     stop("'plot' must be type logical.", call. = FALSE)
@@ -82,7 +89,15 @@ calculate_pcomp <- function(mraster,
 
   #--- Extract values from mraster ---#
 
-  vals <- terra::values(mraster)
+  if (maxcells < terra::ncell(mraster)){
+    
+    vals <- terra::spatSample(mraster, maxcells, "regular")
+  
+  } else {
+    
+    vals <- terra::values(mraster)
+  
+  }
 
   #--- perform PCA ---#
 

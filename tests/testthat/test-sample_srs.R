@@ -25,3 +25,11 @@ test_that("Total outputs", {
   expect_equal(nrow(o1), 20L)
   expect_s3_class(o,"sf")
 })
+
+test_that("Total outputs", {
+  skip_on_cran()
+  set.seed(2023)
+  expect_message(sample_srs(raster = mraster, nSamp = 50, mindist = 1000), "Sampling was not able to select 50 sample units. Output has 38 sample units.")
+})
+
+

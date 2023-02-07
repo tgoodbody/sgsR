@@ -13,6 +13,7 @@
 #' @return Input raster with \code{dist2access} layer appended.
 #'
 #' @examples
+#' \dontrun{
 #' #--- Load raster and access files ---#
 #' r <- system.file("extdata", "mraster_small.tif", package = "sgsR")
 #' mr <- terra::rast(r)
@@ -24,6 +25,7 @@
 #'   raster = mr,
 #'   access = ac,
 #' )
+#' }
 #'
 #' @author Tristan R.H. Goodbody
 #'

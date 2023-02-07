@@ -32,7 +32,8 @@
 #' @note Specifying \code{location = "random"} can result in tessellations with no samples.
 #' This results from \code{raster} have \code{NA} values at the random location chosen.
 #' Using \code{force = TRUE} removes areas of \code{NA} from sampling entirely, but
-#' considerably slows processing speeds. 
+#' considerably slows processing speeds. Thanks to R. Hijmans for help in debugging and 
+#' providing suggestions for this script.
 #'
 #' @examples
 #' #--- Load raster and access files ---#
@@ -110,7 +111,7 @@ sample_systematic <- function(raster,
   }
   
   #--- determine crs of input raster ---#
-  crs <- terra::crs(raster, proj = TRUE)
+  crs <- terra::crs(raster)
   
   #--- set mraster for plotting who area in case of masking ---#
   
@@ -124,61 +125,59 @@ sample_systematic <- function(raster,
   }
   
   #--- convert raster extent into a polygon ---#
-  
-  rasterext <- sf::st_as_sf(terra::as.polygons(terra::ext(raster), crs = terra::crs(raster)))
 
-  res <- terra::res(x = r)[1]
+  res <- terra::xres(raster)
+  e <- as.vector(terra::ext(raster))
   
   #--- add randomness to grid lower left coordinate locations ---#
   
-  xminc <- as.numeric(terra::ext(r)[1]) + (res * sample(-100:0, 1))
-  yminc <- as.numeric(terra::ext(r)[3]) + (res * sample(-100:0, 1))
+  xminc <- e[1] + (res * sample(-100:0, 1))
+  yminc <- e[3] + (res * sample(-100:0, 1))
   
-  xx <- c(xminc,as.numeric(terra::ext(r)[2]))
-  yy <- c(yminc,as.numeric(terra::ext(r)[4]))
+  #--- generate raster extent polygon ---#
   
-  cc <- data.frame(X = xx, Y = yy)
+  rasterext <- sf::st_as_sf(terra::as.polygons(terra::ext(raster[[1]]), crs = crs))
   
-  pol = sf::st_polygon(
-    list(
-      cbind(
-        cc$X[c(1,2,2,1,1)], 
-        cc$Y[c(1,1,2,2,1)])
-    )
-  )
-
-  sfObj <- sf::st_sfc(pol, crs = terra::crs(r))
+  #--- add random LL corner to raster extent to mark start point of systematic grid ---#
+  pol <- terra::as.polygons(terra::ext(xminc, e[2], yminc, e[4]), crs=crs)
   
-  #--- extract centroid of object for random translation later ---#
-  
-  cent <- sf::st_centroid(sf::st_geometry(sfObj))
+  #--- generate a seperate sf component ---#
+  polsf <- sf::st_as_sf(x = pol, crs = crs)
   
   #--- random translation value ---#
   
-  randRot <- (runif(1,0,360) / 180) * pi
+  randRot <- runif(1, 0, 360)
   
-  #--- create tessellation ---#
-  
-  #--- ATLAS rBLAS debugging ---#
-  
-  sfCenteredRot <- ((sfObj - cent) * matrix(c(cos(-randRot), sin(-randRot), -sin(-randRot), cos(-randRot)), 2, 2)) + cent
+  #--- spin pol and get extent for grid making to cover entire raster ---#
 
-  #--- create grid based on outer extents of centered and randomly translated raster extent ---#
+  se <- terra::spin(pol, randRot) |> terra::ext()
+
+  #--- create grid based on outer extents of randomly translated raster extent ---#
   
-  grid <- sf::st_make_grid(x = sfCenteredRot, 
+  grid <- terra::vect(sf::st_make_grid(x = se, 
                            cellsize = cellsize, 
                            square = square, 
                            what = "polygons", 
-                           crs = terra::crs(raster), 
-                           ...)
+                           crs = crs, 
+                           ...))
   
-  #--- ATLAS debugging ---#
+  #--- randomly spin the grid ---#
+  se <- terra::spin(grid, randRot)
   
-  #--- translate grid ---#
+  terra::crs(se, warn = FALSE) <- crs
+
+  #--- check which polygons are fully overlapping with the raster extent ---#
   
-  gridR <- sf::st_as_sf((grid - cent) * matrix(c(cos(randRot), sin(randRot), -sin(randRot), cos(randRot)), 2, 2) + cent, crs = terra::crs(raster)) %>%
+  gridR <- sf::st_as_sf(se) %>%
     dplyr::mutate(overlap = lengths(sf::st_intersects(., rasterext))) %>%
     dplyr::filter(overlap == 1)
+  
+  
+  #--- check to make sure that samples intersect raster extent (cellsize check) ---#
+  
+  if(is.null(nrow(gridR)) || nrow(gridR) == 0){
+    stop("No samples intersect with 'raster'. Ensure 'cellsize' makes sense.", call. = FALSE)
+  } 
   
   if(isTRUE(force)){
     
@@ -209,7 +208,7 @@ sample_systematic <- function(raster,
 
     p_diff <- sf::st_difference(sf::st_geometry(gridR),sf::st_geometry(p)) %>%
       sf::st_as_sf() %>%
-      sf::st_intersection(.,sfObj) %>%
+      sf::st_intersection(.,rasterext) %>%
       dplyr::filter(sf::st_is(., c("POLYGON","MULTIPOLYGON","GEOMETRYCOLLECTION")))
     
     #--- sampling --#
@@ -219,7 +218,8 @@ sample_systematic <- function(raster,
       dplyr::filter(overlap == 1)
     
     #--- check to make sure that samples intersect raster extent (cellsize check) ---#
-    if(nrow(samples) == 0){
+    
+    if(is.null(nrow(samples)) || nrow(samples) == 0){
       stop("No samples intersect with 'raster'. Ensure 'cellsize' makes sense.", call. = FALSE)
     } 
     
@@ -290,7 +290,8 @@ sample_systematic <- function(raster,
         dplyr::filter(overlap == 1)
       
       #--- check to make sure that samples intersect raster extent (cellsize check) ---#
-      if(nrow(samples) == 0){
+      
+      if(is.null(nrow(samples)) || nrow(samples) == 0){
         stop("No samples intersect with 'raster'. Ensure 'cellsize' makes sense.", call. = FALSE)
       } 
       
@@ -308,10 +309,11 @@ sample_systematic <- function(raster,
         dplyr::filter(overlap == 1)
       
       #--- check to make sure that samples intersect raster extent (cellsize check) ---#
-      if(nrow(samples) == 0){
+      
+      if(is.null(nrow(samples)) || nrow(samples) == 0){
         stop("No samples intersect with 'raster'. Ensure 'cellsize' makes sense.", call. = FALSE)
       } 
-      
+
       samples <- samples %>%
         extract_metrics(mraster = raster[[1]], existing = ., quiet = TRUE) %>%
         stats::na.omit() %>%
@@ -326,10 +328,11 @@ sample_systematic <- function(raster,
         dplyr::filter(overlap == 1)
       
       #--- check to make sure that samples intersect raster extent (cellsize check) ---#
-      if(nrow(samples) == 0){
+      
+      if(is.null(nrow(samples)) || nrow(samples) == 0){
         stop("No samples intersect with 'raster'. Ensure 'cellsize' makes sense.", call. = FALSE)
       } 
-      
+
       samples <- samples %>%
         extract_metrics(mraster = raster[[1]], existing = ., quiet = TRUE) %>%
         stats::na.omit() %>%

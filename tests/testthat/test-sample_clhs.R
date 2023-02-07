@@ -31,6 +31,7 @@ test_that("Total outputs", {
 })
 
 test_that("Messages", {
+  skip_on_cran()
   expect_message(sample_clhs(mraster = mraster, nSamp = 320, existing = existing.df.n.xy.lc), "Column coordinates names for 'existing' are lowercase - converting to uppercase.")
   expect_message(sample_clhs(mraster = mraster, nSamp = 320, existing = existingna), "16 samples are located where metric values are NA.")
   expect_message(sample_clhs(mraster = mraster, nSamp = 20, access = access, buff_inner = 50, buff_outer = 200, plot = TRUE), "An access layer has been provided. An internal buffer of 50 m and an external buffer of 200 m have been applied.")
@@ -46,6 +47,7 @@ test_that("Errors", {
 })  
 
 test_that("df input", {
+  skip_on_cran()
   expect_equal(nrow(sample_clhs(mraster = mraster, existing = existing.df.n.xy, nSamp = 320)),320L)
 })  
 

@@ -82,6 +82,7 @@ Other sample functions:
 \code{\link{sample_nc}()},
 \code{\link{sample_srs}()},
 \code{\link{sample_strat}()},
+\code{\link{sample_sys_strat}()},
 \code{\link{sample_systematic}()}
 }
 \author{

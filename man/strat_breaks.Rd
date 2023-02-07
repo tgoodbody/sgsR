@@ -6,9 +6,8 @@
 \usage{
 strat_breaks(
   mraster,
-  mraster2 = NULL,
   breaks,
-  breaks2 = NULL,
+  map = FALSE,
   plot = FALSE,
   details = FALSE,
   filename = NULL,
@@ -16,13 +15,15 @@ strat_breaks(
 )
 }
 \arguments{
-\item{mraster}{Spatraster. Primary covariate raster to stratify.}
+\item{mraster}{Spatraster. Raster to stratify. Layers in \code{mraster} must match the number of
+\code{breaks} vectors provided.}
 
-\item{mraster2}{Spatraster. Secondary covariate raster to stratify.}
+\item{breaks}{Numeric. Vector of breakpoints for each layer of \code{mraster}. If \code{mraster} has multiple layers,
+\code{breaks} must be a list with an equal number of objects.}
 
-\item{breaks}{Numeric. Vector of breakpoints for \code{mraster}.}
-
-\item{breaks2}{Numeric. Vector of breakpoints for \code{mraster2} (if provided).}
+\item{map}{Logical. Map individual stratified layers to a combined stratification. Will output a multi-layer
+\code{SpatRaster} with individual stratifications for each \code{mraster} layer and an additional mapped stratification
+ named \code{"strata"}.}
 
 \item{plot}{Logical. Plots output strata raster and visualized
 strata with boundary dividers.}
@@ -40,9 +41,10 @@ Returns an output stratification \code{spatRaster} or a list when \code{details 
 
 When a list is returned:
 \enumerate{
-\item \code{details} is a list output of the \code{\link[stats]{prcomp}} function
-\item \code{raster} is a stratified \code{spatRaster} based on quantiles
-\item \code{plot} is a \code{ggplot} histogram object showing distribution and break points.
+\item \code{raster} is a stratified \code{spatRaster} based on quantiles. If \code{stack = TRUE} will
+be the number of layers of \code{mraster} plus the final output
+\item \code{breaks} is a list output of \code{breaks}
+\item \code{plot} is a \code{ggplot} histogram object showing distribution(s) and break point(s).
 }
 }
 \description{
@@ -54,21 +56,19 @@ r <- system.file("extdata", "mraster.tif", package = "sgsR")
 mr <- terra::rast(r)
 
 #--- create vector breaks ---#
-br.max <- c(3, 5, 11, 18)
-br.sd <- c(1, 2, 5)
+br.zq90 <- c(3, 5, 11, 18)
+br.pz2 <- c(20, 40, 60, 80)
 
 strat_breaks(
   mraster = mr$zq90,
-  breaks = br.max,
-  plot = TRUE,
-  details = TRUE
+  breaks = br.zq90
 )
 
+
 strat_breaks(
-  mraster = mr$zq90,
-  mraster2 = mr$zsd,
-  breaks = br.max,
-  breaks2 = br.sd
+  mraster = mr[[1:2]],
+  breaks = list(br.zq90, br.pz2),
+  details = TRUE
 )
 }
 \seealso{

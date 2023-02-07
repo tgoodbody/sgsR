@@ -157,7 +157,7 @@ strat_poly <- function(poly,
 
   #--- rasterize vector ---#
   outpolyrast <- terra::rasterize(x = poly, y = raster[[1]], field = "strata")
-  
+
   terra::crs(outpolyrast) <- terra::crs(raster)
 
   #--- write file to disc if requested ---#
