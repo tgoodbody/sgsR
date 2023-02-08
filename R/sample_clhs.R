@@ -111,10 +111,6 @@ sample_clhs <- function(mraster,
     stop("'details' must be type logical.", call. = FALSE)
   }
 
-
-  #--- determine crs of input mraster ---#
-  crs <- terra::crs(mraster, proj = TRUE)
-
   #--- access buffering if specified ---#
 
   if (!is.null(access)) {
@@ -219,7 +215,14 @@ sample_clhs <- function(mraster,
           stop("'existing' must have columns named 'X' and 'Y'.", call. = FALSE)
         }
       }
+      
+      #--- determine crs of input mraster ---#
+      crs <- terra::crs(mraster)
 
+    } else {
+      
+      crs <- sf::st_crs(existing)
+      
     }
     
     existingSamples <- extract_metrics(mraster = mraster, existing = existing, data.frame = TRUE)
@@ -268,6 +271,10 @@ sample_clhs <- function(mraster,
   #--- if existing samples are not provided ---#
 
   if (is.null(existing)) {
+    
+    #--- determine crs of input mraster ---#
+    crs <- terra::crs(mraster)
+    
     clhsOut <- clhs::clhs(x = vals_tp, size = nSamp, iter = iter, cost = cost, ...)
 
     #--- if ... variables are provided the output is sometimes a list object ---#
@@ -307,14 +314,14 @@ sample_clhs <- function(mraster,
       samples <- samples %>%
         dplyr::bind_rows(., samples_NA) %>%
         dplyr::left_join(., extraCols,  by = c("X","Y")) %>%
-        sf::st_as_sf(., coords = c("X", "Y"))
+        sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
       
     } else {
       
       #--- convert coordinates to a spatial points object ---#
       samples <- samples %>%
         dplyr::bind_rows(., samples_NA) %>%
-        sf::st_as_sf(., coords = c("X", "Y"))
+        sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
       
     }
     
@@ -324,23 +331,18 @@ sample_clhs <- function(mraster,
       
       samples <- samples %>%
         dplyr::left_join(., extraCols,  by = c("X","Y")) %>%
-        sf::st_as_sf(., coords = c("X", "Y"))
+        sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
       
     } else {
       
       #--- convert coordinates to a spatial points object ---#
       samples <- samples %>%
         as.data.frame() %>%
-        sf::st_as_sf(., coords = c("X", "Y"))
+        sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
       
     }
     
   }
-
-
-  #--- assign sraster crs to spatial points object ---#
-  
-  sf::st_crs(samples) <- crs
 
   if (isTRUE(plot)) {
     if (!is.null(access)) {

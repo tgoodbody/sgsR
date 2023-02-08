@@ -63,7 +63,7 @@ classPlot <- function(dfc,
 #' @keywords internal
 #' @param samp Numeric. Determines proportion of cells to plot
 #' @param reverse Logical. Reverse x and y axis
-#' @note Population in dark grey and samples in red.
+#' @note Population in viridis and samples in red.
 #' @export
 
 plot_scatter <- function(mraster,

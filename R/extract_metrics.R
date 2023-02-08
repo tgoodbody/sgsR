@@ -65,6 +65,10 @@ extract_metrics <- function(mraster,
       stop("'existing' must be an 'sf' object of type 'sfc_POINT' geometry.", call. = FALSE)
     }
     
+    #--- to preserve input CRS ---# 
+    
+    crs <- sf::st_crs(existing)
+    
     #--- Extract xy coordinates to enable extraction of strata values ---#
     
     xy <- sf::st_coordinates(existing)
@@ -74,6 +78,11 @@ extract_metrics <- function(mraster,
       dplyr::select(-X,-Y)
     
   } else {
+    
+    #--- To use raster CRS when existing is a data.frame ---# 
+    
+    crs <- terra::crs(mraster)
+    
     if (any(!c("X", "Y") %in% colnames(existing))) {
       
       #--- if coordinate column names are lowercase change them to uppercase to match requirements ---#
@@ -170,11 +179,7 @@ extract_metrics <- function(mraster,
     #--- convert coordinates to a sf object ---#
 
     samples <- cbind(xy, vals, existing) %>%
-      sf::st_as_sf(., coords = c("X", "Y"))
-    
-    #--- assign mraster crs to spatial points object ---#
-    
-    sf::st_crs(samples) <- terra::crs(mraster, proj = TRUE)
+      sf::st_as_sf(., coords = c("X", "Y"), crs =  crs)
     
     if (!is.null(filename)) {
       if (!is.logical(overwrite)) {

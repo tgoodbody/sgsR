@@ -14,6 +14,10 @@
 
 `fixed` - Added new citation information for upcoming manuscript release.
 
+`fixed` - Added new citation information for upcoming manuscript release.
+
+`fixed` - `extract_strata() / extract_metrics()` - CRS for `existing` will now be maintained when provided as an `sf` and the `mraster` CRS will be assigned otherwise. In addition, all sampling functions will maintain CRS from `existing` if possible, otherwise CRS from `sraster/mraster` are used for output samples.
+
 # sgsR 1.3.4
 
 `fixed` - `sample_srs() / sample_strat(method = "random")` - First sample unit was always duplicated From Tommaso Trotto.

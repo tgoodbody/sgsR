@@ -120,18 +120,15 @@ sample_existing <- function(existing,
     #--- if raster is supplied
     if(!is.null(raster)){
       
-      crs <- terra::crs(raster)
-      
+        crs <- terra::crs(raster)
+
       #--- check to see if 'existing' does not contain attributes with the same names as 'raster' ---#
       if(!all(names(raster) %in% names(existing))){
         
         message("'existing' does not contain attributes with the same names as 'raster'. Extracting metrics.")
         
         existing <- existing %>%
-          sf::st_as_sf(., coords = c("X", "Y"))
-        
-        #--- assign sraster crs to spatial points object ---#
-        sf::st_crs(existing) <- crs
+          sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
         
         #--- access constraint ---#
         
@@ -154,6 +151,9 @@ sample_existing <- function(existing,
     existingdf <- existing
 
   } else {
+    
+    #---  bring existing crs forward ---#
+    crs <- sf::st_crs(existing)
     
     #--- check to see if 'existing' does not contain attributes with the same names as 'raster' ---#
     if(!all(names(raster) %in% names(existing))){
@@ -320,8 +320,7 @@ sample_existing <- function(existing,
       #--- extract sampled rows from existing ---#
       
       samples <- samples %>%
-        sf::st_as_sf(., coords = c("X", "Y")) %>%
-        sf::st_set_crs(., sf::st_crs(existing))
+        sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
     
   }
   

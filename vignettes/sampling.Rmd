@@ -4,7 +4,7 @@ output: rmarkdown::html_vignette
 description: >
   Learn how to use sample_* functions.
 vignette: >
-  %\VignetteIndexEntry{sampling}
+  %\VignetteIndexEntry{Sampling}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -57,6 +57,8 @@ sraster <- strat_quantiles(mraster = mraster$zq90, # use mraster as input for sa
 existing <- sample_strat(sraster = sraster, # use mraster as input for sampling
                          nSamp = 200, # request 200 samples be taken
                          mindist = 100) # define that samples must be 100 m apart
+
+sf::st_crs(existing) <- terra::crs(sraster)
 
 #--- algorithm table ---#
 
@@ -224,7 +226,7 @@ sample_strat(sraster = sraster, # input sraster
 
 ## `sample_sys_strat` {#sysstrat .unnumbered}
 
-`sample_sys_strat()` function implements systematic stratified sampling on and `sraster`. This function uses the same functionality as `sample_systematic()` but takes an `sraster` as input and performs sampling on each stratum iteratively.
+`sample_sys_strat()` function implements systematic stratified sampling on an `sraster`. This function uses the same functionality as `sample_systematic()` but takes an `sraster` as input and performs sampling on each stratum iteratively.
 
 ```{r}
 #--- perform grid sampling on each stratum separately ---#

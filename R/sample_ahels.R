@@ -133,10 +133,6 @@ sample_ahels <- function(mraster,
 
   nb <- terra::nlyr(mraster)
 
-  #--- determine crs of input sraster ---#
-
-  crs <- terra::crs(mraster, proj = TRUE)
-
   #--- extract covariates data from mraster ---#
 
   vals <- terra::as.data.frame(mraster, xy = TRUE, row.names = FALSE) %>%
@@ -193,6 +189,10 @@ sample_ahels <- function(mraster,
   ### --- Prepare existing sample data ---###
   if(!inherits(existing, "sf")){
     
+    #--- determine crs of input sraster ---#
+    
+    crs <- terra::crs(mraster, proj = TRUE)
+    
     if (any(!c("X", "Y") %in% colnames(existing))) {
       
       #--- if coordinate column names are lowercase change them to uppercase to match requirements ---#
@@ -214,10 +214,14 @@ sample_ahels <- function(mraster,
     }
     
     existing <- existing %>%
-      sf::st_as_sf(., coords = c("X", "Y"))
+      sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
     
-    #--- assign sraster crs to spatial points object ---#
-    sf::st_crs(existing) <- crs
+  } else {
+    
+    #--- determine crs of input sraster ---#
+    
+    crs <- sf::st_crs(existing)
+    
   }
 
   #--- extract covariates at existing sample locations ---#
@@ -336,14 +340,14 @@ sample_ahels <- function(mraster,
       samples <- out$samples %>%
         dplyr::bind_rows(., samples_NA) %>%
         dplyr::left_join(., extraCols,  by = c("X","Y")) %>%
-        sf::st_as_sf(., coords = c("X", "Y"))
+        sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
       
     } else {
     
       #--- convert coordinates to a spatial points object ---#
       samples <- out$samples %>%
         dplyr::bind_rows(., samples_NA) %>%
-        sf::st_as_sf(., coords = c("X", "Y"))
+        sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
     
     }
     
@@ -353,13 +357,13 @@ sample_ahels <- function(mraster,
       
       samples <- out$samples %>%
         dplyr::left_join(., extraCols,  by = c("X","Y")) %>%
-        sf::st_as_sf(., coords = c("X", "Y"))
+        sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
       
     } else {
       
       #--- convert coordinates to a spatial points object ---#
       samples <- out$samples %>%
-        sf::st_as_sf(., coords = c("X", "Y"))
+        sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
       
     }
     

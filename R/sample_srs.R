@@ -74,7 +74,7 @@ sample_srs <- function(raster,
   rasterP <- raster <- raster[[1]]
 
   #--- determine crs of input raster ---#
-  crs <- terra::crs(raster, proj = TRUE)
+  crs <- terra::crs(raster)
 
   if (!is.null(access)) {
 
@@ -152,10 +152,7 @@ sample_srs <- function(raster,
   #--- convert coordinates to a spatial points object ---#
   samples <- add_strata %>%
     as.data.frame() %>%
-    sf::st_as_sf(., coords = c("X", "Y"))
-
-  #--- assign raster crs to spatial points object ---#
-  sf::st_crs(samples) <- crs
+    sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
 
   if (isTRUE(plot)) {
     if (!is.null(access)) {

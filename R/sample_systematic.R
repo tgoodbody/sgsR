@@ -285,7 +285,7 @@ sample_systematic <- function(raster,
           Y = (vals$X * -sin(randRot)) + (vals$Y * cos(randRot)) + Y 
         ) %>%
         sf::st_as_sf(., coords = c("X", "Y"),
-                     crs = terra::crs(raster)) %>%
+                     crs = crs) %>%
         dplyr::mutate(overlap = lengths(sf::st_intersects(., rasterext))) %>%
         dplyr::filter(overlap == 1)
       

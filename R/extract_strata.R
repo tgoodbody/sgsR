@@ -62,7 +62,7 @@ extract_strata <- function(sraster,
   if (!is.logical(quiet)) {
     stop("'quiet' must be type logical.", call. = FALSE)
   }
-
+  
   #--- if the existing plots are an sf object extract coordinates ---#
   
   if (is(existing, "sf")) {
@@ -70,6 +70,10 @@ extract_strata <- function(sraster,
     if (!inherits(sf::st_geometry(existing), "sfc_POINT")) {
       stop("'existing' must be an 'sf' object of type 'sfc_POINT' geometry.", call. = FALSE)
     }
+    
+    #--- to preserve input CRS ---# 
+    
+    crs <- sf::st_crs(existing)
     
     #--- Extract xy coordinates to enable extraction of strata values ---#
     
@@ -80,6 +84,10 @@ extract_strata <- function(sraster,
       dplyr::select(-X,-Y)
     
   } else {
+    
+    #--- To use raster CRS when existing is a data.frame ---# 
+    crs <- terra::crs(sraster)
+    
     if (any(!c("X", "Y") %in% colnames(existing))) {
       
       #--- if coordinate column names are lowercase change them to uppercase to match requirements ---#
@@ -128,7 +136,7 @@ extract_strata <- function(sraster,
   if(all(!complete.cases(vals))){
     stop("'existing' only extracts NA values. Ensure that 'existing' overlaps with 'sraster'.", call. = FALSE)
   }
-
+  
   #--- if existing samples are not linked with a stratum ---#
   if(any(!complete.cases(vals))){
     
@@ -141,7 +149,7 @@ extract_strata <- function(sraster,
       message(paste0(nNA," samples are located where strata values are NA."))
     }
   }
-
+  
   #--- output either data.frame or sf object ---#
   
   if (isTRUE(data.frame)) {
@@ -181,14 +189,9 @@ extract_strata <- function(sraster,
   } else {
     
     #--- convert coordinates to a sf object ---#
-
     samples <- cbind(xy, vals, existing) %>%
-      sf::st_as_sf(., coords = c("X", "Y"))
-    
-    #--- assign sraster crs to spatial points object ---#
-    
-    sf::st_crs(samples) <- terra::crs(sraster)
-    
+      sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
+
     if (!is.null(filename)) {
       
       if (!is.character(filename)) {

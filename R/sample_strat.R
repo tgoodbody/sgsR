@@ -167,7 +167,7 @@ sample_strat <- function(sraster,
   }
   
   #--- determine crs of input sraster ---#
-  crs <- terra::crs(sraster, proj = TRUE)
+  crs <- terra::crs(sraster)
   
   if(method == "Queinnec"){
     
@@ -197,6 +197,9 @@ sample_strat <- function(sraster,
       
       if(inherits(existing, "sf")){
         if (inherits(sf::st_geometry(existing), "sfc_POINT")) {
+          
+          #--- determine crs of existing ---#
+          crs <- sf::st_crs(existing)
           
           #--- if existing is an sf object extract the coordinates and the strata vector ---#
           
@@ -502,7 +505,7 @@ sample_strat <- function(sraster,
         dplyr::select(-cell) %>%
         as.data.frame() %>%
         rbind(.,samples_NA) %>%
-        sf::st_as_sf(., coords = c("X", "Y"))
+        sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
       
     } else {
       
@@ -510,7 +513,7 @@ sample_strat <- function(sraster,
       samples <- out %>%
         dplyr::select(-cell) %>%
         as.data.frame() %>%
-        sf::st_as_sf(., coords = c("X", "Y"))
+        sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
       
     }
     
@@ -526,13 +529,10 @@ sample_strat <- function(sraster,
       samples <- out %>%
         dplyr::select(-cell) %>%
         as.data.frame() %>%
-        sf::st_as_sf(., coords = c("X", "Y"))
+        sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
     }
     
   }
-  
-  #--- assign sraster crs to spatial points object ---#
-  # sf::st_crs(samples) <- crs
   
   #--- plot the raster and samples if desired ---#
   
