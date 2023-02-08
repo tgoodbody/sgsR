@@ -1,4 +1,16 @@
-citHeader("To cite sgsR in publications use:")
+authors <- "Tristan R.H. Goodbody and Nicholas C. Coops and Martin Queinnec and Joanne C. White and Piotr Tompalski and Andrew T. Hudak and David Auty and Ruben Valbuena and Antoine LeBoeuf and Ian Sinclair and Grant McCartney and Jean-Francois Prieur and Murray E. Woods"
+
+bibentry(bibtype="Manual",
+         title = "sgsR: a structurally guided sampling toolbox for LiDAR-based forest inventories.",
+         author = authors,
+         journal = "Forestry: An International Journal of Forest Research",
+         year = "2023",
+         doi = "https://doi.org/10.1093/forestry/cpac055",
+         textVersion =
+           paste("Goodbody, TRH., Coops, NC., Queinnec, M., White, JC., Tompalski, P., Hudak, AT., Auty, D., Valbuena, R., LeBoeuf, A., Sinclair, I., McCartney, G., Prieur, J-F., Woods, ME. (2023).",
+           "sgsR: a structurally guided sampling toolbox for LiDAR-based forest inventories.",
+           "Forestry: An International Journal of Forest Research. https://doi.org/10.1093/forestry/cpac055."))
+         
   
 year <- format(Sys.Date(), "%Y")
 vers <- paste("R package version", meta$Version)
@@ -8,7 +20,7 @@ authors <- Filter(function(e) {!(is.null(e$given) && is.null(e$family)) && !is.n
 authors <- format(authors, include = c("given", "family"))
 authors <- paste(paste(head(authors, -1L), collapse = ", "), tail(authors, 1L), sep = " and ")
 
-citEntry(entry="Manual",
+bibentry(bibtype="Manual",
          title = meta$Title,
          author = authors,
          year = year,
@@ -17,5 +29,5 @@ citEntry(entry="Manual",
            paste(authors, " (",
                  year,
                  "). ", meta$Title, ". ",
-                 vers, ". https://github.com/tgoodbody/sgsR", sep=""),
-         url = "https://github.com/tgoodbody/sgsR")
+                 vers, ". https://cran.r-project.org/package=sgsR", ".", sep=""),
+         url = "https://cran.r-project.org/package=sgsR")
