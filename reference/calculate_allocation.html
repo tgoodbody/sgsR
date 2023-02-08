@@ -147,20 +147,13 @@ Has no effect when <code>existing</code> is provided.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#--- Load strata raster and existing samples---#</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co">#--- Load strata raster and existing samples---#</span></span></span>
 <span class="r-in"><span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"sraster.tif"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">sr</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"existing.shp"</span>, package <span class="op">=</span> <span class="st">"sgsR"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Reading layer `existing' from data source </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   `/home/runner/work/_temp/Library/sgsR/extdata/existing.shp' </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   using driver `ESRI Shapefile'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 200 features and 1 field</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431110 ymin: 5337710 xmax: 438530 ymax: 5343230</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: UTM_Zone_17_Northern_Hemisphere</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#--- proportional allocation ---#</span></span></span>
 <span class="r-in"><span><span class="fu">calculate_allocation</span><span class="op">(</span></span></span>
@@ -168,13 +161,7 @@ Has no effect when <code>existing</code> is provided.</p></dd>
 <span class="r-in"><span>  nSamp <span class="op">=</span> <span class="fl">10</span>,</span></span>
 <span class="r-in"><span>  allocation <span class="op">=</span> <span class="st">"prop"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Implementing proportional allocation of samples.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> nSamp of 10 is not perfectly divisible based on strata distribution. nSamp of 11 will be returned. Use 'force = TRUE' to brute force to 10.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   strata total</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      1     3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      2     3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3      3     3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4      4     2</span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
