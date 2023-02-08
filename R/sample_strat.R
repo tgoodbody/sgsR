@@ -167,7 +167,7 @@ sample_strat <- function(sraster,
   }
   
   #--- determine crs of input sraster ---#
-  crs <- terra::crs(sraster, proj = TRUE)
+  crs <- terra::crs(sraster)
   
   if(method == "Queinnec"){
     
@@ -197,6 +197,9 @@ sample_strat <- function(sraster,
       
       if(inherits(existing, "sf")){
         if (inherits(sf::st_geometry(existing), "sfc_POINT")) {
+          
+          #--- determine crs of existing ---#
+          crs <- sf::st_crs(existing)
           
           #--- if existing is an sf object extract the coordinates and the strata vector ---#
           

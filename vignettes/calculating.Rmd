@@ -4,7 +4,7 @@ output: rmarkdown::html_vignette
 description: >
   Learn how to use calculate_* functions.
 vignette: >
-  %\VignetteIndexEntry{calculating}
+  %\VignetteIndexEntry{Calculating}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

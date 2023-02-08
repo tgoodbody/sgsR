@@ -109,7 +109,7 @@ sample_nc <- function(mraster,
   mrasterP <- mraster[[1]]
   
   #--- determine crs of input raster ---#
-  crs <- terra::crs(mraster, proj = TRUE)
+  crs <- terra::crs(mraster)
   
   #--- Determine number of layers in mraster ---#
   
@@ -150,10 +150,7 @@ sample_nc <- function(mraster,
   
   #--- convert coordinates to a spatial points object ---#
   samples <- samples %>%
-    sf::st_as_sf(., coords = c("x", "y"))
-  
-  #--- assign raster crs to spatial points object ---#
-  sf::st_crs(samples) <- crs
+    sf::st_as_sf(., coords = c("x", "y"), crs = crs)
   
   #--- rescale kmeans centers for details and plotting ---#
   

@@ -217,7 +217,7 @@ sample_clhs <- function(mraster,
       }
       
       #--- determine crs of input mraster ---#
-      crs <- terra::crs(mraster, proj = TRUE)
+      crs <- terra::crs(mraster)
 
     } else {
       
@@ -271,6 +271,10 @@ sample_clhs <- function(mraster,
   #--- if existing samples are not provided ---#
 
   if (is.null(existing)) {
+    
+    #--- determine crs of input mraster ---#
+    crs <- terra::crs(mraster)
+    
     clhsOut <- clhs::clhs(x = vals_tp, size = nSamp, iter = iter, cost = cost, ...)
 
     #--- if ... variables are provided the output is sometimes a list object ---#
@@ -327,23 +331,18 @@ sample_clhs <- function(mraster,
       
       samples <- samples %>%
         dplyr::left_join(., extraCols,  by = c("X","Y")) %>%
-        sf::st_as_sf(., coords = c("X", "Y"))
+        sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
       
     } else {
       
       #--- convert coordinates to a spatial points object ---#
       samples <- samples %>%
         as.data.frame() %>%
-        sf::st_as_sf(., coords = c("X", "Y"))
+        sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
       
     }
     
   }
-
-
-  #--- assign sraster crs to spatial points object ---#
-  
-  sf::st_crs(samples) <- crs
 
   if (isTRUE(plot)) {
     if (!is.null(access)) {
