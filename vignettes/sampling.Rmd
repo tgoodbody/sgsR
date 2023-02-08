@@ -231,7 +231,7 @@ sample_strat(sraster = sraster, # input sraster
 ```{r}
 #--- perform grid sampling on each stratum separately ---#
 sample_sys_strat(
-  sraster = sraster, # input sraster
+  sraster = sraster, # input sraster with 4 strata
   cellsize = 1000, # grid size
   plot = TRUE # plot output
 )
@@ -242,7 +242,7 @@ Just like with `sample_systematic()` we can specify where we want our samples to
 
 ```{r}
 sample_sys_strat(
-  sraster = sraster, # input sraster
+  sraster = sraster, # input sraster with 4 strata
   cellsize = 500, # grid size
   square = FALSE, # hexagon tessellation
   location = "corners", # samples on tessellation corners
@@ -275,8 +275,8 @@ srasterpoly <- strat_poly(
 
 #--- systematatic stratified sampling for each stratum ---#
 sample_sys_strat(
-  sraster = srasterpoly, # input sraster from strat_poly()
-  cellsize = 1000, # grid size
+  sraster = srasterpoly, # input sraster from strat_poly() with 3 strata
+  cellsize = 500, # grid size
   square = FALSE, # hexagon tessellation
   location = "random", # randomize plot location
   plot = TRUE # plot output
