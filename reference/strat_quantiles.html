@@ -86,7 +86,7 @@
 
 
 <dt>nStrata</dt>
-<dd><p>Numeric. A positive integer representing the number of desired classes 
+<dd><p>Numeric. A positive integer representing the number of desired classes
 or a numeric vector of probabilities with values between <code>0-1</code>. If <code>mraster</code> has multiple layers,
 <code>nStrata</code> must be a list with an equal number of objects.</p></dd>
 
@@ -104,7 +104,7 @@ strata with boundary dividers.</p></dd>
 
 <dt>details</dt>
 <dd><p>Logical. If <code>FALSE</code> (default) output is only
-stratification raster. If <code>TRUE</code> return a list where <code>$details</code> is additional 
+stratification raster. If <code>TRUE</code> return a list where <code>$details</code> is additional
 stratification information and <code>$raster</code> is the output stratification spatRaster.</p></dd>
 
 
@@ -163,7 +163,7 @@ Histogram shows distribution and break points.</p></li>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">strat_quantiles</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  mraster <span class="op">=</span> <span class="va">mr</span><span class="op">[[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>,</span></span>
-<span class="r-in"><span>  nStrata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>,<span class="fl">0.4</span>,<span class="fl">0.8</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  nStrata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.4</span>, <span class="fl">0.8</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  map <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Mapping stratifications.</span>
@@ -176,7 +176,7 @@ Histogram shows distribution and break points.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> names       : strata_zq90, strata_pzabove2, strata </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> min values  :           1,               1,      1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> max values  :           4,               3,     12 </span>
-<span class="r-in"><span>  </span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

@@ -115,7 +115,7 @@ no additional samples will be added. Values close to 1 can cause the algorithm t
 
 <dt>tolerance</dt>
 <dd><p>Numeric. Allowable tolerance (&lt;= 0.1 (10<!-- %)) around quantile density of 1. If \code{nSamp} is used samples will be -->
-added until the <code>1 - tolerance</code> density is reached. If <code>threshold</code> is used, samples will be added until the 
+added until the <code>1 - tolerance</code> density is reached. If <code>threshold</code> is used, samples will be added until the
 <code>threshold - tolerance</code> value is reached. This parameter allows the user to define a buffer around desired quantile densities
 to permit the algorithm to not add additional samples if quantile density is very close to 1, or user-defined <code>threshold</code>.</p></dd>
 
@@ -154,7 +154,7 @@ is the tessellation grid for sampling, and <code>samples</code> are the systemat
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
     <p>Messages in the algorithm will state that samples have been added to under-represented quantiles. The number between
 square brackets that follow represent the matrix row and column respectively that can be printed using <code>details = TRUE</code>.</p>
-<p>In some cases, generally when a single metric is used as <code>mraster</code>, sampling ratios all be &gt;= 1 before the 
+<p>In some cases, generally when a single metric is used as <code>mraster</code>, sampling ratios all be &gt;= 1 before the
 <code>nSamp</code> number of samples are allocated. The algorithm will stop in this scenario.</p>
 <p>Special thanks to Dr. Brendan Malone for the original implementation of this algorithm.</p>
     </div>

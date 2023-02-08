@@ -128,7 +128,7 @@ from access where plots can be sampled.</p></dd>
 
 <dt>details</dt>
 <dd><p>Logical. If <code>FALSE</code> (default) output is only
-stratification raster. If <code>TRUE</code> return a list where <code>$details</code> is additional 
+stratification raster. If <code>TRUE</code> return a list where <code>$details</code> is additional
 stratification information and <code>$raster</code> is the output stratification spatRaster.</p></dd>
 
 
@@ -218,20 +218,20 @@ on Digital Soil Mapping, Sydney, Australia.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 200 features and 4 fields</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431110 ymin: 5337730 xmax: 438530 ymax: 5343090</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431110 ymin: 5337710 xmax: 438550 ymax: 5343230</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: UTM Zone 17, Northern Hemisphere</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        zq90 pzabove2  zsd type               geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 74992 19.50      1.6 8.02  new POINT (434290 5338650)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36647 17.90     71.3 5.51  new POINT (435770 5341110)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 68561  6.94     10.7 1.87  new POINT (435090 5339170)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49420 16.90     83.8 3.48  new POINT (437250 5340350)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47643  6.10      1.1 1.50  new POINT (435350 5340450)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25388 18.50     78.0 5.60  new POINT (438130 5341770)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43339 19.00     82.7 4.68  new POINT (436750 5340710)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5182  13.00     84.8 3.47  new POINT (433410 5342910)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 69223  2.00      0.2 0.24  new POINT (437990 5339130)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23228 15.70     75.8 4.33  new POINT (436070 5341890)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       zq90 pzabove2  zsd type               geometry</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 714   12.6     58.5 2.92  new POINT (432510 5343190)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35515 16.8     54.3 5.12  new POINT (433090 5341170)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31336 11.6     77.3 2.57  new POINT (432710 5341410)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55026 20.9     94.4 3.25  new POINT (431750 5340010)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16313 15.0     88.7 3.71  new POINT (435030 5342270)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79162 22.6     92.1 6.04  new POINT (432790 5338370)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10086 20.3     81.0 6.58  new POINT (431430 5342630)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46298 11.3     92.5 2.80  new POINT (434950 5340530)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41398 24.2     98.5 6.18  new POINT (438350 5340830)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 85900 25.3     86.1 7.52  new POINT (433330 5337990)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">sample_clhs</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  mraster <span class="op">=</span> <span class="va">mr</span>,</span></span>
@@ -241,25 +241,25 @@ on Digital Soil Mapping, Sydney, Australia.</p>
 <span class="r-in"><span>  details <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $clhs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 55304 12947 87461 80963 36033 74461 14941 69725 37983 50714 50869</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [12] 58377 39080 16895 45969 58832 75708 11194  7740 28330 22787 12096</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [23] 31093 43738 64040 20536 41297 59515 87112 40080 53108 53183 48918</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [34] 73968  4347 46586  9052 39303 22154  5078 53640 36506 13335 67121</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [45] 21050 22592 51719 87236 55739 15557 73584 37598 20616 17288 11241</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [56] 27327 64561   985 37620 26798 60911 58699 17930  2413 41721 61623</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [67] 44832 43214 62973 38859  3946 35277   283 29802  2075 87301 48082</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [78] 60153 16623 11473 19437   286 76263 90347 87648 63893 23131 46409</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [89] 52202 78292 89151 14738 47242 33748 38638 40254 77423 66500 57734</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [100] 33093  2521 67359 73363 30489 84863 65315 88979 11987 46482 11883</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [111] 41121 12657 45685 75302 17665 20140 64942  9285 14241 28108 45910</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [122]  4130 77398 52531 34647 56403 18103 82057 46248  7667 79412 87793</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [133] 18642 83683 60117   890 20161 61793 67583 51581 36242  3922 52540</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [144] 10406 26288 24211 82010 26087 59689 42024 53429 90178 52035 39851</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [155] 74388 48258 63738 57812 14139 28747 34568  6902 90777 56916 79535</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [166] 50724 10356 55318  8015 43904 88534 87183 74001  7846 27683 87885</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [177]  5497 44205 15091 58139 22931 85539 63309 18759 77833 37555 19260</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [188] 45676 73958 11456 54482 40003 31813 78258 16425 30407 15769 12584</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [199] 81885 67120     1     2     3     4     5     6     7     8     9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 21114 50494 80335 44134  8101 65013 67655 54276 85471 64771 56864</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [12] 76205 43362 62713 58803 21299 48617 20758 46750 57035 43554 35534</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [23] 60838 82837 52096 72548 37745 88029 79767 43187 26281 42337  8770</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [34] 37896 57709 20377 57752 66635 28312 53324 16516 80321 80325    30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [45] 78218 75104 76142 39756 46886 52981 25349 33601 83131 32801 80604</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [56]  9572 54570 68654 27576  3898 10125 79053 31671 83503  5933 59373</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [67] 21727 79186 55160 63690 72951   766 16813 29500  3437 84091 37219</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [78] 76187 55763 82458  6930 86591 61570 84921 28616 54913 42408  5260</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [89] 11114 34710 70939 17394 47996 24487 41668  7450 85711 15789 14157</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [100] 87695 74419 73461 72096 40199 26684 57804 54661 10502 34011 25055</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [111] 73457 78888 15379 52420 75776 35904 21761  8805 87515 50831 23487</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [122] 25548 17058 24197 73735 61362 18664  2696 87776 22101 30318 23092</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [133] 17930 53759 23899  6386 63180 50108 61941 10691 90522 83376  7304</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [144]  1200 27544 48389 16998   635 17962 23207 58061  6935 10673 26423</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [155] 72721  6557  4089 67029 19266 30298 18704 53309  2464 59973 51627</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [166] 66071  8316  2099 79867 34590 48936  2053 82662 32168 53341  9038</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [177] 12324 30792 83504 68001 72394 23631 82106 37490 49420 33655 11452</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [188] 59606 41710 42027 63066 12750 71871 74685  1769 38692 58483 10895</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [199] 48103 27772     1     2     3     4     5     6     7     8     9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [210]    10    11    12    13    14    15    16    17    18    19    20</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [221]    21    22    23    24    25    26    27    28    29    30    31</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [232]    32    33    34    35    36    37    38    39    40    41    42</span>
@@ -287,16 +287,16 @@ on Digital Soil Mapping, Sydney, Australia.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: UTM_Zone_17_Northern_Hemisphere</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    type  zq90 pzabove2  zsd FID               geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   new 20.00     89.3 5.28  NA POINT (433550 5340010)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   new 19.00     81.0 4.09  NA POINT (433650 5342470)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   new 19.80     94.3 5.74  NA POINT (431390 5337910)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   new 19.10     92.6 4.78  NA POINT (431890 5338270)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   new 16.80     90.6 3.39  NA POINT (432570 5341150)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   new 14.70     89.3 3.89  NA POINT (434010 5338710)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7   new  9.36     55.1 2.62  NA POINT (432550 5342350)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8   new 14.80     94.0 2.84  NA POINT (431130 5339090)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9   new 22.90     94.1 6.24  NA POINT (431170 5341030)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10  new 13.50     66.8 3.59  NA POINT (438430 5340290)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   new 15.90     56.6 3.43  NA POINT (432450 5342010)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   new 17.20     93.3 4.69  NA POINT (433490 5340290)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   new 18.30     93.5 3.13  NA POINT (432850 5338310)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   new 16.80     82.1 5.30  NA POINT (434350 5340670)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   new 19.60     92.0 5.73  NA POINT (436810 5342770)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   new 11.80     88.4 3.02  NA POINT (437750 5339430)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   new  5.67      8.8 1.32  NA POINT (437550 5339250)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   new 19.30     73.9 5.63  NA POINT (433730 5340070)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   new 15.50     80.4 3.61  NA POINT (435490 5338030)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10  new 13.90     60.1 4.06  NA POINT (432650 5339430)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

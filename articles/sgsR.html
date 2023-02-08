@@ -206,19 +206,23 @@ the distribution of <code>mraster$zq90</code> and stratified data into 4
 equally sized strata.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#--- apply kmeans algorithm to metrics raster ---#</span></span>
-<span><span class="va">sraster</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat_quantiles.html">strat_quantiles</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span>, <span class="co"># use mraster as input for sampling</span></span>
-<span>                           nStrata <span class="op">=</span> <span class="fl">4</span>, <span class="co"># algorithm will produce 4 strata</span></span>
-<span>                           plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># algorithm will plot output</span></span></code></pre></div>
+<span><span class="va">sraster</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat_quantiles.html">strat_quantiles</a></span><span class="op">(</span></span>
+<span>  mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span>, <span class="co"># use mraster as input for sampling</span></span>
+<span>  nStrata <span class="op">=</span> <span class="fl">4</span>, <span class="co"># algorithm will produce 4 strata</span></span>
+<span>  plot <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span> <span class="co"># algorithm will plot output</span></span></code></pre></div>
 <p><img src="sgsR_files/figure-html/unnamed-chunk-4-1.png" width="700"><img src="sgsR_files/figure-html/unnamed-chunk-4-2.png" width="700"></p>
 <p>The <code>sraster</code> output can then become an input parameter
 (<code>sraster</code>) for the <code><a href="../reference/sample_strat.html">sample_strat()</a></code>
 algorithm.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#--- apply stratified sampling ---#</span></span>
-<span><span class="va">existing</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sample_strat.html">sample_strat</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># use mraster as input for sampling</span></span>
-<span>                         nSamp <span class="op">=</span> <span class="fl">200</span>, <span class="co"># request 200 samples be taken</span></span>
-<span>                         mindist <span class="op">=</span> <span class="fl">100</span>, <span class="co"># define that samples must be 100 m apart</span></span>
-<span>                         plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># algorithm will plot output</span></span></code></pre></div>
+<span><span class="va">existing</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sample_strat.html">sample_strat</a></span><span class="op">(</span></span>
+<span>  sraster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># use mraster as input for sampling</span></span>
+<span>  nSamp <span class="op">=</span> <span class="fl">200</span>, <span class="co"># request 200 samples be taken</span></span>
+<span>  mindist <span class="op">=</span> <span class="fl">100</span>, <span class="co"># define that samples must be 100 m apart</span></span>
+<span>  plot <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span> <span class="co"># algorithm will plot output</span></span></code></pre></div>
 <p><img src="sgsR_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 </div>
 <div class="section level3 unnumbered">
@@ -273,15 +277,21 @@ from your <code>access</code> layer set
 <a href="https://cran.r-project.org/package=magrittr" class="external-link"><code>magrittr package</code></a>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#--- non piped ---#</span></span>
-<span><span class="va">sraster</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat_quantiles.html">strat_quantiles</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span>, <span class="co"># use mraster as input for sampling</span></span>
-<span>                           nStrata <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="co"># algorithm will produce 4 strata</span></span>
-<span>                           </span>
-<span><span class="va">existing</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sample_strat.html">sample_strat</a></span><span class="op">(</span>sraster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># use mraster as input for sampling</span></span>
-<span>                         nSamp <span class="op">=</span> <span class="fl">200</span>, <span class="co"># request 200 samples be taken</span></span>
-<span>                         mindist <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="co"># define that samples must be 100 m apart</span></span>
-<span>                       </span>
-<span><span class="fu"><a href="../reference/extract_metrics.html">extract_metrics</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span>,</span>
-<span>                existing <span class="op">=</span> <span class="va">existing</span><span class="op">)</span></span>
+<span><span class="va">sraster</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/strat_quantiles.html">strat_quantiles</a></span><span class="op">(</span></span>
+<span>  mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span>, <span class="co"># use mraster as input for sampling</span></span>
+<span>  nStrata <span class="op">=</span> <span class="fl">4</span></span>
+<span><span class="op">)</span> <span class="co"># algorithm will produce 4 strata</span></span>
+<span></span>
+<span><span class="va">existing</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sample_strat.html">sample_strat</a></span><span class="op">(</span></span>
+<span>  sraster <span class="op">=</span> <span class="va">sraster</span>, <span class="co"># use mraster as input for sampling</span></span>
+<span>  nSamp <span class="op">=</span> <span class="fl">200</span>, <span class="co"># request 200 samples be taken</span></span>
+<span>  mindist <span class="op">=</span> <span class="fl">100</span></span>
+<span><span class="op">)</span> <span class="co"># define that samples must be 100 m apart</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/extract_metrics.html">extract_metrics</a></span><span class="op">(</span></span>
+<span>  mraster <span class="op">=</span> <span class="va">mraster</span>,</span>
+<span>  existing <span class="op">=</span> <span class="va">existing</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#--- piped ---#</span></span>
 <span><span class="fu"><a href="../reference/strat_quantiles.html">strat_quantiles</a></span><span class="op">(</span>mraster <span class="op">=</span> <span class="va">mraster</span><span class="op">$</span><span class="va">zq90</span>, nStrata <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>

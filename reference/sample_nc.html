@@ -96,7 +96,7 @@
 
 <dt>k</dt>
 <dd><p>Numeric. The number of nearest neighbours to take for each k-means center.
-When <code>k = 1</code> (default), the output number of samples will match <code>nSamp</code>. 
+When <code>k = 1</code> (default), the output number of samples will match <code>nSamp</code>.
 Increases to <code>k</code> results in a multiplicative result total number of samples <code>nSamp * k</code>.</p></dd>
 
 
@@ -129,7 +129,7 @@ from access where plots can be sampled.</p></dd>
 
 <dt>details</dt>
 <dd><p>Logical. If <code>FALSE</code> (default) output is only
-stratification raster. If <code>TRUE</code> return a list where <code>$details</code> is additional 
+stratification raster. If <code>TRUE</code> return a list where <code>$details</code> is additional
 stratification information and <code>$raster</code> is the output stratification spatRaster.</p></dd>
 
 
@@ -149,10 +149,10 @@ stratification information and <code>$raster</code> is the output stratification
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
-    <p>When <code>details = TRUE</code>, a list is returned where:</p><ol><li><p><code>samples</code> output nearest centroid samples with <code>kcenter</code> attribute linking 
+    <p>When <code>details = TRUE</code>, a list is returned where:</p><ol><li><p><code>samples</code> output nearest centroid samples with <code>kcenter</code> attribute linking
 to associated kmeans centers.</p></li>
 <li><p><code>kmeans</code> is a list output of the <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></code> function</p></li>
-<li><p><code>centers</code> Un-scaled kmeans center values for each layer in <code>mraster</code> 
+<li><p><code>centers</code> Un-scaled kmeans center values for each layer in <code>mraster</code>
 with <code>kcenter</code> attribute to link with the same attribute in <code>samples</code>.</p></li>
 <li><p><code>kplot</code> is a <code>ggplot</code> scatterplot object visualizing the kmeans centers
  and associated nearest neighbor samples.</p></li>
@@ -198,11 +198,11 @@ Australian Forestry, 79:3, 217-228, DOI: 10.1080/00049158.2016.1218265</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431970 ymin: 5341550 xmax: 438150 ymax: 5343130</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: UTM Zone 17, Northern Hemisphere</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        zq90 pzabove2  zsd kcenter               geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2218  16.80     86.7 3.93       1 POINT (438150 5343130)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31376 10.90     80.2 2.60       2 POINT (431970 5341550)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2718  12.60     39.8 3.46       3 POINT (433230 5343090)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8052   4.93     21.1 1.15       4 POINT (435470 5342810)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29612 21.10     85.2 5.93       5 POINT (433990 5341650)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31376 10.90     80.2 2.60       1 POINT (431970 5341550)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8052   4.93     21.1 1.15       2 POINT (435470 5342810)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29612 21.10     85.2 5.93       3 POINT (433990 5341650)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2718  12.60     39.8 3.46       4 POINT (433230 5343090)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2218  16.80     86.7 3.93       5 POINT (438150 5343130)</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

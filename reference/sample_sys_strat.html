@@ -153,7 +153,7 @@ is the tessellation grid for sampling, and <code>samples</code> are the systemat
     <p>Specifying <code>location = "random"</code> can result in tessellations with no samples.
 This results from <code>raster</code> have <code>NA</code> values at the random location chosen.
 Using <code>force = TRUE</code> removes areas of <code>NA</code> from sampling entirely, but
-considerably slows processing speeds. Thanks to R. Hijmans for help in debugging and 
+considerably slows processing speeds. Thanks to R. Hijmans for help in debugging and
 providing suggestions for this script.</p>
 <p>All stratum are sampled using random tessellation start points and translations.</p>
     </div>
@@ -189,53 +189,51 @@ providing suggestions for this script.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Processing strata : 2</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Processing strata : 3</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Processing strata : 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 34 features and 1 field</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 32 features and 1 field</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431154.5 ymin: 5337764 xmax: 438512.5 ymax: 5343159</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431250.7 ymin: 5337701 xmax: 438524.7 ymax: 5342458</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: UTM Zone 17, Northern Hemisphere</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    strata                 geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1 POINT (432336.4 5340217)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       1 POINT (434234.6 5341399)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       1 POINT (431154.5 5342115)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       1 POINT (435137.2 5342487)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       1 POINT (436132.8 5342580)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11      2 POINT (438512.5 5343112)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21      2 POINT (437618.3 5339619)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31      2 POINT (435537.6 5340438)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41      2 POINT (435462.4 5339026)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51      2 POINT (432788.4 5342001)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1 POINT (434259.5 5339088)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       1 POINT (433517.9 5341198)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       1 POINT (436392.1 5338416)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       1 POINT (438524.7 5337743)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       1 POINT (437064.5 5340548)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       1 POINT (438501.6 5339157)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11      2 POINT (438275.1 5340372)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21      2 POINT (437286.2 5340520)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31      2 POINT (437434.2 5341509)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41      2   POINT (435853 5337701)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">sample_sys_strat</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  sraster <span class="op">=</span> <span class="va">sr</span>,</span></span>
 <span class="r-in"><span>  cellsize <span class="op">=</span> <span class="fl">1000</span>,</span></span>
 <span class="r-in"><span>  square <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
-<span class="r-in"><span>  location <span class="op">=</span> <span class="st">"corners"</span>,</span></span>
-<span class="r-in"><span>  plot <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span>  location <span class="op">=</span> <span class="st">"corners"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Processing strata : 1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Processing strata : 2</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Processing strata : 3</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Processing strata : 4</span>
-<span class="r-plt img"><img src="sample_sys_strat-1.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 307 features and 1 field</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 319 features and 1 field</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431231.2 ymin: 5337747 xmax: 438556.4 ymax: 5343095</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 431257.6 ymin: 5337743 xmax: 438536.9 ymax: 5343135</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: UTM Zone 17, Northern Hemisphere</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    strata                 geometry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1 POINT (436153.8 5337747)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       1   POINT (437111 5338037)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       1 POINT (437673.2 5337905)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       1 POINT (436153.8 5337747)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       1 POINT (435986.6 5338300)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       1 POINT (436153.8 5337747)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7       1 POINT (437673.2 5337905)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8       1 POINT (438068.1 5338327)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9       1   POINT (437111 5338037)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10      1 POINT (436153.8 5337747)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1   POINT (438374 5341676)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       1 POINT (437816.8 5342506)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       1   POINT (437778 5343082)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       1   POINT (438374 5341676)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       1   POINT (438374 5341676)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       1   POINT (438011 5339626)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7       1   POINT (437778 5343082)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8       1 POINT (437816.8 5342506)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9       1   POINT (438374 5341676)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10      1 POINT (437816.8 5342506)</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
