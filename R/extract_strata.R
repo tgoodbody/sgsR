@@ -71,6 +71,8 @@ extract_strata <- function(sraster,
       stop("'existing' must be an 'sf' object of type 'sfc_POINT' geometry.", call. = FALSE)
     }
     
+    crs <- sf::st_crs(existing)
+    
     #--- Extract xy coordinates to enable extraction of strata values ---#
     
     xy <- sf::st_coordinates(existing)
@@ -80,6 +82,9 @@ extract_strata <- function(sraster,
       dplyr::select(-X,-Y)
     
   } else {
+    
+    crs <- terra::crs(sraster)
+    
     if (any(!c("X", "Y") %in% colnames(existing))) {
       
       #--- if coordinate column names are lowercase change them to uppercase to match requirements ---#
@@ -183,12 +188,9 @@ extract_strata <- function(sraster,
     #--- convert coordinates to a sf object ---#
 
     samples <- cbind(xy, vals, existing) %>%
-      sf::st_as_sf(., coords = c("X", "Y"))
+      sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
     
-    #--- assign sraster crs to spatial points object ---#
-    
-    sf::st_crs(samples) <- terra::crs(sraster)
-    
+
     if (!is.null(filename)) {
       
       if (!is.character(filename)) {
