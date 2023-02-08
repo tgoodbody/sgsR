@@ -251,7 +251,7 @@ strat_map(sraster = srasters, # two layer sraster
 The convention for the numeric value of the output strata is the concatenation (merging) of `sraster` layers. Check `$lookUP` for a clear depiction of this step. 
 
 ```{r}
-strat_map(sraster = srasters, # strat_poly 3 class stratification
+strat_map(sraster = srasters, # input with 2 sraster layers
           stack = TRUE, # output stacked input (strata_1, strata_2) and output (strata) layers
           details = TRUE, # provide additional details
           plot = TRUE) # plot output
