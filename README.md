@@ -36,10 +36,40 @@ library(sgsR)
 To cite `sgsR` use `citation()` from within R with:
 
 ``` r
-citation("sgsR")
-#> Goodbody, TRH., Coops, NC., Queinnec, M., White, JC., Tompalski, P., Hudak, AT., Auty, D., Valbuena, R., LeBoeuf, A., Sinclair, I., McCartney, G., Prieur, J-F., Woods, ME. (2023). sgsR: a structurally guided sampling toolbox for LiDAR-based forest inventories. Forestry: An International Journal of Forest Research. https://doi.org/10.1093/forestry/cpac055.
-
-#> Tristan RH Goodbody, Nicholas C Coops and Martin Queinnec (2023). Structurally Guided Sampling. R package version 1.4.0. https://cran.r-project.org/package=sgsR.
+print(citation("sgsR"),bibtex=TRUE)
+#> 
+#> To cite package 'sgsR' in publications use:
+#> 
+#>   Goodbody, TRH., Coops, NC., Queinnec, M., White, JC., Tompalski, P.,
+#>   Hudak, AT., Auty, D., Valbuena, R., LeBoeuf, A., Sinclair, I.,
+#>   McCartney, G., Prieur, J-F., Woods, ME. (2023). sgsR: a structurally
+#>   guided sampling toolbox for LiDAR-based forest inventories. Forestry:
+#>   An International Journal of Forest Research.
+#>   10.1093/forestry/cpac055.
+#> 
+#> A BibTeX entry for LaTeX users is
+#> 
+#>   @Manual{,
+#>     title = {sgsR: a structurally guided sampling toolbox for LiDAR-based forest inventories.},
+#>     author = {Tristan R.H. Goodbody and Nicholas C. Coops and Martin Queinnec and Joanne C. White and Piotr Tompalski and Andrew T. Hudak and David Auty and Ruben Valbuena and Antoine LeBoeuf and Ian Sinclair and Grant McCartney and Jean-Francois Prieur and Murray E. Woods},
+#>     journal = {Forestry: An International Journal of Forest Research},
+#>     year = {2023},
+#>     doi = {10.1093/forestry/cpac055},
+#>   }
+#> 
+#>   Tristan RH Goodbody, Nicholas C Coops and Martin Queinnec (2023).
+#>   Structurally Guided Sampling. R package version 1.4.0.
+#>   https://cran.r-project.org/package=sgsR.
+#> 
+#> A BibTeX entry for LaTeX users is
+#> 
+#>   @Manual{,
+#>     title = {Structurally Guided Sampling},
+#>     author = {Tristan RH Goodbody and Nicholas C Coops and Martin Queinnec},
+#>     year = {2023},
+#>     note = {R package version 1.4.0},
+#>     url = {https://cran.r-project.org/package=sgsR},
+#>   }
 ```
 
 ## Overview
