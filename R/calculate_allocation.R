@@ -31,6 +31,7 @@
 #'  Chapman and Hall/CRC. https://doi.org/10.1201/9780203498880
 #'
 #' @examples
+#' \dontrun{
 #' #--- Load strata raster and existing samples---#
 #' r <- system.file("extdata", "sraster.tif", package = "sgsR")
 #' sr <- terra::rast(r)
@@ -44,6 +45,7 @@
 #'   nSamp = 10,
 #'   allocation = "prop"
 #' )
+#' }
 #'
 #' @author Tristan R.H. Goodbody
 #'

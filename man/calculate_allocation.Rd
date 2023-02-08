@@ -49,6 +49,7 @@ Returns a data.frame of:
 Determine how many samples to allocate within strata.
 }
 \examples{
+\dontrun{
 #--- Load strata raster and existing samples---#
 r <- system.file("extdata", "sraster.tif", package = "sgsR")
 sr <- terra::rast(r)
@@ -62,6 +63,7 @@ calculate_allocation(
   nSamp = 10,
   allocation = "prop"
 )
+}
 
 }
 \references{
