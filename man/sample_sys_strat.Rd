@@ -82,8 +82,7 @@ sample_sys_strat(
   sraster = sr,
   cellsize = 1000,
   square = FALSE,
-  location = "corners",
-  plot = TRUE
+  location = "corners"
 )
 
 }
