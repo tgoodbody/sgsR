@@ -14,7 +14,6 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-
 ```
 
 ```{css,echo=FALSE}
@@ -50,28 +49,31 @@ a <- system.file("extdata", "access.shp", package = "sgsR")
 access <- sf::st_read(a, quiet = TRUE)
 
 #--- apply quantiles algorithm to metrics raster ---#
-sraster <- strat_quantiles(mraster = mraster$zq90, # use mraster as input for sampling
-                           nStrata = 4) # algorithm will produce 4 strata
+sraster <- strat_quantiles(
+  mraster = mraster$zq90, # use mraster as input for sampling
+  nStrata = 4
+) # algorithm will produce 4 strata
 
 #--- apply stratified sampling algorithm ---#
-existing <- sample_strat(sraster = sraster, # use mraster as input for sampling
-                         nSamp = 200, # request 200 samples be taken
-                         mindist = 100) # define that samples must be 100 m apart
+existing <- sample_strat(
+  sraster = sraster, # use mraster as input for sampling
+  nSamp = 200, # request 200 samples be taken
+  mindist = 100
+) # define that samples must be 100 m apart
 
 #--- algorithm table ---#
 
-a <- c("`strat_kmeans()`","`strat_quantiles()`","`strat_breaks()`","`strat_poly()`","`strat_map()`")
+a <- c("`strat_kmeans()`", "`strat_quantiles()`", "`strat_breaks()`", "`strat_poly()`", "`strat_map()`")
 
 d <- c("kmeans", "Quantiles", "User-defined breaks", "Polygons", "Maps (combines) `srasters`")
 
 s <- c("Unsupervised", "Either", "Supervised", "Supervised", "Unsupervised")
 
-urls <- c("#kmeans","#quantiles","#breaks","#poly","#map")
+urls <- c("#kmeans", "#quantiles", "#breaks", "#poly", "#map")
 
 df <- data.frame(Algorithm = a, Description = d, Approach = s)
 
 df$Algorithm <- paste0("[", df$Algorithm, "](", urls, ")")
-
 ```
 
 Fundamental to many structurally guided sampling approaches is the use of stratification methods that allow for more effective and representative sampling protocols. It is important to note that the data sets being used as inputs are considered to be populations.
@@ -79,7 +81,7 @@ Fundamental to many structurally guided sampling approaches is the use of strati
 Currently, there are 5 functions associated with the `strat` verb in the `sgsR` package:
 
 ```{r echo=FALSE}
-knitr::kable(df, align = 'c')
+knitr::kable(df, align = "c")
 ```
 
 ## `strat_kmeans` {#kmeans .unnumbered}
@@ -88,9 +90,10 @@ knitr::kable(df, align = 'c')
 
 ```{r,warning=F,message=F}
 #--- perform stratification using k-means ---#
-strat_kmeans(mraster = mraster, # input
-             nStrata = 5) # algorithm will produce 4 strata
-
+strat_kmeans(
+  mraster = mraster, # input
+  nStrata = 5
+) # algorithm will produce 4 strata
 ```
 
 ::: {.infobox .caution data-latex="{caution}"}
@@ -100,11 +103,13 @@ strat_kmeans(mraster = mraster, # input
 :::
 
 ```{r,warning=F,message=F}
-strat_kmeans(mraster = mraster, # input
-             nStrata = 10, # algorithm will produce 10 strata
-             iter = 1000, # set minimum number of iterations to determine kmeans centers
-             algorithm = "MacQueen", # use MacQueen algorithm
-             plot = TRUE) # plot output
+strat_kmeans(
+  mraster = mraster, # input
+  nStrata = 10, # algorithm will produce 10 strata
+  iter = 1000, # set minimum number of iterations to determine kmeans centers
+  algorithm = "MacQueen", # use MacQueen algorithm
+  plot = TRUE
+) # plot output
 ```
 
 ## `strat_quantiles` {#quantiles .unnumbered}
@@ -114,16 +119,19 @@ The `strat_quantiles()` algorithm divides data into equally sized strata (`nStra
 
 ```{r,warning=F,message=F}
 #--- perform quantiles stratification ---#
-strat_quantiles(mraster = mraster$zq90,
-                nStrata = 6,
-                plot = TRUE)
+strat_quantiles(
+  mraster = mraster$zq90,
+  nStrata = 6,
+  plot = TRUE
+)
 
 #--- vectorized ---#
 strat_quantiles(
   mraster = mraster[[1:2]], # two metric layers
-  nStrata = list(c(0.2,0.4,0.8), 3), # list with two objects - 1 probability breaks, 1 scalar integer
+  nStrata = list(c(0.2, 0.4, 0.8), 3), # list with two objects - 1 probability breaks, 1 scalar integer
   plot = TRUE, # plot output srasters
-  map = TRUE) # combine stratifications to a mapped output
+  map = TRUE
+) # combine stratifications to a mapped output
 ```
 
 ## `strat_breaks` {#breaks .unnumbered}
@@ -144,24 +152,27 @@ br.pz2
 br.zq90 <- c(3, 5, 11, 18)
 
 br.zq90
-
 ```
 
 Once the breaks are created, we can use them as input into the `strat_breaks()` function using the `breaks` parameter.
 
 ```{r,warning=F,message=F}
 #--- stratify on 1 metric only ---#
-strat_breaks(mraster = mraster$pzabove2, # single raster
-             breaks = br.pz2, # single set of breaks
-             plot = TRUE) # plot output
+strat_breaks(
+  mraster = mraster$pzabove2, # single raster
+  breaks = br.pz2, # single set of breaks
+  plot = TRUE
+) # plot output
 ```
 
 ```{r,warning=F,message=F}
 #--- vectorized ---#
-strat_breaks(mraster = mraster[[1:2]], # two metrics
-             breaks = list(br.zq90,br.pz2), # list of two breaks vectors
-             map = TRUE, # map final output
-             plot = TRUE) # plot outputs
+strat_breaks(
+  mraster = mraster[[1:2]], # two metrics
+  breaks = list(br.zq90, br.pz2), # list of two breaks vectors
+  map = TRUE, # map final output
+  plot = TRUE
+) # plot outputs
 ```   
 
 ## `strat_poly` {#poly .unnumbered}
@@ -197,11 +208,13 @@ In our example, `attribute = "NUTRIENTS"` and features within, `c("poor", "rich"
 ```{r}
 #--- stratify polygon coverage ---#
 
-srasterpoly <- strat_poly(poly = fri, # input polygon
-                          attribute = attribute, # attribute to stratify by
-                          features = features, # features within attribute
-                          raster = sraster, # raster to define extent and resolution for output
-                          plot = TRUE) # plot output
+srasterpoly <- strat_poly(
+  poly = fri, # input polygon
+  attribute = attribute, # attribute to stratify by
+  features = features, # features within attribute
+  raster = sraster, # raster to define extent and resolution for output
+  plot = TRUE
+) # plot output
 ```
 
 `features` can be grouped. In our example below, `rich` and `medium` features are combined into a single strata, while `low` is left in isolation. The 2 vectors are specified into a list, which will result in the output of 2 strata (low & rich/medium).  
@@ -213,12 +226,14 @@ g2 <- c("rich", "medium")
 
 features <- list(g1, g2)
 
-strat_poly(poly = fri,
-           attribute = attribute,
-           features = features,
-           raster = sraster,
-           plot = TRUE,
-           details = TRUE)
+strat_poly(
+  poly = fri,
+  attribute = attribute,
+  features = features,
+  raster = sraster,
+  plot = TRUE,
+  details = TRUE
+)
 ```
 
 ::: {.infobox .caution data-latex="{caution}"}
@@ -243,16 +258,19 @@ plot(srasters)
 
 ```{r}
 #--- map srasters ---#
-strat_map(sraster = srasters, # two layer sraster
-          plot = TRUE)
-
+strat_map(
+  sraster = srasters, # two layer sraster
+  plot = TRUE
+)
 ```
 
 The convention for the numeric value of the output strata is the concatenation (merging) of `sraster` layers. Check `$lookUP` for a clear depiction of this step. 
 
 ```{r}
-strat_map(sraster = srasters, # input with 2 sraster layers
-          stack = TRUE, # output stacked input (strata_1, strata_2) and output (strata) layers
-          details = TRUE, # provide additional details
-          plot = TRUE) # plot output
+strat_map(
+  sraster = srasters, # input with 2 sraster layers
+  stack = TRUE, # output stacked input (strata_1, strata_2) and output (strata) layers
+  details = TRUE, # provide additional details
+  plot = TRUE
+) # plot output
 ```

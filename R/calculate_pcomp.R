@@ -10,7 +10,7 @@
 #'
 #' @param nComp Numeric. Value indicating number of principal components to be rasterized.
 #' @param maxcells Numeric. Maximum number of samples to use to generate principal components.
-#' For objects that are too large to feed into \code{\link[stats]{prcomp}}. 
+#' For objects that are too large to feed into \code{\link[stats]{prcomp}}.
 #' @param ... Additional arguments to be passed to \code{\link[stats]{prcomp}}.
 #'
 #' @importFrom stats na.exclude na.omit prcomp
@@ -34,10 +34,10 @@
 #' )
 #'
 #' #--- Display principal component details ---#
-#' #pcomp$pca
+#' # pcomp$pca
 #'
 #' #--- Display importance of components ---#
-#' #summary(pcomp$pca)
+#' # summary(pcomp$pca)
 #' @author Tristan R.H. Goodbody
 #'
 #' @export
@@ -52,7 +52,6 @@ calculate_pcomp <- function(mraster,
                             filename = NULL,
                             overwrite = FALSE,
                             ...) {
-
   #--- set global vars ---#
 
   rout <- NULL
@@ -74,7 +73,7 @@ calculate_pcomp <- function(mraster,
   if (!is.logical(scale)) {
     stop("'scale' must be type logical.", call. = FALSE)
   }
-  
+
   if (!is.numeric(maxcells)) {
     stop("'maxcells' must be type numeric.", call. = FALSE)
   }
@@ -89,14 +88,10 @@ calculate_pcomp <- function(mraster,
 
   #--- Extract values from mraster ---#
 
-  if (maxcells < terra::ncell(mraster)){
-    
+  if (maxcells < terra::ncell(mraster)) {
     vals <- terra::spatSample(mraster, maxcells, "regular")
-  
   } else {
-    
     vals <- terra::values(mraster)
-  
   }
 
   #--- perform PCA ---#
@@ -133,20 +128,17 @@ calculate_pcomp <- function(mraster,
   }
 
   if (isTRUE(plot)) {
-
     #--- Plot components ---#
     terra::plot(pcaRout)
   }
 
   if (isTRUE(details)) {
-
     #--- create list to assign pca info and output raster ---#
 
     out <- list(pca = PCA, raster = pcaRout)
 
     return(out)
   } else {
-
     #--- just output raster ---#
 
     return(pcaRout)

@@ -29,7 +29,7 @@ strat_breaks(
 strata with boundary dividers.}
 
 \item{details}{Logical. If \code{FALSE} (default) output is only
-stratification raster. If \code{TRUE} return a list where \code{$details} is additional 
+stratification raster. If \code{TRUE} return a list where \code{$details} is additional
 stratification information and \code{$raster} is the output stratification spatRaster.}
 
 \item{filename}{Character. Path to write stratified raster to disc.}

@@ -25,7 +25,7 @@ sample_nc(
 \item{nSamp}{Numeric. Number of desired samples.}
 
 \item{k}{Numeric. The number of nearest neighbours to take for each k-means center.
-When \code{k = 1} (default), the output number of samples will match \code{nSamp}. 
+When \code{k = 1} (default), the output number of samples will match \code{nSamp}.
 Increases to \code{k} results in a multiplicative result total number of samples \code{nSamp * k}.}
 
 \item{iter}{Numeric. The maximum number of kmeans iterations allowed.}
@@ -44,7 +44,7 @@ from access where plots can be sampled.}
 \item{plot}{Logical. Plot \code{mraster} with allocated samples.}
 
 \item{details}{Logical. If \code{FALSE} (default) output is only
-stratification raster. If \code{TRUE} return a list where \code{$details} is additional 
+stratification raster. If \code{TRUE} return a list where \code{$details} is additional
 stratification information and \code{$raster} is the output stratification spatRaster.}
 
 \item{filename}{Character. Path to write stratified raster to disc.}
@@ -60,10 +60,10 @@ Sampling using the nearest centroid (NC) approach described in Melville & Stone 
 \note{
 When \code{details = TRUE}, a list is returned where:
 \enumerate{
-\item \code{samples} output nearest centroid samples with \code{kcenter} attribute linking 
+\item \code{samples} output nearest centroid samples with \code{kcenter} attribute linking
 to associated kmeans centers.
 \item \code{kmeans} is a list output of the \code{\link[stats]{kmeans}} function
-\item \code{centers} Un-scaled kmeans center values for each layer in \code{mraster} 
+\item \code{centers} Un-scaled kmeans center values for each layer in \code{mraster}
 with \code{kcenter} attribute to link with the same attribute in \code{samples}.
 \item \code{kplot} is a \code{ggplot} scatterplot object visualizing the kmeans centers
  and associated nearest neighbor samples.

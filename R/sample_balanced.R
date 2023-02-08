@@ -52,7 +52,6 @@ sample_balanced <- function(mraster,
                             plot = FALSE,
                             filename = NULL,
                             overwrite = FALSE) {
-
   #--- Set global vars ---#
   x <- y <- X <- Y <- strata <- NULL
 
@@ -88,7 +87,6 @@ sample_balanced <- function(mraster,
   mrasterP <- mraster
 
   if (!is.null(access)) {
-
     #--- buffer roads and mask ---#
 
     access_buff <- mask_access(
@@ -116,7 +114,6 @@ sample_balanced <- function(mraster,
   #--- inclusion probability ---#
 
   if (is.null(p)) {
-
     #--- if 'p' is not defined use the default ---#
 
     p <- rep(nSamp / N, N)
@@ -124,15 +121,14 @@ sample_balanced <- function(mraster,
     if (!is.numeric(p)) {
       stop("'p' must be type numeric.", call. = FALSE)
     }
-    
-    if(length(p) != N){
-      stop(paste0("'p' have a length of ", N ,"."), call. = FALSE)
+
+    if (length(p) != N) {
+      stop(paste0("'p' have a length of ", N, "."), call. = FALSE)
     }
   }
 
 
   if (algorithm == "lpm2_kdtree") {
-
     sampled <- SamplingBigData::lpm2_kdtree(prob = p, x = vals_m)
   }
 
@@ -176,7 +172,6 @@ sample_balanced <- function(mraster,
     sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
 
   if (isTRUE(plot)) {
-
     #--- plot input mraster and random samples ---#
     if (!is.null(access)) {
       terra::plot(mrasterP[[1]])
@@ -189,19 +184,18 @@ sample_balanced <- function(mraster,
   }
 
   if (!is.null(filename)) {
-    
     if (!is.character(filename)) {
       stop("'filename' must be a file path character string.", call. = FALSE)
     }
-    
+
     if (!is.logical(overwrite)) {
       stop("'overwrite' must be type logical.", call. = FALSE)
     }
-    
+
     if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(paste0("'",filename, "' already exists and overwrite = FALSE."), call. = FALSE)
+      stop(paste0("'", filename, "' already exists and overwrite = FALSE."), call. = FALSE)
     }
-    
+
     sf::st_write(samples, filename, delete_layer = overwrite)
     message("Output samples written to disc.")
   }

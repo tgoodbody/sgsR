@@ -1,7 +1,7 @@
 #' Population descriptors
 #'
 #' @description Population matrices and descriptions of metric raster data
-#' 
+#'
 #' @family calculate functions
 #'
 #' @description Calculates population level statistics including principal components, quantile matrix, and covariance matrix
@@ -79,7 +79,6 @@ calculate_pop <- function(mraster,
   #--- PCA loadings for the population ---#
 
   if (isTRUE(PCA)) {
-
     #--- perform PCA analysis for the population to determine variance in each component ---#
 
     pca <- stats::prcomp(vals, scale = TRUE, center = TRUE)

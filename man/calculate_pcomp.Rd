@@ -32,7 +32,7 @@ For objects that are too large to feed into \code{\link[stats]{prcomp}}.}
 \item{plot}{Logical. Plots output strata raster with samples.}
 
 \item{details}{Logical. If \code{FALSE} (default) output is only
-stratification raster. If \code{TRUE} return a list where \code{$details} is additional 
+stratification raster. If \code{TRUE} return a list where \code{$details} is additional
 stratification information and \code{$raster} is the output stratification spatRaster.}
 
 \item{filename}{Character. Path to write output samples.}
@@ -64,10 +64,10 @@ pcomp <- calculate_pcomp(
 )
 
 #--- Display principal component details ---#
-#pcomp$pca
+# pcomp$pca
 
 #--- Display importance of components ---#
-#summary(pcomp$pca)
+# summary(pcomp$pca)
 }
 \seealso{
 Other calculate functions: 

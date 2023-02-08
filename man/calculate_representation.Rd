@@ -11,7 +11,7 @@ calculate_representation(sraster, existing, plot = FALSE)
 
 \item{existing}{sf 'POINT'.  Existing plot network.}
 
-\item{plot}{Logical. Plot frequency of strata coverage and sampling coverage 
+\item{plot}{Logical. Plot frequency of strata coverage and sampling coverage
 for \code{sraster} and \code{existing}. Will return a list if \code{TRUE}.}
 }
 \value{

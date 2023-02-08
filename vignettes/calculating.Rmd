@@ -47,32 +47,35 @@ a <- system.file("extdata", "access.shp", package = "sgsR")
 access <- sf::st_read(a, quiet = TRUE)
 
 #--- apply quantiles algorithm to metrics raster ---#
-sraster <- strat_quantiles(mraster = mraster$zq90, # use mraster as input for sampling
-                           nStrata = 4) # algorithm will produce 4 strata
+sraster <- strat_quantiles(
+  mraster = mraster$zq90, # use mraster as input for sampling
+  nStrata = 4
+) # algorithm will produce 4 strata
 
 #--- apply stratified sampling algorithm ---#
-existing <- sample_strat(sraster = sraster, # use mraster as input for sampling
-                         nSamp = 200, # request 200 samples be taken
-                         mindist = 100) # define that samples must be 100 m apart
+existing <- sample_strat(
+  sraster = sraster, # use mraster as input for sampling
+  nSamp = 200, # request 200 samples be taken
+  mindist = 100
+) # define that samples must be 100 m apart
 
 #--- algorithm table ---#
 
-a <- c("`calculate_representation()`","`calculate_distance()`","`calculate_pcomp()`","`calculate_sampsize()`","`calculate_allocation()`","`calculate_coobs()`","`calculate_pop()`","`calculate_lhsOpt()`")
+a <- c("`calculate_representation()`", "`calculate_distance()`", "`calculate_pcomp()`", "`calculate_sampsize()`", "`calculate_allocation()`", "`calculate_coobs()`", "`calculate_pop()`", "`calculate_lhsOpt()`")
 
 d <- c("Determine representation of strata in existing sample unit", "Per pixel distance to closest `access` vector", "Principal components of input `mraster`", "Estimated sample sizes based on relative standard error", "Proportional / optimal / equal / manual allocation", "Detail how `existing` sample units are distributed among `mraster`", "Population level information (PCA / quantile matrix / covariance matrix) of `mraster`", "Determine optimal Latin hypercube sampling parameters including sample size")
 
-urls <- c("#rep","#dist","#pcomp","#sampsize","#allocation","#coobs","#lhspop","#lhsopt")
+urls <- c("#rep", "#dist", "#pcomp", "#sampsize", "#allocation", "#coobs", "#lhspop", "#lhsopt")
 
 df <- data.frame(Algorithm = a, Description = d)
 
 df$Algorithm <- paste0("[", df$Algorithm, "](", urls, ")")
-
 ```
 
 Currently, there are 8 functions associated with the `calculate` verb in the `sgsR` package:
 
 ```{r echo=FALSE}
-knitr::kable(df, align = 'c')
+knitr::kable(df, align = "c")
 ```
 
 ## `calculate_representation()` {#rep .unnumbered}
@@ -81,17 +84,23 @@ knitr::kable(df, align = 'c')
 
 ```{r,warning=F,message=F}
 #--- quantile sraster ---#
-quantiles <- strat_quantiles(mraster = mraster$zq90,
-                             nStrata = 8)
+quantiles <- strat_quantiles(
+  mraster = mraster$zq90,
+  nStrata = 8
+)
 
 #--- random samples ---#
-srs <- sample_srs(raster = sraster,
-                  nSamp = 50)
+srs <- sample_srs(
+  raster = sraster,
+  nSamp = 50
+)
 
 #--- calculate representation ---#
-calculate_representation(sraster = quantiles, 
-                         existing = srs, 
-                         plot = TRUE)
+calculate_representation(
+  sraster = quantiles,
+  existing = srs,
+  plot = TRUE
+)
 ```
 
 The tabular output presents the frequency of coverage for each strata (`srasterFreq`) (what % of the landscape does the strata cover) and the sampling frequency within each strata (`sampleFreq`) (what % of total `existing` samples are in the strata). The difference (`diffFreq`) between coverage frequency and sampling frequency determines whether the values are over-represented (positive numbers) or under-represented (negative numbers). This value translates to a discrete `need` attribute that defines whether there is a need to add or remove samples to meet the number of samples necessary to be considered representative of the spatial coverage of strata inputted in `sraster`. 
@@ -99,9 +108,11 @@ The tabular output presents the frequency of coverage for each strata (`srasterF
 Performing the algorithm on a sample set derived using `sample_strat()` exhibits proportional sampling to strata coverage given that samples were allocated proportionally to spatial coverage.
 
 ```{r,warning=F,message=F}
-calculate_representation(sraster = sraster,
-                         existing = existing,
-                         plot = TRUE)
+calculate_representation(
+  sraster = sraster,
+  existing = existing,
+  plot = TRUE
+)
 ```
 
 ::: {.infobox .caution data-latex="{caution}"}
@@ -115,9 +126,11 @@ Presence of very small (negligible) differences between `srasterFreq` and `sampl
 `calculate_distance()` uses input `raster` and `access` data and outputs the per pixel distance to the nearest access point. This algorithm has a specific value for constraining  sampling protocols, such as with `sample_clhs()`, where the output raster layer can be used as the `cost` for the constraint. The output raster consists of the input appended with the calculated distance layer (`dist2access`). 
 
 ```{r,warning=F,message=F}
-calculate_distance(raster = sraster, # input
-                   access = access, # define access road network
-                   plot = TRUE) # plot
+calculate_distance(
+  raster = sraster, # input
+  access = access, # define access road network
+  plot = TRUE
+) # plot
 ```
 
 _This function performs considerably slower when `access` has many features. Consider mergeing features for improved efficiency._
@@ -127,10 +140,12 @@ _This function performs considerably slower when `access` has many features. Con
 `calculate_pcomp()` uses `mraster` as the input and performs principal component analysis. The number of components defined by the `nComp` parameter specifies the number of components that will be rasterized. 
 
 ```{r,warning=F,message=F}
-calculate_pcomp(mraster = mraster, # input
-                nComp = 3, # number of components to output
-                plot = TRUE, # plot
-                details = TRUE) # details about the principal component analysis appended
+calculate_pcomp(
+  mraster = mraster, # input
+  nComp = 3, # number of components to output
+  plot = TRUE, # plot
+  details = TRUE
+) # details about the principal component analysis appended
 ```
 
 ## `calculate_sampsize` {#sampsize .unnumbered}
@@ -139,20 +154,23 @@ calculate_pcomp(mraster = mraster, # input
 
 ```{r, warning = FALSE}
 #--- determine sample size based on relative standard error (rse) of 1% ---#
-calculate_sampsize(mraster = mraster,
-                   rse = 0.01)
-
+calculate_sampsize(
+  mraster = mraster,
+  rse = 0.01
+)
 ```
 
 ```{r, warning = FALSE}
-#--- change default threshold sequence values ---# 
+#--- change default threshold sequence values ---#
 #--- if increment and rse are not divisible the closest value will be taken ---#
-p <- calculate_sampsize(mraster = mraster,
-                   rse = 0.025,
-                   start = 0.01,
-                   end = 0.08,
-                   increment = 0.01,
-                   plot = TRUE)
+p <- calculate_sampsize(
+  mraster = mraster,
+  rse = 0.025,
+  start = 0.01,
+  end = 0.08,
+  increment = 0.01,
+  plot = TRUE
+)
 
 p
 ```
@@ -168,20 +186,26 @@ Samples are allocated based on the spatial coverage area of the strata. This is 
 
 ```{r,warning=F,message=F}
 #--- perform grid sampling ---#
-calculate_allocation(sraster = sraster, 
-                     nSamp = 200)
+calculate_allocation(
+  sraster = sraster,
+  nSamp = 200
+)
 ```
 
 In this case the sraster has equally sized strata, so the number of allocated sample units is always the same.
 
 ```{r,warning=F,message=F}
 #--- calculate existing samples to include ---#
-e.sr <- extract_strata(sraster = sraster, 
-                       existing = existing)
+e.sr <- extract_strata(
+  sraster = sraster,
+  existing = existing
+)
 
-calculate_allocation(sraster = sraster, 
-                     nSamp = 200, 
-                     existing = e.sr)
+calculate_allocation(
+  sraster = sraster,
+  nSamp = 200,
+  existing = e.sr
+)
 ```
 
 At times, values under `total` can be negative. Negative values indicate that  `existing` sample units over represent those strata and that some sample units could removed to prevent over-representation. `$total` indicates the number of sample units that could be added or removed. 
@@ -191,13 +215,14 @@ At times, values under `total` can be negative. Negative values indicate that  `
 Sample units are allocated based on within strata variance. The optimal allocation method uses the variation within the strata metric to allocate sample units. This means that in addition to providing an `sraster`, that a specific metric (`mraster`) must be provided to calculate variation to optimally allocate sample units.
 
 ```{r, warning=F,message=F}
-calculate_allocation(sraster = sraster, # stratified raster
-                     nSamp = 200, # desired sample number
-                     existing = e.sr, #existing samples
-                     allocation = "optim", # optimal allocation
-                     mraster = mraster$zq90, # metric raster
-                     force = TRUE) # force nSamp number
-
+calculate_allocation(
+  sraster = sraster, # stratified raster
+  nSamp = 200, # desired sample number
+  existing = e.sr, # existing samples
+  allocation = "optim", # optimal allocation
+  mraster = mraster$zq90, # metric raster
+  force = TRUE
+) # force nSamp number
 ```
 
 ### Equal allocation {#equal .unnumbered}
@@ -205,9 +230,11 @@ calculate_allocation(sraster = sraster, # stratified raster
 There may be situations where the user wants an equal number of sample units allocated to each strata. In these situations use `allocation = equal`. In this case, `nSamp` refers to the total number of sample units per strata, instead of the overall total number. 
 
 ```{r}
-calculate_allocation(sraster = sraster, # stratified raster
-                     nSamp = 20, # desired sample number
-                     allocation = "equal") # optimal allocation
+calculate_allocation(
+  sraster = sraster, # stratified raster
+  nSamp = 20, # desired sample number
+  allocation = "equal"
+) # optimal allocation
 ```
 
 The code in the demonstration above yields a total of 80 samples (20 `nSamp` for each of the 4 strata in `sraster`).
@@ -218,11 +245,12 @@ The user may wish to manually assign weights to strata. In this case, `allocatio
 ```{r}
 weights <- c(0.2, 0.2, 0.2, 0.4)
 
-calculate_allocation(sraster = sraster, # stratified raster
-                     nSamp = 20, # desired sample number
-                     allocation = "manual", # manual allocation
-                     weights = weights) # weights adding to 1
-
+calculate_allocation(
+  sraster = sraster, # stratified raster
+  nSamp = 20, # desired sample number
+  allocation = "manual", # manual allocation
+  weights = weights
+) # weights adding to 1
 ```
 
 The code above yields a total of 20 sample units with plots being allocated based on the `weights` provided in ascending strata order.
@@ -248,11 +276,13 @@ The output coobs raster can be used to constrain clhs sampling using the `sample
 The coobs raster determines how many observations are similar in terms of the covariate space at every pixel, and takes advantage of parallel processing routines.
 
 ```{r,warning=F,message=F, eval = FALSE}
-calculate_coobs(mraster = mraster, # input
-                existing = existing, # existing samples
-                cores = 4, # parallel cores to use
-                details = TRUE, # provide details from algorithm output
-                plot = TRUE) # plot
+calculate_coobs(
+  mraster = mraster, # input
+  existing = existing, # existing samples
+  cores = 4, # parallel cores to use
+  details = TRUE, # provide details from algorithm output
+  plot = TRUE
+) # plot
 ```
 
 ## Latin hypercube sampling evaluation algorithms {#lhseval .unnumbered}
@@ -274,7 +304,7 @@ This algorithm can be pre-emptively used to calculate `matQ` and `MatCov`, two v
 
 ```{r,warning=F,message=F, eval = FALSE}
 #--- by default all statistical data are calculated ---#
-calculate_pop(mraster = mraster) # input 
+calculate_pop(mraster = mraster) # input
 ```
 
 The output list contains the following:
@@ -289,15 +319,19 @@ The output list contains the following:
 
 ```{r,warning=F,message=F, eval = FALSE}
 #--- statistical analyses can be chosen by setting their parameter to `FALSE` ---#
-mat <- calculate_pop(mraster = mraster, # input
-                     nQuant = 10) # desired number of quantiles
+mat <- calculate_pop(
+  mraster = mraster, # input
+  nQuant = 10
+) # desired number of quantiles
 
 #--- use matrix output within sample ahels algorithm ---#
-sample_ahels(mraster = mraster, # input
-             existing = existing, # existing sample
-             nQuant = 10, # number of desired quantiles
-             nSamp = 50, # desired sample size
-             matCov = mat) # covariance matrix
+sample_ahels(
+  mraster = mraster, # input
+  existing = existing, # existing sample
+  nQuant = 10, # number of desired quantiles
+  nSamp = 50, # desired sample size
+  matCov = mat
+) # covariance matrix
 ```
 
 ### `calculate_lhsOpt` {#lhsopt .unnumbered}
@@ -314,7 +348,9 @@ calculate_lhsOpt(popLHS = poplhs)
 ```
 
 ```{r,warning=F,message=F, eval = FALSE}
-calculate_lhsOpt(popLHS = poplhs, 
-                 PCA = FALSE, 
-                 iter = 200)
+calculate_lhsOpt(
+  popLHS = poplhs,
+  PCA = FALSE,
+  iter = 200
+)
 ```

@@ -76,7 +76,6 @@ sample_clhs <- function(mraster,
                         filename = NULL,
                         overwrite = FALSE,
                         ...) {
-
   #--- Set global vars ---#
 
   x <- y <- X <- Y <- type <- NULL
@@ -94,7 +93,7 @@ sample_clhs <- function(mraster,
   if (!is.numeric(iter)) {
     stop("'iter' must be type numeric.", call. = FALSE)
   }
-  
+
   if (iter <= 0) {
     stop("'iter' must be >= 0.", call. = FALSE)
   }
@@ -114,7 +113,6 @@ sample_clhs <- function(mraster,
   #--- access buffering if specified ---#
 
   if (!is.null(access)) {
-
     #--- buffer roads and mask ---#
 
     access_buff <- mask_access(
@@ -134,7 +132,6 @@ sample_clhs <- function(mraster,
         Y = y
       )
   } else {
-
     #--- extract covariate data from mraster ---#
 
     vals <- terra::as.data.frame(mraster, xy = TRUE, row.names = FALSE) %>%
@@ -147,11 +144,10 @@ sample_clhs <- function(mraster,
   #--- incorporate cost constraint ---#
 
   if (!is.null(cost)) {
-    
-    if(!is.character(cost) & !is.numeric(cost)){
+    if (!is.character(cost) & !is.numeric(cost)) {
       stop("'cost' must be either type numeric or character.", call. = FALSE)
     }
-    
+
     if (is.numeric(cost)) {
       if ((cost + 2) > (ncol(vals)) | cost < 0) {
         stop("'cost' index doest not exist within 'mraster'.", call. = FALSE)
@@ -160,20 +156,14 @@ sample_clhs <- function(mraster,
       #--- need to add 2 because X and Y are added to vals ---#
 
       cost <- cost + 2
-      
     } else {
-
-      if(length(which(names(vals) == cost)) == 0){
-        
-        stop(paste0("No layer named '",cost,"' exists in 'mraster'."), call. = FALSE)
-        
+      if (length(which(names(vals) == cost)) == 0) {
+        stop(paste0("No layer named '", cost, "' exists in 'mraster'."), call. = FALSE)
       } else {
-        
         cost <- which(names(vals) == cost)
-        
       }
     }
-    
+
     message(paste0("Using `", names(vals)[cost], "` as sampling constraint."))
   }
 
@@ -215,46 +205,39 @@ sample_clhs <- function(mraster,
           stop("'existing' must have columns named 'X' and 'Y'.", call. = FALSE)
         }
       }
-      
+
       #--- determine crs of input mraster ---#
       crs <- terra::crs(mraster)
-
     } else {
-      
       crs <- sf::st_crs(existing)
-      
     }
-    
+
     existingSamples <- extract_metrics(mraster = mraster, existing = existing, data.frame = TRUE)
-    
+
     #--- do other attributes exist in `existing` - if yes, save them for later ---#
-    
-    if(length(names(existingSamples))-2 != length(names(mraster))){
-      
+
+    if (length(names(existingSamples)) - 2 != length(names(mraster))) {
       extraCols <- existingSamples %>%
         dplyr::select(!names(mraster))
-      
     }
 
     #--- Assign attribute to differentiate between original samples and those added during HELS algorithm ---#
-    
+
     existingSamples$type <- "existing"
-    
+
     #--- subset columns for sampling ---#
-    
+
     existingSamples <- existingSamples %>%
       dplyr::select(X, Y, type, names(mraster))
-    
+
     #--- check if samples fall in areas where stratum values are NA ---#
-    
-    if(any(!complete.cases(existingSamples))){
-      
+
+    if (any(!complete.cases(existingSamples))) {
       samples_NA <- existingSamples %>%
         dplyr::filter(!complete.cases(.))
-      
+
       existingSamples <- existingSamples %>%
         stats::na.omit()
-      
     }
 
     #--- create conjoined existing dataset ---#
@@ -271,10 +254,9 @@ sample_clhs <- function(mraster,
   #--- if existing samples are not provided ---#
 
   if (is.null(existing)) {
-    
     #--- determine crs of input mraster ---#
     crs <- terra::crs(mraster)
-    
+
     clhsOut <- clhs::clhs(x = vals_tp, size = nSamp, iter = iter, cost = cost, ...)
 
     #--- if ... variables are provided the output is sometimes a list object ---#
@@ -282,19 +264,16 @@ sample_clhs <- function(mraster,
     if (is.list(clhsOut)) {
       samples <- clhsOut$sampled_data
     } else {
-
       #--- take samples from original vals dataframe for 'type' attribute ---#
 
       samples <- vals[clhsOut, ]
     }
   } else {
-
     #--- same as above but this time including existing samples ---#
 
     clhsOut <- clhs::clhs(x = vals_tp, size = nSamp, iter = iter, cost = cost, must.include = 1:nrow(existingSamples), ...)
 
     if (inherits(clhsOut, "list")) {
-
       #--- locate row indices for each sample and extract ---#
 
       index <- clhsOut$index_samples
@@ -304,49 +283,36 @@ sample_clhs <- function(mraster,
       samples <- vals[clhsOut, ]
     }
   }
-  
+
   #--- replace existing samples (if they exist) that had NA values for metrics ---#
-  
-  if(exists("samples_NA")){
-    
-    if(exists("extraCols")){
-      
+
+  if (exists("samples_NA")) {
+    if (exists("extraCols")) {
       samples <- samples %>%
         dplyr::bind_rows(., samples_NA) %>%
-        dplyr::left_join(., extraCols,  by = c("X","Y")) %>%
+        dplyr::left_join(., extraCols, by = c("X", "Y")) %>%
         sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
-      
     } else {
-      
       #--- convert coordinates to a spatial points object ---#
       samples <- samples %>%
         dplyr::bind_rows(., samples_NA) %>%
         sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
-      
     }
-    
   } else {
-    
-    if(exists("extraCols")){
-      
+    if (exists("extraCols")) {
       samples <- samples %>%
-        dplyr::left_join(., extraCols,  by = c("X","Y")) %>%
+        dplyr::left_join(., extraCols, by = c("X", "Y")) %>%
         sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
-      
     } else {
-      
       #--- convert coordinates to a spatial points object ---#
       samples <- samples %>%
         as.data.frame() %>%
         sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
-      
     }
-    
   }
 
   if (isTRUE(plot)) {
     if (!is.null(access)) {
-
       #--- plot samples as well as aggregated access buffers ---#
 
       terra::plot(mraster[[1]])
@@ -359,17 +325,16 @@ sample_clhs <- function(mraster,
   }
 
   if (!is.null(filename)) {
-    
     if (!is.character(filename)) {
       stop("'filename' must be a file path character string.", call. = FALSE)
     }
-    
+
     if (!is.logical(overwrite)) {
       stop("'overwrite' must be type logical.", call. = FALSE)
     }
-    
+
     if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(paste0("'",filename, "' already exists and overwrite = FALSE."), call. = FALSE)
+      stop(paste0("'", filename, "' already exists and overwrite = FALSE."), call. = FALSE)
     }
 
     sf::st_write(samples, filename, delete_layer = overwrite)
@@ -377,7 +342,6 @@ sample_clhs <- function(mraster,
   }
 
   if (isTRUE(details)) {
-
     #--- output metrics details along with stratification raster ---#
 
     output <- list(clhs = clhsOut, samples = samples)
@@ -385,7 +349,6 @@ sample_clhs <- function(mraster,
     #--- output samples dataframe ---#
     return(output)
   } else {
-
     #--- just output raster ---#
 
     return(samples)

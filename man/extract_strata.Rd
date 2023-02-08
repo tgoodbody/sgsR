@@ -45,8 +45,10 @@ sr <- terra::rast(r)
 e <- system.file("extdata", "existing.shp", package = "sgsR")
 e <- sf::st_read(e)
 
-extract_strata(sraster = sr,
-               existing = e)
+extract_strata(
+  sraster = sr,
+  existing = e
+)
 
 }
 \seealso{

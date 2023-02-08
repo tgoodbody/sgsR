@@ -43,7 +43,7 @@ from access where plots can be sampled.}
 \item{plot}{Logical. Plots output strata raster with samples.}
 
 \item{details}{Logical. If \code{FALSE} (default) output is only
-stratification raster. If \code{TRUE} return a list where \code{$details} is additional 
+stratification raster. If \code{TRUE} return a list where \code{$details} is additional
 stratification information and \code{$raster} is the output stratification spatRaster.}
 
 \item{filename}{Character. Path to write output samples.}

@@ -36,7 +36,6 @@ calculate_distance <- function(raster,
                                plot = FALSE,
                                filename = NULL,
                                overwrite = FALSE) {
-
   #--- error handling ---#
 
   if (!inherits(raster, "SpatRaster")) {
@@ -54,8 +53,8 @@ calculate_distance <- function(raster,
   #--- load access ---#
 
   access <- terra::vect(access)
-  
-  if(terra::crs(access) != terra::crs(raster)) terra::crs(access) <- terra::crs(raster)
+
+  if (terra::crs(access) != terra::crs(raster)) terra::crs(access) <- terra::crs(raster)
 
   #--- use first layer from raster and access to determine distance from each pixel ---#
 

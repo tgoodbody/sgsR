@@ -107,7 +107,7 @@ The sampling is performed in 2 stages when \code{method = "Queinnec"}:
 \code{existing} may contain samples that fall in \code{sraster} cells that are `NA`. If this occurs and \code{include = TRUE}, `NA` samples
 are separated during sampling and re-appended at the end of the sampling process.
 
-If the \code{sraster} provided contains factor values, the algorithm will automatically convert these into the numeric factor levels and 
+If the \code{sraster} provided contains factor values, the algorithm will automatically convert these into the numeric factor levels and
 perform sampling using those values. The categories (factor values) will be extracted and appended to the algorithm output as the `category` attribute.
 }
 \examples{
@@ -121,7 +121,6 @@ sraster <- sample_strat(
   sraster = sr,
   nSamp = 50
 )
-
 
 }
 \references{

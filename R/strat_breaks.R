@@ -38,7 +38,7 @@
 #'   mraster = mr$zq90,
 #'   breaks = br.zq90
 #' )
-#' 
+#'
 #'
 #' strat_breaks(
 #'   mraster = mr[[1:2]],
@@ -55,164 +55,148 @@ strat_breaks <- function(mraster,
                          plot = FALSE,
                          details = FALSE,
                          filename = NULL,
-                         overwrite = FALSE
-) {
-    
+                         overwrite = FALSE) {
   #--- Set global vars ---#
   strata <- x <- y <- value <- val <- NULL
-  
+
   #--- Error management ---#
-    
+
   if (!inherits(mraster, "SpatRaster")) {
     stop("'mraster' must be type SpatRaster.", call. = FALSE)
   }
-    
+
   if (!all(sapply(breaks, is.numeric))) {
     stop("'breaks' must be type numeric.", call. = FALSE)
   }
-  
+
   if (!is.logical(map)) {
     stop("'map' must be type logical.", call. = FALSE)
   }
-  
+
   if (!is.logical(plot)) {
     stop("'plot' must be type logical.", call. = FALSE)
   }
-  
+
   if (!is.logical(details)) {
     stop("'details' must be type logical.", call. = FALSE)
   }
-  
+
   #--- get number of layers ---#
   nlayer <- terra::nlyr(mraster)
-  
+
   #--- if there is only 1 band in mraster use it as default ---#
-  if(nlayer > 1){
-    
-    if(!inherits(breaks, "list")){
+  if (nlayer > 1) {
+    if (!inherits(breaks, "list")) {
       stop("`breaks` must be a list of numeric vectors of the same length as `mraster`.", call. = FALSE)
     }
-    
+
     if (nlayer != length(breaks)) {
       stop("`mraster` and `breaks` must have the same number of layers & objects.", call. = FALSE)
     }
-    
-  } else{
-    
-    if(!is.list(breaks)){
+  } else {
+    if (!is.list(breaks)) {
       breaks <- list(breaks)
     }
-    
   }
-  
+
   #--- check that breaks values are not < or > raster min/max raster values ---#
-  
+
   minmax <- terra::minmax(mraster)
-  
-  mins <- which(unlist(mapply(function(x,y) x > y, breaks, minmax[1,])) == FALSE)
-  maxs <- which(unlist(mapply(function(x,y) x < y, breaks, minmax[2,])) == FALSE)
-  
+
+  mins <- which(unlist(mapply(function(x, y) x > y, breaks, minmax[1, ])) == FALSE)
+  maxs <- which(unlist(mapply(function(x, y) x < y, breaks, minmax[2, ])) == FALSE)
+
   if (length(mins) != 0) {
     stop("'breaks' contains values < the minimum corresponding 'mraster' value.", call. = FALSE)
   }
-  
+
   if (length(maxs) != 0) {
     stop("'breaks' contains values > the maximum corresponding 'mraster' value.", call. = FALSE)
   }
-  
+
   #--- convert mraster to list ---#
   mrl <- as.list(mraster)
-  
+
   #--- vectorize vect_breaks to determine raster break points ---#
   rstack <- terra::rast(mapply(calculate_breaks, mraster = mrl, breaks = breaks))
-  
+
   #--- rename to append raster metric name ---#
-  names(rstack) <- paste0("strata_",names(mraster))
-  
-  if(nlayer > 1){
+  names(rstack) <- paste0("strata_", names(mraster))
+
+  if (nlayer > 1) {
     #--- establish newly formed unique strata ---#
-    breaks_c <- terra::as.data.frame(rstack, xy = TRUE)%>%
+    breaks_c <- terra::as.data.frame(rstack, xy = TRUE) %>%
       dplyr::group_by(dplyr::across(tidyr::starts_with("strata"))) %>%
       dplyr::mutate(strata = dplyr::cur_group_id()) %>%
       dplyr::ungroup()
-    
-    lookUp <- dplyr::arrange(breaks_c, strata) %>% 
-      dplyr::select(-x,-y) %>% 
+
+    lookUp <- dplyr::arrange(breaks_c, strata) %>%
+      dplyr::select(-x, -y) %>%
       unique()
-    
+
     idx <- terra::cellFromXY(mraster[[1]], cbind(breaks_c$x, breaks_c$y))
-    
+
     rcl <- mraster[[1]]
     #--- convert back to original extent ---#
     rcl[idx] <- breaks_c$strata
-  
+
     names(rcl) <- "strata"
-    
-    if(isTRUE(map)){
-      
+
+    if (isTRUE(map)) {
       message("Mapping stratifications.")
-      
-      rcl <- c(rstack,rcl)
-      
+
+      rcl <- c(rstack, rcl)
     } else {
-      
       rcl <- rstack
-      
-      names(rcl) <- rep("strata",nlayer)
-      
+
+      names(rcl) <- rep("strata", nlayer)
     }
-    
   } else {
-    
     rcl <- rstack
-    
+
     names(rcl) <- "strata"
   }
-  
+
   if (isTRUE(plot)) {
-    
-    brs <- mapply(function(x,y) data.frame(var = x, brk = y), names(mraster), breaks)
-    
-    brs <- do.call("rbind",apply(X = brs, MARGIN = 2, FUN = function(x) data.frame(names = x$var, val = x$brk)))
-    
+    brs <- mapply(function(x, y) data.frame(var = x, brk = y), names(mraster), breaks)
+
+    brs <- do.call("rbind", apply(X = brs, MARGIN = 2, FUN = function(x) data.frame(names = x$var, val = x$brk)))
+
     p <- terra::as.data.frame(mraster) %>%
-      tidyr::pivot_longer(dplyr::everything(),names_to = "names") %>%
+      tidyr::pivot_longer(dplyr::everything(), names_to = "names") %>%
       ggplot2::ggplot(ggplot2::aes(value)) +
       ggplot2::geom_histogram() +
       ggplot2::geom_vline(linetype = "dashed", data = brs, mapping = ggplot2::aes(xintercept = val)) +
       ggplot2::facet_wrap(~names, scales = "free")
-    
+
     suppressMessages(print(p))
-    
+
     #--- set colour palette ---#
-    
+
     terra::plot(rcl)
   }
-  
+
   #--- write file to disc ---#
-  
+
   if (!is.null(filename)) {
     terra::writeRaster(x = rcl, filename = filename, overwrite = overwrite)
     message("Output raster written to disc.")
   }
-  
-  #--- Output based on 'details' to return raster alone or list with details ---#
-  
-  if (isTRUE(details)) {
 
+  #--- Output based on 'details' to return raster alone or list with details ---#
+
+  if (isTRUE(details)) {
     #--- output break points raster with associated breaks ---#
     breaks_rcl <- list(
       breaks = if (exists("lookUp")) lookUp,
       raster = rcl,
       plot = if (exists("p")) p
     )
-    
+
     return(breaks_rcl)
   } else {
-    
     #--- just output raster ---#
-    
+
     return(rcl)
   }
 }
-

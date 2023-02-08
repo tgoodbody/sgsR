@@ -15,7 +15,7 @@
 #' @param plot Logical. Plots output strata raster and visualized
 #'  strata with boundary dividers.
 #' @param details Logical. If \code{FALSE} (default) output is only
-#' stratification raster. If \code{TRUE} return a list where \code{$details} is additional 
+#' stratification raster. If \code{TRUE} return a list where \code{$details} is additional
 #' stratification information and \code{$raster} is the output stratification spatRaster.
 #' @param ... Additional arguments to be passed to \code{\link[stats]{kmeans}} function.
 #'
@@ -55,7 +55,6 @@ strat_kmeans <- function(mraster,
                          filename = NULL,
                          overwrite = FALSE,
                          ...) {
-
   #--- Error management ---#
 
   if (!inherits(mraster, "SpatRaster")) {
@@ -106,19 +105,19 @@ strat_kmeans <- function(mraster,
 
   message("K-means being performed on ", terra::nlyr(mraster), " layers with ", nStrata, " centers.")
 
-  km_clust <- stats::kmeans(scale(vals[idx,], center = center, scale = scale), centers = nStrata, iter.max = iter, algorithm = algorithm)
+  km_clust <- stats::kmeans(scale(vals[idx, ], center = center, scale = scale), centers = nStrata, iter.max = iter, algorithm = algorithm)
 
   #--- convert k-means values back to original mraster extent ---#
-  
+
   #--- R Hijmans suggested edit ---#
   #--- create a single vector of NAs of length ncell ---#
   odf <- matrix(nrow = nrow(vals), ncol = 1)
-  
-  odf[,1][idx] <- km_clust$cluster
-  
+
+  odf[, 1][idx] <- km_clust$cluster
+
   #--- re-assign kmeans values to raster ---#
-  kmv <- terra::setValues(mraster[[1]], odf[,1])
-  
+  kmv <- terra::setValues(mraster[[1]], odf[, 1])
+
   names(kmv) <- "strata"
 
   #--- plot if requested ---#
@@ -137,14 +136,12 @@ strat_kmeans <- function(mraster,
   #--- Output based on 'details' to return raster alone or list with details ---#
 
   if (isTRUE(details)) {
-
     #--- create list to assign k-means info and output raster ---#
 
     out <- list(details = km_clust, raster = kmv)
 
     return(out)
   } else {
-
     #--- just output raster ---#
 
     return(kmv)

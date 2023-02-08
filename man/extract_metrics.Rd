@@ -45,8 +45,10 @@ mr <- terra::rast(r)
 e <- system.file("extdata", "existing.shp", package = "sgsR")
 e <- sf::st_read(e)
 
-extract_metrics(mraster =  mr,
-                existing = e)
+extract_metrics(
+  mraster = mr,
+  existing = e
+)
 
 }
 \seealso{

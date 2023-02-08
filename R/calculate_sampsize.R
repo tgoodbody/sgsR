@@ -65,7 +65,6 @@ calculate_sampsize <- function(mraster,
                                end = 0.05,
                                increment = 0.001,
                                plot = FALSE) {
-
   #--- set global vars ---#
 
   rse_var <- nSamp <- var <- rse_var_dif <- NULL
@@ -120,7 +119,6 @@ calculate_sampsize <- function(mraster,
   rownames(sampsize) <- c()
 
   if (is.null(rse)) {
-
     #--- plot ---#
 
     if (isTRUE(plot)) {
@@ -140,7 +138,6 @@ calculate_sampsize <- function(mraster,
 
     lines <- sampsize
   } else {
-
     #--- checks for rse ---#
 
     if (!is.numeric(rse)) {
@@ -211,7 +208,6 @@ calculate_sampsize <- function(mraster,
 size_calculation <- function(N,
                              mvals,
                              rse) {
-
   #--- determine adequate samples size based on the relative standard error defined ---#
 
   nSamp <- ceiling((N^2 * var(mvals)) / (rse^2 * sum(mvals)^2 + N * var(mvals)))

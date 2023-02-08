@@ -55,7 +55,6 @@ calculate_lhsOpt <- function(mats,
                              step = 10,
                              rep = 10,
                              iter = 10000) {
-
   #--- Set global vars ---#
   x <- y <- NULL
 
@@ -104,7 +103,6 @@ calculate_lhsOpt <- function(mats,
   #--- Apply functions for each potential sample size ---#
 
   for (tSamp in 1:length(sampSeq)) {
-
     #--- matrix holding iteration outputs ---#
 
     matFinal <- matrix(NA, nrow = rep, ncol = 7)
@@ -112,7 +110,6 @@ calculate_lhsOpt <- function(mats,
     #--- run conditional latin hypercube sampling ---#
 
     for (j in 1:rep) {
-
       #--- perform conditionel Latin Hypercube Sampling ---#
 
       ss <- clhs::clhs(mats$values, size = sampSeq[tSamp], progress = TRUE, iter = iter)
@@ -122,7 +119,6 @@ calculate_lhsOpt <- function(mats,
       # --- PCA similarity factor testing ---#
 
       if (isTRUE(PCA)) {
-        
         if (any(!c("pcaLoad") %in% names(mats))) {
           stop("'mats' does not have PCA loadings. Use `calculate_pop(PCA = TRUE)`.", call. = FALSE)
         }
@@ -164,7 +160,6 @@ calculate_lhsOpt <- function(mats,
 
       if (isTRUE(quant)) {
         for (var in 1:nb) {
-
           #--- Calculate sample quantiles ---#
 
           sampleQuant <- stats::quantile(samples[, var], probs = seq(0, 1, 0.25), names = F, type = 7)
@@ -187,7 +182,6 @@ calculate_lhsOpt <- function(mats,
       }
 
       if (isTRUE(KLdiv)) {
-
         #--- calculate sample covariate matrix ---#
 
         sampleCov <- mat_cov(
@@ -206,9 +200,8 @@ calculate_lhsOpt <- function(mats,
         #--- Generate KL divergence for each metric and populate kld.vars ---#
 
         for (kl in 1:nb) {
-
           #--- calculate divergence - if values are 0 set to very small number ---#
-          
+
           sampleCov[which(sampleCov == 0)] <- 0.0000001
 
           kld <- entropy::KL.empirical(mats$matCov[, kl], sampleCov[, kl])
@@ -255,7 +248,6 @@ calculate_lhsOpt <- function(mats,
 
 plot_LHCOptim <- function(dfFinal,
                           maxSamp) {
-
   #--- set global vars ---#
 
   df.x <- NULL

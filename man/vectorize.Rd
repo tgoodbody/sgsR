@@ -23,7 +23,7 @@ quantile_breaks(mraster, nStrata)
 \item{breaks}{Numeric. Vector of breakpoints for each layer of \code{mraster}. If \code{mraster} has multiple layers,
 \code{breaks} must be a list with an equal number of objects.}
 
-\item{nStrata}{Numeric. A positive integer representing the number of desired classes 
+\item{nStrata}{Numeric. A positive integer representing the number of desired classes
 or a numeric vector of probabilities with values between \code{0-1}. If \code{mraster} has multiple layers,
 \code{nStrata} must be a list with an equal number of objects.}
 }

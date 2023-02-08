@@ -40,7 +40,7 @@ Has no effect when \code{existing} is provided.}
 Returns a data.frame of:
 \itemize{
 \item{strata} - Strata ID.
-\item{total} - Number of samples to be allocated. Values correspond to under representation (samples needed; positive value) or over representation 
+\item{total} - Number of samples to be allocated. Values correspond to under representation (samples needed; positive value) or over representation
 (too many samples; negative value) based on the \code{nSamp} provided.
 \item{need} - Required samples per strata based on allocation method. Rounded.
 }

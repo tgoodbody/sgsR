@@ -46,7 +46,6 @@ sample_srs <- function(raster,
                        plot = FALSE,
                        filename = NULL,
                        overwrite = FALSE) {
-
   #--- Error management ---#
 
   if (!inherits(raster, "SpatRaster")) {
@@ -77,7 +76,6 @@ sample_srs <- function(raster,
   crs <- terra::crs(raster)
 
   if (!is.null(access)) {
-
     access_buff <- mask_access(raster = raster, access = access, buff_inner = buff_inner, buff_outer = buff_outer)
 
     raster <- access_buff$rast
@@ -134,19 +132,17 @@ sample_srs <- function(raster,
 
         nCount <- nCount + 1
       }
-    } else if(iter != 0){
+    } else if (iter != 0) {
       add_strata <- rbind(add_strata, add_temp[, c("X", "Y")])
 
       nCount <- nCount + 1
     }
-    
+
     iter <- iter + 1
   }
-  
-  if(nrow(add_strata) < nSamp){
-    
-    message(paste0("Sampling was not able to select ",nSamp, " sample units. Output has ", nrow(add_strata), " sample units."))
-    
+
+  if (nrow(add_strata) < nSamp) {
+    message(paste0("Sampling was not able to select ", nSamp, " sample units. Output has ", nrow(add_strata), " sample units."))
   }
 
   #--- convert coordinates to a spatial points object ---#
@@ -156,13 +152,11 @@ sample_srs <- function(raster,
 
   if (isTRUE(plot)) {
     if (!is.null(access)) {
-
       #--- plot input raster and random samples ---#
       terra::plot(rasterP[[1]])
       suppressWarnings(terra::plot(access_buff$buff, add = T, border = c("gray30"), col = "gray10", alpha = 0.1))
       suppressWarnings(terra::plot(samples, add = T, col = "black"))
     } else {
-
       #--- plot input raster and random samples ---#
       terra::plot(rasterP[[1]])
       suppressWarnings(terra::plot(samples, add = T, col = "black"))
@@ -170,17 +164,16 @@ sample_srs <- function(raster,
   }
 
   if (!is.null(filename)) {
-    
     if (!is.character(filename)) {
       stop("'filename' must be a file path character string.", call. = FALSE)
     }
-    
+
     if (!is.logical(overwrite)) {
       stop("'overwrite' must be type logical.", call. = FALSE)
     }
-    
+
     if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(paste0("'",filename, "' already exists and overwrite = FALSE."), call. = FALSE)
+      stop(paste0("'", filename, "' already exists and overwrite = FALSE."), call. = FALSE)
     }
 
     sf::st_write(samples, filename, delete_layer = overwrite)

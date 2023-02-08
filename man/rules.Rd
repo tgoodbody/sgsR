@@ -52,7 +52,7 @@ samples. \code{Default = NULL}.}
 cover at least 1 percent of the area of interest will be excluded and be returned as \code{NA}.}
 
 \item{tolerance}{Numeric. Allowable tolerance (<= 0.1 (10%)) around quantile density of 1. If \code{nSamp} is used samples will be
-added until the \code{1 - tolerance} density is reached. If \code{threshold} is used, samples will be added until the 
+added until the \code{1 - tolerance} density is reached. If \code{threshold} is used, samples will be added until the
 \code{threshold - tolerance} value is reached. This parameter allows the user to define a buffer around desired quantile densities
 to permit the algorithm to not add additional samples if quantile density is very close to 1, or user-defined \code{threshold}.}
 

@@ -14,7 +14,6 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-
 ```
 
 ## Algorithm structure {#str .unnumbered}
@@ -40,15 +39,13 @@ Additional helper functions that `calculate` varying descriptive / summary stati
 `sgsR` uses common words that define algorithm parameters:
 
 ```{r echo=FALSE}
-
 p <- c("`mraster`", "`sraster`", "`access`", "`existing`", "`plot`")
 
 d <- c("Metric raster(s)", "Stratified raster", "Linear vectors representing access routes", "Existing sample units", "Visually displays raster and samples")
 
 df <- data.frame(Parameter = p, Description = d)
 
-knitr::kable(df, align = 'c')
-
+knitr::kable(df, align = "c")
 ```
 
 ### `mraster` {#mrast .unnumbered}
@@ -73,21 +70,23 @@ mraster <- terra::rast(r)
 
 ```{r,warning=F,message=F}
 #--- apply kmeans algorithm to metrics raster ---#
-sraster <- strat_quantiles(mraster = mraster$zq90, # use mraster as input for sampling
-                           nStrata = 4, # algorithm will produce 4 strata
-                           plot = TRUE) # algorithm will plot output
-
+sraster <- strat_quantiles(
+  mraster = mraster$zq90, # use mraster as input for sampling
+  nStrata = 4, # algorithm will produce 4 strata
+  plot = TRUE
+) # algorithm will plot output
 ```
 
 The `sraster` output can then become an input parameter (`sraster`) for the `sample_strat()` algorithm.
 
 ```{r,warning=F,message=F}
 #--- apply stratified sampling ---#
-existing <- sample_strat(sraster = sraster, # use mraster as input for sampling
-                         nSamp = 200, # request 200 samples be taken
-                         mindist = 100, # define that samples must be 100 m apart
-                         plot = TRUE) # algorithm will plot output
-
+existing <- sample_strat(
+  sraster = sraster, # use mraster as input for sampling
+  nSamp = 200, # request 200 samples be taken
+  mindist = 100, # define that samples must be 100 m apart
+  plot = TRUE
+) # algorithm will plot output
 ```
 
 ### `access` {#access .unnumbered}
@@ -120,20 +119,25 @@ The sgsR package leverages the `%>%` operator from the [`magrittr package`](http
 
 ```{r pipe, eval= FALSE}
 #--- non piped ---#
-sraster <- strat_quantiles(mraster = mraster$zq90, # use mraster as input for sampling
-                           nStrata = 4) # algorithm will produce 4 strata
-                           
-existing <- sample_strat(sraster = sraster, # use mraster as input for sampling
-                         nSamp = 200, # request 200 samples be taken
-                         mindist = 100) # define that samples must be 100 m apart
-                       
-extract_metrics(mraster = mraster,
-                existing = existing)
+sraster <- strat_quantiles(
+  mraster = mraster$zq90, # use mraster as input for sampling
+  nStrata = 4
+) # algorithm will produce 4 strata
+
+existing <- sample_strat(
+  sraster = sraster, # use mraster as input for sampling
+  nSamp = 200, # request 200 samples be taken
+  mindist = 100
+) # define that samples must be 100 m apart
+
+extract_metrics(
+  mraster = mraster,
+  existing = existing
+)
 
 #--- piped ---#
 strat_quantiles(mraster = mraster$zq90, nStrata = 4) %>%
   sample_strat(., nSamp = 200, mindist = 100) %>%
   extract_metrics(mraster = mraster, existing = .)
-
 ```
 

@@ -12,20 +12,19 @@ test_that("Input classes", {
 })
 
 test_that("Total outputs", {
-  
   o <- calculate_sampsize(mraster = mraster, plot = TRUE)
   o1 <- calculate_sampsize(mraster = mraster, rse = 0.05)
-  
-  
+
+
   expect_equal(nrow(o$nSamp), 123L)
   expect_equal(ncol(o$nSamp), 3L)
   expect_equal(mean(o$nSamp$rse), 0.03)
-  expect_s3_class(calculate_sampsize(mraster = mraster, plot = TRUE)$plot,"gg")
-  
+  expect_s3_class(calculate_sampsize(mraster = mraster, plot = TRUE)$plot, "gg")
+
   expect_equal(sum(o1$nSamp), 188L)
   expect_equal(nrow(o1), 3L)
-  
-  expect_message(calculate_sampsize(mraster = mraster, rse = 0.01),regexp = NA)
-  
+
+  expect_message(calculate_sampsize(mraster = mraster, rse = 0.01), regexp = NA)
+
   expect_s3_class(calculate_sampsize(mraster = mraster, rse = 0.01, plot = TRUE)$plot, "gg")
 })

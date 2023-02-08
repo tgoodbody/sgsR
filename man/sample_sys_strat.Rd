@@ -62,7 +62,7 @@ Systematic stratified sampling with random start point and translation within a 
 Specifying \code{location = "random"} can result in tessellations with no samples.
 This results from \code{raster} have \code{NA} values at the random location chosen.
 Using \code{force = TRUE} removes areas of \code{NA} from sampling entirely, but
-considerably slows processing speeds. Thanks to R. Hijmans for help in debugging and 
+considerably slows processing speeds. Thanks to R. Hijmans for help in debugging and
 providing suggestions for this script.
 
 All stratum are sampled using random tessellation start points and translations.

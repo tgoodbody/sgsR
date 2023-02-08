@@ -53,7 +53,7 @@ from access where plots can be sampled.}
 systematic samples. If \code{TRUE} returns a list of sf objects where \code{tessellation}
 is the tessellation grid for sampling, and \code{samples} are the systematic samples.}
 
-\item{...}{Additional arguments for \code{\link[sf]{st_make_grid}}. Options include \code{offset} 
+\item{...}{Additional arguments for \code{\link[sf]{st_make_grid}}. Options include \code{offset}
 to offset grid by providing lower left coordinates.}
 }
 \value{
@@ -66,7 +66,7 @@ Systematic sampling with random start point and translation within a square or h
 Specifying \code{location = "random"} can result in tessellations with no samples.
 This results from \code{raster} have \code{NA} values at the random location chosen.
 Using \code{force = TRUE} removes areas of \code{NA} from sampling entirely, but
-considerably slows processing speeds. Thanks to R. Hijmans for help in debugging and 
+considerably slows processing speeds. Thanks to R. Hijmans for help in debugging and
 providing suggestions for this script.
 }
 \examples{

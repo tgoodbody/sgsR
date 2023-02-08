@@ -16,7 +16,7 @@
 #' @param threshold Numeric. Sample quantile ratio threshold. After the threshold \code{default = 0.9} is reached,
 #' no additional samples will be added. Values close to 1 can cause the algorithm to continually loop.
 #' @param tolerance Numeric. Allowable tolerance (<= 0.1 (10%)) around quantile density of 1. If \code{nSamp} is used samples will be
-#' added until the \code{1 - tolerance} density is reached. If \code{threshold} is used, samples will be added until the 
+#' added until the \code{1 - tolerance} density is reached. If \code{threshold} is used, samples will be added until the
 #' \code{threshold - tolerance} value is reached. This parameter allows the user to define a buffer around desired quantile densities
 #' to permit the algorithm to not add additional samples if quantile density is very close to 1, or user-defined \code{threshold}.
 #' @param matrices List. Quantile and covariance matrices generated from \code{calculate_pop(mraster = mraster, nQuant = nQuant)}.
@@ -46,7 +46,7 @@
 #'
 #' #--- supply quantile and covariance matrices ---#
 #' mat <- calculate_pop(mraster = mr)
-#' 
+#'
 #' sample_ahels(
 #'   mraster = mr,
 #'   existing = e,
@@ -58,8 +58,8 @@
 #'
 #' Messages in the algorithm will state that samples have been added to under-represented quantiles. The number between
 #' square brackets that follow represent the matrix row and column respectively that can be printed using \code{details = TRUE}.
-#' 
-#' In some cases, generally when a single metric is used as \code{mraster}, sampling ratios all be >= 1 before the 
+#'
+#' In some cases, generally when a single metric is used as \code{mraster}, sampling ratios all be >= 1 before the
 #' \code{nSamp} number of samples are allocated. The algorithm will stop in this scenario.
 #'
 #' Special thanks to Dr. Brendan Malone for the original implementation of this algorithm.
@@ -79,7 +79,6 @@ sample_ahels <- function(mraster,
                          details = FALSE,
                          filename = NULL,
                          overwrite = FALSE) {
-
   #--- Set global vars ---#
 
   x <- y <- X <- Y <- n <- type <- geometry <- extraCols <- NULL
@@ -101,33 +100,32 @@ sample_ahels <- function(mraster,
   if (!is.numeric(threshold)) {
     stop("'threshold' must be type numeric.", call. = FALSE)
   }
-  
+
   if (threshold < 0 | threshold > 1) {
     stop("'threshold' must be > 0 and < 1.", call. = FALSE)
   }
-  
+
   if (!is.logical(details)) {
     stop("'details' must be type logical.", call. = FALSE)
   }
-  
+
   #--- tolerance ---#
   if (!is.numeric(tolerance)) {
     stop("'tolerance' must be type numeric.", call. = FALSE)
   }
-  
+
   if (tolerance >= threshold) {
     stop("'tolerance' cannot be >= `threshold`.", call. = FALSE)
   }
-  
+
   if (tolerance < 0 | tolerance > 0.1) {
     stop("'tolerance' must be > 0 and <= 0.1.", call. = FALSE)
   }
-  
-  if("type" %in% colnames(existing))
-  {
+
+  if ("type" %in% colnames(existing)) {
     message("`existing` has a variable named `type`. This will cause issues with plotting. Consider removing.")
   }
-  
+
 
   #--- determine number of bands in mraster ---#
 
@@ -147,31 +145,27 @@ sample_ahels <- function(mraster,
     stats::na.omit()
 
   #--- Generate quantile matrix or use supplied one ---#
-  
-  if(is.null(matrices)){
-    
+
+  if (is.null(matrices)) {
     #--- if null generate a new quantile matrix ---#
-    
+
     mats <- calculate_pop(mraster = mraster, nQuant = nQuant)
-    
   } else {
-    
     #--- if quantile matrix is provided ---#
 
     if (any(!c("matQ", "matCov") %in% names(matrices))) {
       stop("'matrices' must be the output from 'calculate_pop()'.", call. = FALSE)
     }
-    
-    if(nrow(matrices$matCov) != nQuant){
+
+    if (nrow(matrices$matCov) != nQuant) {
       stop("Number of quantiles in provided 'matrices' does not match 'nQuant'.", call. = FALSE)
     }
-    
-    if(!all(names(matrices$values) == names(mraster))) {
+
+    if (!all(names(matrices$values) == names(mraster))) {
       stop("'mraster' used to generate 'matrices' must be identical.", call. = FALSE)
     }
-    
+
     mats <- matrices
-    
   }
 
   #--- Change 0's to very small number to avoid division issues ---#
@@ -187,83 +181,73 @@ sample_ahels <- function(mraster,
   matCovDens[which(matCovDens <= 0.01)] <- NA
 
   ### --- Prepare existing sample data ---###
-  if(!inherits(existing, "sf")){
-    
+  if (!inherits(existing, "sf")) {
     #--- determine crs of input sraster ---#
-    
+
     crs <- terra::crs(mraster, proj = TRUE)
-    
+
     if (any(!c("X", "Y") %in% colnames(existing))) {
-      
       #--- if coordinate column names are lowercase change them to uppercase to match requirements ---#
-      
+
       if (any(c("x", "y") %in% colnames(existing))) {
         existing <- existing %>%
           dplyr::rename(
             X = x,
             Y = y
           )
-        
+
         message("'existing' column coordinate names are lowercase - converting to uppercase.")
       } else {
-        
         #--- if no x/y columns are present stop ---#
-        
+
         stop("'existing' must have columns named 'X' and 'Y'.", call. = FALSE)
       }
     }
-    
+
     existing <- existing %>%
       sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
-    
   } else {
-    
     #--- determine crs of input sraster ---#
-    
+
     crs <- sf::st_crs(existing)
-    
   }
 
   #--- extract covariates at existing sample locations ---#
 
   samples <- extract_metrics(mraster, existing, data.frame = TRUE)
-  
+
   #--- remove already existing samples from vals to not repeat sample ---#
-  
+
   vals <- vals %>%
     dplyr::anti_join(samples, by = c("X", "Y"))
-  
+
   #--- Rearrange columns ---#
-  
+
   #--- do other attributes exist in `existing` - if yes, save them for later ---#
-  
-  if(length(names(samples))-2 != length(names(mraster))){
-    
+
+  if (length(names(samples)) - 2 != length(names(mraster))) {
     extraCols <- samples %>%
       dplyr::select(!names(mraster))
-    
   }
-  
+
   #--- Assign attribute to differentiate between original samples and those added during HELS algorithm ---#
-  
+
   samples$type <- "existing"
-  
+
   #--- subset columns for sampling ---#
-  
+
   samples <- samples %>%
     dplyr::select(X, Y, type, names(mraster))
-  
+
   #--- check if samples fall in areas where stratum values are NA ---#
-  
-  if(any(!complete.cases(samples))){
-    
+
+  if (any(!complete.cases(samples))) {
     samples_NA <- samples %>%
       dplyr::filter(!complete.cases(.)) %>%
       dplyr::mutate(type = "existing")
 
     samples <- samples %>%
       stats::na.omit()
-    
   }
 
   #--- Create data hypercube of existing samples to compare with mraster data ---#
@@ -298,75 +282,63 @@ sample_ahels <- function(mraster,
   #--- perform sampling ---#
 
   if (!is.null(nSamp)) {
-
-    out <- ahels_nSamp(nSamp = nSamp,
-                       nQuant = nQuant,
-                       tolerance = tolerance,
-                       nb = nb,
-                       underRep = underRep,
-                       ratio = ratio,
-                       ratOrderUnder = ratOrderUnder,
-                       matCovDens = matCovDens,
-                       matCovSampDens = matCovSampDens,
-                       samples = samples,
-                       mats = mats,
-                       vals = vals)
-    
+    out <- ahels_nSamp(
+      nSamp = nSamp,
+      nQuant = nQuant,
+      tolerance = tolerance,
+      nb = nb,
+      underRep = underRep,
+      ratio = ratio,
+      ratOrderUnder = ratOrderUnder,
+      matCovDens = matCovDens,
+      matCovSampDens = matCovSampDens,
+      samples = samples,
+      mats = mats,
+      vals = vals
+    )
   } else {
-    
-    out <- ahels_threshold(threshold = threshold,
-                           tolerance = tolerance,
-                           ratio = ratio,
-                           nQuant = nQuant,
-                           nb = nb,
-                           underRep = underRep,
-                           ratOrderUnder = ratOrderUnder,
-                           matCovDens = matCovDens,
-                           matCovSampDens = matCovSampDens,
-                           samples = samples,
-                           mats = mats,
-                           vals = vals)
-
+    out <- ahels_threshold(
+      threshold = threshold,
+      tolerance = tolerance,
+      ratio = ratio,
+      nQuant = nQuant,
+      nb = nb,
+      underRep = underRep,
+      ratOrderUnder = ratOrderUnder,
+      matCovDens = matCovDens,
+      matCovSampDens = matCovSampDens,
+      samples = samples,
+      mats = mats,
+      vals = vals
+    )
   }
 
   message(paste0("A total of ", out$sTot, " new samples added."))
 
   #--- replace existing samples (if they exist) that had NA values for metrics ---#
-  
-  if(exists("samples_NA")){
-    
-    if(!is.null(extraCols)){
-      
+
+  if (exists("samples_NA")) {
+    if (!is.null(extraCols)) {
       samples <- out$samples %>%
         dplyr::bind_rows(., samples_NA) %>%
-        dplyr::left_join(., extraCols,  by = c("X","Y")) %>%
+        dplyr::left_join(., extraCols, by = c("X", "Y")) %>%
         sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
-      
     } else {
-    
       #--- convert coordinates to a spatial points object ---#
       samples <- out$samples %>%
         dplyr::bind_rows(., samples_NA) %>%
         sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
-    
     }
-    
   } else {
-    
-    if(!is.null(extraCols)){
-      
+    if (!is.null(extraCols)) {
       samples <- out$samples %>%
-        dplyr::left_join(., extraCols,  by = c("X","Y")) %>%
+        dplyr::left_join(., extraCols, by = c("X", "Y")) %>%
         sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
-      
     } else {
-      
       #--- convert coordinates to a spatial points object ---#
       samples <- out$samples %>%
         sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
-      
     }
-    
   }
 
   #--- assign sraster crs to spatial points object ---#
@@ -378,17 +350,16 @@ sample_ahels <- function(mraster,
   }
 
   if (!is.null(filename)) {
-    
     if (!is.character(filename)) {
       stop("'filename' must be a file path character string.", call. = FALSE)
     }
-    
+
     if (!is.logical(overwrite)) {
       stop("'overwrite' must be type logical.", call. = FALSE)
     }
-    
+
     if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(paste0("'",filename, "' already exists and overwrite = FALSE."), call. = FALSE)
+      stop(paste0("'", filename, "' already exists and overwrite = FALSE."), call. = FALSE)
     }
 
     sf::st_write(samples, filename, delete_layer = overwrite)
@@ -407,4 +378,3 @@ sample_ahels <- function(mraster,
     )))
   }
 }
-

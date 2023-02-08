@@ -5,9 +5,9 @@
 #'
 #' @inheritParams strat_kmeans
 #' @inheritParams strat_breaks
-#' @param nStrata Numeric. A positive integer representing the number of desired classes 
+#' @param nStrata Numeric. A positive integer representing the number of desired classes
 #' or a numeric vector of probabilities with values between \code{0-1}. If \code{mraster} has multiple layers,
-#' \code{nStrata} must be a list with an equal number of objects. 
+#' \code{nStrata} must be a list with an equal number of objects.
 #'
 #' @return Returns an output stratification \code{spatRaster} or a list when \code{details = TRUE}.
 #'
@@ -31,10 +31,10 @@
 #'
 #' strat_quantiles(
 #'   mraster = mr[[1:2]],
-#'   nStrata = list(c(0.2,0.4,0.8), 3),
+#'   nStrata = list(c(0.2, 0.4, 0.8), 3),
 #'   map = TRUE
 #' )
-#'   
+#'
 #' @author Tristan R.H. Goodbody
 #'
 #' @export
@@ -46,7 +46,6 @@ strat_quantiles <- function(mraster,
                             details = FALSE,
                             filename = NULL,
                             overwrite = FALSE) {
-
   #--- Set global vars ---#
   strata <- x <- y <- value <- val <- NULL
 
@@ -54,7 +53,7 @@ strat_quantiles <- function(mraster,
   if (!inherits(mraster, "SpatRaster")) {
     stop("'mraster' must be type SpatRaster.", call. = FALSE)
   }
-  
+
   if (!is.logical(map)) {
     stop("'map' must be type logical.", call. = FALSE)
   }
@@ -66,99 +65,88 @@ strat_quantiles <- function(mraster,
   if (!is.logical(details)) {
     stop("'details' must be type logical.", call. = FALSE)
   }
-  
+
   #--- get number of layers ---#
   nlayer <- terra::nlyr(mraster)
-  
+
   #--- if there is only 1 band in mraster use it as default ---#
-  if(nlayer > 1){
-    
+  if (nlayer > 1) {
     if (nlayer != length(nStrata)) {
       stop("`mraster` and `nStrata` must have the same number of layers & objects.", call. = FALSE)
     }
-    
-    if(!inherits(nStrata, "list")){
+
+    if (!inherits(nStrata, "list")) {
       stop("`nStrata` must be a list of numeric vectors of the same length as `mraster`.", call. = FALSE)
     }
-    
-  } else{
-    
-    if(!is.list(nStrata)){
+  } else {
+    if (!is.list(nStrata)) {
       nStrata <- list(nStrata)
     }
-    
   }
-  
+
   #--- convert mraster to list ---#
   mrl <- as.list(mraster)
-  
+
   #--- vectorize vect_breaks to determine raster break points ---#
   rastbreaks <- mapply(calculate_quantile_breaks, mraster = mrl, nStrata = nStrata)
-  
+
   #--- take all raster outputs from vectorization ---#
   rstack <- terra::rast(rastbreaks[c(TRUE, FALSE)])
-  
+
   #--- rename to append raster metric name ---#
-  names(rstack) <- paste0("strata_",names(mraster))
-  
-  if(nlayer > 1){
+  names(rstack) <- paste0("strata_", names(mraster))
+
+  if (nlayer > 1) {
     #--- establish newly formed unique class ---#
-    breaks_c <- terra::as.data.frame(rstack, xy = TRUE)%>%
+    breaks_c <- terra::as.data.frame(rstack, xy = TRUE) %>%
       dplyr::group_by(dplyr::across(tidyr::starts_with("strata"))) %>%
       dplyr::mutate(strata = dplyr::cur_group_id()) %>%
       dplyr::ungroup()
-    
-    lookUp <- dplyr::arrange(breaks_c, strata) %>% 
-      dplyr::select(-x,-y) %>% 
+
+    lookUp <- dplyr::arrange(breaks_c, strata) %>%
+      dplyr::select(-x, -y) %>%
       unique()
-    
+
     idx <- terra::cellFromXY(mraster[[1]], cbind(breaks_c$x, breaks_c$y))
-    
+
     rcl <- mraster[[1]]
     #--- convert back to original extent ---#
     rcl[idx] <- breaks_c$strata
-    
+
     names(rcl) <- "strata"
-    
-    if(isTRUE(map)){
-      
+
+    if (isTRUE(map)) {
       message("Mapping stratifications.")
-      
-      rcl <- c(rstack,rcl)
-      
+
+      rcl <- c(rstack, rcl)
     } else {
-      
       rcl <- rstack
-      
-      names(rcl) <- rep("strata",nlayer)
-      
+
+      names(rcl) <- rep("strata", nlayer)
     }
-    
   } else {
-    
     rcl <- rstack
-    
+
     names(rcl) <- "strata"
   }
-  
-  if (isTRUE(plot)) {
-    
-    #--- take numeric breaks for plotting ---#
-    brs <- do.call("rbind",rastbreaks[c(FALSE, TRUE)])
 
-    brs <- brs[is.finite(brs$val),]
+  if (isTRUE(plot)) {
+    #--- take numeric breaks for plotting ---#
+    brs <- do.call("rbind", rastbreaks[c(FALSE, TRUE)])
+
+    brs <- brs[is.finite(brs$val), ]
 
     p <- terra::as.data.frame(mraster) %>%
-      tidyr::pivot_longer(dplyr::everything(),names_to = "names") %>%
+      tidyr::pivot_longer(dplyr::everything(), names_to = "names") %>%
       ggplot2::ggplot(ggplot2::aes(value)) +
       ggplot2::geom_histogram() +
       ggplot2::geom_vline(linetype = "dashed", data = brs, mapping = ggplot2::aes(xintercept = val)) +
       ggplot2::facet_wrap(~names, scales = "free")
-    
+
     suppressMessages(print(p))
-    
+
     #--- set colour palette ---#
-    
+
     terra::plot(rcl)
   }
 
@@ -174,12 +162,12 @@ strat_quantiles <- function(mraster,
   if (isTRUE(details)) {
     #--- output metrics details along with stratification raster ---#
 
-    if (isTRUE(plot)){
-    out <- list(
-      details = lookUp,
-      raster = rcl,
-      plot = p
-    )
+    if (isTRUE(plot)) {
+      out <- list(
+        details = lookUp,
+        raster = rcl,
+        plot = p
+      )
     } else {
       out <- list(
         details = lookUp,
@@ -189,7 +177,6 @@ strat_quantiles <- function(mraster,
 
     return(out)
   } else {
-
     #--- just output raster ---#
 
     return(rcl)

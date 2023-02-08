@@ -32,7 +32,7 @@ cover at least 1 percent of the area of interest will be excluded and be returne
 no additional samples will be added. Values close to 1 can cause the algorithm to continually loop.}
 
 \item{tolerance}{Numeric. Allowable tolerance (<= 0.1 (10%)) around quantile density of 1. If \code{nSamp} is used samples will be
-added until the \code{1 - tolerance} density is reached. If \code{threshold} is used, samples will be added until the 
+added until the \code{1 - tolerance} density is reached. If \code{threshold} is used, samples will be added until the
 \code{threshold - tolerance} value is reached. This parameter allows the user to define a buffer around desired quantile densities
 to permit the algorithm to not add additional samples if quantile density is very close to 1, or user-defined \code{threshold}.}
 
@@ -62,7 +62,7 @@ the existing sample and covariate dataset.
 Messages in the algorithm will state that samples have been added to under-represented quantiles. The number between
 square brackets that follow represent the matrix row and column respectively that can be printed using \code{details = TRUE}.
 
-In some cases, generally when a single metric is used as \code{mraster}, sampling ratios all be >= 1 before the 
+In some cases, generally when a single metric is used as \code{mraster}, sampling ratios all be >= 1 before the
 \code{nSamp} number of samples are allocated. The algorithm will stop in this scenario.
 
 Special thanks to Dr. Brendan Malone for the original implementation of this algorithm.

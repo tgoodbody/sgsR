@@ -16,9 +16,9 @@ o <- strat_poly(
   details = TRUE
 )
 
-odf <- terra::values(o$raster, dataframe=TRUE)
+odf <- terra::values(o$raster, dataframe = TRUE)
 
-odfna <- odf[complete.cases(odf),]
+odfna <- odf[complete.cases(odf), ]
 
 #--- or as multiple lists ---#
 
@@ -35,9 +35,9 @@ o1 <- strat_poly(
   details = TRUE
 )
 
-o1df <- terra::values(o1$raster, dataframe=TRUE)
+o1df <- terra::values(o1$raster, dataframe = TRUE)
 
-o1dfna <- o1df[complete.cases(o1df),]
+o1dfna <- o1df[complete.cases(o1df), ]
 
 test_that("Input classes", {
   expect_error(strat_poly(poly = "fri", attribute = attribute, features = features, raster = sraster), "'poly' must be an 'sf' object.")
@@ -65,17 +65,16 @@ test_that("Total outputs", {
 })
 
 test_that("Out classes", {
-  expect_s4_class(o$poly,"SpatVector")
-  expect_s4_class(o$raster,"SpatRaster")
-  expect_equal(sort(unique(odfna)),o$lookUp$strata)
-  expect_equal(3,o$lookUp$strata[3])
-  expect_equal(c(1,2,2),o1$lookUp$strata)
-  
-  features2 <- c(NA,"poor", "medium")
+  expect_s4_class(o$poly, "SpatVector")
+  expect_s4_class(o$raster, "SpatRaster")
+  expect_equal(sort(unique(odfna)), o$lookUp$strata)
+  expect_equal(3, o$lookUp$strata[3])
+  expect_equal(c(1, 2, 2), o1$lookUp$strata)
+
+  features2 <- c(NA, "poor", "medium")
   features3 <- c("poor", "poor", "medium")
-  
-  expect_message(strat_poly(poly = fri, attribute = attribute, features = features2, raster = sraster),"'features' contains NA. Is this on purpose?")
-  expect_error(strat_poly(poly = fri, attribute = attribute, features = features3, raster = sraster),"Repeated within 'features': poor")
-  expect_error(strat_poly(poly = fri %>% dplyr::select(-NUTRIENTS), attribute = attribute, features = features2, raster = sraster),"'poly' does not have a layer named NUTRIENTS.")
-  
+
+  expect_message(strat_poly(poly = fri, attribute = attribute, features = features2, raster = sraster), "'features' contains NA. Is this on purpose?")
+  expect_error(strat_poly(poly = fri, attribute = attribute, features = features3, raster = sraster), "Repeated within 'features': poor")
+  expect_error(strat_poly(poly = fri %>% dplyr::select(-NUTRIENTS), attribute = attribute, features = features2, raster = sraster), "'poly' does not have a layer named NUTRIENTS.")
 })

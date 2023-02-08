@@ -71,9 +71,7 @@ strat_poly <- function(poly,
                        filename = NULL,
                        overwrite = FALSE,
                        plot = FALSE,
-                       details = FALSE
-                       ) {
-
+                       details = FALSE) {
   #--- error handling ---#
 
   if (!inherits(poly, "sf")) {
@@ -107,7 +105,7 @@ strat_poly <- function(poly,
   #--- subset inventory polygon ---#
 
   if (!any(grepl(attribute, names(poly)))) {
-    stop(paste0("'poly' does not have a layer named ", attribute,"."), call. = FALSE)
+    stop(paste0("'poly' does not have a layer named ", attribute, "."), call. = FALSE)
   }
 
   #--- check that features are not duplicated across proposed attribute classes ---#
@@ -163,19 +161,18 @@ strat_poly <- function(poly,
   #--- write file to disc if requested ---#
 
   if (!is.null(filename)) {
-    
     if (!is.character(filename)) {
       stop("'filename' must be a file path character string.", call. = FALSE)
     }
-    
+
     if (!is.logical(overwrite)) {
       stop("'overwrite' must be type logical.", call. = FALSE)
     }
-    
+
     if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(paste0("'",filename, "' already exists and overwrite = FALSE."), call. = FALSE)
+      stop(paste0("'", filename, "' already exists and overwrite = FALSE."), call. = FALSE)
     }
-    
+
     terra::writeRaster(x = outpolyrast, filename = filename, overwrite = overwrite)
     message("Output raster written to disc.")
   }
@@ -189,7 +186,6 @@ strat_poly <- function(poly,
   #--- output details if requested ---#
 
   if (isTRUE(details)) {
-
     #--- output metrics details along with stratification raster ---#
 
     output <- list(raster = outpolyrast, lookUp = lookUp, poly = poly)
@@ -198,7 +194,6 @@ strat_poly <- function(poly,
 
     return(output)
   } else {
-
     #--- just output raster ---#
 
     return(outpolyrast)

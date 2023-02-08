@@ -6,7 +6,7 @@
 #'
 #' @inheritParams extract_strata
 #' @inheritParams sample_strat
-#' @param plot Logical. Plot frequency of strata coverage and sampling coverage 
+#' @param plot Logical. Plot frequency of strata coverage and sampling coverage
 #' for \code{sraster} and \code{existing}. Will return a list if \code{TRUE}.
 #'
 #' @return Returns a tibble where:
@@ -57,9 +57,8 @@
 calculate_representation <- function(sraster,
                                      existing,
                                      plot = FALSE) {
-  
   #--- set global vars ---#
-  
+
   x <- y <- strata <- srasterFreq <- cnt <- desc <- nSamp <- sampleFreq <- diffFreq <- value <- name <- NULL
 
   #--- Error management ---#
@@ -101,15 +100,13 @@ calculate_representation <- function(sraster,
     dplyr::arrange(desc(srasterFreq))
 
   #--- existing ---#
-  
+
   #--- avoid double strata column if existing is coming from a stratified sample function ---#
-  if("strata" %in% names(existing)){
-    
+  if ("strata" %in% names(existing)) {
     existing <- existing %>%
       dplyr::select(-strata)
-    
   }
-  
+
   existing_mat <- extract_strata(sraster = sraster, existing = existing, data.frame = TRUE) %>%
     dplyr::select(strata) %>%
     stats::na.omit() %>%
@@ -146,7 +143,6 @@ calculate_representation <- function(sraster,
       )
 
     print(p)
-    
   }
-    return(rep)
+  return(rep)
 }

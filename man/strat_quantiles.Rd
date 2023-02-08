@@ -17,7 +17,7 @@ strat_quantiles(
 \arguments{
 \item{mraster}{spatRaster. ALS metrics raster.}
 
-\item{nStrata}{Numeric. A positive integer representing the number of desired classes 
+\item{nStrata}{Numeric. A positive integer representing the number of desired classes
 or a numeric vector of probabilities with values between \code{0-1}. If \code{mraster} has multiple layers,
 \code{nStrata} must be a list with an equal number of objects.}
 
@@ -29,7 +29,7 @@ or a numeric vector of probabilities with values between \code{0-1}. If \code{mr
 strata with boundary dividers.}
 
 \item{details}{Logical. If \code{FALSE} (default) output is only
-stratification raster. If \code{TRUE} return a list where \code{$details} is additional 
+stratification raster. If \code{TRUE} return a list where \code{$details} is additional
 stratification information and \code{$raster} is the output stratification spatRaster.}
 
 \item{filename}{Character. Path to write stratified raster to disc.}
@@ -62,10 +62,10 @@ strat_quantiles(
 
 strat_quantiles(
   mraster = mr[[1:2]],
-  nStrata = list(c(0.2,0.4,0.8), 3),
+  nStrata = list(c(0.2, 0.4, 0.8), 3),
   map = TRUE
 )
-  
+
 }
 \seealso{
 Other stratify functions: 

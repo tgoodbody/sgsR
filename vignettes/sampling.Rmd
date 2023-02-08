@@ -36,7 +36,7 @@ library(sgsR)
 library(terra)
 library(dplyr)
 
-par(mar=c(1,1,1,1))
+par(mar = c(1, 1, 1, 1))
 
 #--- Load mraster and access files ---#
 r <- system.file("extdata", "mraster.tif", package = "sgsR")
@@ -50,36 +50,39 @@ a <- system.file("extdata", "access.shp", package = "sgsR")
 access <- sf::st_read(a, quiet = TRUE)
 
 #--- apply quantiles algorithm to metrics raster ---#
-sraster <- strat_quantiles(mraster = mraster$zq90, # use mraster as input for sampling
-                           nStrata = 4) # algorithm will produce 4 strata
+sraster <- strat_quantiles(
+  mraster = mraster$zq90, # use mraster as input for sampling
+  nStrata = 4
+) # algorithm will produce 4 strata
 
 #--- apply stratified sampling algorithm ---#
-existing <- sample_strat(sraster = sraster, # use mraster as input for sampling
-                         nSamp = 200, # request 200 samples be taken
-                         mindist = 100) # define that samples must be 100 m apart
+existing <- sample_strat(
+  sraster = sraster, # use mraster as input for sampling
+  nSamp = 200, # request 200 samples be taken
+  mindist = 100
+) # define that samples must be 100 m apart
 
 sf::st_crs(existing) <- terra::crs(sraster)
 
 #--- algorithm table ---#
 
-a <- c("`sample_srs()`","`sample_systematic()`","`sample_strat()`","`sample_sys_strat()`","`sample_nc()`","`sample_clhs()`","`sample_balanced()`","`sample_ahels()`","`sample_existing()`")
+a <- c("`sample_srs()`", "`sample_systematic()`", "`sample_strat()`", "`sample_sys_strat()`", "`sample_nc()`", "`sample_clhs()`", "`sample_balanced()`", "`sample_ahels()`", "`sample_existing()`")
 
-d <- c("Simple random", "Systematic", "Stratified","Systematic Stratified", "Nearest centroid", "Conditioned Latin hypercube", "Balanced sampling", "Adapted hypercube evaluation of a legacy sample", "Sub-sampling an existing sample")
+d <- c("Simple random", "Systematic", "Stratified", "Systematic Stratified", "Nearest centroid", "Conditioned Latin hypercube", "Balanced sampling", "Adapted hypercube evaluation of a legacy sample", "Sub-sampling an existing sample")
 
-s <- c("", "", "[Queinnec, White, & Coops (2021)](https://www.sciencedirect.com/science/article/pii/S0034425721002303)","","[Melville & Stone (2016)](https://doi.org/10.1080/00049158.2016.1218265)", "[Minasny & McBratney (2006)](https://www.sciencedirect.com/science/article/pii/S009830040500292X?via%3Dihub)","[Grafström, A. Lisic, J (2018)](http://www.antongrafstrom.se/balancedsampling/)","[Malone, Minasny, & Brungard (2019)](https://peerj.com/articles/6451/)","")
+s <- c("", "", "[Queinnec, White, & Coops (2021)](https://www.sciencedirect.com/science/article/pii/S0034425721002303)", "", "[Melville & Stone (2016)](https://doi.org/10.1080/00049158.2016.1218265)", "[Minasny & McBratney (2006)](https://www.sciencedirect.com/science/article/pii/S009830040500292X?via%3Dihub)", "[Grafström, A. Lisic, J (2018)](http://www.antongrafstrom.se/balancedsampling/)", "[Malone, Minasny, & Brungard (2019)](https://peerj.com/articles/6451/)", "")
 
-urls <- c("#srs","#systematic","#sstrat","#sysstrat","#nc","#clhs","#balanced","#ahels","#samp-existing")
+urls <- c("#srs", "#systematic", "#sstrat", "#sysstrat", "#nc", "#clhs", "#balanced", "#ahels", "#samp-existing")
 
 df <- data.frame(Algorithm = a, Description = d, Reference = s)
 
 df$Algorithm <- paste0("[", df$Algorithm, "](", urls, ")")
-
 ```
 
 Currently, there are 9 functions associated with the `sample` verb in the `sgsR` package:
 
 ```{r echo=FALSE}
-knitr::kable(df, align = 'c')
+knitr::kable(df, align = "c")
 ```
 
 ## `sample_srs` {#srs .unnumbered}
@@ -93,19 +96,23 @@ The input required for `sample_srs()` is a `raster`. This means that `sraster` a
 
 ```{r,warning=F,message=F} 
 #--- perform simple random sampling ---#
-sample_srs(raster = sraster, # input sraster
-           nSamp = 200, # number of desired sample units
-           plot = TRUE) # plot
+sample_srs(
+  raster = sraster, # input sraster
+  nSamp = 200, # number of desired sample units
+  plot = TRUE
+) # plot
 ```
 
 ```{r,warning=F,message=F} 
-sample_srs(raster = mraster, # input mraster
-           nSamp = 200, # number of desired sample units
-           access = access, # define access road network
-           mindist = 200, # minimum distance sample units must be apart from one another
-           buff_inner = 50, # inner buffer - no sample units within this distance from road
-           buff_outer = 200, # outer buffer - no sample units further than this distance from road
-           plot = TRUE) # plot
+sample_srs(
+  raster = mraster, # input mraster
+  nSamp = 200, # number of desired sample units
+  access = access, # define access road network
+  mindist = 200, # minimum distance sample units must be apart from one another
+  buff_inner = 50, # inner buffer - no sample units within this distance from road
+  buff_outer = 200, # outer buffer - no sample units further than this distance from road
+  plot = TRUE
+) # plot
 ```
 
 ## `sample_systematic` {#systematic .unnumbered}
@@ -116,28 +123,34 @@ The location of sample units can also be adjusted using the `locations` paramete
 
 ```{r,warning=F,message=F} 
 #--- perform grid sampling ---#
-sample_systematic(raster = sraster, # input sraster
-                  cellsize = 1000, # grid distance
-                  plot = TRUE) # plot
+sample_systematic(
+  raster = sraster, # input sraster
+  cellsize = 1000, # grid distance
+  plot = TRUE
+) # plot
 ```
 
 ```{r,warning=F,message=F} 
 #--- perform grid sampling ---#
-sample_systematic(raster = sraster, # input sraster
-                  cellsize = 500, # grid distance
-                  square = FALSE, # hexagonal tessellation
-                  location = "random", # randomly sample within tessellation
-                  plot = TRUE) # plot
+sample_systematic(
+  raster = sraster, # input sraster
+  cellsize = 500, # grid distance
+  square = FALSE, # hexagonal tessellation
+  location = "random", # randomly sample within tessellation
+  plot = TRUE
+) # plot
 ```      
 
 ```{r,warning=F,message=F} 
-sample_systematic(raster = sraster, # input sraster
-            cellsize = 500, # grid distance
-            access = access, # define access road network
-            buff_outer = 200, # outer buffer - no sample units further than this distance from road
-            square = FALSE, # hexagonal tessellation
-            location = "corners", # take corners instead of centers
-            plot = TRUE)
+sample_systematic(
+  raster = sraster, # input sraster
+  cellsize = 500, # grid distance
+  access = access, # define access road network
+  buff_outer = 200, # outer buffer - no sample units further than this distance from road
+  square = FALSE, # hexagonal tessellation
+  location = "corners", # take corners instead of centers
+  plot = TRUE
+)
 ```
 
 ## `sample_strat` {#sstrat .unnumbered}
@@ -164,8 +177,10 @@ The rule applied to a select each sample unit is defined in the `rule` attribute
 
 ```{r,warning=F,message=F} 
 #--- perform stratified sampling random sampling ---#
-sample_strat(sraster = sraster, # input sraster
-             nSamp = 200) # desired sample size # plot
+sample_strat(
+  sraster = sraster, # input sraster
+  nSamp = 200
+) # desired sample size # plot
 ```
 
 In some cases, users might want to include an `existing` sample  within the algorithm. In order to adjust the total number of sample units needed per stratum to reflect those already present in `existing`, we can use the intermediate function `extract_strata()`.
@@ -173,10 +188,11 @@ In some cases, users might want to include an `existing` sample  within the algo
 This function uses the `sraster` and `existing` sample units and extracts the stratum for each. These sample units can be included within `sample_strat()`, which adjusts total sample units required per class based on representation in `existing`.
 
 ```{r,warning=F,message=F} 
-#--- extract strata values to existing samples ---#              
-e.sr <- extract_strata(sraster = sraster, # input sraster
-                       existing = existing) # existing samples to add strata value to
-
+#--- extract strata values to existing samples ---#
+e.sr <- extract_strata(
+  sraster = sraster, # input sraster
+  existing = existing
+) # existing samples to add strata value to
 ```
 
 ::: {.infobox .caution data-latex="{caution}"}
@@ -186,14 +202,16 @@ e.sr <- extract_strata(sraster = sraster, # input sraster
 :::
 
 ```{r,warning=F,message=F} 
-sample_strat(sraster = sraster, # input sraster
-             nSamp = 200, # desired sample size
-             access = access, # define access road network
-             existing = e.sr, # existing sample with strata values
-             mindist = 200, # minimum distance sample units must be apart from one another
-             buff_inner = 50, # inner buffer - no sample units within this distance from road
-             buff_outer = 200, # outer buffer - no sample units further than this distance from road
-             plot = TRUE) # plot
+sample_strat(
+  sraster = sraster, # input sraster
+  nSamp = 200, # desired sample size
+  access = access, # define access road network
+  existing = e.sr, # existing sample with strata values
+  mindist = 200, # minimum distance sample units must be apart from one another
+  buff_inner = 50, # inner buffer - no sample units within this distance from road
+  buff_outer = 200, # outer buffer - no sample units further than this distance from road
+  plot = TRUE
+) # plot
 ```
 
 The code in the example above defined the `mindist` parameter, which specifies the minimum euclidean distance that new sample units must be apart from one another.
@@ -201,13 +219,15 @@ The code in the example above defined the `mindist` parameter, which specifies t
 Notice that the sample units have `type` and `rule` attributes which outline whether they are `existing` or `new`, and whether `rule1` or `rule2` were used to select them. If `type` is _existing_ (a user provided `existing` sample), `rule` will be _existing_ as well as seen above.
 
 ```{r,warning=F,message=F} 
-sample_strat(sraster = sraster, # input
-             nSamp = 200, # desired sample size
-             access = access, # define access road network
-             existing = e.sr, # existing samples with strata values
-             include = TRUE, # include existing sample in nSamp total
-             buff_outer = 200, # outer buffer - no samples further than this distance from road
-             plot = TRUE) # plot
+sample_strat(
+  sraster = sraster, # input
+  nSamp = 200, # desired sample size
+  access = access, # define access road network
+  existing = e.sr, # existing samples with strata values
+  include = TRUE, # include existing sample in nSamp total
+  buff_outer = 200, # outer buffer - no samples further than this distance from road
+  plot = TRUE
+) # plot
 ```
 
 The `include` parameter determines whether `existing` sample units should be included in the total sample size defined by `nSamp`. By default, the `include` parameter is set as `FALSE`.
@@ -218,10 +238,12 @@ Stratified random sampling with equal probability for all cells (using default a
 
 ```{r,warning=F,message=F} 
 #--- perform stratified sampling random sampling ---#
-sample_strat(sraster = sraster, # input sraster
-             method = "random", #stratified random sampling
-             nSamp = 200, # desired sample size
-             plot = TRUE) # plot
+sample_strat(
+  sraster = sraster, # input sraster
+  method = "random", # stratified random sampling
+  nSamp = 200, # desired sample size
+  plot = TRUE
+) # plot
 ```
 
 ## `sample_sys_strat` {#sysstrat .unnumbered}
@@ -235,7 +257,6 @@ sample_sys_strat(
   cellsize = 1000, # grid size
   plot = TRUE # plot output
 )
-
 ```
 
 Just like with `sample_systematic()` we can specify where we want our samples to fall within our tessellations. We specify `location = "corners"` below. Note that the tesselations are all saved to a list file when `details = TRUE` should the user want to save them.
@@ -291,18 +312,22 @@ Cluster centers are located, which then prompts the nearest neighbour `mraster` 
 
 ```{r}
 #--- perform simple random sampling ---#
-sample_nc(mraster = mraster, # input
-          nSamp = 25, # desired sample size
-          plot = TRUE)
+sample_nc(
+  mraster = mraster, # input
+  nSamp = 25, # desired sample size
+  plot = TRUE
+)
 ```
 Altering the `k` parameter leads to a multiplicative increase in output sample units where total output samples = $nSamp * k$.
 
 ```{r}
 #--- perform simple random sampling ---#
-samples <- sample_nc(mraster = mraster, # input
-                    k = 2, # number of nearest neighbours to take for each kmeans center
-                    nSamp = 25, # desired sample size
-                    plot = TRUE)
+samples <- sample_nc(
+  mraster = mraster, # input
+  k = 2, # number of nearest neighbours to take for each kmeans center
+  nSamp = 25, # desired sample size
+  plot = TRUE
+)
 
 #--- total samples = nSamp * k (25 * 2) = 50 ---#
 nrow(samples)
@@ -312,9 +337,11 @@ Visualizing what the kmeans centers and sample units looks like is possible when
 
 ```{r}
 #--- perform simple random sampling with details ---#
-details <- sample_nc(mraster = mraster, # input
-                     nSamp = 25, # desired sample number
-                     details = TRUE)
+details <- sample_nc(
+  mraster = mraster, # input
+  nSamp = 25, # desired sample number
+  details = TRUE
+)
 
 #--- plot ggplot output ---#
 
@@ -334,17 +361,21 @@ A number of other functions in the `sgsR` package help to provide guidance on cl
 The syntax for this function is similar to others shown above, although parameters like `iter`, which define the number of iterations within the Metropolis-Hastings process are important to consider. In these examples we use a low `iter` value for efficiency. Default values for `iter` within the `clhs` package are 10,000.
 
 ```{r,eval = FALSE} 
-sample_clhs(mraster = mraster, # input
-            nSamp = 200, # desired sample size
-            plot = TRUE, # plot 
-            iter = 100) # number of iterations
+sample_clhs(
+  mraster = mraster, # input
+  nSamp = 200, # desired sample size
+  plot = TRUE, # plot
+  iter = 100
+) # number of iterations
 ```
 
 ```{r,warning=F,message=F,echo=F,results = FALSE} 
-sample_clhs(mraster = mraster, # input
-            nSamp = 200, # desired sample size
-            plot = TRUE, # plot 
-            iter = 100) # number of iterations
+sample_clhs(
+  mraster = mraster, # input
+  nSamp = 200, # desired sample size
+  plot = TRUE, # plot
+  iter = 100
+) # number of iterations
 ```
 
 The `cost` parameter defines the `mraster` covariate, which is used to constrain the clhs sampling. An example could be the distance a pixel is from road `access` (e.g. from `calculate_distance()` see example below), terrain slope, the output from `calculate_coobs()`, or many others.
@@ -352,26 +383,31 @@ The `cost` parameter defines the `mraster` covariate, which is used to constrain
 ```{r,warning=F,message=F} 
 #--- cost constrained examples ---#
 #--- calculate distance to access layer for each pixel in mr ---#
-mr.c <- calculate_distance(raster = mraster, # input
-                           access = access, # define access road network
-                           plot = TRUE) # plot
-
+mr.c <- calculate_distance(
+  raster = mraster, # input
+  access = access, # define access road network
+  plot = TRUE
+) # plot
 ```
 
 ```{r,eval=F} 
-sample_clhs(mraster = mr.c, # input
-            nSamp = 250, # desired sample size
-            iter = 100, # number of iterations
-            cost = "dist2access", # cost parameter - name defined in calculate_distance()
-            plot = TRUE) # plot
+sample_clhs(
+  mraster = mr.c, # input
+  nSamp = 250, # desired sample size
+  iter = 100, # number of iterations
+  cost = "dist2access", # cost parameter - name defined in calculate_distance()
+  plot = TRUE
+) # plot
 ```
 
 ```{r,warning=F,message=F,echo=F,results = FALSE} 
-sample_clhs(mraster = mr.c, # input
-            nSamp = 250, # desired sample size
-            iter = 100, # number of iterations
-            cost = "dist2access", # cost parameter - name defined in calculate_distance()
-            plot = TRUE) # plot
+sample_clhs(
+  mraster = mr.c, # input
+  nSamp = 250, # desired sample size
+  iter = 100, # number of iterations
+  cost = "dist2access", # cost parameter - name defined in calculate_distance()
+  plot = TRUE
+) # plot
 ```
 
 ## `sample_balanced` {#balanced .unnumbered}
@@ -379,18 +415,22 @@ sample_clhs(mraster = mr.c, # input
 The `sample_balanced()` algorithm performs a balanced sampling methodology from the [`stratifyR / SamplingBigData`](http://www.antongrafstrom.se/balancedsampling/) packages.
 
 ```{r,warning=F,message=F} 
-sample_balanced(mraster = mraster, # input
-                nSamp = 200, # desired sample size
-                plot = TRUE) # plot
+sample_balanced(
+  mraster = mraster, # input
+  nSamp = 200, # desired sample size
+  plot = TRUE
+) # plot
 ```
 
 ```{r,warning=F,message=F} 
-sample_balanced(mraster = mraster, # input
-                nSamp = 100, # desired sample size
-                algorithm = "lcube", # algorithm type
-                access = access, # define access road network
-                buff_inner = 50, # inner buffer - no sample units within this distance from road
-                buff_outer = 200) # outer buffer - no sample units further than this distance from road
+sample_balanced(
+  mraster = mraster, # input
+  nSamp = 100, # desired sample size
+  algorithm = "lcube", # algorithm type
+  access = access, # define access road network
+  buff_inner = 50, # inner buffer - no sample units within this distance from road
+  buff_outer = 200
+) # outer buffer - no sample units further than this distance from road
 ```
 
 ## `sample_ahels` {#ahels .unnumbered}
@@ -416,14 +456,18 @@ To use this function, user must first specify the number of quantiles (`nQuant`)
 
 existing <- existing %>% select(-type)
 
-sample_ahels(mraster = mraster, 
-             existing = existing, # existing sample
-             plot = TRUE) # plot
+sample_ahels(
+  mraster = mraster,
+  existing = existing, # existing sample
+  plot = TRUE
+) # plot
 ```
 
 ```{r,warning=F,message=F,echo=FALSE, results = FALSE}
-s <- sample_ahels(mraster = mraster, 
-             existing = existing) # existing samples
+s <- sample_ahels(
+  mraster = mraster,
+  existing = existing
+) # existing samples
 ```
 ```{r,echo=FALSE}
 s
@@ -439,18 +483,21 @@ Notice that no `threshold`, `nSamp`, or `nQuant` were defined. That is because t
 The first matrix output shows the quantile ratios between the sample and the covariates. A value of 1.0 indicates that the sample is representative of quantile coverage. Values > 1.0 indicate over representation of sample units, while < 1.0 indicate under representation.
 
 ```{r,eval = FALSE}
-sample_ahels(mraster = mraster, 
-             existing = existing, # existing sample
-             nQuant = 20, # define 20 quantiles
-             nSamp = 300) # desired sample size
+sample_ahels(
+  mraster = mraster,
+  existing = existing, # existing sample
+  nQuant = 20, # define 20 quantiles
+  nSamp = 300
+) # desired sample size
 ```
 
 ```{r,warning=F,message=F,echo=FALSE, results = FALSE}
-s <- sample_ahels(mraster = mraster, 
-             existing = existing, # existing sample
-             nQuant = 20, # define 20 quantiles
-             nSamp = 300) # plot
-
+s <- sample_ahels(
+  mraster = mraster,
+  existing = existing, # existing sample
+  nQuant = 20, # define 20 quantiles
+  nSamp = 300
+) # plot
 ```
 
 ```{r,echo=FALSE}
@@ -478,17 +525,15 @@ First we can create an `existing` sample for our example. Lets imagine we have a
 ```{r,warning=F,message=F}
 #--- generate existing samples and extract metrics ---#
 existing <- sample_srs(raster = mraster, nSamp = 900, plot = TRUE)
-
 ```
 Now lets sub-sample.
 
 ```{r,warning=F,message=F}
 #--- sub sample using ---#
-e <- existing %>% 
+e <- existing %>%
   extract_metrics(mraster = mraster, existing = .)
 
 sample_existing(existing = e, nSamp = 300, plot = TRUE)
-
 ```
 
 ::: {.infobox .caution data-latex="{caution}"}
@@ -505,28 +550,29 @@ Our systematic sample of ~900 plots is fairly comprehensive, however we can gene
 
 ```{r,warning=F,message=F}
 #--- sub sample using ---#
-sample_existing(existing = existing, # our existing sample
-                nSamp = 300, # desired sample size
-                raster = mraster, # include mraster metrics to guide sampling of existing
-                plot = TRUE) # plot
-
+sample_existing(
+  existing = existing, # our existing sample
+  nSamp = 300, # desired sample size
+  raster = mraster, # include mraster metrics to guide sampling of existing
+  plot = TRUE
+) # plot
 ```
 The sample distribution again mimics the population distribution quite well! Now lets try using a cost variable to constrain the sub-sample.
 
 ```{r,warning=F,message=F}
 #--- create distance from roads metric ---#
 dist <- calculate_distance(raster = mraster, access = access)
-
 ```
 
 ```{r,warning=F,message=F}
 #--- sub sample using ---#
-sample_existing(existing = existing, # our existing sample
-                nSamp = 300, # desired sample size
-                raster = dist, # include mraster metrics to guide sampling of existing
-                cost = 4, # either provide the index (band number) or the name of the cost layer
-                plot = TRUE) # plot
-
+sample_existing(
+  existing = existing, # our existing sample
+  nSamp = 300, # desired sample size
+  raster = dist, # include mraster metrics to guide sampling of existing
+  cost = 4, # either provide the index (band number) or the name of the cost layer
+  plot = TRUE
+) # plot
 ```
 
 Finally, should the user wish to further constrain the sample based on `access` like other sampling approaches in `sgsR` that is also possible.
@@ -537,15 +583,16 @@ Finally, should the user wish to further constrain the sample based on `access` 
 sf::st_crs(existing) <- sf::st_crs(access)
 
 #--- sub sample using ---#
-sample_existing(existing = existing, # our existing sample
-                nSamp = 300, # desired sample size
-                raster = dist, # include mraster metrics to guide sampling of existing
-                cost = 4, # either provide the index (band number) or the name of the cost layer
-                access = access, # roads layer
-                buff_inner = 50, # inner buffer - no sample units within this distance from road
-                buff_outer = 300, # outer buffer - no sample units further than this distance from road
-                plot = TRUE) # plot
-
+sample_existing(
+  existing = existing, # our existing sample
+  nSamp = 300, # desired sample size
+  raster = dist, # include mraster metrics to guide sampling of existing
+  cost = 4, # either provide the index (band number) or the name of the cost layer
+  access = access, # roads layer
+  buff_inner = 50, # inner buffer - no sample units within this distance from road
+  buff_outer = 300, # outer buffer - no sample units further than this distance from road
+  plot = TRUE
+) # plot
 ```
 
 ::: {.infobox .caution data-latex="{caution}"}
