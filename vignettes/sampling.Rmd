@@ -58,6 +58,8 @@ existing <- sample_strat(sraster = sraster, # use mraster as input for sampling
                          nSamp = 200, # request 200 samples be taken
                          mindist = 100) # define that samples must be 100 m apart
 
+sf::st_crs(existing) <- terra::crs(sraster)
+
 #--- algorithm table ---#
 
 a <- c("`sample_srs()`","`sample_systematic()`","`sample_strat()`","`sample_sys_strat()`","`sample_nc()`","`sample_clhs()`","`sample_balanced()`","`sample_ahels()`","`sample_existing()`")

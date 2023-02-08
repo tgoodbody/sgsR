@@ -12,6 +12,10 @@
 
 `enhanced` - `plot_scatter()` - now visualizes with `viridis` colour scheme.
 
+`fixed` - Added new citation information for upcoming manuscript release.
+
+`fixed` - `extract_strata() / extract_metrics()` - CRS for `existing` will now be maintained when provided as an `sf` and the `mraster` CRS will be assigned otherwise.
+
 # sgsR 1.3.4
 
 `fixed` - `sample_srs() / sample_strat(method = "random")` - First sample unit was always duplicated From Tommaso Trotto.

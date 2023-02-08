@@ -502,7 +502,7 @@ sample_strat <- function(sraster,
         dplyr::select(-cell) %>%
         as.data.frame() %>%
         rbind(.,samples_NA) %>%
-        sf::st_as_sf(., coords = c("X", "Y"))
+        sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
       
     } else {
       
@@ -510,7 +510,7 @@ sample_strat <- function(sraster,
       samples <- out %>%
         dplyr::select(-cell) %>%
         as.data.frame() %>%
-        sf::st_as_sf(., coords = c("X", "Y"))
+        sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
       
     }
     
@@ -526,13 +526,10 @@ sample_strat <- function(sraster,
       samples <- out %>%
         dplyr::select(-cell) %>%
         as.data.frame() %>%
-        sf::st_as_sf(., coords = c("X", "Y"))
+        sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
     }
     
   }
-  
-  #--- assign sraster crs to spatial points object ---#
-  # sf::st_crs(samples) <- crs
   
   #--- plot the raster and samples if desired ---#
   

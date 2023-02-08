@@ -111,10 +111,6 @@ sample_clhs <- function(mraster,
     stop("'details' must be type logical.", call. = FALSE)
   }
 
-
-  #--- determine crs of input mraster ---#
-  crs <- terra::crs(mraster, proj = TRUE)
-
   #--- access buffering if specified ---#
 
   if (!is.null(access)) {
@@ -219,7 +215,14 @@ sample_clhs <- function(mraster,
           stop("'existing' must have columns named 'X' and 'Y'.", call. = FALSE)
         }
       }
+      
+      #--- determine crs of input mraster ---#
+      crs <- terra::crs(mraster, proj = TRUE)
 
+    } else {
+      
+      crs <- sf::st_crs(existing)
+      
     }
     
     existingSamples <- extract_metrics(mraster = mraster, existing = existing, data.frame = TRUE)
@@ -307,14 +310,14 @@ sample_clhs <- function(mraster,
       samples <- samples %>%
         dplyr::bind_rows(., samples_NA) %>%
         dplyr::left_join(., extraCols,  by = c("X","Y")) %>%
-        sf::st_as_sf(., coords = c("X", "Y"))
+        sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
       
     } else {
       
       #--- convert coordinates to a spatial points object ---#
       samples <- samples %>%
         dplyr::bind_rows(., samples_NA) %>%
-        sf::st_as_sf(., coords = c("X", "Y"))
+        sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
       
     }
     

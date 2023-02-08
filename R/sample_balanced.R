@@ -173,10 +173,7 @@ sample_balanced <- function(mraster,
   #--- convert coordinates to a spatial points object ---#
   samples <- dplyr::select(samples, X, Y) %>%
     as.data.frame() %>%
-    sf::st_as_sf(., coords = c("X", "Y"))
-
-  #--- assign mraster crs to spatial points object ---#
-  sf::st_crs(samples) <- crs
+    sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
 
   if (isTRUE(plot)) {
 
