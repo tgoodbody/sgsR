@@ -33,6 +33,10 @@ library(sgsR)
 
 ## Citing `sgsR` in literature
 
+Open access publication: [sgsR: a structurally guided sampling toolbox
+for LiDAR-based forest
+inventories](https://doi.org/10.1093/forestry/cpac055)
+
 To cite `sgsR` use `citation()` from within R with:
 
 ``` r
