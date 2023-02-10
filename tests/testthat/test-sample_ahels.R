@@ -16,7 +16,6 @@ test_that("Input classes", {
   expect_error(sample_ahels(mraster = mraster, existing = existing, matrices = mat, threshold = "0.9"), "'threshold' must be type numeric.")
   expect_error(sample_ahels(mraster = mraster, existing = existing, tolerance = 0.2), "'tolerance' must be > 0 and <= 0.1.")
   expect_error(sample_ahels(mraster = mraster, existing = existing, matrices = 4), "'matrices' must be the output from 'calculate_pop\\(\\)\\'.")
-  expect_error(sample_ahels(mraster = mraster, existing = existing, matrices = mat, nQuant = 12), "Number of quantiles in provided 'matrices' does not match 'nQuant'.")
   expect_error(sample_ahels(mraster = sraster, existing = existing, matrices = mat), "'mraster' used to generate 'matrices' must be identical.")
   expect_error(sample_ahels(mraster = mraster, existing = existing.df.n, matrices = mat), "'existing' must have columns named 'X' and 'Y'.")
 

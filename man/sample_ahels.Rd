@@ -38,7 +38,8 @@ to permit the algorithm to not add additional samples if quantile density is ver
 
 \item{matrices}{List. Quantile and covariance matrices generated from \code{calculate_pop(mraster = mraster, nQuant = nQuant)}.
 Both \code{mraster} & \code{nQuant} inputs must be the same to supply the covariance matrix. Supplying the matrix allows users
-with very large \code{mrasters} to pre-process the covariance matrix to avoid longer sampling processing times.}
+with very large \code{mrasters} to pre-process the covariance matrix to avoid longer sampling processing times. If \code{matrices} is
+provided, the \code{nQuant} parameter is ignored and taken from the covariance matrix.}
 
 \item{plot}{Logical. Plots samples of type \code{existing} (if provided; crosses) and \code{new} (circles) along with \code{mraster}.}
 

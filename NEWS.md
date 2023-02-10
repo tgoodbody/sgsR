@@ -1,3 +1,7 @@
+# sgsR 1.4.1
+
+`fixed` - `sample_ahels()` - gave an erroneous error when `matrices` was provided and `nQuant` did not match. Changed to allow only `matrices` to be provided.
+
 # sgsR 1.4.0
 
 `added` - `sample_sys_strat()` - Systematic stratified sampling. Using same functionality as `sample_systematic()` but takes an `sraster` as input and performs sampling on each stratum iteratively.
@@ -11,8 +15,6 @@
 `enhanced` - Updated vignettes and documentation to account for vectorized functionality of the above functions.
 
 `enhanced` - `plot_scatter()` - now visualizes with `viridis` colour scheme.
-
-`fixed` - Added new citation information for upcoming manuscript release.
 
 `fixed` - Added new citation information for upcoming manuscript release.
 
