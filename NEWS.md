@@ -2,6 +2,12 @@
 
 `fixed` - `sample_ahels()` - gave an erroneous error when `matrices` was provided and `nQuant` did not match. Changed to allow only `matrices` to be provided.
 
+`fixed` - `extract_strata()` - added error message if `sraster` had multiple layers #28
+
+`fixed` - `extract_metrics()` - removed code where `mraster` layers with `ID` as name were removed. From Tomasso Trotto #27
+
+`enhanced` - `calculate_representation()` - Added parameter `drop = NULL`. If `!=NULL` then filtering is applied where strata with under drop frequency are dropped from resulting dataframe and plot.  #28
+
 # sgsR 1.4.0
 
 `added` - `sample_sys_strat()` - Systematic stratified sampling. Using same functionality as `sample_systematic()` but takes an `sraster` as input and performs sampling on each stratum iteratively.

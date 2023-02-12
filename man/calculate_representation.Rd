@@ -4,12 +4,17 @@
 \alias{calculate_representation}
 \title{Compare sample representation within sraster strata}
 \usage{
-calculate_representation(sraster, existing, plot = FALSE)
+calculate_representation(sraster, existing, drop = NULL, plot = FALSE)
 }
 \arguments{
 \item{sraster}{spatRaster. Stratification raster.}
 
 \item{existing}{sf 'POINT'.  Existing plot network.}
+
+\item{drop}{Numeric. Numeric value between 0-1 representing the \code{sraster} frequency
+(\code{srasterFreq}) below which strata will be dropped from comparison (e.g..
+This parameter can be useful for when comparing stratum where percent coverage of strata
+may be ~ 0 percent and should be dropped. This could occur when mapping multiple stratifications.}
 
 \item{plot}{Logical. Plot frequency of strata coverage and sampling coverage
 for \code{sraster} and \code{existing}. Will return a list if \code{TRUE}.}
