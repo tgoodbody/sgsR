@@ -22,8 +22,8 @@ test_that("df input", {
   expect_message(extract_metrics(mraster = mraster, existing = e), "Column coordinate names are lowercase - converting to uppercase.")
   expect_message(extract_metrics(mraster = mraster, existing = e), "Column coordinate names are lowercase - converting to uppercase.")
 
-  expect_equal(ncol(extract_metrics(mraster = mraster, existing = e)), 4L)
-  expect_equal(ncol(extract_metrics(mraster = mraster, existing = e, data.frame = TRUE)), 5L)
+  expect_equal(ncol(extract_metrics(mraster = mraster, existing = e)), 5L)
+  expect_equal(ncol(extract_metrics(mraster = mraster, existing = e, data.frame = TRUE)), 6L)
 })
 
 
