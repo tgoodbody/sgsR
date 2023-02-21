@@ -112,12 +112,6 @@ extract_metrics <- function(mraster,
 
   vals <- terra::extract(mraster, xy)
 
-  #--- when dataframe is input "ID" is appended to vals -- remove it ---#
-
-  if ("ID" %in% names(vals)) {
-    vals <- vals %>% dplyr::select(-ID)
-  }
-
   #--- check that extractions has produced some values -- if not tell the user ---#
 
   if (all(!complete.cases(vals))) {

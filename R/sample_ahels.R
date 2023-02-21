@@ -21,7 +21,8 @@
 #' to permit the algorithm to not add additional samples if quantile density is very close to 1, or user-defined \code{threshold}.
 #' @param matrices List. Quantile and covariance matrices generated from \code{calculate_pop(mraster = mraster, nQuant = nQuant)}.
 #' Both \code{mraster} & \code{nQuant} inputs must be the same to supply the covariance matrix. Supplying the matrix allows users
-#' with very large \code{mrasters} to pre-process the covariance matrix to avoid longer sampling processing times.
+#' with very large \code{mrasters} to pre-process the covariance matrix to avoid longer sampling processing times. If \code{matrices} is
+#' provided, the \code{nQuant} parameter is ignored and taken from the covariance matrix.
 #' @param plot Logical. Plots samples of type \code{existing} (if provided; crosses) and \code{new} (circles) along with \code{mraster}.
 #'
 #' @references
@@ -156,10 +157,10 @@ sample_ahels <- function(mraster,
     if (any(!c("matQ", "matCov") %in% names(matrices))) {
       stop("'matrices' must be the output from 'calculate_pop()'.", call. = FALSE)
     }
-
-    if (nrow(matrices$matCov) != nQuant) {
-      stop("Number of quantiles in provided 'matrices' does not match 'nQuant'.", call. = FALSE)
-    }
+    
+    #--- get nQuant from matrices ---#
+    
+    nQuant <- nrow(matrices$matCov)
 
     if (!all(names(matrices$values) == names(mraster))) {
       stop("'mraster' used to generate 'matrices' must be identical.", call. = FALSE)

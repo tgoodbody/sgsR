@@ -3,9 +3,12 @@ o1 <- extract_strata(sraster = sraster, existing = existing, data.frame = TRUE)
 
 unq <- unique(o$strata)
 
+xx <- c(sraster,sraster)
+
 test_that("Single breaks classes", {
   expect_error(extract_strata(sraster = "A", existing = existing), "'sraster' must be type SpatRaster.")
-  expect_error(extract_strata(sraster = mraster, existing = existing), "'sraster' must have a layer named 'strata'.")
+  expect_error(extract_strata(sraster = xx, existing = existing), "'sraster' must have a single layer named 'strata'.")
+  expect_error(extract_strata(sraster = mraster[[1]], existing = existing), "'sraster' must have a layer named 'strata'.")
   expect_error(extract_strata(sraster = sraster, existing = "existing"), "'existing' must be a data.frame or sf object.")
   expect_error(extract_strata(sraster = sraster, existing = existing, quiet = 1), "'quiet' must be type logical.")
 

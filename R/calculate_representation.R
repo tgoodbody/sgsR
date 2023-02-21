@@ -8,6 +8,10 @@
 #' @inheritParams sample_strat
 #' @param plot Logical. Plot frequency of strata coverage and sampling coverage
 #' for \code{sraster} and \code{existing}. Will return a list if \code{TRUE}.
+#' @param drop Numeric. Numeric value between 0-1 representing the \code{sraster} frequency
+#' (\code{srasterFreq}) below which strata will be dropped from comparison (e.g..
+#' This parameter can be useful for when comparing stratum where percent coverage of strata
+#' may be ~ 0 percent and should be dropped. This could occur when mapping multiple stratifications.
 #'
 #' @return Returns a tibble where:
 #' \itemize{
@@ -56,6 +60,7 @@
 
 calculate_representation <- function(sraster,
                                      existing,
+                                     drop = NULL,
                                      plot = FALSE) {
   #--- set global vars ---#
 
@@ -122,6 +127,22 @@ calculate_representation <- function(sraster,
     dplyr::select(strata, srasterFreq, sampleFreq, diffFreq, nSamp) %>%
     dplyr::mutate(need = ceiling(srasterFreq * sum(nSamp)) - nSamp) %>%
     dplyr::arrange(strata)
+  
+  #--- drop srasterFreq values below a certain frequency ---#
+  if(!is.null(drop)){
+    
+    if(!is.numeric(drop)){
+      stop("'drop' must be type numeric.", call. = FALSE)
+    }
+    
+    if(drop > 1 | drop < 0){
+      stop("'drop' must be a numeric value between 0-1.", call. = FALSE)
+    }
+    
+    rep <- rep %>%
+      dplyr::filter(srasterFreq > drop)
+    
+  }
 
   #--- present barchart if desired ---#
   if (isTRUE(plot)) {
