@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,6 +61,13 @@
       <small>Source: <a href="https://github.com/tgoodbody/sgsR/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.4.1" id="sgsr-141">sgsR 1.4.1<a class="anchor" aria-label="anchor" href="#sgsr-141"></a></h2>
+<p><code>fixed</code> - <code><a href="../reference/sample_ahels.html">sample_ahels()</a></code> - gave an erroneous error when <code>matrices</code> was provided and <code>nQuant</code> did not match. Changed to allow only <code>matrices</code> to be provided.</p>
+<p><code>fixed</code> - <code><a href="../reference/extract_strata.html">extract_strata()</a></code> - added error message if <code>sraster</code> had multiple layers <a href="https://github.com/tgoodbody/sgsR/issues/28" class="external-link">#28</a></p>
+<p><code>fixed</code> - <code><a href="../reference/extract_metrics.html">extract_metrics()</a></code> - removed code where <code>mraster</code> layers with <code>ID</code> as name were removed. From Tomasso Trotto <a href="https://github.com/tgoodbody/sgsR/issues/27" class="external-link">#27</a></p>
+<p><code>enhanced</code> - <code><a href="../reference/calculate_representation.html">calculate_representation()</a></code> - Added parameter <code>drop = NULL</code>. If <code>!=NULL</code> then filtering is applied where strata with under drop frequency are dropped from resulting dataframe and plot. <a href="https://github.com/tgoodbody/sgsR/issues/28" class="external-link">#28</a></p>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.4.0" id="sgsr-140">sgsR 1.4.0<a class="anchor" aria-label="anchor" href="#sgsr-140"></a></h2><p class="text-muted">CRAN release: 2023-02-09</p>
 <p><code>added</code> - <code><a href="../reference/sample_sys_strat.html">sample_sys_strat()</a></code> - Systematic stratified sampling. Using same functionality as <code><a href="../reference/sample_systematic.html">sample_systematic()</a></code> but takes an <code>sraster</code> as input and performs sampling on each stratum iteratively.</p>

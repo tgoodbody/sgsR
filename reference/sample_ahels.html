@@ -20,7 +20,7 @@ the existing sample and covariate dataset."><meta property="og:image" content="/
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -123,7 +123,8 @@ to permit the algorithm to not add additional samples if quantile density is ver
 <dt>matrices</dt>
 <dd><p>List. Quantile and covariance matrices generated from <code>calculate_pop(mraster = mraster, nQuant = nQuant)</code>.
 Both <code>mraster</code> &amp; <code>nQuant</code> inputs must be the same to supply the covariance matrix. Supplying the matrix allows users
-with very large <code>mrasters</code> to pre-process the covariance matrix to avoid longer sampling processing times.</p></dd>
+with very large <code>mrasters</code> to pre-process the covariance matrix to avoid longer sampling processing times. If <code>matrices</code> is
+provided, the <code>nQuant</code> parameter is ignored and taken from the covariance matrix.</p></dd>
 
 
 <dt>plot</dt>
