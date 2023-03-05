@@ -157,9 +157,9 @@ sample_ahels <- function(mraster,
     if (any(!c("matQ", "matCov") %in% names(matrices))) {
       stop("'matrices' must be the output from 'calculate_pop()'.", call. = FALSE)
     }
-    
+
     #--- get nQuant from matrices ---#
-    
+
     nQuant <- nrow(matrices$matCov)
 
     if (!all(names(matrices$values) == names(mraster))) {

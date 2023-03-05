@@ -63,6 +63,7 @@ Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of c
 }
 \seealso{
 Other calculate functions: 
+\code{\link{calculate_allocation_existing}()},
 \code{\link{calculate_allocation}()},
 \code{\link{calculate_distance}()},
 \code{\link{calculate_pcomp}()},

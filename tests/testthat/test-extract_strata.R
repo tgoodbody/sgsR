@@ -3,7 +3,7 @@ o1 <- extract_strata(sraster = sraster, existing = existing, data.frame = TRUE)
 
 unq <- unique(o$strata)
 
-xx <- c(sraster,sraster)
+xx <- c(sraster, sraster)
 
 test_that("Single breaks classes", {
   expect_error(extract_strata(sraster = "A", existing = existing), "'sraster' must be type SpatRaster.")

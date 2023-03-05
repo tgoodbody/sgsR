@@ -51,7 +51,7 @@ extract_strata <- function(sraster,
   if (!inherits(sraster, "SpatRaster")) {
     stop("'sraster' must be type SpatRaster.", call. = FALSE)
   }
-  
+
   if (terra::nlyr(sraster) > 1) {
     stop("'sraster' must have a single layer named 'strata'.", call. = FALSE)
   }

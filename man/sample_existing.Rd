@@ -8,11 +8,10 @@ sample_existing(
   existing,
   nSamp,
   raster = NULL,
-  cost = NULL,
+  type = "clhs",
   access = NULL,
   buff_inner = NULL,
   buff_outer = NULL,
-  iter = 10000,
   plot = FALSE,
   details = FALSE,
   filename = NULL,
@@ -25,10 +24,11 @@ sample_existing(
 
 \item{nSamp}{Numeric. Number of desired samples.}
 
-\item{raster}{spatRaster. Raster used to define population distributions.}
+\item{raster}{SpatRaster. Raster to guide the location of the samples. If \code{type = "clhs"} this raster can also
+be used to define the population distributions to be used for sampling.}
 
-\item{cost}{Numeric/Character. Index or name of covariate within \code{mraster} to be used to constrain cLHS sampling.
-If default (\code{NULL}), a cost constraint is not used.}
+\item{type}{Character. A string indicating the type of sampling method to use.
+Possible values are \code{"clhs"}, \code{"balanced"}, \code{"srs"} and \code{"strat"}.}
 
 \item{access}{sf. Road access network - must be lines.}
 
@@ -37,8 +37,6 @@ from access where plots cannot be sampled.}
 
 \item{buff_outer}{Numeric. Outer buffer boundary specifying distance
 from access where plots can be sampled.}
-
-\item{iter}{Numeric. Value giving the number of iterations within the Metropolis-Hastings process.}
 
 \item{plot}{Logical. Plots output strata raster with samples.}
 
@@ -50,33 +48,18 @@ is the tessellation grid for sampling, and \code{samples} are the systematic sam
 
 \item{overwrite}{Logical. Choice to overwrite existing \code{filename} if it exists.}
 
-\item{...}{Additional arguments for clhs sampling. See \code{\link[clhs]{clhs}}.}
+\item{...}{Additional arguments for the sampling method selected.}
 }
 \value{
-An sf object of samples or a list object if `details = TRUE`
+An sf object of samples or a list object if \code{details = TRUE}
 }
 \description{
-Sub-sample an existing sample using \code{\link[clhs]{clhs}} functionality.
+Sub-sample an existing sample. Four sampling methods are available:
+\code{clhs}, \code{balanced}, \code{srs} and \code{strat}.
 }
 \note{
-If providing only \code{existing} - all attributes will be used for sampling. Remove attributes not indented for sampling
-prior to using this algorithm.
-}
-\examples{
-#--- Load raster ---#
-r <- system.file("extdata", "mraster.tif", package = "sgsR")
-mr <- terra::rast(r)
-
-#--- generate an existing sample ---#
-e <- sample_systematic(raster = mr, cellsize = 200)
-
-#--- perform sub-sampling ---#
-sample_existing(
-  existing = e,
-  raster = mr,
-  nSamp = 50
-)
-
+When \code{type = "clhs"} or \code{type = "balanced"} all attributes in \code{existing} will be used for sampling.
+Remove attributes not indented for sampling' prior to using this algorithm.
 }
 \seealso{
 Other sample functions: 

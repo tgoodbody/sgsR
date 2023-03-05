@@ -44,7 +44,7 @@ Open access publication: [sgsR: a structurally guided sampling toolbox for LiDAR
 To cite `sgsR` use `citation()` from within R with:
 
 ```{r}
-print(citation("sgsR"),bibtex=TRUE)
+print(citation("sgsR"), bibtex = TRUE)
 ```
 
 ## Overview
