@@ -1,3 +1,12 @@
+#' Check existing sample data against requirements
+#'
+#' This function checks whether the existing sample data meets certain requirements for use in downstream analyses.
+#'
+#' @inheritParams sample_existing
+#'
+#' @return If requirements are met, the function returns the prepared existing sample data. 
+#' Otherwise, it raises a stop error with a relevant message.
+#'
 #' @keywords internal
 check_existing <- function(existing,
                            raster,
@@ -53,12 +62,24 @@ check_existing <- function(existing,
     }
   }
 }
+#' Prepare existing sample data
+#'
+#' This function prepares the existing sample data by ensuring that it meets the necessary requirements for downstream analysis.
+#' If the 'existing' object is not of class 'sf', this function checks that the data contains columns named "X" and "Y", and 
+#' converts lowercase "x" and "y" column names to uppercase if necessary. If the 'raster' object is supplied, this function 
+#' checks if 'existing' contains attributes with the same names as 'raster'. If it does not, this function extracts metrics 
+#' at existing sample locations using the 'raster' object. If 'access' is not null, the function masks the existing sample 
+#' locations with a buffered access area.
+#' 
+#' @inheritParams sample_existing
+#'
+#' @keywords internal
 #' @keywords internal
 prepare_existing <- function(existing,
-                             raster,
-                             access,
-                             buff_inner,
-                             buff_outer) {
+                             raster = NULL,
+                             access = NULL,
+                             buff_inner = NULL,
+                             buff_outer = NULL) {
   #--- Prepare existing sample data ---#
   if (!inherits(existing, "sf")) {
     if (any(!c("X", "Y") %in% colnames(existing))) {
@@ -130,6 +151,14 @@ prepare_existing <- function(existing,
   return(existing)
 }
 
+#' Get existing and XY coordinates
+#'
+#' This function extracts the 'X' and 'Y' coordinates from an 'sf' object and returns them in a data.frame format.
+#'
+#' @inheritParams sample_existing
+#'
+#' @return \code{existing} with respective 'X' and 'Y' columns representing the coordinates of the input \code{sf} object.
+#'
 #' @keywords internal
 coords_existing <- function(existing) {
   xy <- existing %>%

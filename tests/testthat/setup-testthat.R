@@ -20,6 +20,9 @@ sraster2 <- c(sraster, sraster)
 e <- system.file("extdata", "existing.shp", package = "sgsR")
 existing <- sf::st_read(e, quiet = TRUE)
 
+existing_samples <- extract_strata(sraster = sraster, existing = existing) %>%
+  extract_metrics(., mraster = mraster)
+
 #--- existing with NA samples ---#
 ena <- system.file("extdata", "existingna.shp", package = "sgsR")
 existingna <- sf::st_read(ena, quiet = TRUE)

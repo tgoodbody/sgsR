@@ -5,18 +5,15 @@
 #' parameter. It returns a sample of the existing data based on the desired sample sizes for
 #' each strata, and optionally writes the resulting samples to a file.
 #'
-#' @param existing A data frame containing existing data.
+#' @inheritParams extract_strata
+#' @inheritParams sample_strat
 #' @param toSample A data frame specifying the desired sample sizes for each strata.
-#' @param nSamp An integer specifying the number of samples to take.
-#' @param filename A character string specifying the name of the file to write the samples to,
-#' or NULL if no file should be written.
-#' @param overwrite A logical value indicating whether to overwrite the file if it already exists,
-#' or NULL if the file should not be overwritten.
 #'
-#' @return A data frame containing a sample of the existing data based on the desired sample sizes
-#' for each strata.
+#' @return An \code{sf} object that is a sub-sample of \code{existing} 
 #'
 #' @keywords internal
+#' 
+
 sample_existing_strat <- function(existing,
                                   toSample,
                                   nSamp,

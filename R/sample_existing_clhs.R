@@ -1,3 +1,13 @@
+#' Sub-sample using the conditional Latin hypercube sampling (CLHS)
+#'
+#' This function takes an existing \code{sf} object and returns a random sub-sample of size \code{nSamp}.
+#'
+#' @inheritParams sample_clhs
+#' @inheritParams extract_strata
+#' @inheritParams sample_existing_balanced
+#' 
+#' @return A subsampled SpatialPointsDataFrame object.
+#' 
 #' @keywords internal
 sample_existing_clhs <- function(existing,
                                  nSamp,
@@ -5,8 +15,8 @@ sample_existing_clhs <- function(existing,
                                  cost = NULL,
                                  iter = 10000,
                                  details = FALSE,
-                                 filename = filename,
-                                 overwrite = overwrite,
+                                 filename = NULL,
+                                 overwrite = NULL,
                                  ...) {
   #--- incorporate cost constraint ---#
 
@@ -44,7 +54,7 @@ sample_existing_clhs <- function(existing,
 
     if (is.numeric(cost)) {
       if (cost > length(names(costLoc)) | cost < 0) {
-        stop(paste0("'cost' index doest not exist within '", v, "'."), call. = FALSE)
+        stop(paste0("'cost' index does not exist within '", v, "'."), call. = FALSE)
       }
     } else {
       if (length(which(names(costLoc) == cost)) == 0) {

@@ -1,10 +1,20 @@
+#' Sample Existing Data Using Balanced Sampling
+#'
+#' This function samples a given set of existing data using balanced sampling techniques,
+#' which ensures that each stratum or subgroup of data is proportionally represented in the sample.
+#'
+#' @inheritParams sample_balanced
+#' @inheritParams extract_strata 
+#' @param ... Additional arguments to pass to the selected sampling algorithm. 
+#' This is leveraged when used by \code{sample_existing()} internally
+#' @return An \code{sf} object that is a sub-sample of \code{existing} 
 #' @keywords internal
 sample_existing_balanced <- function(existing,
                                      nSamp,
                                      algorithm = "lpm2_kdtree",
                                      p = NULL,
-                                     filename = filename,
-                                     overwrite = overwrite,
+                                     filename = NULL,
+                                     overwrite = NULL,
                                      ...) {
   #--- Set global vars ---#
   x <- y <- X <- Y <- strata <- NULL

@@ -13,21 +13,18 @@ sample_existing_strat(
 )
 }
 \arguments{
-\item{existing}{A data frame containing existing data.}
+\item{existing}{sf 'POINT'.  Existing plot network.}
 
 \item{toSample}{A data frame specifying the desired sample sizes for each strata.}
 
-\item{nSamp}{An integer specifying the number of samples to take.}
+\item{nSamp}{Numeric. Number of desired samples. \code{existing}, \code{include} and \code{force} influence this value.}
 
-\item{filename}{A character string specifying the name of the file to write the samples to,
-or NULL if no file should be written.}
+\item{filename}{Character. Path to write output samples.}
 
-\item{overwrite}{A logical value indicating whether to overwrite the file if it already exists,
-or NULL if the file should not be overwritten.}
+\item{overwrite}{Logical. Choice to overwrite existing \code{filename} if it exists.}
 }
 \value{
-A data frame containing a sample of the existing data based on the desired sample sizes
-for each strata.
+An \code{sf} object that is a sub-sample of \code{existing}
 }
 \description{
 This function takes a data frame of existing data, a data frame of desired sample sizes
