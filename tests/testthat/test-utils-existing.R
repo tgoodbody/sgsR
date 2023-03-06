@@ -1,5 +1,4 @@
 # tests for check_existing
-context("check_existing")
 test_that("existing must be a data.frame or sf object", {
   expect_error(check_existing(1, raster = NULL, nSamp = 1), "'existing' must be a data.frame or sf object.")
   expect_error(check_existing("existing", raster = NULL, nSamp = 1), "'existing' must be a data.frame or sf object.")
@@ -18,7 +17,6 @@ test_that("details must be type logical", {
   expect_error(check_existing(existing, raster = NULL, nSamp = 1, details = 1), "'details' must be type logical.")
 })
 
-context("prepare_existing")
 test_that("prepare_existing returns an sf object when input is not an sf object", {
 
   expect_true(inherits(prepare_existing(coords_existing(existing)),"data.frame"))
@@ -52,7 +50,6 @@ test_that("prepare_existing masks samples with access constraint when access obj
   expect_equal(nrow(output), 119L)
 })
 
-context("coords_existing")
 test_that("coords_existing returns a data.frame with X and Y columns", {
   # check if the output of the function is a data.frame
   expect_true(is.data.frame(coords_existing(existing)))

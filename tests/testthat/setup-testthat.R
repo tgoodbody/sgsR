@@ -89,3 +89,7 @@ d <- calculate_distance(raster = mraster, access = access)
 de <- calculate_distance(raster = mraster, access = access) %>%
   extract_metrics(., existing) %>%
   dplyr::select(-FID)
+
+tmp_file <- file.path(tempdir(), "temp.shp")
+tmp_file_df <- file.path(tempdir(), "temp.txt")
+tmp_file_rast <- file.path(tempdir(), "temp.tif")

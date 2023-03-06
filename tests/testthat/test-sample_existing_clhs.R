@@ -1,6 +1,4 @@
 # Test the function
-context("sample_existing_clhs")
-
 test_that("It returns an error when the 'iter' argument is not numeric", {
   expect_error(sample_existing_clhs(existing = existing, nSamp = 3, iter = "a"), "'iter' must be type numeric.")
 })

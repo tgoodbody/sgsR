@@ -15,8 +15,6 @@ test_that("Input classes", {
   expect_error(sample_clhs(mraster = mraster, nSamp = 100, existing = e, cost = TRUE), "'cost' must be either type numeric or character.")
   expect_error(sample_clhs(mraster = mraster, nSamp = 100, existing = e, cost = 13), "'cost' index doest not exist within 'mraster'.")
   expect_error(sample_clhs(mraster = mraster, nSamp = 100, existing = data.frame(x = c(1, 2, 3), y = c(1, 2, 3))), "'existing' only extracts NA values. Ensure that 'existing' overlaps with 'mraster'.")
-  expect_error(sample_clhs(mraster = mraster, nSamp = 10, filename = 56), "'filename' must be a file path character string.")
-  expect_error(sample_clhs(mraster = mraster, nSamp = 10, filename = file.path(tempdir(), "temp.shp"), overwrite = "A"), "'overwrite' must be type logical.")
 })
 
 test_that("Total outputs", {
@@ -35,7 +33,6 @@ test_that("Messages", {
   expect_message(sample_clhs(mraster = mraster, nSamp = 320, existing = existingna), "16 samples are located where metric values are NA.")
   expect_message(sample_clhs(mraster = mraster, nSamp = 20, access = access, buff_inner = 50, buff_outer = 200, plot = TRUE), "An access layer has been provided. An internal buffer of 50 m and an external buffer of 200 m have been applied.")
   expect_message(sample_clhs(mraster = mraster, nSamp = 20, access = access, buff_outer = 200), "An access layer has been provided. An external buffer of 200 m have been applied.")
-  expect_message(sample_clhs(mraster = mraster, nSamp = 20, filename = file.path(tempdir(), "temp.shp"), overwrite = TRUE), "Output samples written to disc.")
 })
 
 

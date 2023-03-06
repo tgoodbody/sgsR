@@ -53,8 +53,3 @@ test_that("errors", {
   expect_error(extract_strata(sraster = sraster, existing = data.frame(strata = c(1, 2, 3), X = c(1, 2, 3), Y = c(1, 2, 3))), "'existing' only extracts NA values. Ensure that 'existing' overlaps with 'sraster'.")
 })
 
-
-test_that("writes to disc", {
-  expect_message(extract_strata(sraster = sraster, existing = existing, filename = file.path(tempdir(), "temp.shp"), overwrite = TRUE), "Output samples written to disc.")
-  expect_message(extract_strata(sraster = sraster, existing = existing, data.frame = TRUE, filename = file.path(tempdir(), "temp.csv"), overwrite = TRUE), "Output samples written to disc.")
-})

@@ -23,7 +23,6 @@ test_that("Total outputs", {
   expect_equal(length(odfna), 91195L)
   expect_equal(length(unique(odfna)), 4L)
 
-  expect_message(strat_kmeans(mraster = mraster, nStrata = 4, iter = 100, filename = file.path(tempdir(), "temp.tif"), overwrite = TRUE), "Output raster written to disc.")
 })
 
 test_that("Out classes", {

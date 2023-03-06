@@ -21,6 +21,4 @@ test_that("Total outputs", {
   expect_s4_class(o, "SpatRaster")
 
   expect_type(calculate_pcomp(mraster = mraster, nComp = 2, details = TRUE, plot = TRUE), "list")
-
-  expect_message(calculate_pcomp(mraster = mraster, nComp = 2, filename = file.path(tempdir(), "temp.tif"), overwrite = TRUE), "Output raster written to disc.")
 })

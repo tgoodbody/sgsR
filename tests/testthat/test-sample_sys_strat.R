@@ -21,9 +21,6 @@ test_that("sample_sys_strat function input validation", {
   expect_error(sample_sys_strat(sraster = sraster, cellsize = 1, location = 1), "'location' must be type character.")
 
   expect_error(sample_sys_strat(sraster = sraster, cellsize = 1000, location = "not_center"), "'location' must be one of 'centers', 'corners', or 'random'.")
-  expect_error(sample_sys_strat(sraster = sraster, cellsize = 1000, filename = file.path(tempdir(), "temp.shp"), overwrite = "A"), "'overwrite' must be type logical.")
-  expect_error(sample_sys_strat(sraster = sraster, cellsize = 1000, filename = 3, overwrite = "A"), "'filename' must be a file path character string.")
-
 
   s <- sraster
   names(s) <- "a"
