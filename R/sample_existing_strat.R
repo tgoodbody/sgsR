@@ -9,17 +9,14 @@
 #' @inheritParams sample_strat
 #' @param toSample A data frame specifying the desired sample sizes for each strata.
 #'
-#' @return An \code{sf} object that is a sub-sample of \code{existing} 
+#' @return An \code{sf} object that is a sub-sample of \code{existing}
 #'
 #' @keywords internal
-#' 
-
 sample_existing_strat <- function(existing,
                                   toSample,
                                   nSamp,
                                   filename = NULL,
                                   overwrite = FALSE) {
-  
   strata <- unique(existing$strata)
 
 
@@ -48,9 +45,8 @@ sample_existing_strat <- function(existing,
 #'
 #' @keywords internal
 take_samples <- function(existing, toSample, strata) {
-  
   total <- NULL
-  
+
   toTake <- toSample %>%
     dplyr::filter(strata == {{ strata }}) %>%
     dplyr::select(total) %>%

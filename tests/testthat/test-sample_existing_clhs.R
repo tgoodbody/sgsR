@@ -32,7 +32,6 @@ test_that("It returns a list when 'details' is TRUE", {
 })
 
 test_that("It returns a list when 'details' is TRUE", {
-  
-  expect_message(sample_existing_clhs(existing = existing_samples, raster = mraster, nSamp = 3, details = TRUE, cost = "zq90"),"Using `zq90` as sampling constraint.")
-  expect_message(sample_existing_clhs(existing = existing_samples, raster = mraster, nSamp = 3, cost = "zq90"),"Sub-sampling based on 'raster' distributions.")
+  expect_message(sample_existing_clhs(existing = existing_samples, raster = mraster, nSamp = 3, details = TRUE, cost = "zq90"), "Using `zq90` as sampling constraint.")
+  expect_message(sample_existing_clhs(existing = existing_samples, raster = mraster, nSamp = 3, cost = "zq90"), "Sub-sampling based on 'raster' distributions.")
 })

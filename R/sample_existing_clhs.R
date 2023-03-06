@@ -5,9 +5,9 @@
 #' @inheritParams sample_clhs
 #' @inheritParams extract_strata
 #' @inheritParams sample_existing_balanced
-#' 
+#'
 #' @return A subsampled SpatialPointsDataFrame object.
-#' 
+#'
 #' @keywords internal
 sample_existing_clhs <- function(existing,
                                  nSamp,
@@ -120,10 +120,10 @@ sample_existing_clhs <- function(existing,
       stats::na.omit()
 
     #--- select the variables existing in raster for sampling ---#
-    
+
     vals <- vals %>%
       dplyr::select(names(vals_r))
-    
+
     all <- dplyr::bind_rows(vals_r, vals)
 
 

@@ -350,7 +350,7 @@ sample_systematic <- function(raster,
       terra::plot(samples, add = TRUE, col = "black")
     }
   }
-  
+
   #--- write outputs if desired ---#
   write_samples(samples = samples, filename = filename, overwrite = overwrite)
 

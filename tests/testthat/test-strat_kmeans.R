@@ -22,7 +22,6 @@ test_that("Total outputs", {
   expect_equal(ncol(o$raster), 373L)
   expect_equal(length(odfna), 91195L)
   expect_equal(length(unique(odfna)), 4L)
-
 })
 
 test_that("Out classes", {

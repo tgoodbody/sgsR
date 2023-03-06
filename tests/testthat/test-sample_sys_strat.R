@@ -29,9 +29,7 @@ test_that("sample_sys_strat function input validation", {
 })
 
 test_that("access works", {
-  
-  expect_type(sample_sys_strat(sraster = sraster, cellsize = 1000, access = access, buff_inner = 50, buff_outer = 400, plot = TRUE, details = TRUE),"list")
-  
+  expect_type(sample_sys_strat(sraster = sraster, cellsize = 1000, access = access, buff_inner = 50, buff_outer = 400, plot = TRUE, details = TRUE), "list")
 })
 
 

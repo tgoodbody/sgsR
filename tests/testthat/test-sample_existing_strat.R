@@ -30,7 +30,8 @@ test_that("take_samples returns correct number of samples", {
 })
 
 test_that("take_samples raises error when not enough samples in strata", {
-  expect_error(take_samples(existing_samples, toSample = toSample, strata = 199),
-               "Not enough samples in strata: 199 to take:  sample units.")
-
+  expect_error(
+    take_samples(existing_samples, toSample = toSample, strata = 199),
+    "Not enough samples in strata: 199 to take:  sample units."
+  )
 })

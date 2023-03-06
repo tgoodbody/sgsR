@@ -53,4 +53,3 @@ test_that("writing to file works", {
 test_that("existing file with overwrite=FALSE raises an error", {
   expect_error(write_raster(raster = mrastersmall, filename = tmp_file_rast, overwrite = FALSE))
 })
-

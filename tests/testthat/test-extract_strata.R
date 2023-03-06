@@ -44,4 +44,3 @@ test_that("errors", {
   expect_error(extract_strata(sraster = sraster, existing = data.frame(strata = c(1, 2, 3), A = c(1, 2, 3), B = c(1, 2, 3))), "existing' must have columns named 'X' and 'Y'.")
   expect_error(extract_strata(sraster = sraster, existing = data.frame(strata = c(1, 2, 3), X = c(1, 2, 3), Y = c(1, 2, 3))), "'existing' only extracts NA values. Ensure that 'existing' overlaps with 'sraster'.")
 })
-

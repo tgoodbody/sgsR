@@ -15,4 +15,3 @@ test_that("returns the expected number of rows", {
 test_that("throws an error when filename is not a character string", {
   expect_error(sample_existing_srs(existing, 100, filename = 123))
 })
-

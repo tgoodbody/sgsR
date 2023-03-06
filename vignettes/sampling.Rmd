@@ -622,7 +622,6 @@ sample_existing(existing = e, nSamp = 300, type = "srs")
 When `type = "strat"`, `existing` must have an attribute named `strata` (just like how `sample_strat()` requires a `strata` layer). If it doesnt exist you will get an error. Lets define an `sraster` so that we are compliant.
 
 ```{r,warning=F,message=F}
-
 sraster <- strat_kmeans(mraster = mraster, nStrata = 4)
 
 e_strata <- extract_strata(sraster = sraster, existing = e)
@@ -651,8 +650,7 @@ sample_existing(existing = e_strata, nSamp = 100, type = "strat", allocation = "
 
 ```{r,warning=F,message=F}
 #--- manual stratified sampling of existing with user defined weights ---#
-s <- sample_existing(existing = e_strata, nSamp = 100, type = "strat", allocation = "manual", weights = c(0.2,0.6,0.1,0.1))
-
+s <- sample_existing(existing = e_strata, nSamp = 100, type = "strat", allocation = "manual", weights = c(0.2, 0.6, 0.1, 0.1))
 ```
 We can check the proportion of samples from each strata with:
 
@@ -665,6 +663,5 @@ Finally, `type = "optim` allows for the user to define a `raster` metric to be u
 ```{r,warning=F,message=F}
 #--- manual stratified sampling of existing with user defined weights ---#
 sample_existing(existing = e_strata, nSamp = 100, type = "strat", allocation = "optim", raster = mraster, metric = "zq90")
-
 ```
 We see from the output that we get 300 sample units that are a sub-sample of `existing`. The plotted output shows cumulative frequency distributions of the population (all `existing` samples) and the sub-sample (the 300 samples we requested).

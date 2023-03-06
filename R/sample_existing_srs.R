@@ -4,7 +4,7 @@
 #'
 #' @inheritParams extract_strata
 #' @inheritParams sample_srs
-#' 
+#'
 #' @return A data frame or spatial data frame containing the random sample.
 #'
 #' @keywords internal
