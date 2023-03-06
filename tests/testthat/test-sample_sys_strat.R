@@ -21,14 +21,15 @@ test_that("sample_sys_strat function input validation", {
   expect_error(sample_sys_strat(sraster = sraster, cellsize = 1, location = 1), "'location' must be type character.")
 
   expect_error(sample_sys_strat(sraster = sraster, cellsize = 1000, location = "not_center"), "'location' must be one of 'centers', 'corners', or 'random'.")
-  expect_error(sample_sys_strat(sraster = sraster, cellsize = 1000, filename = file.path(tempdir(), "temp.shp"), overwrite = "A"), "'overwrite' must be type logical.")
-  expect_error(sample_sys_strat(sraster = sraster, cellsize = 1000, filename = 3, overwrite = "A"), "'filename' must be a file path character string.")
-
 
   s <- sraster
   names(s) <- "a"
 
   expect_error(sample_sys_strat(sraster = s, cellsize = 1), "'sraster' must have a layer named `strata`.")
+})
+
+test_that("access works", {
+  expect_type(sample_sys_strat(sraster = sraster, cellsize = 1000, access = access, buff_inner = 50, buff_outer = 400, plot = TRUE, details = TRUE), "list")
 })
 
 

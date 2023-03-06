@@ -48,8 +48,6 @@ test_that("Input classes", {
   expect_error(strat_poly(poly = fri, attribute = attribute, features = 2, raster = sraster), "'attribute' does not have specified 'features'.")
   expect_error(strat_poly(poly = fri, attribute = attribute, features = features, raster = "sraster"), "'raster' must be type SpatRaster.")
   expect_error(strat_poly(poly = fri, attribute = attribute, features = features, raster = sraster, plot = "TRUE"), "'plot' must be type logical.")
-  expect_error(strat_poly(poly = fri, attribute = attribute, features = features, raster = sraster, filename = 2), "'filename' must be a file path character string.")
-  expect_error(strat_poly(poly = fri, attribute = attribute, features = features, raster = sraster, filename = file.path(tempdir(), "temp.tif"), overwrite = "A"), "'overwrite' must be type logical.")
 })
 
 
@@ -61,7 +59,6 @@ test_that("Total outputs", {
   expect_equal(length(odfna), 89878L)
   expect_equal(length(unique(odfna)), 3L)
   expect_equal(length(unique(o1dfna)), 2L)
-  expect_message(strat_poly(poly = fri, attribute = attribute, features = features, raster = sraster, filename = file.path(tempdir(), "temp.tif"), overwrite = TRUE, plot = TRUE), "Output raster written to disc.")
 })
 
 test_that("Out classes", {

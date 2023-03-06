@@ -31,8 +31,6 @@ test_that("Single breaks classes", {
 })
 
 test_that("Total outputs", {
-  expect_message(strat_breaks(mraster = mraster$zq90, breaks = br.zq90, filename = file.path(tempdir(), "temp.tif"), overwrite = TRUE), "Output raster written to disc.")
-
   expect_equal(nrow(o), 277L)
   expect_equal(ncol(o), 373L)
 })

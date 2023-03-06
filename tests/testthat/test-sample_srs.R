@@ -8,15 +8,12 @@ test_that("Input classes", {
   expect_error(sample_srs(raster = mraster, nSamp = 5, mindist = "A"), "'mindist' must be type numeric.")
   expect_error(sample_srs(raster = mraster, nSamp = 50, plot = "A"), "'plot' must be type logical")
   expect_error(sample_srs(raster = mraster, nSamp = 100, plot = 1), "'plot' must be type logical.")
-  expect_error(sample_srs(raster = mraster, nSamp = 320, filename = TRUE), "'filename' must be a file path character string.")
-  expect_error(sample_srs(raster = mraster, nSamp = 10, filename = file.path(tempdir(), "temp.shp"), overwrite = "A"), "'overwrite' must be type logical.")
 })
 
 test_that("Access", {
   expect_message(sample_srs(raster = mraster, nSamp = 20, access = access, buff_inner = 50, buff_outer = 200, plot = TRUE), "An access layer has been provided. An internal buffer of 50 m and an external buffer of 200 m have been applied.")
   expect_message(sample_srs(raster = mraster, nSamp = 20, access = access, buff_outer = 200), "An access layer has been provided. An external buffer of 200 m have been applied.")
   expect_message(sample_srs(raster = mraster, nSamp = 20), regexp = NA)
-  expect_message(sample_srs(raster = mraster, nSamp = 20, filename = file.path(tempdir(), "temp.shp"), overwrite = TRUE), "Output samples written to disc.")
 })
 
 test_that("Total outputs", {

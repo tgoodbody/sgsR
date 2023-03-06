@@ -151,11 +151,7 @@ strat_quantiles <- function(mraster,
   }
 
   #--- write file to disc ---#
-
-  if (!is.null(filename)) {
-    terra::writeRaster(x = rcl, filename = filename, overwrite = overwrite)
-    message("Output raster written to disc.")
-  }
+  write_raster(raster = rcl, filename = filename, overwrite = overwrite)
 
   #--- Output based on 'details' to return raster alone or list with details ---#
 

@@ -33,7 +33,6 @@ test_that("errors", {
   expect_error(sample_strat(sraster = sraster, nSamp = 20, existing = data.frame()), "'existing' must have an attribute named 'strata'. Consider using extract_strata().")
   expect_error(sample_strat(sraster = sraster, nSamp = 20, existing = data.frame(strata = c(1, 2, 3))), "'existing' must have columns named 'X' and 'Y'.")
   expect_error(sample_strat(sraster = sraster, nSamp = 15000, access = access, allocation = "equal", buff_inner = 50, buff_outer = 200), "Insufficient candidate samples within the buffered access extent. Consider altering buffer widths.")
-  expect_error(sample_strat(sraster = sraster, nSamp = 20, filename = file.path(tempdir(), "temp.shp"), overwrite = "TRUE"), "'overwrite' must be type logical.")
 })
 
 
@@ -62,7 +61,6 @@ test_that("messages", {
   expect_message(sample_strat(sraster = sraster, nSamp = 20, existing = existingna), "Implementing proportional allocation of samples.")
 
   expect_message(sample_strat(sraster = sraster, nSamp = 25, access = access, buff_inner = 50, buff_outer = 200), "Buffered area contains 12454 available candidates. Sampling to reach 6 starting.")
-  expect_message(sample_strat(sraster = sraster, nSamp = 20, filename = file.path(tempdir(), "temp.shp"), overwrite = TRUE), "Output samples written to disc.")
 })
 
 test_that("Test equal", {

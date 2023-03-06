@@ -71,10 +71,7 @@ calculate_distance <- function(raster,
     suppressWarnings(terra::plot(access, add = T))
   }
 
-  if (!is.null(filename)) {
-    terra::writeRaster(x = raster, filename = filename, overwrite = overwrite)
-    message("Output raster written to disc.")
-  }
+  write_raster(raster = raster, filename = filename, overwrite = overwrite)
 
   return(raster)
 }

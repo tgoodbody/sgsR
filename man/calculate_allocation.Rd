@@ -72,6 +72,7 @@ Gregoire, T.G., & Valentine, H.T. (2007). Sampling Strategies for Natural Resour
 }
 \seealso{
 Other calculate functions: 
+\code{\link{calculate_allocation_existing}()},
 \code{\link{calculate_coobs}()},
 \code{\link{calculate_distance}()},
 \code{\link{calculate_pcomp}()},

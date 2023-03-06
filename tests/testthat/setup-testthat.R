@@ -20,6 +20,9 @@ sraster2 <- c(sraster, sraster)
 e <- system.file("extdata", "existing.shp", package = "sgsR")
 existing <- sf::st_read(e, quiet = TRUE)
 
+existing_samples <- extract_strata(sraster = sraster, existing = existing) %>%
+  extract_metrics(., mraster = mraster)
+
 #--- existing with NA samples ---#
 ena <- system.file("extdata", "existingna.shp", package = "sgsR")
 existingna <- sf::st_read(ena, quiet = TRUE)
@@ -86,3 +89,7 @@ d <- calculate_distance(raster = mraster, access = access)
 de <- calculate_distance(raster = mraster, access = access) %>%
   extract_metrics(., existing) %>%
   dplyr::select(-FID)
+
+tmp_file <- file.path(tempdir(), "temp.shp")
+tmp_file_df <- file.path(tempdir(), "temp.txt")
+tmp_file_rast <- file.path(tempdir(), "temp.tif")

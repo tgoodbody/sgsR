@@ -54,9 +54,6 @@ test_that("Total outputs", {
   expect_equal(length(o1dfna), 3L)
   expect_equal(nrow(o1dfna), 87431L)
   expect_equal(14, o1$lookUp$strata[4])
-
-  expect_message(strat_map(sraster = c(srasterfri, sraster), filename = file.path(tempdir(), "temp.tif"), overwrite = TRUE), "Output raster written to disc.")
-  expect_message(strat_map(sraster = c(srasterfri, sraster), stack = TRUE, filename = file.path(tempdir(), "temp.tif"), overwrite = TRUE), "Output stack written to disc.")
 })
 
 test_that("Out classes", {

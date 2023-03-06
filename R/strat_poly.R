@@ -160,22 +160,7 @@ strat_poly <- function(poly,
 
   #--- write file to disc if requested ---#
 
-  if (!is.null(filename)) {
-    if (!is.character(filename)) {
-      stop("'filename' must be a file path character string.", call. = FALSE)
-    }
-
-    if (!is.logical(overwrite)) {
-      stop("'overwrite' must be type logical.", call. = FALSE)
-    }
-
-    if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(paste0("'", filename, "' already exists and overwrite = FALSE."), call. = FALSE)
-    }
-
-    terra::writeRaster(x = outpolyrast, filename = filename, overwrite = overwrite)
-    message("Output raster written to disc.")
-  }
+  write_raster(raster = outpolyrast, filename = filename, overwrite = overwrite)
 
   #--- plot if requested ---#
 

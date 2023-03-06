@@ -68,7 +68,7 @@ sf::st_crs(existing) <- terra::crs(sraster)
 
 a <- c("`sample_srs()`", "`sample_systematic()`", "`sample_strat()`", "`sample_sys_strat()`", "`sample_nc()`", "`sample_clhs()`", "`sample_balanced()`", "`sample_ahels()`", "`sample_existing()`")
 
-d <- c("Simple random", "Systematic", "Stratified", "Systematic Stratified", "Nearest centroid", "Conditioned Latin hypercube", "Balanced sampling", "Adapted hypercube evaluation of a legacy sample", "Sub-sampling an existing sample")
+d <- c("Simple random", "Systematic", "Stratified", "Systematic Stratified", "Nearest centroid", "Conditioned Latin hypercube", "Balanced sampling", "Adapted hypercube evaluation of a legacy sample", "Sub-sampling an `existing` sample")
 
 s <- c("", "", "[Queinnec, White, & Coops (2021)](https://www.sciencedirect.com/science/article/pii/S0034425721002303)", "", "[Melville & Stone (2016)](https://doi.org/10.1080/00049158.2016.1218265)", "[Minasny & McBratney (2006)](https://www.sciencedirect.com/science/article/pii/S009830040500292X?via%3Dihub)", "[Grafström, A. Lisic, J (2018)](http://www.antongrafstrom.se/balancedsampling/)", "[Malone, Minasny, & Brungard (2019)](https://peerj.com/articles/6451/)", "")
 
@@ -508,43 +508,40 @@ Notice that the total number of samples is 500. This value is the sum of existin
 
 ## `sample_existing` {#samp-existing .unnumbered}
 
-Acknowledging that `existing` sample networks exist is important. There is significant investment into these samples, and in order to keep inventories up-to-date, we often need to collect new data at these locations. The `sample_existing` algorithm provides a method for sub-sampling an `existing` sample network should the financial / logistical resources not be available to collect data at all sample units. The algorithm leverages latin hypercube sampling using the [clhs](https://CRAN.R-project.org/package=clhs) package to effectively sample within an `existing` network.
+Acknowledging that `existing` sample networks are common is important. There is significant investment into these samples, and in order to keep inventories up-to-date, we often need to collect new data for sample units. The `sample_existing` algorithm provides the user with methods for sub-sampling an `existing` sample network should the financial / logistical resources not be available to collect data at all sample units. The functions allows users to choose between algorithm types using (`type = "clhs"` - default, `type = "balanced"`, `type = "srs"`, `type = "strat"`). Differences in type result in calling internal `sample_existing_*()` functions (`sample_existing_clhs()` (default), `sample_existing_balanced()`, `sample_existing_srs()`, `sample_existing_strat()`). These functions are not exported to be used stand-alone, however they employ the same functionality as their `sample_clhs()` etc counterparts.
 
-The algorithm has two fundamental approaches:
+While using `sample_existing()`, should the user wish to specify algorithm specific parameters (e.g. `algorithm = "lcube"` in `sample_balanced()` or `allocation = "equal"` in `sample_strat()`), they can specify within `sample_existing()` as if calling the function directly.
 
-1. Sample exclusively using the sample network and the attributes it contains.
+I give applied examples for all methods below that are based on the following scenario:
 
-2. Should `raster` information be available and co-located with the sample, use these data as population values to improve sub-sampling of `existing`.
+*   We have a systematic sample where sample units are 200m apart. 
 
-Much like the `sample_clhs()` algorithm, users can define a `cost` parameter, which will be used to constrain sub-sampling. A cost parameter is a user defined metric/attribute such as distance from roads (e.g. `calculate_distance()`), elevation, etc.
+*   We know we only have resources to sample 300 of them. 
 
-### Basic sub-sampling of `existing`
+*   We have some ALS data available (`mraster`), which we can use to improve knowledge of the metric populations.
 
-First we can create an `existing` sample for our example. Lets imagine we have a dataset of ~900 samples, and we know we only have resources to sample 300 of them. We have some ALS data available (`mraster`), which we will use as our distributions to sample within.
+See our `existing` sample for the scenario below.
 
 ```{r,warning=F,message=F}
 #--- generate existing samples and extract metrics ---#
-existing <- sample_srs(raster = mraster, nSamp = 900, plot = TRUE)
-```
-Now lets sub-sample.
+existing <- sample_systematic(raster = mraster, cellsize = 200, plot = TRUE)
 
-```{r,warning=F,message=F}
 #--- sub sample using ---#
 e <- existing %>%
   extract_metrics(mraster = mraster, existing = .)
+```
+### `sample_existing(type = "clhs")`
 
-sample_existing(existing = e, nSamp = 300, plot = TRUE)
+The algorithm is unique in that it has two fundamental approaches:
+
+1. Sample exclusively using `existing` and the attributes it contains.
+
+```{r,warning=F,message=F}
+#--- sub sample using ---#
+sample_existing(existing = e, nSamp = 300, type = "clhs")
 ```
 
-::: {.infobox .caution data-latex="{caution}"}
-**TIP!**
-
-Notice that we used `extract_metrics()` after creating our existing. If the user provides a `raster` for the algorithm this isn't neccesary (its done internally). If only sample units are given, attributes must be provided and _sampling will be conducted on all included attributes_.
-:::
-
-We see from the output that we get 300 sample units that are a sub-sample of `existing`. The plotted output shows cumulative frequency distributions of the population (all `existing` samples) and the sub-sample (the 300 samples we requested).
-
-### Sub-sampling using `raster` distributions
+2. Sub-sampling using `raster` distributions
 
 Our systematic sample of ~900 plots is fairly comprehensive, however we can generate a true population distribution through the inclusion of the ALS metrics in the sampling process. The metrics will be included in internal latin hypercube sampling to help guide sub-sampling of `existing`.
 
@@ -600,3 +597,71 @@ sample_existing(
 
 The greater constraints we add to sampling, the less likely we will have strong correlations between the population and sample, so its always important to understand these limitations and plan accordingly.
 :::
+
+### `sample_existing(type = "balanced")`
+
+When `type = "balanced"` users can define all parameters that are found within `sample_balanced()`. This means that one can change the `algorithm`, `p` etc.
+
+```{r,warning=F,message=F}
+sample_existing(existing = e, nSamp = 300, type = "balanced")
+```
+```{r,warning=F,message=F}
+sample_existing(existing = e, nSamp = 300, type = "balanced", algorithm = "lcube")
+```
+
+### `sample_existing(type = "srs")`
+
+The simplest, `type = srs`, randomly selects sample units.
+
+```{r,warning=F,message=F}
+sample_existing(existing = e, nSamp = 300, type = "srs")
+```
+
+### `sample_existing(type = "strat")`
+
+When `type = "strat"`, `existing` must have an attribute named `strata` (just like how `sample_strat()` requires a `strata` layer). If it doesnt exist you will get an error. Lets define an `sraster` so that we are compliant.
+
+```{r,warning=F,message=F}
+sraster <- strat_kmeans(mraster = mraster, nStrata = 4)
+
+e_strata <- extract_strata(sraster = sraster, existing = e)
+```
+
+
+When we do have a strata attribute, the function works very much the same as `sample_strat()` in that is allows the user to define the `allocation` method (`"prop"` - defaults, `"optim"`, `"manual"`, `"equal"`).
+
+```{r,warning=F,message=F}
+#--- proportional stratified sampling of existing ---#
+sample_existing(existing = e_strata, nSamp = 300, type = "strat", allocation = "prop")
+```
+
+::: {.infobox .caution data-latex="{caution}"}
+**TIP!**
+
+Remember that when `allocation = "equal"`, the `nSamp` value will be allocated for each strata.
+:::
+
+We get 400 sample units in our output below because we have 4 strata and `nSamp = 100`.
+
+```{r,warning=F,message=F}
+#--- equal stratified sampling of existing ---#
+sample_existing(existing = e_strata, nSamp = 100, type = "strat", allocation = "equal")
+```
+
+```{r,warning=F,message=F}
+#--- manual stratified sampling of existing with user defined weights ---#
+s <- sample_existing(existing = e_strata, nSamp = 100, type = "strat", allocation = "manual", weights = c(0.2, 0.6, 0.1, 0.1))
+```
+We can check the proportion of samples from each strata with:
+
+```{r,warning=F,message=F}
+#--- check proportions match weights ---#
+table(s$strata) / 100
+```
+Finally, `type = "optim` allows for the user to define a `raster` metric to be used to optimize within strata variances.
+
+```{r,warning=F,message=F}
+#--- manual stratified sampling of existing with user defined weights ---#
+sample_existing(existing = e_strata, nSamp = 100, type = "strat", allocation = "optim", raster = mraster, metric = "zq90")
+```
+We see from the output that we get 300 sample units that are a sub-sample of `existing`. The plotted output shows cumulative frequency distributions of the population (all `existing` samples) and the sub-sample (the 300 samples we requested).

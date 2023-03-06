@@ -127,21 +127,19 @@ calculate_representation <- function(sraster,
     dplyr::select(strata, srasterFreq, sampleFreq, diffFreq, nSamp) %>%
     dplyr::mutate(need = ceiling(srasterFreq * sum(nSamp)) - nSamp) %>%
     dplyr::arrange(strata)
-  
+
   #--- drop srasterFreq values below a certain frequency ---#
-  if(!is.null(drop)){
-    
-    if(!is.numeric(drop)){
+  if (!is.null(drop)) {
+    if (!is.numeric(drop)) {
       stop("'drop' must be type numeric.", call. = FALSE)
     }
-    
-    if(drop > 1 | drop < 0){
+
+    if (drop > 1 | drop < 0) {
       stop("'drop' must be a numeric value between 0-1.", call. = FALSE)
     }
-    
+
     rep <- rep %>%
       dplyr::filter(srasterFreq > drop)
-    
   }
 
   #--- present barchart if desired ---#

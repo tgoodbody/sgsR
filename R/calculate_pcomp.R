@@ -122,10 +122,7 @@ calculate_pcomp <- function(mraster,
 
   #--- write file to disc ---#
 
-  if (!is.null(filename)) {
-    terra::writeRaster(x = pcaRout, filename = filename, overwrite = overwrite)
-    message("Output raster written to disc.")
-  }
+  write_raster(raster = pcaRout, filename = filename, overwrite = overwrite)
 
   if (isTRUE(plot)) {
     #--- Plot components ---#

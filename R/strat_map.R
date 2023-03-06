@@ -208,11 +208,9 @@ strat_map <- function(sraster,
 
     #--- write file to disc depending on whether 'stack' was specified ---#
     if (isTRUE(stack)) {
-      terra::writeRaster(x = routstack, filename = filename, overwrite = overwrite)
-      message("Output stack written to disc.")
+      write_raster(raster = stack, filename = filename, overwrite = overwrite)
     } else {
-      terra::writeRaster(x = rout, filename = filename, overwrite = overwrite)
-      message("Output raster written to disc.")
+      write_raster(raster = rout, filename = filename, overwrite = overwrite)
     }
   }
 

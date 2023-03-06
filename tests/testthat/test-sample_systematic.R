@@ -7,8 +7,6 @@ test_that("Input classes", {
   expect_error(sample_systematic(raster = mraster, cellsize = 1000, square = "TRUE"), "'square' must be type logical.")
   expect_error(sample_systematic(raster = mraster, cellsize = 1000, location = 3), "'location' must be type character.")
   expect_error(sample_systematic(raster = mraster, cellsize = 1000, location = "not_center"), "'location' must be one of 'centers', 'corners', or 'random'.")
-  expect_error(sample_systematic(raster = mraster, cellsize = 1000, filename = file.path(tempdir(), "temp.shp"), overwrite = "A"), "'overwrite' must be type logical.")
-  expect_error(sample_systematic(raster = mraster, cellsize = 1000, filename = 3, overwrite = "A"), "'filename' must be a file path character string.")
 })
 
 test_that("Total outputs", {
@@ -55,7 +53,6 @@ test_that("random", {
 test_that("messages", {
   skip_on_cran()
   set.seed(2022)
-  expect_message(sample_systematic(raster = sraster, cellsize = 2000, access = access, buff_outer = 200, filename = file.path(tempdir(), "temp.shp"), overwrite = TRUE), "Output samples written to disc.")
   expect_message(sample_systematic(raster = sraster, cellsize = 20000, square = FALSE, location = "random", force = TRUE), "Forcing samples to fall in non NA locations.")
   expect_message(sample_systematic(raster = sraster, cellsize = 5000, location = "random", force = TRUE), "Forcing samples to fall in non NA locations.")
   expect_error(sample_systematic(raster = sraster, cellsize = 5000000, location = "centers"), "No samples intersect with 'raster'. Ensure 'cellsize' makes sense.")
