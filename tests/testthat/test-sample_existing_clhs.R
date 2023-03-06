@@ -20,7 +20,7 @@ test_that("It returns an error when the 'cost' argument is not numeric or charac
 })
 
 test_that("It returns an error when the 'cost' index does not exist within the given object", {
-  expect_error(sample_existing_clhs(existing, nSamp = 3, cost = 3), "'cost' index does not exist within 'existing'.")
+  expect_error(sample_existing_clhs(existing, nSamp = 3, cost = 4), "'cost' index does not exist within 'existing'.")
 })
 
 test_that("It returns an error when the given layer name does not exist in the object", {
