@@ -62,9 +62,9 @@ Remove attributes not indented for sampling' prior to using this algorithm.
 r <- system.file("extdata", "mraster.tif", package = "sgsR")
 mr <- terra::rast(r)
 
-#--- generate an existing sample ---#
-e <- sample_systematic(raster = mr, cellsize = 200) \%>\%
-extract_metrics(., mraster = mr)
+#--- generate an existing sample adn extract metrics ---#
+e <- sample_systematic(raster = mr, cellsize = 200)
+e <- extract_metrics(existing = e, mraster = mr)
 
 #--- perform clhs (default) sub-sampling ---#
 sample_existing(

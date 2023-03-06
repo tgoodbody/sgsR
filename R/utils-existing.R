@@ -77,7 +77,6 @@ check_existing <- function(existing,
 #' @inheritParams sample_existing
 #'
 #' @keywords internal
-#' @keywords internal
 prepare_existing <- function(existing,
                              raster = NULL,
                              access = NULL,
