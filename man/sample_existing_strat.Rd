@@ -9,7 +9,7 @@ sample_existing_strat(
   toSample,
   nSamp,
   filename = NULL,
-  overwrite = NULL
+  overwrite = FALSE
 )
 }
 \arguments{

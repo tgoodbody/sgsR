@@ -12,7 +12,7 @@ sample_existing_clhs(
   iter = 10000,
   details = FALSE,
   filename = NULL,
-  overwrite = NULL,
+  overwrite = FALSE,
   ...
 )
 }

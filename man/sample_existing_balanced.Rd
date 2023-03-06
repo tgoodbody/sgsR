@@ -10,7 +10,7 @@ sample_existing_balanced(
   algorithm = "lpm2_kdtree",
   p = NULL,
   filename = NULL,
-  overwrite = NULL,
+  overwrite = FALSE,
   ...
 )
 }

@@ -4,7 +4,7 @@
 \alias{sample_existing_srs}
 \title{Randomly sample from an existing dataset}
 \usage{
-sample_existing_srs(existing, nSamp, filename = NULL, overwrite = NULL)
+sample_existing_srs(existing, nSamp, filename = NULL, overwrite = FALSE)
 }
 \arguments{
 \item{existing}{sf 'POINT'.  Existing plot network.}
