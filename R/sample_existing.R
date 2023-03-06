@@ -37,6 +37,10 @@ sample_existing <- function(existing,
                             overwrite = FALSE,
                             ...) {
   #--- error handling ---#
+  
+  if(!type %in% c("clhs","balanced","srs","strat")){
+    stop("'type' must be one of 'clhs','balanced', 'srs', 'strat'.", call. = FALSE)
+  }
 
   check_existing(
     existing = existing,
@@ -105,93 +109,6 @@ sample_existing <- function(existing,
       samples <- list(samples = samples, details = toSample)
     }
   }
-
-  #   #--- plotting ---#
-  #   if (is.null(raster)) {
-  #     if (any(anyCat != "numeric")) {
-  #       nonNumeric <- oclass[oclass$Class != "numeric", ]
-  #
-  #       pecdfcat <- all %>%
-  #         dplyr::select(dplyr::any_of(nonNumeric$Name)) %>%
-  #         tidyr::pivot_longer(c(!type), names_to = "metric") %>%
-  #         dplyr::group_by(type, metric, value) %>%
-  #         dplyr::summarize(counts = dplyr::n()) %>%
-  #         dplyr::mutate(counts = dplyr::case_when(
-  #           type == "population" ~ counts / nrow(all %>% dplyr::filter(type == "population")),
-  #           type == "sample" ~ counts / nrow(all %>% dplyr::filter(type == "sample")),
-  #         )) %>%
-  #         ggplot2::ggplot(ggplot2::aes(x = value, y = counts, class = type, fill = type)) +
-  #         ggplot2::geom_col(position = "fill") +
-  #         ggplot2::facet_grid(. ~ metric, scales = "free") +
-  #         ggplot2::ggtitle(label = "Percent stacked barchart for existing samples") +
-  #         ggplot2::xlab("Sampling metrics") +
-  #         ggplot2::ylab("Representation percent")
-  #     }
-  #
-  #     Numeric <- oclass[oclass$Class == "numeric", ] %>% dplyr::filter(!Name %in% c("X", "Y"))
-  #
-  #     pecdf <- all %>%
-  #       dplyr::select(Numeric$Name, type) %>%
-  #       dplyr::select(-dplyr::all_of(names(costLoc)[cost]), type) %>%
-  #       tidyr::pivot_longer(c(!type), names_to = "metric") %>%
-  #       ggplot2::ggplot(ggplot2::aes(value, class = type, colour = type)) +
-  #       ggplot2::stat_ecdf(geom = "step") +
-  #       ggplot2::facet_grid(. ~ metric, scales = "free") +
-  #       ggplot2::ggtitle(label = "Empirical cumulative distributions for existing samples") +
-  #       ggplot2::xlab("Sampling metrics") +
-  #       ggplot2::ylab("Cumulative distribution")
-  #   } else {
-  #     if (!is.null(access)) {
-  #       #--- plot sample locations and raster output ---#
-  #       terra::plot(raster[[1]])
-  #       suppressWarnings(plot(masked$buffer, add = TRUE, alpha = 0.1))
-  #       suppressWarnings(plot(samples, add = TRUE, col = "black"))
-  #     } else {
-  #       #--- plot sample locations and raster output ---#
-  #       terra::plot(raster[[1]])
-  #       suppressWarnings(plot(samples, add = TRUE, col = "black"))
-  #     }
-  #
-  #     if (any(anyCat != "numeric")) {
-  #       nonNumeric <- oclass[oclass$Class != "numeric", ]
-  #
-  #       pecdfcat <- all %>%
-  #         dplyr::select(nonNumeric$Name) %>%
-  #         tidyr::pivot_longer(c(!type), names_to = "metric") %>%
-  #         dplyr::group_by(type, metric, value) %>%
-  #         dplyr::summarize(counts = dplyr::n()) %>%
-  #         dplyr::mutate(counts = dplyr::case_when(
-  #           type == "population" ~ counts / nrow(all %>% dplyr::filter(type == "population")),
-  #           type == "sample" ~ counts / nrow(all %>% dplyr::filter(type == "sample")),
-  #         )) %>%
-  #         ggplot2::ggplot(ggplot2::aes(x = value, y = counts, class = type, fill = type)) +
-  #         ggplot2::geom_col(position = "fill") +
-  #         ggplot2::facet_grid(. ~ metric, scales = "free") +
-  #         ggplot2::ggtitle(label = "Percent stacked barchart for existing samples") +
-  #         ggplot2::xlab("Sampling metrics") +
-  #         ggplot2::ylab("Representation percent")
-  #     }
-  #
-  #     Numeric <- oclass[oclass$Class == "numeric", ] %>% dplyr::filter(Name %in% names(raster) & !Name %in% c("X", "Y"))
-  #
-  #     #--- generate ecdf curves comparing population and sample ---#
-  #     pecdf <- all[, c(names(raster), "type")] %>%
-  #       dplyr::select(Numeric$Name, type, -dplyr::all_of(names(costLoc)[cost])) %>%
-  #       tidyr::pivot_longer(c(!type), names_to = "metric") %>%
-  #       ggplot2::ggplot(ggplot2::aes(value, class = type, colour = type)) +
-  #       ggplot2::stat_ecdf(geom = "step") +
-  #       ggplot2::facet_grid(. ~ metric, scales = "free") +
-  #       ggplot2::ggtitle(label = "Empirical cumulative distributions for existing samples") +
-  #       ggplot2::xlab("Sampling metrics") +
-  #       ggplot2::ylab("Cumulative distribution")
-  #   }
-  #
-  #   if (exists("pecdfcat")) print(pecdfcat)
-  #
-  #   print(pecdf)
-  # }
-
-  #--- details ---#
 
   return(samples)
 }

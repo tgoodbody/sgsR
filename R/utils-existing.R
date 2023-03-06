@@ -13,6 +13,9 @@ check_existing <- function(existing,
                            nSamp,
                            plot = FALSE,
                            details = NULL) {
+  
+  x <- y <- NULL
+  
   #--- error handling ---#
 
   if (!inherits(existing, "data.frame") && !inherits(existing, "sf")) {
@@ -80,6 +83,9 @@ prepare_existing <- function(existing,
                              access = NULL,
                              buff_inner = NULL,
                              buff_outer = NULL) {
+  
+  x <- y <- NULL
+  
   #--- Prepare existing sample data ---#
   if (!inherits(existing, "sf")) {
     if (any(!c("X", "Y") %in% colnames(existing))) {

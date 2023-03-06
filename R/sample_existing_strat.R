@@ -19,6 +19,7 @@ sample_existing_strat <- function(existing,
                                   nSamp,
                                   filename = NULL,
                                   overwrite = NULL) {
+  
   strata <- unique(existing$strata)
 
 
@@ -63,6 +64,9 @@ sample_existing_strat <- function(existing,
 #'
 #' @keywords internal
 take_samples <- function(existing, toSample, strata) {
+  
+  total <- NULL
+  
   toTake <- toSample %>%
     dplyr::filter(strata == {{ strata }}) %>%
     dplyr::select(total) %>%

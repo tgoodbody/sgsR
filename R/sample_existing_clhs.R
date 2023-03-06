@@ -18,6 +18,7 @@ sample_existing_clhs <- function(existing,
                                  filename = NULL,
                                  overwrite = NULL,
                                  ...) {
+  x <- y <- pecdfcat <- pecdf <- NULL
   #--- incorporate cost constraint ---#
 
   if (!is.null(raster)) {
