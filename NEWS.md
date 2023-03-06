@@ -2,10 +2,9 @@
 
 `added` - `utils-write` - made writing functions for samples, rasters, and tables to make code more succinct.
 
-`enhanced` - `sample_existing` - A major change to `sample_existing()` has been implemented. Prior to `sgsR` v1.4.2, `sample_existing()` only leveraged `sample_clhs()` functionality. New functionality has been added to allow users to define the sub-sampling method of their choice out of (`sample_srs()`, `sample_balanced()`, `sample_strat()`, `sample_clhs()`). To do so, additional internal functions (`sample_existing_strat()`, `sample_existing_srs()`, `sample_existing_balanced()`, `sample_existing_srs()`) have been added that take in `existing` data and perform sampling based on those data. For `sample_existing_strat()`, new allocation algorithms that take `existing` as inputs needed to be written that are found in `utils-allocation-existing()`. Additionally, more utility functions that check `existing` data, and prepare `existing` data for sub-sampling have been developed and implemented in `utils-existing()`. Unit tests for all functions have been added.
+`enhanced` - `sample_existing` - A major change to `sample_existing()` has been implemented. Prior to `sgsR` v1.4.2, `sample_existing()` only leveraged `sample_clhs()` functionality. New functionality has been added to allow users to define the sub-sampling method of their choice out of (`sample_srs()`, `sample_balanced()`, `sample_strat()`, `sample_clhs()`). To do so, additional internal functions (`sample_existing_strat()`, `sample_existing_srs()`, `sample_existing_balanced()`, `sample_existing_srs()`) have been added that take in `existing` data and perform sampling based on those data. For `sample_existing_strat()`, new allocation algorithms that take `existing` as inputs needed to be written that are found in `utils-allocation-existing()`. Additionally, more utility functions that check `existing` data, and prepare `existing` data for sub-sampling have been developed and implemented in `utils-existing()`. Unit tests for all functions have been added. The `plot` parameter has been removed from `sample_existing()` for now. Likely to be added again later.
 
-
-
+`enhanced` - Sampling Vignette - Added content about `sample_existing()`
 
 # sgsR 1.4.1
 
