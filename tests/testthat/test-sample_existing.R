@@ -1,4 +1,3 @@
-set.seed(2022)
 nSamp <- 40
 
 test_that("sample_existing returns correct number of samples", {
