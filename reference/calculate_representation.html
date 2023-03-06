@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -113,6 +113,7 @@ in <code>sampleFreq</code> vs. <code>srasterFreq</code> frequency could make the
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other calculate functions: 
+<code><a href="calculate_allocation_existing.html">calculate_allocation_existing</a>()</code>,
 <code><a href="calculate_allocation.html">calculate_allocation</a>()</code>,
 <code><a href="calculate_coobs.html">calculate_coobs</a>()</code>,
 <code><a href="calculate_distance.html">calculate_distance</a>()</code>,
@@ -159,12 +160,12 @@ in <code>sampleFreq</code> vs. <code>srasterFreq</code> frequency could make the
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 6</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   strata srasterFreq sampleFreq diffFreq nSamp  need</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>      1        0.23       0.27   0.04      27    -<span style="color: #BB0000;">4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>      2        0.15       0.1   -<span style="color: #BB0000;">0.05</span>      10     5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>      3        0.1        0.09  -<span style="color: #BB0000;">0.010</span><span style="color: #BB0000; text-decoration: underline;">0</span>     9     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>      4        0.24       0.31   0.07      31    -<span style="color: #BB0000;">7</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>      5        0.07       0.06  -<span style="color: #BB0000;">0.010</span><span style="color: #BB0000; text-decoration: underline;">0</span>     6     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>      6        0.19       0.17  -<span style="color: #BB0000;">0.020</span><span style="color: #BB0000; text-decoration: underline;">0</span>    17     2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>      1        0.23       0.24   0.010<span style="text-decoration: underline;">0</span>    24    -<span style="color: #BB0000;">1</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>      2        0.25       0.23  -<span style="color: #BB0000;">0.020</span><span style="color: #BB0000; text-decoration: underline;">0</span>    23     2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>      3        0.19       0.21   0.020<span style="text-decoration: underline;">0</span>    21    -<span style="color: #BB0000;">2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>      4        0.07       0.08   0.010<span style="text-decoration: underline;">0</span>     8     0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>      5        0.15       0.16   0.010<span style="text-decoration: underline;">0</span>    16    -<span style="color: #BB0000;">1</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>      6        0.1        0.08  -<span style="color: #BB0000;">0.02</span>       8     2</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

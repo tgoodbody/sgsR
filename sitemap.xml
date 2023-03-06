@@ -37,6 +37,9 @@
     <loc>/reference/calculate_allocation.html</loc>
   </url>
   <url>
+    <loc>/reference/calculate_allocation_existing.html</loc>
+  </url>
+  <url>
     <loc>/reference/calculate_coobs.html</loc>
   </url>
   <url>
@@ -58,6 +61,12 @@
     <loc>/reference/calculate_sampsize.html</loc>
   </url>
   <url>
+    <loc>/reference/check_existing.html</loc>
+  </url>
+  <url>
+    <loc>/reference/coords_existing.html</loc>
+  </url>
+  <url>
     <loc>/reference/extract_metrics.html</loc>
   </url>
   <url>
@@ -76,6 +85,9 @@
     <loc>/reference/plot.html</loc>
   </url>
   <url>
+    <loc>/reference/prepare_existing.html</loc>
+  </url>
+  <url>
     <loc>/reference/rules.html</loc>
   </url>
   <url>
@@ -89,6 +101,18 @@
   </url>
   <url>
     <loc>/reference/sample_existing.html</loc>
+  </url>
+  <url>
+    <loc>/reference/sample_existing_balanced.html</loc>
+  </url>
+  <url>
+    <loc>/reference/sample_existing_clhs.html</loc>
+  </url>
+  <url>
+    <loc>/reference/sample_existing_srs.html</loc>
+  </url>
+  <url>
+    <loc>/reference/sample_existing_strat.html</loc>
   </url>
   <url>
     <loc>/reference/sample_nc.html</loc>
@@ -124,6 +148,12 @@
     <loc>/reference/strat_quantiles.html</loc>
   </url>
   <url>
+    <loc>/reference/take_samples.html</loc>
+  </url>
+  <url>
     <loc>/reference/vectorize.html</loc>
+  </url>
+  <url>
+    <loc>/reference/write.html</loc>
   </url>
 </urlset>

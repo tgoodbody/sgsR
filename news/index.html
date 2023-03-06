@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,6 +61,12 @@
       <small>Source: <a href="https://github.com/tgoodbody/sgsR/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.4.2" id="sgsr-142">sgsR 1.4.2<a class="anchor" aria-label="anchor" href="#sgsr-142"></a></h2>
+<p><code>added</code> - <code>utils-write</code> - made writing functions for samples, rasters, and tables to make code more succinct.</p>
+<p><code>enhanced</code> - <code>sample_existing</code> - A major change to <code><a href="../reference/sample_existing.html">sample_existing()</a></code> has been implemented. Prior to <code>sgsR</code> v1.4.2, <code><a href="../reference/sample_existing.html">sample_existing()</a></code> only leveraged <code><a href="../reference/sample_clhs.html">sample_clhs()</a></code> functionality. New functionality has been added to allow users to define the sub-sampling method of their choice out of (<code><a href="../reference/sample_srs.html">sample_srs()</a></code>, <code><a href="../reference/sample_balanced.html">sample_balanced()</a></code>, <code><a href="../reference/sample_strat.html">sample_strat()</a></code>, <code><a href="../reference/sample_clhs.html">sample_clhs()</a></code>). To do so, additional internal functions (<code><a href="../reference/sample_existing_strat.html">sample_existing_strat()</a></code>, <code><a href="../reference/sample_existing_srs.html">sample_existing_srs()</a></code>, <code><a href="../reference/sample_existing_balanced.html">sample_existing_balanced()</a></code>, <code><a href="../reference/sample_existing_srs.html">sample_existing_srs()</a></code>) have been added that take in <code>existing</code> data and perform sampling based on those data. For <code><a href="../reference/sample_existing_strat.html">sample_existing_strat()</a></code>, new allocation algorithms that take <code>existing</code> as inputs needed to be written that are found in <code>utils-allocation-existing()</code>. Additionally, more utility functions that check <code>existing</code> data, and prepare <code>existing</code> data for sub-sampling have been developed and implemented in <code>utils-existing()</code>. Unit tests for all functions have been added. The <code>plot</code> parameter has been removed from <code><a href="../reference/sample_existing.html">sample_existing()</a></code> for now. Likely to be added again later.</p>
+<p><code>enhanced</code> - Sampling Vignette - Added content about <code><a href="../reference/sample_existing.html">sample_existing()</a></code></p>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.4.1" id="sgsr-141">sgsR 1.4.1<a class="anchor" aria-label="anchor" href="#sgsr-141"></a></h2>
 <p><code>fixed</code> - <code><a href="../reference/sample_ahels.html">sample_ahels()</a></code> - gave an erroneous error when <code>matrices</code> was provided and <code>nQuant</code> did not match. Changed to allow only <code>matrices</code> to be provided.</p>
