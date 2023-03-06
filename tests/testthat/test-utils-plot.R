@@ -8,6 +8,7 @@ test_that("scatter errors", {
   expect_error(plot_scatter(mraster = mraster, existing = existing, samp = "a"), "'samp' must be type numeric.")
 
   expect_error(plot_scatter(mraster = mraster[[1]], existing = existing), "Only 1 layer in `mraster` when 2 are needed.")
+  expect_error(plot_scatter(mraster = mraster[[1:2]], existing = existing, reverse = "1"), "'reverse' must be type logical.")
   expect_error(plot_scatter(mraster = mraster, existing = existing, samp = 1.1), "'samp' must be > 0 <= 1.")
 })
 

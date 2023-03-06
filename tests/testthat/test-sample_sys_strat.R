@@ -28,6 +28,12 @@ test_that("sample_sys_strat function input validation", {
   expect_error(sample_sys_strat(sraster = s, cellsize = 1), "'sraster' must have a layer named `strata`.")
 })
 
+test_that("access works", {
+  
+  expect_type(sample_sys_strat(sraster = sraster, cellsize = 1000, access = access, buff_inner = 50, buff_outer = 400, plot = TRUE, details = TRUE),"list")
+  
+})
+
 
 test_that("Total outputs", {
   skip_on_cran()

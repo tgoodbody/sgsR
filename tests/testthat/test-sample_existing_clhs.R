@@ -30,3 +30,9 @@ test_that("It returns an error when the given layer name does not exist in the o
 test_that("It returns a list when 'details' is TRUE", {
   expect_type(sample_existing_clhs(existing_samples, nSamp = 3, details = TRUE), "list")
 })
+
+test_that("It returns a list when 'details' is TRUE", {
+  
+  expect_message(sample_existing_clhs(existing = existing_samples, raster = mraster, nSamp = 3, details = TRUE, cost = "zq90"),"Using `zq90` as sampling constraint.")
+  expect_message(sample_existing_clhs(existing = existing_samples, raster = mraster, nSamp = 3, cost = "zq90"),"Sub-sampling based on 'raster' distributions.")
+})

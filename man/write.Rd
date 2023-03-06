@@ -30,7 +30,7 @@ Write samples
 
 Write table
 
-Write table
+Write raster
 }
 \concept{write}
 \keyword{internal}

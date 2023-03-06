@@ -63,7 +63,7 @@ allocate_existing_optim <- function(existing,
   }
 
   if (!metric %in% names(existing)) {
-    stop(paste0("No column named ", metric, " in 'existing'.", call. = FALSE))
+    stop(paste0("No column named ", metric, " in 'existing'."), call. = FALSE)
   }
 
   message(paste0("Implementing optimal allocation of samples based on variability of '", metric, "'."))

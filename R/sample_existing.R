@@ -19,6 +19,35 @@
 #'
 #' @note When \code{type = "clhs"} or \code{type = "balanced"} all attributes in \code{existing} will be used for sampling.
 #' Remove attributes not indented for sampling' prior to using this algorithm.
+#' 
+#' @examples 
+#--- Load raster ---#
+#' r <- system.file("extdata", "mraster.tif", package = "sgsR")
+#' mr <- terra::rast(r)
+#'
+#' #--- generate an existing sample ---#
+#' e <- sample_systematic(raster = mr, cellsize = 200) %>%
+#' extract_metrics(., mraster = mr)
+#'
+#' #--- perform clhs (default) sub-sampling ---#
+#' sample_existing(
+#'   existing = e,
+#'   nSamp = 50
+#' )
+#' 
+#' #--- perform balanced sub-sampling ---#
+#' sample_existing(
+#'   existing = e,
+#'   nSamp = 50,
+#'   type = "balanced"
+#' )
+#' 
+#' #--- perform simple random sub-sampling ---#
+#' sample_existing(
+#'   existing = e,
+#'   nSamp = 50,
+#'   type = "srs"
+#' )
 #'
 #' @author Tristan R.H. Goodbody
 #'
@@ -31,7 +60,6 @@ sample_existing <- function(existing,
                             access = NULL,
                             buff_inner = NULL,
                             buff_outer = NULL,
-                            plot = FALSE,
                             details = FALSE,
                             filename = NULL,
                             overwrite = FALSE,
@@ -46,7 +74,7 @@ sample_existing <- function(existing,
     existing = existing,
     raster = raster,
     nSamp = nSamp,
-    plot = plot,
+    plot = FALSE,
     details = details
   )
 

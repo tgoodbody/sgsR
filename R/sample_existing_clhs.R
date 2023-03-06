@@ -112,7 +112,7 @@ sample_existing_clhs <- function(existing,
     crs <- terra::crs(raster, proj = TRUE)
 
     # #--- extract covariates data from raster ---#
-    vals <- terra::as.data.frame(raster, xy = TRUE, row.names = FALSE) %>%
+    vals_r <- terra::as.data.frame(raster, xy = TRUE, row.names = FALSE) %>%
       dplyr::rename(
         X = x,
         Y = y
@@ -120,8 +120,11 @@ sample_existing_clhs <- function(existing,
       stats::na.omit()
 
     #--- select the variables existing in raster for sampling ---#
-
-    all <- dplyr::bind_rows(vals, existing)
+    
+    vals <- vals %>%
+      dplyr::select(names(vals_r))
+    
+    all <- dplyr::bind_rows(vals_r, vals)
 
 
     #--- sampling ---#

@@ -44,7 +44,7 @@ sample_existing_balanced <- function(existing,
       stop("'p' must be type numeric.", call. = FALSE)
     }
     if (length(p) != N) {
-      stop(paste0("'p' have a length of ", N, "."), call. = FALSE)
+      stop(paste0("'p' must have a length of ", N, "."), call. = FALSE)
     }
   }
   if (algorithm == "lpm2_kdtree") {

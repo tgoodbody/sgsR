@@ -14,8 +14,6 @@ be used to define the population distributions to be used for sampling.}
 
 \item{nSamp}{Numeric. Number of desired samples.}
 
-\item{plot}{Logical. Plots output strata raster with samples.}
-
 \item{details}{Logical. If \code{FALSE} (default) output is sf object of
 systematic samples. If \code{TRUE} returns a list of sf objects where \code{tessellation}
 is the tessellation grid for sampling, and \code{samples} are the systematic samples.}

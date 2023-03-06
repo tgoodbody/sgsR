@@ -12,7 +12,6 @@ sample_existing(
   access = NULL,
   buff_inner = NULL,
   buff_outer = NULL,
-  plot = FALSE,
   details = FALSE,
   filename = NULL,
   overwrite = FALSE,
@@ -38,8 +37,6 @@ from access where plots cannot be sampled.}
 \item{buff_outer}{Numeric. Outer buffer boundary specifying distance
 from access where plots can be sampled.}
 
-\item{plot}{Logical. Plots output strata raster with samples.}
-
 \item{details}{Logical. If \code{FALSE} (default) output is sf object of
 systematic samples. If \code{TRUE} returns a list of sf objects where \code{tessellation}
 is the tessellation grid for sampling, and \code{samples} are the systematic samples.}
@@ -60,6 +57,35 @@ Sub-sample an existing sample. Four sampling methods are available:
 \note{
 When \code{type = "clhs"} or \code{type = "balanced"} all attributes in \code{existing} will be used for sampling.
 Remove attributes not indented for sampling' prior to using this algorithm.
+}
+\examples{
+r <- system.file("extdata", "mraster.tif", package = "sgsR")
+mr <- terra::rast(r)
+
+#--- generate an existing sample ---#
+e <- sample_systematic(raster = mr, cellsize = 200) \%>\%
+extract_metrics(., mraster = mr)
+
+#--- perform clhs (default) sub-sampling ---#
+sample_existing(
+  existing = e,
+  nSamp = 50
+)
+
+#--- perform balanced sub-sampling ---#
+sample_existing(
+  existing = e,
+  nSamp = 50,
+  type = "balanced"
+)
+
+#--- perform simple random sub-sampling ---#
+sample_existing(
+  existing = e,
+  nSamp = 50,
+  type = "srs"
+)
+
 }
 \seealso{
 Other sample functions: 

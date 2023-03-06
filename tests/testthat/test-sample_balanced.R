@@ -20,9 +20,11 @@ test_that("Total outputs", {
   expect_equal(nrow(o), 50L)
   expect_equal(ncol(o), 1L)
   expect_s3_class(o, "sf")
+  
+  sample_clhs(mraster = mraster, nSamp = 320, access = access, buff_inner = 50, buff_outer = 200, plot = TRUE)
 })
 
-test_that("Messages", {
+test_that("errors", {
   expect_error(sample_clhs(mraster = mraster, nSamp = 320, cost = "A"), "No layer named 'A' exists in 'mraster'.")
   expect_error(sample_balanced(mraster = mraster, nSamp = 50, algorithm = "lcubestratified"), "'mraster' must have a variable named 'strata' to use the 'lcubestratified' algorithm")
 })

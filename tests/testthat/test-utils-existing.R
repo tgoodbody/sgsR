@@ -1,4 +1,10 @@
 # tests for check_existing
+
+test_that("X & Y", {
+  expect_message(check_existing(existing = existing.df.n.xy.lc, raster = mraster, nSamp = 5), "'existing' column coordinate names are lowercase - converting to uppercase.")
+  expect_error(check_existing(existing = existing.df.n, raster = mraster, nSamp = 5), "'existing' must have columns named 'X' and 'Y'.")
+})
+
 test_that("existing must be a data.frame or sf object", {
   expect_error(check_existing(1, raster = NULL, nSamp = 1), "'existing' must be a data.frame or sf object.")
   expect_error(check_existing("existing", raster = NULL, nSamp = 1), "'existing' must be a data.frame or sf object.")
@@ -41,6 +47,10 @@ test_that("prepare_existing converts lowercase 'x' and 'y' column names to upper
 test_that("prepare_existing extracts metrics when raster is supplied", {
   output <- prepare_existing(existing = existing, raster = mraster, access = NULL, buff_inner = NULL, buff_outer = NULL)
   expect_true(all(c("zq90", "pzabove2","zsd","FID","geometry") %in% colnames(output)))
+  
+  expect_message(prepare_existing(existing = existing, raster = mraster, access = NULL, buff_inner = NULL, buff_outer = NULL),"'existing' does not contain attributes with the same names as 'raster'. Extracting metrics.")
+  
+  expect_message(prepare_existing(existing = existing, raster = mraster, access = access, buff_inner = 100, buff_outer = 400),"An access layer has been provided. An internal buffer of 100 m and an external buffer of 400 m have been applied.")
 })
 
 test_that("prepare_existing masks samples with access constraint when access object is supplied", {

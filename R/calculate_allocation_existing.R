@@ -22,7 +22,6 @@
 #' @author Tristan R.H. Goodbody
 #'
 #' @keywords internal
-## TODO
 
 calculate_allocation_existing <- function(existing,
                                           nSamp,
