@@ -228,10 +228,7 @@ calculate_coobs <- function(mraster,
     terra::plot(existing, add = TRUE)
   }
 
-  if (!is.null(filename)) {
-    terra::writeRaster(x = rout, filename = filename, overwrite = overwrite)
-    message("Output raster written to disc.")
-  }
+  write_raster(raster = rout, filename = filename, overwrite = overwrite)
 
   return(rout)
 }

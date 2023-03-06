@@ -151,24 +151,8 @@ sample_existing_clhs <- function(existing,
       sf::st_as_sf(., coords = c("X", "Y"), crs = crs)
   }
 
-  #--- write to disc ---#
-
-  if (!is.null(filename)) {
-    if (!is.character(filename)) {
-      stop("'filename' must be a file path character string.", call. = FALSE)
-    }
-
-    if (!is.logical(overwrite)) {
-      stop("'overwrite' must be type logical.", call. = FALSE)
-    }
-
-    if (file.exists(filename) & isFALSE(overwrite)) {
-      stop(paste0("'", filename, "' already exists and overwrite = FALSE."), call. = FALSE)
-    }
-
-    sf::st_write(samples, filename, delete_layer = overwrite)
-    message("Output samples written to disc.")
-  }
+  #--- write outputs if desired ---#
+  write_samples(samples = samples, filename = filename, overwrite = overwrite)
 
   #--- details ---#
 
