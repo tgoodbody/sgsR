@@ -16,7 +16,7 @@ sample_existing_clhs <- function(existing,
                                  iter = 10000,
                                  details = FALSE,
                                  filename = NULL,
-                                 overwrite = NULL,
+                                 overwrite = FALSE,
                                  ...) {
   x <- y <- pecdfcat <- pecdf <- NULL
   #--- incorporate cost constraint ---#

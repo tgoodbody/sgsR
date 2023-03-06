@@ -11,7 +11,7 @@
 sample_existing_srs <- function(existing,
                                 nSamp,
                                 filename = NULL,
-                                overwrite = NULL) {
+                                overwrite = FALSE) {
   samples <- existing %>%
     dplyr::slice_sample(., n = nSamp)
 

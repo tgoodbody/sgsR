@@ -18,7 +18,7 @@ sample_existing_strat <- function(existing,
                                   toSample,
                                   nSamp,
                                   filename = NULL,
-                                  overwrite = NULL) {
+                                  overwrite = FALSE) {
   
   strata <- unique(existing$strata)
 

@@ -14,7 +14,7 @@ sample_existing_balanced <- function(existing,
                                      algorithm = "lpm2_kdtree",
                                      p = NULL,
                                      filename = NULL,
-                                     overwrite = NULL,
+                                     overwrite = FALSE,
                                      ...) {
   #--- Set global vars ---#
   x <- y <- X <- Y <- strata <- NULL
