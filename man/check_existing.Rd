@@ -19,7 +19,7 @@ systematic samples. If \code{TRUE} returns a list of sf objects where \code{tess
 is the tessellation grid for sampling, and \code{samples} are the systematic samples.}
 }
 \value{
-If requirements are met, the function returns the prepared existing sample data. 
+If requirements are met, the function returns the prepared existing sample data.
 Otherwise, it raises a stop error with a relevant message.
 }
 \description{

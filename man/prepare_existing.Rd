@@ -28,10 +28,10 @@ from access where plots can be sampled.}
 }
 \description{
 This function prepares the existing sample data by ensuring that it meets the necessary requirements for downstream analysis.
-If the 'existing' object is not of class 'sf', this function checks that the data contains columns named "X" and "Y", and 
-converts lowercase "x" and "y" column names to uppercase if necessary. If the 'raster' object is supplied, this function 
-checks if 'existing' contains attributes with the same names as 'raster'. If it does not, this function extracts metrics 
-at existing sample locations using the 'raster' object. If 'access' is not null, the function masks the existing sample 
+If the 'existing' object is not of class 'sf', this function checks that the data contains columns named "X" and "Y", and
+converts lowercase "x" and "y" column names to uppercase if necessary. If the 'raster' object is supplied, this function
+checks if 'existing' contains attributes with the same names as 'raster'. If it does not, this function extracts metrics
+at existing sample locations using the 'raster' object. If 'access' is not null, the function masks the existing sample
 locations with a buffered access area.
 }
 \keyword{internal}

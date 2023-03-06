@@ -29,7 +29,7 @@ is the number of cells.}
 
 \item{overwrite}{Logical. Specify whether \code{filename} should be overwritten on disc.}
 
-\item{...}{Additional arguments to pass to the selected sampling algorithm. 
+\item{...}{Additional arguments to pass to the selected sampling algorithm.
 This is leveraged when used by \code{sample_existing()} internally}
 }
 \value{
