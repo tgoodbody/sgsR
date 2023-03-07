@@ -116,7 +116,7 @@ strat_map <- function(sraster,
   }
 
   #--- error handling for raster inputs ---#
-  if (isFALSE(sraster@ptr$hasValues)) {
+  if (isFALSE(terra::hasValues(sraster))) {
     stop("'sraster' has no values.", call. = FALSE)
   }
 

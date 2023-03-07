@@ -6,6 +6,8 @@
 
 `enhanced` - Sampling Vignette - Added content about `sample_existing()`
 
+`fixed` - `strat_map()` - Fixed improper use of `terra::hasValues`. From Robert Hijmans #31
+
 # sgsR 1.4.1
 
 `fixed` - `sample_ahels()` - gave an erroneous error when `matrices` was provided and `nQuant` did not match. Changed to allow only `matrices` to be provided.
