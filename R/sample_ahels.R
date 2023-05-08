@@ -215,7 +215,28 @@ sample_ahels <- function(mraster,
 
   #--- extract covariates at existing sample locations ---#
 
-  samples <- extract_metrics(mraster, existing, data.frame = TRUE)
+  if(any(!colnames(mats$values) %in% colnames(existing))){
+    
+    #--- if columns in existing do not contain numeric data for metrics ---#
+    
+    message("'existing' does not contain data for desired metrics. Extracting sample data from 'mraster'.")
+    
+    samples <- extract_metrics(mraster, existing, data.frame = TRUE)
+    
+  } else {
+    
+    #--- if values already exist in columns use them instead of extracting from mraster ---#
+    
+    message("Using 'existing' sample data.")
+    
+    coords <- existing %>%
+      sf::st_coordinates()
+    
+    samples <- existing %>%
+      sf::st_drop_geometry() %>%
+      cbind(coords, .)
+      
+  }
 
   #--- remove already existing samples from vals to not repeat sample ---#
 

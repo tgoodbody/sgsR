@@ -1,3 +1,7 @@
+# sgsR 1.4.3
+
+`enhanced` - `sample_ahels()` - If attributes in `existing` contain numeric data -- and match columns in `mraster` -- these data will be used instead of extracting from `mraster`.
+
 # sgsR 1.4.2
 
 `added` - `utils-write` - made writing functions for samples, rasters, and tables to make code more succinct.
