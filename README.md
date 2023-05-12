@@ -62,7 +62,7 @@ print(citation("sgsR"),bibtex=TRUE)
 #>   }
 #> 
 #>   Tristan RH Goodbody, Nicholas C Coops and Martin Queinnec (2023).
-#>   Structurally Guided Sampling. R package version 1.4.0.
+#>   Structurally Guided Sampling. R package version 1.4.3.
 #>   https://cran.r-project.org/package=sgsR.
 #> 
 #> A BibTeX entry for LaTeX users is
@@ -71,7 +71,7 @@ print(citation("sgsR"),bibtex=TRUE)
 #>     title = {Structurally Guided Sampling},
 #>     author = {Tristan RH Goodbody and Nicholas C Coops and Martin Queinnec},
 #>     year = {2023},
-#>     note = {R package version 1.4.0},
+#>     note = {R package version 1.4.3},
 #>     url = {https://cran.r-project.org/package=sgsR},
 #>   }
 ```
