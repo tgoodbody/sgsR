@@ -123,7 +123,7 @@ Presence of very small (negligible) differences between `srasterFreq` and `sampl
 
 ## `calculate_distance` {#dist .unnumbered}
 
-`calculate_distance()` uses input `raster` and `access` data and outputs the per pixel distance to the nearest access point. This algorithm has a specific value for constraining  sampling protocols, such as with `sample_clhs()`, where the output raster layer can be used as the `cost` for the constraint. The output raster consists of the input appended with the calculated distance layer (`dist2access`). 
+`calculate_distance()` uses input `raster` and `access` data and outputs the per pixel distance to the nearest access point. This algorithm has a specific value for constraining  sampling protocols, such as with `sample_clhs()`, where the output raster layer can be used as the `cost` for the constraint. The output raster consists of the input appended with the calculated distance layer (`dist2access`). The `slope` parameters also exists to calculate slope distance instead of geographic distance, which becomes very handy in the case of steep mountainous areas and is faster from a computational point of view. If `slope == TRUE`, the `mraster` provided should be a digital terrain model.
 
 ```{r,warning=F,message=F}
 calculate_distance(

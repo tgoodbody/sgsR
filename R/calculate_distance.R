@@ -9,6 +9,8 @@
 #' @inheritParams strat_breaks
 #'
 #' @param raster spatRaster. Raster to be used to calculate pixel level distance to access layer.
+#' @param slope Logical. Calculate slope distance instead of geographic distance. \code{raster} needs 
+#' to be a digital terrain model for this to make sense.
 #'
 #' @return Input raster with \code{dist2access} layer appended.
 #'
@@ -33,6 +35,7 @@
 
 calculate_distance <- function(raster,
                                access,
+                               slope = FALSE,
                                plot = FALSE,
                                filename = NULL,
                                overwrite = FALSE) {
@@ -44,6 +47,10 @@ calculate_distance <- function(raster,
 
   if (!inherits(access, "sf")) {
     stop("'access' must be an 'sf' object.", call. = FALSE)
+  }
+  
+  if (!is.logical(slope)) {
+    stop("'slope' must be type logical.", call. = FALSE)
   }
 
   if (!inherits(sf::st_geometry(access), "sfc_MULTILINESTRING") && !inherits(sf::st_geometry(access), "sfc_LINESTRING")) {
@@ -59,8 +66,28 @@ calculate_distance <- function(raster,
   #--- use first layer from raster and access to determine distance from each pixel ---#
 
   message("calculating per pixel distance to provided access layer")
-
-  dist2access <- terra::distance(raster[[1]], access)
+  
+  if(isFALSE(slope)){
+    
+    dist2access <- terra::distance(raster[[1]], access)
+    
+  } else {
+    
+    #--- from @spono ---#
+    
+    slopeDist <- terra::terrain(raster[[1]], v="slope", unit="radians", neighbors=8)
+    
+    slopeDist <-  terra::res(slopeDist)[1] / cos(slopeDist)
+    
+    access$value <- 0
+    
+    access_rast <- terra::rasterize(access, slopeDist, field="value", background = 1) # values=0
+    
+    slopeDist <- slopeDist * access_rast
+    
+    dist2access <- terra::costDist(slopeDist, target=0, scale=res(slopeDist)[1], maxiter=50)
+    
+  }
 
   #--- append dist2access layer to raster ---#
 

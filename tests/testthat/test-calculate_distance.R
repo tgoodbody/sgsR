@@ -3,6 +3,7 @@ o <- calculate_distance(raster = mraster, access)
 test_that("inputs", {
   expect_error(calculate_distance(raster = "A", access = access), "'raster' must be type SpatRaster.")
   expect_error(calculate_distance(raster = mraster, access = "access"), "'access' must be an 'sf' object.")
+  expect_error(calculate_distance(raster = mraster, access = access, slope = 1), "'slope' must be type logical.")
   expect_error(calculate_distance(raster = mraster, access = existing), "'access' geometry type must be 'LINESTRING' or 'MULTILINESTRING'.")
 })
 
@@ -19,4 +20,13 @@ test_that("Total outputs", {
   expect_s4_class(o, "SpatRaster")
 
   expect_type(calculate_pcomp(mraster = mraster, nComp = 2, details = TRUE, plot = TRUE), "list")
+})
+
+# test slope
+
+test_that("slope", {
+  
+  expect_s4_class(calculate_distance(raster = mraster, access = access, slope = TRUE), "SpatRaster")
+
+  
 })

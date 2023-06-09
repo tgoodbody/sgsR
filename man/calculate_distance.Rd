@@ -7,6 +7,7 @@
 calculate_distance(
   raster,
   access,
+  slope = FALSE,
   plot = FALSE,
   filename = NULL,
   overwrite = FALSE
@@ -16,6 +17,9 @@ calculate_distance(
 \item{raster}{spatRaster. Raster to be used to calculate pixel level distance to access layer.}
 
 \item{access}{sf 'LINESTRING' or 'MULTILINESTRING'. Access network.}
+
+\item{slope}{Logical. Calculate slope distance instead of geographic distance. \code{raster} needs 
+to be a digital terrain model for this to make sense.}
 
 \item{plot}{Logical. Plots output strata raster with samples.}
 
