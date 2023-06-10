@@ -1,3 +1,9 @@
+# sgsR 1.4.4
+
+`fixed` - `sample_strat()` - Was not taking samples from other strata into account when calculating `mindist` between sample units. This has now been corrected for both `Queinnec` and `random` methods. From Tommasso Trotto #33
+
+`enhanced` - `calculate_distance()` - added `slope` parameter to allow for calculation of slope distance. From Nic #32
+
 # sgsR 1.4.3
 
 `enhanced` - `sample_ahels()` - If attributes in `existing` contain numeric data -- and match columns in `mraster` -- these data will be used instead of extracting from `mraster`.
@@ -18,7 +24,7 @@
 
 `fixed` - `extract_strata()` - added error message if `sraster` had multiple layers #28
 
-`fixed` - `extract_metrics()` - removed code where `mraster` layers with `ID` as name were removed. From Tomasso Trotto #27
+`fixed` - `extract_metrics()` - removed code where `mraster` layers with `ID` as name were removed. From Tommasso Trotto #27
 
 `enhanced` - `calculate_representation()` - Added parameter `drop = NULL`. If `!=NULL` then filtering is applied where strata with under drop frequency are dropped from resulting dataframe and plot.  #28
 

@@ -121,5 +121,5 @@ test_that("force", {
 test_that("category column", {
   xx <- strat_map(c(x, sraster))
 
-  expect_equal(ncol(sample_strat(xx, nSamp = 1000, method = "random")), 3)
+  expect_equal(ncol(sample_strat(xx, nSamp = 1000, method = "random")), 4)
 })

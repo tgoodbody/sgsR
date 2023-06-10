@@ -84,9 +84,10 @@ strat_rule1 <- function(n, # number of samples
           nCount <- nCount + 1
         }
       }
-
-      return(list(add_strata = add_strata, nCount = nCount))
     }
+    
+    return(list(add_strata = add_strata, nCount = nCount))
+    
   } else if (i == 1) {
     add_strata <- data.frame(
       cell = NULL,

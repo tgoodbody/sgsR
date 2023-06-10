@@ -75,17 +75,19 @@ calculate_distance <- function(raster,
     
     #--- from @spono ---#
     
-    slopeDist <- terra::terrain(raster[[1]], v="slope", unit="radians", neighbors=8)
+    slopeDist <- terra::terrain(raster[[1]], v = "slope", unit = "radians", neighbors = 8)
     
-    slopeDist <-  terra::res(slopeDist)[1] / cos(slopeDist)
+    resolution <- terra::res(slopeDist)[1]
+    
+    slopeDist <-  resolution / cos(slopeDist)
     
     access$value <- 0
     
-    access_rast <- terra::rasterize(access, slopeDist, field="value", background = 1) # values=0
+    access_rast <- terra::rasterize(access, slopeDist, field = "value", background = 1) # values=0
     
     slopeDist <- slopeDist * access_rast
     
-    dist2access <- terra::costDist(slopeDist, target=0, scale=res(slopeDist)[1], maxiter=50)
+    dist2access <- terra::costDist(slopeDist, target = 0, scale = resolution, maxiter = 50)
     
   }
 
