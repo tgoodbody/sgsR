@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,6 +62,11 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.4.4" id="sgsr-144">sgsR 1.4.4<a class="anchor" aria-label="anchor" href="#sgsr-144"></a></h2>
+<p><code>fixed</code> - <code><a href="../reference/sample_strat.html">sample_strat()</a></code> - Was not taking samples from other strata into account when calculating <code>mindist</code> between sample units. This has now been corrected for both <code>Queinnec</code> and <code>random</code> methods. From Tommasso Trotto <a href="https://github.com/tgoodbody/sgsR/issues/33" class="external-link">#33</a></p>
+<p><code>enhanced</code> - <code><a href="../reference/calculate_distance.html">calculate_distance()</a></code> - added <code>slope</code> parameter to allow for calculation of slope distance. From Nic <a href="https://github.com/tgoodbody/sgsR/issues/32" class="external-link">#32</a></p>
+</div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.4.3" id="sgsr-143">sgsR 1.4.3<a class="anchor" aria-label="anchor" href="#sgsr-143"></a></h2>
 <p><code>enhanced</code> - <code><a href="../reference/sample_ahels.html">sample_ahels()</a></code> - If attributes in <code>existing</code> contain numeric data – and match columns in <code>mraster</code> – these data will be used instead of extracting from <code>mraster</code>.</p>
 </div>
@@ -76,7 +81,7 @@
 <h2 class="pkg-version" data-toc-text="1.4.1" id="sgsr-141">sgsR 1.4.1<a class="anchor" aria-label="anchor" href="#sgsr-141"></a></h2>
 <p><code>fixed</code> - <code><a href="../reference/sample_ahels.html">sample_ahels()</a></code> - gave an erroneous error when <code>matrices</code> was provided and <code>nQuant</code> did not match. Changed to allow only <code>matrices</code> to be provided.</p>
 <p><code>fixed</code> - <code><a href="../reference/extract_strata.html">extract_strata()</a></code> - added error message if <code>sraster</code> had multiple layers <a href="https://github.com/tgoodbody/sgsR/issues/28" class="external-link">#28</a></p>
-<p><code>fixed</code> - <code><a href="../reference/extract_metrics.html">extract_metrics()</a></code> - removed code where <code>mraster</code> layers with <code>ID</code> as name were removed. From Tomasso Trotto <a href="https://github.com/tgoodbody/sgsR/issues/27" class="external-link">#27</a></p>
+<p><code>fixed</code> - <code><a href="../reference/extract_metrics.html">extract_metrics()</a></code> - removed code where <code>mraster</code> layers with <code>ID</code> as name were removed. From Tommasso Trotto <a href="https://github.com/tgoodbody/sgsR/issues/27" class="external-link">#27</a></p>
 <p><code>enhanced</code> - <code><a href="../reference/calculate_representation.html">calculate_representation()</a></code> - Added parameter <code>drop = NULL</code>. If <code>!=NULL</code> then filtering is applied where strata with under drop frequency are dropped from resulting dataframe and plot. <a href="https://github.com/tgoodbody/sgsR/issues/28" class="external-link">#28</a></p>
 </div>
     <div class="section level2">

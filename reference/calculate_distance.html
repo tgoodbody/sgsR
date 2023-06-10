@@ -18,7 +18,7 @@ within the sample_clhs function"><meta property="og:image" content="/reference/f
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,6 +74,7 @@ within the <code><a href="sample_clhs.html">sample_clhs</a></code> function</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">calculate_distance</span><span class="op">(</span></span>
 <span>  <span class="va">raster</span>,</span>
 <span>  <span class="va">access</span>,</span>
+<span>  slope <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  plot <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  filename <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  overwrite <span class="op">=</span> <span class="cn">FALSE</span></span>
@@ -88,6 +89,11 @@ within the <code><a href="sample_clhs.html">sample_clhs</a></code> function</p>
 
 <dt>access</dt>
 <dd><p>sf 'LINESTRING' or 'MULTILINESTRING'. Access network.</p></dd>
+
+
+<dt>slope</dt>
+<dd><p>Logical. Calculate slope distance instead of geographic distance. <code>raster</code> needs 
+to be a digital terrain model for this to make sense.</p></dd>
 
 
 <dt>plot</dt>
