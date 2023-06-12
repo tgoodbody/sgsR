@@ -96,7 +96,7 @@ urls <- c(
   "https://www.researchgate.net/profile/Martin-Queinnec",
   "https://scholar.google.ca/citations?user=bqjk4skAAAAJ&hl=en/",
   "https://scholar.google.ca/citations?user=RtYdz0cAAAAJ&hl=en/",
-  "https://www.fs.usda.gov/rmrs/people/ahudak/",
+  "https://www.fs.usda.gov/research/about/people/ahudak/",
   "https://scholar.google.com/citations?user=Nx336TQAAAAJ&hl=en/",
   "https://scholar.google.com/citations?user=wGsKOK8AAAAJ&hl=en/",
   "https://ca.linkedin.com/in/ian-sinclair-984929a4/",

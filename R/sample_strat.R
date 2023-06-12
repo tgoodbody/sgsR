@@ -341,8 +341,7 @@ sample_strat <- function(sraster,
         if(!is.null(mindist)){
           if(exists("out")){
             
-            add_strata <- rbind(out, add_strata) %>%
-              dplyr::filter(strata == s)
+            add_strata <- rbind(out, add_strata)
             
           }
         }
@@ -351,11 +350,12 @@ sample_strat <- function(sraster,
           n = n,
           s = s,
           add_strata = add_strata,
-          nCount = nrow(add_strata),
+          nCount = 0,
           strata_m = strata_m,
           extraCols = extraCols,
           mindist = mindist
-        )
+        ) %>%
+          filter(strata == s)
         
       }
     }
@@ -435,8 +435,7 @@ sample_strat <- function(sraster,
         if(!is.null(mindist)){
           if(exists("out")){
             
-            add_strata <- rbind(out, add_strata) %>%
-              dplyr::filter(strata == s)
+            add_strata <- rbind(out, add_strata)
             
           }
         }
@@ -463,7 +462,9 @@ sample_strat <- function(sraster,
           strata_m = strata_m,
           extraCols = extraCols,
           mindist = mindist
-        )
+        ) %>%
+          filter(strata == s)
+          
 
         #--- if number of samples is < 0 based on `include` parameter ---#
       } else if (n < 0) {
