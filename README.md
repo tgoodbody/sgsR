@@ -40,7 +40,7 @@ inventories](https://doi.org/10.1093/forestry/cpac055)
 To cite `sgsR` use `citation()` from within R with:
 
 ``` r
-print(citation("sgsR"),bibtex=TRUE)
+print(citation("sgsR"), bibtex = TRUE)
 #> 
 #> To cite package 'sgsR' in publications use:
 #> 
@@ -62,7 +62,7 @@ print(citation("sgsR"),bibtex=TRUE)
 #>   }
 #> 
 #>   Tristan RH Goodbody, Nicholas C Coops and Martin Queinnec (2023).
-#>   Structurally Guided Sampling. R package version 1.4.3.
+#>   Structurally Guided Sampling. R package version 1.4.4.
 #>   https://cran.r-project.org/package=sgsR.
 #> 
 #> A BibTeX entry for LaTeX users is
@@ -71,7 +71,7 @@ print(citation("sgsR"),bibtex=TRUE)
 #>     title = {Structurally Guided Sampling},
 #>     author = {Tristan RH Goodbody and Nicholas C Coops and Martin Queinnec},
 #>     year = {2023},
-#>     note = {R package version 1.4.3},
+#>     note = {R package version 1.4.4},
 #>     url = {https://cran.r-project.org/package=sgsR},
 #>   }
 ```
@@ -133,7 +133,7 @@ thanks to to:
 | [Martin Queinnec](https://www.researchgate.net/profile/Martin-Queinnec)                                       | University of British Columbia                                                    |
 | [Joanne C. White](https://scholar.google.ca/citations?user=bqjk4skAAAAJ&hl=en/)                               | Canadian Forest Service                                                           |
 | [Piotr Tompalski](https://scholar.google.ca/citations?user=RtYdz0cAAAAJ&hl=en/)                               | Canadian Forest Service                                                           |
-| [Andrew T. Hudak](https://www.fs.usda.gov/rmrs/people/ahudak/)                                                | United States Forest Service                                                      |
+| [Andrew T. Hudak](https://www.fs.usda.gov/research/about/people/ahudak/)                                      | United States Forest Service                                                      |
 | [Ruben Valbuena](https://scholar.google.com/citations?user=Nx336TQAAAAJ&hl=en/)                               | Swedish University of Agricultural Sciences                                       |
 | [Antoine LeBoeuf](https://scholar.google.com/citations?user=wGsKOK8AAAAJ&hl=en/)                              | Ministère des Forêts, de la Faune et des Parcs                                    |
 | [Ian Sinclair](https://ca.linkedin.com/in/ian-sinclair-984929a4/)                                             | Ministry of Northern Development, Mines, Natural Resources and Forestry           |
