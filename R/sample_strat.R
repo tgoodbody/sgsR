@@ -355,7 +355,7 @@ sample_strat <- function(sraster,
           extraCols = extraCols,
           mindist = mindist
         ) %>%
-          filter(strata == s)
+          dplyr::filter(strata == s)
         
       }
     }
@@ -463,7 +463,7 @@ sample_strat <- function(sraster,
           extraCols = extraCols,
           mindist = mindist
         ) %>%
-          filter(strata == s)
+          dplyr::filter(strata == s)
           
 
         #--- if number of samples is < 0 based on `include` parameter ---#
