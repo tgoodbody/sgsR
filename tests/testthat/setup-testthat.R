@@ -1,5 +1,6 @@
 library(terra)
 library(dplyr)
+library(sf)
 
 #--- metrics raster ---#
 mr <- system.file("extdata", "mraster.tif", package = "sgsR")

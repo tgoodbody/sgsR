@@ -123,3 +123,39 @@ test_that("category column", {
 
   expect_equal(ncol(sample_strat(xx, nSamp = 1000, method = "random")), 4)
 })
+
+
+test_that("mindist", {
+  samples <- vect(sample_strat(sraster = sraster, nSamp = 200, mindist = 200))
+  
+  # Calculate pairwise distances
+  distances <- terra::distance(samples, samples)
+  
+  # Exclude distances between the same point (diagonal entries)
+  diag(distances) <- Inf
+  distances[upper.tri(distances)] <- Inf
+  
+  # Check if any distance is smaller than the threshold
+  any_close <- distances < 200
+  
+  indices <- which(any_close, arr.ind = TRUE)
+  
+  expect_equal(nrow(indices),0)
+  
+  #--- random ---#
+  samples <- vect(sample_strat(sraster = sraster, nSamp = 200, mindist = 200, method = "random"))
+  
+  # Calculate pairwise distances
+  distances <- terra::distance(samples, samples)
+  
+  # Exclude distances between the same point (diagonal entries)
+  diag(distances) <- Inf
+  distances[upper.tri(distances)] <- Inf
+  
+  # Check if any distance is smaller than the threshold
+  any_close <- distances < 200
+  
+  indices <- which(any_close, arr.ind = TRUE)
+  
+  expect_equal(nrow(indices),0)
+})
