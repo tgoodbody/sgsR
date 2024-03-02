@@ -1,3 +1,7 @@
+# sgsR 1.4.5
+
+`fixed` - `sample_balanced()` & `sample_existing_balanded` - Updated to match `BalancedSampling v2.0.6` changes to `lcubsestratified`. Thanks to Anton Grafström.
+
 # sgsR 1.4.4
 
 `fixed` - `sample_strat()` - Was not taking samples from other strata into account when calculating `mindist` between sample units. This has now been corrected for both `Queinnec` and `random` methods. From Tommasso Trotto #33

@@ -55,9 +55,6 @@ Balanced raster sampling using \code{\link[BalancedSampling]{lcube}} and
 r <- system.file("extdata", "mraster.tif", package = "sgsR")
 mr <- terra::rast(r)
 
-a <- system.file("extdata", "access.shp", package = "sgsR")
-ac <- sf::st_read(a)
-
 sample_balanced(
   mraster = mr,
   nSamp = 200

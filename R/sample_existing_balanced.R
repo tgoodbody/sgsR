@@ -9,6 +9,7 @@
 #' This is leveraged when used by \code{sample_existing()} internally
 #' @return An \code{sf} object that is a sub-sample of \code{existing}
 #' @keywords internal
+#' @noRd
 sample_existing_balanced <- function(existing,
                                      nSamp,
                                      algorithm = "lpm2_kdtree",
@@ -68,7 +69,7 @@ sample_existing_balanced <- function(existing,
       prob = p,
       Xspread = vals_m, Xbal = cbind(p), integerStrata = strata_v
     )
-    sampled <- (1:N)[sampled == 1]
+
   }
   samples <- vals[sampled, ]
   samples <- samples %>%

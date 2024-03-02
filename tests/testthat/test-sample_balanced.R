@@ -47,7 +47,7 @@ test_that("lcubestratified", {
   set.seed(2022)
   mrs <- c(mraster, sraster)
 
-  o1 <- sample_balanced(mraster = mrs, nSamp = 50, algorithm = "lcubestratified")
+  o1 <- sample_balanced(mraster = mrs, nSamp = 100, algorithm = "lcubestratified")
 
-  expect_equal(nrow(o1), 50L)
+  expect_equal(nrow(o1), 100L)
 })
