@@ -8,7 +8,7 @@
 #' Otherwise, it raises a stop error with a relevant message.
 #'
 #' @keywords internal
-#' @noRd
+
 check_existing <- function(existing,
                            raster,
                            nSamp,
@@ -77,7 +77,7 @@ check_existing <- function(existing,
 #' @inheritParams sample_existing
 #'
 #' @keywords internal
-#' @noRd
+
 prepare_existing <- function(existing,
                              raster = NULL,
                              access = NULL,
@@ -165,7 +165,7 @@ prepare_existing <- function(existing,
 #' @return \code{existing} with respective 'X' and 'Y' columns representing the coordinates of the input \code{sf} object.
 #'
 #' @keywords internal
-#' @noRd
+
 coords_existing <- function(existing) {
   xy <- existing %>%
     sf::st_coordinates(.)

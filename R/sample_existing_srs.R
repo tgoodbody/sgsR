@@ -8,7 +8,7 @@
 #' @return A data frame or spatial data frame containing the random sample.
 #'
 #' @keywords internal
-#' @noRd
+
 sample_existing_srs <- function(existing,
                                 nSamp,
                                 filename = NULL,

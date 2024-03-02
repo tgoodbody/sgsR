@@ -66,7 +66,7 @@ calculate_lhsOpt(
 
 }
 \references{
-Malone BP, Minansy B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451
+Malone BP, Minasny B, Brungard C. 2019. Some methods to improve the utility of conditioned Latin hypercube sampling. PeerJ 7:e6451 DOI 10.7717/peerj.6451
 }
 \author{
 Tristan R.H. Goodbody
