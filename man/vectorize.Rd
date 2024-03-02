@@ -2,8 +2,41 @@
 % Please edit documentation in R/utils-vectorization.R
 \name{vectorize}
 \alias{vectorize}
+\alias{calculate_breaks}
+\alias{calculate_quantile_breaks}
+\alias{quantile_breaks_integer}
+\alias{quantile_breaks}
 \title{Vectorization helpers}
+\usage{
+calculate_breaks(mraster, breaks)
+
+calculate_quantile_breaks(mraster, nStrata)
+
+quantile_breaks_integer(mraster, nStrata)
+
+quantile_breaks(mraster, nStrata)
+}
+\arguments{
+\item{mraster}{Spatraster. Raster to stratify. Layers in \code{mraster} must match the number of
+\code{breaks} vectors provided.}
+
+\item{breaks}{Numeric. Vector of breakpoints for each layer of \code{mraster}. If \code{mraster} has multiple layers,
+\code{breaks} must be a list with an equal number of objects.}
+
+\item{nStrata}{Numeric. A positive integer representing the number of desired classes
+or a numeric vector of probabilities with values between \code{0-1}. If \code{mraster} has multiple layers,
+\code{nStrata} must be a list with an equal number of objects.}
+}
 \description{
 Vectorization helpers
+
+Breaks vectorize
+
+Quantile breaks
+
+Quantile vectorize by integer helper
+
+Quantile vectorize by probabilities vector helper
 }
 \concept{vectorize}
+\keyword{internal}
