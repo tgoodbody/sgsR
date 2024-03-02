@@ -39,7 +39,7 @@ Imports:
     tidyr,
     clhs,
     SamplingBigData,
-    BalancedSampling (>= 2.0.6),
+    BalancedSampling,
     spatstat.geom
 Suggests: 
     knitr,
