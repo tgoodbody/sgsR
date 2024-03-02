@@ -47,9 +47,9 @@
 #' Where:
 #'
 #' \itemize{
-#'  \item{SE}{ - Standard error of the mean}
-#'  \item{s}{ - Standard deviation of the observations}
-#'  \item{n}{ - Number of observations}
+#'   \item \code{SE} - Standard error of the mean
+#'   \item \code{s} - Standard deviation of the observations
+#'   \item \code{n} - Number of observations
 #' }
 #'
 #' @references
