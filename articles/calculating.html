@@ -15,8 +15,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Calculating">
 <meta property="og:description" content="Learn how to use calculate_* functions.
@@ -41,7 +41,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sgsR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -204,13 +204,13 @@ and sampling frequency.</p>
 <span><span class="co">#&gt;   strata srasterFreq sampleFreq diffFreq nSamp  need</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>      1        0.13       0.12  -<span style="color: #BB0000;">0.010</span><span style="color: #BB0000; text-decoration: underline;">0</span>     6     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>      2        0.13       0.2    0.07      10    -<span style="color: #BB0000;">3</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>      3        0.12       0.1   -<span style="color: #BB0000;">0.020</span><span style="color: #BB0000; text-decoration: underline;">0</span>     5     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>      4        0.13       0.06  -<span style="color: #BB0000;">0.07</span>       3     4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>      5        0.13       0.16   0.03       8    -<span style="color: #BB0000;">1</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>      2        0.13       0.14   0.010<span style="text-decoration: underline;">0</span>     7     0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>      3        0.12       0.12   0          6     0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>      4        0.13       0.02  -<span style="color: #BB0000;">0.11</span>       1     6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>      5        0.13       0.18   0.05       9    -<span style="color: #BB0000;">2</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>      6        0.12       0.16   0.04       8    -<span style="color: #BB0000;">2</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span>      7        0.13       0.14   0.010<span style="text-decoration: underline;">0</span>     7     0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span>      8        0.12       0.06  -<span style="color: #BB0000;">0.06</span>       3     3</span></span></code></pre>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span>      7        0.13       0.18   0.05       9    -<span style="color: #BB0000;">2</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span>      8        0.12       0.08  -<span style="color: #BB0000;">0.04</span>       4     2</span></span></code></pre>
 <p>The tabular output presents the frequency of coverage for each strata
 (<code>srasterFreq</code>) (what % of the landscape does the strata
 cover) and the sampling frequency within each strata
@@ -264,15 +264,15 @@ exists to calculate slope distance instead of geographic distance, which
 becomes very handy in the case of steep mountainous areas and is faster
 from a computational point of view. If <code>slope == TRUE</code>, the
 <code>mraster</code> provided should be a digital terrain model.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">calculate_distance</span>(</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">raster =</span> sraster, <span class="co"># input</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">access =</span> access, <span class="co"># define access road network</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot =</span> <span class="cn">TRUE</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>) <span class="co"># plot</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="sc">|---------</span><span class="er">|</span><span class="sc">---------</span><span class="er">|</span><span class="sc">---------</span><span class="er">|</span><span class="sc">---------</span><span class="er">|</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="er">=========================================</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                                          </span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">calculate_distance</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="at">raster =</span> sraster, <span class="co"># input</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="at">access =</span> access, <span class="co"># define access road network</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  <span class="at">plot =</span> <span class="cn">TRUE</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>) <span class="co"># plot</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="sc">|---------</span><span class="er">|</span><span class="sc">---------</span><span class="er">|</span><span class="sc">---------</span><span class="er">|</span><span class="sc">---------</span><span class="er">|</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="er">=========================================</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>                                          </span></code></pre></div>
 <p><img src="calculating_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 <pre><code><span><span class="co">#&gt; class       : SpatRaster </span></span>
 <span><span class="co">#&gt; dimensions  : 277, 373, 2  (nrow, ncol, nlyr)</span></span>
@@ -280,6 +280,8 @@ from a computational point of view. If <code>slope == TRUE</code>, the
 <span><span class="co">#&gt; extent      : 431100, 438560, 5337700, 5343240  (xmin, xmax, ymin, ymax)</span></span>
 <span><span class="co">#&gt; coord. ref. : UTM Zone 17, Northern Hemisphere </span></span>
 <span><span class="co">#&gt; source(s)   : memory</span></span>
+<span><span class="co">#&gt; varnames    : mraster </span></span>
+<span><span class="co">#&gt;               mraster </span></span>
 <span><span class="co">#&gt; names       : strata, dist2access </span></span>
 <span><span class="co">#&gt; min values  :      1,      0.3438 </span></span>
 <span><span class="co">#&gt; max values  :      4,   1061.6599</span></span></code></pre>
@@ -320,6 +322,9 @@ components that will be rasterized.</p>
 <span><span class="co">#&gt; extent      : 431100, 438560, 5337700, 5343240  (xmin, xmax, ymin, ymax)</span></span>
 <span><span class="co">#&gt; coord. ref. : UTM Zone 17, Northern Hemisphere </span></span>
 <span><span class="co">#&gt; source(s)   : memory</span></span>
+<span><span class="co">#&gt; varnames    : mraster </span></span>
+<span><span class="co">#&gt;               mraster </span></span>
+<span><span class="co">#&gt;               mraster </span></span>
 <span><span class="co">#&gt; names       :       PC1,       PC2,       PC3 </span></span>
 <span><span class="co">#&gt; min values  : -4.402269, -2.155242, -1.510955 </span></span>
 <span><span class="co">#&gt; max values  :  5.282663,  5.357801,  1.446156</span></span></code></pre>
