@@ -12,6 +12,7 @@
 #' @return An \code{sf} object that is a sub-sample of \code{existing}
 #'
 #' @keywords internal
+#' @noRd
 sample_existing_strat <- function(existing,
                                   toSample,
                                   nSamp,
@@ -44,6 +45,7 @@ sample_existing_strat <- function(existing,
 #' for the specified strata.
 #'
 #' @keywords internal
+#' @noRd
 take_samples <- function(existing, toSample, strata) {
   total <- NULL
 

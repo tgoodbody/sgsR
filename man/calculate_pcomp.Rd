@@ -71,8 +71,8 @@ pcomp <- calculate_pcomp(
 }
 \seealso{
 Other calculate functions: 
-\code{\link{calculate_allocation_existing}()},
 \code{\link{calculate_allocation}()},
+\code{\link{calculate_allocation_existing}()},
 \code{\link{calculate_coobs}()},
 \code{\link{calculate_distance}()},
 \code{\link{calculate_pop}()},

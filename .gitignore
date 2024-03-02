@@ -1,3 +1,4 @@
+.Renviron
 .Rproj.user
 .Rhistory
 .RData
@@ -8,3 +9,5 @@ doc
 docs
 pkgdown
 cran-comments.md
+/doc/
+/Meta/
