@@ -15,6 +15,12 @@ test_that("scatter errors", {
 test_that("scatter messages", {
   expect_message(plot_scatter(mraster = mraster, existing = existing), "More than 2 layers in `mraster`. Only first 2 layers will be used.")
   expect_s3_class(o, "gg")
-  expect_equal(o$labels$x, "zq90")
-  expect_equal(o1$labels$x, "pzabove2")
+  
+  get_labs <- function(x) x$labels
+  if ("get_labs" %in% getNamespaceExports("ggplot2")) {
+    get_labs <- ggplot2::get_labs
+  }
+  
+  expect_equal(get_labs(o)$x, "zq90")
+  expect_equal(get_labs(o1)$x, "pzabove2")
 })
