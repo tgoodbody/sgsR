@@ -4,8 +4,8 @@
 #'
 #' @family sample functions
 #'
-#' @inheritParams strat_kmeans
 #' @inheritParams sample_srs
+#' @inheritParams strat_kmeans
 #'
 #' @param iter Numeric. The maximum number of kmeans iterations allowed.
 #' @param algorithm Character. \code{Lloyd} (default) or
