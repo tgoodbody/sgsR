@@ -1,6 +1,7 @@
 # sgsR 1.4.5
 
 `fixed` - `sample_balanced()` & `sample_existing_balanded` - Updated to match `BalancedSampling v2.0.6` changes to `lcubsestratified`. Thanks to Anton Grafström.
+
 `fixed` - `sample_nc()` - Updated parameter `filename` to correctly indicate the function outputs samples and not a raster layer. From StumWhere #36
 
 # sgsR 1.4.4
