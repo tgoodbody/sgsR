@@ -11,6 +11,7 @@
 #' @param p Numeric. Vector with length equal to the number of cells in \code{mraster} representing
 #' the inclusion probability for each candidate sample. Default = \code{nSamp / N}, where \code{N}
 #' is the number of cells.
+#' @param filename Character. Path to write output samples.
 #'
 #' @return An sf object with \code{nSamp} samples.
 #'
