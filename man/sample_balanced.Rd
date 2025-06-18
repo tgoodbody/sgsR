@@ -39,7 +39,7 @@ from access where plots can be sampled.}
 \item{plot}{Logical. Plots output strata raster and visualized
 strata with boundary dividers.}
 
-\item{filename}{Character. Path to write stratified raster to disc.}
+\item{filename}{Character. Path to write output samples.}
 
 \item{overwrite}{Logical. Specify whether \code{filename} should be overwritten on disc.}
 }

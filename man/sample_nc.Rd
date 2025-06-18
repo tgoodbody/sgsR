@@ -47,9 +47,9 @@ from access where plots can be sampled.}
 stratification raster. If \code{TRUE} return a list where \code{$details} is additional
 stratification information and \code{$raster} is the output stratification spatRaster.}
 
-\item{filename}{Character. Path to write stratified raster to disc.}
+\item{filename}{Character. Path to write output samples.}
 
-\item{overwrite}{Logical. Specify whether \code{filename} should be overwritten on disc.}
+\item{overwrite}{Logical. Choice to overwrite existing \code{filename} if it exists.}
 }
 \value{
 An sf object with \code{nSamp} randomly sampled points.

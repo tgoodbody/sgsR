@@ -25,7 +25,7 @@ sample_existing_balanced(
 the inclusion probability for each candidate sample. Default = \code{nSamp / N}, where \code{N}
 is the number of cells.}
 
-\item{filename}{Character. Path to write stratified raster to disc.}
+\item{filename}{Character. Path to write output samples.}
 
 \item{overwrite}{Logical. Specify whether \code{filename} should be overwritten on disc.}
 

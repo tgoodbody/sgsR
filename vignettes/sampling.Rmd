@@ -70,7 +70,7 @@ a <- c("`sample_srs()`", "`sample_systematic()`", "`sample_strat()`", "`sample_s
 
 d <- c("Simple random", "Systematic", "Stratified", "Systematic Stratified", "Nearest centroid", "Conditioned Latin hypercube", "Balanced sampling", "Adapted hypercube evaluation of a legacy sample", "Sub-sampling an `existing` sample")
 
-s <- c("", "", "[Queinnec, White, & Coops (2021)](https://www.sciencedirect.com/science/article/pii/S0034425721002303)", "", "[Melville & Stone (2016)](https://doi.org/10.1080/00049158.2016.1218265)", "[Minasny & McBratney (2006)](https://www.sciencedirect.com/science/article/pii/S009830040500292X?via%3Dihub)", "[Grafström, A. Lisic, J (2018)](http://www.antongrafstrom.se/balancedsampling/)", "[Malone, Minasny, & Brungard (2019)](https://peerj.com/articles/6451/)", "")
+s <- c("", "", "[Queinnec, White, & Coops (2021)](https://doi.org/10.1016/j.rse.2021.112510)", "", "[Melville & Stone (2016)](https://doi.org/10.1080/00049158.2016.1218265)", "[Minasny & McBratney (2006)](https://doi.org/10.1016/j.cageo.2005.12.009)", "[Grafström, A. Lisic, J (2018)](http://www.antongrafstrom.se/balancedsampling/)", "[Malone, Minasny, & Brungard (2019)](https://doi.org/10.7717/peerj.6451)", "")
 
 urls <- c("#srs", "#systematic", "#sstrat", "#sysstrat", "#nc", "#clhs", "#balanced", "#ahels", "#samp-existing")
 

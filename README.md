@@ -41,7 +41,6 @@ To cite `sgsR` use `citation()` from within R with:
 
 ``` r
 print(citation("sgsR"), bibtex = TRUE)
-#> 
 #> To cite package 'sgsR' in publications use:
 #> 
 #>   Goodbody, TRH., Coops, NC., Queinnec, M., White, JC., Tompalski, P.,
@@ -61,8 +60,8 @@ print(citation("sgsR"), bibtex = TRUE)
 #>     doi = {10.1093/forestry/cpac055},
 #>   }
 #> 
-#>   Tristan RH Goodbody, Nicholas C Coops and Martin Queinnec (2023).
-#>   Structurally Guided Sampling. R package version 1.4.4.
+#>   Tristan RH Goodbody, Nicholas C Coops and Martin Queinnec (2025).
+#>   Structurally Guided Sampling. R package version 1.4.6.
 #>   https://cran.r-project.org/package=sgsR.
 #> 
 #> A BibTeX entry for LaTeX users is
@@ -70,8 +69,8 @@ print(citation("sgsR"), bibtex = TRUE)
 #>   @Manual{,
 #>     title = {Structurally Guided Sampling},
 #>     author = {Tristan RH Goodbody and Nicholas C Coops and Martin Queinnec},
-#>     year = {2023},
-#>     note = {R package version 1.4.4},
+#>     year = {2025},
+#>     note = {R package version 1.4.6},
 #>     url = {https://cran.r-project.org/package=sgsR},
 #>   }
 ```
@@ -128,18 +127,18 @@ We are thankful for continued collaboration with academic, private
 industry, and government institutions to help improve `sgsR`. Special
 thanks to to:
 
-| Collaborator                                                                                                  | Affiliation                                                                       |
-|:--------------------------------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------|
-| [Martin Queinnec](https://www.researchgate.net/profile/Martin-Queinnec)                                       | University of British Columbia                                                    |
-| [Joanne C. White](https://scholar.google.ca/citations?user=bqjk4skAAAAJ&hl=en/)                               | Canadian Forest Service                                                           |
-| [Piotr Tompalski](https://scholar.google.ca/citations?user=RtYdz0cAAAAJ&hl=en/)                               | Canadian Forest Service                                                           |
-| [Andrew T. Hudak](https://www.fs.usda.gov/research/about/people/ahudak/)                                      | United States Forest Service                                                      |
-| [Ruben Valbuena](https://scholar.google.com/citations?user=Nx336TQAAAAJ&hl=en/)                               | Swedish University of Agricultural Sciences                                       |
-| [Antoine LeBoeuf](https://scholar.google.com/citations?user=wGsKOK8AAAAJ&hl=en/)                              | Ministère des Forêts, de la Faune et des Parcs                                    |
-| [Ian Sinclair](https://ca.linkedin.com/in/ian-sinclair-984929a4/)                                             | Ministry of Northern Development, Mines, Natural Resources and Forestry           |
-| [Grant McCartney](https://www.signalhire.com/profiles/grant-mccartney%27s-email/99719223/)                    | Forsite Consultants Ltd.                                                          |
-| [Jean-Francois Prieur](https://www.researchgate.net/scientific-contributions/Jean-Francois-Prieur-2142960944) | Université de Sherbrooke                                                          |
-| [Murray Woods](https://www.researchgate.net/profile/Murray-Woods)                                             | (Retired) Ministry of Northern Development, Mines, Natural Resources and Forestry |
+| Collaborator | Affiliation |
+|:---|:---|
+| Martin Queinnec | University of British Columbia |
+| Joanne C. White | Canadian Forest Service |
+| Piotr Tompalski | Canadian Forest Service |
+| Andrew T. Hudak | United States Forest Service |
+| Ruben Valbuena | Swedish University of Agricultural Sciences |
+| Antoine LeBoeuf | Ministère des Forêts, de la Faune et des Parcs |
+| Ian Sinclair | Ministry of Northern Development, Mines, Natural Resources and Forestry |
+| Grant McCartney | Forsite Consultants Ltd. |
+| Jean-Francois Prieur | Université de Sherbrooke |
+| Murray Woods | (Retired) Ministry of Northern Development, Mines, Natural Resources and Forestry |
 
 ## Funding :raised_hands:
 

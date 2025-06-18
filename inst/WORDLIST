@@ -12,7 +12,6 @@ CRC
 CRS
 Centre's
 Centre’s
-Centroid
 Codecov
 DOI
 Faune
@@ -22,7 +21,6 @@ Forsite
 Forêts
 Geosciences
 Github
-Grafstrom
 Grafström
 Gregoire
 Hijmans
@@ -61,6 +59,7 @@ SpatRaster
 SpatialPointsDataFrame
 Spatraster
 Springer
+StumWhere
 Tommaso
 Tommasso
 Tompalski
@@ -79,8 +78,6 @@ balancedsampling
 boreal
 cLHS
 cellsize
-centroid
-centroids
 clhs
 colour
 coloured
@@ -129,6 +126,7 @@ srasters
 stratifications
 subsampled
 tesselations
+teunbrand
 th
 tibble
 underreprented

@@ -148,7 +148,7 @@ sample_systematic <- function(raster,
 
   #--- spin pol and get extent for grid making to cover entire raster ---#
 
-  se <- terra::spin(pol, randRot) |> terra::ext()
+  se <- terra::spin(pol, randRot) %>% terra::ext()
 
   #--- create grid based on outer extents of randomly translated raster extent ---#
 
